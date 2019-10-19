@@ -1,0 +1,169 @@
+font pango:monospace bold 9
+
+set $up k
+set $down j
+set $left h
+set $right l
+
+# use Mouse+Mod4 to drag floating windows to their wanted position
+floating_modifier Mod4
+
+# start a terminal
+bindsym Mod4+Return exec st
+
+# kill focused window
+bindsym Mod4+q kill 
+
+# change focus
+bindsym Mod4+$left focus left
+bindsym Mod4+$down focus down
+bindsym Mod4+$up focus up
+bindsym Mod4+$right focus right
+
+# move focused window
+bindsym Mod4+Shift+$left move left
+bindsym Mod4+Shift+$down move down
+bindsym Mod4+Shift+$up move up
+bindsym Mod4+Shift+$right move right
+
+# split in horizontal orientation
+bindsym Mod4+o split h
+
+# split in vertical orientation
+bindsym Mod4+v split v
+
+# enter fullscreen mode for the focused container
+bindsym Mod4+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+#bindsym Mod4+s layout stacking
+bindsym Mod4+w layout tabbed
+bindsym Mod4+e layout toggle split
+
+# toggle tiling / floating
+bindsym Mod4+Shift+space floating toggle
+#bindsym Mod4+Space
+
+# change focus between tiling / floating windows
+bindsym Mod4+space focus mode_toggle
+
+# focus the parent container
+#bindsym Mod4+a focus parent
+
+# focus the child container
+#bindsym Mod4+d focus child
+
+# move the currently focused window to the scratchpad
+bindsym Mod4+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym Mod4+minus scratchpad show; sticky enable
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+
+# switch to workspace
+bindsym Mod4+1 workspace $ws1
+bindsym Mod4+2 workspace $ws2
+bindsym Mod4+3 workspace $ws3
+bindsym Mod4+4 workspace $ws4
+bindsym Mod4+5 workspace $ws5
+bindsym Mod4+6 workspace $ws6
+bindsym Mod4+7 workspace $ws7
+bindsym Mod4+8 workspace $ws8
+bindsym Mod4+9 workspace $ws9
+bindsym Mod4+0 workspace $ws10
+
+# move focused container to workspace
+bindsym Mod4+Shift+1 move container to workspace $ws1
+bindsym Mod4+Shift+2 move container to workspace $ws2
+bindsym Mod4+Shift+3 move container to workspace $ws3
+bindsym Mod4+Shift+4 move container to workspace $ws4
+bindsym Mod4+Shift+5 move container to workspace $ws5
+bindsym Mod4+Shift+6 move container to workspace $ws6
+bindsym Mod4+Shift+7 move container to workspace $ws7
+bindsym Mod4+Shift+8 move container to workspace $ws8
+bindsym Mod4+Shift+9 move container to workspace $ws9
+bindsym Mod4+Shift+0 move container to workspace $ws10
+
+bindsym Mod4+Shift+c reload
+bindsym Mod4+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym Mod4+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+mode "RESIZE" {
+        bindsym $left       resize shrink width 10 px or 2 ppt
+        bindsym $down       resize grow height 10 px or 2 ppt
+        bindsym $up         resize shrink height 10 px or 2 ppt
+        bindsym $right      resize grow width 10 px or 2 ppt
+
+        bindsym Escape mode "default"
+        bindsym Mod4+Tab mode "default"
+}
+bindsym Mod4+r mode "RESIZE"
+
+focus_follows_mouse no
+
+gaps inner 12
+gaps top 4
+gaps left 0
+gaps right 0
+gaps bottom 0
+
+default_border pixel 2
+smart_borders on
+#smart_gaps on
+
+for_window [class="mpv"] floating enable sticky enable
+for_window [class="Sxiv"] floating enable
+
+bindsym Menu exec j4-dmenu-desktop --no-generic --display-binary --usage-log=.j4-dmenu-desktop-log --term=st --dmenu="setdmenu -l 8"
+
+bindsym Mod4+s sticky toggle
+
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 2dB+ unmute
+bindsym XF86AudioLowerVolume exec amixer -q set Master 2dB- unmute
+bindsym XF86AudioMute exec amixer -q set Master toggle
+
+bindsym Mod4+Mod1+h workspace prev
+bindsym Mod4+Mod1+l workspace next
+
+bindsym Mod4+Mod1+comma exec --no-startup-id $HOME/.config/i3/scripts/shift-current-workspace -prev
+bindsym Mod4+Mod1+period exec --no-startup-id $HOME/.config/i3/scripts/shift-current-workspace -next
+
+bindsym Mod4+n exec --no-startup-id $HOME/.config/i3/scripts/new-empty-workspace
+
+bindsym Mod4+Shift+Menu exec --no-startup-id $HOME/.config/i3/scripts/dmenu-move-to-workspace
+bindsym Mod4+Menu exec --no-startup-id $HOME/.config/i3/scripts/dmenu-rename-workspace
+
+bindsym Mod4+b exec --no-startup-id bottomright
+
+bindsym XF86AudioNext exec --no-startup-id mpc next
+bindsym XF86AudioPlay exec --no-startup-id mpc toggle
+bindsym XF86AudioPrev exec --no-startup-id mpc prev
+bindsym XF86AudioStop exec --no-startup-id mpc stop
+
+bindsym Print exec --no-startup-id scrot $HOME/scrn/'Screenshot-%Y-%m-%d_%H-%M-%S_$wx$h.png'
+
+bindsym XF86Launch1 exec --no-startup-id xset dpms force off
+
+# class                 border     bg         text       indicator  child_brd
+client.focused          #458588    #665c54    #282828    #458588    #458588
+client.focused_inactive #3c3836    #3c3836    #ebdbb2    #3c3836    #3c3836
+client.unfocused        #3c3836    #3c3836    #665c54    #3c3836    #3c3836
+client.urgent           #fb4934    #fabd2f    #282828    #fb4934    #fb4934
+
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh

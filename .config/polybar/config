@@ -1,0 +1,212 @@
+;=====================================================
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/jaagr/polybar
+;
+;   The README contains alot of information
+;
+;=====================================================
+
+[colors]
+background = #282828
+foreground = #665c54
+primary = #458588
+alert = #fabd2f
+
+[bar/right]
+monitor = ${env:MONITOR:VGA-1}
+width = 100%
+height = 24
+fixed-center = true
+locale = lv_LV.utf-8
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+border-top-size = 16px
+border-top-color = ${colors.background}
+border-bottom-size = 12px
+border-bottom-color = ${colors.background}
+border-left-size = 12px
+border-left-color = ${colors.background}
+border-right-size = 12px
+border-right-color = ${colors.background}
+
+module-margin-left = 0
+module-margin-right = 2
+modules-left = i3
+#modules-center = date
+;modules-right = network battery volume
+modules-right = date
+
+tray-position = right
+tray-padding = 0
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+wm-restack = i3
+
+font-0 = Iosevka Slab:weight=bold:pixelsize=9;2
+font-1 = Symbola:pixelsize=13;2
+
+bottom = true
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+wrapping-scroll = true
+
+; Only show workspaces on the same output as the bar
+pin-workspaces = true
+
+label-mode = %mode%
+label-mode-padding = 4
+label-mode-foreground = ${colors.background}
+label-mode-background = ${colors.primary}
+
+; focused = Active workspace on focused monitor
+label-focused = %name%
+label-focused-background = ${colors.foreground}
+label-focused-padding = 3
+label-focused-foreground = ${colors.background}
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %name%
+label-unfocused-padding = 3
+label-unfocused-foreground = ${colors.foreground}
+
+; visible = Active workspace on unfocused monitor
+label-visible = %name%
+label-visible-background = ${colors.background} 
+label-visible-padding = 3
+
+; urgent = Workspace with urgency hint set
+label-urgent = %name%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 3
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:115:...%
+label-foreground = ${colors.foreground}
+label-padding = 1
+
+[module/date]
+type = internal/date
+
+label = %date%
+;date = "%A, %d. %B %H:%M"
+date = "%Y-%m-%d %A %H:%M"
+label-padding = 0
+label-foreground = #a89984
+
+[module/volume]
+type = internal/volume
+
+master-soundcard = default
+speaker-soundcard = default
+headphone-soundcard = default
+
+master-mixer = Master
+
+speaker-mixer = Headphone
+headphone-mixer = Headphone
+
+headphone-id = 9
+
+mapped = true
+
+format-volume = <bar-volume>
+label-muted = 🔇
+label-volume-padding = 0
+bar-volume-padding = 0
+bar-volume-width = 7
+bar-volume-gradient = false
+bar-volume-indicator = ·
+bar-volume-empty-foreground = #584945
+bar-volume-fill = ·
+bar-volume-fill-foreground = ${colors.foreground}
+bar-volume-empty = ·
+
+[module/battery]
+type = internal/battery
+full-at = 96
+
+; $ ls -1 /sys/class/power_supply/
+battery = BAT0
+adapter = AC
+
+; poll-interval = 5
+time-format = %kh%Mm
+format-charging = <label-charging>
+format-discharging = <label-discharging>
+label-charging = ~%percentage%%
+label-discharging = %percentage%%%time%
+label-full = 
+label-charging-foreground = ${colors.foreground}
+label-discharging-foreground = #a89984
+label-full-foreground = ${colors.foreground}
+label-charging-padding = 0
+label discharging-padding = 0
+label-full-padding = 0
+
+[module/network]
+type = internal/network
+interface = wlp3s0
+; Available tags:
+;   <label-connected> (default)
+;   <ramp-signal>
+format-connected = %{A1:$HOME/.config/i3/scripts/float-nmtui-wifi-list:}<label-connected>%{A}
+
+; Available tags:
+;   <label-disconnected> (default)
+format-disconnected = %{A1:$HOME/.config/i3/scripts/float-nmtui-wifi-list:}<label-disconnected>%{A}
+
+; Available tags:
+;   <label-connected> (default)
+;   <label-packetloss>
+;   <animation-packetloss>
+format-packetloss = <animation-packetloss> <label-connected>
+
+; All labels support the following tokens:
+;   %ifname%    [wireless+wired]
+;   %local_ip%  [wireless+wired]
+;   %local_ip6% [wireless+wired]
+;   %essid%     [wireless]
+;   %signal%    [wireless]
+;   %upspeed%   [wireless+wired]
+;   %downspeed% [wireless+wired]
+;   %linkspeed% [wired]
+
+; Default: %ifname% %local_ip%
+;label-connected = %essid% %downspeed:9%
+label-connected = %essid%
+;label-connected-foreground = #eefafafa
+
+; Default: (none)
+label-disconnected = No Wireless
+;label-disconnected-foreground = #66ffffff
+
+; Default: (none)
+;label-packetloss = %essid%
+;label-packetloss-foreground = #eefafafa
+
+; Only applies if <ramp-signal> is used
+ramp-signal-0 = 😱
+ramp-signal-1 = 😠
+ramp-signal-2 = 😒
+ramp-signal-3 = 😊
+ramp-signal-4 = 😃
+ramp-signal-5 = 😈
+
+; Only applies if <animation-packetloss> is used
+animation-packetloss-0 = ⚠
+animation-packetloss-0-foreground = #ffa64c
+animation-packetloss-1 = 📶
+;animation-packetloss-1-foreground = #000000
+; Framerate in milliseconds
+animation-packetloss-framerate = 500
+
+[settings]
+
+;vim:ft=dosini

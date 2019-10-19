@@ -1,0 +1,72 @@
+#!/bin/bash
+
+#"-next" or "-prev"
+moveDirection=$1
+
+workspaces=($(i3-msg -t get_workspaces | tr , '\n' | grep '"name":' | cut -d : -f 2 | tr \" '\ '))
+currentWorkspace=$(i3-msg -t get_workspaces | tr , '\n' | grep -B3 '"focused":true' | grep '"name":' | cut -d : -f 2 | tr \" '\ ')
+# avoid to much parsing guesswork like this
+
+getPrevWorkspace () {
+    for i in "${workspaces[@]}"
+    do
+        if [[ $i -eq $currentWorkspace ]]
+        then
+            local prevWorkspace=$prev
+        fi
+        local prev=$i
+    done
+
+    echo $prevWorkspace
+}
+
+getNextWorkspace () {
+    local j=0
+    for i in "${workspaces[@]}"
+    do
+        if [[ $i -eq $currentWorkspace ]]
+        then
+            local nextWorkspace=${workspaces[$(($j+1))]}
+        fi
+        local j=$(($j+1))
+    done
+
+    echo $nextWorkspace
+}
+
+prevWorkspace=$(getPrevWorkspace)
+nextWorkspace=$(getNextWorkspace)
+
+if [[ $moveDirection = -next ]]
+then
+    if [[ $nextWorkspace -ne $(($currentWorkspace+1)) ]]
+    then
+        echo Add new workspace 1 forwards by renaming/addition.
+        i3-msg rename workspace $currentWorkspace to $(($currentWorkspace+1))
+        exit
+    elif [[ $nextWorkspace -eq $(($currentWorkspace+1)) ]]
+    then
+        echo Move 1 workspace forwards by swapping workspace contents.
+        i3-msg rename workspace $currentWorkspace to 0
+        i3-msg rename workspace $nextWorkspace to $currentWorkspace
+        i3-msg rename workspace 0 to $nextWorkspace
+        exit
+    fi
+elif [[ $moveDirection = -prev ]]
+then
+    if [[ $prevWorkspace -ne $(($currentWorkspace-1)) ]]
+    then
+        echo Add new workspace 1 backwards by renaming/substraction.
+        i3-msg rename workspace $currentWorkspace to $(($currentWorkspace-1))
+        exit
+    elif [[ $prevWorkspace -eq $(($currentWorkspace-1)) ]]
+    then
+        echo Move 1 workspace backwards by swapping workspace contents.
+        i3-msg rename workspace $currentWorkspace to 0
+        i3-msg rename workspace $prevWorkspace to $currentWorkspace
+        i3-msg rename workspace 0 to $prevWorkspace
+        exit
+    fi
+else
+    echo Invalid argument. Use \'-next\' or \'-prev\'.
+fi

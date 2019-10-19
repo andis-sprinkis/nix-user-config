@@ -1,0 +1,4 @@
+#!/bin/bash
+
+workspaces=($(i3-msg -t get_workspaces | tr , '\n' | grep '"name":' | cut -d : -f 2))
+i3-msg  move container to workspace $(echo ${workspaces[@]} | sed -e "s/\" \"/\n/g" | tr -d \" | setdmenu -b -p "Window to Workspace:")

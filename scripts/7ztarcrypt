@@ -1,0 +1,10 @@
+#!/bin/bash
+
+DATETIME=`date "+%Y-%m-%d--%H-%M-%S"`
+NAME="$1-$DATETIME"
+TAREXT=".tar"
+ZEXT=".7z"
+
+tar cpvf "$NAME$TAREXT" "${@:2}"
+7z a -p -mx=9 -mhe -t7z "$NAME$ZEXT" "$NAME$TAREXT"
+rm "$NAME$TAREXT"
