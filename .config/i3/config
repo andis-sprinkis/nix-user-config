@@ -115,7 +115,7 @@ mode "RESIZE" {
 }
 bindsym Mod4+r mode "RESIZE"
 
-focus_follows_mouse no
+focus_follows_mouse yes
 
 gaps inner 12
 gaps top 4
