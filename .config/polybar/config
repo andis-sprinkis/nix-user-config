@@ -21,7 +21,7 @@ fixed-center = true
 locale = lv_LV.utf-8
 background = ${colors.background}
 foreground = ${colors.foreground}
-border-top-size = 16px
+border-top-size = 8px
 border-top-color = ${colors.background}
 border-bottom-size = 12px
 border-bottom-color = ${colors.background}
@@ -45,7 +45,7 @@ cursor-scroll = ns-resize
 
 wm-restack = i3
 
-font-0 = Iosevka Slab:weight=bold:pixelsize=9;2
+font-0 = Iosevka Slab:weight=bold:pixelsize=10;2
 font-1 = Symbola:pixelsize=13;2
 
 bottom = true
@@ -58,7 +58,7 @@ fixed-center = true
 locale = lv_LV.utf-8
 background = ${colors.background}
 foreground = ${colors.foreground}
-border-top-size = 16px
+border-top-size = 8px
 border-top-color = ${colors.background}
 border-bottom-size = 12px
 border-bottom-color = ${colors.background}
@@ -82,7 +82,7 @@ cursor-scroll = ns-resize
 
 wm-restack = i3
 
-font-0 = Iosevka Slab:weight=bold:pixelsize=9;2
+font-0 = Iosevka Slab:weight=bold:pixelsize=10;2
 font-1 = Symbola:pixelsize=13;2
 
 bottom = true
