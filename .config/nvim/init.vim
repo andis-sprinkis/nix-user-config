@@ -4,6 +4,13 @@ call plug#begin()
 Plug 'itchyny/lightline.vim'
 " VSCode plugins
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" coc extensions
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
 " indent indicator line
 Plug 'Yggdroot/indentLine'
 " general syntax highlighintg
@@ -32,13 +39,6 @@ Plug 'sinetoami/lightline-hunks'
 Plug 'mihaifm/bufstop'
 " fzf
 Plug 'junegunn/fzf.vim'
-" coc extensions
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
 call plug#end()
 
 " leader key
@@ -156,7 +156,8 @@ set tabstop=4 shiftwidth=4 expandtab
 autocmd FileType graphql setlocal shiftwidth=4 softtabstop=4 expandtab
 
 " dispay special chars
-set listchars=eol:⦙,tab:»\ 
+"set listchars=eol:⦙,tab:»\ 
+set listchars=eol:¶,tab:»\ 
 set list
 
 " terminal buffer settings
