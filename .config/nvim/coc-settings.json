@@ -3,5 +3,5 @@
 "coc.preferences.enableFloatHighlight": true,
 "coc.preferences.bracketEnterImprove": true,
 "suggest.triggerAfterInsertEnter": true,
-"snippets.ultisnips.enable": false
+"snippets.ultisnips.enable": true
 }
