@@ -1,7 +1,15 @@
-*.font: mono:pixelsize=13:antialias=false:autohint=true
+Xft.autohint: 0
+Xft.antialias: 1
+Xft.hinting: true
+Xft.hintstyle: hintfull
+Xft.dpi: 96
+Xft.rgba: rgb
+Xft.lcdfilter: lcddefault
+
+*.font: mono:pixelsize=14
 
 st.termname: st-256color
-*.borderpx: 6
+*.borderpx: 4
 *.alpha: 1
 
 *.cursorColor: #458588
