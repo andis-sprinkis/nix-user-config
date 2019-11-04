@@ -1,1 +1,1 @@
-GNU/Linux configuration files for work, life, leisure.
+GNU/Linux configuration files for Work, Life, Leisure.
