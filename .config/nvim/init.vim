@@ -5,18 +5,18 @@ Plug 'itchyny/lightline.vim'
 " VSCode plugins
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " coc extensions
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
 " indent indicator line
 Plug 'Yggdroot/indentLine'
 " general syntax highlighintg
 Plug 'sheerun/vim-polyglot'
-" graphql syntax highlighting
-Plug 'jparise/vim-graphql'
+" " graphql syntax highlighting
+" Plug 'jparise/vim-graphql'
 " commenting
 Plug 'tpope/vim-commentary'
 " folding
@@ -245,3 +245,13 @@ xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>F  <Plug>(coc-format)
 xmap <leader>F  <Plug>(coc-format)
 
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
