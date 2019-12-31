@@ -7,6 +7,9 @@ Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
 
 *.font: mono:pixelsize=14
+URxvt.font: xft:mono:size=11
+URxvt.letterSpace: -1
+URxvt.scrollBar: false
 
 st.termname: st-256color
 *.borderpx: 4
