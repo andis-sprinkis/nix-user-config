@@ -15,7 +15,7 @@ add-zsh-hook chpwd chpwd_recent_dirs
 
 autoload -Uz vcs_info
 precmd_vcs_info() { vcs_info }
-precmd_functions+=( precmd_vcs_info )
+precmd_functions+=( precmd_vcs_info update-term-window-title )
 setopt prompt_subst
 zstyle ':vcs_info:git:*' formats "$bg[white]$fg[black]  %b %{$reset_color%}"
 
@@ -110,7 +110,15 @@ export EDITOR="nvim"
 
 export FZF_DEFAULT_OPTS="--tabstop=4 --cycle --color bw --height 50% --layout=reverse"
 
+# update terminal window title with relevant info
+
+function update-term-window-title {
+    echo -n "\033]0;st - ${USER}@${HOST} - ${PWD}\007"
+}
+update-term-window-title
+
 # -------------------------
+# 
 
 # Load zsh-syntax-highlighting; should be last.
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
