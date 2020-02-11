@@ -39,6 +39,9 @@ Plug 'sinetoami/lightline-hunks'
 Plug 'mihaifm/bufstop'
 " fzf
 Plug 'junegunn/fzf.vim'
+" common *nix actions
+Plug 'tpope/vim-eunuch'
+
 call plug#end()
 
 " leader key
@@ -255,3 +258,7 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
+
+" Filetypes
+au FileType markdown set syntax=off
+au FileType markdown.mdx set syntax=off
