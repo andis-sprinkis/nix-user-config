@@ -1,3 +1,12 @@
+" Bootstrap Plug
+let autoload_plug_path = stdpath('data') . '/site/autoload/plug.vim'
+if !filereadable(autoload_plug_path)
+  silent execute '!curl -fLo ' . autoload_plug_path . '  --create-dirs 
+      \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+unlet autoload_plug_path
+
 " LOAD PLUGINS
 call plug#begin()
 " statusline
@@ -15,8 +24,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Yggdroot/indentLine'
 " general syntax highlighintg
 Plug 'sheerun/vim-polyglot'
-" " graphql syntax highlighting
-" Plug 'jparise/vim-graphql'
 " commenting
 Plug 'tpope/vim-commentary'
 " folding
