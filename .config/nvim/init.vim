@@ -40,6 +40,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 " color scheme
 Plug 'lifepillar/vim-gruvbox8'
+" Plug 'arcticicestudio/nord-vim'
 " git hunks in lightline
 Plug 'sinetoami/lightline-hunks'
 " buffer cycling and list
@@ -48,6 +49,8 @@ Plug 'mihaifm/bufstop'
 Plug 'junegunn/fzf.vim'
 " common *nix actions
 Plug 'tpope/vim-eunuch'
+" indicate cursor jump
+Plug 'danilamihailov/beacon.nvim'
 
 call plug#end()
 
@@ -106,10 +109,11 @@ let g:lightline = {
       \              [ 'filetype' ] ]
       \ },
       \ 'component_function': {
-      \  'lightline_hunks': 'lightline#hunks#composer'
+      \  'lightline_hunks': 'lightline#hunks#composer',
       \ }
       \ }
 let g:lightline.colorscheme = 'seoul256'
+" let g:lightline.colorscheme = 'nord'
 
 " jump between git hunks
 nmap <Leader>gn <Plug>GitGutterNextHunk
@@ -141,6 +145,8 @@ set nohlsearch
 set termguicolors
 set background=dark
 colorscheme gruvbox8
+" colorscheme orbital
+" colorscheme nord
 syntax on
 let g:gitgutter_override_sign_column_highlight = 1
 
@@ -269,3 +275,14 @@ endfunction
 " Filetypes
 au FileType markdown set syntax=off
 au FileType markdown.mdx set syntax=off
+
+" beacon
+let g:beacon_shrink = 0
+let g:beacon_fade = 0
+let g:beacon_size = 80
+let g:beacon_timeout = 200
+let g:beacon_minimal_jump = 10
+nmap n n:Beacon<cr>
+nmap N N:Beacon<cr>
+nmap * *:Beacon<cr>
+nmap # #:Beacon<cr>

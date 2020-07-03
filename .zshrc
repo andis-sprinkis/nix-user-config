@@ -94,7 +94,7 @@ source $HOME/ssh-cmd
 source $HOME/smb-cmd
 
 alias l='lf'
-alias ls='ls -hNF --color=auto --group-directories-first'
+alias ls='ls -haNF --color=auto --group-directories-first'
 alias mkdir='mkdir -p'
 alias v='nvim'
 alias vim='nvim'
