@@ -99,7 +99,7 @@ alias mkdir='mkdir -p'
 alias v='nvim'
 alias vim='nvim'
 alias rss='newsboat'
-alias dmenu='setdmenu'
+alias less="less -R"
 
 alias dotgit='/usr/bin/git --git-dir=$HOME/.dotfiles-git/ --work-tree=$HOME'
 

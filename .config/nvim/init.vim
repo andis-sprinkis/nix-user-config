@@ -14,12 +14,14 @@ Plug 'itchyny/lightline.vim'
 " VSCode plugins
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " coc extensions
-" Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+Plug 'coc-extensions/coc-svelte', {'do': 'yarn install --frozen-lockfile'}
 " indent indicator line
 Plug 'Yggdroot/indentLine'
 " general syntax highlighintg
@@ -45,12 +47,12 @@ Plug 'lifepillar/vim-gruvbox8'
 Plug 'sinetoami/lightline-hunks'
 " buffer cycling and list
 Plug 'mihaifm/bufstop'
-" fzf
+" fzflukelbd/vim-scrollwrapped
 Plug 'junegunn/fzf.vim'
 " common *nix actions
 Plug 'tpope/vim-eunuch'
 " indicate cursor jump
-Plug 'danilamihailov/beacon.nvim'
+" Plug 'danilamihailov/beacon.nvim'
 
 call plug#end()
 
@@ -196,7 +198,7 @@ set updatetime=100
 set shortmess+=c
 
 " merge clipboard registers
-set clipboard=unnamedplus
+" set clipboard=unnamedplus
 
 " sudo
 let g:suda_smart_edit = 1
@@ -277,12 +279,12 @@ au FileType markdown set syntax=off
 au FileType markdown.mdx set syntax=off
 
 " beacon
-let g:beacon_shrink = 0
-let g:beacon_fade = 0
-let g:beacon_size = 80
-let g:beacon_timeout = 200
-let g:beacon_minimal_jump = 10
-nmap n n:Beacon<cr>
-nmap N N:Beacon<cr>
-nmap * *:Beacon<cr>
-nmap # #:Beacon<cr>
+" let g:beacon_shrink = 0
+" let g:beacon_fade = 0
+" let g:beacon_size = 1
+" let g:beacon_timeout = 200
+" let g:beacon_minimal_jump = 10
+" nmap n n:Beacon<cr>
+" nmap N N:Beacon<cr>
+" nmap * *:Beacon<cr>
+" nmap # #:Beacon<cr>

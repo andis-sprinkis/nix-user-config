@@ -161,8 +161,8 @@ bindsym Print exec --no-startup-id scrot $HOME/scrn/'Screenshot-%Y-%m-%d_%H-%M-%
 bindsym XF86Launch1 exec --no-startup-id xset dpms force off
 
 # class                 border     bg         text       indicator  child_brd
-client.focused          #689d6a    #665c54    #282828    #689d6a    #689d6a
-client.focused_inactive #3c3836    #3c3836    #ebdbb2    #3c3836    #3c3836
+client.focused          #689d6a    #3c3736    #ebdbb2    #689d6a    #689d6a
+client.focused_inactive #3c3836    #3c3836    #665c54    #3c3836    #3c3836
 client.unfocused        #3c3836    #3c3836    #665c54    #3c3836    #3c3836
 client.urgent           #fb4934    #fabd2f    #282828    #fb4934    #fb4934
 

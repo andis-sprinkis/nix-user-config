@@ -1,8 +1,10 @@
 {
-"coc.preferences.formatOnType": true,
-"coc.preferences.enableFloatHighlight": true,
-"coc.preferences.bracketEnterImprove": true,
-"suggest.triggerAfterInsertEnter": true,
-"suggest.acceptSuggestionOnCommitCharacter": true,
-"snippets.ultisnips.enable": true
+    "coc.preferences.formatOnType": true,
+    "coc.preferences.enableFloatHighlight": true,
+    "coc.preferences.bracketEnterImprove": true,
+    "suggest.triggerAfterInsertEnter": true,
+    "suggest.acceptSuggestionOnCommitCharacter": true,
+    "snippets.ultisnips.enable": true,
+    "prettier.tabWidth": 4,
+    "prettier.printWidth": 1000000
 }

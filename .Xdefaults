@@ -12,7 +12,7 @@ URxvt.letterSpace: -1
 URxvt.scrollBar: false
 
 st.termname: st-256color
-st.chscale: 1.14
+st.chscale: 1.2
 *.borderpx: 4
 *.alpha: 1
 

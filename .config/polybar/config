@@ -44,8 +44,7 @@ cursor-scroll = ns-resize
 
 wm-restack = i3
 
-font-0 = Iosevka:weight=bold:pixelsize=11;3
-font-1 = Symbola:pixelsize=13;2
+font-0 = mono:weight=bold:pixelsize=11;3
 
 bottom = false
 
@@ -80,8 +79,7 @@ cursor-scroll = ns-resize
 
 wm-restack = i3
 
-font-0 = Iosevka:weight=bold:pixelsize=11;3
-font-1 = Symbola:pixelsize=13;2
+font-0 = mono:weight=bold:pixelsize=11;3
 
 bottom = false
 
