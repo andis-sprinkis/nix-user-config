@@ -3,8 +3,10 @@
     "coc.preferences.enableFloatHighlight": true,
     "coc.preferences.bracketEnterImprove": true,
     "suggest.triggerAfterInsertEnter": true,
+    "suggest.autoTrigger": "always",
     "suggest.acceptSuggestionOnCommitCharacter": true,
-    "snippets.ultisnips.enable": true,
-    "prettier.tabWidth": 4,
-    "prettier.printWidth": 1000000
+    "suggest.numberSelect": true,
+    "suggest.enablePreview": true,
+    "snippets.ultisnips.enable": false,
+    "html.autoClosingTags": true
 }

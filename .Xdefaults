@@ -12,8 +12,8 @@ URxvt.letterSpace: -1
 URxvt.scrollBar: false
 
 st.termname: st-256color
-st.chscale: 1.2
-*.borderpx: 4
+st.chscale: 1.25
+*.borderpx: 6
 *.alpha: 1
 
 *.cursorColor: #458588
