@@ -1,8 +1,0 @@
-cmd open ${{
-    case $(file --mime-type $f -b) in
-        text/*) nvim $fx;;
-        image/*) sxiv $fx;;
-        *) for f in $fx; do mimeo $f > /dev/null 2> /dev/null & done;;
-    esac
-}}
-map oi %sxiv-dir-open
