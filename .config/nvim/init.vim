@@ -53,6 +53,10 @@ Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-eunuch'
 " indicate cursor jump
 " Plug 'danilamihailov/beacon.nvim'
+" split between single and multiline forms
+Plug 'AndrewRadev/splitjoin.vim'
+" read editorconfig
+Plug 'editorconfig/editorconfig-vim'
 
 call plug#end()
 
@@ -285,6 +289,9 @@ endfunction
 " Filetypes
 au FileType markdown set syntax=off
 au FileType markdown.mdx set syntax=off
+
+" tsconfig.json is actually jsonc, help TypeScript set the correct filetype
+autocmd BufRead,BufNewFile tsconfig.json set filetype=jsonc
 
 " beacon
 " let g:beacon_shrink = 0
