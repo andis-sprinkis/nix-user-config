@@ -117,11 +117,11 @@ bindsym Mod4+r mode "RESIZE"
 
 focus_follows_mouse yes
 
-gaps inner 2
-gaps top -2
-gaps left -2
-gaps right -2
-gaps bottom -2
+gaps inner 4
+gaps top -4
+gaps left -3
+gaps right -3
+gaps bottom -4
 
 default_border pixel 1
 smart_borders on
