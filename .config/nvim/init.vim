@@ -57,6 +57,8 @@ Plug 'tpope/vim-eunuch'
 Plug 'AndrewRadev/splitjoin.vim'
 " read editorconfig
 Plug 'editorconfig/editorconfig-vim'
+" view register content
+" Plug 'junegunn/vim-peekaboo'
 
 call plug#end()
 
@@ -201,8 +203,35 @@ set updatetime=100
 " No 'Press Enter to continue'
 set shortmess+=c
 
-" merge clipboard registers
-" set clipboard=unnamedplus
+" clipboard system register
+set clipboard=unnamedplus
+
+" centered floating window 
+function! CreateCenteredFloatingWindow()
+    let height = float2nr(&lines * 0.85)
+    let top = ((&lines - height) / 2) - 1
+    let width = float2nr(&columns - (&columns * 2 / 12))
+    let left = float2nr((&columns - width) / 2)
+    let opts = {'relative': 'editor', 'row': top, 'col': left, 'width': width, 'height': height, 'style': 'minimal'}
+
+    let top = "╭" . repeat("─", width - 2) . "╮"
+    let mid = "│" . repeat(" ", width - 2) . "│"
+    let bot = "╰" . repeat("─", width - 2) . "╯"
+    let lines = [top] + repeat([mid], height - 2) + [bot]
+    let s:buf = nvim_create_buf(v:false, v:true)
+    call nvim_buf_set_lines(s:buf, 0, -1, v:true, lines)
+    call nvim_open_win(s:buf, v:true, opts)
+    set winhl=Normal:Floating
+    let opts.row += 1
+    let opts.height -= 2
+    let opts.col += 2
+    let opts.width -= 4
+    call nvim_open_win(nvim_create_buf(v:false, v:true), v:true, opts)
+    au BufWipeout <buffer> exe 'bw '.s:buf
+endfunction
+
+" view register content in floating window
+let g:peekaboo_window="call CreateCenteredFloatingWindow()"
 
 " sudo
 let g:suda_smart_edit = 1
@@ -218,26 +247,8 @@ let g:indentLine_char = '▏'
 nnoremap <silent><tab> :GFiles --exclude-standard --others --cached<cr>
 nnoremap <silent><s-tab> :Files<cr>
 nnoremap <silent><nowait><leader>e :Rg<cr>
-let g:fzf_layout = { 'window': 'call FloatingWindoww()' }
+let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
 
-function! FloatingWindoww()
-  let buf = nvim_create_buf(v:false, v:true)
-  call setbufvar(buf, '&signcolumn', 'no')
-
-  let height = &lines - 6
-  let width = float2nr(&columns - (&columns * 2 / 9))
-  let col = float2nr((&columns - width) / 2)
-
-  let opts = {
-        \ 'relative': 'editor',
-        \ 'row': 2,
-        \ 'col': col,
-        \ 'width': width,
-        \ 'height': height
-        \ }
-
-  call nvim_open_win(buf, v:true, opts)
-endfunction
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
