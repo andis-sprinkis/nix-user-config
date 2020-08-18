@@ -100,7 +100,7 @@ alias v='nvim'
 alias vim='nvim'
 alias rss='newsboat'
 alias less="less -R"
-
+alias diskspace="df -h | grep Filesystem; df -h | grep /dev/sd; df -h | grep @"
 alias dotgit='/usr/bin/git --git-dir=$HOME/.dotfiles-git/ --work-tree=$HOME'
 
 export USERSCRIPTS="$HOME/scripts"

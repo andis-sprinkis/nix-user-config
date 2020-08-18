@@ -1,4 +1,0 @@
-#!/bin/sh
-df -h | grep Filesystem
-df -h | grep /dev/sd
-df -h | grep @
