@@ -300,6 +300,7 @@ endfunction
 " Filetypes
 au FileType markdown set syntax=off
 au FileType markdown.mdx set syntax=off
+let g:polyglot_disabled = ['markdown']
 
 " tsconfig.json is actually jsonc, help TypeScript set the correct filetype
 autocmd BufRead,BufNewFile tsconfig.json set filetype=jsonc
@@ -314,3 +315,9 @@ autocmd BufRead,BufNewFile tsconfig.json set filetype=jsonc
 " nmap N N:Beacon<cr>
 " nmap * *:Beacon<cr>
 " nmap # #:Beacon<cr>
+
+" splitjoin mappings
+let g:splitjoin_split_mapping = ''
+let g:splitjoin_join_mapping = ''
+nmap <Leader>k :SplitjoinJoin<cr>
+nmap <Leader>j :SplitjoinSplit<cr>
