@@ -63,7 +63,7 @@ Plug 'editorconfig/editorconfig-vim'
 call plug#end()
 
 " leader key
-let mapleader=" "
+let mapleader="\\"
 
 " bufstop
 let g:BufstopSpeedKeys = ["<F1>", "<F2>", "<F3>", "<F4>", "<F5>", "<F6>"]
@@ -91,8 +91,8 @@ set winblend=25
 " resize splits
 nnoremap <silent><C-A-j> :resize +2<cr>
 nnoremap <silent><C-A-k> :resize -2<cr>
-nnoremap <silent><C-A-l> :vertical resize +1<cr>
-nnoremap <silent><C-A-h> :vertical resize -1<cr>
+nnoremap <silent><C-A-l> :vertical resize +4<cr>
+nnoremap <silent><C-A-h> :vertical resize -4<cr>
 
 " quicker split switching
 nnoremap <C-j> <C-W><C-J>
