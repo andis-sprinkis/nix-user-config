@@ -95,6 +95,7 @@ source $HOME/smb-cmd
 
 alias l='lf'
 alias ls='ls -haNF --color=auto --group-directories-first'
+alias mv='mv -v'
 alias mkdir='mkdir -p'
 alias v='nvim'
 alias vim='nvim'
