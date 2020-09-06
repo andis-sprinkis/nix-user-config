@@ -11,6 +11,8 @@ unlet autoload_plug_path
 call plug#begin()
 " statusline
 Plug 'itchyny/lightline.vim'
+" lightline-theme
+Plug 'andis-spr/lightline-gruvbox-dark.vim'
 " VSCode plugins
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " snippets
@@ -59,11 +61,19 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'editorconfig/editorconfig-vim'
 " view register content
 " Plug 'junegunn/vim-peekaboo'
+" surround chars with chars
+Plug 'tpope/vim-surround'
 
 call plug#end()
 
 " leader key
-let mapleader="\\"
+let mapleader="\<space>"
+
+" move over linebreak
+nnoremap h <bs>
+nnoremap l <space>
+vnoremap h <bs>
+vnoremap l <space>
 
 " bufstop
 let g:BufstopSpeedKeys = ["<F1>", "<F2>", "<F3>", "<F4>", "<F5>", "<F6>"]
@@ -86,7 +96,7 @@ set splitright
 autocmd VimResized * wincmd =
 
 " floating window transparency
-set winblend=25
+set winblend=10
 
 " resize splits
 nnoremap <silent><C-A-j> :resize +2<cr>
@@ -112,15 +122,24 @@ let g:lightline = {
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             ['lightline_hunks', 'readonly', 'relativepath', 'modified' ] ],
-      \ 'right': [ [ 'lineinfo' ],
+      \   'right': [ [ 'lineinfo' ],
       \              [ 'percent' ],
       \              [ 'filetype' ] ]
       \ },
+      \ 'inactive': {
+      \   'left': [
+      \             ['lightline_hunks', 'readonly', 'relativepath', 'modified' ] ],
+      \   'right': [ [ 'lineinfo' ],
+      \            [ 'percent' ] ,
+      \            [ 'filetype' ] ]
+      \  },
       \ 'component_function': {
       \  'lightline_hunks': 'lightline#hunks#composer',
       \ }
-      \ }
-let g:lightline.colorscheme = 'seoul256'
+  \ }
+
+let g:lightline.colorscheme = 'gruvboxdark'
+
 " let g:lightline.colorscheme = 'nord'
 
 " jump between git hunks
@@ -244,11 +263,19 @@ let g:indentLine_color_gui = '#3c3836'
 let g:indentLine_char = '▏'
 
 " fzf 
-nnoremap <silent><tab> :GFiles --exclude-standard --others --cached<cr>
-nnoremap <silent><s-tab> :Files<cr>
-nnoremap <silent><nowait><leader>e :Rg<cr>
-let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
+function! ShowGitFiles()
+    let gitDirExists = system("git rev-parse --git-dir") == ".git\n"
+    if gitDirExists == 1
+        execute "GFiles --exclude-standard --others --cached"
+    elseif gitDirExists == 0
+        execute "Files"
+    endif
+endfunction
 
+nnoremap <silent><tab> :call ShowGitFiles()<cr>
+nnoremap <silent><s-tab> :Files<cr>
+
+let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
