@@ -10,6 +10,8 @@ Xft.lcdfilter: lcddefault
 URxvt.font: xft:mono:size=11
 URxvt.letterSpace: -1
 URxvt.scrollBar: false
+xterm*faceName: mono
+xterm*faceSize: 11.5
 
 st.termname: st-256color
 st.chscale: 1.22
