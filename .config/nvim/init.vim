@@ -274,6 +274,7 @@ endfunction
 
 nnoremap <silent><tab> :call ShowGitFiles()<cr>
 nnoremap <silent><s-tab> :Files<cr>
+nnoremap <silent><leader>e :Rg<cr>
 
 let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
 
