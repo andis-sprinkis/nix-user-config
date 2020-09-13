@@ -90,8 +90,7 @@ bindkey '^e' edit-command-line
 
 setopt  autocd
 
-source $HOME/ssh-cmd
-source $HOME/smb-cmd
+source $HOME/ssh-bookmark/ssh-bookmark
 
 alias l='lf'
 alias ls='ls -haNF --color=auto --group-directories-first'
@@ -103,6 +102,7 @@ alias rss='newsboat'
 alias less="less -R"
 alias diskspace="df -h | grep Filesystem; df -h | grep /dev/sd; df -h | grep @"
 alias dotgit='/usr/bin/git --git-dir=$HOME/.dotfiles-git/ --work-tree=$HOME'
+alias dmenu='setdmenu -l 8'
 
 export USERSCRIPTS="$HOME/scripts"
 export I3WMSCRIPTS="$HOME/.config/i3/scripts"
