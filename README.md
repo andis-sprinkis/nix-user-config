@@ -1,6 +1,1 @@
-GNU/Linux configuration files for
-- Work
-- Life
-- Leisure
-
-Shout outs to https://github.com/lukesmithxyz for helping to make this GNU/Linux thing less of a hassle.
+Personal user program configuration files for a Linux GUI session.
