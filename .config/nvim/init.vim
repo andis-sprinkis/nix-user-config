@@ -7,6 +7,14 @@ if !filereadable(autoload_plug_path)
 endif
 unlet autoload_plug_path
 
+if !exists("g:os")
+    if has("win64") || has("win32") || has("win16")
+        let g:os = "Windows"
+    else
+        let g:os = substitute(system('uname'), '\n', '', '')
+    endif
+endif
+
 " LOAD PLUGINS
 call plug#begin()
 " statusline
@@ -50,6 +58,9 @@ Plug 'sinetoami/lightline-hunks'
 " buffer cycling and list
 Plug 'mihaifm/bufstop'
 " fzflukelbd/vim-scrollwrapped
+if g:os == "Windows"
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+endif
 Plug 'junegunn/fzf.vim'
 " common *nix actions
 Plug 'tpope/vim-eunuch'
