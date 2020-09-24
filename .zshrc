@@ -114,7 +114,7 @@ export FZF_DEFAULT_OPTS="--tabstop=4 --cycle --color bw --height 50% --layout=re
 # update terminal window title with relevant info
 
 function update-term-window-title {
-    echo -n "\033]0;st - ${USER}@${HOST} - ${PWD}\007"
+    echo -n "\033]0;${TERM} - ${USER}@${HOST} - ${PWD}\007"
 }
 update-term-window-title
 
