@@ -138,6 +138,8 @@ bindsym XF86AudioRaiseVolume exec amixer -q set Master 2dB+ unmute
 bindsym XF86AudioLowerVolume exec amixer -q set Master 2dB- unmute
 bindsym XF86AudioMute exec amixer -q set Master toggle
 
+bindsym Mod4+Mod1+Shift+h workspace prev_on_output
+bindsym Mod4+Mod1+Shift+l workspace next_on_output
 bindsym Mod4+Mod1+h workspace prev
 bindsym Mod4+Mod1+l workspace next
 
