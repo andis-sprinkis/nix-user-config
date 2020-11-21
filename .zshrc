@@ -152,8 +152,8 @@ fi
 NVMDIR="$HOME/.nvm"
 if test -f "$NVMDIR"
 then
-  [ -s "$NVMDIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-  [ -s "$NVMDIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+  [ -s "$NVMDIR/nvm.sh" ] && \. "$NVMDIR/nvm.sh"  # This loads nvm
+  [ -s "$NVMDIR/bash_completion" ] && \. "$NVMDIR/bash_completion"  # This loads nvm bash_completion
   export NVMDIR=$NVMDIR
 fi
 
