@@ -157,7 +157,7 @@ then
   export NVMDIR=$NVMDIR
 fi
 
-# updating
+# updating itself
 export update_zshrc() {
   wget -P $HOME/ https://raw.githubusercontent.com/andis-spr/linux-user-config/master/.zshrc
   if [ -f $HOME/.zshrc.1 ]
