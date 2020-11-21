@@ -24,7 +24,7 @@ PS1="%{$bg[cyan] $fg[black]%}%n@%M %{$reset_color%}\$vcs_info_msg_0_%{$bg[white]
 HISTSIZE=10000
 SAVEHIST=10000
 
-if ! test -f $HOME/.cache/zsh
+if [ ! -f $HOME/.cache/zsh ]
 then
   mkdir -p $HOME/.cache/zsh
   touch $HOME/.cache/history
@@ -76,7 +76,7 @@ autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
 # lf cd
-if test -f /usr/share/lf
+if [ -d /usr/share/lf ]
 then
   source /usr/share/lf/lfcd.sh
   bindkey -s '^o' 'lfcd\n'
@@ -87,7 +87,7 @@ setopt autocd
 
 # ssh bookmarks
 SSHBOOKMARKS=$HOME/ssh-bookmark/ssh-bookmark
-if test -f $SSHBOOKMARKS
+if [ -f $SSHBOOKMARKS ]
 then
   source $SSHBOOKMARKS
 fi
@@ -106,7 +106,7 @@ alias dotgit='git --git-dir=$HOME/.dotfiles-git/ --work-tree=$HOME'
 
 # general user scripts
 USERSCRIPTS="$HOME/scripts"
-if test -f "$USERSCRIPTS"
+if [ -d "$USERSCRIPTS" ]
 then
   export USERSCRIPTS="$HOME/scripts"
   export PATH=$PATH:$USERSCRIPTS
@@ -114,7 +114,7 @@ fi
 
 # i3wm specific user scripts
 I3WMSCRIPTS="$HOME/.config/i3/scripts"
-if test -f "$I3WMSCRIPTS"
+if [ -d "$I3WMSCRIPTS" ]
 then
   export I3WMSCRIPTS=$I3WMSCRIPTS
   export PATH=$PATH:$I3WMSCRIPTS
@@ -150,7 +150,7 @@ fi
 
 # nvm
 NVMDIR="$HOME/.nvm"
-if test -f "$NVMDIR"
+if [ -d "$NVMDIR" ]
 then
   [ -s "$NVMDIR/nvm.sh" ] && \. "$NVMDIR/nvm.sh"  # This loads nvm
   [ -s "$NVMDIR/bash_completion" ] && \. "$NVMDIR/bash_completion"  # This loads nvm bash_completion
