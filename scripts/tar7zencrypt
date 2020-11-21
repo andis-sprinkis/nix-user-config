@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-timestamp=$(date +%s)=
+timestamp=$(date +%s)
 filename=$(basename $@)
 temp_filename=$filename$timestamp
 
