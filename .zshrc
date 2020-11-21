@@ -148,5 +148,13 @@ then
   source /usr/share/fzf/completion.zsh
 fi
 
+# nvm
+export NVMDIR="$HOME/.nvm"
+if test -f "$NVMDIR"
+then
+  [ -s "$NVMDIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVMDIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
+
 # load zsh-syntax-highlighting; should be last
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
