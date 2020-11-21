@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+timestamp=$(date +%s)=
+filename=$(basename $@)
+temp_filename=$filename$timestamp
+
+tar -czvf /tmp/$temp_filename.tar.gz $@
+
+echo -n "Enter a password: "
+read -s password
+
+7z a \
+  -t7z -m0=lzma2 -mx=9 -mfb=64 \
+  -md=32m -ms=on -mhe=on -p$password \
+   ./$filename.7z /tmp/$temp_filename.tar.gz
+
+rm /tmp/$temp_filename.tar.gz
