@@ -159,7 +159,7 @@ fi
 
 # updating itself
 export update_zshrc() {
-  wget -P $HOME/ https://raw.githubusercontent.com/andis-spr/linux-user-config/master/.zshrc
+  wget --no-cache -P $HOME/ https://raw.githubusercontent.com/andis-spr/linux-user-config/master/.zshrc
   if [ -f $HOME/.zshrc.1 ]
   then
     rm .zshrc
