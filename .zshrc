@@ -51,7 +51,7 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
 
 # hange cursor shape for different vi modes
-function zle-keymap-select {
+zle-keymap-select() {
   if [[ ${KEYMAP} == vicmd ]] ||
      [[ $1 = 'block' ]]; then
     echo -ne '\e[1 q'
@@ -156,6 +156,16 @@ then
   [ -s "$NVMDIR/bash_completion" ] && \. "$NVMDIR/bash_completion"  # This loads nvm bash_completion
   export NVMDIR=$NVMDIR
 fi
+
+# updating
+export update_zshrc() {
+  wget -P $HOME/ https://raw.githubusercontent.com/andis-spr/linux-user-config/master/.zshrc
+  if [ -f $HOME/.zshrc.1 ]
+  then
+    rm .zshrc
+    mv .zshrc.1 .zshrc
+  fi
+}
 
 # load zsh-syntax-highlighting; should be last
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
