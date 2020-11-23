@@ -144,7 +144,7 @@ update-term-window-title
 # fzf options and completion
 if command="$(type -p "fzf")"
 then
-  export FZF_DEFAULT_OPTS="--tabstop=4 --cycle --color bw --height 50% --layout=reverse"
+  export FZF_DEFAULT_OPTS="--tabstop=4 --cycle --height 50% --layout=reverse"
   if [ -d /usr/share/fzf ]
   then
     source /usr/share/fzf/completion.zsh
