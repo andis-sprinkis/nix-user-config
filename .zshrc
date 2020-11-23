@@ -145,7 +145,13 @@ update-term-window-title
 if command="$(type -p "fzf")"
 then
   export FZF_DEFAULT_OPTS="--tabstop=4 --cycle --color bw --height 50% --layout=reverse"
-  source /usr/share/fzf/completion.zsh
+  if [ -d /usr/share/fzf ]
+  then
+    source /usr/share/fzf/completion.zsh
+  elif [ -d $HOME/.fzf ]
+  then
+    source $HOME/.fzf/.fzf.zsh
+  fi
 fi
 
 # nvm
