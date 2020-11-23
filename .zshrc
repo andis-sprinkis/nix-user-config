@@ -155,12 +155,20 @@ then
 fi
 
 # nvm
-NVMDIR="$HOME/.nvm"
-if [ -d "$NVMDIR" ]
+
+if command="$(type -p "brew")"
 then
-  [ -s "$NVMDIR/nvm.sh" ] && \. "$NVMDIR/nvm.sh"  # This loads nvm
-  [ -s "$NVMDIR/bash_completion" ] && \. "$NVMDIR/bash_completion"  # This loads nvm bash_completion
-  export NVMDIR=$NVMDIR
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
+  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
+else
+  NVM_DIR="$HOME/.nvm"
+  if [ -d "$NVM_DIR" ]
+  then
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+    export NVM_DIR=$NVM_DIR
+  fi
 fi
 
 # updating itself
