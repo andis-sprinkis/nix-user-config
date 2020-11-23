@@ -93,7 +93,7 @@ then
 fi
 
 # alias
-alias ls='ls -haNF --color=auto --group-directories-first'
+alias ls='ls -haF'
 alias mv='mv -v'
 alias mkdir='mkdir -p'
 alias v='nvim'
@@ -150,7 +150,7 @@ then
     source /usr/share/fzf/completion.zsh
   elif [ -d $HOME/.fzf ]
   then
-    source $HOME/.fzf/.fzf.zsh
+    source $HOME/.fzf/shell/completion.zsh
   fi
 fi
 
