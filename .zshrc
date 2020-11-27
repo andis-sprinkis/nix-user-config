@@ -76,11 +76,19 @@ autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
 # lf cd
-if [ -d /usr/share/lf ]
-then
-  source /usr/share/lf/lfcd.sh
-  bindkey -s '^o' 'lfcd\n'
-fi
+lfcd () {
+    tmp="$(mktemp)"
+    lf -last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        rm -f "$tmp"
+        if [ -d "$dir" ]; then
+            if [ "$dir" != "$(pwd)" ]; then
+                cd "$dir"
+            fi
+        fi
+    fi
+}
 
 # auto cd
 setopt autocd
@@ -156,7 +164,7 @@ fi
 
 # nvm
 
-if command="$(type -p "brew")"
+if [[ "$OSTYPE" == "darwin"* ]]; then
 then
   export NVM_DIR="$HOME/.nvm"
   [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
