@@ -1,5 +1,17 @@
 # Based on "Luke's config for the Zoomer Shell"
 
+# use the GNU utils on macOS
+if [[ "$OSTYPE" == "darwin"* ]]
+then
+  if [ ! -d /usr/local/opt/coreutils/libexec/gnubin ]
+  then
+    echo "GNU utils for macOS are not found"
+  else
+    export PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
+    export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
+  fi
+fi
+
 # Enable colors and change prompt:
 autoload -U colors && colors
 
@@ -115,7 +127,7 @@ then
 fi
 
 # alias
-alias ls='ls -haF'
+alias ls='ls -hAFX --color --group-directories-first' # TODO: detect and set args according to GNU or BSD util availability
 alias mv='mv -v'
 alias mkdir='mkdir -p'
 alias v='nvim'
@@ -180,13 +192,20 @@ fi
 
 if [[ "$OSTYPE" == "darwin"* ]]
 then
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
-  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
-else
-  NVM_DIR="$HOME/.nvm"
-  if [ -d "$NVM_DIR" ]
+  if [ ! -d /usr/local/opt/nvm ]
   then
+    # echo "nvm for macOS is not found"
+  else
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
+    [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
+  fi
+else
+  NVM_DIR=$HOME/.nvm
+  if [ ! -d $NVM_DIR ]
+  then
+    # echo "nvm is not found"
+  else
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
     export NVM_DIR=$NVM_DIR
