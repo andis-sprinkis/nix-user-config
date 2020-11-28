@@ -14,7 +14,7 @@ primary = #689d6a
 alert = #fabd2f
 
 [bar/right]
-monitor = ${env:MONITOR:VGA-2}
+monitor = ${env:MONITOR:Virtual2}
 width = 100%
 height = 24
 fixed-center = true
@@ -49,7 +49,7 @@ font-0 = mono:weight=bold:pixelsize=11;3
 bottom = false
 
 [bar/left]
-monitor = ${env:MONITOR:VGA-1}
+monitor = ${env:MONITOR:Virtual1}
 width = 100%
 height = 24
 fixed-center = true
