@@ -16,6 +16,8 @@ precmd_functions+=( precmd_vcs_info update-term-window-title )
 setopt prompt_subst
 zstyle ':vcs_info:git:*' formats "$bg[white]$fg[black]  %b %{$reset_color%}"
 
+# prompt colors
+#
 USERHOSTCOLOR='cyan'
 
 if [[ $(whoami) == 'root' ]]
@@ -23,8 +25,13 @@ then
   USERHOSTCOLOR='magenta'
 fi
 
+SSHSTATUS=''
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+  SSHSTATUS="%{$bg[blue]$fg[black]%} SSH "
+fi
+
 # prompt
-PS1="%{$bg[$USERHOSTCOLOR] $fg[black]%}%n@%M %{$reset_color%}\$vcs_info_msg_0_%{$bg[white]$fg[black]%} %/ 
+PS1="$SSHSTATUS%{$bg[$USERHOSTCOLOR] $fg[black]%}%n@%M %{$reset_color%}\$vcs_info_msg_0_%{$bg[white]$fg[black]%} %/ 
 %{$reset_color$fg[$USERHOSTCOLOR]%}$%{$reset_color%} "
 
 # History in cache directory:
