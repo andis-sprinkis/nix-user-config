@@ -31,7 +31,7 @@ if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
 fi
 
 # prompt
-PS1="$SSHSTATUS%{$bg[$USERHOSTCOLOR] $fg[black]%}%n@%M %{$reset_color%}\$vcs_info_msg_0_%{$bg[white]$fg[black]%} %/ 
+PS1="%{$bg[$USERHOSTCOLOR] $fg[black]%}%n@%M $SSHSTATUS%{$reset_color%}\$vcs_info_msg_0_%{$bg[white]$fg[black]%} %/ 
 %{$reset_color$fg[$USERHOSTCOLOR]%}$%{$reset_color%} "
 
 # History in cache directory:
