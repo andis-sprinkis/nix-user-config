@@ -6,7 +6,7 @@ Xft.dpi: 96
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
 
-*.font: mono:style=medium:pixelsize=14
+*.font: mono:style=medium:pixelsize=15.95
 URxvt.font: xft:mono:size=11
 URxvt.letterSpace: -1
 URxvt.scrollBar: false
@@ -14,7 +14,8 @@ xterm*faceName: mono
 xterm*faceSize: 11.5
 
 st.termname: st-256color
-st.chscale: 1.22
+st.chscale: 1.2
+st.cwscale: 0.89
 *.borderpx: 4
 *.alpha: 1
 
