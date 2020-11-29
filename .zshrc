@@ -5,11 +5,18 @@ if [[ "$OSTYPE" == "darwin"* ]]
 then
   if [ ! -d /usr/local/opt/coreutils/libexec/gnubin ]
   then
-    echo "GNU utils for macOS are not found"
+    echo "GNU coreutils for macOS are not found (sourcing coreutils)"
   else
     export PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
   fi
+fi
+
+if [[ "$OSTYPE" == "darwin"* ]]
+then
+  install_coreutils_macos() {
+    brew install coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep
+  }
 fi
 
 # Enable colors and change prompt:
@@ -127,7 +134,21 @@ then
 fi
 
 # alias
-alias ls='ls -hAFX --color --group-directories-first' # TODO: detect and set args according to GNU or BSD util availability
+
+COREUTILS_LS='ls -hAFX --color --group-directories-first'
+
+if [[ "$OSTYPE" == "darwin"* ]]
+then
+  if [ ! -d /usr/local/opt/coreutils/libexec/gnubin ]
+  then
+    echo "GNU utils for macOS are not found (ls alias)"
+  else
+    alias ls=$COREUTILS_LS
+  fi
+else
+  alias ls=$COREUTILS_LS
+fi
+
 alias mv='mv -v'
 alias mkdir='mkdir -p'
 alias v='nvim'
