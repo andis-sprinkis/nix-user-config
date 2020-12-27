@@ -245,4 +245,5 @@ export update_zshrc() {
 }
 
 # load zsh-syntax-highlighting; should be last
+# TODO: check for macos/brew path
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null

@@ -166,6 +166,54 @@ bindsym XF86Launch1 exec --no-startup-id xset dpms force off
 client.focused          #689d6a    #3c3736    #ebdbb2    #689d6a    #689d6a
 client.focused_inactive #3c3836    #3c3836    #665c54    #3c3836    #3c3836
 client.unfocused        #3c3836    #3c3836    #665c54    #3c3836    #3c3836
-client.urgent           #fb4934    #fabd2f    #282828    #fb4934    #fb4934
+client.urgent           #fb4934    #fabd2f    #1d2021    #fb4934    #fb4934
 
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+# exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+bar {
+    output            Virtual1
+    status_command    ~/.config/i3/scripts/i3status-window-title
+    position          top
+    mode              dock
+    workspace_buttons yes
+    tray_output       none
+    workspace_min_width 48
+    separator_symbol " "
+    font pango:monospace Bold 12
+
+    colors {
+        background #1d2021
+        statusline #665c54
+        separator  #665c54
+
+        focused_workspace  #689d6a #689d6a #1d2021
+        active_workspace   #665c54 #665c54 #1d2021
+        inactive_workspace #1d2021 #1d2021 #665c54
+        urgent_workspace   #fb4934 #fb4934 #fabd2f
+        binding_mode       #689d6a #689d6a #1d2021
+    }
+}
+
+bar {
+    output            Virtual2
+    status_command    ~/.config/i3/scripts/i3status-window-title
+    position          top
+    mode              dock
+    workspace_buttons yes
+    tray_output       none
+    separator_symbol none
+    workspace_min_width 48
+    font pango:monospace Bold 12
+
+    colors {
+        background #1d2021
+        statusline #665c54
+        separator  #665c54
+
+        focused_workspace  #689d6a #689d6a #1d2021
+        active_workspace   #665c54 #665c54 #1d2021
+        inactive_workspace #1d2021 #1d2021 #665c54
+        urgent_workspace   #fb4934 #fb4934 #fabd2f
+        binding_mode       #689d6a #689d6a #1d2021
+    }
+}
