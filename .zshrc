@@ -159,14 +159,6 @@ then
   export PATH=$PATH:$USERSCRIPTS
 fi
 
-# i3wm specific user scripts
-I3WMSCRIPTS="$HOME/.config/i3/scripts"
-if [ -d "$I3WMSCRIPTS" ]
-then
-  export I3WMSCRIPTS=$I3WMSCRIPTS
-  export PATH=$PATH:$I3WMSCRIPTS
-fi
-
 # editor
 if command="$(type -p "nvim")" || ! [[ -z $command ]]
 then
