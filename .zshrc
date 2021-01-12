@@ -22,18 +22,22 @@ fi
 # Enable colors and change prompt:
 autoload -U colors && colors
 
-# remember last dir
+# remember and cd to last dir
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
-
-# TODO: check if git installed
+cdr
 
 # git
-autoload -Uz vcs_info
-precmd_vcs_info() { vcs_info }
-precmd_functions+=( precmd_vcs_info update-term-window-title )
-setopt prompt_subst
-zstyle ':vcs_info:git:*' formats "$bg[white]$fg[black]  %b %{$reset_color%}"
+if command="$(type -p "git")" || ! [[ -z $command ]]
+then
+  autoload -Uz vcs_info
+  precmd_vcs_info() { vcs_info }
+  precmd_functions+=( precmd_vcs_info update-term-window-title )
+  setopt prompt_subst
+  zstyle ':vcs_info:git:*' formats "$bg[white]$fg[black]  %b %{$reset_color%}"
+else
+  precmd_functions+=( update-term-window-title )
+fi
 
 # prompt colors
 #
