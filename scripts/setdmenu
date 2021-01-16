@@ -1,7 +1,10 @@
 #!/usr/bin/env sh
-dmenu \
-    -i -nf '#a89984' \
-    -nb    '#3c3836' \
-    -sb    '#a89984' \
-    -sf    '#3c3836' \
-    -fn    'monospace:bold:pixelsize=14'
+dmenu           \
+  -i            \
+  -nf '#a89984' \
+  -nb '#282828' \
+  -sb '#a89984' \
+  -sf '#282828' \
+  -b            \
+  -l   25       \
+  -fn 'monospace:bold:pixelsize=15'

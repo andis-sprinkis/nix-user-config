@@ -172,7 +172,7 @@ client.urgent           #fb4934    #fabd2f    #1d2021    #fb4934    #fb4934
 
 bar {
     output            Virtual1
-    status_command    ~/.config/i3/scripts/i3status-window-title
+    status_command    i3blocks
     position          top
     mode              dock
     workspace_buttons yes
@@ -196,7 +196,7 @@ bar {
 
 bar {
     output            Virtual2
-    status_command    ~/.config/i3/scripts/i3status-window-title
+    status_command    i3blocks
     position          top
     mode              dock
     workspace_buttons yes

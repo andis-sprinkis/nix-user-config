@@ -1,0 +1,3 @@
+[window]
+command=xtitle -s
+interval=persist
