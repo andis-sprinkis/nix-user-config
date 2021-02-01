@@ -7,7 +7,7 @@ then
   then
     echo "GNU coreutils for macOS are not found (sourcing coreutils)"
   else
-    export PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
+    PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
   fi
 fi
@@ -153,6 +153,7 @@ alias less="less -R"
 alias diskspace="df -h | grep Filesystem; df -h | grep /dev/sd; df -h | grep @"
 alias dmenu='setdmenu -l 8'
 alias dotgit='git --git-dir=$HOME/.dotfiles-git/ --work-tree=$HOME'
+alias zshrcgit='git --git-dir=$HOME/.zshrc-git/ --work-tree=$HOME'
 alias set_ssh_dir_permissions='chmod 700 ~/.ssh; chmod 600 ~/.ssh/*; chmod 644 -f ~/.ssh/*.pub ~/.ssh/authorized_keys ~/.ssh/known_hosts'
 
 # general user scripts
@@ -160,7 +161,7 @@ USERSCRIPTS="$HOME/scripts"
 if [ -d "$USERSCRIPTS" ]
 then
   export USERSCRIPTS="$HOME/scripts"
-  export PATH=$PATH:$USERSCRIPTS
+  PATH=$PATH:$USERSCRIPTS
 fi
 
 # editor
@@ -234,3 +235,5 @@ export update_zshrc() {
 # load zsh-syntax-highlighting; should be last
 # TODO: check for macos/brew path
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+
+export PATH=$PATH:$(npm bin -g)
