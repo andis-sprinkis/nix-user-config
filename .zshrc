@@ -167,17 +167,19 @@ fi
 # editor
 if command="$(type -p "nvim")" || ! [[ -z $command ]]
 then
-  export EDITOR="nvim"
+  EDITOR="nvim"
 elif command="$(type -p "vim")" || ! [[ -z $command ]]
 then
-  export EDITOR="vim"
+  EDITOR="vim"
 elif command="$(type -p "vi")" || ! [[ -z $command ]]
 then
-  export EDITOR="vi"
+  EDITOR="vi"
 elif command="$(type -p "nano")" || ! [[ -z $command ]]
 then
-  export EDITOR="nano"
+  EDITOR="nano"
 fi
+
+export EDITOR=$EDITOR
 
 # update terminal window title with relevant info
 function update-term-window-title {
@@ -222,6 +224,12 @@ else
   fi
 fi
 
+# npm bin PATH
+if command="$(type -p "npm")"
+then
+  PATH=$PATH:$(npm bin -g)
+fi
+
 # updating itself
 export update_zshrc() {
   wget --no-cache -P $HOME/ https://raw.githubusercontent.com/andis-spr/linux-user-config/master/.zshrc
@@ -232,8 +240,9 @@ export update_zshrc() {
   fi
 }
 
+# PATH
+export PATH=$PATH
+
 # load zsh-syntax-highlighting; should be last
 # TODO: check for macos/brew path
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
-
-export PATH=$PATH:$(npm bin -g)
