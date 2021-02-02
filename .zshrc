@@ -224,12 +224,6 @@ else
   fi
 fi
 
-# npm bin PATH
-if command="$(type -p "npm")"
-then
-  PATH=$PATH:$(npm bin -g)
-fi
-
 # updating itself
 export update_zshrc() {
   wget --no-cache -P $HOME/ https://raw.githubusercontent.com/andis-spr/linux-user-config/master/.zshrc
