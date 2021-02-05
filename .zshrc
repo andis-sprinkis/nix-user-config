@@ -12,13 +12,6 @@ then
   fi
 fi
 
-if [[ "$OSTYPE" == "darwin"* ]]
-then
-  install_coreutils_macos() {
-    brew install coreutils findutils gnu-tar gnu-sed gawk gnutls gnu-indent gnu-getopt grep
-  }
-fi
-
 # Enable colors and change prompt:
 autoload -U colors && colors
 
@@ -153,7 +146,6 @@ alias less="less -R"
 alias diskspace="df -h | grep Filesystem; df -h | grep /dev/sd; df -h | grep @"
 alias dmenu='setdmenu -l 8'
 alias dotgit='git --git-dir=$HOME/.dotfiles-git/ --work-tree=$HOME'
-alias zshrcgit='git --git-dir=$HOME/.zshrc-git/ --work-tree=$HOME'
 alias set_ssh_dir_permissions='chmod 700 ~/.ssh; chmod 600 ~/.ssh/*; chmod 644 -f ~/.ssh/*.pub ~/.ssh/authorized_keys ~/.ssh/known_hosts'
 
 # general user scripts
@@ -238,6 +230,7 @@ export update_zshrc() {
 export PATH=$PATH
 
 # load zsh-syntax-highlighting; should be last
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null # arch
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null # macos
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null # debian
+# arch, macos, debian
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null \
+  || source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null \
+  || source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
