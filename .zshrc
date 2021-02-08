@@ -54,12 +54,7 @@ PS1="%{$bg[$USERHOSTCOLOR] $fg[black]%}%n@%M $SSHSTATUS%{$reset_color%}\$vcs_inf
 HISTSIZE=10000
 SAVEHIST=10000
 
-if [ ! -f $HOME/.cache/zsh ]
-then
-  mkdir -p $HOME/.cache/zsh
-  touch $HOME/.cache/history
-fi
-
+[ ! -f $HOME/.cache/zsh ] && mkdir -p $HOME/.cache/zsh && touch $HOME/.cache/zsh/history
 HISTFILE=~/.cache/zsh/history
 
 # basic auto/tab complete:
@@ -115,29 +110,19 @@ lfcd () {
 setopt autocd
 
 # ssh bookmarks
-SSHBOOKMARKS=$HOME/ssh-bookmark/ssh-bookmark
-if [ -f $SSHBOOKMARKS ]
-then
-  source $SSHBOOKMARKS
-fi
+[ -f $HOME/ssh-bookmark/ssh-bookmark ] && source $HOME/ssh-bookmark/ssh-bookmark
 
 # alias
 
-COREUTILS_LS='ls -hAFX --color --group-directories-first'
-
-if [[ "$OSTYPE" == "darwin"* ]]
+if [[ "$OSTYPE" == "darwin"* ]] && [ ! -d /usr/local/opt/coreutils/libexec/gnubin ]
 then
-  if [ ! -d /usr/local/opt/coreutils/libexec/gnubin ]
-  then
-    echo "GNU utils for macOS are not found (ls alias)"
-  else
-    alias ls=$COREUTILS_LS
-  fi
+  echo "GNU utils for macOS are not found (ls alias)"
 else
-  alias ls=$COREUTILS_LS
+  alias ls='ls -hAFX --color --group-directories-first'
 fi
 
 alias mv='mv -v'
+alias cp='cp -rv'
 alias mkdir='mkdir -p'
 alias v='nvim'
 alias vim='nvim'
@@ -149,12 +134,7 @@ alias dotgit='git --git-dir=$HOME/.dotfiles-git/ --work-tree=$HOME'
 alias set_ssh_dir_permissions='chmod 700 ~/.ssh; chmod 600 ~/.ssh/*; chmod 644 -f ~/.ssh/*.pub ~/.ssh/authorized_keys ~/.ssh/known_hosts'
 
 # general user scripts
-USERSCRIPTS="$HOME/scripts"
-if [ -d "$USERSCRIPTS" ]
-then
-  export USERSCRIPTS="$HOME/scripts"
-  PATH=$PATH:$USERSCRIPTS
-fi
+[ -d "$HOME/scripts" ] && export USERSCRIPTS=$HOME/scripts && PATH=$PATH:$HOME/scripts
 
 # editor
 if command="$(type -p "nvim")" || ! [[ -z $command ]]
@@ -216,7 +196,7 @@ else
   fi
 fi
 
-# updating itself
+# updating zshrc
 export update_zshrc() {
   wget --no-cache -P $HOME/ https://raw.githubusercontent.com/andis-spr/linux-user-config/master/.zshrc
   if [ -f $HOME/.zshrc.1 ]
