@@ -1,5 +1,8 @@
 # Based on "Luke's config for the Zoomer Shell"
 
+# default .profile
+source $HOME/.profile 2>/dev/null
+
 # use the GNU utils on macOS
 if [[ "$OSTYPE" == "darwin"* ]]
 then
@@ -33,7 +36,6 @@ else
 fi
 
 # prompt colors
-#
 USERHOSTCOLOR='cyan'
 
 if [[ $(whoami) == 'root' ]]
@@ -123,15 +125,15 @@ fi
 
 alias mv='mv -v'
 alias cp='cp -rv'
+alias rm='rm -v'
 alias mkdir='mkdir -p'
-alias v='nvim'
 alias vim='nvim'
-alias rss='newsboat'
 alias less="less -R"
 alias diskspace="df -h | grep Filesystem; df -h | grep /dev/sd; df -h | grep @"
 alias dmenu='setdmenu -l 8'
 alias dotgit='git --git-dir=$HOME/.dotfiles-git/ --work-tree=$HOME'
-alias set_ssh_dir_permissions='chmod 700 ~/.ssh; chmod 600 ~/.ssh/*; chmod 644 -f ~/.ssh/*.pub ~/.ssh/authorized_keys ~/.ssh/known_hosts'
+alias sshdirp='chmod 700 ~/.ssh; chmod 600 ~/.ssh/*; chmod 644 -f ~/.ssh/*.pub ~/.ssh/authorized_keys ~/.ssh/known_hosts'
+alias myip='curl https://ipinfo.io/'
 
 # general user scripts
 [ -d "$HOME/scripts" ] && export USERSCRIPTS=$HOME/scripts && PATH=$PATH:$HOME/scripts
