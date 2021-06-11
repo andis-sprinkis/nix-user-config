@@ -8,7 +8,7 @@ if [[ "$OSTYPE" == "darwin"* ]]
 then
   if [ ! -d /usr/local/opt/coreutils/libexec/gnubin ]
   then
-    echo "GNU coreutils for macOS are not found (sourcing coreutils)"
+    echo "zshrc: GNU coreutils for macOS are not found (sourcing coreutils)"
   else
     PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
     export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
@@ -118,7 +118,7 @@ setopt autocd
 
 if [[ "$OSTYPE" == "darwin"* ]] && [ ! -d /usr/local/opt/coreutils/libexec/gnubin ]
 then
-  echo "GNU utils for macOS are not found (ls alias)"
+  echo "zshrc: GNU utils for macOS are not found (ls alias)"
 else
   alias ls='ls -hAFX --color --group-directories-first'
 fi
@@ -127,7 +127,8 @@ alias mv='mv -v'
 alias cp='cp -rv'
 alias rm='rm -v'
 alias mkdir='mkdir -p'
-alias vim='nvim'
+alias tree='tree -CF'
+alias nvim_nogit='nvim --cmd "let g:nogit=1"'
 alias less="less -R"
 alias diskspace="df -h | grep Filesystem; df -h | grep /dev/sd; df -h | grep @"
 alias dmenu='setdmenu -l 8'
@@ -180,7 +181,7 @@ if [[ "$OSTYPE" == "darwin"* ]]
 then
   if [ ! -d /usr/local/opt/nvm ]
   then
-    # echo "nvm for macOS is not found"
+    # echo "zshrc: nvm for macOS is not found"
   else
     export NVM_DIR="$HOME/.nvm"
     [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
@@ -190,7 +191,7 @@ else
   NVM_DIR=$HOME/.nvm
   if [ ! -d $NVM_DIR ]
   then
-    # echo "nvm is not found"
+    # echo "zshrc: nvm is not found"
   else
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
