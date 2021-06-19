@@ -34,7 +34,6 @@ fi
 
 # prompt colors
 USERHOSTCOLOR='cyan'
-
 if [[ $(whoami) == 'root' ]]; then
   USERHOSTCOLOR='magenta'
 fi
@@ -142,16 +141,14 @@ alias myip='curl https://ipinfo.io/'
 
 # editor
 if command="$(type -p "nvim")" || ! [[ -z $command ]]; then
-  EDITOR="nvim"
+  export EDITOR="nvim"
 elif command="$(type -p "vim")" || ! [[ -z $command ]]; then
-  EDITOR="vim"
+  export EDITOR="vim"
 elif command="$(type -p "vi")" || ! [[ -z $command ]]; then
-  EDITOR="vi"
+  export EDITOR="vi"
 elif command="$(type -p "nano")" || ! [[ -z $command ]]; then
-  EDITOR="nano"
+  export EDITOR="nano"
 fi
-
-export EDITOR=$EDITOR
 
 # update terminal window title with relevant info
 function update-term-window-title {
