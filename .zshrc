@@ -169,10 +169,22 @@ function update-term-window-title {
 }
 update-term-window-title
 
+if command="$(type  -p "bat")"
+then
+  export BAT_THEME="ansi"
+  export BAT_STYLE="plain"
+fi
+
 # fzf options and completion
 if command="$(type -p "fzf")"
 then
-  export FZF_DEFAULT_OPTS="--tabstop=4 --cycle --height 50% --layout=reverse"
+  if command="$(type -p "bat")"
+  then
+    export FZF_DEFAULT_OPTS="--tabstop=2 --cycle --color=dark --layout=reverse --preview 'bat --color=always --line-range=:500 {}'"
+  else
+    export FZF_DEFAULT_OPTS="--tabstop=4 --cycle --color=dark --height 50% --layout=reverse"
+  fi
+
   if [ -d /usr/share/fzf ]
   then
     source /usr/share/fzf/completion.zsh
@@ -183,7 +195,6 @@ then
 fi
 
 # nvm
-
 if [[ "$OSTYPE" == "darwin"* ]]
 then
   if [ ! -d /usr/local/opt/nvm ]
@@ -211,8 +222,8 @@ export update_zshrc() {
   wget --no-cache -P $HOME/ https://raw.githubusercontent.com/andis-spr/linux-user-config/master/.zshrc
   if [ -f $HOME/.zshrc.1 ]
   then
-    rm .zshrc
-    mv .zshrc.1 .zshrc
+    rm $HOME/.zshrc
+    mv $HOME/.zshrc.1 $HOME/.zshrc
   fi
 }
 
