@@ -4,10 +4,8 @@
 source $HOME/.profile 2>/dev/null
 
 # use the GNU utils on macOS
-if [[ "$OSTYPE" == "darwin"* ]]
-then
-  if [ ! -d /usr/local/opt/coreutils/libexec/gnubin ]
-  then
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  if [ ! -d /usr/local/opt/coreutils/libexec/gnubin ]; then
     echo "zshrc: GNU coreutils for macOS are not found (sourcing coreutils)"
   else
     PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
@@ -24,8 +22,7 @@ add-zsh-hook chpwd chpwd_recent_dirs
 cdr
 
 # git
-if command="$(type -p "git")" || ! [[ -z $command ]]
-then
+if command="$(type -p "git")" || ! [[ -z $command ]]; then
   autoload -Uz vcs_info
   precmd_vcs_info() { vcs_info }
   precmd_functions+=( precmd_vcs_info update-term-window-title )
@@ -38,8 +35,7 @@ fi
 # prompt colors
 USERHOSTCOLOR='cyan'
 
-if [[ $(whoami) == 'root' ]]
-then
+if [[ $(whoami) == 'root' ]]; then
   USERHOSTCOLOR='magenta'
 fi
 
@@ -115,16 +111,14 @@ setopt autocd
 [ -f $HOME/ssh-bookmark/ssh-bookmark ] && source $HOME/ssh-bookmark/ssh-bookmark
 
 # use nvim as manpages pager
-if command="$(type -p "nvim")" || ! [[ -z $command ]]
-then
+if command="$(type -p "nvim")" || ! [[ -z $command ]]; then
   export MANPAGER='nvim +Man!'
   export MANWIDTH=999
 fi
 
 # alias
 
-if [[ "$OSTYPE" == "darwin"* ]] && [ ! -d /usr/local/opt/coreutils/libexec/gnubin ]
-then
+if [[ "$OSTYPE" == "darwin"* ]] && [ ! -d /usr/local/opt/coreutils/libexec/gnubin ]; then
   echo "zshrc: GNU utils for macOS are not found (ls alias)"
 else
   alias ls='ls -hAFX --color --group-directories-first'
@@ -147,17 +141,13 @@ alias myip='curl https://ipinfo.io/'
 [ -d "$HOME/scripts" ] && export USERSCRIPTS=$HOME/scripts && PATH=$PATH:$HOME/scripts
 
 # editor
-if command="$(type -p "nvim")" || ! [[ -z $command ]]
-then
+if command="$(type -p "nvim")" || ! [[ -z $command ]]; then
   EDITOR="nvim"
-elif command="$(type -p "vim")" || ! [[ -z $command ]]
-then
+elif command="$(type -p "vim")" || ! [[ -z $command ]]; then
   EDITOR="vim"
-elif command="$(type -p "vi")" || ! [[ -z $command ]]
-then
+elif command="$(type -p "vi")" || ! [[ -z $command ]]; then
   EDITOR="vi"
-elif command="$(type -p "nano")" || ! [[ -z $command ]]
-then
+elif command="$(type -p "nano")" || ! [[ -z $command ]]; then
   EDITOR="nano"
 fi
 
@@ -169,59 +159,45 @@ function update-term-window-title {
 }
 update-term-window-title
 
-if command="$(type  -p "bat")"
-then
+if command="$(type  -p "bat")"; then
   export BAT_THEME="ansi"
   export BAT_STYLE="plain"
 fi
 
 # fzf options and completion
-if command="$(type -p "fzf")"
-then
-  if command="$(type -p "bat")"
-  then
+if command="$(type -p "fzf")"; then
+  if command="$(type -p "bat")"; then
     export FZF_DEFAULT_OPTS="--tabstop=2 --cycle --color=dark --layout=reverse --preview 'bat --color=always --line-range=:500 {}'"
   else
     export FZF_DEFAULT_OPTS="--tabstop=4 --cycle --color=dark --height 50% --layout=reverse"
   fi
 
-  if [ -d /usr/share/fzf ]
-  then
+  if [ -d /usr/share/fzf ]; then
     source /usr/share/fzf/completion.zsh
-  elif [ -d $HOME/.fzf ]
-  then
+  elif [ -d $HOME/.fzf ]; then
     source $HOME/.fzf/shell/completion.zsh
   fi
 fi
 
 # nvm
-if [[ "$OSTYPE" == "darwin"* ]]
-then
-  if [ ! -d /usr/local/opt/nvm ]
-  then
-    # echo "zshrc: nvm for macOS is not found"
-  else
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
-    [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  if [ -d /usr/local/opt/nvm ]; then
+    [ -s /usr/local/opt/nvm/nvm.sh ] && . /usr/local/opt/nvm/nvm.sh
+    [ -s /usr/local/opt/nvm/etc/bash_completion.d/nvm ] && . /usr/local/opt/nvm/etc/bash_completion.d/nvm
+    export NVM_DIR=$HOME/.nvm
   fi
 else
-  NVM_DIR=$HOME/.nvm
-  if [ ! -d $NVM_DIR ]
-  then
-    # echo "zshrc: nvm is not found"
-  else
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-    export NVM_DIR=$NVM_DIR
+  if [ -d $HOME/.nvm ]; then
+    [ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh  # This loads nvm
+    [ -s $HOME/.nvm/bash_completion ] && . $HOME/.nvm/bash_completion  # This loads nvm bash_completion
+    export NVM_DIR=$HOME/.nvm
   fi
 fi
 
 # updating zshrc
 export update_zshrc() {
   wget --no-cache -P $HOME/ https://raw.githubusercontent.com/andis-spr/linux-user-config/master/.zshrc
-  if [ -f $HOME/.zshrc.1 ]
-  then
+  if [ -f $HOME/.zshrc.1 ]; then
     rm $HOME/.zshrc
     mv $HOME/.zshrc.1 $HOME/.zshrc
   fi
