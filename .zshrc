@@ -79,15 +79,15 @@ bindkey -v '^?' backward-delete-char
 
 # Change cursor shape for different vi modes.
 function zle-keymap-select () {
-    case $KEYMAP in
-        vicmd) echo -ne '\e[1 q';;      # block
-        viins|main) echo -ne '\e[5 q';; # beam
-    esac
+  case $KEYMAP in
+    vicmd) echo -ne '\e[1 q';;      # block
+    viins|main) echo -ne '\e[5 q';; # beam
+  esac
 }
 zle -N zle-keymap-select
 zle-line-init() {
-    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
-    echo -ne "\e[5 q"
+  zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+  echo -ne "\e[5 q"
 }
 zle -N zle-line-init
 echo -ne '\e[5 q' # Use beam shape cursor on startup.
@@ -95,17 +95,17 @@ preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 # lf cd
 lfcd () {
-    tmp="$(mktemp)"
-    lf -last-dir-path="$tmp" "$@"
-    if [ -f "$tmp" ]; then
-        dir="$(cat "$tmp")"
-        rm -f "$tmp"
-        if [ -d "$dir" ]; then
-            if [ "$dir" != "$(pwd)" ]; then
-                cd "$dir"
-            fi
-        fi
+  tmp="$(mktemp)"
+  lf -last-dir-path="$tmp" "$@"
+  if [ -f "$tmp" ]; then
+    dir="$(cat "$tmp")"
+    rm -f "$tmp"
+    if [ -d "$dir" ]; then
+      if [ "$dir" != "$(pwd)" ]; then
+        cd "$dir"
+      fi
     fi
+  fi
 }
 
 # auto cd
@@ -113,6 +113,13 @@ setopt autocd
 
 # ssh bookmarks
 [ -f $HOME/ssh-bookmark/ssh-bookmark ] && source $HOME/ssh-bookmark/ssh-bookmark
+
+# use nvim as manpages pager
+if command="$(type -p "nvim")" || ! [[ -z $command ]]
+then
+  export MANPAGER='nvim +Man!'
+  export MANWIDTH=999
+fi
 
 # alias
 
@@ -158,7 +165,7 @@ export EDITOR=$EDITOR
 
 # update terminal window title with relevant info
 function update-term-window-title {
-    echo -n "\033]0;${TERM} - ${USER}@${HOST} - ${PWD}\007"
+  echo -n "\033]0;${TERM} - ${USER}@${HOST} - ${PWD}\007"
 }
 update-term-window-title
 
