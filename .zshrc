@@ -141,15 +141,10 @@ alias myip='curl https://ipinfo.io/'
 [ -d "$HOME/scripts" ] && export USERSCRIPTS=$HOME/scripts && PATH=$PATH:$HOME/scripts
 
 # editor
-if command="$(type -p "nvim")" || ! [[ -z $command ]]; then
-  export EDITOR="nvim"
-elif command="$(type -p "vim")" || ! [[ -z $command ]]; then
-  export EDITOR="vim"
-elif command="$(type -p "vi")" || ! [[ -z $command ]]; then
-  export EDITOR="vi"
-elif command="$(type -p "nano")" || ! [[ -z $command ]]; then
-  export EDITOR="nano"
-fi
+  if command="$(type -p "nvim")" || ! [[ -z $command ]]; then; export EDITOR="nvim"
+elif command="$(type -p "vim")" || ! [[ -z $command ]]; then; export EDITOR="vim"
+elif command="$(type -p "vi")" || ! [[ -z $command ]]; then; export EDITOR="vi"
+elif command="$(type -p "nano")" || ! [[ -z $command ]]; then; export EDITOR="nano"; fi
 
 # update terminal window title with relevant info
 function update-term-window-title {
@@ -192,10 +187,7 @@ fi
 # updating zshrc
 export update_zshrc() {
   wget --no-cache -P $HOME/ https://raw.githubusercontent.com/andis-spr/linux-user-config/master/.zshrc
-  if [ -f $HOME/.zshrc.1 ]; then
-    rm $HOME/.zshrc
-    mv $HOME/.zshrc.1 $HOME/.zshrc
-  fi
+  [ -f $HOME/.zshrc.1 ] && rm $HOME/.zshrc && mv $HOME/.zshrc.1 $HOME/.zshrc
 }
 
 # PATH
