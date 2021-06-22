@@ -38,6 +38,7 @@ if [[ $(whoami) == 'root' ]]; then
   USERHOSTCOLOR='magenta'
 fi
 
+# ssh session status in prompt
 SSHSTATUS=''
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
   SSHSTATUS="%{$bg[blue]$fg[black]%} SSH "
@@ -156,39 +157,36 @@ function update-term-window-title {
 }
 update-term-window-title
 
-if command="$(type  -p "bat")"; then
+if command="$(type -p "bat")" || ! [[ -z $command ]]; then
   export BAT_THEME="ansi"
   export BAT_STYLE="plain"
 fi
 
 # fzf options and completion
-if command="$(type -p "fzf")"; then
-  if command="$(type -p "bat")"; then
+if command="$(type -p "fzf")" || ! [[ -z $command ]]; then
+  if command="$(type -p "bat")" || ! [[ -z $command ]]; then
     export FZF_DEFAULT_OPTS="--tabstop=2 --cycle --color=dark --layout=reverse --preview 'bat --color=always --line-range=:500 {}'"
   else
     export FZF_DEFAULT_OPTS="--tabstop=4 --cycle --color=dark --height 50% --layout=reverse"
   fi
 
-  if [ -d /usr/share/fzf ]; then
+  if [ -f /usr/share/fzf/completion.zsh ]; then
     source /usr/share/fzf/completion.zsh
-  elif [ -d $HOME/.fzf ]; then
-    source $HOME/.fzf/shell/completion.zsh
+  else
+    [ -d $HOME/.fzf ] && source $HOME/.fzf/shell/completion.zsh
   fi
 fi
 
 # nvm
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  if [ -d /usr/local/opt/nvm ]; then
+if [ -d $HOME/.nvm ]; then
+  if [[ "$OSTYPE" == "darwin"* ]]; then
     [ -s /usr/local/opt/nvm/nvm.sh ] && . /usr/local/opt/nvm/nvm.sh
     [ -s /usr/local/opt/nvm/etc/bash_completion.d/nvm ] && . /usr/local/opt/nvm/etc/bash_completion.d/nvm
-    export NVM_DIR=$HOME/.nvm
+  else
+    [ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh
+    [ -s $HOME/.nvm/bash_completion ] && . $HOME/.nvm/bash_completion
   fi
-else
-  if [ -d $HOME/.nvm ]; then
-    [ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh  # This loads nvm
-    [ -s $HOME/.nvm/bash_completion ] && . $HOME/.nvm/bash_completion  # This loads nvm bash_completion
-    export NVM_DIR=$HOME/.nvm
-  fi
+  export NVM_DIR=$HOME/.nvm
 fi
 
 # updating zshrc
