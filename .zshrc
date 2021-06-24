@@ -52,6 +52,13 @@ PS1="%{$bg[$USERHOSTCOLOR] $fg[black]%}%n@%M $SSHSTATUS%{$reset_color%}\$vcs_inf
 HISTSIZE=10000
 SAVEHIST=10000
 
+# function to fix corrupt zsh_history
+function fix_zsh_histfile {
+  mv $HISTFILE $HOME/.zsh_history_old
+  strings $HOME/.zsh_history_old > $HISTFILE
+  rm $HOME/.zsh_history_old
+}
+
 [ ! -f $HOME/.cache/zsh ] && mkdir -p $HOME/.cache/zsh && touch $HOME/.cache/zsh/history
 HISTFILE=~/.cache/zsh/history
 
