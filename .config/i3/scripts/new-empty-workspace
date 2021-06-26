@@ -5,29 +5,24 @@ previous=$((${workspaces[0]}-1))
 j=0
 
 echo $previous
-
 echo workspaces are ${workspaces[@]}
 
-for i in "${workspaces[@]}"
-do
-    echo $i
-    if [[ $previous -gt 0 ]] && [[ $j -eq 0 ]]
-    then
-        i3-msg workspace 1
-        exit
-    fi
+for i in "${workspaces[@]}"; do
+  echo $i
+  if [[ $previous -gt 0 ]] && [[ $j -eq 0 ]]; then
+    i3-msg workspace 1
+    exit
+  fi
 
-    if [[ $previous+1 -ne $i ]]
-    then
-        i3-msg workspace $(($previous+1))
-        exit
-    fi
-    previous=$i
-    j=$(($j+1))
+  if [[ $previous+1 -ne $i ]]; then
+    i3-msg workspace $(($previous+1))
+    exit
+  fi
+  previous=$i
+  j=$(($j+1))
 done
 
-if [[ $i -lt 10 ]]
-then
-    i3-msg workspace $(($i+1))
-    exit
+if [[ $i -lt 10 ]]; then
+  i3-msg workspace $(($i+1))
+  exit
 fi
