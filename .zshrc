@@ -1,7 +1,8 @@
 # Based on "Luke's config for the Zoomer Shell"
 
 # default .profile
-source $HOME/.profile 2>/dev/null
+[ ! -f $HOME/.profile ] && touch $HOME/.profile
+source $HOME/.profile
 
 # use the GNU utils on macOS
 if [[ "$OSTYPE" == "darwin"* ]]; then
