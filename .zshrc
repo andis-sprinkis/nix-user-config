@@ -54,7 +54,7 @@ HISTSIZE=10000
 SAVEHIST=10000
 
 # function to fix corrupted zsh_history
-fix_zsh_histfile() {
+fix-zsh-histfile() {
   mv $HISTFILE $HOME/.zsh_history_old
   strings $HOME/.zsh_history_old > $HISTFILE
   rm $HOME/.zsh_history_old
@@ -146,7 +146,8 @@ alias sshdirp='chmod 700 ~/.ssh; chmod 600 ~/.ssh/*; chmod 644 -f ~/.ssh/*.pub ~
 alias myip='curl https://ipinfo.io/'
 
 # general user scripts
-[ -d "$HOME/scripts" ] && export USERSCRIPTS=$HOME/scripts && PATH=$PATH:$HOME/scripts
+USERSCRIPT_DIR=$HOME/scripts
+[ -d $USERSCRIPT_DIR ] && export USERSCRIPT_DIR=$HOME/scripts && PATH=$PATH:$USERSCRIPT_DIR
 
 # editor
   if command="$(type -p "nvim")" || ! [[ -z $command ]]; then; export EDITOR="nvim"
@@ -155,9 +156,7 @@ elif command="$(type -p "vi")" || ! [[ -z $command ]]; then; export EDITOR="vi"
 elif command="$(type -p "nano")" || ! [[ -z $command ]]; then; export EDITOR="nano"; fi
 
 # update terminal window title with relevant info
-update-term-window-title() {
-  echo -n "\033]0;${TERM} - ${USER}@${HOST} - ${PWD}\007"
-}
+update-term-window-title() { echo -n "\033]0;${TERM} - ${USER}@${HOST} - ${PWD}\007" }
 update-term-window-title
 
 if command="$(type -p "bat")" || ! [[ -z $command ]]; then
@@ -193,7 +192,7 @@ if [ -d $HOME/.nvm ]; then
 fi
 
 # updating zshrc
-update_zshrc() {
+update-zshrc() {
   wget --no-cache -P $HOME/ https://raw.githubusercontent.com/andis-spr/linux-user-config/master/.zshrc
   [ -f $HOME/.zshrc.1 ] && rm $HOME/.zshrc && mv $HOME/.zshrc.1 $HOME/.zshrc
 }
