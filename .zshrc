@@ -126,6 +126,13 @@ bindkey '^e' edit-command-line
 SSHBOOKMARK_DIR=$HOME/ssh-bookmark/ssh-bookmark
 [ -f $SSHBOOKMARK_DIR ] && source $SSHBOOKMARK_DIR
 
+# function to set correct .ssh persmissions
+ssh-set-dir-permissions() {
+  chmod 700 ~/.ssh
+  chmod 600 ~/.ssh/*
+  chmod 644 -f ~/.ssh/*.pub ~/.ssh/authorized_keys ~/.ssh/known_hosts
+}
+
 # use nvim as manpages pager
 if command="$(type -p "nvim")" || ! [[ -z $command ]]; then
   export MANPAGER='nvim +Man!'
@@ -133,25 +140,27 @@ if command="$(type -p "nvim")" || ! [[ -z $command ]]; then
 fi
 
 # alias
-alias mv='mv -iv'
-alias cp='cp -riv'
-alias rm='rm -vI'
-alias mkdir='mkdir -pv'
-alias tree='tree -CF'
-alias bc='bc -ql'
-alias nvim_nogit='nvim --cmd "let g:nogit=1"'
-alias less="less -R"
-alias diskspace="df -h | grep Filesystem; df -h | grep /dev/sd; df -h | grep @"
-alias dmenu='setdmenu -l 8'
-alias dotgit='git --git-dir=$HOME/.dotfiles-git/ --work-tree=$HOME'
-alias sshdirp='chmod 700 ~/.ssh; chmod 600 ~/.ssh/*; chmod 644 -f ~/.ssh/*.pub ~/.ssh/authorized_keys ~/.ssh/known_hosts'
-alias myip='curl https://ipinfo.io/'
+alias \
+  mv='mv -iv' \
+  cp='cp -riv' \
+  rm='rm -vI' \
+  mkdir='mkdir -pv' \
+  tree='tree -CF' \
+  bc='bc -ql' \
+  nvim_nogit='nvim --cmd "let g:nogit=1"' \
+  less="less -R" \
+  diskspace="df -h | grep Filesystem; df -h | grep /dev/sd; df -h | grep @" \
+  dmenu='setdmenu -l 8' \
+  dotgit='git --git-dir=$HOME/.dotfiles-git/ --work-tree=$HOME' \
+  myip='curl https://ipinfo.io/' \
+
 if [[ "$OSTYPE" == "darwin"* ]] && [ ! -d /usr/local/opt/coreutils/libexec/gnubin ]; then
   echo "zshrc: GNU utils for macOS are not found (GNU util alias)"
 else
-  alias ls='ls -hAFX --color=auto --group-directories-first'
-  alias grep='grep --color=auto'
-  alias diff='diff --color=auto'
+  alias \
+    ls='ls -hAFX --color=auto --group-directories-first' \
+    grep='grep --color=auto' \
+    diff='diff --color=auto'
 fi
 
 # general user scripts
