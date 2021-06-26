@@ -14,7 +14,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 # Enable colors and change prompt:
-autoload -U colors && colors
+autoload -U colors
+colors
 
 # remember and cd to last dir
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
@@ -53,7 +54,7 @@ HISTSIZE=10000
 SAVEHIST=10000
 
 # function to fix corrupted zsh_history
-function fix_zsh_histfile {
+fix_zsh_histfile() {
   mv $HISTFILE $HOME/.zsh_history_old
   strings $HOME/.zsh_history_old > $HISTFILE
   rm $HOME/.zsh_history_old
@@ -81,7 +82,7 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
 
 # Change cursor shape for different vi modes.
-function zle-keymap-select () {
+zle-keymap-select() {
   case $KEYMAP in
     vicmd) echo -ne '\e[1 q';;      # block
     viins|main) echo -ne '\e[5 q';; # beam
@@ -154,7 +155,7 @@ elif command="$(type -p "vi")" || ! [[ -z $command ]]; then; export EDITOR="vi"
 elif command="$(type -p "nano")" || ! [[ -z $command ]]; then; export EDITOR="nano"; fi
 
 # update terminal window title with relevant info
-function update-term-window-title {
+update-term-window-title() {
   echo -n "\033]0;${TERM} - ${USER}@${HOST} - ${PWD}\007"
 }
 update-term-window-title
@@ -192,7 +193,7 @@ if [ -d $HOME/.nvm ]; then
 fi
 
 # updating zshrc
-export update_zshrc() {
+update_zshrc() {
   wget --no-cache -P $HOME/ https://raw.githubusercontent.com/andis-spr/linux-user-config/master/.zshrc
   [ -f $HOME/.zshrc.1 ] && rm $HOME/.zshrc && mv $HOME/.zshrc.1 $HOME/.zshrc
 }
