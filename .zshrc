@@ -17,6 +17,9 @@ fi
 autoload -U colors
 colors
 
+# comments in interactive mode
+setopt interactive_comments
+
 # remember and cd to last dir
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
@@ -55,9 +58,9 @@ SAVEHIST=10000
 
 # function to fix corrupted zsh_history
 fix-zsh-histfile() {
-  mv $HISTFILE $HOME/.zsh_history_old
-  strings $HOME/.zsh_history_old > $HISTFILE
-  rm $HOME/.zsh_history_old
+  mv $HISTFILE $HOME/.zsh-history-old
+  strings $HOME/.zsh-history-old > $HISTFILE
+  rm $HOME/.zsh-history-old
 }
 
 [ ! -f $HOME/.cache/zsh ] && mkdir -p $HOME/.cache/zsh && touch $HOME/.cache/zsh/history
@@ -115,8 +118,13 @@ lfcd () {
 # auto cd
 setopt autocd
 
+# Edit line in editor with ctrl-e:
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^e' edit-command-line
+
 # ssh bookmarks
-[ -f $HOME/ssh-bookmark/ssh-bookmark ] && source $HOME/ssh-bookmark/ssh-bookmark
+SSHBOOKMARK_DIR=$HOME/ssh-bookmark/ssh-bookmark
+[ -f $SSHBOOKMARK_DIR ] && source $SSHBOOKMARK_DIR
 
 # use nvim as manpages pager
 if command="$(type -p "nvim")" || ! [[ -z $command ]]; then
@@ -125,18 +133,12 @@ if command="$(type -p "nvim")" || ! [[ -z $command ]]; then
 fi
 
 # alias
-
-if [[ "$OSTYPE" == "darwin"* ]] && [ ! -d /usr/local/opt/coreutils/libexec/gnubin ]; then
-  echo "zshrc: GNU utils for macOS are not found (ls alias)"
-else
-  alias ls='ls -hAFX --color --group-directories-first'
-fi
-
-alias mv='mv -v'
-alias cp='cp -rv'
-alias rm='rm -v'
-alias mkdir='mkdir -p'
+alias mv='mv -iv'
+alias cp='cp -riv'
+alias rm='rm -vI'
+alias mkdir='mkdir -pv'
 alias tree='tree -CF'
+alias bc='bc -ql'
 alias nvim_nogit='nvim --cmd "let g:nogit=1"'
 alias less="less -R"
 alias diskspace="df -h | grep Filesystem; df -h | grep /dev/sd; df -h | grep @"
@@ -144,6 +146,13 @@ alias dmenu='setdmenu -l 8'
 alias dotgit='git --git-dir=$HOME/.dotfiles-git/ --work-tree=$HOME'
 alias sshdirp='chmod 700 ~/.ssh; chmod 600 ~/.ssh/*; chmod 644 -f ~/.ssh/*.pub ~/.ssh/authorized_keys ~/.ssh/known_hosts'
 alias myip='curl https://ipinfo.io/'
+if [[ "$OSTYPE" == "darwin"* ]] && [ ! -d /usr/local/opt/coreutils/libexec/gnubin ]; then
+  echo "zshrc: GNU utils for macOS are not found (GNU util alias)"
+else
+  alias ls='ls -hAFX --color=auto --group-directories-first'
+  alias grep='grep --color=auto'
+  alias diff='diff --color=auto'
+fi
 
 # general user scripts
 USERSCRIPT_DIR=$HOME/scripts
@@ -159,6 +168,7 @@ elif command="$(type -p "nano")" || ! [[ -z $command ]]; then; export EDITOR="na
 update-term-window-title() { echo -n "\033]0;${TERM} - ${USER}@${HOST} - ${PWD}\007" }
 update-term-window-title
 
+# bat settings
 if command="$(type -p "bat")" || ! [[ -z $command ]]; then
   export BAT_THEME="ansi"
   export BAT_STYLE="plain"
