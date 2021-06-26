@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+
 dmenu           \
   -i            \
   -nf '#a89984' \

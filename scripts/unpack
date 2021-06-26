@@ -4,7 +4,7 @@ argsFile=/tmp/unpack-$(date +%s3N).txt
 
 for match in "$@"
 do
-    printf %q"\n" "$(readlink -f "$match")" >> $argsFile
+  printf %q"\n" "$(readlink -f "$match")" >> $argsFile
 done
 
 $EDITOR $argsFile
@@ -15,8 +15,8 @@ rm $argsFile
 
 for item in "${arrArgs[@]}"
 do
-    echo "--------------------------------------------------"
-    echo "Unpacking $item"
-    echo "--------------------------------------------------"
-    aunpack -D "$(echo $item | sed 's/[\]//g')"
+  echo "--------------------------------------------------"
+  echo "Unpacking $item"
+  echo "--------------------------------------------------"
+  aunpack -D "$(echo $item | sed 's/[\]//g')"
 done
