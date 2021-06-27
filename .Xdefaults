@@ -22,15 +22,23 @@ st.chscale: 1.2
 st.cwscale: 1
 
 /* Theme: Gruvbox Dark */
+*.cursorColor: #458588
+*.foreground: #a89984
+
 /* - Background: Soft */
 /* *.background: #32302f */
 /* - Background: Regular */
 /* *.background: #282828 */
 /* - Background: Hard */
 *.background: #1d2021
-*.cursorColor: #458588
-*.foreground: #a89984
-*.color0: #282828
+
+/* - color0: Soft */
+/* *.color0: #32302f */
+/* - color0: Regular */
+/* *.color0: #282828 */
+/* - color0: Hard */
+*.color0: #1d2021
+
 *.color1: #cc241d
 *.color2: #98971a
 *.color3: #d79921

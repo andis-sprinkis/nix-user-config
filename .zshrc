@@ -52,6 +52,9 @@ fi
 # prompt
 PS1="%{$bg[$USERHOSTCOLOR] $fg[black]%}%n@%M $SSHSTATUS%{$reset_color%}\$vcs_info_msg_0_%{$bg[white]$fg[black]%} %/ 
 %{$reset_color$fg[$USERHOSTCOLOR]%}$%{$reset_color%} "
+RPROMPT="%{$bg[black]$fg[white]%}(%D{%L:%M:%S%p})%{$reset_color%}"
+TMOUT=1
+TRAPALRM() { zle reset-prompt }
 
 # History in cache directory:
 HISTSIZE=10000
