@@ -162,7 +162,7 @@ if [[ "$OSTYPE" == "darwin"* ]] && [ ! -d /usr/local/opt/coreutils/libexec/gnubi
   echo "zshrc: GNU utils for macOS are not found (GNU util alias)"
 else
   alias \
-    ls='ls -hAFX --color=auto --group-directories-first' \
+    ls='ls -hAFX --color=auto --group-directories-first --time-style=long-iso' \
     grep='grep --color=auto' \
     diff='diff --color=auto'
 fi
