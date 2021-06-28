@@ -4,7 +4,7 @@
 [ -f $HOME/.profile ] && source $HOME/.profile
 
 # use the GNU utils on macOS
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if [[ $OSTYPE == "darwin"* ]]; then
   if [ ! -d /usr/local/opt/coreutils/libexec/gnubin ]; then
     echo "zshrc: GNU coreutils for macOS are not found (sourcing coreutils)"
   else
@@ -27,7 +27,7 @@ cdr
 
 # function to detect if given command is executable
 is-exec() {
-  command="$(type -p "$1")" || ! [[ -z $command ]] && return 0
+  if command="$(type -p "$1")" || [[ -z $command ]] && return 0
   return 1
 }
 
@@ -43,12 +43,10 @@ else
 fi
 
 # prompt colors
-USERHOSTCOLOR='cyan'
-[[ $(whoami) == 'root' ]] && USERHOSTCOLOR='magenta'
+[[ $(whoami) == 'root' ]] && USERHOSTCOLOR='magenta' || USERHOSTCOLOR='cyan'
 
 # ssh session status in prompt
-SSHSTATUS=''
-[ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] && SSHSTATUS="%{$bg[blue]$fg[black]%} SSH "
+[ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] && SSHSTATUS="%{$bg[blue]$fg[black]%} SSH " || SSHSTATUS=''
 
 # prompt
 PS1="%{$bg[$USERHOSTCOLOR] $fg[black]%}%n@%M $SSHSTATUS%{$reset_color%}\$vcs_info_msg_0_%{$bg[white]$fg[black]%} %/ 
@@ -111,11 +109,7 @@ lfcd () {
   if [ -f "$tmp" ]; then
     dir="$(cat "$tmp")"
     rm -f "$tmp"
-    if [ -d "$dir" ]; then
-      if [ "$dir" != "$(pwd)" ]; then
-        cd "$dir"
-      fi
-    fi
+    [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
   fi
 }
 
@@ -135,10 +129,7 @@ ssh-set-dir-permissions() {
 }
 
 # use nvim as manpages pager
-if is-exec "nvim"; then
-  export MANPAGER='nvim +Man!'
-  export MANWIDTH=999
-fi
+is-exec "nvim" && export MANPAGER="nvim +Man!" MANWIDTH=999
 
 # alias
 alias \
@@ -155,7 +146,7 @@ alias \
   dotgit='git --git-dir=$HOME/.dotfiles-git/ --work-tree=$HOME' \
   myip='curl https://ipinfo.io/' \
 
-if [[ "$OSTYPE" == "darwin"* ]] && [ ! -d /usr/local/opt/coreutils/libexec/gnubin ]; then
+if [[ $OSTYPE == "darwin"* ]] && [ ! -d /usr/local/opt/coreutils/libexec/gnubin ]; then
   echo "zshrc: GNU utils for macOS are not found (GNU util alias)"
 else
   alias \
@@ -165,8 +156,7 @@ else
 fi
 
 # general user scripts
-USERSCRIPT_DIR=$HOME/scripts
-[ -d $USERSCRIPT_DIR ] && export USERSCRIPT_DIR=$HOME/scripts && PATH=$PATH:$USERSCRIPT_DIR
+[ -d $HOME/scripts ] && PATH=$PATH:$HOME/scripts
 
 # editor
 if is-exec "nvim"; then; export EDITOR="nvim"
@@ -179,10 +169,7 @@ update-term-window-title() { echo -n "\033]0;${TERM} - ${USER}@${HOST} - ${PWD}\
 update-term-window-title
 
 # bat settings
-if is-exec "bat"; then
-  export BAT_THEME="ansi"
-  export BAT_STYLE="plain"
-fi
+is-exec "bat" && export BAT_THEME="ansi" BAT_STYLE="plain"
 
 # fzf options and completion
 if is-exec "fzf"; then
@@ -198,7 +185,7 @@ fi
 
 # nvm
 if [ -d $HOME/.nvm ]; then
-  if [[ "$OSTYPE" == "darwin"* ]]; then
+  if [[ $OSTYPE == "darwin"* ]]; then
     [ -s /usr/local/opt/nvm/nvm.sh ] && . /usr/local/opt/nvm/nvm.sh
     [ -s /usr/local/opt/nvm/etc/bash_completion.d/nvm ] && . /usr/local/opt/nvm/etc/bash_completion.d/nvm
   else
