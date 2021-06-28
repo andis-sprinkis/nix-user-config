@@ -1,8 +1,7 @@
 # Based on "Luke's config for the Zoomer Shell"
 
 # default .profile
-[ ! -f $HOME/.profile ] && touch $HOME/.profile
-source $HOME/.profile
+[ -f $HOME/.profile ] && source $HOME/.profile
 
 # use the GNU utils on macOS
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -26,8 +25,14 @@ autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
 cdr
 
+# function to detect if given command is executable
+is-exec() {
+  command="$(type -p "$1")" || ! [[ -z $command ]] && return 0
+  return 1
+}
+
 # git
-if command="$(type -p "git")" || ! [[ -z $command ]]; then
+if is-exec "git"; then
   autoload -Uz vcs_info
   precmd_vcs_info() { vcs_info }
   precmd_functions+=( precmd_vcs_info update-term-window-title )
@@ -39,15 +44,11 @@ fi
 
 # prompt colors
 USERHOSTCOLOR='cyan'
-if [[ $(whoami) == 'root' ]]; then
-  USERHOSTCOLOR='magenta'
-fi
+[[ $(whoami) == 'root' ]] && USERHOSTCOLOR='magenta'
 
 # ssh session status in prompt
 SSHSTATUS=''
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-  SSHSTATUS="%{$bg[blue]$fg[black]%} SSH "
-fi
+[ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] && SSHSTATUS="%{$bg[blue]$fg[black]%} SSH "
 
 # prompt
 PS1="%{$bg[$USERHOSTCOLOR] $fg[black]%}%n@%M $SSHSTATUS%{$reset_color%}\$vcs_info_msg_0_%{$bg[white]$fg[black]%} %/ 
@@ -57,6 +58,8 @@ TMOUT=1
 TRAPALRM() { zle reset-prompt }
 
 # History in cache directory:
+[ ! -f $HOME/.cache/zsh ] && mkdir -p $HOME/.cache/zsh && touch $HOME/.cache/zsh/history
+HISTFILE=~/.cache/zsh/history
 HISTSIZE=10000
 SAVEHIST=10000
 
@@ -66,9 +69,6 @@ fix-zsh-histfile() {
   strings $HOME/.zsh-history-old > $HISTFILE
   rm $HOME/.zsh-history-old
 }
-
-[ ! -f $HOME/.cache/zsh ] && mkdir -p $HOME/.cache/zsh && touch $HOME/.cache/zsh/history
-HISTFILE=~/.cache/zsh/history
 
 # basic auto/tab complete:
 autoload -U compinit
@@ -123,7 +123,8 @@ lfcd () {
 setopt autocd
 
 # Edit line in editor with ctrl-e:
-autoload edit-command-line; zle -N edit-command-line
+autoload edit-command-line
+zle -N edit-command-line
 bindkey '^e' edit-command-line
 
 # ssh bookmarks
@@ -132,13 +133,13 @@ SSHBOOKMARK_DIR=$HOME/ssh-bookmark/ssh-bookmark
 
 # function to set correct .ssh persmissions
 ssh-set-dir-permissions() {
-  chmod 700 ~/.ssh
-  chmod 600 ~/.ssh/*
-  chmod 644 -f ~/.ssh/*.pub ~/.ssh/authorized_keys ~/.ssh/known_hosts
+  chmod 700 $HOME/.ssh
+  chmod 600 $HOME/.ssh/*
+  chmod 644 -f $HOME/.ssh/*.pub $HOME/.ssh/authorized_keys $HOME/.ssh/known_hosts
 }
 
 # use nvim as manpages pager
-if command="$(type -p "nvim")" || ! [[ -z $command ]]; then
+if is-exec "nvim"; then
   export MANPAGER='nvim +Man!'
   export MANWIDTH=999
 fi
@@ -172,34 +173,31 @@ USERSCRIPT_DIR=$HOME/scripts
 [ -d $USERSCRIPT_DIR ] && export USERSCRIPT_DIR=$HOME/scripts && PATH=$PATH:$USERSCRIPT_DIR
 
 # editor
-  if command="$(type -p "nvim")" || ! [[ -z $command ]]; then; export EDITOR="nvim"
-elif command="$(type -p "vim")" || ! [[ -z $command ]]; then; export EDITOR="vim"
-elif command="$(type -p "vi")" || ! [[ -z $command ]]; then; export EDITOR="vi"
-elif command="$(type -p "nano")" || ! [[ -z $command ]]; then; export EDITOR="nano"; fi
+if is-exec "nvim"; then; export EDITOR="nvim"
+elif is-exec "vim"; then; export EDITOR="vim"
+elif is-exec "vi"; then; export EDITOR="vi"
+elif is-exec "nano"; then; export EDITOR="nano"; fi
 
 # update terminal window title with relevant info
 update-term-window-title() { echo -n "\033]0;${TERM} - ${USER}@${HOST} - ${PWD}\007" }
 update-term-window-title
 
 # bat settings
-if command="$(type -p "bat")" || ! [[ -z $command ]]; then
+if is-exec "bat"; then
   export BAT_THEME="ansi"
   export BAT_STYLE="plain"
 fi
 
 # fzf options and completion
-if command="$(type -p "fzf")" || ! [[ -z $command ]]; then
-  if command="$(type -p "bat")" || ! [[ -z $command ]]; then
+if is-exec "fzf"; then
+  if is-exec "bat"; then
     export FZF_DEFAULT_OPTS="--tabstop=2 --cycle --color=dark --layout=reverse --preview 'bat --color=always --line-range=:500 {}'"
   else
     export FZF_DEFAULT_OPTS="--tabstop=4 --cycle --color=dark --height 50% --layout=reverse"
   fi
 
-  if [ -f /usr/share/fzf/completion.zsh ]; then
-    source /usr/share/fzf/completion.zsh
-  else
-    [ -d $HOME/.fzf ] && source $HOME/.fzf/shell/completion.zsh
-  fi
+  if [ -f /usr/share/fzf/completion.zsh ]; then; source /usr/share/fzf/completion.zsh
+  elif [ -f $HOME/.fzf/shell/completion.zsh ]; then; source $HOME/.fzf/shell/completion.zsh; fi
 fi
 
 # nvm
@@ -219,9 +217,6 @@ update-zshrc() {
   wget --no-cache -P $HOME/ https://raw.githubusercontent.com/andis-sprinkis/linux-user-config/master/.zshrc
   [ -f $HOME/.zshrc.1 ] && rm $HOME/.zshrc && mv $HOME/.zshrc.1 $HOME/.zshrc
 }
-
-# PATH
-export PATH=$PATH
 
 # load zsh-syntax-highlighting; should be last
 # arch, macos, debian
