@@ -127,10 +127,6 @@ autoload edit-command-line
 zle -N edit-command-line
 bindkey '^e' edit-command-line
 
-# ssh bookmarks
-SSHBOOKMARK_DIR=$HOME/ssh-bookmark/ssh-bookmark
-[ -f $SSHBOOKMARK_DIR ] && source $SSHBOOKMARK_DIR
-
 # function to set correct .ssh persmissions
 ssh-set-dir-permissions() {
   chmod 700 $HOME/.ssh
