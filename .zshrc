@@ -1,21 +1,17 @@
-# Based on "Luke's config for the Zoomer Shell"
-
 # default .profile
-[ -f $HOME/.profile ] && source $HOME/.profile
+[ -f $HOME/.profile ] && . $HOME/.profile
+
+# function to detect if given command is executable
+is-exec() { if command="$(type -p "$1")" || [[ -z $command ]] && return 0; return 1 }
 
 # use the GNU utils on macOS
 if [[ $OSTYPE == "darwin"* ]]; then
-  if [ ! -d /usr/local/opt/coreutils/libexec/gnubin ]; then
-    echo "zshrc: GNU coreutils for macOS are not found (sourcing coreutils)"
-  else
-    PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
-    export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
-  fi
+  [ -d /usr/local/opt/coreutils/libexec/gnubin ] && PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
+  [ -d /usr/local/opt/coreutils/libexec/gnuman ] && export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
 fi
 
-# Enable colors and change prompt:
-autoload -U colors
-colors
+# enable colors
+autoload -U colors && colors
 
 # comments in interactive mode
 setopt interactive_comments
@@ -25,13 +21,11 @@ autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
 cdr
 
-# function to detect if given command is executable
-is-exec() {
-  if command="$(type -p "$1")" || [[ -z $command ]] && return 0
-  return 1
-}
+# set terminal emulator window title
+update-term-window-title() { echo -n "\033]0;${TERM} - ${USER}@${HOST} - ${PWD}\007" }
+update-term-window-title
 
-# git
+# display git status
 if is-exec "git"; then
   autoload -Uz vcs_info
   precmd_vcs_info() { vcs_info }
@@ -42,26 +36,26 @@ else
   precmd_functions+=( update-term-window-title )
 fi
 
-# prompt colors
+# set color for host in prompt depending if root or not
 [[ $(whoami) == 'root' ]] && USERHOSTCOLOR='magenta' || USERHOSTCOLOR='cyan'
 
-# ssh session status in prompt
+# display ssh session status in prompt
 [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] && SSHSTATUS="%{$bg[blue]$fg[black]%} SSH " || SSHSTATUS=''
 
-# prompt
+# set prompt
 PS1="%{$bg[$USERHOSTCOLOR] $fg[black]%}%n@%M $SSHSTATUS%{$reset_color%}\$vcs_info_msg_0_%{$bg[white]$fg[black]%} %/ 
 %{$reset_color$fg[$USERHOSTCOLOR]%}$%{$reset_color%} "
 RPROMPT="%{$bg[black]$fg[white]%}%D{%K:%M:%S}%{$reset_color%}"
 TMOUT=1
 TRAPALRM() { zle reset-prompt }
 
-# History in cache directory:
+# store history
 [ ! -f $HOME/.cache/zsh ] && mkdir -p $HOME/.cache/zsh && touch $HOME/.cache/zsh/history
 HISTFILE=~/.cache/zsh/history
 HISTSIZE=10000
 SAVEHIST=10000
 
-# function to fix corrupted zsh_history
+# function to fix corrupted history file
 fix-zsh-histfile() {
   mv $HISTFILE $HOME/.zsh-history-old
   strings $HOME/.zsh-history-old > $HISTFILE
@@ -86,7 +80,7 @@ bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
 
-# Change cursor shape for different vi modes.
+# change cursor shape for different vi modes.
 zle-keymap-select() {
   case $KEYMAP in
     vicmd) echo -ne '\e[1 q';;      # block
@@ -116,19 +110,19 @@ lfcd () {
 # auto cd
 setopt autocd
 
-# Edit line in editor with ctrl-e:
+# edit line in editor with ctrl-e:
 autoload edit-command-line
 zle -N edit-command-line
 bindkey '^e' edit-command-line
 
-# function to set correct .ssh persmissions
+# define commadn to set correct .ssh persmissions
 ssh-set-dir-permissions() {
   chmod 700 $HOME/.ssh
   chmod 600 $HOME/.ssh/*
   chmod 644 -f $HOME/.ssh/*.pub $HOME/.ssh/authorized_keys $HOME/.ssh/known_hosts
 }
 
-# use nvim as manpages pager
+# use nvim as man-pager
 is-exec "nvim" && export MANPAGER="nvim +Man!" MANWIDTH=999
 
 # alias
@@ -155,54 +149,44 @@ else
     diff='diff --color=auto'
 fi
 
-# general user scripts
+# add user scripts directory to path
 [ -d $HOME/scripts ] && PATH=$PATH:$HOME/scripts
 
-# editor
+# set editor
 if is-exec "nvim"; then; export EDITOR="nvim"
 elif is-exec "vim"; then; export EDITOR="vim"
 elif is-exec "vi"; then; export EDITOR="vi"
 elif is-exec "nano"; then; export EDITOR="nano"; fi
 
-# update terminal window title with relevant info
-update-term-window-title() { echo -n "\033]0;${TERM} - ${USER}@${HOST} - ${PWD}\007" }
-update-term-window-title
-
-# bat settings
+# setup bat
 is-exec "bat" && export BAT_THEME="ansi" BAT_STYLE="plain"
 
-# fzf options and completion
+# setup fzf
 if is-exec "fzf"; then
-  if is-exec "bat"; then
-    export FZF_DEFAULT_OPTS="--tabstop=2 --cycle --color=dark --layout=reverse --preview 'bat --color=always --line-range=:500 {}'"
-  else
-    export FZF_DEFAULT_OPTS="--tabstop=4 --cycle --color=dark --height 50% --layout=reverse"
-  fi
+  if is-exec "bat"; then; export FZF_DEFAULT_OPTS="--tabstop=2 --cycle --color=dark --layout=reverse --preview 'bat --color=always --line-range=:500 {}'"
+  else; export FZF_DEFAULT_OPTS="--tabstop=4 --cycle --color=dark --height 50% --layout=reverse"; fi
 
-  if [ -f /usr/share/fzf/completion.zsh ]; then; source /usr/share/fzf/completion.zsh
-  elif [ -f $HOME/.fzf/shell/completion.zsh ]; then; source $HOME/.fzf/shell/completion.zsh; fi
+  if [ -f /usr/share/fzf/completion.zsh ]; then; . /usr/share/fzf/completion.zsh
+  elif [ -f $HOME/.fzf/shell/completion.zsh ]; then; . $HOME/.fzf/shell/completion.zsh; fi
 fi
 
-# nvm
-if [ -d $HOME/.nvm ]; then
-  if [[ $OSTYPE == "darwin"* ]]; then
-    [ -s /usr/local/opt/nvm/nvm.sh ] && . /usr/local/opt/nvm/nvm.sh
-    [ -s /usr/local/opt/nvm/etc/bash_completion.d/nvm ] && . /usr/local/opt/nvm/etc/bash_completion.d/nvm
-  else
-    [ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh
-    [ -s $HOME/.nvm/bash_completion ] && . $HOME/.nvm/bash_completion
-  fi
-  export NVM_DIR=$HOME/.nvm
-fi
+# setup nvm
+if [ -s /usr/local/opt/nvm/nvm.sh ]; then; . /usr/local/opt/nvm/nvm.sh
+elif [ -s $HOME/.nvm/nvm.sh ]; then; . $HOME/.nvm/nvm.sh; fi
 
-# updating zshrc
+if [ -s /usr/local/opt/nvm/etc/bash_completion.d/nvm ]; then; . /usr/local/opt/nvm/etc/bash_completion.d/nvm
+elif [ -s $HOME/.nvm/bash_completion ]; then; . $HOME/.nvm/bash_completion; fi
+
+[ -d $HOME/.nvm ] && export NVM_DIR=$HOME/.nvm
+
+# define command to fetch updated .zshrc
 update-zshrc() {
   wget --no-cache -P $HOME/ https://raw.githubusercontent.com/andis-sprinkis/linux-user-config/master/.zshrc
   [ -f $HOME/.zshrc.1 ] && rm $HOME/.zshrc && mv $HOME/.zshrc.1 $HOME/.zshrc
 }
 
 # load zsh-syntax-highlighting; should be last
-# arch, macos, debian
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null \
-  || source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null \
-  || source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+# per platform: arch, macos, debian
+. /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null \
+  || . /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null \
+  || . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
