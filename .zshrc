@@ -78,7 +78,7 @@ fi
 # prompt
 PS1="%{$bg[$USERHOSTCOLOR] $fg[black]%}%n@%M $SSHSTATUS%{$reset_color%}\$vcs_info_msg_0_%{$bg[white]$fg[black]%} %/ 
 %{$reset_color$fg[$USERHOSTCOLOR]%}$%{$reset_color%} "
-RPROMPT="%{$bg[black]$fg[white]%}%D{%K:%M:%S}%{$reset_color%}"
+RPROMPT="%{$reset_color%}%D{%K:%M:%S}"
 # TMOUT=1
 # TRAPALRM() { zle reset-prompt } # reset prompt every TMOUT
 
