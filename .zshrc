@@ -169,8 +169,8 @@ is-exec "bat" && export BAT_THEME="ansi" BAT_STYLE="plain"
 
 # configure fzf
 if is-exec "fzf"; then
-  if is-exec "bat"; then; export FZF_DEFAULT_OPTS="--tabstop=2 --cycle --color=dark --layout=reverse --preview 'bat --color=always --line-range=:500 {}'"
-  else; export FZF_DEFAULT_OPTS="--tabstop=4 --cycle --color=dark --height 50% --layout=reverse"; fi
+  is-exec "bat" && export FZF_DEFAULT_OPTS="--tabstop=2 --cycle --color=dark --layout=reverse --preview 'bat --color=always --line-range=:500 {}'" \
+    || export FZF_DEFAULT_OPTS="--tabstop=4 --cycle --color=dark --height 50% --layout=reverse"
 
   if [ -f /usr/share/fzf/completion.zsh ]; then; . /usr/share/fzf/completion.zsh
   elif [ -f $HOME/.fzf/shell/completion.zsh ]; then; . $HOME/.fzf/shell/completion.zsh; fi
