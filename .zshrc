@@ -84,8 +84,7 @@ RPROMPT="%{$reset_color%}%D{%K:%M:%S}"
 
 # store history
 [ ! -f $HOME/.cache/zsh ] && mkdir -p $HOME/.cache/zsh && touch $HOME/.cache/zsh/history
-HISTFILE=~/.cache/zsh/history
-HISTSIZE=10000 SAVEHIST=10000
+HISTSIZE=10000 SAVEHIST=10000 HISTFILE=$HOME/.cache/zsh/history 
 
 # basic auto/tab complete:
 autoload -U compinit
