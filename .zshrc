@@ -1,5 +1,15 @@
-# default .profile
+# source user local .profile
 [ -f $HOME/.profile ] && . $HOME/.profile
+
+# use user local PATHs
+[ -d $HOME/.local/bin ] && PATH=$HOME/.local/bin:$PATH
+[ -d $HOME/scripts ] && PATH=$PATH:$HOME/scripts
+
+# use the GNU utils on macOS
+if [[ $OSTYPE == "darwin"* ]]; then
+  [ -d /usr/local/opt/coreutils/libexec/gnubin ] && PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
+  [ -d /usr/local/opt/coreutils/libexec/gnuman ] && export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
+fi
 
 # fn: detect if given command is executable
 is-exec() { if command="$(type -p "$1")" || [[ -z $command ]] && return 0; return 1 }
@@ -40,12 +50,6 @@ fix-zsh-histfile() {
 
 # set terminal emulator window title
 update-term-window-title
-
-# use the GNU utils on macOS
-if [[ $OSTYPE == "darwin"* ]]; then
-  [ -d /usr/local/opt/coreutils/libexec/gnubin ] && PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
-  [ -d /usr/local/opt/coreutils/libexec/gnuman ] && export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
-fi
 
 # enable colors
 autoload -U colors && colors
@@ -157,12 +161,6 @@ else
     diff='diff --color=auto'
 fi
 
-# add user scripts directory to path
-[ -d $HOME/scripts ] && PATH=$PATH:$HOME/scripts
-
-# user local bin
-[ -d $HOME/.local/bin ] && PATH=$HOME/.local/bin:$PATH
-
 # set EDITOR
 if is-exec "nvim"; then; export EDITOR="nvim"
 elif is-exec "vim"; then; export EDITOR="vim"
@@ -190,7 +188,7 @@ elif [ -s $HOME/.nvm/bash_completion ]; then; . $HOME/.nvm/bash_completion; fi
 
 [ -d $HOME/.nvm ] && export NVM_DIR=$HOME/.nvm
 
-# load zsh-syntax-highlighting; should be last
+# load zsh-syntax-highlighting (should be last)
 # per platform: arch, macos, debian
 . /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null \
   || . /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null \
