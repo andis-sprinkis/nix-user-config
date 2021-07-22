@@ -76,6 +76,8 @@ fi
 [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] && SSHSTATUS="%{$bg[blue]$fg[black]%} SSH " || SSHSTATUS=''
 
 # prompt
+setopt promptsubst
+left='%m | %~'
 PS1="%{$bg[$USERHOSTCOLOR] $fg[black]%}%n@%M $SSHSTATUS%{$reset_color%}\$vcs_info_msg_0_%{$bg[white]$fg[black]%} %/ 
 %{$reset_color$fg[$USERHOSTCOLOR]%}$%{$reset_color%} "
 RPROMPT="%{$reset_color%}%D{%K:%M:%S}"
@@ -144,7 +146,7 @@ alias \
   diskspace="df -h | grep Filesystem; df -h | grep /dev/sd; df -h | grep @" \
   dmenu='setdmenu -l 8' \
   dotgit='git --git-dir=$HOME/.dotfiles-git/ --work-tree=$HOME' \
-  myip='curl https://ipinfo.io/' \
+  myip='curl https://ipinfo.io/'
 
 if [[ $OSTYPE == "darwin"* ]] && [ ! -d /usr/local/opt/coreutils/libexec/gnubin ]; then
   echo "zshrc: GNU utils for macOS are not found (GNU util alias)"
@@ -157,6 +159,9 @@ fi
 
 # add user scripts directory to path
 [ -d $HOME/scripts ] && PATH=$PATH:$HOME/scripts
+
+# user local bin
+[ -d $HOME/.local/bin ] && PATH=$HOME/.local/bin:$PATH
 
 # set EDITOR
 if is-exec "nvim"; then; export EDITOR="nvim"
