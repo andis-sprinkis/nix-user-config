@@ -139,8 +139,8 @@ is-exec "nvim" && export MANPAGER="nvim +Man!" MANWIDTH=999
 
 # alias
 alias \
-  mv='mv -iv' \
-  cp='cp -riv' \
+  mv='mv -v' \
+  cp='cp -rv' \
   rm='rm -vI' \
   mkdir='mkdir -pv' \
   tree='tree -CF' \
