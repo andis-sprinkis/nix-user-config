@@ -11,6 +11,10 @@ if [[ $OSTYPE == "darwin"* ]]; then
   [ -d /usr/local/opt/coreutils/libexec/gnuman ] && export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
 fi
 
+# store history
+[ ! -f $HOME/.cache/zsh ] && mkdir -p $HOME/.cache/zsh && touch $HOME/.cache/zsh/history
+HISTSIZE=10000 SAVEHIST=10000 HISTFILE=$HOME/.cache/zsh/history 
+
 # fn: detect if given command is executable
 is-exec() { if command="$(type -p "$1")" || [[ -z $command ]] && return 0; return 1 }
 
@@ -38,59 +42,52 @@ ssh-set-dir-permissions() {
   chmod 644 -f $HOME/.ssh/*.pub $HOME/.ssh/authorized_keys $HOME/.ssh/known_hosts
 }
 
-# fn: set terminal emulator window title
-update-term-window-title() { echo -n "\033]0;${TERM} - ${USER}@${HOST} - ${PWD}\007" }
-
 # fn: fix corrupted history file
 fix-zsh-histfile() {
-  mv $HISTFILE $HOME/.zsh-history-old
+  mv $HISTFILE 
   strings $HOME/.zsh-history-old > $HISTFILE
   rm $HOME/.zsh-history-old
 }
 
-# set terminal emulator window title
-update-term-window-title
+# fn: set terminal emulator window title
+update-window-title() { echo -n "\033]0;${TERM} - ${USER}@${HOST} - ${PWD}\007" }
 
-# enable colors
-autoload -U colors && colors
-
-# remember and cd to last dir
+# remember last dir 
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
-cdr
 
-# comments in interactive mode
-setopt interactive_comments
+# cd to last dir
+cdr 
 
-# display git status
+# set window title
+update-window-title 
+
+# enable colors
+autoload -U colors && colors 
+
+# precmd_functions
 if is-exec "git"; then
   autoload -Uz vcs_info
-  precmd_vcs_info() { vcs_info }
-  precmd_functions+=( precmd_vcs_info update-term-window-title )
-  setopt prompt_subst
+  precmd_functions+=( vcs_info update-window-title )
   zstyle ':vcs_info:git:*' formats "$bg[white]$fg[black]  %b %{$reset_color%}"
 else
-  precmd_functions+=( update-term-window-title )
+  precmd_functions+=( update-window-title )
 fi
 
-# prompt: set color for host in prompt depending if root or not
-[[ $(whoami) == 'root' ]] && USERHOSTCOLOR='magenta' || USERHOSTCOLOR='cyan'
-
-# prompt: display ssh session status
-[ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] && SSHSTATUS="%{$bg[blue]$fg[black]%} SSH " || SSHSTATUS=''
-
-# prompt
+# prompt substitution
 setopt promptsubst
-left='%m | %~'
-PS1="%{$bg[$USERHOSTCOLOR] $fg[black]%}%n@%M $SSHSTATUS%{$reset_color%}\$vcs_info_msg_0_%{$bg[white]$fg[black]%} %/ 
-%{$reset_color$fg[$USERHOSTCOLOR]%}$%{$reset_color%} "
-RPROMPT="%{$reset_color%}%D{%K:%M:%S}"
-# TMOUT=1
-# TRAPALRM() { zle reset-prompt } # reset prompt every TMOUT
 
-# store history
-[ ! -f $HOME/.cache/zsh ] && mkdir -p $HOME/.cache/zsh && touch $HOME/.cache/zsh/history
-HISTSIZE=10000 SAVEHIST=10000 HISTFILE=$HOME/.cache/zsh/history 
+# prompt: PS1
+color_host=$([[ $(whoami) == 'root' ]] && echo 'magenta' || echo 'cyan')
+color_user=$([ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] && echo "%{$bg[blue]$fg[black]%} SSH ")
+PS1="%{$bg[$color_host] $fg[black]%}%n@%M $color_user%{$reset_color%}\$vcs_info_msg_0_%{$bg[white]$fg[black]%} %/ 
+%{$reset_color$fg[$color_host]%}$%{$reset_color%} "
+
+# prompt: RPROMPT
+RPROMPT="%{$reset_color%}%D{%K:%M:%S}"
+
+# comments in interactive mode
+setopt interactive_comments 
 
 # basic auto/tab complete:
 autoload -U compinit
@@ -99,10 +96,6 @@ zmodload zsh/complist
 compinit
 _comp_options+=(globdots) # Include hidden files.
 
-# vi mode
-bindkey -v
-export KEYTIMEOUT=1
-
 # use vim keys in tab complete menu
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
@@ -110,29 +103,37 @@ bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
 
-# change cursor shape for different vi modes.
+# vi mode
+bindkey -v
+export KEYTIMEOUT=1
+
+# fn: cursor shape for different vi modes
+echo-cur-beam() { echo -ne '\e[5 q' }
+echo-cur-block() { echo -ne '\e[1 q' }
+
+# fn: zle widgets
 zle-keymap-select() {
   case $KEYMAP in
-    vicmd) echo -ne '\e[1 q';;      # block
-    viins|main) echo -ne '\e[5 q';; # beam
+    vicmd) echo-cur-block;;
+    viins|main|.safe) echo-cur-beam;;
   esac
 }
-zle -N zle-keymap-select
-zle-line-init() {
-  zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
-  echo -ne "\e[5 q"
-}
-zle -N zle-line-init
-echo -ne '\e[5 q' # Use beam shape cursor on startup.
-preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
+zle-line-init() {zle -K viins && echo-cur-beam }
 
-# auto cd
-setopt autocd
+# set zle widgets
+zle -N zle-keymap-select
+zle -N zle-line-init
 
 # edit line in editor with ctrl-e:
 autoload edit-command-line
 zle -N edit-command-line
 bindkey '^e' edit-command-line
+
+# fn: preexec
+preexec() { echo-cur-beam }
+
+# auto cd
+setopt autocd
 
 # use nvim as man-pager
 is-exec "nvim" && export MANPAGER="nvim +Man!" MANWIDTH=999
@@ -183,6 +184,7 @@ fi
 if [ -s /usr/local/opt/nvm/nvm.sh ]; then; . /usr/local/opt/nvm/nvm.sh
 elif [ -s $HOME/.nvm/nvm.sh ]; then; . $HOME/.nvm/nvm.sh; fi
 
+# initialize nvm completion
 if [ -s /usr/local/opt/nvm/etc/bash_completion.d/nvm ]; then; . /usr/local/opt/nvm/etc/bash_completion.d/nvm
 elif [ -s $HOME/.nvm/bash_completion ]; then; . $HOME/.nvm/bash_completion; fi
 
