@@ -80,6 +80,7 @@ setopt promptsubst
 # prompt: PS1
 color_host=$([[ $(whoami) == 'root' ]] && echo 'magenta' || echo 'cyan')
 color_user=$([ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] && echo "%{$bg[blue]$fg[black]%} SSH ")
+
 PS1="%{$bg[$color_host] $fg[black]%}%n@%M $color_user%{$reset_color%}\$vcs_info_msg_0_%{$bg[white]$fg[black]%} %/ 
 %{$reset_color$fg[$color_host]%}$%{$reset_color%} "
 
@@ -184,7 +185,6 @@ fi
 if [ -s /usr/local/opt/nvm/nvm.sh ]; then; . /usr/local/opt/nvm/nvm.sh
 elif [ -s $HOME/.nvm/nvm.sh ]; then; . $HOME/.nvm/nvm.sh; fi
 
-# initialize nvm completion
 if [ -s /usr/local/opt/nvm/etc/bash_completion.d/nvm ]; then; . /usr/local/opt/nvm/etc/bash_completion.d/nvm
 elif [ -s $HOME/.nvm/bash_completion ]; then; . $HOME/.nvm/bash_completion; fi
 
