@@ -94,12 +94,12 @@ fi
 setopt promptsubst
 
 # prompt: PS1
-userhost="%{$bg[$([[ $(whoami) == 'root' ]] && echo 'magenta' || echo 'cyan')] $fg[black]%}%n@%M $reset_color"
-ssh_status=$([ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] && echo "%{$bg[blue]$fg[black]%} SSH $reset_color")
-vcs_info="\$vcs_info_msg_0_$reset_color"
-cwd_path="%{$bg[white]$fg[black]%} %/ $reset_color"
+userhost="%{$bg[$([[ $(whoami) == 'root' ]] && echo 'magenta' || echo 'cyan')] $fg[black]%}%n@%M %{$reset_color%}"
+ssh_status=$([ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] && echo "%{$bg[blue]$fg[black]%} SSH %{$reset_color%}")
+vcs_info="\$vcs_info_msg_0_%{$reset_color%}"
+cwd_path="%{$bg[white]$fg[black]%} %/ %{$reset_color%}"
 prompt_symbol="
-$([[ $(whoami) == 'root' ]] && echo "%{$fg[magenta]%}#" || echo "%{$fg[cyan]%}$") $reset_color"
+$([[ $(whoami) == 'root' ]] && echo "%{$fg[magenta]%}#" || echo "%{$fg[cyan]%}$")%{$reset_color%} "
 PS1="$userhost$ssh_status$vcs_info$cwd_path$prompt_symbol"
 
 # prompt: RPROMPT
