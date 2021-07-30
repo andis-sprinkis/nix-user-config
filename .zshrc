@@ -1,20 +1,3 @@
-# source user local .profile
-[ -f $HOME/.profile ] && . $HOME/.profile
-
-# use user local PATHs
-[ -d $HOME/.local/bin ] && PATH=$HOME/.local/bin:$PATH
-[ -d $HOME/scripts ] && PATH=$PATH:$HOME/scripts
-
-# use the GNU utils on macOS
-if [[ $OSTYPE == "darwin"* ]]; then
-  [ -d /usr/local/opt/coreutils/libexec/gnubin ] && PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
-  [ -d /usr/local/opt/coreutils/libexec/gnuman ] && export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
-fi
-
-# store history
-[ ! -f $HOME/.cache/zsh ] && mkdir -p $HOME/.cache/zsh && touch $HOME/.cache/zsh/history
-HISTSIZE=10000 SAVEHIST=10000 HISTFILE=$HOME/.cache/zsh/history 
-
 # fn: detect if given command is executable
 is-exec() { if command="$(type -p "$1")" || [[ -z $command ]] && return 0; return 1 }
 
@@ -52,6 +35,39 @@ fix-zsh-histfile() {
 # fn: set terminal emulator window title
 update-window-title() { echo -n "\033]0;${TERM} - ${USER}@${HOST} - ${PWD}\007" }
 
+# fn: cursor shape for different vi modes
+echo-cur-beam() { echo -ne '\e[5 q' }
+echo-cur-block() { echo -ne '\e[1 q' }
+
+# fn: zle widgets
+zle-keymap-select() {
+  case $KEYMAP in
+    vicmd) echo-cur-block;;
+    viins|main|.safe) echo-cur-beam;;
+  esac
+}
+zle-line-init() { zle -K viins && echo-cur-beam }
+
+# fn: preexec
+preexec() { echo-cur-beam }
+
+# source user local .profile
+[ -f $HOME/.profile ] && . $HOME/.profile
+
+# use user local PATHs
+[ -d $HOME/.local/bin ] && PATH=$HOME/.local/bin:$PATH
+[ -d $HOME/scripts ] && PATH=$PATH:$HOME/scripts
+
+# use the GNU utils on macOS
+if [[ $OSTYPE == "darwin"* ]]; then
+  [ -d /usr/local/opt/coreutils/libexec/gnubin ] && PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
+  [ -d /usr/local/opt/coreutils/libexec/gnuman ] && export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}"
+fi
+
+# store history
+[ ! -f $HOME/.cache/zsh ] && mkdir -p $HOME/.cache/zsh && touch $HOME/.cache/zsh/history
+HISTSIZE=10000 SAVEHIST=10000 HISTFILE=$HOME/.cache/zsh/history 
+
 # remember last dir 
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
@@ -78,14 +94,18 @@ fi
 setopt promptsubst
 
 # prompt: PS1
-color_host=$([[ $(whoami) == 'root' ]] && echo 'magenta' || echo 'cyan')
-color_user=$([ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] && echo "%{$bg[blue]$fg[black]%} SSH ")
-
-PS1="%{$bg[$color_host] $fg[black]%}%n@%M $color_user%{$reset_color%}\$vcs_info_msg_0_%{$bg[white]$fg[black]%} %/ 
-%{$reset_color$fg[$color_host]%}$%{$reset_color%} "
+color_userhost_prompt=$([[ $(whoami) == 'root' ]] && echo 'magenta' || echo 'cyan')
+userhost="%{$bg[$color_userhost_prompt] $fg[black]%}%n@%M "
+ssh_status=$([ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] && echo "%{$bg[blue]$fg[black]%} SSH $reset_color")
+vcs_info="\$vcs_info_msg_0_"
+cwd_path="%{$bg[white]$fg[black]%} %/ $reset_color"
+prompt_symbol="
+%{$fg[$color_userhost_prompt]%}$%{$reset_color%} "
+PS1="$userhost$ssh_status$vcs_info$cwd_path$prompt_symbol"
 
 # prompt: RPROMPT
-RPROMPT="%{$reset_color%}%D{%K:%M:%S}"
+timestamp="%D{%K:%M:%S}"
+RPROMPT="$timestamp"
 
 # comments in interactive mode
 setopt interactive_comments 
@@ -108,19 +128,6 @@ bindkey -v '^?' backward-delete-char
 bindkey -v
 export KEYTIMEOUT=1
 
-# fn: cursor shape for different vi modes
-echo-cur-beam() { echo -ne '\e[5 q' }
-echo-cur-block() { echo -ne '\e[1 q' }
-
-# fn: zle widgets
-zle-keymap-select() {
-  case $KEYMAP in
-    vicmd) echo-cur-block;;
-    viins|main|.safe) echo-cur-beam;;
-  esac
-}
-zle-line-init() {zle -K viins && echo-cur-beam }
-
 # set zle widgets
 zle -N zle-keymap-select
 zle -N zle-line-init
@@ -129,9 +136,6 @@ zle -N zle-line-init
 autoload edit-command-line
 zle -N edit-command-line
 bindkey '^e' edit-command-line
-
-# fn: preexec
-preexec() { echo-cur-beam }
 
 # auto cd
 setopt autocd
@@ -184,7 +188,6 @@ fi
 # initialize nvm
 if [ -s /usr/local/opt/nvm/nvm.sh ]; then; . /usr/local/opt/nvm/nvm.sh
 elif [ -s $HOME/.nvm/nvm.sh ]; then; . $HOME/.nvm/nvm.sh; fi
-
 if [ -s /usr/local/opt/nvm/etc/bash_completion.d/nvm ]; then; . /usr/local/opt/nvm/etc/bash_completion.d/nvm
 elif [ -s $HOME/.nvm/bash_completion ]; then; . $HOME/.nvm/bash_completion; fi
 
