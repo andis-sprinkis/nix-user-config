@@ -85,7 +85,7 @@ autoload -U colors && colors
 if is-exec "git"; then
   autoload -Uz vcs_info
   precmd_functions+=( vcs_info update-window-title )
-  zstyle ':vcs_info:git:*' formats "$bg[white]$fg[black]  %b %{$reset_color%}"
+  zstyle ':vcs_info:git:*' formats "$bg[white]$fg[black]  %b "
 else
   precmd_functions+=( update-window-title )
 fi
@@ -94,13 +94,12 @@ fi
 setopt promptsubst
 
 # prompt: PS1
-color_userhost_prompt=$([[ $(whoami) == 'root' ]] && echo 'magenta' || echo 'cyan')
-userhost="%{$bg[$color_userhost_prompt] $fg[black]%}%n@%M "
+userhost="%{$bg[$([[ $(whoami) == 'root' ]] && echo 'magenta' || echo 'cyan')] $fg[black]%}%n@%M $reset_color"
 ssh_status=$([ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] && echo "%{$bg[blue]$fg[black]%} SSH $reset_color")
-vcs_info="\$vcs_info_msg_0_"
+vcs_info="\$vcs_info_msg_0_$reset_color"
 cwd_path="%{$bg[white]$fg[black]%} %/ $reset_color"
 prompt_symbol="
-%{$fg[$color_userhost_prompt]%}$%{$reset_color%} "
+$([[ $(whoami) == 'root' ]] && echo "%{$fg[magenta]%}#" || echo "%{$fg[cyan]%}$") $reset_color"
 PS1="$userhost$ssh_status$vcs_info$cwd_path$prompt_symbol"
 
 # prompt: RPROMPT
