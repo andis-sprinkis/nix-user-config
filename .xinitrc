@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 
+xrdb $HOME/.Xresources &
 VBoxClient-all &
 xset b off &
 xset r rate 220 30 &
