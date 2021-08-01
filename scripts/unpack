@@ -1,22 +1,18 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
-argsFile=/tmp/unpack-$(date +%s3N).txt
+argsFile=$(mktemp)
 
-for match in "$@"
-do
+for match in "$@"; do
   printf %q"\n" "$(readlink -f "$match")" >> $argsFile
 done
 
 $EDITOR $argsFile
-
 readarray -t arrArgs < $argsFile
-
 rm $argsFile
 
-for item in "${arrArgs[@]}"
-do
-  echo "--------------------------------------------------"
-  echo "Unpacking $item"
-  echo "--------------------------------------------------"
+for item in "${arrArgs[@]}"; do
+  echo "--------------------------------------------------
+Unpacking $item
+--------------------------------------------------"
   aunpack -D "$(echo $item | sed 's/[\]//g')"
 done
