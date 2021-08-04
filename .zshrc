@@ -167,10 +167,9 @@ else
 fi
 
 # set EDITOR
-if is-exec "nvim"; then; export EDITOR="nvim"
-elif is-exec "vim"; then; export EDITOR="vim"
-elif is-exec "vi"; then; export EDITOR="vi"
-elif is-exec "nano"; then; export EDITOR="nano"; fi
+for editor in "nvim" "vim" "vi" "nano"; do
+  is-exec $editor && export EDITOR=$editor && break
+done
 
 # configure bat
 is-exec "bat" && export BAT_THEME="ansi" BAT_STYLE="plain"
