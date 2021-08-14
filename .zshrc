@@ -167,9 +167,7 @@ else
 fi
 
 # set EDITOR
-for editor in "nvim" "vim" "vi" "nano"; do
-  is-exec $editor && export EDITOR=$editor && break
-done
+for editor in "nvim" "vim" "vi" "nano"; do; is-exec $editor && export EDITOR=$editor && break; done
 
 # configure bat
 is-exec "bat" && export BAT_THEME="ansi" BAT_STYLE="plain"
@@ -178,36 +176,34 @@ is-exec "bat" && export BAT_THEME="ansi" BAT_STYLE="plain"
 if is-exec "fzf"; then
   is-exec "bat" && export FZF_DEFAULT_OPTS="--tabstop=2 --cycle --color=dark --layout=reverse --preview 'bat --color=always --line-range=:500 {}'" \
     || export FZF_DEFAULT_OPTS="--tabstop=4 --cycle --color=dark --height 50% --layout=reverse"
-  if [ -f /usr/share/fzf/completion.zsh ]; then; . /usr/share/fzf/completion.zsh
-  elif [ -f $HOME/.fzf/shell/completion.zsh ]; then; . $HOME/.fzf/shell/completion.zsh; fi
+
+  for fzf_completion in \
+    /usr/share/fzf/completion.zsh \
+    $HOME/.fzf/shell/completion.zsh
+  do; if [ -f $fzf_completion ]; then; . $fzf_completion; break; fi; done
 fi
 
 # initialize nvm
 for nvm_sh in \
-  /usr/local/opt/nvm/nvm.sh \
   /usr/share/nvm/nvm.sh \
+  /usr/local/opt/nvm/nvm.sh \
   $HOME/.nvm/nvm.sh
-do
-  if [ -f $nvm_sh ]; then
-    . $nvm_sh
-    [ ! -d $HOME/.nvm ] && mkdir -p $HOME/.nvm && export NVM_DIR=$HOME/.nvm
-    break
-  fi
-done
+do; if [ -f $nvm_sh ]; then
+  . $nvm_sh
+  [ ! -d $HOME/.nvm ] && mkdir -p $HOME/.nvm
+  export NVM_DIR=$HOME/.nvm
+break; fi; done
 
 for nvm_bash_completion in \
-  /usr/local/opt/nvm/etc/bash_completion.d/nvm \
   /usr/share/nvm/bash_completion \
+  /usr/local/opt/nvm/etc/bash_completion.d/nvm \
   $HOME/.nvm/bash_completion
-do
-  if [ -f $nvm_bash_completion ]; then
-    . $nvm_bash_completion
-    break
-  fi
-done
+do; if [ -f $nvm_bash_completion ]; then; . $nvm_bash_completion; break; fi; done
 
 # load zsh-syntax-highlighting (should be last)
 # per platform: arch, macos, debian
-. /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null \
-  || . /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null \
-  || . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 2>/dev/null
+for zsh_highlighting_init in \
+  /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+  /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+  /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+do; if [ -f $zsh_highlighting_init ]; then; . $zsh_highlighting_init; break; fi; done
