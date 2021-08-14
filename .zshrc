@@ -183,11 +183,25 @@ if is-exec "fzf"; then
 fi
 
 # initialize nvm
-if [ -s /usr/local/opt/nvm/nvm.sh ]; then; . /usr/local/opt/nvm/nvm.sh
-elif [ -s $HOME/.nvm/nvm.sh ]; then; . $HOME/.nvm/nvm.sh; fi
-if [ -s /usr/local/opt/nvm/etc/bash_completion.d/nvm ]; then; . /usr/local/opt/nvm/etc/bash_completion.d/nvm
-elif [ -s $HOME/.nvm/bash_completion ]; then; . $HOME/.nvm/bash_completion; fi
-[ -d $HOME/.nvm ] && export NVM_DIR=$HOME/.nvm
+for nvm_sh in \
+  /usr/local/opt/nvm/nvm.sh \
+  /usr/share/nvm/nvm.sh \
+  $HOME/.nvm/nvm.sh
+do
+  if [ -f $nvm_sh ]; then
+    . $nvm_sh
+    [ ! -d $HOME/.nvm ] && mkdir -p $HOME/.nvm && export NVM_DIR=$HOME/.nvm
+    break
+  fi
+done
+
+for nvm_bash_completion in \
+  /usr/local/opt/nvm/etc/bash_completion.d/nvm \
+  /usr/share/nvm/bash_completion \
+  $HOME/.nvm/bash_completion
+do
+  if [ -f $nvm_bash_completion ]; then; . $nvm_bash_completion && break; fi
+done
 
 # load zsh-syntax-highlighting (should be last)
 # per platform: arch, macos, debian
