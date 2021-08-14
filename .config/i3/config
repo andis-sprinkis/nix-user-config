@@ -175,7 +175,7 @@ bar {
   mode              dock
   workspace_buttons yes
   tray_output       none
-  workspace_min_width 48
+  workspace_min_width 56
   separator_symbol " "
   font pango:monospace Bold 12
 
@@ -200,7 +200,7 @@ bar {
   workspace_buttons yes
   tray_output       none
   separator_symbol none
-  workspace_min_width 48
+  workspace_min_width 56
   font pango:monospace Bold 12
 
   colors {
