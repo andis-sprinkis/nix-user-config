@@ -200,7 +200,10 @@ for nvm_bash_completion in \
   /usr/share/nvm/bash_completion \
   $HOME/.nvm/bash_completion
 do
-  if [ -f $nvm_bash_completion ]; then; . $nvm_bash_completion && break; fi
+  if [ -f $nvm_bash_completion ]; then
+    . $nvm_bash_completion
+    break
+  fi
 done
 
 # load zsh-syntax-highlighting (should be last)
