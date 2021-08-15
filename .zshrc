@@ -1,5 +1,5 @@
 # fn: detect if given command is executable
-is-exec() { if command="$(type -p "$1")" || [[ -z $command ]] && return 0; return 1 }
+is-exec() { if command="$(command -v "$1")" || [[ -z $command ]] && return 0; return 1 }
 
 # fn: fetch updated .zshrc
 update-zshrc() {
@@ -27,7 +27,7 @@ ssh-set-dir-permissions() {
 
 # fn: fix corrupted history file
 fix-zsh-histfile() {
-  mv $HISTFILE 
+  mv $HISTFILE $HOME/.zsh-history-old
   strings $HOME/.zsh-history-old > $HISTFILE
   rm $HOME/.zsh-history-old
 }
