@@ -51,8 +51,8 @@ zle-line-init() { zle -K viins && echo-cur-beam }
 # fn: preexec
 preexec() { echo-cur-beam }
 
-# source user local .profile
-[ -f $HOME/.profile ] && . $HOME/.profile
+# source .local_profile
+[ -f $HOME/.local_profile ] && . $HOME/.local_profile
 
 # use user local PATHs
 [ -d $HOME/.local/bin ] && PATH=$HOME/.local/bin:$PATH
