@@ -65,7 +65,7 @@ if [[ $OSTYPE == "darwin"* ]]; then
 fi
 
 # store history
-[ ! -f $HOME/.cache/zsh ] && mkdir -p $HOME/.cache/zsh && touch $HOME/.cache/zsh/history
+[ ! -f $HOME/.cache/zsh ] && mkdir -p $HOME/.cache/zsh && touch $HOME/.cache/zsh/history && echo $HOME >> $HOME/.cache/zsh/history
 HISTSIZE=10000 SAVEHIST=10000 HISTFILE=$HOME/.cache/zsh/history 
 
 # remember last dir 
