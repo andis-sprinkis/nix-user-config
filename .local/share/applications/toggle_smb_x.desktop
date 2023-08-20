@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Toggle SMB
+Exec=toggle_smb_x

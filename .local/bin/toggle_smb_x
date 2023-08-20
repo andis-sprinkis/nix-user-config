@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+systemctl is-active --quiet sshd && {
+  $TERMINAL -e $SHELL -c "systemctl stop smb && read"
+} || {
+  $TERMINAL -e $SHELL -c "systemctl start smb && read"
+}
