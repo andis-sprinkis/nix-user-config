@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Toggle SSHD
+Exec=toggle_sshd_x
