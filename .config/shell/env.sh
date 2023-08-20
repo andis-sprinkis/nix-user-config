@@ -54,6 +54,9 @@ main() {
   # configure GTK 2.0
   export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc"
 
+  # configure GTK 3.0, 4.0
+  export GTK_THEME=Adwaita:dark
+
   # configure Qt
   export QT_STYLE_OVERRIDE="adwaita-dark"
 
