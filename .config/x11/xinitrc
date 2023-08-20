@@ -8,7 +8,7 @@ fi
 xrdb -load "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources"
 VBoxClient-all &
 xset b off &
-xset r rate 170 50 &
+xset r rate 165 55 &
 xkbcomp -I"${XDG_CONFIG_HOME:-$HOME/.config}/xkb" "${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd" "$DISPLAY" &
 [ -z "$(pidof xsettingsd)" ] && xsettingsd &
 [ -z "$(pidof xcompmgr)" ] && xcompmgr &
