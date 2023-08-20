@@ -1,0 +1,25 @@
+#!/bin/bash
+
+workspaces=($(i3-msg -t get_workspaces | tr , '\n' | grep '"num":' | cut -d : -f 2))
+previous=$((${workspaces[0]}-1))
+j=0
+
+for i in "${workspaces[@]}"; do
+  echo $i
+  if [[ $previous -gt 0 ]] && [[ $j -eq 0 ]]; then
+    i3-msg workspace 1
+    exit
+  fi
+
+  if [[ $previous+1 -ne $i ]]; then
+    i3-msg workspace $(($previous+1))
+    exit
+  fi
+  previous=$i
+  j=$(($j+1))
+done
+
+if [[ $i -lt 10 ]]; then
+  i3-msg workspace $(($i+1))
+  exit
+fi

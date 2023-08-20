@@ -1,0 +1,18 @@
+[submodule ".local/share/dict"]
+	path = .local/share/dict
+	url = https://github.com/andis-sprinkis/dict
+[submodule ".local/share/zsh/plugins/fast-syntax-highlighting"]
+	path = .local/share/zsh/plugins/fast-syntax-highlighting
+	url = https://github.com/andis-sprinkis/fast-syntax-highlighting
+[submodule ".local/share/git-completion"]
+	path = .local/share/git-completion
+	url = https://github.com/andis-sprinkis/git-completion
+[submodule ".local/share/nsxiv-extra"]
+	path = .local/share/nsxiv-extra
+	url = https://github.com/andis-sprinkis/nsxiv-extra
+[submodule ".local/opt/tldr-sh-client"]
+	path = .local/opt/tldr-sh-client
+	url = https://github.com/andis-sprinkis/tldr-sh-client
+[submodule ".local/share/zsh/plugins/zsh-system-clipboard"]
+	path = .local/share/zsh/plugins/zsh-system-clipboard
+	url = https://github.com/andis-sprinkis/zsh-system-clipboard

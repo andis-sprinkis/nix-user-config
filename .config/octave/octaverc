@@ -1,0 +1,4 @@
+EDITOR('nvim > /dev/tty 2>&1 < /dev/tty %s')
+edit mode async # make spawned processes run in background
+more off # scroll screen output automatically
+page_screen_output(0); # write text to screen without buffering

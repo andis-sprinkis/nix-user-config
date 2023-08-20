@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Lock screen
+Exec=screen_lock_i3lock_dpms

@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+[[ "$@" == ?(http|https)://* ]] && exec web_browser_xdg "$@"
+
+[[ "$@" == file://* ]] && {
+  no_pre=$(echo "$@" | sed -n 's/file:\/\///p')
+  path=$(readlink -f "$(printf '%b\n' "${no_pre//%/\\x}")")
+} || path="$(readlink -f "$@")"
+
+[ "$path" ] && mime="$(file --mime-type -b "$path")"
+[ "$mime" ] && handler="$(xdg-mime query default $mime)"
+
+[ -z "$handler" ] && {
+  echo "Preventing parameter without a recognized handler from being passed to xdg-open"
+  exit 1
+}
+
+exec "/usr/bin/xdg-open" "$@"

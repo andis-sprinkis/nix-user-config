@@ -1,0 +1,15 @@
+#!/bin/sh
+foreground="$(xrdb -get foreground)"
+color0="$(xrdb -get color0)"
+font="$(xrdb -get font)"
+
+exec /usr/bin/dmenu \
+  -i \
+  -nf "$foreground" \
+  -nb "$color0" \
+  -sb "$foreground" \
+  -sf "$color0" \
+  -b \
+  -l 25 \
+  -fn "$font" \
+  "$@"

@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=BitTorrent client
+Exec=qbittorrent %U

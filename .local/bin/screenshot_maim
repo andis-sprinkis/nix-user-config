@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -e
+
+path_dir="$HOME/screen"
+mkdir -p "$path_dir"
+path_file=$path_dir/"$(date +%s).png"
+
+case "$1" in
+	--help | -h)
+		echo "script usage: [--active] [--select] [--help | -h]"
+		exit
+		;;
+	--active)
+		maim -u --window "$(xdotool getactivewindow)" "$path_file"
+		exit
+		;;
+	--select)
+		maim -u --select "$path_file"
+		exit
+		;;
+	*)
+		maim -u "$path_file"
+		exit
+		;;
+esac

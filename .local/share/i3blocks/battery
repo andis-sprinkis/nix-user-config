@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# The original script is from:
+# https://github.com/LukeSmithxyz/voidrice/blob/5a6c56d565e4e7c20171f5757e12306d9253c52b/.local/bin/labelbar/sb-battery
+
+[ "$button" == "1" ] && $TERMINAL -e $SHELL -c "acpi -i && read"
+
+label_full="Battery full"
+label_discharging="Battery discharging"
+label_charging="Battery charging"
+label_not_charging="Battery not charging"
+label_unknown="Battery state unknown"
+label_warn="⚠️ " 
+
+for battery in /sys/class/power_supply/BAT?*; do
+	[ -n "${capacity+x}" ] && printf " "
+
+	case "$(cat "$battery/status" 2>&1)" in
+		"Full") label="$label_full" ;;
+		"Discharging") label="$label_discharging" ;;
+		"Charging") label="$label_charging" ;;
+		"Not charging") label="$label_not_charging" ;;
+		"Unknown") label="$label_unknown" ;;
+		*) exit 1 ;;
+	esac
+
+	capacity="$(cat "$battery/capacity" 2>&1)"
+
+	[ "$label" = "$label_discharging" ] && [ "$capacity" -le 25 ] && warn="$label_warn"
+
+	printf "%s, %s%d%%" "$label" "$warn" "$capacity"; unset warn
+done && printf "\\n"

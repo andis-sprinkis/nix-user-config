@@ -1,0 +1,32 @@
+[date]
+command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/date
+interval=20
+
+[time]
+command=date +"%-H:%M"
+interval=20
+
+[connectivity_nm]
+command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/connectivity_nm
+interval=5
+
+[sshd]
+command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/sshd
+interval=10
+
+[smb]
+command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/smb
+interval=10
+
+[battery]
+command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/battery
+interval=10
+
+[volume]
+command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/volume
+LABEL=Volume 
+interval=1
+signal=10
+STEP=1%
+# MIXER=[determined automatically]
+# SCONTROL=[determined automatically]

@@ -1,0 +1,9 @@
+#/usr/bin/python
+options(radian.editing_mode = "vi")
+options(radian.global_history_file = "~/.cache/radian/history")
+options(radian.tab_size = 2)
+options(radian.auto_match = FALSE)
+options(radian.vi_mode_prompt = "\033[0;34m({})\033[0m ")
+options(radian.prompt = "\033[0;34mr$\033[0m ")
+options(radian.shell_prompt = "\033[0;31m#!\033[0m ")
+options(radian.browse_prompt = "\033[0;33mBrowse({})\033[0m ")

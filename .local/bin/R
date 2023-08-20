@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+for web_browser in "firefox" "chromium" "chrome" "epiphany"; do
+  [ "$(command -v "$web_browser")" ] && export R_BROWSER="$web_browser" && break
+done
+
+[ "$(command -v "zathura")" ] && export R_PDFVIEWER="zathura"
+
+mkdir -p \
+  "${XDG_CONFIG_HOME:-$HOME/.config}/r" \
+  "${XDG_CACHE_HOME:-$HOME/.cache}/r" \
+  "${XDG_DATA_HOME:-$HOME/.local/share}/r/lib"
+
+[ ! -f "${XDG_CACHE_HOME:-$HOME/.cache}/r/history.R" ] && touch "${XDG_CACHE_HOME:-$HOME/.cache}/r/history.R"
+
+export R_PROFILE_USER="${XDG_CONFIG_HOME:-$HOME/.config}/r/profile.R"
+export R_HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/r/history.R"
+export R_LIBS_USER="${XDG_DATA_HOME:-$HOME/.local/share}/r/lib"
+
+exec /usr/bin/R --no-save --quiet "$@"

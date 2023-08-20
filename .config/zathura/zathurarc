@@ -1,0 +1,26 @@
+include colors/vscode_dark
+
+set adjust-open "width"
+set continuous-hist-save true
+set font "sans-serif regular 12"
+set guioptions ""
+set recolor true
+set recolor-keephue true
+set selection-clipboard clipboard
+set show-hidden true
+set statusbar-basename true
+set window-title-basename true
+set window-title-page true
+
+map <PageDown> scroll half-down
+map <PageUp> scroll half-up
+map C exec "zathura -P \"$PAGE\" -- \"$FILE\""
+map D toggle_page_mode
+map J zoom out
+map K zoom in
+map R rotate
+map d scroll half-down
+map g goto top
+map i recolor
+map r reload
+map u scroll half-up

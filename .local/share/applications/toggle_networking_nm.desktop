@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Toggle networking
+Exec=toggle_networking_nm

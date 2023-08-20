@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+[ "$button" == "1" ] && $TERMINAL -e calcurse
+
+date +"%A — %-d. %B" | sed 's/./\u&/'

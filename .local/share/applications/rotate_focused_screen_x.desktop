@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Rotate screen
+Exec=rotate_focused_screen_x

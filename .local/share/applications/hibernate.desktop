@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Hibernate
+Exec=systemctl hibernate

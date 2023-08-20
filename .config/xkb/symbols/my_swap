@@ -1,0 +1,5 @@
+partial modifier_keys
+xkb_symbols "kb_swaps" {
+  replace key <CAPS> { [ Super_L ] };
+  replace key <LWIN> { [ Menu ] };
+};

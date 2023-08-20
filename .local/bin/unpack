@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Extracts multiple archives as subdirectories, after confirming input archives listing in the EDITOR.
+#
+# Arguments:
+# $@ - the list of input archive paths
+
+[ ! "$(command -v "aunpack")" ] && {
+  echo "aunpack not found"
+  exit 1
+}
+
+archive_paths_file=$(mktemp)
+
+for archive_path in "$@"; do
+  printf %q"\n" "$(readlink -f "$archive_path")" >> $archive_paths_file
+done
+
+$EDITOR $archive_paths_file
+readarray -t archive_paths < $archive_paths_file
+rm $archive_paths_file
+
+for archive_path in "${archive_paths[@]}"; do
+  echo "--------------------------------------------------
+Unpacking $archive_path
+--------------------------------------------------"
+
+  aunpack -D "$(echo $archive_path | sed 's/[\]//g')"
+done

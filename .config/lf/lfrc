@@ -1,0 +1,62 @@
+set hidden!
+set mouse
+set numberfmt "\033[90m"
+set period 1
+set previewer ~/.local/share/lf/previewer
+set promptfmt "\033[32;1m%u@%h\033[0m \033[34;1m%d\033[0m\033[1m%f\033[0m"
+set scrolloff 12
+set shellopts '-eu'
+set tabstop 2
+set wrapscroll
+
+cmd open ${{
+  IFS=$'\n'
+  mime="$(file --mime-type "$(readlink -f "$f")" -b)"
+
+  case $mime in
+    application/octet-stream)
+      lf -remote "send $id push :open-with<space>"
+      exit;;
+    application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
+      lf -remote "send $id push :unpack"
+      exit;;
+    text/*|application/xml|application/*json*|application/xhtml*|application/x-httpd-php|application/x-wine-extension-ini|application/x-subrip|application/x-awk|inode/x-empty)
+      $EDITOR $fx
+      exit;;
+  esac
+
+  [ "$(command -v "xdg-mime")" ] && [ -z "$(xdg-mime query default $mime)" ] && {
+    lf -remote "send $id push :open-with<space>"
+    exit
+  }
+
+  for f in $fx; do nohup $OPENER "$f" > /dev/null 2> /dev/null & done
+}}
+
+cmd open-with ${{
+  IFS=$'\n'
+  for f in $fx; do nohup "$@" "$f" > /dev/null 2> /dev/null & done
+}}
+
+cmd unpack ${{
+  IFS=$'\n'
+  unpack $fx
+}}
+
+cmd copy-path ${{
+  IFS=$'\n'
+  [ "$(command -v "xclip")" ] && { echo -n "$fx" | xclip -sel clipboard; } && exit
+  [ "$(command -v "pbcopy")" ] && { echo -n "$fx" | pbcopy; } && exit
+}}
+
+cmd on-cd &{{
+  printf "\033]0;$PWD\007" > /dev/tty
+}}
+on-cd
+
+map Y copy-path
+map ` !true
+map b :mark-load
+map m
+map o push :open-with<space>
+

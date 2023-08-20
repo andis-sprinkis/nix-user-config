@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+if [ "$(id -u)" -lt 1000 ]; then
+  echo "$(basename "$0"): Must not use a system account" 2>&1
+  exit 1
+fi
+
+xrdb -load "${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources"
+VBoxClient-all &
+xset b off &
+xset r rate 170 40 &
+xkbcomp -I"${XDG_CONFIG_HOME:-$HOME/.config}/xkb" "${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd" "$DISPLAY" &
+[ -z "$(pidof xsettingsd)" ] && xsettingsd &
+[ -z "$(pidof xcompmgr)" ] && xcompmgr &
+[ -z "$(pidof unclutter)" ] && unclutter --timeout 2 --start-hidden &
+hsetroot -solid "$(xrdb -get background)" &
+
+[ -z "$(pidof i3)" ] && exec i3 || i3-msg restart
