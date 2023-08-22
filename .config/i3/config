@@ -78,7 +78,7 @@ bar {
     active_workspace   $color15 $color15 $color0
     inactive_workspace $color0  $color0  $color8
     urgent_workspace   $color3  $color3  $color0
-    binding_mode       $color6  $color6  $color0
+    binding_mode       $color5  $color5  $color0
   }
 }
 
