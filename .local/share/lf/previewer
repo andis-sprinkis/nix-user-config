@@ -11,5 +11,6 @@ case $mime in
   application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/zip) als -- "$1"; exit 1;;
   image/*) catimg -r 2 -w $(($2*2)) "$1" | awk 'NR>1{print buf}{buf = $0}'; exit 1;;
   *opendocument*) odt2txt "$1"; exit 1;;
+  application/vnd.sqlite3) sqlite3 "$1" '.tables'; exit 1;;
   *) bat --color always -- "$1"; exit 1;;
 esac
