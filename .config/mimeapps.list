@@ -10,6 +10,7 @@ application/vnd.rar=file.desktop
 application/x-7z-compressed=file.desktop
 application/x-rar=file.desktop
 application/x-tar=file.desktop
+application/x-xz=file.desktop
 application/zip=file.desktop
 
 x-scheme-handler/http=web.desktop
