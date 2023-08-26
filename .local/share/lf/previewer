@@ -8,7 +8,7 @@ echo "$mime"
 
 case $mime in
   application/eps|application/pdf|application/postscript|application/x-eps|image/x-eps) pdftotext -- "$1" -; exit 1;;
-  application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/zip) als -- "$1"; exit 1;;
+  application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip) als -- "$1"; exit 1;;
   image/*) catimg -r 2 -w $(($2*2)) "$1" | awk 'NR>1{print buf}{buf = $0}'; exit 1;;
   *opendocument*) odt2txt "$1"; exit 1;;
   application/vnd.sqlite3) sqlite3 "$1" '.tables'; exit 1;;
