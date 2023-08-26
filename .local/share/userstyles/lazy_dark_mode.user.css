@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://andis.work
-@version      0.0.7
+@version      0.0.8
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://andis.work)
@@ -27,7 +27,6 @@ domain("medium.com"),
 domain("merriam-webster.com"),
 domain("programmathically.com"),
 domain("proton.me"),
-domain("scribbr.com"),
 domain("stackexchange.com"),
 domain("stackoverflow.com"),
 domain("tensorflow.org"),
@@ -45,7 +44,8 @@ domain("yr.no") {
   }
 }
 
-@-moz-document domain("rapidtables.com") {
+@-moz-document domain("rapidtables.com"),
+domain("scribbr.com") {
   @media (prefers-color-scheme: dark) {
     html,
     img,
