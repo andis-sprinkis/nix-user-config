@@ -87,6 +87,9 @@ main() {
   # configure less
   export LESSHISTFILE="-"
 
+  # configure sqlite
+  export NODE_REPL_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}/sqlite/history"
+
   # configure go
   export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 
