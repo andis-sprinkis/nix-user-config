@@ -16,7 +16,11 @@ for archive_path in "$@"; do
 done
 
 $EDITOR $archive_paths_file
-readarray -t archive_paths < $archive_paths_file
+
+while read archive_path; do
+  archive_paths+=($archive_path)
+done < $archive_paths_file
+
 rm $archive_paths_file
 
 for archive_path in "${archive_paths[@]}"; do
