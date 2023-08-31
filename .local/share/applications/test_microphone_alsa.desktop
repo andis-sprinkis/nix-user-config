@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Test microphone
+Exec=kitty -e test_microphone_alsa
