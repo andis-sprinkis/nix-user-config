@@ -38,9 +38,13 @@ cmd open-with ${{
   for f in $fx; do nohup "$@" "$f" > /dev/null 2> /dev/null & done
 }}
 
-cmd unpack ${{
+cmd unpack !{{
   IFS=$'\n'
   unpack $fx
+}}
+
+cmd mkdir !{{
+  mkdir -pv $PWD/$@
 }}
 
 cmd copy-path ${{
