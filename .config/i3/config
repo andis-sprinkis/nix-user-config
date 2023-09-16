@@ -8,7 +8,6 @@ workspace_auto_back_and_forth yes
 title_align                   center
 default_border                normal 1
 default_floating_border       normal 1
-set $terminal                 $TERMINAL
 set $font                     pango:sans-serif medium 12
 font                          $font
 show_marks                    yes
@@ -90,8 +89,8 @@ set $down  j
 set $left  h
 set $right l
 
-bindsym $mod+Return exec --no-startup-id $terminal
-bindsym $mod+e exec --no-startup-id $terminal -e lf
+bindsym $mod+Return exec --no-startup-id $TERMINAL
+bindsym $mod+e exec --no-startup-id $TERMINAL -e lf
 
 bindsym $mod+q kill
 
@@ -176,7 +175,7 @@ bindsym $mod+Shift+q exec \
 "i3-nagbar -t warning -f $font -m 'Exit i3?' -b 'Yes' 'i3-msg exit'"
 
 bindsym Menu exec --no-startup-id \
-"j4-dmenu-desktop --no-generic --display-binary --usage-log=${XDG_CACHE_HOME:-HOME/.cache}/j4-dmenu-desktop/log --term='$terminal'"
+"j4-dmenu-desktop --no-generic --display-binary --usage-log=${XDG_CACHE_HOME:-HOME/.cache}/j4-dmenu-desktop/log"
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 5%+ unmute
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%- unmute
