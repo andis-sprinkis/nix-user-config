@@ -35,6 +35,9 @@ main() {
   # set TERMINAL
   export TERMINAL="kitty --single-instance"
 
+  # set tmux terminfo
+  export TMUX_DEFAULT_TERMINAL="xterm-kitty"
+
   is_exec "nvim" && {
     # configure nvim as EDITOR, MANPAGER
     export EDITOR="nvim"
