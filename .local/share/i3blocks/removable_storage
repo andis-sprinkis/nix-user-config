@@ -9,4 +9,4 @@ for i in "$(lsblk -l -n -o "MOUNTPOINTS" | grep "^.*.")"; do
   }
 done
 
-[ "$num" ] && echo "$num rm. storage mounted"
+[ "$num" ] && echo "$num rem. storage mounted"
