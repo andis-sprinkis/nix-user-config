@@ -2,7 +2,6 @@
 
 fstab_storage="$(cat "/etc/fstab" | grep "^.*." | grep --invert "#")"
 
-num="0"
 IFS='\n'
 for i in "$(lsblk -l -n -o "MOUNTPOINTS" | grep "^.*.")"; do
   [ "$(printf "$fstab_storage" | grep " $i ")" ] && {
@@ -10,4 +9,4 @@ for i in "$(lsblk -l -n -o "MOUNTPOINTS" | grep "^.*.")"; do
   }
 done
 
-[ "$num" != "0" ] && echo "$num rm. storage mounted"
+[ "$num" ] && echo "$num rm. storage mounted"
