@@ -8,6 +8,6 @@ for i in $current_mounts; do
   [ "$(printf "$fstab_mounts" | grep -x "$i")" ] || { num="$(("$num" + "1"))"; }
 done
 
-[ "$num" ] && echo "$num rem. storage mounted"
+[ "$num" ] && echo "$num RSD mounted"
 
 # TODO: compare by device UUID
