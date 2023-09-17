@@ -1,12 +1,19 @@
-#/usr/bin/env sh
+#!/usr/bin/env sh
 
-fstab_storage="$(cat "/etc/fstab" | grep "^.*." | grep --invert "#")"
+fstab_mounts="$(cat "/etc/fstab" | grep -v -e "^#|^$" | awk '{ print $2 }')"
+fstab_mounts_mountpoints="$(printf "$fstab_mounts" | awk '{ print $2 }')"
 
-IFS='\n'
-for i in "$(lsblk -l -n -o "MOUNTPOINTS" | grep "^.*.")"; do
-  [ "$(printf "$fstab_storage" | grep " $i ")" ] && {
-    num="$(("$num" + "1"))"
+current_mounts="$(cat "/proc/mounts" | grep -v -P " \/(sys|run|dev|proc|tmp)(/| )" | awk '{ print $2 }')"
+current_mounts_mountpoints="$(printf "$current_mounts" | awk '{ print $2 }')"
+
+num="0"
+IFS=$'\n'
+for i in "$current_mounts_mountpoints"; do
+  [ "$(printf "$fstab_mounts_mountpoints" | grep -x "$i")" ] || { 
+    num="$(("$num" + "1"))";
   }
 done
 
-[ "$num" ] && echo "$num rem. storage mounted"
+[ "$num" != "0" ] && echo "$num rem. storage mounted"
+
+# TODO: compare by device UUID
