@@ -4,7 +4,7 @@ fstab_mounts="$(cat "/etc/fstab" | grep -v -e "^#" -e "^$")"
 fstab_mounts_mount_points="$(printf "$fstab_mounts" | awk '{ print $2 }')"
 current_mounts="$(cat "/proc/mounts" | grep -v -P " \/(sys|run|dev|proc|tmp)(/| )")"
 current_mounts_mount_points="$(printf "$current_mounts" | awk '{ print $2 }')"
-rsd_mounts="Removable storage devices mounted"
+rsd_mounts="Removable storage devices mounted:"
 
 old_ifs="$IFS"; IFS=$'\n'
 for i in $current_mounts_mount_points; do
