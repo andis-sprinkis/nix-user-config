@@ -1,4 +1,6 @@
 set hidden!
+set incfilter
+set incsearch
 set mouse
 set numberfmt "\033[90m"
 set period 1
