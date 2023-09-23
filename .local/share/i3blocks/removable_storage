@@ -18,6 +18,6 @@ IFS="$old_ifs"
 
 [ "$button" == "1" ] && $TERMINAL -e $SHELL -c "printf \"$rsd_mounts\n\n\" | $PAGER"
 
-[ "$num" ] && echo "$num device mounted"
+[ "$num" ] && echo "$num devices mounted"
 
 # TODO: compare by device UUID
