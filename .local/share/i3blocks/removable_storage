@@ -1,12 +1,22 @@
 #!/usr/bin/env sh
 
-fstab_mounts="$(cat "/etc/fstab" | grep -v -e "^#" -e "^$" | awk '{ print $2 }')"
-current_mounts="$(cat "/proc/mounts" | grep -v -P " \/(sys|run|dev|proc|tmp)(/| )" | awk '{ print $2 }')"
+fstab_mounts="$(cat "/etc/fstab" | grep -v -e "^#" -e "^$")"
+fstab_mounts_mount_points="$(printf "$fstab_mounts" | awk '{ print $2 }')"
+current_mounts="$(cat "/proc/mounts" | grep -v -P " \/(sys|run|dev|proc|tmp)(/| )")"
+current_mounts_mount_points="$(printf "$current_mounts" | awk '{ print $2 }')"
+rsd_mounts="Removable storage devices mounted"
 
-IFS=$'\n'
-for i in $current_mounts; do
-  [ "$(printf "$fstab_mounts" | grep -x "$i")" ] || { num="$(("$num" + "1"))"; }
+old_ifs="$IFS"; IFS=$'\n'
+for i in $current_mounts_mount_points; do
+  [ "$(printf "$fstab_mounts_mount_points" | grep -x "$i")" ] || {
+    num="$(("$num" + "1"))"
+    rsd_mounts="$rsd_mounts
+$(printf "$current_mounts" | grep " $i ")"
+  }
 done
+IFS="$old_ifs"
+
+[ "$button" == "1" ] && $TERMINAL -e $SHELL -c "printf \"$rsd_mounts\n\n\" | $PAGER"
 
 [ "$num" ] && echo "$num RSD"
 
