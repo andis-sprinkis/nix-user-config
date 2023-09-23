@@ -10,6 +10,6 @@ exec /usr/bin/dmenu \
   -sb "$foreground" \
   -sf "$color0" \
   -b \
-  -l 50 \
+  -l 25 \
   -fn "$font" \
   "$@"
