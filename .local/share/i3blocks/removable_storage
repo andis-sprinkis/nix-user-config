@@ -16,7 +16,10 @@ $(printf "$current_mounts" | grep " $i ")"
 done
 IFS="$old_ifs"
 
-[ "$button" == "1" ] && $TERMINAL -e $SHELL -c "printf \"$rsd_mounts\n\n\" | $PAGER"
+[ "$button" == "1" ] && {
+  win_title="\033]0;Removable storage devices mounted\007"
+  $TERMINAL -e $SHELL -c "echo -n \"$win_title\"; printf \"$rsd_mounts\n\n\" | $PAGER"
+}
 
 [ "$num" ] && echo "$num device(s) mounted"
 

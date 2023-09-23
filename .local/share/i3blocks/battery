@@ -2,7 +2,10 @@
 # The original script is from:
 # https://github.com/LukeSmithxyz/voidrice/blob/5a6c56d565e4e7c20171f5757e12306d9253c52b/.local/bin/labelbar/sb-battery
 
-[ "$button" == "1" ] && $TERMINAL -e $SHELL -c "acpi -i | $PAGER"
+[ "$button" == "1" ] && {
+  win_title="\033]0;Battery information\007"
+	$TERMINAL -e $SHELL -c "echo -n \"$win_title\"; acpi -i | $PAGER"
+}
 
 label_full="Battery full"
 label_discharging="Battery discharging"

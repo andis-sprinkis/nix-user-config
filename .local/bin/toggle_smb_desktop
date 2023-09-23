@@ -1,7 +1,9 @@
 #!/usr/bin/env sh
 
-systemctl is-active --quiet sshd && {
-  $TERMINAL -e $SHELL -c "systemctl stop smb; read"
+systemctl is-active --quiet smb && {
+  win_title="\033]0;Stop SMB service\007"
+  $TERMINAL -e $SHELL -c "echo -n \"$win_title\"; systemctl stop smb; read"
 } || {
-  $TERMINAL -e $SHELL -c "systemctl start smb; read"
+  win_title="\033]0;Start SMB service\007"
+  $TERMINAL -e $SHELL -c "echo -n \"$win_title\"; systemctl start smb; read"
 }

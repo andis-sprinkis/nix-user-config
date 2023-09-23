@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
-[ "$button" == "3" ] && $TERMINAL -e $SHELL -c "systemctl stop smb; read"
+[ "$button" == "3" ] && {
+  win_title="\033]0;Stop SMB service\007"
+  $TERMINAL -e $SHELL -c "echo -n \"$win_title\"; systemctl stop smb; read"
+}
 
 systemctl is-active --quiet smb && echo "SMB active"

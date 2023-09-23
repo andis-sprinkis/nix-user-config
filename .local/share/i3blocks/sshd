@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
-[ "$button" == "3" ] && $TERMINAL -e $SHELL -c "systemctl stop sshd; read"
+[ "$button" == "3" ] && {
+  win_title="\033]0;Stop SSHD service\007"
+  $TERMINAL -e $SHELL -c "echo -n \"$win_title\"; systemctl stop sshd; read"
+}
 
 systemctl is-active --quiet sshd && echo "SSHD active"
