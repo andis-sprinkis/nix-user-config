@@ -55,11 +55,18 @@ cmd copy-path ${{
   [ "$(command -v "pbcopy")" ] && { echo -n "$fx" | pbcopy; } && exit
 }}
 
+cmd paste-to-file ${{
+  [ -z "$@" ] && echo "No path specified" && exit 1
+  [ "$(command -v "xclip")" ] && { xclip -o -sel clipboard >> "$PWD/$@"; } && exit
+  [ "$(command -v "pbcopy")" ] && { pbpaste >> "$PWD/$@"; >> "$PWD/$@"; } && exit
+}}
+
 cmd on-cd &{{
   printf "\033]0;$PWD\007" > /dev/tty
 }}
 on-cd
 
+map P push :paste-to-file<space>
 map Y copy-path
 map ` !true
 map b :mark-load
