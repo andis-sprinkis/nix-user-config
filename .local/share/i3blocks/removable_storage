@@ -7,6 +7,7 @@ current_mounts_mount_points="$(printf "$current_mounts" | awk '{ print $2 }')"
 rsd_mounts="Removable storage devices mounted:"
 
 old_ifs="$IFS"; IFS=$'\n'
+
 for i in $current_mounts_mount_points; do
   [ "$(printf "$fstab_mounts_mount_points" | grep -x "$i")" ] || {
     num="$(("$num" + "1"))"
@@ -14,13 +15,16 @@ for i in $current_mounts_mount_points; do
 $(printf "$current_mounts" | grep " $i ")"
   }
 done
+
 IFS="$old_ifs"
 
-[ "$button" == "1" ] && {
-  win_title="\033]0;Removable storage devices mounted\007"
-  $TERMINAL -e $SHELL -c "echo -n \"$win_title\"; printf \"$rsd_mounts\n\n\" | $PAGER"
-}
+[ "$num" ] && {
+  [ "$button" == "1" ] && {
+    win_title="\033]0;Removable storage devices mounted\007"
+    $TERMINAL -e $SHELL -c "echo -n \"$win_title\"; printf \"$rsd_mounts\n\n\" | $PAGER"
+  }
 
-[ "$num" ] && echo "$num device(s) mounted"
+  echo "$num device(s) mounted"
+}
 
 # TODO: compare by device UUID
