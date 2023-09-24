@@ -56,7 +56,9 @@ cmd copy-path ${{
 }}
 
 cmd paste-to-file ${{
+  set -e
   [ -z "$@" ] && echo "No path specified" && exit 1
+
   [ "$(command -v "xclip")" ] && { xclip -o -sel clipboard >> "$PWD/$@"; } && exit
   [ "$(command -v "pbcopy")" ] && { pbpaste >> "$PWD/$@"; >> "$PWD/$@"; } && exit
 }}
