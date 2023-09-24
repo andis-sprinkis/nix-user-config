@@ -19,6 +19,7 @@ map D toggle_page_mode
 map J zoom out
 map K zoom in
 map R rotate
+map b toggle_statusbar
 map d scroll half-down
 map g goto top
 map i recolor
