@@ -3,15 +3,14 @@
 connectivity="$(nmcli networking connectivity)"
 
 [ "$connectivity" ] && {
-  [ "$label_disabling" ] || label_disabling="Disabling connectivity..."
-  [ "$label_enabling" ] || label_enabling="Enabling connectivity..."
-
-  [ "$label_full" ] || label_full="Network connected"
-  [ "$label_none" ] || label_none="Network disconnected"
-  [ "$label_portal" ] || label_portal="Network connected (portal)"
-  [ "$label_limited" ] || label_limited="Network connected (limited)"
-  [ "$label_unknown" ] || label_unknown="Network connectivity unknown"
-  [ "$label_other" ] || label_other="Network connectivity status: $connectivity"
+  label_disabling="Disabling connectivity..."
+  label_enabling="Enabling connectivity..."
+  label_full="Network connected"
+  label_none="Network disconnected"
+  label_portal="Network connected (portal)"
+  label_limited="Network connected (limited)"
+  label_unknown="Network connectivity unknown"
+  label_other="Network connectivity status: $connectivity"
 
   [ "$button" == "1" ] && {
     $TERMINAL -e nmtui
