@@ -12,7 +12,7 @@ interval=5
 
 [removable_storage]
 command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/removable_storage
-interval=5
+interval=10
 
 [sshd]
 command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/sshd
