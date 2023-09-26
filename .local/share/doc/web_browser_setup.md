@@ -1,4 +1,6 @@
-# Web browser addons
+# Web browser setup
+
+## Addons
 
 -   Mozilla Firefox
     -   https://addons.mozilla.org/en-US/firefox/addon/accessibility-checker/
@@ -50,10 +52,10 @@
     -   https://github.com/FastForwardTeam/FastForward/
 -   Apple Safari
 
-# Userscripts
+## Userscripts
 
 -   https://github.com/zerodytrash/Simple-YouTube-Age-Restriction-Bypass/raw/main/dist/Simple-YouTube-Age-Restriction-Bypass.user.js
 
-# Userstyles
+## Userstyles
 
 -   https://github.com/andis-sprinkis/nix-user-config/raw/master/.local/share/userstyles/lazy_dark_mode.user.css
