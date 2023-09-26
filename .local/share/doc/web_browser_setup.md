@@ -25,6 +25,7 @@
     -   https://addons.mozilla.org/en-US/firefox/addon/metager-searchengine/
     -   https://addons.mozilla.org/en-US/firefox/addon/mojeek-search/
     -   https://addons.mozilla.org/en-US/firefox/addon/multi-account-containers/
+    -   https://addons.mozilla.org/en-US/firefox/addon/nomoreshorts/
     -   https://addons.mozilla.org/en-US/firefox/addon/privacy-redirect/
     -   https://addons.mozilla.org/en-US/firefox/addon/react-context-devtool/
     -   https://addons.mozilla.org/en-US/firefox/addon/react-devtools/
