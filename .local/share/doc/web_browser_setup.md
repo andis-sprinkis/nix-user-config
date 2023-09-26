@@ -1,5 +1,13 @@
 # Web browser setup
 
+## Configuration
+
+-   Mozilla Firefox
+    ```sh
+    cd $HOME/.mozilla/firefox/PROFILE_ID.default-release
+    ln -s ../../../.config/firefox/user.js user.js
+    ```
+
 ## Addons
 
 -   Mozilla Firefox
