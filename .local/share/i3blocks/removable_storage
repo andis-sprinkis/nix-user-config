@@ -24,7 +24,8 @@ IFS="$old_ifs"
     $TERMINAL -e $SHELL -c "echo -n \"$win_title\"; printf \"$rsd_mounts\n\n\" | $PAGER"
   }
 
-  echo "$num device(s) mounted"
+  [ "$num" == "1" ] && echo "$num device mounted" && exit
+  echo "$num devices mounted"
 }
 
 # TODO: compare by device UUID
