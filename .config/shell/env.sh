@@ -29,6 +29,9 @@ main() {
   # set language
   [ "$LANG" ] || export LANG='en_US.UTF-8'
 
+  # set locale
+  [ -f "/etc/profile.d/locale.sh" ] && { unset LANG; . "/etc/profile.d/locale.sh"; }
+
   # set PAGER
   export PAGER="less -Ri"
 
