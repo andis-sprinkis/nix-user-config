@@ -51,7 +51,7 @@ cmd mkdir !{{
 
 cmd copy-path ${{
   IFS=$'\n'
-  [ "$(command -v "xclip")" ] && { echo -n "$fx" | xclip -sel clipboard; } && exit
+  [ "$(command -v "xclip")" ] && { echo -n "$fx" | xclip -sel "clipboard"; } && exit
   [ "$(command -v "pbcopy")" ] && { echo -n "$fx" | pbcopy; } && exit
 }}
 
