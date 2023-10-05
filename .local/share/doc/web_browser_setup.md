@@ -30,6 +30,7 @@
     -   https://addons.mozilla.org/en-US/firefox/addon/react-context-devtool/
     -   https://addons.mozilla.org/en-US/firefox/addon/react-devtools/
     -   https://addons.mozilla.org/en-US/firefox/addon/reduxdevtools/
+    -   https://addons.mozilla.org/en-US/firefox/addon/search_by_image/
     -   https://addons.mozilla.org/en-US/firefox/addon/sponsorblock/
     -   https://addons.mozilla.org/en-US/firefox/addon/stop-autoplay-next-for-youtube/
     -   https://addons.mozilla.org/en-US/firefox/addon/styl-us/
@@ -52,6 +53,7 @@
     -   https://chrome.google.com/webstore/detail/react-context-devtool/oddhnidmicpefilikhgeagedibnefkcf
     -   https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi
     -   https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd
+    -   https://chrome.google.com/webstore/detail/search-by-image/cnojnbdhbhnkbcieeekonklommdnndci
     -   https://chrome.google.com/webstore/detail/sponsorblock-for-youtube/mnjggcdmjocbbbhaepdhchncahnbgone
     -   https://chrome.google.com/webstore/detail/stop-autoplay-next-for-yo/bhnhbmjfaanopkalgkjoiemhekdnhanh
     -   https://chrome.google.com/webstore/detail/stylus/clngdbkpkpeebahjckkjfobafhncgmne
@@ -59,7 +61,6 @@
     -   https://chrome.google.com/webstore/detail/unhook-remove-youtube-rec/khncfooichmfjbepaaaebmommgaepoid
     -   https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag
     -   https://github.com/FastForwardTeam/FastForward/
--   Apple Safari
 
 ## Userscripts
 
