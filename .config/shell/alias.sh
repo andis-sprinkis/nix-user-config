@@ -15,7 +15,7 @@ alias \
   mkdir="mkdir -pv" \
   mv="mv -v" \
   myip="curl https://ipinfo.io/" \
-  py="python3" \
+  py="python3 -q" \
   q="exit" \
   r="radian" \
   rm="rm -vI" \
