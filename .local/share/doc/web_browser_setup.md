@@ -2,70 +2,74 @@
 
 ## Configuration
 
--   Mozilla Firefox
-    ```sh
-    cd $HOME/.mozilla/firefox/PROFILE_ID.default-release
-    ln -s ../../../.config/firefox/user.js user.js
-    ```
+### Mozilla Firefox
+
+```sh
+cd $HOME/.mozilla/firefox/PROFILE_ID.default-release
+ln -s ../../../.config/firefox/user.js user.js
+```
 
 ## Addons
 
--   Mozilla Firefox
-    -   https://addons.mozilla.org/en-US/firefox/addon/accessibility-checker/
-    -   https://addons.mozilla.org/en-US/firefox/addon/clearurls/
-    -   https://addons.mozilla.org/en-US/firefox/addon/ddg-lite-search-provider/
-    -   https://addons.mozilla.org/en-US/firefox/addon/favicon-detector/
-    -   https://addons.mozilla.org/en-US/firefox/addon/github-search/
-    -   https://addons.mozilla.org/en-US/firefox/addon/hohser/
-    -   https://addons.mozilla.org/en-US/firefox/addon/istilldontcareaboutcookies/
-    -   https://addons.mozilla.org/en-US/firefox/addon/jump-to-anchor/
-    -   https://addons.mozilla.org/en-US/firefox/addon/link-gopher/
-    -   https://addons.mozilla.org/en-US/firefox/addon/localcdn-fork-of-decentraleyes/
-    -   https://addons.mozilla.org/en-US/firefox/addon/mdn-search-provider/
-    -   https://addons.mozilla.org/en-US/firefox/addon/metager-searchengine/
-    -   https://addons.mozilla.org/en-US/firefox/addon/mojeek-search/
-    -   https://addons.mozilla.org/en-US/firefox/addon/multi-account-containers/
-    -   https://addons.mozilla.org/en-US/firefox/addon/nomoreshorts/
-    -   https://addons.mozilla.org/en-US/firefox/addon/privacy-redirect/
-    -   https://addons.mozilla.org/en-US/firefox/addon/react-context-devtool/
-    -   https://addons.mozilla.org/en-US/firefox/addon/react-devtools/
-    -   https://addons.mozilla.org/en-US/firefox/addon/reduxdevtools/
-    -   https://addons.mozilla.org/en-US/firefox/addon/search_by_image/
-    -   https://addons.mozilla.org/en-US/firefox/addon/sponsorblock/
-    -   https://addons.mozilla.org/en-US/firefox/addon/stop-autoplay-next-for-youtube/
-    -   https://addons.mozilla.org/en-US/firefox/addon/styl-us/
-    -   https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/
-    -   https://addons.mozilla.org/en-US/firefox/addon/url-to-qrcode/
-    -   https://addons.mozilla.org/en-US/firefox/addon/view-page-archive/
-    -   https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/
-    -   https://addons.mozilla.org/en-US/firefox/addon/youtube-recommended-videos/
-    -   https://github.com/FastForwardTeam/FastForward/
--   Google Chrome
-    -   https://chrome.google.com/webstore/detail/clearurls/lckanjgmijmafbedllaakclkaicjfmnk
-    -   https://chrome.google.com/webstore/detail/favicon-detector/jlfeffjhgmgblofcgpbgpkkhfniipejm
-    -   https://chrome.google.com/webstore/detail/highlight-or-hide-search/ilopipickdimglkalhckioobifbiinbk
-    -   https://chrome.google.com/webstore/detail/i-still-dont-care-about-c/edibdbjcniadpccecjdfdjjppcpchdlm
-    -   https://chrome.google.com/webstore/detail/ibm-equal-access-accessib/lkcagbfjnkomcinoddgooolagloogehp
-    -   https://chrome.google.com/webstore/detail/jump-to-anchor/fhbjjkmbahpmoegppmljagmakkeomlmb
-    -   https://chrome.google.com/webstore/detail/link-gopher/bpjdkodgnbfalgghnbeggfbfjpcfamkf
-    -   https://chrome.google.com/webstore/detail/localcdn/njdfdhgcmkocbgbhcioffdbicglldapd
-    -   https://chrome.google.com/webstore/detail/privacy-redirect/pmcmeagblkinmogikoikkdjiligflglb
-    -   https://chrome.google.com/webstore/detail/react-context-devtool/oddhnidmicpefilikhgeagedibnefkcf
-    -   https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi
-    -   https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd
-    -   https://chrome.google.com/webstore/detail/search-by-image/cnojnbdhbhnkbcieeekonklommdnndci
-    -   https://chrome.google.com/webstore/detail/sponsorblock-for-youtube/mnjggcdmjocbbbhaepdhchncahnbgone
-    -   https://chrome.google.com/webstore/detail/stop-autoplay-next-for-yo/bhnhbmjfaanopkalgkjoiemhekdnhanh
-    -   https://chrome.google.com/webstore/detail/stylus/clngdbkpkpeebahjckkjfobafhncgmne
-    -   https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm
-    -   https://chrome.google.com/webstore/detail/unhook-remove-youtube-rec/khncfooichmfjbepaaaebmommgaepoid
-    -   https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag
-    -   https://github.com/FastForwardTeam/FastForward/
+### Mozilla Firefox
+
+1.  https://addons.mozilla.org/en-US/firefox/addon/accessibility-checker/
+1.  https://addons.mozilla.org/en-US/firefox/addon/clearurls/
+1.  https://addons.mozilla.org/en-US/firefox/addon/ddg-lite-search-provider/
+1.  https://addons.mozilla.org/en-US/firefox/addon/favicon-detector/
+1.  https://addons.mozilla.org/en-US/firefox/addon/github-search/
+1.  https://addons.mozilla.org/en-US/firefox/addon/hohser/
+1.  https://addons.mozilla.org/en-US/firefox/addon/istilldontcareaboutcookies/
+1.  https://addons.mozilla.org/en-US/firefox/addon/jump-to-anchor/
+1.  https://addons.mozilla.org/en-US/firefox/addon/link-gopher/
+1.  https://addons.mozilla.org/en-US/firefox/addon/localcdn-fork-of-decentraleyes/
+1.  https://addons.mozilla.org/en-US/firefox/addon/mdn-search-provider/
+1.  https://addons.mozilla.org/en-US/firefox/addon/metager-searchengine/
+1.  https://addons.mozilla.org/en-US/firefox/addon/mojeek-search/
+1.  https://addons.mozilla.org/en-US/firefox/addon/multi-account-containers/
+1.  https://addons.mozilla.org/en-US/firefox/addon/nomoreshorts/
+1.  https://addons.mozilla.org/en-US/firefox/addon/privacy-redirect/
+1.  https://addons.mozilla.org/en-US/firefox/addon/react-context-devtool/
+1.  https://addons.mozilla.org/en-US/firefox/addon/react-devtools/
+1.  https://addons.mozilla.org/en-US/firefox/addon/reduxdevtools/
+1.  https://addons.mozilla.org/en-US/firefox/addon/search_by_image/
+1.  https://addons.mozilla.org/en-US/firefox/addon/sponsorblock/
+1.  https://addons.mozilla.org/en-US/firefox/addon/stop-autoplay-next-for-youtube/
+1.  https://addons.mozilla.org/en-US/firefox/addon/styl-us/
+1.  https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/
+1.  https://addons.mozilla.org/en-US/firefox/addon/url-to-qrcode/
+1.  https://addons.mozilla.org/en-US/firefox/addon/view-page-archive/
+1.  https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/
+1.  https://addons.mozilla.org/en-US/firefox/addon/youtube-recommended-videos/
+1.  https://github.com/FastForwardTeam/FastForward/
+
+### Google Chrome
+
+1.  https://chrome.google.com/webstore/detail/clearurls/lckanjgmijmafbedllaakclkaicjfmnk
+1.  https://chrome.google.com/webstore/detail/favicon-detector/jlfeffjhgmgblofcgpbgpkkhfniipejm
+1.  https://chrome.google.com/webstore/detail/highlight-or-hide-search/ilopipickdimglkalhckioobifbiinbk
+1.  https://chrome.google.com/webstore/detail/i-still-dont-care-about-c/edibdbjcniadpccecjdfdjjppcpchdlm
+1.  https://chrome.google.com/webstore/detail/ibm-equal-access-accessib/lkcagbfjnkomcinoddgooolagloogehp
+1.  https://chrome.google.com/webstore/detail/jump-to-anchor/fhbjjkmbahpmoegppmljagmakkeomlmb
+1.  https://chrome.google.com/webstore/detail/link-gopher/bpjdkodgnbfalgghnbeggfbfjpcfamkf
+1.  https://chrome.google.com/webstore/detail/localcdn/njdfdhgcmkocbgbhcioffdbicglldapd
+1.  https://chrome.google.com/webstore/detail/privacy-redirect/pmcmeagblkinmogikoikkdjiligflglb
+1.  https://chrome.google.com/webstore/detail/react-context-devtool/oddhnidmicpefilikhgeagedibnefkcf
+1.  https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi
+1.  https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd
+1.  https://chrome.google.com/webstore/detail/search-by-image/cnojnbdhbhnkbcieeekonklommdnndci
+1.  https://chrome.google.com/webstore/detail/sponsorblock-for-youtube/mnjggcdmjocbbbhaepdhchncahnbgone
+1.  https://chrome.google.com/webstore/detail/stop-autoplay-next-for-yo/bhnhbmjfaanopkalgkjoiemhekdnhanh
+1.  https://chrome.google.com/webstore/detail/stylus/clngdbkpkpeebahjckkjfobafhncgmne
+1.  https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm
+1.  https://chrome.google.com/webstore/detail/unhook-remove-youtube-rec/khncfooichmfjbepaaaebmommgaepoid
+1.  https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag
+1.  https://github.com/FastForwardTeam/FastForward/
 
 ## Userscripts
 
--   https://github.com/zerodytrash/Simple-YouTube-Age-Restriction-Bypass/raw/main/dist/Simple-YouTube-Age-Restriction-Bypass.user.js
+1.  https://github.com/zerodytrash/Simple-YouTube-Age-Restriction-Bypass/raw/main/dist/Simple-YouTube-Age-Restriction-Bypass.user.js
 
 ## Userstyles
 
--   https://github.com/andis-sprinkis/nix-user-config/raw/master/.local/share/userstyles/lazy_dark_mode.user.css
+1.  https://github.com/andis-sprinkis/nix-user-config/raw/master/.local/share/userstyles/lazy_dark_mode.user.css
