@@ -4,7 +4,7 @@ return {
   color_scheme = "vscode-dark",
   font = wezterm.font("Cascadia Code PL"),
   font_size = 12.0,
-  line_height = 1.3,
+  line_height = 1.29,
   enable_tab_bar = false,
   cursor_blink_rate = 0,
   window_padding = {
