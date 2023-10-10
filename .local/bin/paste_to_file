@@ -2,5 +2,5 @@
 set -e
 [ -z "$@" ] && echo "No path specified" && exit 1
 
-[ "$(command -v "xclip")" ] && { xclip -o -sel clipboard >> "$@"; } && exit
+[ "$(command -v "xclip")" ] && { xclip -o -sel "clipboard" >> "$@"; } && exit
 [ "$(command -v "pbcopy")" ] && { pbpaste >> "$@"; } && exit
