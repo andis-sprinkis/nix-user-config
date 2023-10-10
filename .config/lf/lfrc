@@ -46,7 +46,7 @@ cmd unpack !{{
 }}
 
 cmd mkdir !{{
-  mkdir -pv $PWD/$@
+  mkdir -pv "$PWD/$@"
 }}
 
 cmd copy-path ${{
