@@ -3,6 +3,7 @@ local act = wezterm.action
 local cfg_local_status, cfg_local = pcall(require, 'cfg_local')
 
 return {
+  adjust_window_size_when_changing_font_size = false,
   color_scheme = 'vscode-dark',
   cursor_blink_rate = 0,
   disable_default_key_bindings = true,
@@ -11,6 +12,10 @@ return {
   font_size = cfg_local_status and cfg_local['font_size'] or 12.0,
   freetype_load_target = 'Light',
   line_height = 1.29,
+  max_fps = 120,
+  initial_cols = 120,
+  initial_rows = 30,
+  animation_fps = 1,
   window_padding = {
     left = 4,
     right = 4,
