@@ -1,9 +1,11 @@
 local wezterm = require('wezterm')
+local act = wezterm.action
 local cfg_local_status, cfg_local = pcall(require, 'cfg_local')
 
 return {
   color_scheme = 'vscode-dark',
   cursor_blink_rate = 0,
+  disable_default_key_bindings = true,
   enable_tab_bar = false,
   font = wezterm.font('Cascadia Code PL'),
   font_size = cfg_local_status and cfg_local['font_size'] or 12.0,
@@ -14,5 +16,36 @@ return {
     right = 4,
     top = 4,
     bottom = 4,
+  },
+  keys = {
+    { key = ')',        mods = 'CTRL',       action = act.ResetFontSize },
+    { key = ')',        mods = 'SHIFT|CTRL', action = act.ResetFontSize },
+    { key = '+',        mods = 'CTRL',       action = act.IncreaseFontSize },
+    { key = '+',        mods = 'SHIFT|CTRL', action = act.IncreaseFontSize },
+    { key = '-',        mods = 'CTRL',       action = act.DecreaseFontSize },
+    { key = '-',        mods = 'SHIFT|CTRL', action = act.DecreaseFontSize },
+    -- { key = '-',        mods = 'SUPER',      action = act.DecreaseFontSize },
+    { key = '0',        mods = 'CTRL',       action = act.ResetFontSize },
+    { key = '0',        mods = 'SHIFT|CTRL', action = act.ResetFontSize },
+    -- { key = '0',        mods = 'SUPER',      action = act.ResetFontSize },
+    { key = '=',        mods = 'CTRL',       action = act.IncreaseFontSize },
+    { key = '=',        mods = 'SHIFT|CTRL', action = act.IncreaseFontSize },
+    -- { key = '=',        mods = 'SUPER',      action = act.IncreaseFontSize },
+    { key = 'C',        mods = 'CTRL',       action = act.CopyTo 'Clipboard' },
+    { key = 'C',        mods = 'SHIFT|CTRL', action = act.CopyTo 'Clipboard' },
+    { key = 'V',        mods = 'CTRL',       action = act.PasteFrom 'Clipboard' },
+    { key = 'V',        mods = 'SHIFT|CTRL', action = act.PasteFrom 'Clipboard' },
+    { key = '_',        mods = 'CTRL',       action = act.DecreaseFontSize },
+    { key = '_',        mods = 'SHIFT|CTRL', action = act.DecreaseFontSize },
+    { key = 'c',        mods = 'SHIFT|CTRL', action = act.CopyTo 'Clipboard' },
+    -- { key = 'c',        mods = 'SUPER',      action = act.CopyTo 'Clipboard' },
+    { key = 'v',        mods = 'SHIFT|CTRL', action = act.PasteFrom 'Clipboard' },
+    -- { key = 'v',        mods = 'SUPER',      action = act.PasteFrom 'Clipboard' },
+    { key = 'PageUp',   mods = 'SHIFT',      action = act.ScrollByPage(-1) },
+    { key = 'PageDown', mods = 'SHIFT',      action = act.ScrollByPage(1) },
+    { key = 'Insert',   mods = 'SHIFT',      action = act.PasteFrom 'PrimarySelection' },
+    { key = 'Insert',   mods = 'CTRL',       action = act.CopyTo 'PrimarySelection' },
+    { key = 'Copy',     mods = 'NONE',       action = act.CopyTo 'Clipboard' },
+    { key = 'Paste',    mods = 'NONE',       action = act.PasteFrom 'Clipboard' },
   },
 }
