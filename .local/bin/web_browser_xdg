@@ -7,5 +7,5 @@ done
 
 [ "$web_browser" ] && exec $web_browser "$@"
 
-echo "No known web browser available"
+echo "$(basename "$0"): No known web browser available"
 exit 1

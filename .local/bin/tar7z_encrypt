@@ -6,7 +6,7 @@ set -e
 . fn_read_confirm_pw_input
 
 if [ -z "$1" ]; then
-  echo "Must provide a file or directory path for archival" 2>&1
+  echo "$(basename "$0"): Must provide a file or directory path for archival" 2>&1
   exit 1
 fi
 

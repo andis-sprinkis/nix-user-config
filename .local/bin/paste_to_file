@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 set -e
-[ -z "$@" ] && echo "No path specified" && exit 1
+[ -z "$@" ] && echo "$(basename "$0"): No path specified" && exit 1
 
 [ "$(command -v "xclip")" ] && { xclip -o -sel "clipboard" >> "$@"; } && exit
 [ "$(command -v "pbcopy")" ] && { pbpaste >> "$@"; } && exit

@@ -5,7 +5,7 @@
 # $@ - the list of input archive paths
 
 [ ! "$(command -v "aunpack")" ] && {
-  echo "aunpack not found"
+  echo "$(basename "$0"): aunpack not found"
   exit 1
 }
 

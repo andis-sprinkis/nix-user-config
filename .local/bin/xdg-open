@@ -11,7 +11,7 @@
 [ "$mime" ] && handler="$(xdg-mime query default $mime)"
 
 [ -z "$handler" ] && {
-  echo "Preventing parameter without a recognized handler from being passed to xdg-open"
+  echo "$(basename "$0"): Preventing parameter without a recognized handler from being passed to xdg-open"
   exit 1
 }
 
