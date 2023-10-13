@@ -169,7 +169,7 @@ bindsym $mod+Mod1+Next              exec --no-startup-id ${XDG_DATA_HOME:-$HOME/
 bindsym --whole-window Mod1+button9 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/shift_current_workspace -prev
 bindsym --whole-window Mod1+button8 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/shift_current_workspace -next
 
-bindsym $mod+Shift+r exec --no-startup-id ${XDG_CONFIG_HOME:-HOME/.config}/x11/xinitrc
+bindsym $mod+Shift+r exec --no-startup-id ${XDG_CONFIG_HOME:-HOME/.config}/xinit/xinitrc
 
 bindsym $mod+Shift+q exec \
 "i3-nagbar -t warning -f $font -m 'Exit i3?' -b 'Yes' 'i3-msg exit'"
