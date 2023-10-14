@@ -6,7 +6,7 @@ alias \
   cp="cp -rv" \
   date_iso8601="date -u +\"%Y-%m-%dT%H:%M:%SZ\"" \
   dirsize="ncdu -x" \
-  diskspace="df -h --output=\"target,size,used,avail,fstype,source\"" \
+  diskspace="df -h --output=\"target,pcent,size,used,avail,fstype,source\"" \
   dotgit_submodule_upgrade_latest_remote="dotgit submodule update --recursive --remote" \
   git_submodule_upgrade_latest_remote="git submodule update --recursive --remote" \
   h="tldr" \
