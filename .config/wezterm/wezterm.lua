@@ -8,7 +8,10 @@ return {
   cursor_blink_rate = 0,
   disable_default_key_bindings = true,
   enable_tab_bar = false,
-  font = wezterm.font('Cascadia Code PL'),
+  font = wezterm.font_with_fallback {
+    'Cascadia Code PL',
+    'monospace',
+  },
   font_size = cfg_local_status and cfg_local['font_size'] or 12.0,
   freetype_load_target = 'Light',
   line_height = 1.29,
