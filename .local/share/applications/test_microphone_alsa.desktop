@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=Application
 Name=Test microphone
-Exec=kitty -e test_microphone_alsa
+Exec=terminal_shell_cmd test_microphone_alsa

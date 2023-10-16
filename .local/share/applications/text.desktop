@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=Application
 Name=Text editor
-Exec=kitty -e nvim -- %F
+Exec=terminal_shell_cmd $EDITOR %F
