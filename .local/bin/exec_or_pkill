@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-[ -z "$(pidof $1)" ] && exec "$@" || pkill $1
