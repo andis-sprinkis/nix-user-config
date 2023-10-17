@@ -24,6 +24,7 @@ application/ecmascript=text.desktop
 application/geo+json=text.desktop
 application/gml+xml=text.desktop
 application/gpx+xml=text.desktop
+application/javascript=text.desktop
 application/jrd+json=text.desktop
 application/json-patch+json=text.desktop
 application/json=text.desktop
