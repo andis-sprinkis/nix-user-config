@@ -8,6 +8,7 @@ alias \
   dirsize="ncdu -x" \
   diskspace="df -h --output=\"target,pcent,size,used,avail,fstype,source\"" \
   dotgit_submodule_upgrade_latest_remote="dotgit submodule update --recursive --remote" \
+  e="$EDITOR" \
   git_submodule_upgrade_latest_remote="git submodule update --recursive --remote" \
   h="tldr" \
   ip="ip --color=auto" \
