@@ -21,6 +21,7 @@ alias \
   q="exit" \
   r="radian" \
   rm="rm -vI" \
+  scan_http="sudo nmap -sS -p 80,447 192.168.1.0/24" \
   scan_smb="sudo nmap -sS -p 445 192.168.1.0/24" \
   scan_ssh="sudo nmap -sS -p 22 192.168.1.0/24" \
   tree="tree -CF" \
