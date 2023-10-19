@@ -3,6 +3,7 @@ is_exec() { [ "$(command -v "$1")" ]; }
 
 alias \
   bc="bc -ql" \
+  c="clear" \
   cp="cp -rv" \
   date_iso8601="date -u +\"%Y-%m-%dT%H:%M:%SZ\"" \
   dirsize="ncdu -x" \
