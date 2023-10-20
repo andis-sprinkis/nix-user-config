@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=Application
 Name=Web browser
-Exec=web_browser_xdg %u
+Exec=web_browser_desktop %u

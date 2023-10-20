@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=Application
 Name=Text editor
-Exec=terminal_shell_cmd $EDITOR %F
+Exec=text_editor_desktop %F

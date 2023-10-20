@@ -14,8 +14,10 @@ main() {
     export MANPATH="$BREW_DEFAULT_PATH/opt/coreutils/libexec/gnuman:$MANPATH"
   }
 
+  # lfcd
+  lfcd() { cd "$(command lf -print-last-dir "$@")"; }
+
   # source functions in local PATH
-  is_exec "lf" && . fn_lfcd
   . fn_ssh_set_alias
 
   # inactivity timeout

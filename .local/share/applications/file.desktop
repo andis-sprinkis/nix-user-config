@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=Application
 Name=File manager
-Exec=terminal_shell_cmd lf %u
+Exec=file_manager_desktop %u
