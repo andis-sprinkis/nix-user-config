@@ -50,4 +50,16 @@ return {
     { key = 'Copy',     mods = 'NONE',       action = act.CopyTo 'Clipboard' },
     { key = 'Paste',    mods = 'NONE',       action = act.PasteFrom 'Clipboard' },
   },
+  mouse_bindings = {
+    {
+      event = { Down = { streak = 1, button = { WheelUp = 1 } } },
+      mods = 'CTRL',
+      action = act.IncreaseFontSize,
+    },
+    {
+      event = { Down = { streak = 1, button = { WheelDown = 1 } } },
+      mods = 'CTRL',
+      action = act.DecreaseFontSize,
+    },
+  },
 }
