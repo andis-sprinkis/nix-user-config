@@ -21,11 +21,11 @@ alias \
   q="exit" \
   r="radian" \
   rm="rm -vI" \
+  rsync_progress="rsync --progress --human-readable --stats" \
   scan_http="sudo nmap -sS -p 80,447 192.168.1.0/24" \
   scan_smb="sudo nmap -sS -p 445 192.168.1.0/24" \
   scan_ssh="sudo nmap -sS -p 22 192.168.1.0/24" \
   tree="tree -CF" \
-  rsync_progress="rsync --progress --human-readable --stats" \
   wget=wget --hsts-file="${XDG_DATA_HOME:-$HOME/.local/share}/wget-hsts" \
   yay="yay --color=auto"
 
