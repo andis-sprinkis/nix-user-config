@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+win_title="\033]0;i3 window manager key mappings\007"
+
+exec $TERMINAL -e $SHELL -c "echo -n \"$win_title\"; ${XDG_DATA_HOME:-$HOME/.local/share}/i3/i3_key_mappings | $PAGER"
