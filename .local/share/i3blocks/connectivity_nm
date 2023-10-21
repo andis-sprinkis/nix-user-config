@@ -13,7 +13,7 @@ connectivity="$(nmcli networking connectivity)"
   label_other="Network connectivity status: $connectivity"
 
   [ "$button" == "1" ] && {
-    $TERMINAL -e nmtui
+    $TERMINAL -e "$SHELL" -c "nmtui"
   } 
 
   [ "$button" == "3" ] && {
