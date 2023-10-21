@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-[[ "$@" == ?(http|https)://* ]] && exec web_browser_xdg "$@"
+[[ "$@" == ?(http|https)://* ]] && exec web_browser_desktop "$@"
 
 [[ "$@" == file://* ]] && {
   no_pre=$(echo "$@" | sed -n 's/file:\/\///p')
