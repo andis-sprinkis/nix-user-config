@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 
-[ "$button" == "1" ] && $TERMINAL -e calcurse
+[ "$button" == "1" ] && $TERMINAL -e "$SHELL" -c "calcurse"
 
 date +"%A — %-d. %B" | sed 's/./\u&/'
