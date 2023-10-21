@@ -21,11 +21,9 @@ IFS="$old_ifs"
 [ "$num" ] && {
   [ "$button" == "1" ] && {
     win_title="\033]0;Removable storage devices mounted\007"
-    $TERMINAL -e $SHELL -c "echo -n \"$win_title\"; printf \"$rsd_mounts\n\n\" | $PAGER"
+    $TERMINAL -e "$SHELL" -c "echo -n \"$win_title\"; printf \"$rsd_mounts\n\n\" | $PAGER"
   }
 
   [ "$num" == "1" ] && echo "$num device mounted" && exit
   echo "$num devices mounted"
 }
-
-# TODO: compare by device UUID
