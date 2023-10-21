@@ -171,8 +171,6 @@ bindsym --whole-window Mod1+button8 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/
 
 bindsym $mod+Shift+r exec --no-startup-id ${XDG_CONFIG_HOME:-HOME/.config}/xinit/xinitrc
 
-bindsym $mod+slash exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/keyboard_shortuts
-
 bindsym $mod+Shift+q exec \
 "i3-nagbar -t warning -f $font -m 'Exit i3?' -b 'Yes' 'i3-msg exit'"
 
@@ -200,6 +198,8 @@ bindsym $mod+Ctrl+Print  exec --no-startup-id screenshot_maim --select
 bindsym $mod+F12 exec --no-startup-id screen_lock_i3lock_dpms
 
 bindsym $mod+c exec --no-startup-id exec_active_win_x
+
+bindsym $mod+slash exec --no-startup-id i3_key_mappings_desktop
 
 set     $mode_resize "Resize container..."
 bindsym $mod+r mode $mode_resize
