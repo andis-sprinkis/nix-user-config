@@ -2,7 +2,7 @@ local wezterm = require('wezterm')
 local act = wezterm.action
 local cfg_local_status, cfg_local = pcall(require, 'cfg_local')
 
-return {
+local cfg = {
   adjust_window_size_when_changing_font_size = false,
   color_scheme = 'vscode-dark',
   cursor_blink_rate = 0,
@@ -63,3 +63,24 @@ return {
     },
   },
 }
+
+if (wezterm.target_triple == 'aarch64-apple-darwin' or wezterm.target_triple == 'x86_64-apple-darwin') then
+  table.insert(
+    cfg.mouse_bindings,
+    {
+      event = { Down = { streak = 1, button = { WheelUp = 1 } } },
+      mods = 'META',
+      action = act.IncreaseFontSize,
+    }
+  )
+  table.insert(
+    cfg.mouse_bindings,
+    {
+      event = { Down = { streak = 1, button = { WheelDown = 1 } } },
+      mods = 'META',
+      action = act.DecreaseFontSize,
+    }
+  )
+end
+
+return cfg
