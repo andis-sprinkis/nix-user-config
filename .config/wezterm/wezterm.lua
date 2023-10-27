@@ -69,7 +69,7 @@ if (wezterm.target_triple == 'aarch64-apple-darwin' or wezterm.target_triple == 
     cfg.mouse_bindings,
     {
       event = { Down = { streak = 1, button = { WheelUp = 1 } } },
-      mods = 'META',
+      mods = 'SUPER',
       action = act.IncreaseFontSize,
     }
   )
@@ -77,7 +77,7 @@ if (wezterm.target_triple == 'aarch64-apple-darwin' or wezterm.target_triple == 
     cfg.mouse_bindings,
     {
       event = { Down = { streak = 1, button = { WheelDown = 1 } } },
-      mods = 'META',
+      mods = 'SUPER',
       action = act.DecreaseFontSize,
     }
   )
