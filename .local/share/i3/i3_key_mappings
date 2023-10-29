@@ -5,4 +5,4 @@ echo "$(< ${XDG_CONFIG_HOME:-$HOME/.config}/i3/config)" \
   | sed -z 's/\\\n//g' \
   | grep "bindsym" \
   | sed -e 's/bindsym //g' -e 's/--whole-window //g' -e 's/--no-startup-id //g' -e 's/ exec / /g' -e 's/^ //g' \
-  | column -t -s' ' -l "2" -O "2,1" -R "2" -o " : " -m
+  | column -m -t -s' ' -l "2" -O "2,1" -R "2" -o " <=> "
