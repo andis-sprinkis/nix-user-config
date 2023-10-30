@@ -132,6 +132,7 @@ $prompt_symbol"
     do; [ -f "$fzf_completion" ] && . "$fzf_completion" && break; done
 
     bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
+    bindkey -M vicmd -s '^f' 'i^ucd "$(dirname "$(fzf)")"\n'
   }
 
   # list all shell options
