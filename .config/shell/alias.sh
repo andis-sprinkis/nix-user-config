@@ -10,10 +10,12 @@ alias \
   diskspace="df -h --output=\"target,pcent,size,used,avail,fstype,source\"" \
   dg="dotgit" \
   dgc="dotgit commit" \
-  dgca="dotgit commit --amend" \
-  dgcan="dotgit commit --amend --no-edit" \
+  dgcm="dotgit commit --amend" \
+  dgcmn="dotgit commit --amend --no-edit" \
+  dgd="dotgit diff" \
   dgl="dotgit log" \
-  dgp="dotgit pull" \
+  dgpl="dotgit pull" \
+  dgps="dotgit push" \
   dgs="dotgit status" \
   dgt="dotgit checkout" \
   dg_submodule_init="dotgit submodule update --init --recursive" \
@@ -21,11 +23,12 @@ alias \
   e="$EDITOR" \
   g="git" \
   gc="git commit" \
-  gca="git commit --amend" \
-  gcan="git commit --amend --no-edit" \
-  dgs="dotgit status" \
+  gcm="git commit --amend" \
+  gcmn="git commit --amend --no-edit" \
+  gd="git diff" \
   gl="git log" \
-  gp="git pull" \
+  gpl="git pull" \
+  gps="git push" \
   gs="git status" \
   gt="git checkout" \
   g_submodule_init="git submodule update --init --recursive" \
