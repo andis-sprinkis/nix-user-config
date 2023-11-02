@@ -32,6 +32,7 @@ user_pref("browser.startup.homepage_override.mstone", "ignore");
 user_pref("browser.tabs.closeWindowWithLastTab", false);
 user_pref("browser.tabs.crashReporting.sendReport", false);
 user_pref("browser.tabs.firefox-view", false);
+user_pref("browser.tabs.firefox-view-next", false);
 user_pref("browser.tabs.loadBookmarksInTabs", true);
 user_pref("browser.uidensity", 1);
 user_pref("browser.uitour.enabled", false);
