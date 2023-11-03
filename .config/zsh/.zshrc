@@ -22,7 +22,16 @@
       "viins"|"main") echo_cur_beam;;
     esac
   }
+
   zle-line-init() { zle -K "viins" && echo_cur_beam }
+
+  function expand_alias() {
+    zle "_expand_alias"
+    zle "self-insert"
+  }
+
+  zle -N "expand_alias"
+  bindkey -M main " " "expand_alias"
 
   # fn: preexec
   preexec() {
