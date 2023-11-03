@@ -1,6 +1,3 @@
-# fn: detect if given command is executable
-is_exec() { [ "$(command -v "$1")" ]; }
-
 alias \
   bc="bc -ql" \
   c="clear" \
@@ -48,6 +45,7 @@ alias \
   scan_smb="sudo nmap -sS -p 445 192.168.1.0/24" \
   scan_ssh="sudo nmap -sS -p 22 192.168.1.0/24" \
   tree="tree -CF" \
+  viff="nvim -d" \
   wget="wget --hsts-file=\"${XDG_DATA_HOME:-$HOME/.local/share}/wget-hsts\"" \
   yay="yay --color=auto"
 
@@ -57,5 +55,3 @@ alias \
     grep="grep --color=auto" \
     ls="ls -xhAFNX --color=auto --group-directories-first --time-style=long-iso"
 }
-
-is_exec "nvim" && alias viff="nvim -d"
