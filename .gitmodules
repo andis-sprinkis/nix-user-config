@@ -16,3 +16,6 @@
 [submodule ".local/share/zsh/plugins/zsh-system-clipboard"]
 	path = .local/share/zsh/plugins/zsh-system-clipboard
 	url = https://github.com/andis-sprinkis/zsh-system-clipboard
+[submodule ".local/share/unicode-menu"]
+	path = .local/share/unicode-menu
+	url = https://github.com/andis-sprinkis/unicode-menu
