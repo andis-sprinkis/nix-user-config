@@ -60,6 +60,7 @@ user_pref("javascript.use_us_english_locale", true);
 user_pref("media.autoplay.default", 5);
 user_pref("media.videocontrols.picture-in-picture.improved-video-controls.enabled", true);
 user_pref("middlemouse.contentLoadURL", false);
+user_pref("middlemouse.paste", false);
 user_pref("network.predictor.enabled", false);
 user_pref("signon.firefoxRelay.feature", "disabled");
 user_pref("signon.generation.enabled", false);
