@@ -6,15 +6,15 @@ main() {
   [ -f "/opt/homebrew/bin/brew" ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
   # default macOS homebrew dir. path
-  export BREW_DEFAULT_PATH="/opt/homebrew"
+  export BREW_PREFIX="${$(brew --prefix 2> /dev/null):-/opt/homebrew}"
 
   # determine if GNU utilities have been installed with homebrew
-  [ -d "$BREW_DEFAULT_PATH/opt/coreutils/libexec/gnubin" ] && export HAS_BREW_GNUBIN="1"
+  [ -d "$BREW_PREFIX/opt/coreutils/libexec/gnubin" ] && export HAS_BREW_GNUBIN="1"
 
   # use the GNU utils on macOS
   [ "$HAS_BREW_GNUBIN" ] && {
-    PATH="$BREW_DEFAULT_PATH/opt/coreutils/libexec/gnubin:$PATH"
-    export MANPATH="$BREW_DEFAULT_PATH/opt/coreutils/libexec/gnuman:$MANPATH"
+    PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
+    export MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
   }
 
   # XDG base directories

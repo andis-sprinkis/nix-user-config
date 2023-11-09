@@ -137,7 +137,7 @@ $prompt_symbol"
   is_exec "fzf" && {
     local fzf_completion; for fzf_completion in \
       "/usr/share/fzf/completion.zsh" \
-      "$BREW_DEFAULT_PATH/opt/fzf/shell/completion.zsh" \
+      "$BREW_PREFIX/opt/fzf/shell/completion.zsh" \
       "$HOME/.fzf/shell/completion.zsh"
     do; [ -f "$fzf_completion" ] && . "$fzf_completion" && break; done
 

@@ -10,8 +10,8 @@ main() {
 
   # use the GNU utils on macOS
   [ "$HAS_BREW_GNUBIN" ] && {
-    PATH="$BREW_DEFAULT_PATH/opt/coreutils/libexec/gnubin:$PATH"
-    export MANPATH="$BREW_DEFAULT_PATH/opt/coreutils/libexec/gnuman:$MANPATH"
+    PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
+    export MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
   }
 
   # lfcd
