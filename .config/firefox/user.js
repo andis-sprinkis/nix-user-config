@@ -62,6 +62,7 @@ user_pref("media.videocontrols.picture-in-picture.improved-video-controls.enable
 user_pref("middlemouse.contentLoadURL", false);
 user_pref("middlemouse.paste", false);
 user_pref("network.predictor.enabled", false);
+user_pref("reader.parse-on-load.enabled", false);
 user_pref("signon.firefoxRelay.feature", "disabled");
 user_pref("signon.generation.enabled", false);
 user_pref("toolkit.coverage.opt-out", true);
