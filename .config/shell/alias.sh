@@ -32,7 +32,7 @@ alias \
   g_submodule_upgrade_latest_remote="git submodule update --recursive --remote" \
   h="tldr" \
   ip="ip --color=auto" \
-  less="less -Ri" \
+  less="$PAGER" \
   mkdir="mkdir -pv" \
   mv="mv -v" \
   myip="curl https://ipinfo.io/" \

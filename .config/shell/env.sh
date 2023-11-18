@@ -33,7 +33,7 @@ main() {
   [ -f "/etc/profile.d/locale.sh" ] && { unset LANG; . "/etc/profile.d/locale.sh"; }
 
   # set PAGER
-  export PAGER="less -Ri"
+  export PAGER="pager"
 
   # set TERMINAL
   export TERMINAL="wezterm"

@@ -17,7 +17,7 @@
   pushInsteadOf = https://gitlab.com/
 
 [core]
-  pager = less -F -R -i -+X
+  pager = pager
   ignorecase = false
 
 [color]
