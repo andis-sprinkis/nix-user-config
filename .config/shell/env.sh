@@ -36,7 +36,7 @@ main() {
   export PAGER="pager"
 
   # set TERMINAL
-  export TERMINAL="wezterm"
+  export TERMINAL="terminal"
 
   is_exec "nvim" && {
     # configure nvim as EDITOR, MANPAGER
