@@ -17,19 +17,15 @@ cmd open ${{
 
   case $mime in
     application/octet-stream)
-      lf -remote "send $id push :open-with<space>"
-      exit;;
+      exec lf -remote "send $id push :open-with<space>" ;;
     application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
-      lf -remote "send $id push :unpack"
-      exit;;
+      exec lf -remote "send $id push :unpack" ;;
     text/*|application/xml|application/*json*|application/xhtml*|application/javascript|application/x-httpd-php|application/x-wine-extension-ini|application/x-subrip|application/x-awk|inode/x-empty)
-      $EDITOR $fx
-      exit;;
+      exec $EDITOR $fx ;;
   esac
 
   [ "$(command -v "xdg-mime")" ] && [ -z "$(xdg-mime query default $mime)" ] && {
-    lf -remote "send $id push :open-with<space>"
-    exit
+    exec lf -remote "send $id push :open-with<space>"
   }
 
   for f in $fx; do nohup $OPENER "$f" > /dev/null 2> /dev/null & done
