@@ -51,7 +51,7 @@ main() {
   }
 
   # configure makepkg
-  is_exec "nproc" && MAKEFLAGS="-j$(nproc)"
+  is_exec "nproc" && export MAKEFLAGS="-j$(nproc)"
 
   # configure X11
   export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/xinit/xinitrc"
