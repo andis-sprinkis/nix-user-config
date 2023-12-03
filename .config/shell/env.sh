@@ -50,6 +50,9 @@ main() {
     done
   }
 
+  # configure makepkg
+  is_exec "nproc" && MAKEFLAGS="-j$(nproc)"
+
   # configure X11
   export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/xinit/xinitrc"
   export XAUTHORITY="$XDG_RUNTIME_DIR/xauthority"
