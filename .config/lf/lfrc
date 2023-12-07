@@ -61,6 +61,7 @@ cmd on-cd &{{
 on-cd
 
 map P push :paste-to-file<space>
+map R delete
 map Y copy-path
 map ` !true
 map b :mark-load
