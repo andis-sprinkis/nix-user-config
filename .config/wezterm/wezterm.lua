@@ -20,10 +20,10 @@ local cfg = {
   initial_rows = 30,
   animation_fps = 1,
   window_padding = {
-    left = 4,
-    right = 4,
-    top = 4,
-    bottom = 4,
+    left = 2,
+    right = 2,
+    top = 2,
+    bottom = 2,
   },
   keys = {
     { key = ')',        mods = 'CTRL',       action = act.ResetFontSize },
