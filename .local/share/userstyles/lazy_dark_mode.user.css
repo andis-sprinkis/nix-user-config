@@ -42,6 +42,7 @@ domain("stackoverflow.com"),
 domain("superuser.com"),
 domain("tensorflow.org"),
 domain("translate.google.com"),
+domain("vestnesis.lv"),
 domain("w3schools.com"),
 domain("yr.no") {
   @media (prefers-color-scheme: dark) {
