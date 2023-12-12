@@ -3,6 +3,9 @@ import rlcompleter
 import atexit
 import os
 
+# runtime libraries
+import math
+
 # tab completion
 readline.parse_and_bind('tab: complete')
 
