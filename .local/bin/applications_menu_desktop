@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+PATH_APPIMAGE="$HOME/.local/opt/appimage"
+
+exec j4-dmenu-desktop \
+  --no-generic \
+  --display-binary \
+  --dmenu="(cat ; stest -flx \"$PATH_APPIMAGE\" | awk '{ print \"$PATH_APPIMAGE/\"\$0 }') | dmenu" \
+  --usage-log=${XDG_CACHE_HOME:-HOME/.cache}/j4-dmenu-desktop/log
