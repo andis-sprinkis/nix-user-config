@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-path_appimage="$HOME/.local/opt/appimage/"
+path_appimage="${APPIMAGE_BIN_HOME:-$HOME/.local/opt/appimage/}"
 cmd_dmenu="(cat; stest -flx \"${path_appimage}\" | awk '{ print \"${path_appimage}\"\$0 }' | sort -u) | dmenu"
 
 exec j4-dmenu-desktop \

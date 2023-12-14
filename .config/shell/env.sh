@@ -23,8 +23,12 @@ main() {
   export XDG_DATA_HOME="$HOME/.local/share"
   export XDG_STATE_HOME="$HOME/.local/state"
 
-  # local bin PATH
+  # set local bin PATH
   PATH="$HOME/.local/bin:$PATH"
+
+  # set user AppImages location
+  APPIMAGE_BIN_HOME="$HOME/.local/opt/appimage"
+  PATH="$APPIMAGE_BIN_HOME:$PATH"
 
   # set language
   [ "$LANG" ] || export LANG='en_US.UTF-8'
