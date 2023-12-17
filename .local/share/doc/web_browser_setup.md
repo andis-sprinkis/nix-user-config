@@ -15,6 +15,7 @@ ln -s ../../../.config/firefox/user.js user.js
 
 1.  https://addons.mozilla.org/en-US/firefox/addon/accessibility-checker/
 1.  https://addons.mozilla.org/en-US/firefox/addon/clearurls/
+1.  https://addons.mozilla.org/en-US/firefox/addon/copy-as-markdown/
 1.  https://addons.mozilla.org/en-US/firefox/addon/ddg-lite-search-provider/
 1.  https://addons.mozilla.org/en-US/firefox/addon/favicon-detector/
 1.  https://addons.mozilla.org/en-US/firefox/addon/github-search/
@@ -46,6 +47,7 @@ ln -s ../../../.config/firefox/user.js user.js
 ### Google Chrome
 
 1.  https://chrome.google.com/webstore/detail/clearurls/lckanjgmijmafbedllaakclkaicjfmnk
+1.  https://chrome.google.com/webstore/detail/copy-as-markdown/fkeaekngjflipcockcnpobkpbbfbhmdn
 1.  https://chrome.google.com/webstore/detail/favicon-detector/jlfeffjhgmgblofcgpbgpkkhfniipejm
 1.  https://chrome.google.com/webstore/detail/highlight-or-hide-search/ilopipickdimglkalhckioobifbiinbk
 1.  https://chrome.google.com/webstore/detail/i-still-dont-care-about-c/edibdbjcniadpccecjdfdjjppcpchdlm
