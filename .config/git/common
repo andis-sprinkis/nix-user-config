@@ -21,7 +21,7 @@
   ignorecase = false
 
 [color]
-	ui = auto
+  ui = auto
 
 [gpg]
   program = gpg
