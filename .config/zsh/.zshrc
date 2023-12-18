@@ -133,6 +133,9 @@ $prompt_symbol"
   bindkey "^e" "edit-command-line"
   bindkey -a "^e" "edit-command-line"
 
+  # configure tldr
+  [ -f "$HOME/.local/bin/tldr" ] && compctl -k "($(tldr 2>/dev/null --list))" "tldr"
+
   # configure fzf
   is_exec "fzf" && {
     local fzf_completion; for fzf_completion in \
