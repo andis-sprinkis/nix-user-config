@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=Application
 Name=Text editor
-Exec=text_editor_desktop %F
+Exec=editor_desktop %F
