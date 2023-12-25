@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 # From https://github.com/sharkdp/bat/issues/1175#issuecomment-684786269
+
 if command -v bat >/dev/null 2>&1; then
    # we don't just do this because then the other lessfilters never have a chance to run
    # bat --paging never --color always --style plain "$1"
