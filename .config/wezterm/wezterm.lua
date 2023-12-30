@@ -9,8 +9,14 @@ local cfg = {
   disable_default_key_bindings = true,
   enable_tab_bar = false,
   font = wezterm.font_with_fallback {
-    'Cascadia Code PL',
-    'monospace',
+    {
+      family = 'Cascadia Code PL',
+      harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
+    },
+    {
+      family = 'monospace',
+      harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
+    },
   },
   font_size = cfg_local_status and cfg_local['font_size'] or 12.0,
   freetype_load_target = 'Light',
