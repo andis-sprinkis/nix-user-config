@@ -1,13 +1,18 @@
 #!/usr/bin/env sh
 
 exec less \
-  -RNJic~ \
-  -+X \
-  --mouse \
-  --tabs "2" \
-  --wheel-lines "3" \
-  --line-num-width "5" \
-  -j ".5" \
+  --LINE-NUMBERS \
+  --LONG-PROMPT \
+  --RAW-CONTROL-CHARS \
+  --clear-screen \
+  --ignore-case \
   --incsearch \
+  --jump-target ".5" \
+  --line-num-width "5" \
+  --mouse \
+  --status-column \
+  --tabs "2" \
+  --tilde \
   --use-color \
+  --wheel-lines "3" \
   "$@"
