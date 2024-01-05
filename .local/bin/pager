@@ -5,6 +5,7 @@ exec less \
   --LONG-PROMPT \
   --RAW-CONTROL-CHARS \
   --clear-screen \
+  --HILITE-UNREAD \
   --incsearch \
   --ignore-case \
   --jump-target ".5" \
@@ -17,4 +18,5 @@ exec less \
   --color=P- \
   --color=Nk \
   --wheel-lines "3" \
+  --wordwrap \
   "$@"
