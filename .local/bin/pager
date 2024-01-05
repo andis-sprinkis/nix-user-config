@@ -5,8 +5,8 @@ exec less \
   --LONG-PROMPT \
   --RAW-CONTROL-CHARS \
   --clear-screen \
-  --ignore-case \
   --incsearch \
+  --ignore-case \
   --jump-target ".5" \
   --line-num-width "5" \
   --mouse \
@@ -14,5 +14,7 @@ exec less \
   --tabs "2" \
   --tilde \
   --use-color \
+  --color=P- \
+  --color=Nk \
   --wheel-lines "3" \
   "$@"
