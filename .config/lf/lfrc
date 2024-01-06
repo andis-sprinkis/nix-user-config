@@ -19,7 +19,7 @@ cmd open ${{
     application/octet-stream)
       exec lf -remote "send $id push :open-with<space>" ;;
     application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
-      exec lf -remote "send $id push :unpack" ;;
+      exec $PAGER $fx ;;
     text/*|application/xml|application/*json*|application/xhtml*|application/javascript|application/x-httpd-php|application/x-wine-extension-ini|application/x-subrip|application/x-awk|inode/x-empty)
       exec $PAGER $fx ;;
   esac
@@ -38,7 +38,18 @@ cmd open-with ${{
 
 cmd unpack !{{
   IFS=$'\n'
-  unpack $fx
+
+  echo "Selected to extract:
+$fx"
+
+  for f in $fx; do 
+    echo "
+---
+
+${f}
+"
+    aunpack --explain --subdir "$f"
+  done
 }}
 
 cmd mkdir !{{
@@ -67,4 +78,4 @@ map ` !true
 map b :mark-load
 map m
 map o push :open-with<space>
-
+map X unpack
