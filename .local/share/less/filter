@@ -3,8 +3,6 @@
 mime="$(file --mime-type "$(readlink -f "$1")" -b)"
 
 case $mime in
-  application/octet-stream)
-    exit 1 ;;
   application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
     exec als "$1" ;;
   *) path_file="$(readlink -f "$1")"
