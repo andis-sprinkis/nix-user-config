@@ -1,0 +1,39 @@
+#!/usr/bin/env sh
+
+mime="$(file --mime-type "$(readlink -f "$1")" -b)"
+
+case $mime in
+  application/octet-stream)
+    exit 1 ;;
+  application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
+    exec als "$1" ;;
+  *) path_file="$(readlink -f "$1")"
+     name_file="$(basename "$path_file")"
+     bat_args="--paging never --color always --style plain"
+
+     types_patterns_groups="$(bat -L)"
+     types="$(echo "$types_patterns_groups" | cut --delimiter=":" --fields=1)"
+     patterns_groups="$(echo "$types_patterns_groups" | cut --delimiter=":" --fields=2)"
+
+     i="0"
+     while IFS= read -r patterns_group; do
+       i="$(("$i" + "1"))"
+
+       while read -r pattern; do
+         case "$name_file" in 
+           ($pattern|\.$pattern|*\.$pattern)
+             exec bat $bat_args --language "$(echo "$types" | sed "${i}!d")" < "$1"
+           ;;
+         esac
+
+         case "$path_file" in
+           ($pattern)
+             exec bat $bat_args --language "$(echo "$types" | sed "${i}!d")" < "$1"
+           ;;
+         esac
+       done <<< "$(echo "$patterns_group" | sed 's/,/\n/g')"
+     done <<< "$patterns_groups"
+
+     exec bat $bat_args < "$1"
+  ;;
+esac
