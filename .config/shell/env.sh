@@ -96,7 +96,7 @@ main() {
 
   # configure less
   export LESSHISTFILE="-"
-  export LESSOPEN="|${XDG_DATA_HOME:-$HOME/.local/share}/less/filter_bat_hl %s"
+  export LESSOPEN="|${XDG_DATA_HOME:-$HOME/.local/share}/less/filter %s"
 
   # configure sqlite
   export SQLITE_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}/sqlite/history"
