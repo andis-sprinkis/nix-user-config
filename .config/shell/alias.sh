@@ -1,4 +1,5 @@
 alias \
+  aunpack="aunpack --subdir --explain" \
   bc="bc -ql" \
   c="clear" \
   cp="cp -rv" \
@@ -45,7 +46,6 @@ alias \
   scan_smb="sudo nmap -sS -p 445 192.168.1.0/24" \
   scan_ssh="sudo nmap -sS -p 22 192.168.1.0/24" \
   tree="tree -CF" \
-  unpack="aunpack --subdir --explain" \
   viff="nvim -d" \
   wget="wget --hsts-file=\"${XDG_DATA_HOME:-$HOME/.local/share}/wget-hsts\"" \
   yay="yay --color=auto"
