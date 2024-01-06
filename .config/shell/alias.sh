@@ -39,7 +39,7 @@ alias \
   myip="curl https://ipinfo.io/" \
   p="python3 -q" \
   q="exit" \
-  pacman="yay --color=auto"
+  pacman="yay --color=auto" \
   r="radian" \
   rm="rm -vI" \
   rsync_progress="rsync --progress --human-readable --stats" \
