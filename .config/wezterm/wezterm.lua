@@ -2,6 +2,8 @@ local wezterm = require('wezterm')
 local act = wezterm.action
 local cfg_local_status, cfg_local = pcall(require, 'cfg_local')
 
+local harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
+
 local cfg = {
   adjust_window_size_when_changing_font_size = false,
   color_scheme = 'vscode-dark',
@@ -11,11 +13,11 @@ local cfg = {
   font = wezterm.font_with_fallback {
     {
       family = 'Cascadia Code PL',
-      harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
+      harfbuzz_features = harfbuzz_features,
     },
     {
       family = 'monospace',
-      harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
+      harfbuzz_features = harfbuzz_features,
     },
   },
   font_size = cfg_local_status and cfg_local['font_size'] or 12.0,
