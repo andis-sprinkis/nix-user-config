@@ -91,7 +91,6 @@ set $left  h
 set $right l
 
 bindsym $mod+Return exec --no-startup-id $TERMINAL
-bindsym $mod+e exec --no-startup-id file_manager_desktop
 
 bindsym $mod+q kill
 
