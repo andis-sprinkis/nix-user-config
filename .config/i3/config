@@ -176,7 +176,7 @@ bindsym $mod+Shift+r exec --no-startup-id ${XDG_CONFIG_HOME:-HOME/.config}/xinit
 bindsym $mod+Shift+q exec \
 "i3-nagbar -t warning -f $font -m 'Exit i3?' -b 'Yes' 'i3-msg exit'"
 
-bindsym Menu exec --no-startup-id "applications_menu_desktop"
+bindsym Menu exec --no-startup-id applications_menu_desktop
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 5%+ unmute
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%- unmute
