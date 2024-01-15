@@ -47,7 +47,6 @@ alias \
   scan_smb="sudo nmap -sS --open -p 445 192.168.1.0/24" \
   scan_ssh="sudo nmap -sS --open -p 22 192.168.1.0/24" \
   tree="tree -CF" \
-  tree_spaces="tree -CF | sed 's/ \|├\|─\|│\|└/ /g'" \ 
   viff="nvim -d" \
   wget="wget --hsts-file=\"${XDG_DATA_HOME:-$HOME/.local/share}/wget-hsts\"" \
   yay="yay --color=auto"
