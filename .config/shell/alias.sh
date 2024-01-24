@@ -4,7 +4,7 @@ alias \
   c="clear" \
   cp="cp -rv" \
   date_iso8601="date -u +\"%Y-%m-%dT%H:%M:%SZ\"" \
-  dirsize="ncdu -x" \
+  dirsize="du -sch" \
   diskspace="df -h --output=\"target,pcent,size,used,avail,fstype,source\"" \
   dg="dotgit" \
   dgc="dotgit commit" \
@@ -37,6 +37,7 @@ alias \
   mkdir="mkdir -pv" \
   mv="mv -v" \
   myip="curl https://ipinfo.io/" \
+  ncdu="ncdu -x" \
   p="python3 -q" \
   q="exit" \
   pacman="yay --color=auto" \
