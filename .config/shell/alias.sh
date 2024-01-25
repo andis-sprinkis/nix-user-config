@@ -2,6 +2,7 @@ alias \
   aunpack="aunpack --subdir --explain" \
   bc="bc -ql" \
   c="clear" \
+  calc="qalc -c" \
   cp="cp -rv" \
   date_iso8601="date -u +\"%Y-%m-%dT%H:%M:%SZ\"" \
   dirsize="du -sch" \
@@ -40,6 +41,7 @@ alias \
   ncdu="ncdu -x" \
   p="python3 -q" \
   q="exit" \
+  qalc="qalc -c" \
   pacman="yay --color=auto" \
   r="radian" \
   rm="rm -vI" \
