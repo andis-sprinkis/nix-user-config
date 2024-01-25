@@ -4,8 +4,7 @@ is_exec() { [ "$(command -v "$1")" ]; }
 main() {
   # launch tmux
   is_exec "tmux" && [ -z "$TMUX" ] && [ "$TERM" != "linux" ] && {
-    ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true"
-    exec tmux
+    ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true" exec tmux
   }
 
   # use the GNU utils on macOS
