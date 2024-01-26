@@ -1,3 +1,6 @@
 #!/usr/bin/env sh
 
-exec wezterm "$@"
+[ "$(command -v "wezterm")" ] && exec wezterm "$@"
+[ "$(command -v "kitty")" ] && exec kitty --single-instance "$@"
+[ "$(command -v "st")" ] && exec st "$@"
+[ "$(command -v "xterm")" ] && exec xterm "$@"
