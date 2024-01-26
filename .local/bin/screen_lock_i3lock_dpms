@@ -7,5 +7,5 @@ color="$(xrdb -get background)"
 
 trap revert HUP INT TERM
 xset +dpms dpms 5 5 5
-i3lock -u -n -c ${color:1}
+i3lock -u -n -c "${color:1}"
 revert
