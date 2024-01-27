@@ -1,16 +1,17 @@
 local wezterm = require('wezterm')
 local act = wezterm.action
+
 local cfg_local_status, cfg_local = pcall(require, 'cfg_local')
 
 local harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
 
-local cfg = {
+local M = {
   adjust_window_size_when_changing_font_size = false,
   color_scheme = 'vscode-dark',
   cursor_blink_rate = 0,
   disable_default_key_bindings = true,
   enable_tab_bar = false,
-  font = wezterm.font_with_fallback {
+  font = wezterm.font_with_fallback({
     {
       family = 'Cascadia Code PL',
       harfbuzz_features = harfbuzz_features,
@@ -19,7 +20,7 @@ local cfg = {
       family = 'monospace',
       harfbuzz_features = harfbuzz_features,
     },
-  },
+  }),
   font_size = cfg_local_status and cfg_local['font_size'] or 12.0,
   freetype_load_target = 'Light',
   line_height = 1.29,
@@ -74,7 +75,7 @@ local cfg = {
 
 if (wezterm.target_triple == 'aarch64-apple-darwin' or wezterm.target_triple == 'x86_64-apple-darwin') then
   table.insert(
-    cfg.mouse_bindings,
+    M.mouse_bindings,
     {
       event = { Down = { streak = 1, button = { WheelUp = 1 } } },
       mods = 'SUPER',
@@ -82,7 +83,7 @@ if (wezterm.target_triple == 'aarch64-apple-darwin' or wezterm.target_triple == 
     }
   )
   table.insert(
-    cfg.mouse_bindings,
+    M.mouse_bindings,
     {
       event = { Down = { streak = 1, button = { WheelDown = 1 } } },
       mods = 'SUPER',
@@ -91,4 +92,4 @@ if (wezterm.target_triple == 'aarch64-apple-darwin' or wezterm.target_triple == 
   )
 end
 
-return cfg
+return M
