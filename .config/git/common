@@ -1,6 +1,15 @@
-; Usage - in ~/.config/git/config include
+; In file ~/.config/git/config include:
+;
 ; [include]
 ;   path = ~/.config/git/common
+
+; [user]
+;   email =
+;   name =
+;   signingkey =
+;
+; [commit]
+;   gpgsign = true
 
 [alias]
   pll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
@@ -31,11 +40,3 @@
   smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
   required = true
-
-; [commit]
-;   gpgsign = true
-
-; [user]
-;   email =
-;   name =
-;   signingkey =
