@@ -9,8 +9,8 @@ alias \
   diskspace="df -h --output=\"target,pcent,size,used,avail,fstype,source\"" \
   dg="dotgit" \
   dgc="dotgit commit" \
-  dgcm="dotgit commit --amend" \
-  dgcmn="dotgit commit --amend --no-edit" \
+  dgca="dotgit commit --amend" \
+  dgcan="dotgit commit --amend --no-edit" \
   dgd="dotgit diff" \
   dgl="dotgit log" \
   dgpl="dotgit pull" \
@@ -22,8 +22,8 @@ alias \
   e="$EDITOR" \
   g="git" \
   gc="git commit" \
-  gcm="git commit --amend" \
-  gcmn="git commit --amend --no-edit" \
+  gca="git commit --amend" \
+  gcan="git commit --amend --no-edit" \
   gd="git diff" \
   gl="git log" \
   gpl="git pull" \
