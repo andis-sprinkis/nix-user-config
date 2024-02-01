@@ -8,8 +8,8 @@ alias \
   dirsize="du -sch" \
   diskspace="df -h --output=\"target,pcent,size,used,avail,fstype,source\"" \
   dg="dotgit" \
-  dgc="dotgit commit" \
-  dgcm="dotgit commit -m" \
+  dgc="dotgit commit -a" \
+  dgcm="dotgit commit -a -m" \
   dgca="dotgit commit --amend" \
   dgcan="dotgit commit --amend --no-edit" \
   dgd="dotgit diff" \
