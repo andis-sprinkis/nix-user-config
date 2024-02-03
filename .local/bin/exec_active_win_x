@@ -12,6 +12,7 @@ set -e
 case $wm_class in
   "libreoffice") exec libreoffice "--$(echo "$wm_instance" | sed -n 's/libreoffice-\(.*.\)/\1/p')";;
   "libreoffice-"*) exec libreoffice "--$(echo "$wm_class" | sed -n 's/libreoffice-\(.*.\)/\1/p')";;
+  "org.wezfurlong.wezterm") exec wezterm;;
   "mpv") exec mpv --player-operation-mode=pseudo-gui;;
 esac
 
