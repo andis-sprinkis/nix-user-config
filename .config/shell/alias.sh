@@ -48,6 +48,7 @@ alias \
   r="radian" \
   rm="rm -vI" \
   rsync_progress="rsync --progress --human-readable --stats" \
+  s="sudo" \
   scan_http="sudo nmap -sS --open -p 80,447 192.168.1.0/24" \
   scan_smb="sudo nmap -sS --open -p 445 192.168.1.0/24" \
   scan_ssh="sudo nmap -sS --open -p 22 192.168.1.0/24" \
