@@ -34,6 +34,7 @@ user_pref("browser.tabs.crashReporting.sendReport", false);
 user_pref("browser.tabs.firefox-view", false);
 user_pref("browser.tabs.firefox-view-next", false);
 user_pref("browser.tabs.loadBookmarksInTabs", true);
+user_pref("browser.translations.enable", false);
 user_pref("browser.uidensity", 1);
 user_pref("browser.uitour.enabled", false);
 user_pref("browser.urlbar.dnsResolveSingleWordsAfterSearch", 0);
