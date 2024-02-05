@@ -8,11 +8,8 @@ case $mime in
   *)
     path_file="$(readlink -f "$1")"
     name_file="$(basename "$path_file")"
-    bat_args="--paging never --color always --style plain"
-
+    bat_args="bat --paging never --color always --style plain"
     types_patterns_groups="$(bat -L)"
-    types="$(echo "$types_patterns_groups" | cut --delimiter=":" --fields=1)"
-    patterns_groups="$(echo "$types_patterns_groups" | cut --delimiter=":" --fields=2)"
 
     i="0"
     while IFS= read -r patterns_group; do
@@ -20,19 +17,19 @@ case $mime in
 
       while read -r pattern; do
         case "$name_file" in 
-          ($pattern|\.$pattern|*\.$pattern)
-            exec bat $bat_args --language "$(echo "$types" | sed "${i}!d")" < "$1"
+          ($pattern|*"."$pattern)
+            exec $bat_args --language "$(echo "$types_patterns_groups" | cut --delimiter=":" --fields="1" | sed "${i}!d")" < "$1"
           ;;
         esac
 
         case "$path_file" in
           ($pattern)
-            exec bat $bat_args --language "$(echo "$types" | sed "${i}!d")" < "$1"
+            exec $bat_args --language "$(echo "$types_patterns_groups" | cut --delimiter=":" --fields="1" | sed "${i}!d")" < "$1"
           ;;
         esac
       done <<< "$(echo "$patterns_group" | sed 's/,/\n/g')"
-    done <<< "$patterns_groups"
+    done <<< "$(echo "$types_patterns_groups" | cut --delimiter=":" --fields=2)"
 
-    exec bat $bat_args < "$1"
+    exec $bat_args < "$1"
   ;;
 esac
