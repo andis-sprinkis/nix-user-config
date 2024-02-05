@@ -18,13 +18,13 @@ case $mime in
       while read -r pattern; do
         case "$name_file" in 
           ($pattern|*"."$pattern)
-            exec $bat_args --language "$(echo "$types_patterns_groups" | cut --delimiter=":" --fields="1" | sed "${i}!d")" < "$1"
+            exec $bat_args --language "$(echo "$types_patterns_groups" | sed "${i}!d" | cut --delimiter=":" --fields="1")" < "$1"
           ;;
         esac
 
         case "$path_file" in
           ($pattern)
-            exec $bat_args --language "$(echo "$types_patterns_groups" | cut --delimiter=":" --fields="1" | sed "${i}!d")" < "$1"
+            exec $bat_args --language "$(echo "$types_patterns_groups" | sed "${i}!d" | cut --delimiter=":" --fields="1")" < "$1"
           ;;
         esac
       done <<< "$(echo "$patterns_group" | sed 's/,/\n/g')"
