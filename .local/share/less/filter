@@ -28,7 +28,7 @@ case $mime in
           ;;
         esac
       done <<< "$(echo "$patterns_group" | sed 's/,/\n/g')"
-    done <<< "$(echo "$types_patterns_groups" | cut --delimiter=":" --fields=2)"
+    done <<< "$(echo "$types_patterns_groups" | cut --delimiter=":" --fields="2")"
 
     exec $bat_args < "$1"
   ;;
