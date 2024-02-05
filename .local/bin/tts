@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+set -eu
+
+text=
+
+while read -r ln; do 
+  text="$text${ln}
+" 
+done
+
+echo "$text"
+
+echo "$text" | piper --output-raw --model "${XDG_DATA_HOME:-$HOME/.local/share}/piper-voices/en/en_US/hfc_female/medium/en_US-hfc_female-medium.onnx" | mpv --demuxer=rawaudio --demuxer-rawaudio-rate=22050 --demuxer-rawaudio-channels=1 -
