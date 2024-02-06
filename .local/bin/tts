@@ -4,20 +4,17 @@ set -eu
 text=
 
 while read -r ln || [ -n "$ln" ]; do 
-  text="$text${ln}" 
+  text="$text${ln}
+" 
 done
 
-echo "Input text:
+echo "Input text:"
 
-${text}
-
---------
-" | fmt -u --width="48"
+printf "\n%s\n" "${text}" | fmt --split-only --width="48" 
 
 echo "$text" | \
   piper \
-    --output-raw \
-    --model "${XDG_DATA_HOME:-$HOME/.local/share}/piper-voices/en/en_US/hfc_female/medium/en_US-hfc_female-medium.onnx" | \
+    --output-raw --model "${XDG_DATA_HOME:-$HOME/.local/share}/piper-voices/en/en_US/hfc_female/medium/en_US-hfc_female-medium.onnx" | \
       mpv \
         --demuxer=rawaudio \
         --demuxer-rawaudio-rate=22050 \
