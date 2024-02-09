@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 # Create an encrypted 7z archive containing a tar archive for preserving file system attributes.
 # $1 - path to a file or a directory to archive
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 read_pw_input() {
   # Read concealed password input
@@ -36,8 +36,8 @@ read_pw_input() {
 # Prompt with user error handling for concealed password input
 
 confirm_pw_input() {
-  local password_1
-  local password_2
+  password_1=
+  password_2=
 
   read_pw_input && password_1=$PW_INPUT
 
@@ -60,7 +60,7 @@ confirm_pw_input() {
     confirm_pw_input $1 && return 0; return 1
   fi
 
-  if [ ! "$password_1" == "$password_2" ]; then
+  if [ ! "$password_1" = "$password_2" ]; then
     unset $password_1
     unset $password_2
     unset $PW_INPUT
