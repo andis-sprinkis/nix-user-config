@@ -27,6 +27,6 @@ confirm_pw_input
 
 7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on -mhe=on -p"$PW_INPUT" $path_7z $path_tar
 
-PW_INPUT=""
+unset PW_INPUT
 
 rm -rf $dir_tmp
