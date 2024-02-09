@@ -15,4 +15,5 @@ xkbcomp -I"${XDG_CONFIG_HOME:-$HOME/.config}/xkb" "${XDG_CONFIG_HOME:-$HOME/.con
 [ -z "$(pidof unclutter)" ] && unclutter --timeout 1 --start-hidden &
 hsetroot -solid "$(xrdb -get background)" &
 
-[ -z "$(pidof i3)" ] && exec i3 || i3-msg restart
+[ -z "$(pidof i3)" ] && exec i3
+i3-msg restart
