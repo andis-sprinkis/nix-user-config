@@ -6,7 +6,8 @@ main() {
   [ -f "/opt/homebrew/bin/brew" ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 
   # default macOS homebrew dir. path
-  export BREW_PREFIX="${$(brew --prefix 2> /dev/null):-/opt/homebrew}"
+  prefix="$(brew --prefix 2> /dev/null)"
+  export BREW_PREFIX="${prefix:-/opt/homebrew}"
 
   # determine if GNU utilities have been installed with homebrew
   [ -d "$BREW_PREFIX/opt/coreutils/libexec/gnubin" ] && export HAS_BREW_GNUBIN="1"
@@ -55,7 +56,10 @@ main() {
   }
 
   # configure makepkg
-  is_exec "nproc" && export MAKEFLAGS="-j$(nproc)"
+  is_exec "nproc" && {
+    proc_units_no="$(nproc)"
+    [ "$proc_units_no" ] && export MAKEFLAGS="-j${proc_units_no}"
+  }
 
   # configure X11
   export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/xinit/xinitrc"
