@@ -46,6 +46,7 @@ main() {
   is_exec "nvim" && {
     # configure nvim as EDITOR, MANPAGER
     export EDITOR="nvim"
+    export MANWIDTH="999"
     export MANPAGER="nvim +Man!"
   } || {
     # or set a different avail. EDITOR
