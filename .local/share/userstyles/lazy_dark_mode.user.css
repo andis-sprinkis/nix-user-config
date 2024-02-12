@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://andis.work
-@version      0.0.48
+@version      0.0.49
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://andis.work)
@@ -59,6 +59,7 @@ domain("perl.org"),
 domain("programmathically.com"),
 domain("proton.me"),
 domain("pubs.opengroup.org"),
+domain("rfc-editor.org"),
 domain("serverfault.com"),
 domain("skillbuilder.aws"),
 domain("sourceware.org"),
@@ -72,6 +73,7 @@ domain("tensorflow.org"),
 domain("translate.google.com"),
 domain("vestnesis.lv"),
 domain("viss.gov.lv"),
+domain("w3.org"),
 domain("w3schools.com"),
 domain("wiki.documentfoundation.org"),
 domain("yr.no") {
