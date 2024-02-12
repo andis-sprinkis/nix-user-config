@@ -37,6 +37,7 @@ ln -s ../../../.config/firefox/user.js user.js
 1.  https://addons.mozilla.org/en-US/firefox/addon/sponsorblock/
 1.  https://addons.mozilla.org/en-US/firefox/addon/stop-autoplay-next-for-youtube/
 1.  https://addons.mozilla.org/en-US/firefox/addon/styl-us/
+1.  https://addons.mozilla.org/en-US/firefox/addon/toggle-dark-mode/
 1.  https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/
 1.  https://addons.mozilla.org/en-US/firefox/addon/url-to-qrcode/
 1.  https://addons.mozilla.org/en-US/firefox/addon/view-page-archive/
