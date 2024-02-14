@@ -13,6 +13,7 @@ xkbcomp -I"${XDG_CONFIG_HOME:-$HOME/.config}/xkb" "${XDG_CONFIG_HOME:-$HOME/.con
 [ -z "$(pidof xsettingsd)" ] && xsettingsd &
 [ -z "$(pidof xcompmgr)" ] && xcompmgr &
 [ -z "$(pidof unclutter)" ] && unclutter --timeout 1 --start-hidden &
+[ -z "$(pidof xss-lock)" ] && xss-lock --transfer-sleep-lock -- screen_lock --nofork &
 hsetroot -solid "$(xrdb -get background)" &
 
 [ -z "$(pidof i3)" ] && exec i3

@@ -2,4 +2,4 @@
 
 color="$(xrdb -get background)"
 [ -z "$color" ] && color="#000000"
-i3lock -u -n -c "$(echo "$color" | cut -c 2-)"
+exec i3lock -u -n -c "$(echo "$color" | cut -c 2-)"
