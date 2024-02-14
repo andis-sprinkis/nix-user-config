@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+df -h --output="target,pcent,size,used,avail,fstype,source"
