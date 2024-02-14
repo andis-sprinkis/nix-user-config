@@ -196,7 +196,7 @@ bindsym $mod+Print       exec --no-startup-id screenshot_maim
 bindsym $mod+Shift+Print exec --no-startup-id screenshot_maim --active
 bindsym $mod+Ctrl+Print  exec --no-startup-id screenshot_maim --select
 
-bindsym $mod+F12 exec --no-startup-id screen_lock_i3lock_dpms
+bindsym $mod+F12 exec --no-startup-id screen_lock_and_off
 
 bindsym $mod+c exec --no-startup-id exec_active_win_x
 
