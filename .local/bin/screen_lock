@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-
-color="$(xrdb -get background)"
-[ -z "$color" ] && color="#000000"
-exec i3lock -u -n -c "$(echo "$color" | cut -c 2-)"
