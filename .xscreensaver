@@ -16,9 +16,9 @@ fadeSeconds:	0:00:01
 ignoreUninstalledPrograms:False
 dpmsEnabled:	True
 dpmsQuickOff:	True
-dpmsStandby:	0:00:00
-dpmsSuspend:	0:00:00
-dpmsOff:	0:00:00
+dpmsStandby:	0:01:00
+dpmsSuspend:	0:01:00
+dpmsOff:	0:01:00
 grabDesktopImages:  False
 grabVideoFrames:    False
 chooseRandomImages: False
@@ -33,7 +33,7 @@ textFile:
 textProgram:	fortune
 textURL:	https://en.wikipedia.org/w/index.php?title=Special:NewPages&feed=rss
 dialogTheme:	darkgray
-settingsGeom:	1440,1225 -1,-1
+settingsGeom:	1440,1086 -1,-1
 
 programs:								      \
 				maze --root				    \n\
