@@ -19,3 +19,39 @@ xterm*faceName: font_family_term
 xterm*faceSize: font_size
 
 Xcursor.size: 42
+
+XScreenSaver.timeout: 0:01:00
+XScreenSaver.cycle: 0:00:00
+XScreenSaver.lock: True
+XScreenSaver.lockTimeout: 0:00:00
+XScreenSaver.passwdTimeout: 0:00:30
+XScreenSaver.visualID: default
+XScreenSaver.installColormap: True
+XScreenSaver.verbose: False
+XScreenSaver.splash: False
+XScreenSaver.splashDuration: 0:00:05
+XScreenSaver.demoCommand: xscreensaver-settings
+XScreenSaver.fade: False
+XScreenSaver.unfade: False
+XScreenSaver.fadeSeconds: 0:00:01
+XScreenSaver.ignoreUninstalledPrograms:False
+XScreenSaver.dpmsEnabled: True
+XScreenSaver.dpmsQuickOff: True
+XScreenSaver.dpmsStandby: 0:01:00
+XScreenSaver.dpmsSuspend: 0:01:00
+XScreenSaver.dpmsOff: 0:01:00
+XScreenSaver.grabDesktopImages: False
+XScreenSaver.grabVideoFrames: False
+XScreenSaver.chooseRandomImages: False
+XScreenSaver.imageDirectory:
+XScreenSaver.mode: blank
+XScreenSaver.selected: -1
+XScreenSaver.textMode: literal
+XScreenSaver.textLiteral:
+XScreenSaver.textFile:
+XScreenSaver.textProgram:
+XScreenSaver.textURL:
+XScreenSaver.dialogTheme: darkgray
+XScreenSaver.programs:
+XScreenSaver.pointerHysteresis: 10
+XScreenSaver.authWarningSlack: 20
