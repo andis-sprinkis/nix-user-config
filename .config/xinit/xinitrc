@@ -5,7 +5,7 @@ if [ "$(id -u)" -lt 1000 ]; then
   exit 1
 fi
 
-xrdb -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/xresources"
+xrdb -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
 VBoxClient-all &
 xset b off &
 xset r rate 165 55 &
