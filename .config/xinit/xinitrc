@@ -11,9 +11,9 @@ xset b off &
 xset r rate 165 55 &
 xkbcomp -I"${XDG_CONFIG_HOME:-$HOME/.config}/xkb" "${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd" "$DISPLAY" &
 [ -z "$(pidof xsettingsd)" ] && xsettingsd &
-[ -z "$(pidof xcompmgr)" ] && xcompmgr &
 [ -z "$(pidof unclutter)" ] && unclutter --timeout 1 --start-hidden &
 hsetroot -solid "$(xrdb -get background)" &
+[ -z "$(pidof picom)" ] && picom -b &
 
 pidof_xscreensaver="$(pidof xscreensaver)"
 [ "$pidof_xscreensaver" ] && xscreensaver-command --restart
