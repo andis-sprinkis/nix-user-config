@@ -6,20 +6,38 @@ if [ "$(id -u)" -lt 1000 ]; then
 fi
 
 xrdb -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
+
+pid_xsettingsd="$(pidof xsettingsd)"
+if [ "$pid_xsettingsd" ]; then 
+  kill -HUP "$pid_xsettingsd"
+else 
+  xsettingsd -b &
+fi
+
 VBoxClient-all &
 xset b off &
 xset r rate 165 55 &
 xkbcomp -I"${XDG_CONFIG_HOME:-$HOME/.config}/xkb" "${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd" "$DISPLAY" &
-[ -z "$(pidof xsettingsd)" ] && xsettingsd &
 [ -z "$(pidof unclutter)" ] && unclutter --timeout 1 --start-hidden &
 hsetroot -solid "$(xrdb -get background)" &
-[ -z "$(pidof picom)" ] && picom -b &
 
-pidof_xscreensaver="$(pidof xscreensaver)"
-[ "$pidof_xscreensaver" ] && xscreensaver-command --restart
-[ -z "$pidof_xscreensaver" ] && xscreensaver -no-splash &
+pid_picom="$(pidof picom)"
+if [ "$pid_picom" ]; then 
+  kill -USR1 "$pid_picom"
+else 
+  picom -b &
+fi
+
+if [ "$(pidof xscreensaver)" ]; then 
+  xscreensaver-command --restart
+else
+  xscreensaver -no-splash & 
+fi
 
 [ -z "$(pidof xss-lock)" ] && xss-lock --ignore-sleep -- xscreensaver-command -lock &
 
-[ -z "$(pidof i3)" ] && exec i3
-i3-msg restart
+if [ "$(pidof i3)" ]; then 
+  i3-msg restart
+else
+  exec i3
+fi
