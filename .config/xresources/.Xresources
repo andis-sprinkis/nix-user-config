@@ -31,15 +31,16 @@ XScreenSaver.verbose: False
 XScreenSaver.splash: False
 XScreenSaver.splashDuration: 0:00:05
 XScreenSaver.demoCommand: xscreensaver-settings
+XScreenSaver.nice: 10
 XScreenSaver.fade: False
 XScreenSaver.unfade: False
 XScreenSaver.fadeSeconds: 0:00:01
 XScreenSaver.ignoreUninstalledPrograms:False
 XScreenSaver.dpmsEnabled: True
 XScreenSaver.dpmsQuickOff: True
-XScreenSaver.dpmsStandby: 0:01:00
-XScreenSaver.dpmsSuspend: 0:01:00
-XScreenSaver.dpmsOff: 0:01:00
+XScreenSaver.dpmsStandby: 0:02:00
+XScreenSaver.dpmsSuspend: 0:02:00
+XScreenSaver.dpmsOff: 0:02:00
 XScreenSaver.grabDesktopImages: False
 XScreenSaver.grabVideoFrames: False
 XScreenSaver.chooseRandomImages: False
@@ -52,6 +53,7 @@ XScreenSaver.textFile:
 XScreenSaver.textProgram:
 XScreenSaver.textURL:
 XScreenSaver.dialogTheme: darkgray
+XScreenSaver.settingsGeom: 1440,1292 -1,-1
 XScreenSaver.programs:
 XScreenSaver.pointerHysteresis: 10
 XScreenSaver.authWarningSlack: 20
