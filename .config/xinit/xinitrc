@@ -23,13 +23,13 @@ hsetroot -solid "$(xrdb -get background)" &
 
 pid_picom="$(pidof picom)"
 if [ "$pid_picom" ]; then 
-  kill -USR1 "$pid_picom"
+  kill -USR1 "$pid_picom" &
 else 
   picom -b &
 fi
 
 if [ "$(pidof xscreensaver)" ]; then 
-  xscreensaver-command --restart
+  xscreensaver-command --restart &
 else
   xscreensaver -no-splash & 
 fi
