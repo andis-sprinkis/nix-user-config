@@ -31,7 +31,7 @@ fi
 if [ "$(pidof xscreensaver)" ]; then 
   xscreensaver-command --restart &
 else
-  xscreensaver -no-splash & 
+  xscreensaver --no-splash & 
 fi
 
 [ -z "$(pidof xss-lock)" ] && xss-lock --ignore-sleep -- xscreensaver-command -lock &
