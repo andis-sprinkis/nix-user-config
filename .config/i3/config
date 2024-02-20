@@ -14,6 +14,7 @@ font                          $font
 show_marks                    yes
 
 for_window [window_role="PictureInPicture"] sticky enable
+for_window [class="zoom" title="zoom"] floating enable
 
 set_from_resource $color0      i3wm.color0      #1e1e1e
 set_from_resource $color1      i3wm.color1      #f44747

@@ -7,4 +7,4 @@ exec j4-dmenu-desktop \
   --no-generic \
   --display-binary \
   --dmenu="$cmd_dmenu" \
-  --usage-log=${XDG_CACHE_HOME:-HOME/.cache}/j4-dmenu-desktop/log
+  --usage-log="${XDG_CACHE_HOME:-HOME/.cache}/j4-dmenu-desktop/log"
