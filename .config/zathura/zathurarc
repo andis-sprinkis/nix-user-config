@@ -11,14 +11,16 @@ set show-hidden true
 set statusbar-basename true
 set window-title-basename true
 set window-title-page true
+set scroll-full-overlap 0.2
 
-map <PageDown> scroll half-down
-map <PageUp> scroll half-up
+map <PageDown> scroll full-down
+map <PageUp> scroll full-up
 map C exec "zathura -P \"$PAGE\" -- \"$FILE\""
-map D toggle_page_mode
+map D scroll full-down
 map J zoom out
 map K zoom in
 map R rotate
+map U scroll full-up
 map b toggle_statusbar
 map d scroll half-down
 map g goto top
