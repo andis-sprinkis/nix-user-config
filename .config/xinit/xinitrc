@@ -5,13 +5,32 @@ if [ "$(id -u)" -lt 1000 ]; then
   exit 1
 fi
 
-xrdb -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
+path_d_xresources="${XDG_CONFIG_HOME:-$HOME/.config}/xresources"
+path_f_xresources_common="${path_d_xresources}/common.Xresources"
+path_f_xresources_local="${path_d_xresources}/local.Xresources"
+path_f_xresources_merged="${path_d_xresources}/.Xresources"
+mkdir -p "$path_d_xresources"
+true > "$path_f_xresources_merged"
+[ -f "$path_f_xresources_common" ] && cat "$path_f_xresources_common" >> "$path_f_xresources_merged"
+[ -f "$path_f_xresources_local" ] && cat "$path_f_xresources_local" >> "$path_f_xresources_merged"
+xrdb -load "$path_f_xresources_merged"
+
+# TODO: merge the xsettingsd local and common config files value by value
+path_d_xsettingsd="${XDG_CONFIG_HOME:-$HOME/.config}/xsettingsd"
+path_f_xsettingsd_common="${path_d_xsettingsd}/common.conf"
+path_f_xsettingsd_local="${path_d_xsettingsd}/local.conf"
+path_f_xsettingsd_merged="${path_d_xsettingsd}/xsettingsd.conf"
+mkdir -p "$path_d_xsettingsd"
+true > "$path_f_xsettingsd_merged"
+[ -f "$path_f_xsettingsd_common" ] && cat "$path_f_xsettingsd_common" >> "$path_f_xsettingsd_merged"
+[ -f "$path_f_xsettingsd_local" ] && cat "$path_f_xsettingsd_local" >> "$path_f_xsettingsd_merged"
 
 pid_xsettingsd="$(pidof xsettingsd)"
 if [ "$pid_xsettingsd" ]; then 
   kill -HUP "$pid_xsettingsd"
 else 
-  xsettingsd -b &
+  echo "HERE ${path_f_xsettingsd_merged}"
+  xsettingsd --config="$path_f_xsettingsd_merged" &
 fi
 
 VBoxClient-all &
