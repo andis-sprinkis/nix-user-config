@@ -10,22 +10,31 @@ xrdb -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
 pathf_xresources_local="${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources"
 [ -f "$pathf_xresources_local" ] && xrdb -override "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources"
 
-# TODO: merge the xsettingsd local and common config files value by value
-pathd_xsettingsd="${XDG_CONFIG_HOME:-$HOME/.config}/xsettingsd"
-pathf_xsettingsd_common="${pathd_xsettingsd}/common.conf"
-pathf_xsettingsd_local="${pathd_xsettingsd}/local.conf"
-pathf_xsettingsd_merged="${pathd_xsettingsd}/xsettingsd.conf"
-mkdir -p "$pathd_xsettingsd"
-true > "$pathf_xsettingsd_merged"
-[ -f "$pathf_xsettingsd_common" ] && cat "$pathf_xsettingsd_common" >> "$pathf_xsettingsd_merged"
-[ -f "$pathf_xsettingsd_local" ] && cat "$pathf_xsettingsd_local" >> "$pathf_xsettingsd_merged"
+pathd_cfg_xsettingsd="${XDG_CONFIG_HOME:-$HOME/.config}/xsettingsd"
+pathf_cfg_xsettingsd="${pathd_cfg_xsettingsd}/xsettingsd.conf"
+pathf_cfg_xsettingsd_common="${pathd_cfg_xsettingsd}/common.conf"
+pathf_cfg_xsettingsd_local="${pathd_cfg_xsettingsd}/local.conf"
+
+if [ -f "$pathf_cfg_xsettingsd_local" ]; then
+  cfg_xsettingsd_local="$(cat "$pathf_cfg_xsettingsd_local")"
+
+  echo "$(
+    [ -f "$pathf_cfg_xsettingsd_common" ] && while IFS=' ' read -r key val; do
+      [ "${key##\#*}" ] || continue
+      echo "$cfg_xsettingsd_local" | grep -q "^${key} " && continue
+      printf '%s %s\n' "$key" "$val"
+    done < "$pathf_cfg_xsettingsd_common"
+  )
+${cfg_xsettingsd_local}" > "$pathf_cfg_xsettingsd"
+else
+  [ -f "$pathf_cfg_xsettingsd_common" ] && cat "$pathf_cfg_xsettingsd_common" > "$pathf_cfg_xsettingsd"
+fi
 
 pid_xsettingsd="$(pidof xsettingsd)"
 if [ "$pid_xsettingsd" ]; then 
   kill -HUP "$pid_xsettingsd"
 else 
-  echo "HERE ${pathf_xsettingsd_merged}"
-  xsettingsd -c "$pathf_xsettingsd_merged" &
+  xsettingsd -c "$pathf_cfg_xsettingsd" &
 fi
 
 VBoxClient-all &
