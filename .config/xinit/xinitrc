@@ -5,15 +5,9 @@ if [ "$(id -u)" -lt 1000 ]; then
   exit 1
 fi
 
-pathd_xresources="${XDG_CONFIG_HOME:-$HOME/.config}/xresources"
-pathf_xresources_common="${pathd_xresources}/common.Xresources"
-pathf_xresources_local="${pathd_xresources}/local.Xresources"
-pathf_xresources_merged="${pathd_xresources}/.Xresources"
-mkdir -p "$pathd_xresources"
-true > "$pathf_xresources_merged"
-[ -f "$pathf_xresources_common" ] && cat "$pathf_xresources_common" >> "$pathf_xresources_merged"
-[ -f "$pathf_xresources_local" ] && cat "$pathf_xresources_local" >> "$pathf_xresources_merged"
-xrdb -load "$pathf_xresources_merged"
+xrdb -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/common.Xresources"
+pathf_xresources_local="${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources"
+[ -f "$pathf_xresources_local" ] && xrdb -override "$pathf_xresources_local"
 
 # TODO: merge the xsettingsd local and common config files value by value
 pathd_xsettingsd="${XDG_CONFIG_HOME:-$HOME/.config}/xsettingsd"
