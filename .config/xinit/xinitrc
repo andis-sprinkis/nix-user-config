@@ -18,7 +18,7 @@ pathf_xresources_local="${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xreso
 
 ## xsettingsd
 
-### Merging the common and local configurations
+### Merging the xsettingsd common and local configurations
 
 pathd_cfg_xsettingsd="${XDG_CONFIG_HOME:-$HOME/.config}/xsettingsd"
 pathf_cfg_xsettingsd="${pathd_cfg_xsettingsd}/xsettingsd.conf"
