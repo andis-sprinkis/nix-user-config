@@ -1,14 +1,24 @@
 #!/usr/bin/env sh
 
+# Preventing starting running this script with a system account (e.g. root)
+
 if [ "$(id -u)" -lt 1000 ]; then
   echo "$(basename "$0"): Must not use a system account" 2>&1
   exit 1
 fi
 
+# .Xresources
+
+## XRDB
+
 xrdb -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
 
 pathf_xresources_local="${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources"
 [ -f "$pathf_xresources_local" ] && xrdb -override "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources"
+
+## xsettingsd
+
+### Merging the common and local configurations
 
 pathd_cfg_xsettingsd="${XDG_CONFIG_HOME:-$HOME/.config}/xsettingsd"
 pathf_cfg_xsettingsd="${pathd_cfg_xsettingsd}/xsettingsd.conf"
@@ -30,6 +40,8 @@ else
   [ -f "$pathf_cfg_xsettingsd_common" ] && cat "$pathf_cfg_xsettingsd_common" > "$pathf_cfg_xsettingsd"
 fi
 
+### Starting or reloading xsettingsd
+
 pid_xsettingsd="$(pidof xsettingsd)"
 if [ "$pid_xsettingsd" ]; then 
   kill -HUP "$pid_xsettingsd"
@@ -37,12 +49,31 @@ else
   xsettingsd -c "$pathf_cfg_xsettingsd" &
 fi
 
+# Staring VirtualBox guest service
+
 VBoxClient-all &
+
+# Disabling console bell beep in X11
+
 xset b off &
+
+# Adjusting keyboard key repetition rate in X11
+
 xset r rate 165 55 &
+
+# Initializing the X11 keyboard layout
+
 xkbcomp -I"${XDG_CONFIG_HOME:-$HOME/.config}/xkb" "${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd" "$DISPLAY" &
+
+# Running unclutter to automatically hide the mouse pointer
+
 [ -z "$(pidof unclutter)" ] && unclutter --timeout 1 --start-hidden &
+
+# Setting the root X11 window background
+
 hsetroot -solid "$(xrdb -get background)" &
+
+# Starting or reloading X11 display compositor
 
 pid_picom="$(pidof picom)"
 if [ "$pid_picom" ]; then 
@@ -51,13 +82,19 @@ else
   picom -b &
 fi
 
+# Starting or reloading xscreensaver screensaver and power events manager
+
 if [ "$(pidof xscreensaver)" ]; then 
   xscreensaver-command --restart &
 else
   xscreensaver --no-splash & 
 fi
 
+# Starting xss-lock lock screen
+
 [ -z "$(pidof xss-lock)" ] && xss-lock --ignore-sleep -- xscreensaver-command -lock &
+
+# Starting or reloading i3 window manager
 
 if [ "$(pidof i3)" ]; then 
   i3-msg restart
