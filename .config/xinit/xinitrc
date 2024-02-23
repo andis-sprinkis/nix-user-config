@@ -7,7 +7,7 @@ fi
 
 xrdb -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/common.Xresources"
 pathf_xresources_local="${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources"
-[ -f "$pathf_xresources_local" ] && xrdb -override "$pathf_xresources_local"
+[ -f "$pathf_xresources_local" ] && xrdb -override "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources"
 
 # TODO: merge the xsettingsd local and common config files value by value
 pathd_xsettingsd="${XDG_CONFIG_HOME:-$HOME/.config}/xsettingsd"
