@@ -53,7 +53,7 @@ fi
 
 VBoxClient-all &
 
-# Disabling console bell beep in X11
+# Disabling the console bell beep in X11
 
 xset b off &
 
