@@ -13,8 +13,11 @@ set window-title-basename true
 set window-title-page true
 set scroll-full-overlap 0.15
 
+map + zoom default
+map - zoom out
 map <PageDown> scroll full-down
 map <PageUp> scroll full-up
+map = zoom in
 map C exec "zathura -P \"$PAGE\" -- \"$FILE\""
 map D scroll half-down
 map J zoom out
