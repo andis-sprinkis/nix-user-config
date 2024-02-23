@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-# Preventing starting running this script with a system account (e.g. root)
+# Preventing running this script with a system account (e.g. root)
 
 if [ "$(id -u)" -lt 1000 ]; then
   echo "$(basename "$0"): Must not use a system account" 2>&1
