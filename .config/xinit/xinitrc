@@ -9,7 +9,7 @@ fi
 
 # .Xresources
 
-## XRDB
+## xrdb
 
 xrdb -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
 
