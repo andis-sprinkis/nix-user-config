@@ -69,7 +69,7 @@ bar {
   separator_symbol    $bar_separator_symbol
   tray_padding        $bar_tray_padding
   tray_output         $bar_tray_output
-  font                $font 
+  font                $font
 
   colors {
     background         $background
