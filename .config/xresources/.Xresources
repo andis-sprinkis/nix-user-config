@@ -5,11 +5,17 @@
 #define font_size 12
 #define font_style medium
 
+! Xft/DPI is the font resolution in DPI (dots/inch).
+! 100%:  96
+! 125%: 120
+! 150%: 144
+! 175%: 168
+! 200%: 192
+
 Xft.autohint: true
 Xft.antialias: true
 Xft.hinting: true
 Xft.hintstyle: hintslight
-! DPI values - 96, 120, 144, 168, 192
 Xft.dpi: 96
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
