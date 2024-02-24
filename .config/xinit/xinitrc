@@ -79,7 +79,7 @@ pid_picom="$(pidof picom)"
 if [ "$pid_picom" ]; then 
   kill -USR1 "$pid_picom" &
 else 
-  picom -b &
+  picom -b --config "/dev/null" &
 fi
 
 # Starting or reloading xscreensaver
