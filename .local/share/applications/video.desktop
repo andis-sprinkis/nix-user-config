@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Video player
+Exec=mpv --player-operation-mode=pseudo-gui -- %U
