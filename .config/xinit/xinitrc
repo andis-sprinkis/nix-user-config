@@ -14,7 +14,7 @@ fi
 xrdb -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
 
 pathf_xresources_local="${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources"
-[ -f "$pathf_xresources_local" ] && xrdb -override "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources"
+[ -f "$pathf_xresources_local" ] && xrdb -override "$pathf_xresources_local"
 
 ## xsettingsd
 
