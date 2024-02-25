@@ -5,17 +5,20 @@
 #define font_size 12
 #define font_style medium
 
-! Xft/DPI is the font resolution in DPI (dots/inch).
+! Xft/DPI in xrdb is the font resolution in DPI (dots/inch).
+! The corresponding xsettingsd value is 1024*DPI.
 !
-! 100.0  96
-! 112.5 108
-! 125.0 120
-! 137.5 132
-! 150.0 144
-! 162.5 156
-! 175.0 168
-! 187.5 180
-! 200.0 192
+!     % | DPI | 1024*DPI
+! ------|-----|---------
+! 100.0 |  96 |    98304
+! 112.5 | 108 |   110592
+! 125.0 | 120 |   122880
+! 137.5 | 132 |   135168
+! 150.0 | 144 |   147456
+! 162.5 | 156 |   159744
+! 175.0 | 168 |   172032
+! 187.5 | 180 |   184320
+! 200.0 | 192 |   196608
 
 Xft.autohint: true
 Xft.antialias: true
