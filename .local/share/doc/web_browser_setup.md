@@ -71,7 +71,7 @@ ln -s ../../../.config/firefox/user.js user.js
 
 ## Userscripts
 
-1.  https://github.com/andis-sprinkis/nix-user-config/raw/master/.local/share/usersripts/enable_video_pictureinpicture.user.js
+1.  https://github.com/andis-sprinkis/nix-user-config/raw/master/.local/share/userscripts/enable_video_pictureinpicture.user.js
 1.  https://github.com/zerodytrash/Simple-YouTube-Age-Restriction-Bypass/raw/main/dist/Simple-YouTube-Age-Restriction-Bypass.user.js
 
 ## Userstyles
