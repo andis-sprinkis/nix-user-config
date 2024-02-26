@@ -62,6 +62,7 @@ user_pref("media.autoplay.default", 5);
 user_pref("media.videocontrols.picture-in-picture.improved-video-controls.enabled", true);
 user_pref("media.videocontrols.picture-in-picture.respect-disablePictureInPicture");
 user_pref("media.videocontrols.picture-in-picture.video-toggle.always-show", true);
+user_pref("media.videocontrols.picture-in-picture.video-toggle.has-used", true);
 user_pref("middlemouse.contentLoadURL", false);
 user_pref("middlemouse.paste", false);
 user_pref("network.predictor.enabled", false);
