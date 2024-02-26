@@ -1,10 +1,10 @@
 [date]
 command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/date
-interval=20
+interval=15
 
 [time]
 command=date +"%-H:%M"
-interval=20
+interval=15
 
 [connectivity_nm]
 command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/connectivity_nm
