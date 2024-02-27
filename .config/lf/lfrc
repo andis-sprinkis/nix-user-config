@@ -12,7 +12,8 @@ set tabstop 2
 set wrapscroll
 
 cmd open ${{
-  IFS=$'\n'
+  IFS="
+"
   mime="$(file --mime-type "$(readlink -f "$f")" -b)"
 
   case $mime in
@@ -32,12 +33,15 @@ cmd open ${{
 }}
 
 cmd open-with ${{
-  IFS=$'\n'
+  IFS="
+"
+
   for f in $fx; do nohup "$@" "$f" > /dev/null 2> /dev/null & done
 }}
 
 cmd aunpack !{{
-  IFS=$'\n'
+  IFS="
+"
 
   echo "Selected to extract:
 $fx"
