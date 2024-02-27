@@ -58,8 +58,8 @@ cmd mkdir !{{
 
 cmd copy-path ${{
   IFS=$'\n'
-  [ "$(command -v "xclip")" ] && { echo -n "$fx" | xclip -sel "clipboard"; } && exit
-  [ "$(command -v "pbcopy")" ] && { echo -n "$fx" | pbcopy; } && exit
+  [ "$(command -v "xclip")" ] && { printf "$fx" | xclip -sel "clipboard"; } && exit
+  [ "$(command -v "pbcopy")" ] && { printf "$fx" | pbcopy; } && exit
 }}
 
 cmd paste-to-file ${{
