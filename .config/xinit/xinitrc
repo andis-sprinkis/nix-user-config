@@ -66,10 +66,9 @@ xset r rate 165 55 &
 xkbcomp -w 4 -I"${XDG_CONFIG_HOME:-$HOME/.config}/xkb" "${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd" "$DISPLAY" &
 
 # Running unclutter to automatically hide the mouse pointer
-
 [ -z "$(pidof unclutter)" ] && unclutter --timeout 1 --start-hidden &
 
-# Setting the root X11 window background
+# Setting the X11 root window background
 
 hsetroot -solid "$(xrdb -get background)" &
 
@@ -82,7 +81,9 @@ else
   picom -b --config "/dev/null" &
 fi
 
-# Starting or reloading xscreensaver
+# xscreensaver
+
+## Starting or reloading xscreensaver
 
 if [ "$(pidof xscreensaver)" ]; then 
   xscreensaver-command --restart &
@@ -90,9 +91,13 @@ else
   xscreensaver --no-splash & 
 fi
 
-# Starting xss-lock
+## Starting xss-lock
 
 [ -z "$(pidof xss-lock)" ] && xss-lock --ignore-sleep -- xscreensaver-command -lock &
+
+# Running EeasyEffects audio effects interface
+
+[ -z "$(pidof easyeffects)" ] && easyeffects --gapplication-service &
 
 # Starting or reloading i3 window manager
 
