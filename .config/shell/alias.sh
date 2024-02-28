@@ -2,6 +2,7 @@ alias \
   aunpack="aunpack --subdir --explain" \
   bc="bc -ql" \
   c="clear" \
+  cal="calcurse" \
   calc="qalc -c" \
   cp="cp -rv" \
   date_iso8601="date -u +\"%Y-%m-%dT%H:%M:%SZ\"" \
