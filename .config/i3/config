@@ -5,6 +5,7 @@ smart_borders                 on
 hide_edge_borders             both
 focus_follows_mouse           yes
 focus_wrapping                yes
+tiling_drag                   titlebar
 workspace_auto_back_and_forth yes
 title_align                   center
 default_border                normal 1
