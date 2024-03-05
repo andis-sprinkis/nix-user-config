@@ -19,6 +19,3 @@
 [submodule ".local/share/unicode-menu"]
 	path = .local/share/unicode-menu
 	url = https://github.com/andis-sprinkis/unicode-menu
-[submodule ".local/opt/vidir"]
-	path = .local/opt/vidir
-	url = https://github.com/trapd00r/vidir/
