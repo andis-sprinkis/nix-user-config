@@ -1,4 +1,6 @@
 #!/bin/bash
 
+# TODO: convert to POSIX sh
+
 workspaces=($(i3-msg -t get_workspaces | tr , '\n' | grep '"name":' | cut -d : -f 2))
 i3-msg move container to workspace $(echo ${workspaces[@]} | sed -e "s/\" \"/\n/g" | tr -d \" | dmenu -p "Move window to workspace:")
