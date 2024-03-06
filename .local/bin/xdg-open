@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# TODO: convert to POSIX sh
+
 [[ "$@" == ?(http|https)://* ]] && exec web_browser_desktop "$@"
 
 [[ "$@" == file://* ]] && {
