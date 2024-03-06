@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 set -e
 
 sudo rm -rf "$(xcode-select -print-path)"
