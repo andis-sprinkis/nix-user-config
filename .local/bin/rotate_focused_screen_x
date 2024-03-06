@@ -6,7 +6,7 @@ directions="normal left right"
 menu_options=""
 
 for direction in $directions; do
-  [ "$current_rotation" == "$direction" ] && continue
+  [ "$current_rotation" = "$direction" ] && continue
   menu_options="$menu_options$direction
 "
 done
