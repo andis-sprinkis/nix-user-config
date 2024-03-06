@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 for web_browser in "firefox" "chromium" "chrome" "epiphany"; do
   [ "$(command -v "$web_browser")" ] && export R_BROWSER="$web_browser" && break
