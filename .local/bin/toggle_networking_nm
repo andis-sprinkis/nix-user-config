@@ -3,7 +3,7 @@ set -e
 
 connectivity="$(nmcli networking connectivity check)"
 
-if [ "$connectivity" == "none" ] || [ "$connectivity" == "unknown" ]; then
+if [ "$connectivity" = "none" ] || [ "$connectivity" = "unknown" ]; then
   nmcli networking on
 else
   nmcli networking off

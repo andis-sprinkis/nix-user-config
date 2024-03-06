@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# TODO: rewrite this with getopts
+
 # set an ssh host connection alias command
 # $1 - shortname
 # $2 - user@host
@@ -14,12 +16,12 @@
 # sshfs_vps0 - mount in /mnt/vps0
 
 ssh_set_alias() {
-  local $shortname=$1
-  local $user_at_host=$2
-  local $port=$3
-  local $dir_remote=$4
-  local $dir_local=$5
-  local $file_identity=$6
+  shortname="$1"
+  user_at_host="$2"
+  port="$3"
+  dir_remote="$4"
+  dir_local="$5"
+  file_identity="$6"
 
   alias \
     ssh_${shortname}="autossh -M 0 ${user_at_host} -p ${port} $([ "${file_identity}" ] && echo "-i ${file_identity}")" \

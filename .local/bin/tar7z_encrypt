@@ -10,7 +10,7 @@ if [ -z "$1" ]; then
   exit 1
 fi
 
-filename=$(basename $1)
+filename=$(basename "$1")
 timestamp=$(date +%s)
 
 filename_tar="${filename}_${timestamp}.tar.gz"
@@ -20,13 +20,13 @@ dir_tmp=$(mktemp -d)
 path_tar="$dir_tmp/${filename_tar}"
 path_7z="./${filename_7z}"
 
-tar -czvf $path_tar $1
+tar -czvf "$path_tar" "$1"
 
 echo "Set password for $filename_7z"
 confirm_pw_input
 
-7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on -mhe=on -p"$PW_INPUT" $path_7z $path_tar
+7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on -mhe=on -p"$PW_INPUT" "$path_7z" "$path_tar"
 
 unset PW_INPUT
 
-rm -rf $dir_tmp
+rm -rf "$dir_tmp"

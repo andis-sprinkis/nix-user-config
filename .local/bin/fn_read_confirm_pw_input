@@ -39,36 +39,36 @@ confirm_pw_input() {
   password_1=
   password_2=
 
-  read_pw_input && password_1=$PW_INPUT
+  read_pw_input && password_1="$PW_INPUT"
 
   if [ -z "$password_1" ]; then
-    unset $password_1
-    unset $password_2
-    unset $PW_INPUT
+    unset password_1
+    unset password_2
+    unset PW_INPUT
     echo; echo "Input error - password must not be empty. Try again!"
-    confirm_pw_input $1 && return 0; return 1
+    confirm_pw_input "$1" && return 0; return 1
   fi
 
   echo; echo "Repeat the password."
-  read_pw_input && password_2=$PW_INPUT
+  read_pw_input && password_2="$PW_INPUT"
 
   if [ -z "$password_2" ]; then
-    unset $password_1
-    unset $password_2
-    unset $PW_INPUT
+    unset password_1
+    unset password_2
+    unset PW_INPUT
     echo; echo "Input error - password must not be empty. Try again!"
-    confirm_pw_input $1 && return 0; return 1
+    confirm_pw_input "$1" && return 0; return 1
   fi
 
   if [ ! "$password_1" = "$password_2" ]; then
-    unset $password_1
-    unset $password_2
-    unset $PW_INPUT
+    unset password_1
+    unset password_2
+    unset PW_INPUT
     echo; echo "Input error - passwords must match. Try again!"
-    confirm_pw_input $1 && return 0; return 1
+    confirm_pw_input "$1" && return 0; return 1
   fi
 
-  unset $password_1
-  unset $password_2
+  unset password_1
+  unset password_2
   return 0
 }
