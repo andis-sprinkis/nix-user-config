@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 foreground="$(xrdb -get foreground)"
 color0="$(xrdb -get color0)"
 font="$(xrdb -get font)"
