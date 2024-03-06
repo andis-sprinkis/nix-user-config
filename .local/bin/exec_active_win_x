@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 # Tries to execute focused X window program again to spawn a new window of it.
 # How:
 # 1. Reads WM_CLASS and WM_INSTANCE of the focused X window.
