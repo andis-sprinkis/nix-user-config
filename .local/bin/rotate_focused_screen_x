@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 screen="$(focused_screen_x)"
 current_rotation="$(xrandr -q --verbose | grep "$screen" | sed 's/primary //' | cut -d ' ' -f 5)"
