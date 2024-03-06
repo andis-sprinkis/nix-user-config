@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# TODO: convert to POSIX sh
+# TODO: use getopts
+
 #"-next" or "-prev"
 move_direction=$1
 
