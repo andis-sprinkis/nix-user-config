@@ -20,7 +20,7 @@ input type:keyboard {
   repeat_rate 55
 }
 
-output * scale 1.08
+# output * scale 1.08
 
 seat seat0 xcursor_theme default 48
 
