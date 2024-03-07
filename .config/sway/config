@@ -221,6 +221,8 @@ mode $mode_resize {
   bindsym Escape mode "default"
 }
 
+exec VBoxClient-all
+
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
 exec_always xrdb -load ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources && test -f ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources && xrdb -override ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources
