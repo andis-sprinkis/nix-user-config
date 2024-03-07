@@ -12,6 +12,8 @@ set $font                     pango:sans-serif medium 12
 font                          $font
 show_marks                    yes
 
+exec xrdb -load ~/.config/xresources/.Xresources
+
 output * scale 1.08
 
 seat seat0 xcursor_theme default 48
