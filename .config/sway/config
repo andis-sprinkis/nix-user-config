@@ -191,6 +191,10 @@ bindsym $mod+Shift+q exec swaynag -t warning -f $font -m 'Exit sway?' -B 'Yes' '
 
 bindsym Menu exec --no-startup-id applications_menu_desktop
 
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 5%+ unmute
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%- unmute
+bindsym XF86AudioMute        exec --no-startup-id amixer -q set Master toggle
+
 bindsym --whole-window $mod+button4 exec --no-startup-id amixer -D pulse sset Master 5%+ unmute
 bindsym --whole-window $mod+button5 exec --no-startup-id amixer -D pulse sset Master 5%- unmute
 bindsym --whole-window $mod+button2 exec --no-startup-id amixer -q set Master toggle
