@@ -20,7 +20,7 @@ seat seat0 xcursor_theme default 48
 
 set $menu j4-dmenu-desktop --no-generic --display-binary --dmenu="wmenu -b -l 25" --usage-log="${XDG_CACHE_HOME:-HOME/.cache}/j4-dmenu-desktop/log"
 
-for_window [shell="xwayland"] title_format "[XWayland] %title"
+for_window [shell="xwayland"] title_format "[Xwayland] %title"
 
 for_window [class="eparaksts-chrome-extension" instance="eparaksts-chrome-extension"] floating enable
 for_window [class="zoom" title="zoom"] floating enable
