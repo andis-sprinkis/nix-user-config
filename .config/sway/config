@@ -12,7 +12,7 @@ set $font                     pango:sans-serif medium 12
 font                          $font
 show_marks                    yes
 
-exec_always xrdb -load ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources && test -f ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources && xrdb -merge ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources
+exec_always xrdb -merge ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources && test -f ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources && xrdb -merge ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources
 
 input type:keyboard {
   xkb_file ${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd
