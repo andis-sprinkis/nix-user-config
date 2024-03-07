@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 
-application_menu="dmenu"
-[ "$XDG_SESSION_TYPE" = "wayland" ] && application_menu="wmenu"
+exec_menu="dmenu"
+[ "$XDG_SESSION_TYPE" = "wayland" ] && exec_menu="wmenu"
 
 path_appimage="${APPIMAGE_BIN_HOME:-$HOME/.local/opt/appimage/}"
-cmd_menu="(cat; stest -flx \"${path_appimage}\" | awk '{ print \"${path_appimage}\"\$0 }' | sort -u) | ${application_menu}"
+cmd_menu="(cat; stest -flx \"${path_appimage}\" | awk '{ print \"${path_appimage}\"\$0 }' | sort -u) | ${exec_menu}"
 
 exec j4-dmenu-desktop \
   --no-generic \
