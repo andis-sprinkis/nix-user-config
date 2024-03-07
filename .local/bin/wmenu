@@ -13,4 +13,5 @@ exec /usr/bin/wmenu \
   -s "$color0" \
   -b \
   -l 25 \
+  -f "$font" \
   "$@"
