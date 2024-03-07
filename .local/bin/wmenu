@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
-foreground="$(xrdb -get foreground)"
-color0="$(xrdb -get color0)"
+foreground="$(xrdb -get foreground | cut -c2-)"
+color0="$(xrdb -get color0 | cut -c2-)"
 font="$(xrdb -get font)"
 
 exec /usr/bin/wmenu \
