@@ -41,6 +41,7 @@ alias \
   mv="mv -v" \
   myip="curl https://ipinfo.io/" \
   ncdu="ncdu -x" \
+  n="$EDITOR $HOME/note/" \
   p="python3 -q" \
   q="exit" \
   qalc="qalc -c" \
