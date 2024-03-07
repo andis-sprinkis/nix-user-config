@@ -12,7 +12,7 @@ set $font                     pango:sans-serif medium 12
 font                          $font
 show_marks                    yes
 
-exec xrdb -load ~/.config/xresources/.Xresources
+exec xrdb -load $HOME/.config/xresources/.Xresources
 
 output * scale 1.08
 
