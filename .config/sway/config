@@ -14,10 +14,11 @@ show_marks                    yes
 
 exec_always xrdb -load ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources && test -f ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources && xrdb -merge ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources
 
-input * xkb_file ${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd
-
-input * repeat_delay 165
-input * repeat_rate 55
+input type:keyboard {
+  xkb_file ${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd
+  repeat_delay 165
+  repeat_rate 55
+}
 
 output * scale 1.08
 
