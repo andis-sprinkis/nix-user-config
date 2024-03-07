@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=Application
-Name=Shut down
+Name=Power off
 Exec=systemctl poweroff
