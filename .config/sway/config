@@ -16,6 +16,9 @@ exec_always xrdb -load ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources 
 
 input * xkb_file ${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd
 
+input * repeat_delay 165
+input * repeat_rate 55
+
 output * scale 1.08
 
 seat seat0 xcursor_theme default 48
