@@ -22,8 +22,6 @@ input type:keyboard {
 
 seat seat0 xcursor_theme default 48
 
-set $menu j4-dmenu-desktop --no-generic --display-binary --dmenu="wmenu" --usage-log="${XDG_CACHE_HOME:-HOME/.cache}/j4-dmenu-desktop/log"
-
 for_window [shell="xwayland"] title_format "[Xwayland] %title"
 
 for_window [class="eparaksts-chrome-extension" instance="eparaksts-chrome-extension"] floating enable
@@ -191,8 +189,7 @@ bindsym $mod+Shift+r reload
 
 bindsym $mod+Shift+q exec swaynag -t warning -f $font -m 'Exit sway?' -B 'Yes' 'swaymsg exit'
 
-# bindsym Menu exec --no-startup-id applications_menu_desktop
-bindsym Menu exec --no-startup-id $menu
+bindsym Menu exec --no-startup-id applications_menu_desktop
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 5%+ unmute
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%- unmute
