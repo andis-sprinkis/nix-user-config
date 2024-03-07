@@ -225,6 +225,7 @@ mode $mode_resize {
 }
 
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
-exec xrdb -load ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources && test -f ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources && xrdb -override ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources
+
+exec_always xrdb -load ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources && test -f ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources && xrdb -override ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources
 
 include /etc/sway/config.d/*
