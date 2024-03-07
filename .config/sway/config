@@ -12,8 +12,6 @@ set $font                     pango:sans-serif medium 12
 font                          $font
 show_marks                    yes
 
-exec_always xrdb -merge ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources && test -f ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources && xrdb -merge ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources
-
 input type:keyboard {
   xkb_file ${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd
   repeat_delay 165
@@ -225,5 +223,8 @@ mode $mode_resize {
   bindsym $right resize grow   width  48
   bindsym Escape mode "default"
 }
+
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec xrdb -load ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources && test -f ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources && xrdb -override ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources
 
 include /etc/sway/config.d/*
