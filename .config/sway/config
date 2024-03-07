@@ -14,6 +14,8 @@ show_marks                    yes
 
 exec_always xrdb -load ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources && test -f ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources && xrdb -merge ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources
 
+input * xkb_file ${XDG_CONFIG_HOME:-$HOME/.config}/keymap/kbd
+
 output * scale 1.08
 
 seat seat0 xcursor_theme default 48
