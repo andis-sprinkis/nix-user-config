@@ -57,6 +57,8 @@ client.placeholder       $color6 $color0 $color6 $color6 $color8
 
 client.background $color6
 
+output * bg $background solid_color
+
 set $bar_position            top
 set $bar_mode                dock
 set $bar_workspace_min_width 48
