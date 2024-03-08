@@ -12,6 +12,8 @@ set $font                     pango:sans-serif medium 12
 font                          $font
 show_marks                    yes
 
+exec_always ${XDG_CONFIG_HOME:-$HOME/.config}/sway/init
+
 input type:keyboard {
   xkb_file ${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd
   repeat_delay 165
@@ -211,7 +213,7 @@ bindsym $mod+Print       exec --no-startup-id screenshot_maim
 bindsym $mod+Shift+Print exec --no-startup-id screenshot_maim --active
 bindsym $mod+Ctrl+Print  exec --no-startup-id screenshot_maim --select
 
-# bindsym $mod+slash exec --no-startup-id i3_key_mappings_desktop
+bindsym $mod+slash exec --no-startup-id i3_key_mappings_desktop
 
 set     $mode_resize "Resize container..."
 bindsym $mod+r mode $mode_resize
@@ -222,14 +224,5 @@ mode $mode_resize {
   bindsym $right resize grow   width  48
   bindsym Escape mode "default"
 }
-
-# exec_always wl-gammactl -c 1.000 -b 1.000 -g 1.3
-# TODO: create swayinit
-
-exec VBoxClient-all
-
-exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
-
-exec_always xrdb -load ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources && test -f ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources && xrdb -override ${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources
 
 include /etc/sway/config.d/*
