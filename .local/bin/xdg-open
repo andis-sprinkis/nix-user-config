@@ -1,18 +1,29 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # TODO: convert to POSIX sh
 
-[[ "$@" == ?(http|https)://* ]] && exec web_browser_desktop "$@"
+case "$@" in
+  http://*|https://*)
+    exec web_browser_desktop "$@"
+  ;;
+  file://*)
+    no_pre=$(echo "$@" | sed -n 's/file:\/\///p')
+    path_file=$(readlink -f "$(printf '%b\n' "${no_pre//%/\\x}")")
+  ;;
+  *)
+    path_file="$(readlink -f "$@")"
+  ;;
+esac
 
-[[ "$@" == file://* ]] && {
-  no_pre=$(echo "$@" | sed -n 's/file:\/\///p')
-  path_file=$(readlink -f "$(printf '%b\n' "${no_pre//%/\\x}")")
-} || path_file="$(readlink -f "$@")"
+[ "$path_file" ] && {
+  mime="$(file --mime-type -b "$path_file")"
+  [ "$mime" ] && xdg_handler="$(xdg-mime query default "$mime")"
+  echo "$xdg_handler"
 
-[ "$path_file" ] && mime="$(file --mime-type -b "$path_file")"
-[ "$mime" ] && handler="$(xdg-mime query default "$mime")"
+  exec "/usr/bin/xdg-open" "$path_file"
+}
 
-[ -z "$handler" ] && {
+[ -z "$xdg_handler" ] && {
   echo "$(basename "$0"): Preventing parameter without a recognized handler from being passed to /usr/bin/xdg-open"
   exit 1
 }
