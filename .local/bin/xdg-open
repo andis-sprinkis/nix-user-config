@@ -8,24 +8,17 @@ case "$@" in
   ;;
   file://*)
     no_pre=$(echo "$@" | sed -n 's/file:\/\///p')
-    path_file=$(readlink -f "$(printf '%b\n' "${no_pre//%/\\x}")")
+    item_to_open=$(readlink -f "$(printf '%b\n' "${no_pre//%/\\x}")")
   ;;
   *)
-    path_file="$(readlink -f "$@")"
+    item_to_open="$(readlink -f "$@")"
   ;;
 esac
 
-[ "$path_file" ] && {
-  mime="$(file --mime-type -b "$path_file")"
-  [ "$mime" ] && xdg_handler="$(xdg-mime query default "$mime")"
-  echo "$xdg_handler"
-
-  exec "/usr/bin/xdg-open" "$path_file"
+[ "$item_to_open" ] && {
+  mime="$(file --mime-type -b "$item_to_open")"
+  [ "$mime" ] && [ "$(xdg-mime query default "$mime")" ] && exec "/usr/bin/xdg-open" "$item_to_open"
 }
 
-[ -z "$xdg_handler" ] && {
-  echo "$(basename "$0"): Preventing parameter without a recognized handler from being passed to /usr/bin/xdg-open"
-  exit 1
-}
-
-exec "/usr/bin/xdg-open" "$@"
+echo "$(basename "$0"): Preventing item without a recognized handler from being passed to /usr/bin/xdg-open"
+exit 1
