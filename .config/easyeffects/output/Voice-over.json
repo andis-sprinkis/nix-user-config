@@ -1,11 +1,7 @@
 {
     "output": {
         "blocklist": [],
-        "level_meter#0": {
-            "bypass": false
-        },
         "plugins_order": [
-            "level_meter#0",
             "speex#0"
         ],
         "speex#0": {
