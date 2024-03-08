@@ -56,4 +56,10 @@ VBoxClient-all &
 
 # TODO: local
 
-[ -z "$(pidof "gammastep")" ] && gammastep -O 6500 -g 1.37:1.37:1.37 &
+pid_gammastep="$(pidof gammastep)"
+if [ "$pid_gammastep" ]; then
+  pkill -9 gammastep
+  gammastep -O 6500 -P -g 1.37:1.37:1.37 &
+else
+  gammastep -O 6500 -P -g 1.37:1.37:1.37 &
+fi
