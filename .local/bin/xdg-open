@@ -1,14 +1,12 @@
 #!/usr/bin/env sh
 
-# TODO: convert to POSIX sh
-
 case "$@" in
   http://*|https://*)
     exec web_browser_desktop "$@"
   ;;
   file://*)
     no_pre=$(echo "$@" | sed -n 's/file:\/\///p')
-    item_to_open=$(readlink -f "$(printf '%b\n' "${no_pre//%/\\x}")")
+    item_to_open=$(readlink -f "$(printf '%b\n' "${no_pre//%/\\x}")") # TODO: convert to POSIX sh
   ;;
   *)
     item_to_open="$(readlink -f "$@")"
