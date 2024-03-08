@@ -10,7 +10,7 @@
 } || path="$(readlink -f "$@")"
 
 [ "$path" ] && mime="$(file --mime-type -b "$path")"
-[ "$mime" ] && handler="$(xdg-mime query default $mime)"
+[ "$mime" ] && handler="$(xdg-mime query default "$mime")"
 
 [ -z "$handler" ] && {
   echo "$(basename "$0"): Preventing parameter without a recognized handler from being passed to xdg-open"
