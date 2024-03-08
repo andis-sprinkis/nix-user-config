@@ -18,5 +18,5 @@ esac
   [ "$mime" ] && [ "$(xdg-mime query default "$mime")" ] && exec "/usr/bin/xdg-open" "$item_to_open"
 }
 
-echo "$(basename "$0"): Preventing item without a recognized handler from being passed to /usr/bin/xdg-open"
+echo "$(basename "$0"): Preventing item without a recognized handler from being passed to /usr/bin/xdg-open" 2>&1
 exit 1
