@@ -1,0 +1,26 @@
+{
+    "output": {
+        "blocklist": [],
+        "level_meter#0": {
+            "bypass": false
+        },
+        "plugins_order": [
+            "level_meter#0",
+            "speex#0"
+        ],
+        "speex#0": {
+            "bypass": false,
+            "enable-agc": true,
+            "enable-denoise": true,
+            "enable-dereverb": false,
+            "input-gain": 0.0,
+            "noise-suppression": -80,
+            "output-gain": 0.0,
+            "vad": {
+                "enable": true,
+                "probability-continue": 95,
+                "probability-start": 95
+            }
+        }
+    }
+}
