@@ -6,14 +6,14 @@
 
 [[ "$@" == file://* ]] && {
   no_pre=$(echo "$@" | sed -n 's/file:\/\///p')
-  path=$(readlink -f "$(printf '%b\n' "${no_pre//%/\\x}")")
-} || path="$(readlink -f "$@")"
+  path_file=$(readlink -f "$(printf '%b\n' "${no_pre//%/\\x}")")
+} || path_file="$(readlink -f "$@")"
 
-[ "$path" ] && mime="$(file --mime-type -b "$path")"
+[ "$path_file" ] && mime="$(file --mime-type -b "$path_file")"
 [ "$mime" ] && handler="$(xdg-mime query default "$mime")"
 
 [ -z "$handler" ] && {
-  echo "$(basename "$0"): Preventing parameter without a recognized handler from being passed to xdg-open"
+  echo "$(basename "$0"): Preventing parameter without a recognized handler from being passed to /usr/bin/xdg-open"
   exit 1
 }
 
