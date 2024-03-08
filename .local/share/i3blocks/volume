@@ -58,12 +58,12 @@ NATURAL_MAPPING=${NATURAL_MAPPING:-0}
 
 #------------------------------------------------------------------------
 
-cmd_amixer_dev="amixer ${AMIXER_PARAMS} -D ${MIXER} get ${SCONTROL}"
+cmd_amixer_status="amixer ${AMIXER_PARAMS} -D ${MIXER} get ${SCONTROL}"
 
 # Return "Capture" if the device is a capture device
-capability() { $cmd_amixer_dev | sed -n "s/  Capabilities:.*cvolume.*/Capture/p"; }
+capability() { $cmd_amixer_status | sed -n "s/  Capabilities:.*cvolume.*/Capture/p"; }
 
-volume() { $cmd_amixer_dev "$(capability)"; }
+volume() { $cmd_amixer_status "$(capability)"; }
 
 #------------------------------------------------------------------------
 
