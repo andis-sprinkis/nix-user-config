@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
+# Copyright (C) 2024 Andis Spriņķis <spr.andis@protonmail.com>
 # Copyright (C) 2014 Julien Bonjean <julien@bonjean.info>
 # Copyright (C) 2014 Alexander Keller <github@nycroth.com>
-# Copyright (C) 2024 Andis Spriņķis <spr.andis@protonmail.com>
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ if [ -z "$MIXER" ] ; then
     if amixer -D pulse info >/dev/null 2>&1 ; then MIXER="pulse"; fi
   fi
 
-  [ -n "$(lsmod | grep jack)" ] && MIXER="jackplug"
+  lsmod | grep -q "jack" && MIXER="jackplug"
 
   MIXER="${2:-$MIXER}"
 fi
@@ -40,7 +40,7 @@ fi
 # The instance option sets the control to report and configure
 # This defaults to the first control of your selected mixer
 # For a list of the available, use `amixer -D $Your_Mixer scontrols`
-[ -z "$SCONTROL" ] && SCONTROL="${BLOCK_INSTANCE:-$(amixer -D $MIXER scontrols | sed -n "s/Simple mixer control '\([^']*\)',0/\1/p" | head -n1)}"
+[ -z "$SCONTROL" ] && SCONTROL="${BLOCK_INSTANCE:-$(amixer -D "$MIXER" scontrols | sed -n "s/Simple mixer control '\([^']*\)',0/\1/p" | head -n1)}"
 
 # The first parameter sets the step to change the volume by (and units to display)
 # This may be in in % or dB (eg. 5% or 3dB)
@@ -55,11 +55,11 @@ NATURAL_MAPPING=${NATURAL_MAPPING:-0}
 #------------------------------------------------------------------------
 
 capability() { # Return "Capture" if the device is a capture device
-  amixer $AMIXER_PARAMS -D $MIXER get $SCONTROL | sed -n "s/  Capabilities:.*cvolume.*/Capture/p"
+  amixer $AMIXER_PARAMS -D "$MIXER" get "$SCONTROL" | sed -n "s/  Capabilities:.*cvolume.*/Capture/p"
 }
 
 volume() {
-  amixer $AMIXER_PARAMS -D $MIXER get $SCONTROL $(capability)
+  amixer $AMIXER_PARAMS -D "$MIXER" get "$SCONTROL" "$(capability)"
 }
 
 format() {
@@ -82,9 +82,9 @@ format() {
 #------------------------------------------------------------------------
 
 case $BLOCK_BUTTON in
-  3) amixer $AMIXER_PARAMS -q -D $MIXER sset $SCONTROL $(capability) toggle ;;  # right click, mute/unmute
-  4) amixer $AMIXER_PARAMS -q -D $MIXER sset $SCONTROL $(capability) ${STEP}+ unmute ;; # scroll up, increase
-  5) amixer $AMIXER_PARAMS -q -D $MIXER sset $SCONTROL $(capability) ${STEP}- unmute ;; # scroll down, decrease
+  3) amixer $AMIXER_PARAMS -q -D "$MIXER" "sset" "$SCONTROL" "$(capability)" "toggle" ;; # right click, mute/unmute
+  4) amixer $AMIXER_PARAMS -q -D "$MIXER" "sset" "$SCONTROL" "$(capability)" "${STEP}+" "unmute" ;; # scroll up, increase
+  5) amixer $AMIXER_PARAMS -q -D "$MIXER" "sset" "$SCONTROL" "$(capability)" "${STEP}-" "unmute" ;; # scroll down, decrease
 esac
 
 volume | format
