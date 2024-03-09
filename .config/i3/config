@@ -12,6 +12,7 @@ default_floating_border       normal 1
 set $font                     pango:sans-serif medium 12
 font                          $font
 show_marks                    yes
+set $applications_menu        applications_menu_desktop
 
 for_window [class="eparaksts-chrome-extension" instance="eparaksts-chrome-extension"] floating enable
 for_window [class="zoom" title="zoom"] floating enable
@@ -87,7 +88,7 @@ bar {
   bindsym button5 workspace next_on_output
 
   bindsym button2 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_empty_workspace
-  bindsym button3 exec --no-startup-id applications_menu_desktop
+  bindsym button3 exec --no-startup-id $applications_menu
 }
 
 set $mod Mod4
@@ -185,7 +186,7 @@ bindsym $mod+Shift+r exec --no-startup-id ${XDG_CONFIG_HOME:-HOME/.config}/xinit
 bindsym $mod+Shift+q exec \
 "i3-nagbar -t warning -f $font -m 'Exit i3?' -b 'Yes' 'i3-msg exit'"
 
-bindsym Menu exec --no-startup-id applications_menu_desktop
+bindsym Menu exec --no-startup-id $applications_menu
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 5%+ unmute
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%- unmute

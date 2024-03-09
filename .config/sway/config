@@ -8,9 +8,10 @@ workspace_auto_back_and_forth yes
 title_align                   center
 default_border                normal 1
 default_floating_border       normal 1
-set $font                     pango:sans-serif medium 12
+set $font                     pango:sans-serif medium 13.5
 font                          $font
 show_marks                    yes
+set $applications_menu        applications_menu_desktop wmenu
 
 input type:keyboard {
   xkb_file ${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd
@@ -91,7 +92,7 @@ bar {
 
   bindsym button2 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_empty_workspace
 
-  bindsym button3 exec --no-startup-id applications_menu_desktop
+  bindsym button3 exec --no-startup-id $applications_menu
 }
 
 set $mod Mod4
@@ -182,7 +183,7 @@ bindsym $mod+Shift+r reload
 
 bindsym $mod+Shift+q exec swaynag -t warning -f $font -m 'Exit sway?' -B 'Yes' 'swaymsg exit'
 
-bindsym Menu exec --no-startup-id applications_menu_desktop
+bindsym Menu exec --no-startup-id $applications_menu
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 5%+ unmute
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%- unmute
