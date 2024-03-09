@@ -8,6 +8,7 @@
 
 gsettings "set" "org.gnome.desktop.interface" "cursor-size" "${GUI_CURSOR_SIZE}"
 gsettings "set" "org.gnome.desktop.interface" "text-scaling-factor" "${GUI_TEXT_SCALING_FACTOR}"
+gsettings "set" "org.gnome.desktop.interface" "color-scheme" "prefer-dark"
 
 # .Xresources
 
