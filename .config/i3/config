@@ -1,4 +1,4 @@
-set $font_size                12
+set $font                     pango:sans-serif medium 12
 set $applications_menu        applications_menu_desktop
 
 include ${XDG_CONFIG_HOME:-HOME/.config}/i3/common
@@ -10,3 +10,5 @@ floating_modifier $mod
 
 bindsym $mod+F12 exec --no-startup-id screen_lock_x
 bindsym $mod+c   exec --no-startup-id exec_active_win_x
+
+bindsym $mod+Shift+q exec i3-nagbar -t warning -f $font -m 'Exit i3?' -b 'Yes' 'i3-msg exit'

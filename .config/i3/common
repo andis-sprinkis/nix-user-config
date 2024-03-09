@@ -1,6 +1,4 @@
 # vi: ft=i3config
-set $font_name                pango:sans-serif
-set $font_style               medium
 gaps inner                    0
 gaps outer                    0
 smart_borders                 on
@@ -11,7 +9,7 @@ workspace_auto_back_and_forth yes
 title_align                   center
 default_border                normal 1
 default_floating_border       normal 1
-font                          $font_name $font_style $font_size
+font                          $font
 show_marks                    yes
 
 for_window [class="eparaksts-chrome-extension" instance="eparaksts-chrome-extension"] floating enable
@@ -108,9 +106,6 @@ bindsym --whole-window $mod+Mod1+button9 exec --no-startup-id ${XDG_DATA_HOME:-$
 bindsym --whole-window $mod+Mod1+button8 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/shift_current_workspace -next
 
 bindsym $mod+Shift+r exec --no-startup-id ${XDG_CONFIG_HOME:-HOME/.config}/xinit/xinitrc
-
-bindsym $mod+Shift+q exec \
-"i3-nagbar -t warning -f $font -m 'Exit i3?' -b 'Yes' 'i3-msg exit'"
 
 bindsym Menu exec --no-startup-id $applications_menu
 
