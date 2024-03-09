@@ -25,6 +25,6 @@ VBoxClient-all &
 
 [ -z "$(pidof easyeffects)" ] && easyeffects --gapplication-service &
 
-# TODO: local
+# Local settings
 
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/sway/init.local" ] && exec "${XDG_CONFIG_HOME:-$HOME/.config}/sway/init.local"
