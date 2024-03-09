@@ -4,6 +4,7 @@ export GUI_FONT_FAMILY_TERM="mono"
 export GUI_FONT_FAMILY_GUI="sans-serif"
 export GUI_FONT_STYLE="medium"
 export GUI_FONT_SIZE="13.5"
+export GUI_FONT_SIZE_X11="12"
 export GUI_TEXT_SCALING_FACTOR="1.15"
 export GUI_CURSOR_SIZE="42"
 

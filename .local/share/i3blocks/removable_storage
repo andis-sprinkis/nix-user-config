@@ -1,29 +1,30 @@
 #!/usr/bin/env sh
 
-fstab_mounts="$(cat "/etc/fstab" | grep -v -e "^#" -e "^$")"
-fstab_mounts_mount_points="$(printf "$fstab_mounts" | awk '{ print $2 }')"
-current_mounts="$(cat "/proc/mounts" | grep -v -P " \/(sys|run|dev|proc|tmp)(/| )")"
-current_mounts_mount_points="$(printf "$current_mounts" | awk '{ print $2 }')"
+fstab_mounts="$(grep -v -e "^#" -e "^$" < "/etc/fstab")"
+fstab_mounts_mount_points="$(echo "$fstab_mounts" | awk '{ print $2 }')"
+current_mounts="$(grep -v -P " \/(sys|run|dev|proc|tmp)(/| )" < "/proc/mounts")"
+current_mounts_mount_points="$(echo "$current_mounts" | awk '{ print $2 }')"
 rsd_mounts="Removable storage devices mounted:"
 
-old_ifs="$IFS"; IFS=$'\n'
+old_ifs="$IFS"; IFS="
+"
 
 for i in $current_mounts_mount_points; do
-  [ "$(printf "$fstab_mounts_mount_points" | grep -x "$i")" ] || {
+  echo "$fstab_mounts_mount_points" | grep -xq "$i" || {
     num="$(("$num" + "1"))"
     rsd_mounts="$rsd_mounts
-$(printf "$current_mounts" | grep " $i ")"
+$(echo "$current_mounts" | grep " $i ")"
   }
 done
 
 IFS="$old_ifs"
 
 [ "$num" ] && {
-  [ "$button" == "1" ] && {
+  [ "$button" = "1" ] && {
     win_title="\033]0;Removable storage devices mounted\007"
     $TERMINAL -e "$SHELL" -c "echo -n \"$win_title\"; printf \"$rsd_mounts\n\n\" | $PAGER"
   }
 
-  [ "$num" == "1" ] && echo "$num device mounted" && exit
+  [ "$num" = "1" ] && echo "$num device mounted" && exit
   echo "$num devices mounted"
 }

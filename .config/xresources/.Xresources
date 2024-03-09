@@ -2,7 +2,7 @@
 
 #define font_family_term mono
 #define font_family_gui sans-serif
-#define font_size 13.5
+#define font_size 12
 #define font_style medium
 
 ! Xft/DPI in xrdb is the font resolution in DPI (dots/inch).
@@ -24,7 +24,7 @@ Xft.autohint: true
 Xft.antialias: true
 Xft.hinting: true
 Xft.hintstyle: hintslight
-Xft.dpi: 96
+Xft.dpi: 108
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
 
