@@ -23,6 +23,13 @@ pathf_xresources_local="${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xreso
 
 "${XDG_DATA_HOME:-$HOME/.local/share}/xsettingsd/init" &
 
+# swayidle, swaylock
+swayidle -w \
+  timeout "60" 'swaylock -f -c 000000' \
+  timeout "60" 'swaymsg "output * dpms off"' \
+  resume 'swaymsg "output * dpms on"' \
+  before-sleep 'swaylock -f -c 000000' &
+
 # Starting VirtualBox guest service
 
 VBoxClient-all &
