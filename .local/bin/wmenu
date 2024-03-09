@@ -1,8 +1,15 @@
 #!/usr/bin/env sh
+foreground="#d4d4d4"
+color0="#1e1e1e"
+font="pango:sans-serif medium 13.5"
 
 exec /usr/bin/wmenu \
+  -N "$color0" \
+  -n "$foreground" \
+  -S "$foreground" \
+  -s "$color0" \
+  -f "$font" \
+  -l "25" \
   -i \
   -b \
-  -l 25 \
-  -f "pango:sans-serif medium 13.5" \
   "$@"

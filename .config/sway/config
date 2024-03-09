@@ -11,7 +11,7 @@ default_floating_border       normal 1
 set $font                     pango:sans-serif medium 13.5
 font                          $font
 show_marks                    yes
-set $applications_menu        applications_menu_desktop bemenu
+set $applications_menu        applications_menu_desktop wmenu
 
 input type:keyboard {
   xkb_file ${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd
