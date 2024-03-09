@@ -1,13 +1,5 @@
-set $font                     pango:sans-serif medium 12
-set $applications_menu        applications_menu_desktop
+include pre
 
 include ${XDG_CONFIG_HOME:-HOME/.config}/i3/common
 
-gaps top -1
-
-set $mod Mod4
-
-floating_modifier $mod
-
-bindsym $mod+F12 exec --no-startup-id screen_lock_x
-bindsym $mod+c   exec --no-startup-id exec_active_win_x
+include post

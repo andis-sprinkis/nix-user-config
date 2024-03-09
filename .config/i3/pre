@@ -1,0 +1,3 @@
+# vi: ft=i3config
+set $font_size                12
+set $applications_menu        applications_menu_desktop

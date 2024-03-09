@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+[ -z "$(pidof gammastep)" ] && exec gammastep -O "6500" -P -g "1.37:1.37:1.37"
+
+exec gammastep -O "6500" -P -g "1.37:1.37:1.37"
+
+# gammastep -m list

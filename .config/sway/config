@@ -1,21 +1,5 @@
-set $font                     pango:sans-serif medium 13.5
-set $applications_menu        applications_menu_desktop wmenu
+include pre
 
 include ${XDG_CONFIG_HOME:-HOME/.config}/i3/common
 
-for_window [shell="xwayland"] title_format "[Xwayland] %title"
-
-input type:keyboard {
-  xkb_file ${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd
-  repeat_delay 165
-  repeat_rate 55
-}
-output * bg $background solid_color
-
-floating_modifier $mod normal
-
-seat seat0 xcursor_theme default 42
-
-exec_always ${XDG_CONFIG_HOME:-$HOME/.config}/sway/init
-
-include /etc/sway/config.d/*
+include post

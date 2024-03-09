@@ -1,4 +1,6 @@
 # vi: ft=i3config
+set $font_name                pango:sans-serif
+set $font_style               medium
 gaps inner                    0
 gaps outer                    0
 smart_borders                 on
@@ -9,7 +11,7 @@ workspace_auto_back_and_forth yes
 title_align                   center
 default_border                normal 1
 default_floating_border       normal 1
-font                          $font
+font                          $font_name $font_style $font_size
 show_marks                    yes
 
 for_window [class="eparaksts-chrome-extension" instance="eparaksts-chrome-extension"] floating enable
@@ -195,7 +197,6 @@ bar {
   # padding             $bar_padding_top $bar_padding_right $bar_padding_bottom $bar_padding_left
   tray_padding        $bar_tray_padding
   tray_output         $bar_tray_output
-  font                $font
 
   colors {
     background         $background
