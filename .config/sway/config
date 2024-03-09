@@ -1,5 +1,22 @@
-include pre
+set $font_size                13.5
+set $applications_menu        applications_menu_desktop wmenu
 
 include ${XDG_CONFIG_HOME:-HOME/.config}/i3/common
 
-include post
+input type:keyboard {
+  xkb_file ${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd
+  repeat_delay 165
+  repeat_rate 55
+}
+
+output * bg $background solid_color
+
+seat seat0 xcursor_theme default 42
+
+for_window [shell="xwayland"] title_format "[Xwayland] %title"
+
+floating_modifier $mod normal
+
+include /etc/sway/config.d/*
+
+exec_always ${XDG_CONFIG_HOME:-$HOME/.config}/sway/post_init

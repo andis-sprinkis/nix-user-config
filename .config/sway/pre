@@ -1,3 +1,0 @@
-# vi: ft=swayconfig
-set $font_size                13.5
-set $applications_menu        applications_menu_desktop wmenu
