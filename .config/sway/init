@@ -8,10 +8,10 @@ gsettings set "org.gnome.desktop.interface" cursor-size "42"
 
 ## xrdb
 
-xrdb -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
+xrdb -retain -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
 
 pathf_xresources_local="${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources"
-[ -f "$pathf_xresources_local" ] && xrdb -override "$pathf_xresources_local"
+[ -f "$pathf_xresources_local" ] && xrdb -retain -override "$pathf_xresources_local"
 
 ## xsettingsd
 
