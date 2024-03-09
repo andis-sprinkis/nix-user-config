@@ -12,15 +12,11 @@ set $font                     pango:sans-serif medium 12
 font                          $font
 show_marks                    yes
 
-exec_always ${XDG_CONFIG_HOME:-$HOME/.config}/sway/init
-
 input type:keyboard {
   xkb_file ${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd
   repeat_delay 165
   repeat_rate 55
 }
-
-seat seat0 xcursor_theme default 48
 
 for_window [shell="xwayland"] title_format "[Xwayland] %title"
 
@@ -75,7 +71,7 @@ set $bar_padding_left        0
 bar {
   status_command      $bar_status_command
   position            $bar_position
-  # padding             $bar_padding_top $bar_padding_right $bar_padding_bottom $bar_padding_left
+  # padding           $bar_padding_top $bar_padding_right $bar_padding_bottom $bar_padding_left
   mode                $bar_mode
   workspace_buttons   $bar_workspace_buttons
   workspace_min_width $bar_workspace_min_width
@@ -222,5 +218,9 @@ mode $mode_resize {
   bindsym $right resize grow   width  48
   bindsym Escape mode "default"
 }
+
+seat seat0 xcursor_theme default 42
+
+exec_always ${XDG_CONFIG_HOME:-$HOME/.config}/sway/init
 
 include /etc/sway/config.d/*

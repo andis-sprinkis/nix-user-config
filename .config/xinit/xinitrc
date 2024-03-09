@@ -18,36 +18,7 @@ pathf_xresources_local="${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xreso
 
 ## xsettingsd
 
-### Merging the xsettingsd common and local configurations
-
-pathd_cfg_xsettingsd="${XDG_CONFIG_HOME:-$HOME/.config}/xsettingsd"
-pathf_cfg_xsettingsd="${pathd_cfg_xsettingsd}/xsettingsd.conf"
-pathf_cfg_xsettingsd_common="${pathd_cfg_xsettingsd}/common.conf"
-pathf_cfg_xsettingsd_local="${pathd_cfg_xsettingsd}/local.conf"
-
-if [ -f "$pathf_cfg_xsettingsd_local" ]; then
-  cfg_xsettingsd_local="$(cat "$pathf_cfg_xsettingsd_local")"
-
-  echo "$(
-    [ -f "$pathf_cfg_xsettingsd_common" ] && while IFS=' ' read -r key val; do
-      [ "${key##\#*}" ] || continue
-      echo "$cfg_xsettingsd_local" | grep -q "^${key} " && continue
-      printf '%s %s\n' "$key" "$val"
-    done < "$pathf_cfg_xsettingsd_common"
-  )
-${cfg_xsettingsd_local}" > "$pathf_cfg_xsettingsd"
-else
-  [ -f "$pathf_cfg_xsettingsd_common" ] && cat "$pathf_cfg_xsettingsd_common" > "$pathf_cfg_xsettingsd"
-fi
-
-### Starting or reloading xsettingsd
-
-pid_xsettingsd="$(pidof xsettingsd)"
-if [ "$pid_xsettingsd" ]; then 
-  kill -HUP "$pid_xsettingsd"
-else 
-  xsettingsd -c "$pathf_cfg_xsettingsd" &
-fi
+"${XDG_DATA_HOME:-$HOME/.local/share}/xsettingsd/init" &
 
 # Starting VirtualBox guest service
 
