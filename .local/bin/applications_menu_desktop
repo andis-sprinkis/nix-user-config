@@ -2,7 +2,9 @@
 
 path_appimage="${APPIMAGE_BIN_HOME:-$HOME/.local/opt/appimage/}"
 
-cmd_menu="(cat; stest -flx \"${path_appimage}\" | awk '{ print \"${path_appimage}\"\$0 }' | sort -u) | ${1:-dmenu}"
+cmd_menu="(cat; stest -flx \"${path_appimage}\" | awk '{ print \"${path_appimage}\"\$0 }' | sort -u) | ${*:-dmenu}"
+
+echo "$*"
 
 exec j4-dmenu-desktop \
   --no-generic \
