@@ -1,3 +1,4 @@
+# vi: ft=i3config
 gaps inner                    0
 gaps outer                    0
 smart_borders                 on
@@ -90,7 +91,6 @@ bar {
   bindsym button2 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_empty_workspace
   bindsym button3 exec --no-startup-id $applications_menu
 }
-
 
 set $up    k
 set $down  j
