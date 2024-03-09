@@ -3,7 +3,7 @@
 systemctl is-active --quiet smb && {
   win_title="\033]0;Stop SMB service\007"
   exec $TERMINAL -e "$SHELL" -c "echo -n \"$win_title\"; systemctl stop smb; read"
-} || {
-  win_title="\033]0;Start SMB service\007"
-  exec $TERMINAL -e "$SHELL" -c "echo -n \"$win_title\"; systemctl start smb; read"
-}
+} 
+
+win_title="\033]0;Start SMB service\007"
+exec $TERMINAL -e "$SHELL" -c "echo -n \"$win_title\"; systemctl start smb; read"

@@ -3,7 +3,7 @@
 systemctl is-active --quiet sshd && {
   win_title="\033]0;Stop SSHD service\007"
   exec $TERMINAL -e "$SHELL" -c "echo -n \"$win_title\"; systemctl stop sshd; read"
-} || {
-  win_title="\033]0;Start SSHD service\007"
-  exec $TERMINAL -e "$SHELL" -c "echo -n \"$win_title\"; systemctl start sshd; read"
 }
+
+win_title="\033]0;Start SSHD service\007"
+exec $TERMINAL -e "$SHELL" -c "echo -n \"$win_title\"; systemctl start sshd; read"
