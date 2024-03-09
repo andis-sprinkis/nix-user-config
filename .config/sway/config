@@ -17,6 +17,7 @@ for_window [shell="xwayland"] title_format "[Xwayland] %title"
 
 floating_modifier $mod normal
 
+bindsym $mod+Shift+r reload
 bindsym $mod+Shift+q exec swaynag -t warning -f $font -m 'Exit sway?' -B 'Yes' 'swaymsg exit'
 
 exec_always ${XDG_CONFIG_HOME:-$HOME/.config}/sway/post_init

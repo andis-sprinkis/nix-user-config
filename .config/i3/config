@@ -11,4 +11,5 @@ floating_modifier $mod
 bindsym $mod+F12 exec --no-startup-id screen_lock_x
 bindsym $mod+c   exec --no-startup-id exec_active_win_x
 
+bindsym $mod+Shift+r exec --no-startup-id ${XDG_CONFIG_HOME:-HOME/.config}/xinit/xinitrc
 bindsym $mod+Shift+q exec i3-nagbar -t warning -f $font -m 'Exit i3?' -b 'Yes' 'i3-msg exit'
