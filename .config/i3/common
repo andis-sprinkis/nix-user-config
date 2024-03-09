@@ -91,6 +91,7 @@ bar {
   bindsym button3 exec --no-startup-id $applications_menu
 }
 
+
 set $up    k
 set $down  j
 set $left  h

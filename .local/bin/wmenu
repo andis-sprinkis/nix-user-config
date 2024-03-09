@@ -1,16 +1,12 @@
 #!/usr/bin/env sh
 . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/gui.sh"
 
-foreground="$GUI_COLOR_FOREGROUND"
-color0="$GUI_COLOR_0"
-font="pango:${GUI_FONT_FAMILY_GUI} ${GUI_FONT_STYLE} ${GUI_FONT_SIZE}"
-
 exec /usr/bin/wmenu \
-  -N "$color0" \
-  -n "$foreground" \
-  -S "$foreground" \
-  -s "$color0" \
-  -f "$font" \
+  -N "$GUI_COLOR_0" \
+  -n "$GUI_COLOR_FOREGROUND" \
+  -S "$GUI_COLOR_FOREGROUND" \
+  -s "$GUI_COLOR_0" \
+  -f "pango:${GUI_FONT_FAMILY_GUI} ${GUI_FONT_STYLE} ${GUI_FONT_SIZE}" \
   -l "25" \
   -i \
   -b \

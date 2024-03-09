@@ -10,7 +10,6 @@ input type:keyboard {
   repeat_delay 165
   repeat_rate 55
 }
-
 output * bg $background solid_color
 
 floating_modifier $mod normal
