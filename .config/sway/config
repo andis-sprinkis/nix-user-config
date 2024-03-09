@@ -19,6 +19,6 @@ floating_modifier $mod normal
 
 bindsym $mod+Shift+q exec swaynag -t warning -f $font -m 'Exit sway?' -B 'Yes' 'swaymsg exit'
 
-include /etc/sway/config.d/*
-
 exec_always ${XDG_CONFIG_HOME:-$HOME/.config}/sway/post_init
+
+include /etc/sway/config.d/*

@@ -169,29 +169,16 @@ client.placeholder       $color6 $color0 $color6 $color6 $color8
 
 client.background $color6
 
-set $bar_position            top
-set $bar_mode                dock
-set $bar_workspace_min_width 48
-set $bar_workspace_buttons   yes
-set $bar_status_command      i3blocks
-set $bar_separator_symbol    " "
-set $bar_tray_padding        1
-set $bar_tray_output         none
-# set $bar_padding_top         0
-# set $bar_padding_right       10
-# set $bar_padding_bottom      -4
-# set $bar_padding_left        0
-
 bar {
-  status_command      $bar_status_command
-  position            $bar_position
-  mode                $bar_mode
-  workspace_buttons   $bar_workspace_buttons
-  workspace_min_width $bar_workspace_min_width
-  separator_symbol    $bar_separator_symbol
-  # padding             $bar_padding_top $bar_padding_right $bar_padding_bottom $bar_padding_left
-  tray_padding        $bar_tray_padding
-  tray_output         $bar_tray_output
+  status_command      i3blocks
+  position            top
+  mode                dock
+  workspace_buttons   yes
+  workspace_min_width 48
+  separator_symbol    " "
+  # padding             0 10 -4 0
+  tray_padding        1
+  tray_output         none
 
   colors {
     background         $background
