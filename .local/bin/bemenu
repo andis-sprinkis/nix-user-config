@@ -1,7 +1,9 @@
 #!/usr/bin/env sh
-foreground="#d4d4d4"
-color0="#1e1e1e"
-font="pango:sans-serif medium 13.5"
+. "${XDG_CONFIG_HOME:-$HOME/.config}/shell/gui.sh"
+
+foreground="$GUI_COLOR_FOREGROUND"
+color0="$GUI_COLOR_0"
+font="pango:${GUI_FONT_FAMILY_GUI} ${GUI_FONT_STYLE} ${GUI_FONT_SIZE}"
 
 exec /usr/bin/bemenu \
   --tb \

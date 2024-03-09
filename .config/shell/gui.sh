@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-#
+
 export GUI_FONT_FAMILY_TERM="mono"
 export GUI_FONT_FAMILY_GUI="sans-serif"
 export GUI_FONT_SIZE="13.5"

@@ -1,7 +1,9 @@
 #!/usr/bin/env sh
-foreground="$(xrdb -get foreground)"
-color0="$(xrdb -get color0)"
-font="$(xrdb -get font)"
+. "${XDG_CONFIG_HOME:-$HOME/.config}/shell/gui.sh"
+
+foreground="$GUI_COLOR_FOREGROUND"
+color0="$GUI_COLOR_0"
+font="pango:${GUI_FONT_FAMILY_GUI}:${GUI_FONT_STYLE}:12"
 
 exec /usr/bin/dmenu \
   -nf "$foreground" \
