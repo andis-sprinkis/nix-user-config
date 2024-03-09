@@ -2,7 +2,11 @@
 
 dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway &
 
-gsettings set "org.gnome.desktop.interface" cursor-size "42"
+# gsettings
+
+gsettings "set" "org.gnome.desktop.interface" "cursor-size" "42"
+gsettings "set" "org.gnome.desktop.interface" "scaling-factor" "1.125"
+gsettings "set" "org.gnome.desktop.interface" "text-scaling-factor" "1.125"
 
 # .Xresources
 
@@ -27,4 +31,5 @@ VBoxClient-all &
 
 # Local settings
 
-[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/sway/init.local" ] && exec "${XDG_CONFIG_HOME:-$HOME/.config}/sway/init.local"
+pathf_init_local="${XDG_CONFIG_HOME:-$HOME/.config}/sway/init.local"
+[ -f "$pathf_init_local" ] && exec "$pathf_init_local"

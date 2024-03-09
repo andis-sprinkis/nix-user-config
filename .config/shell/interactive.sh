@@ -2,6 +2,11 @@
 is_exec() { [ "$(command -v "$1")" ]; }
 
 main() {
+  # configure zsh-system-clipboard
+  [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && {
+    export ZSH_SYSTEM_CLIPBOARD_METHOD="xcc"
+  }
+
   # launch tmux
   is_exec "tmux" && [ -z "$TMUX" ] && [ "$TERM" != "linux" ] && {
     ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true" exec tmux

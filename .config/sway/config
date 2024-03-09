@@ -63,15 +63,10 @@ set $bar_status_command      i3blocks
 set $bar_separator_symbol    " "
 set $bar_tray_padding        1
 set $bar_tray_output         none
-set $bar_padding_top         0
-set $bar_padding_right       10
-set $bar_padding_bottom      -4
-set $bar_padding_left        0
 
 bar {
   status_command      $bar_status_command
   position            $bar_position
-  # padding           $bar_padding_top $bar_padding_right $bar_padding_bottom $bar_padding_left
   mode                $bar_mode
   workspace_buttons   $bar_workspace_buttons
   workspace_min_width $bar_workspace_min_width
@@ -96,7 +91,7 @@ bar {
 
   bindsym button2 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_empty_workspace
 
-  bindsym button3 exec $menu
+  bindsym button3 exec --no-startup-id applications_menu_desktop
 }
 
 set $mod Mod4
