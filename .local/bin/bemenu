@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 foreground="#d4d4d4"
 color0="#1e1e1e"
-font="sans-serif medium 13.5"
+font="pango:sans-serif medium 13.5"
 
 exec /usr/bin/bemenu \
   -i \
