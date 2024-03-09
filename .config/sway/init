@@ -1,10 +1,14 @@
 #!/usr/bin/env sh
 
+# GUI environment variables
+
+. "${XDG_CONFIG_HOME:-$HOME/.config}/shell/gui.sh"
+
 # gsettings
 
-gsettings "set" "org.gnome.desktop.interface" "cursor-size" "42"
-gsettings "set" "org.gnome.desktop.interface" "scaling-factor" "1.125"
-gsettings "set" "org.gnome.desktop.interface" "text-scaling-factor" "1.125"
+gsettings "set" "org.gnome.desktop.interface" "cursor-size" "${GUI_CURSOR_SIZE}"
+gsettings "set" "org.gnome.desktop.interface" "scaling-factor" "${GUI_SCALING_FACTOR}"
+gsettings "set" "org.gnome.desktop.interface" "text-scaling-factor" "${GUI_SCALING_FACTOR}"
 
 # .Xresources
 

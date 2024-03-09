@@ -1,9 +1,12 @@
+#!/usr/bin/env sh
+#
 export GUI_FONT_FAMILY_TERM="mono"
 export GUI_FONT_FAMILY_GUI="sans-serif"
 export GUI_FONT_SIZE="13.5"
 export GUI_FONT_STYLE="medium"
 export GUI_CURSOR_SIZE="42"
 export GUI_FONT_DPI="108"
+export GUI_SCALING_FACTOR="1.125"
 
 # vscode dark
 export GUI_COLOR_FOREGROUND="#d4d4d4"
