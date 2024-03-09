@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
-dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway &
-
 # gsettings
 
 gsettings "set" "org.gnome.desktop.interface" "cursor-size" "42"
