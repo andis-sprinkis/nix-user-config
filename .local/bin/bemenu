@@ -4,7 +4,6 @@ color0="#1e1e1e"
 font="pango:sans-serif medium 13.5"
 
 exec /usr/bin/bemenu \
-  -i \
   --tb \
   --tf \
   --fb \
@@ -23,8 +22,9 @@ exec /usr/bin/bemenu \
   --af \
   --scb \
   --scf \
-  -p "" \
-  -b \
-  -l 25 \
   --fn "$font" \
+  -l "25" \
+  -p "" \
+  -i \
+  -b \
   "$@"
