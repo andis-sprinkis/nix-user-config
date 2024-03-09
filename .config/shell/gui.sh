@@ -2,11 +2,10 @@
 
 export GUI_FONT_FAMILY_TERM="mono"
 export GUI_FONT_FAMILY_GUI="sans-serif"
-export GUI_FONT_SIZE="13.5"
 export GUI_FONT_STYLE="medium"
+export GUI_FONT_SIZE="13.5"
+export GUI_TEXT_SCALING_FACTOR="1.15"
 export GUI_CURSOR_SIZE="42"
-export GUI_FONT_DPI="108"
-export GUI_SCALING_FACTOR="1.125"
 
 # vscode dark
 export GUI_COLOR_FOREGROUND="#d4d4d4"
@@ -32,7 +31,7 @@ export GUI_COLOR_15="#d4d4d4"
 # # vscode light
 # export GUI_COLOR_FOREGROUND="#000000"
 # export GUI_COLOR_BACKGROUND="#ffffff"
-# export gui_color_cursor #000000"
+# export GUI_COLOR_CURSOR="#000000"
 # export GUI_COLOR_0="#ffffff"
 # export GUI_COLOR_1="#c72e0f"
 # export GUI_COLOR_2="#008000"
