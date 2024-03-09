@@ -21,7 +21,7 @@ local M = {
       harfbuzz_features = harfbuzz_features,
     },
   }),
-  font_size = cfg_local_status and cfg_local['font_size'] or 12,
+  font_size = cfg_local_status and cfg_local['font_size'] or (os.getenv("WAYLAND_DISPLAY") and 13.5 or 12),
   freetype_load_target = 'Light',
   line_height = 1.29,
   max_fps = 75,
