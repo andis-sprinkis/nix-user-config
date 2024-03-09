@@ -6,20 +6,28 @@ msg_usage="$(basename "$0") usage: [--active] [--select] [--help | -h]"
 path_dir="$HOME/screen"
 path_file="${path_dir}/$(date "+%s").png"
 
+[ -z "$1" ] && {
+  mkdir -p "$path_dir"
+  maim -u "$path_file"
+}
+
 case "$1" in
-  --help | -h)
+  --help|-h)
     echo "$msg_usage"
+    exit
     ;;
   --active)
     mkdir -p "$path_dir"
     maim -u --window "$(xdotool getactivewindow)" "$path_file"
+    exit
     ;;
   --select)
     mkdir -p "$path_dir"
     maim -u --select "$path_file"
+    exit
     ;;
   *)
-    maim -u "$msg_usage"
+    echo "$msg_usage"
     exit 1
     ;;
 esac
