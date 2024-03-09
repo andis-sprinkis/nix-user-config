@@ -7,6 +7,7 @@ export GUI_FONT_SIZE="13.5"
 export GUI_FONT_SIZE_X11="12"
 export GUI_TEXT_SCALING_FACTOR="1.15"
 export GUI_CURSOR_SIZE="42"
+export GUI_PREFER_COLOR_SCHEME="prefer-dark"
 
 # vscode dark
 export GUI_COLOR_FOREGROUND="#d4d4d4"
