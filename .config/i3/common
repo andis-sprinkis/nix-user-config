@@ -12,85 +12,11 @@ default_floating_border       normal 1
 font                          $font
 show_marks                    yes
 
-set $mod Mod4
-
 for_window [class="eparaksts-chrome-extension" instance="eparaksts-chrome-extension"] floating enable
 for_window [class="zoom" title="zoom"] floating enable
 for_window [window_role="PictureInPicture"] sticky enable
 
-set $color0      #1e1e1e
-set $color1      #f44747
-set $color2      #608b4e
-set $color3      #dcdcaa
-set $color4      #569cd6
-set $color5      #c678dd
-set $color6      #56b6c2
-set $color7      #d4d4d4
-set $color8      #808080
-set $color9      #f44747
-set $color10     #608b4e
-set $color11     #dcdcaa
-set $color12     #569cd6
-set $color13     #c678dd
-set $color14     #56b6c2
-set $color15     #d4d4d4
-set $foreground  #d4d4d4
-set $background  #1e1e1e
-set $cursorColor #d4d4d4
-
-# class, border, bg, text, indicator, child border
-client.focused           $color6 $color6 $color0 $color6 $color6
-client.focused_inactive  $color8 $color8 $color0 $color8 $color8
-client.unfocused         $color8 $color0 $color8 $color8 $color8
-client.focused_tab_title $color6 $color0 $color6
-client.urgent            $color3 $color0 $color3 $color8 $color8
-client.placeholder       $color6 $color0 $color6 $color6 $color8
-
-client.background $color6
-
-set $bar_position            top
-set $bar_mode                dock
-set $bar_workspace_min_width 48
-set $bar_workspace_buttons   yes
-set $bar_status_command      i3blocks
-set $bar_separator_symbol    " "
-set $bar_tray_padding        1
-set $bar_tray_output         none
-set $bar_padding_top         0px
-set $bar_padding_right       10px
-set $bar_padding_bottom      -4px
-set $bar_padding_left        0px
-
-bar {
-  # padding             $bar_padding_top $bar_padding_right $bar_padding_bottom $bar_padding_left
-
-  status_command      $bar_status_command
-  position            $bar_position
-  mode                $bar_mode
-  workspace_buttons   $bar_workspace_buttons
-  workspace_min_width $bar_workspace_min_width
-  separator_symbol    $bar_separator_symbol
-  tray_padding        $bar_tray_padding
-  tray_output         $bar_tray_output
-  font                $font
-
-  colors {
-    background         $background
-    statusline         $color8
-    separator          $color8
-    focused_workspace  $color6 $color6 $color0
-    active_workspace   $color8 $color8 $color0
-    inactive_workspace $color0 $color0 $color8
-    urgent_workspace   $color3 $color3 $color0
-    binding_mode       $color5 $color5 $color0
-  }
-
-  bindsym button4 workspace prev_on_output
-  bindsym button5 workspace next_on_output
-
-  bindsym button2 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_empty_workspace
-  bindsym button3 exec --no-startup-id $applications_menu
-}
+set $mod Mod4
 
 set $up    k
 set $down  j
@@ -215,3 +141,77 @@ mode $mode_resize {
   bindsym $right resize grow   width  48
   bindsym Escape mode "default"
 }
+
+set $color0      #1e1e1e
+set $color1      #f44747
+set $color2      #608b4e
+set $color3      #dcdcaa
+set $color4      #569cd6
+set $color5      #c678dd
+set $color6      #56b6c2
+set $color7      #d4d4d4
+set $color8      #808080
+set $color9      #f44747
+set $color10     #608b4e
+set $color11     #dcdcaa
+set $color12     #569cd6
+set $color13     #c678dd
+set $color14     #56b6c2
+set $color15     #d4d4d4
+set $foreground  #d4d4d4
+set $background  #1e1e1e
+set $cursorColor #d4d4d4
+
+# class, border, bg, text, indicator, child border
+client.focused           $color6 $color6 $color0 $color6 $color6
+client.focused_inactive  $color8 $color8 $color0 $color8 $color8
+client.unfocused         $color8 $color0 $color8 $color8 $color8
+client.focused_tab_title $color6 $color0 $color6
+client.urgent            $color3 $color0 $color3 $color8 $color8
+client.placeholder       $color6 $color0 $color6 $color6 $color8
+
+client.background $color6
+
+set $bar_position            top
+set $bar_mode                dock
+set $bar_workspace_min_width 48
+set $bar_workspace_buttons   yes
+set $bar_status_command      i3blocks
+set $bar_separator_symbol    " "
+set $bar_tray_padding        1
+set $bar_tray_output         none
+# set $bar_padding_top         0
+# set $bar_padding_right       10
+# set $bar_padding_bottom      -4
+# set $bar_padding_left        0
+
+bar {
+  status_command      $bar_status_command
+  position            $bar_position
+  mode                $bar_mode
+  workspace_buttons   $bar_workspace_buttons
+  workspace_min_width $bar_workspace_min_width
+  separator_symbol    $bar_separator_symbol
+  # padding             $bar_padding_top $bar_padding_right $bar_padding_bottom $bar_padding_left
+  tray_padding        $bar_tray_padding
+  tray_output         $bar_tray_output
+  font                $font
+
+  colors {
+    background         $background
+    statusline         $color8
+    separator          $color8
+    focused_workspace  $color6 $color6 $color0
+    active_workspace   $color8 $color8 $color0
+    inactive_workspace $color0 $color0 $color8
+    urgent_workspace   $color3 $color3 $color0
+    binding_mode       $color5 $color5 $color0
+  }
+
+  bindsym button4 workspace prev_on_output
+  bindsym button5 workspace next_on_output
+
+  bindsym button2 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_empty_workspace
+  bindsym button3 exec --no-startup-id $applications_menu
+}
+
