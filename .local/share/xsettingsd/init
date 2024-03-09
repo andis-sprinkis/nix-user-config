@@ -24,9 +24,5 @@ fi
 
 # Starting or reloading xsettingsd
 
-pid_xsettingsd="$(pidof xsettingsd)"
-if [ "$pid_xsettingsd" ]; then 
-  kill -HUP "$pid_xsettingsd"
-else 
-  exec xsettingsd -c "$pathf_cfg_xsettingsd"
-fi
+[ "$(pidof xsettingsd)" ] && pkill "xsettingsd"
+exec xsettingsd -c "$pathf_cfg_xsettingsd"
