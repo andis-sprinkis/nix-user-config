@@ -11,8 +11,7 @@ default_floating_border       normal 1
 set $font                     pango:sans-serif medium 13.5
 font                          $font
 show_marks                    yes
-# TODO: replace with bemenu-wayland
-set $applications_menu        applications_menu_desktop wmenu
+set $applications_menu        applications_menu_desktop bemenu
 
 input type:keyboard {
   xkb_file ${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd
