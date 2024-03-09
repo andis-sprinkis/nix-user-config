@@ -1,25 +1,25 @@
 #!/usr/bin/env sh
 set -e
 
+msg_usage="$(basename "$0") usage: [--active] [--select] [--help | -h]"
+
 path_dir="$HOME/screen"
-mkdir -p "$path_dir"
-path_file=$path_dir/"$(date +%s).png"
+path_file="${path_dir}/$(date "+%s").png"
 
 case "$1" in
   --help | -h)
-    echo "$(basename "$0") usage: [--active] [--select] [--help | -h]"
-    exit
+    echo "$msg_usage"
     ;;
   --active)
+    mkdir -p "$path_dir"
     maim -u --window "$(xdotool getactivewindow)" "$path_file"
-    exit
     ;;
   --select)
+    mkdir -p "$path_dir"
     maim -u --select "$path_file"
-    exit
     ;;
   *)
-    maim -u "$path_file"
-    exit
+    maim -u "$msg_usage"
+    exit 1
     ;;
 esac
