@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 connectivity="$(nmcli networking connectivity)"
 
@@ -10,20 +10,20 @@ connectivity="$(nmcli networking connectivity)"
   label_portal="Network connected (portal)"
   label_limited="Network connected (limited)"
   label_unknown="Network connectivity unknown"
-  label_other="Network connectivity status: $connectivity"
+  label_other="Network connectivity status: ${connectivity}"
 
-  [ "$button" == "1" ] && {
+  [ "$BLOCK_BUTTON" = "1" ] && {
     $TERMINAL -e "$SHELL" -c "nmtui"
   } 
 
-  [ "$button" == "3" ] && {
-    case $connectivity in
-      "full"|"portal"|"limited") echo $label_disabling;;
-      "none"|"unknown") echo $label_enabling;;
-      *) echo $label_enabling;;
+  [ "$BLOCK_BUTTON" = "3" ] && {
+    case "$connectivity" in
+      "full"|"portal"|"limited") echo "$label_disabling";;
+      "none"|"unknown") echo "$label_enabling";;
+      *) echo "$label_enabling";;
     esac
 
-    if [ "$connectivity" == "none" ] || [ "$connectivity" == "unknown" ]; then
+    if [ "$connectivity" = "none" ] || [ "$connectivity" = "unknown" ]; then
       nmcli networking on
     else
       nmcli networking off
@@ -31,11 +31,11 @@ connectivity="$(nmcli networking connectivity)"
   }
 
   case $connectivity in
-    "full") echo $label_full;;
-    "none") echo $label_none;;
-    "portal") echo $label_portal;;
-    "limited") echo $label_limited;;
-    "unknown") echo $label_unknown;;
-    *) echo $label_other;;
+    "full") echo "$label_full";;
+    "none") echo "$label_none";;
+    "portal") echo "$label_portal";;
+    "limited") echo "$label_limited";;
+    "unknown") echo "$label_unknown";;
+    *) echo "$label_other";;
   esac
 }
