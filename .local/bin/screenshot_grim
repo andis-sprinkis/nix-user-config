@@ -8,7 +8,7 @@ path_file="${path_dir}/$(date "+%s").png"
 
 [ -z "$1" ] && {
   mkdir -p "$path_dir"
-  exec maim -u "$path_file"
+  exec grim -o "$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')" "$path_file"
 }
 
 case "$1" in
@@ -18,11 +18,12 @@ case "$1" in
     ;;
   --active)
     mkdir -p "$path_dir"
-    exec maim -u --window "$(xdotool getactivewindow)" "$path_file"
+    exec grim -g "$(swaymsg -t get_tree | jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$path_file"
     ;;
   --select)
     mkdir -p "$path_dir"
-    exec maim -u --select "$path_file"
+    exec grim -g "$(slurp)" "$path_file"
+    exit
     ;;
   *)
     echo "$msg_usage"
