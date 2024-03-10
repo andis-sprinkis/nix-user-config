@@ -12,6 +12,7 @@ input type:keyboard {
 output * bg $background solid_color
 
 seat seat0 xcursor_theme default 42
+seat seat0 hide_cursor 232
 
 for_window [shell="xwayland"] title_format "[XW] %title"
 
