@@ -131,10 +131,12 @@ bindsym $mod+slash exec --no-startup-id i3_key_mappings_desktop
 set     $mode_resize "Resize container..."
 bindsym $mod+r mode $mode_resize
 mode $mode_resize {
-  bindsym $left  resize shrink width  48
-  bindsym $down  resize shrink height 48
-  bindsym $up    resize grow   height 48
-  bindsym $right resize grow   width  48
+  bindsym $left  resize shrink width  48px
+  bindsym $down  resize shrink height 48px
+  bindsym $up    resize grow   height 48px
+  bindsym $right resize grow   width  48px
+
+  bindsym Return mode "default"
   bindsym Escape mode "default"
 }
 
