@@ -116,8 +116,8 @@ bindsym --whole-window $mod+button4 exec --no-startup-id amixer -D pulse sset Ma
 bindsym --whole-window $mod+button5 exec --no-startup-id amixer -D pulse sset Master 5%- unmute
 bindsym --whole-window $mod+button2 exec --no-startup-id amixer -q set Master toggle
 
-bindsym XF86MonBrightnessUp   exec --no-startup-id brightnessctl set +5%
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
+bindsym XF86MonBrightnessUp   exec --no-startup-id brightnessctl -q set +3%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl -q set 3%-
 
 bindsym $mod+n exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_empty_workspace
 bindsym $mod+m exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/dmenu_move_to_workspace
