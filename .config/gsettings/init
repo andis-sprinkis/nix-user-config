@@ -6,6 +6,11 @@
 
 # gsettings
 
-gsettings "set" "org.gnome.desktop.interface" "cursor-size" "$GUI_CURSOR_SIZE"
-gsettings "set" "org.gnome.desktop.interface" "text-scaling-factor" "$GUI_TEXT_SCALING_FACTOR"
-gsettings "set" "org.gnome.desktop.interface" "color-scheme" "$GUI_PREFER_COLOR_SCHEME"
+schema="org.gnome.desktop.interface"
+
+gsettings "set" "$schema" "cursor-size" "$GUI_CURSOR_SIZE"
+gsettings "set" "$schema" "text-scaling-factor" "1.15"
+gsettings "set" "$schema" "color-scheme" "prefer-dark"
+gsettings "set" "$schema" "enable-animations" "false"
+gsettings "set" "$schema" "cursor-blink" "false"
+gsettings "set" "$schema" "font-name" "${GUI_FONT_FAMILY_GUI} ${GUI_FONT_STYLE_GUI} 11"
