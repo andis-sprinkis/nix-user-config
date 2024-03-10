@@ -47,8 +47,8 @@ bindsym $mod+space       focus mode_toggle
 
 bindsym $mod+shift+f floating enable; exec --no-startup-id maximize_win_multimon_x
 
-bindsym $mod+d       layout toggle splitv splith tabbed stacked
-bindsym $mod+Shift+d layout toggle stacked tabbed splith splitv
+bindsym $mod+d       layout toggle splitv splith tabbed stacking
+bindsym $mod+Shift+d layout toggle stacking tabbed splith splitv
 
 bindsym $mod+z       focus parent
 bindsym $mod+Shift+z focus child

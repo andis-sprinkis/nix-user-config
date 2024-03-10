@@ -9,6 +9,10 @@ input type:keyboard {
   repeat_rate 55
 }
 
+input type:pointer {
+  scroll_factor 0.733333333333333
+}
+
 output * bg $background solid_color
 
 seat seat0 xcursor_theme default 42
