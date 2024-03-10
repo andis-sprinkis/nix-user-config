@@ -122,10 +122,6 @@ bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl -q set 3%-
 bindsym $mod+n exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_empty_workspace
 bindsym $mod+m exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/dmenu_move_to_workspace
 
-bindsym $mod+Print       exec --no-startup-id screenshot_maim
-bindsym $mod+Shift+Print exec --no-startup-id screenshot_maim --active
-bindsym $mod+Ctrl+Print  exec --no-startup-id screenshot_maim --select
-
 bindsym $mod+slash exec --no-startup-id i3_key_mappings_desktop
 
 set     $mode_resize "Resize container..."
