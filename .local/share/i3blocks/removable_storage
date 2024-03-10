@@ -20,7 +20,7 @@ done
 IFS="$old_ifs"
 
 [ "$num" ] && {
-  [ "$button" = "1" ] && {
+  [ "$BLOCK_BUTTON" = "1" ] || [ "$BLOCK_BUTTON" = "3" ] && {
     win_title="\033]0;Removable storage devices mounted\007"
     $TERMINAL -e "$SHELL" -c "echo -n \"$win_title\"; printf \"$rsd_mounts\n\n\" | $PAGER"
   }
