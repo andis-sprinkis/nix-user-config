@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Sway window manager key mappings
+Exec=i3_key_mappings_desktop sway
