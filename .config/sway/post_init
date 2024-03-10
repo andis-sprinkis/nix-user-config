@@ -1,14 +1,8 @@
 #!/usr/bin/env sh
 
-# GUI environment variables
-
-. "${XDG_CONFIG_HOME:-$HOME/.config}/shell/gui.sh"
-
 # gsettings
 
-gsettings "set" "org.gnome.desktop.interface" "cursor-size" "$GUI_CURSOR_SIZE"
-gsettings "set" "org.gnome.desktop.interface" "text-scaling-factor" "$GUI_TEXT_SCALING_FACTOR"
-gsettings "set" "org.gnome.desktop.interface" "color-scheme" "$GUI_PREFER_COLOR_SCHEME"
+"${XDG_CONFIG_HOME:-$HOME/.config}/gsettings/init"
 
 # .Xresources
 
@@ -24,11 +18,8 @@ pathf_xresources_local="${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xreso
 "${XDG_DATA_HOME:-$HOME/.local/share}/xsettingsd/init" &
 
 # swayidle, swaylock
-swayidle -w \
-  timeout "60" 'swaylock -f -c 000000' \
-  timeout "60" 'swaymsg "output * dpms off"' \
-  resume 'swaymsg "output * dpms on"' \
-  before-sleep 'swaylock -f -c 000000' &
+
+"${XDG_CONFIG_HOME:-$HOME/.config}/swayidle/init" &
 
 # Starting VirtualBox guest service
 

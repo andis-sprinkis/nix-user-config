@@ -7,15 +7,9 @@ if [ "$(id -u)" -lt 1000 ]; then
   exit 1
 fi
 
-# GUI environment variables
-
-. "${XDG_CONFIG_HOME:-$HOME/.config}/shell/gui.sh"
-
 # gsettings
 
-gsettings "set" "org.gnome.desktop.interface" "cursor-size" "$GUI_CURSOR_SIZE"
-gsettings "set" "org.gnome.desktop.interface" "text-scaling-factor" "$GUI_TEXT_SCALING_FACTOR"
-gsettings "set" "org.gnome.desktop.interface" "color-scheme" "$GUI_PREFER_COLOR_SCHEME"
+"${XDG_CONFIG_HOME:-$HOME/.config}/gsettings/init"
 
 # .Xresources
 
