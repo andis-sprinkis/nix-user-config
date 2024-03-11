@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=Application
 Name=Lock screen
-Exec=screen_lock_x
+Exec=screen_lock

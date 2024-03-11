@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+[ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && {
+  exec xscreensaver-command -lock
+}
+
+killall -s SIGUSR1 swayidle && killall -s SIGUSR1 swayidle
