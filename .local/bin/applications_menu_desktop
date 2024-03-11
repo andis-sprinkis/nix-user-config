@@ -2,12 +2,13 @@
 
 path_appimage="${APPIMAGE_BIN_HOME:-$HOME/.local/opt/appimage/}"
 
-cmd_menu="(cat; stest -flx \"${path_appimage}\" | awk '{ print \"${path_appimage}\"\$0 }' | sort -u) | ${*:-dmenu}"
+cmd_menu="${*:-dmenu}"
+cmd_applications_menu="(cat; stest -flx \"${path_appimage}\" | awk '{ print \"${path_appimage}\"\$0 }' | sort -u) | ${cmd_menu}"
 
-echo "$*"
+killall -u "$(whoami)" "$cmd_menu"
 
 exec j4-dmenu-desktop \
   --no-generic \
   --display-binary \
-  --dmenu="$cmd_menu" \
+  --dmenu="$cmd_applications_menu" \
   --usage-log="${XDG_CACHE_HOME:-HOME/.cache}/j4-dmenu-desktop/log"
