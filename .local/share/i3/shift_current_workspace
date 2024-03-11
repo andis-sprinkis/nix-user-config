@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
+# TODO: fix/rewrite (for swaymsg)
 # TODO: convert to POSIX sh
 # TODO: use getopts
+# TODO: use jq
 
 #"-next" or "-prev"
-move_direction=$1
+move_direction="$1"
 
 workspaces=($(i3-msg -t get_workspaces | tr , '\n' | grep '"name":' | cut -d : -f 2 | tr \" '\ '))
 current_workspace=$(i3-msg -t get_workspaces | tr , '\n' | grep -B3 '"focused":true' | grep '"name":' | cut -d : -f 2 | tr \" '\ ')
@@ -12,62 +14,63 @@ current_workspace=$(i3-msg -t get_workspaces | tr , '\n' | grep -B3 '"focused":t
 get_prev_workspace() {
   for i in "${workspaces[@]}"; do
     if [[ $i -eq $current_workspace ]]; then
-      local prev_workspace=$prev
+      local prev_workspace="$prev"
       break
     fi
 
     local prev=$i
   done
 
-  echo $prev_workspace
+  echo "$prev_workspace"
 }
 
 get_next_workspace() {
-  local next=0
+  local next="0"
   for i in "${workspaces[@]}"; do
-    next=($next+1)
+    next="$((next + 1))"
 
-    if [[ $i -eq $current_workspace ]]; then
+    if [ "$i" = "$current_workspace" ]; then
       local next_workspace=${workspaces[$next]}
       break
     fi
   done
 
-  echo $next_workspace
+  echo "$next_workspace"
 }
 
-prev_workspace=$(get_prev_workspace)
-next_workspace=$(get_next_workspace)
+prev_workspace="$(get_prev_workspace)"
+next_workspace="$(get_next_workspace)"
 
-if [[ $move_direction = -next ]]; then
-  if [[ $next_workspace -ne $(($current_workspace+1)) ]]; then
+if [ "$move_direction" = "-next" ]; then
+  if [ "$next_workspace" != "$((current_workspace + 1))" ]; then
     echo Add new workspace 1 forwards by renaming/addition.
 
-    i3-msg rename workspace $current_workspace to $(($current_workspace+1))
+    i3-msg rename workspace "$current_workspace" to "$((current_workspace + 1))"
 
     exit
-  elif [[ $next_workspace -eq $(($current_workspace+1)) ]]; then
+  elif [ "$next_workspace" = "$((current_workspace + 1))" ]; then
     echo "Move 1 workspace forwards by swapping workspace contents."
 
-    i3-msg rename workspace $current_workspace to 0
-    i3-msg rename workspace $next_workspace to $current_workspace
-    i3-msg rename workspace 0 to $next_workspace
+    i3-msg rename workspace "$current_workspace" to "0"
+    i3-msg rename workspace "$next_workspace" to "$current_workspace"
+    i3-msg rename workspace "0" to "$next_workspace"
 
     exit
   fi
-elif [[ $move_direction = -prev ]]; then
-  if [[ $prev_workspace -ne $(($current_workspace-1)) ]]; then
+elif [ "$move_direction" = "-prev" ]; then
+  if [ "$prev_workspace" != "$((current_workspace - 1))" ]; then
     echo "Add new workspace 1 backwards by renaming/substraction."
 
-    i3-msg rename workspace $current_workspace to $(($current_workspace-1))
+    echo "$current_workspace"
+    i3-msg rename workspace "$current_workspace" to "$((current_workspace - 1))"
 
     exit
-  elif [[ $prev_workspace -eq $(($current_workspace-1)) ]]; then
+  elif [ "$prev_workspace" = "$((current_workspace - 1))" ]; then
     echo "Move 1 workspace backwards by swapping workspace contents."
 
-    i3-msg rename workspace "$current_workspace" to 0
+    i3-msg rename workspace "$current_workspace" to "0"
     i3-msg rename workspace "$prev_workspace" to "$current_workspace"
-    i3-msg rename workspace 0 to "$prev_workspace"
+    i3-msg rename workspace "0" to "$prev_workspace"
 
     exit
   fi
