@@ -1,5 +1,11 @@
 #!/usr/bin/env sh
 
+# GUI environment variables
+
+. "${XDG_CONFIG_HOME:-$HOME/.config}/shell/gui.sh"
+
+# ----
+
 # gsettings
 
 "${XDG_CONFIG_HOME:-$HOME/.config}/gsettings/init"
@@ -19,7 +25,15 @@ pathf_xresources_local="${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xreso
 
 # swayidle, swaylock
 
-"${XDG_CONFIG_HOME:-$HOME/.config}/swayidle/init" &
+color_bg_swaylock="$(echo "${GUI_COLOR_BACKGROUND:-#000000}" | cut -c2-)"
+
+killall "swayidle"
+
+swayidle -w \
+  timeout "60" "swaylock -u -f -c ${color_bg_swaylock}" \
+  timeout "60" "swaymsg \"output * dpms off\"" \
+  resume "swaymsg \"output * dpms on\"" \
+  before-sleep "swaylock -u -f -c ${color_bg_swaylock}" &
 
 # Starting VirtualBox guest service
 
