@@ -15,4 +15,5 @@ gsettings "set" "org.gnome.desktop.interface" "font-name" "${GUI_FONT_FAMILY_GUI
 gsettings "set" "org.gnome.desktop.interface" "text-scaling-factor" "1.15"
 gsettings "set" "org.gnome.desktop.interface" "monospace-font-name" "${GUI_FONT_FAMILY_TERM} ${GUI_FONT_SIZE_GTK}"
 gsettings "set" "org.gtk.Settings.FileChooser" "show-hidden" "true"
-gsettings "set" "org.gtk.Settings.FileChooser" "show-directories-first" "true"
+gsettings "set" "org.gtk.Settings.FileChooser" "sort-directories-first" "true"
+gsettings "set" "org.gtk.Settings.FileChooser" "date-format" "with-time"
