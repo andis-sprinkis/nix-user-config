@@ -33,6 +33,6 @@ bindsym $mod+slash exec --no-startup-id i3_key_mappings_desktop sway
 bindsym $mod+Shift+r reload
 bindsym $mod+Shift+q exec swaynag -t warning -f $font -m 'Exit sway?' -B 'Yes' 'swaymsg exit'
 
-exec_always ${XDG_CONFIG_HOME:-$HOME/.config}/sway/post_init
+exec_always ${XDG_CONFIG_HOME:-$HOME/.config}/sway/post
 
 include /etc/sway/config.d/*
