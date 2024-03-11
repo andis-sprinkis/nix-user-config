@@ -41,6 +41,7 @@ xset r rate 165 55 &
 xkbcomp -w 4 -I"${XDG_CONFIG_HOME:-$HOME/.config}/xkb" "${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd" "$DISPLAY" &
 
 # Running unclutter to automatically hide the mouse pointer
+
 [ -z "$(pidof unclutter)" ] && unclutter --timeout 1 --start-hidden &
 
 # Setting the X11 root window background
