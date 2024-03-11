@@ -4,4 +4,4 @@
   exec xscreensaver-command -lock
 }
 
-killall -s SIGUSR1 swayidle && killall -s SIGUSR1 swayidle
+exec killall -u "$(whoami)" -s "SIGUSR1" "swayidle"

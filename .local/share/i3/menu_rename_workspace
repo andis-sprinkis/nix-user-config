@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+menu="dmenu"
+wm="i3-"
+
+[ -z "$DISPLAY" ] && [ "$WAYLAND_DISPLAY" ] && {
+  menu="wmenu"
+  wm="sway"
+}
+
+exec "${wm}msg" rename workspace to "$("$@" | "$menu" -p "Rename workspace:")"
