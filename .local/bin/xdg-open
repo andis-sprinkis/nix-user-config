@@ -5,8 +5,8 @@ case "$@" in
     exec web_browser_desktop "$@"
   ;;
   file://*)
-    no_pre=$(echo "$@" | sed -n 's/file:\/\///p')
-    item_to_open=$(readlink -f "$(printf '%b\n' "${no_pre//%/\\x}")") # TODO: convert to POSIX sh
+    path_no_pre=$(echo "$@" | sed -n 's/file:\/\///p')
+    item_to_open=$(readlink -f "$(printf '%b\n' "${path_no_pre//%/\\x}")") # TODO: convert to POSIX sh
   ;;
   *)
     item_to_open="$(readlink -f "$@")"
@@ -18,5 +18,5 @@ esac
   [ "$mime" ] && [ "$(xdg-mime query default "$mime")" ] && exec "/usr/bin/xdg-open" "$item_to_open"
 }
 
-echo "$(basename "$0"): Preventing item without a recognized handler from being passed to /usr/bin/xdg-open" 2>&1
+echo "$(basename "$0"): Preventing item without a recognized handler being passed to /usr/bin/xdg-open" 2>&1
 exit 1
