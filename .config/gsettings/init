@@ -7,12 +7,12 @@ set -e
 
 # gsettings
 
-set="gsettings set org.gnome.desktop.interface"
-
-$set "color-scheme" "prefer-dark"
-$set "cursor-blink" "false"
-$set "cursor-size" "42"
-$set "enable-animations" "false"
-$set "font-name" "${GUI_FONT_FAMILY_GUI} ${GUI_FONT_STYLE} ${GUI_FONT_SIZE_GTK}"
-$set "text-scaling-factor" "1.15"
-$set "monospace-font-name" "${GUI_FONT_FAMILY_TERM} ${GUI_FONT_SIZE_GTK}"
+gsettings "set" "org.gnome.desktop.interface" "color-scheme" "prefer-dark"
+gsettings "set" "org.gnome.desktop.interface" "cursor-blink" "false"
+gsettings "set" "org.gnome.desktop.interface" "cursor-size" "42"
+gsettings "set" "org.gnome.desktop.interface" "enable-animations" "false"
+gsettings "set" "org.gnome.desktop.interface" "font-name" "${GUI_FONT_FAMILY_GUI} ${GUI_FONT_STYLE} ${GUI_FONT_SIZE_GTK}"
+gsettings "set" "org.gnome.desktop.interface" "text-scaling-factor" "1.15"
+gsettings "set" "org.gnome.desktop.interface" "monospace-font-name" "${GUI_FONT_FAMILY_TERM} ${GUI_FONT_SIZE_GTK}"
+gsettings "set" "org.gtk.Settings.FileChooser" "show-hidden" "true"
+gsettings "set" "org.gtk.Settings.FileChooser" "show-directories-first" "true"
