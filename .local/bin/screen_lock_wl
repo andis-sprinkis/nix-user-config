@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-
-killall -s SIGUSR1 swayidle && killall -s SIGUSR1 swayidle
