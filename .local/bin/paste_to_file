@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 set -e
-[ -z "$@" ] && echo "$(basename "$0"): No path specified" && exit 1
 
-[ "$(command -v "xclip")" ] && { xclip -o -sel "clipboard" >> "$@"; } && exit
+[ -z "$*" ] && echo "$(basename "$0"): No path specified" && exit 1
+
+[ "$WAYLAND_DISPLAY" ] && [ "$(command -v "wl-paste")" ] && { wl-paste >> "$@"; } && exit
+[ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$(command -v "xclip")" ] && { xclip -o -sel "clipboard" >> "$@"; } && exit
 [ "$(command -v "pbcopy")" ] && { pbpaste >> "$@"; } && exit
+
+exit 1

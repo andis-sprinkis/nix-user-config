@@ -61,8 +61,11 @@ cmd mkdir !{{
 }}
 
 cmd copy-path ${{
-  [ "$(command -v "xclip")" ] && { printf "$fx" | xclip -sel "clipboard"; } && exit
+  [ "$WAYLAND_DISPLAY" ] && [ "$(command -v "wl-copy")" ] && { printf "$fx" | wl-copy; } && exit
+  [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$(command -v "xclip")" ] && { printf "$fx" | xclip -sel "clipboard"; } && exit
   [ "$(command -v "pbcopy")" ] && { printf "$fx" | pbcopy; } && exit
+
+  exit 1
 }}
 
 cmd paste-to-file ${{
