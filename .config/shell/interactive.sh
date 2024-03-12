@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 # fn: detect if given command is executable
 is_exec() { [ "$(command -v "$1")" ]; }
 

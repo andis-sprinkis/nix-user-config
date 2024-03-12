@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 alias \
   aunpack="aunpack --subdir --explain" \
   bc="bc -ql" \
@@ -20,7 +22,7 @@ alias \
   dgt="dotgit checkout" \
   dg_submodule_init="dotgit submodule update --init --recursive" \
   dg_submodule_upgrade_latest_remote="dotgit submodule update --recursive --remote" \
-  e="$EDITOR" \
+  e="\$EDITOR" \
   g="git" \
   gc="git commit" \
   gcm="git commit -m" \
@@ -36,12 +38,12 @@ alias \
   g_submodule_upgrade_latest_remote="git submodule update --recursive --remote" \
   h="tldr" \
   ip="ip --color=auto" \
-  less="$PAGER" \
+  less="\$PAGER" \
   mkdir="mkdir -pv" \
   mv="mv -v" \
   myip="curl https://ipinfo.io/" \
   ncdu="ncdu -x" \
-  n="${EDITOR} ${HOME}/note/" \
+  n="\$EDITOR \$HOME/note/" \
   p="python3 -q" \
   q="exit" \
   qalc="qalc -c" \
@@ -49,18 +51,19 @@ alias \
   r="radian" \
   rm="rm -vI" \
   rsync_progress="rsync --progress --human-readable --stats" \
-  s="${EDITOR} ${HOME}/snippet/" \
+  s="\$EDITOR \$HOME/snippet/" \
   scan_http="sudo nmap -sS --open -p 80,447 192.168.1.0/24" \
   scan_smb="sudo nmap -sS --open -p 445 192.168.1.0/24" \
   scan_ssh="sudo nmap -sS --open -p 22 192.168.1.0/24" \
   tree="tree -CF" \
   viff="nvim -d" \
-  wget="wget --hsts-file=\"${XDG_DATA_HOME:-$HOME/.local/share}/wget-hsts\"" \
+  wget="wget --hsts-file=\"\${XDG_DATA_HOME:-\$HOME/.local/share}/wget-hsts\"" \
   yay="yay --color=auto"
 
-[[ ! "$OSTYPE" == "darwin"* ]] || [ "$HAS_BREW_GNUBIN" ] && {
-  alias \
-    diff="diff --color=auto" \
-    grep="grep --color=auto" \
-    ls="ls -xhAFNX --color=auto --group-directories-first --time-style=long-iso"
+  case $(uname) in "Darwin") is_macos="1" ;; esac
+  [ "$is_macos" ] || [ "$HAS_BREW_GNUBIN" ] && {
+    alias \
+      diff="diff --color=auto" \
+      grep="grep --color=auto" \
+      ls="ls -xhAFNX --color=auto --group-directories-first --time-style=long-iso"
 }

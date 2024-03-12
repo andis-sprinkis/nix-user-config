@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 # fn: detect if given command is executable
 is_exec() { [ "$(command -v "$1")" ]; }
 
@@ -50,7 +52,6 @@ main() {
     export MANPAGER="nvim +Man!"
   } || {
     # or set a different avail. EDITOR
-    local editor
     for editor in "vim" "vi" "nano"; do
       is_exec "$editor" && export EDITOR="$editor" && break
     done
