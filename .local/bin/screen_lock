@@ -8,5 +8,4 @@ user="$(whoami)"
 
 killall -s 9 -u "$user" "sway-audio-idle-inhibit"
 sleep "0.1"
-while pgrep -f -x -u "$user" "sway-audio-idle-inhibit" > "/dev/null"; do sleep "0.1"; done
 exec killall -u "$(whoami)" -s "SIGUSR1" "swayidle"
