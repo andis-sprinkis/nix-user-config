@@ -37,7 +37,7 @@ swayidle -w \
 
 ## Idle inhibiting on audio I/O
 
-killall -s 9 -u "$user" "sway-audio-idle-inhibit"
+killall -u "$user" "sway-audio-idle-inhibit"
 sway-audio-idle-inhibit &
 
 # Starting VirtualBox guest service
