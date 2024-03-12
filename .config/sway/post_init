@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+user="$(whoami)"
+
 # GUI environment variables
 
 . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/gui.sh"
@@ -27,16 +29,15 @@ pathf_xresources_local="${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xreso
 
 color_bg_swaylock="$(echo "${GUI_COLOR_BACKGROUND:-#000000}" | cut -c2-)"
 
-killall -u "$(whoami)" "swayidle"
+killall -u "$user" "swayidle"; while pgrep -u "$user" "swayidle" > "/dev/null"; do sleep "0.1"; done
 swayidle -w \
-  timeout "60" "swaylock -u -f -c ${color_bg_swaylock}" \
-  timeout "60" "swaymsg \"output * dpms off\"" \
-  resume "swaymsg \"output * dpms on\"" \
+  timeout "60" "swaylock -u -f -c ${color_bg_swaylock}; swaymsg \"output * dpms off\"" \
+  resume "swaymsg \"output * dpms on\" && sway-audio-idle-inhibit &" \
   before-sleep "swaylock -u -f -c ${color_bg_swaylock}" &
 
 ## Idle inhibiting on audio I/O
 
-killall -u "$(whoami)" "sway-audio-idle-inhibit"
+killall -s 9 -u "$user" "sway-audio-idle-inhibit"; while pgrep -f -x -u "$user" "sway-audio-idle-inhibit" > "/dev/null"; do sleep "0.1"; done
 sway-audio-idle-inhibit &
 
 # Starting VirtualBox guest service
