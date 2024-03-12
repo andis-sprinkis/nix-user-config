@@ -21,7 +21,7 @@ For executing Git commands with user config repository parameters, it is conveni
 -   Or as a script in `PATH`:
 
     ```sh
-    #!/bin/sh
+    #!/usr/bin/env sh
 
     exec git --git-dir="${XDG_STATE_HOME:-$HOME/.local/state}/dotfiles_git" --work-tree=$HOME "$@"
     ```
