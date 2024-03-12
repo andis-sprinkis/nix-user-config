@@ -28,12 +28,16 @@ pathf_xresources_local="${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xreso
 color_bg_swaylock="$(echo "${GUI_COLOR_BACKGROUND:-#000000}" | cut -c2-)"
 
 killall -u "$(whoami)" "swayidle"
-
 swayidle -w \
   timeout "60" "swaylock -u -f -c ${color_bg_swaylock}" \
   timeout "60" "swaymsg \"output * dpms off\"" \
   resume "swaymsg \"output * dpms on\"" \
   before-sleep "swaylock -u -f -c ${color_bg_swaylock}" &
+
+## Idle inhibiting on audio I/O
+
+killall -u "$(whoami)" "sway-audio-idle-inhibit"
+sway-audio-idle-inhibit &
 
 # Starting VirtualBox guest service
 
