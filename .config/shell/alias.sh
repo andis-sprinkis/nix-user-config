@@ -41,7 +41,7 @@ alias \
   mv="mv -v" \
   myip="curl https://ipinfo.io/" \
   ncdu="ncdu -x" \
-  n="$EDITOR $HOME/note/" \
+  n="${EDITOR} ${HOME}/note/" \
   p="python3 -q" \
   q="exit" \
   qalc="qalc -c" \
@@ -49,7 +49,7 @@ alias \
   r="radian" \
   rm="rm -vI" \
   rsync_progress="rsync --progress --human-readable --stats" \
-  s="$EDITOR $HOME/snippet/" \
+  s="${EDITOR} ${HOME}/snippet/" \
   scan_http="sudo nmap -sS --open -p 80,447 192.168.1.0/24" \
   scan_smb="sudo nmap -sS --open -p 445 192.168.1.0/24" \
   scan_ssh="sudo nmap -sS --open -p 22 192.168.1.0/24" \
