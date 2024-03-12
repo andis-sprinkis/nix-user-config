@@ -4,8 +4,4 @@
   exec xscreensaver-command -lock
 }
 
-user="$(whoami)"
-
-killall -s 9 -u "$user" "sway-audio-idle-inhibit"
-sleep "0.1"
 exec killall -u "$(whoami)" -s "SIGUSR1" "swayidle"
