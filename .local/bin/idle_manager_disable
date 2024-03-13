@@ -9,4 +9,7 @@
 
 [ "$WAYLAND_DISPLAY" ] && {
   killall -e -s 9 "swayidle"
+  exit
 }
+
+exit "1"
