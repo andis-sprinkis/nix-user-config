@@ -13,4 +13,4 @@ for ws in $workspaces; do
   pre_ws="$ws"
 done
 
-i3-msg workspace $((ws + 1))
+i3-msg workspace "$((ws + 1))"
