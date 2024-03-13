@@ -12,8 +12,7 @@ else
 fi
 
 echo "$tzlist" | grep -i "$search_term" \
-| while read -r zone
-  do
+| while read -r zone; do
     date=$(TZ=$zone date +"$format")
     printf "%-32s %s\n" "$zone" "$date"
   done
