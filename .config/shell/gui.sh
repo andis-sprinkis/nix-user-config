@@ -6,6 +6,7 @@ export GUI_FONT_STYLE="medium"
 export GUI_FONT_SIZE="13.5"
 export GUI_FONT_SIZE_X11="12"
 export GUI_FONT_SIZE_GTK="11"
+export GUI_MENU_LINE_COUNT="25"
 
 # vscode dark
 export GUI_COLOR_FOREGROUND="#d4d4d4"
