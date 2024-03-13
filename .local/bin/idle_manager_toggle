@@ -1,11 +1,6 @@
 #!/usr/bin/env sh
 
-[ "$(idle_manager_status)" = "disabled" ] && {
-  exec idle_manager_enable
-}
-
-[ "$(idle_manager_status)" = "enabled" ] && {
-  exec idle_manager_disable
-}
+[ "$(idle_manager_status)" = "disabled" ] && exec idle_manager_enable
+[ "$(idle_manager_status)" = "enabled" ] && exec idle_manager_disable
 
 exit 1
