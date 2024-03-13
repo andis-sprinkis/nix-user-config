@@ -9,7 +9,7 @@ pre_ws="$(($(echo "$workspaces" | cut -d" " -f 1) - 1))"
 [ "$pre_ws" -ge 1 ] && exec i3-msg workspace 1
 
 for ws in $workspaces; do
-  [ $((pre_ws + 1)) -ne "$ws" ] && exec i3-msg workspace $((pre_ws + 1))
+  [ $((pre_ws + 1)) -ne "$ws" ] && exec i3-msg workspace "$((pre_ws + 1))"
   pre_ws="$ws"
 done
 
