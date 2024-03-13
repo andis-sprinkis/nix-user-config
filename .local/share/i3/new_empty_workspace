@@ -1,27 +1,16 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
-# TODO: POSIX sh
-# TODO: use jq
+# Assumes the integer index only name workspaces.
 
-workspaces=($(i3-msg -t get_workspaces | tr , '\n' | grep '"num":' | cut -d : -f 2))
-previous=$((workspaces[0] - 1))
-j=0
+workspaces="$(echo $(i3-msg -t get_workspaces | jq '.[].name' -r))"
 
-for i in "${workspaces[@]}"; do
-  if [[ $previous -gt 0 ]] && [[ $j -eq 0 ]]; then
-    i3-msg workspace 1
-    exit
-  fi
+pre_ws="$(($(echo "$workspaces" | cut -d" " -f 1) - 1))"
 
-  if [[ $previous+1 -ne $i ]]; then
-    i3-msg workspace $((previous + 1))
-    exit
-  fi
-  previous=$i
-  j=$((j+1))
+[ "$pre_ws" -ge 1 ] && exec i3-msg workspace 1
+
+for ws in $workspaces; do
+  [ $((pre_ws + 1)) -ne "$ws" ] && exec i3-msg workspace $((pre_ws + 1))
+  pre_ws="$ws"
 done
 
-if [[ $i -lt 10 ]]; then
-  i3-msg workspace $((i + 1))
-  exit
-fi
+i3-msg workspace $((ws + 1))

@@ -1,11 +1,6 @@
 #!/usr/bin/env sh
 
 menu="dmenu"
-wm="i3-"
+[ -z "$DISPLAY" ] && [ "$WAYLAND_DISPLAY" ] && menu="wmenu"
 
-[ -z "$DISPLAY" ] && [ "$WAYLAND_DISPLAY" ] && {
-  menu="wmenu"
-  wm="sway"
-}
-
-exec "${wm}msg" rename workspace to "$("$@" | "$menu" -p "Rename workspace:")"
+exec i3-msg rename workspace to "$("$@" | "$menu" -p "Rename workspace:")"
