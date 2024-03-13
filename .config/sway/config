@@ -10,7 +10,7 @@ input type:keyboard {
 }
 
 input type:pointer {
-  scroll_factor 0.733333333333333
+  scroll_factor 0.75
 }
 
 output * bg $background solid_color
