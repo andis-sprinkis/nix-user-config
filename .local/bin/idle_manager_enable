@@ -7,3 +7,5 @@
 [ "$WAYLAND_DISPLAY" ] && {
   exec "${XDG_CONFIG_HOME:-$HOME/.config}/swayidle/init"
 }
+
+exit "1"
