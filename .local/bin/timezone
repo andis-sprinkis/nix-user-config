@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+search_term="$1"
+
+format='%a %F %T %z'
+zoneinfo="/usr/share/zoneinfo/posix/"
+
+if command -v timedatectl >/dev/null; then
+  tzlist=$(timedatectl list-timezones)
+else
+  tzlist=$(find -L $zoneinfo -type f -printf "%P\n")
+fi
+
+echo "$tzlist" | grep -i "$search_term" \
+| while read -r zone
+  do
+    date=$(TZ=$zone date +"$format")
+    printf "%-32s %s\n" "$zone" "$date"
+  done
