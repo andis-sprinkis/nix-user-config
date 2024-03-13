@@ -18,6 +18,8 @@ output * bg $background solid_color
 seat seat0 xcursor_theme default 42
 # seat seat0 hide_cursor 232
 
+titlebar_padding 5 2
+
 for_window [shell="xwayland"] title_format "[XW] %title"
 
 for_window [app_id="firefox" title="Picture-in-Picture"] floating enable
