@@ -9,9 +9,7 @@
 }
 
 [ "$WAYLAND_DISPLAY" ] && {
-  [ -z "$(pidof "swayidle")" ] && {
-    exec echo "disabled"
-  }
+  [ -z "$(pidof "swayidle")" ] && exec echo "disabled"
 
   exec echo "enabled"
 }
