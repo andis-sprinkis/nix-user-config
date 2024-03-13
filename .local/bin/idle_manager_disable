@@ -4,12 +4,12 @@
   killall -e -s 9 "xss-lock"
   killall -e -s 9 "xscreensaver"
   killall -e -s 9 "xscreensaver-systemd"
-  exit
+  exit "0"
 }
 
 [ "$WAYLAND_DISPLAY" ] && {
   killall -e -s 9 "swayidle"
-  exit
+  exit "0"
 }
 
 exit "1"
