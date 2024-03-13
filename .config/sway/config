@@ -19,9 +19,10 @@ output * {
 
 seat seat0 xcursor_theme default 42
 
-titlebar_padding 5 2
+titlebar_padding 10 3
 
 exec_always swaymsg bar bar status_edge_padding 0
+exec_always swaymsg bar bar height 32
 
 for_window [shell="xwayland"] title_format "[XW] %title"
 
