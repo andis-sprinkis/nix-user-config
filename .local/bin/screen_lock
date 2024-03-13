@@ -2,7 +2,13 @@
 
 [ "$(idle_manager_status)" = "unknown" ] && exit 1
 
-[ "$(idle_manager_status)" = "disabled" ] && idle_manager_enable && sleep 1
+[ "$(idle_manager_status)" = "disabled" ] && {
+  idle_manager_enable &
+
+  while [ "$(idle_manager_status)" = "disabled" ]; do
+    sleep 1
+  done
+}
 
 [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && {
   exec xscreensaver-command -lock
