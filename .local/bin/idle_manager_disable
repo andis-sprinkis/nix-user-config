@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-#
+
 [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && {
   killall -e -s 9 "xss-lock"
   killall -e -s 9 "xscreensaver"
