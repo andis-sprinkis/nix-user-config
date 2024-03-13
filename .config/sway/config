@@ -13,12 +13,15 @@ input type:pointer {
   scroll_factor 0.75
 }
 
-output * bg $background solid_color
+output * {
+  bg $background solid_color
+}
 
 seat seat0 xcursor_theme default 42
-# seat seat0 hide_cursor 232
 
 titlebar_padding 5 2
+
+exec_always swaymsg bar bar status_edge_padding 0
 
 for_window [shell="xwayland"] title_format "[XW] %title"
 

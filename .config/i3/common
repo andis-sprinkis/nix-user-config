@@ -167,6 +167,7 @@ client.placeholder       $color6 $color0 $color6 $color6 $color8
 client.background $color6
 
 bar {
+  id                  bar
   status_command      i3blocks
   position            top
   mode                dock

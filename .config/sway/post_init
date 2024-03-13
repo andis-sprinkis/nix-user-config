@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
-user="$(whoami)"
-
 # GUI environment variables
 
 . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/gui.sh"
