@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 [ "$BLOCK_BUTTON" = "1" ] || [ "$BLOCK_BUTTON" = "3" ] && {
-  $TERMINAL -e "$SHELL" -c "calcurse"
+  $TERMINAL -e "$SHELL" -c "calcurse" 1>/dev/null 2>/dev/null & disown
 }
 
 date +"%A — %-d. %B" | sed 's/./\u&/'

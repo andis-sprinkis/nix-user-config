@@ -3,7 +3,7 @@
 systemctl is-active --quiet sshd && {
   [ "$BLOCK_BUTTON" = "3" ] && {
     win_title="\033]0;Stop SSHD service\007"
-    $TERMINAL -e "$SHELL" -c "echo -n \"$win_title\"; systemctl stop sshd; read"
+    $TERMINAL -e "$SHELL" -c "echo -n \"$win_title\"; systemctl stop sshd; read" 1>/dev/null 2>/dev/null & disown
   }
 
   exec echo "SSHD active"
