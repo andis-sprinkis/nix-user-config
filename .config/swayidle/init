@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
-killall -u "$(whoami)" "swayidle"
+[ "$(pidof "swayidle")" ] && killall -u "$(whoami)" "swayidle"
+
 exec swayidle -w \
   timeout "60" "swaylock -u -f -c 000000" \
   timeout "90" "swaymsg \"output * dpms off\"" \

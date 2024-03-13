@@ -57,19 +57,9 @@ else
   picom -b --config "/dev/null" &
 fi
 
-# xscreensaver
+# xscreensaver, xss-lock
 
-## Starting or reloading xscreensaver
-
-if [ "$(pidof xscreensaver)" ]; then 
-  xscreensaver-command --restart &
-else
-  xscreensaver --no-splash & 
-fi
-
-## Starting xss-lock
-
-[ -z "$(pidof xss-lock)" ] && xss-lock --ignore-sleep -- xscreensaver-command -lock &
+idle_manager_enable &
 
 # Running EeasyEffects audio effects interface
 

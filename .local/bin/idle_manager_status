@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+[ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && {
+  [ -z "$(pidof "xscreensaver")" ] || [ -z "$(pidof "xss-lock")" ] && {
+    exec echo "disabled"
+  }
+
+  exec echo "enabled"
+}
+
+[ "$WAYLAND_DISPLAY" ] && {
+  [ -z "$(pidof "swayidle")" ] && {
+    exec echo "disabled"
+  }
+
+  exec echo "enabled"
+}
+
+echo "unknown"

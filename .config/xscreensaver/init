@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+#
+# xscreensaver
+
+## Starting or reloading xscreensaver
+
+if [ "$(pidof xscreensaver)" ]; then 
+  xscreensaver-command --restart &
+else
+  xscreensaver --no-splash & 
+fi
+
+## Starting xss-lock
+
+[ -z "$(pidof xss-lock)" ] && exec xss-lock --ignore-sleep -- xscreensaver-command -lock

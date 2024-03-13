@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+[ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && {
+  exec "${XDG_CONFIG_HOME:-$HOME/.config}/xscreensaver/init"
+}
+
+[ "$WAYLAND_DISPLAY" ] && {
+  exec "${XDG_CONFIG_HOME:-$HOME/.config}/swayidle/init"
+}
