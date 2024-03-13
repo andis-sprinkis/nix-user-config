@@ -88,8 +88,10 @@ format() {
 
 [ "$BLOCK_BUTTON" ] && {
   amixer_cmd_btn="amixer ${AMIXER_PARAMS} -q -D ${MIXER} sset ${SCONTROL} $(capability)"
+  easyeffects_cmd_btn="easyeffects 1>/dev/null 2>/dev/null & disown"
 
   case $BLOCK_BUTTON in
+    1) $easyeffects_cmd_btn ;;
     3) $amixer_cmd_btn "toggle" ;; # right click, mute/unmute
     4) $amixer_cmd_btn "${STEP}+" "unmute" ;; # scroll up, increase
     5) $amixer_cmd_btn "${STEP}-" "unmute" ;; # scroll down, decrease
