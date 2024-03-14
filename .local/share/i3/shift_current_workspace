@@ -2,6 +2,7 @@
 set -eu
 
 # TODO: support for multi-monitor setups
+# TODO: handling named workspaces without the index prefix
 
 # "next" or "prev"
 direction="${1:-next}"
