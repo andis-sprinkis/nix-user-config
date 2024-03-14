@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 set -eu
 
+# TODO: explictly check if i3 or Sway session in focus so both don't interfere
+
 # If the current workspace is named "2":
 #
 # | Input       | The new name |
