@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 set -eu
 
+# TODO: support for multi-monitor setups
+
 # "next" or "prev"
 direction="${1:-next}"
 
