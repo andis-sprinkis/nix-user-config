@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # TODO: fix/rewrite (for swaymsg)
 # TODO: convert to POSIX sh
@@ -6,27 +6,30 @@
 # TODO: use jq
 
 #"-next" or "-prev"
-move_direction="$1"
+move_direction="${1:--next}"
 
-workspaces=($(i3-msg -t get_workspaces | tr , '\n' | grep '"name":' | cut -d : -f 2 | tr \" '\ '))
-current_workspace=$(i3-msg -t get_workspaces | tr , '\n' | grep -B3 '"focused":true' | grep '"name":' | cut -d : -f 2 | tr \" '\ ')
+[ "$move_direction" != "-next" ] && [ "$move_direction" != "-prev" ] && exit 1
+
+workspaces="$(echo $(i3-msg -t get_workspaces | jq '.[].name' -r))"
+current_workspace="$(i3-msg -t get_workspaces | jq '.[] | select(.focused == true).name' -r)"
+
+prev="0"
 
 get_prev_workspace() {
-  for i in "${workspaces[@]}"; do
-    if [[ $i -eq $current_workspace ]]; then
-      local prev_workspace="$prev"
-      break
+  for ws in $workspaces; do
+    if [ "$ws" -eq "$current_workspace" ]; then
+      echo "$prev"
+      return
     fi
 
-    local prev=$i
+    prev="$ws"
   done
-
-  echo "$prev_workspace"
 }
 
+next="0"
+
 get_next_workspace() {
-  local next="0"
-  for i in "${workspaces[@]}"; do
+  for ws in $workspaces; do
     next="$((next + 1))"
 
     if [ "$i" = "$current_workspace" ]; then
