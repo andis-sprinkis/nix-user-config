@@ -173,7 +173,7 @@ bar {
   position            top
   mode                dock
   workspace_buttons   yes
-  workspace_min_width 48
+  workspace_min_width 42
   separator_symbol    " "
   # padding             0 10 -4 0
   tray_padding        1
