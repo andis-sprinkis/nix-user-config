@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+# TODO: auto report sway on wayland and i3 on x11, fall back to i3 otherwise
+
 wm="${1:-i3}"
 path_cfg_common="${XDG_CONFIG_HOME:-$HOME/.config}/i3/common"
 path_cfg_wm="${XDG_CONFIG_HOME:-$HOME/.config}/${wm}/config"
