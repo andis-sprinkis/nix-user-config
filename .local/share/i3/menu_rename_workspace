@@ -1,6 +1,16 @@
 #!/usr/bin/env sh
 set -eu
 
+# If the current workspace is named "2":
+#
+# | Input       | The new name |
+# | ----------- | ------------ |
+# | 3           | 3            |
+# | new name    | 2: new name  |
+# | 3:new name  | 3: new name  |
+# | 3: new name | 3: new name  |
+# | 3new name   | 2: 3new name |
+
 menu="dmenu"
 [ -z "$DISPLAY" ] && [ "$WAYLAND_DISPLAY" ] && menu="wmenu"
 
