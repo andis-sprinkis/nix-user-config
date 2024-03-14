@@ -14,7 +14,7 @@ ws_i="$(echo "$wss" | jq -r '[.[].focused] | index(true)')"
 ws="$(echo "$wss" | jq -r ".[$ws_i]")"
 ws_num="$(echo "$ws" | jq -r ".num")"
 ws_name="$(echo "$ws" | jq -r ".name")"
-ws_name_no_num="$(echo "$ws_name" | cut -d":" -f "2")"
+ws_name_title="$(echo "$ws_name" | cut -s -d":" -f "2")"
 
 case "$direction" in
   "next") 
@@ -33,23 +33,23 @@ esac
 
   [ "$ws_beside_num" = "$num_beside" ] && {
     ws_beside_name="$(echo "$ws_beside" | jq -r ".name")"
-    ws_beside_name_no_num="$(echo "$ws_beside_name" | cut -d":" -f "2")"
+    ws_beside_name_title="$(echo "$ws_beside_name" | cut -s -d":" -f "2")"
 
     i3-msg rename workspace "$ws_beside_name" to "$ws_tmp_name"
 
     ws_name_new="$num_beside"
-    [ "$ws_name_no_num" != "$ws_num" ] && ws_name_new="$num_beside:$ws_name_no_num"
+    [ "$ws_name_title" ] && ws_name_new="$num_beside:$ws_name_title"
 
     i3-msg rename workspace "$ws_name" to "$ws_name_new"
 
     ws_beside_name_new="$ws_num"
-    [ "$ws_beside_name_no_num" != "$ws_beside_num" ] && ws_beside_name_new="$ws_num:$ws_beside_name_no_num"
+    [ "$ws_beside_name_title" ] && ws_beside_name_new="$ws_num:$ws_beside_name_title"
 
     exec i3-msg rename workspace "$ws_tmp_name" to "$ws_beside_name_new"
   }
 }
 
 ws_name_new="$num_beside"
-[ "$ws_name_no_num" != "$ws_num" ] && ws_name_new="$num_beside:$ws_name_no_num"
+[ "$ws_name_title" ] && ws_name_new="$num_beside:$ws_name_title"
 
 exec i3-msg rename workspace "$ws_name" to "$ws_name_new"

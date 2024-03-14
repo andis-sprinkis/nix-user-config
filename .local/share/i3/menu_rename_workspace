@@ -1,6 +1,39 @@
 #!/usr/bin/env sh
+set -eu
 
 menu="dmenu"
 [ -z "$DISPLAY" ] && [ "$WAYLAND_DISPLAY" ] && menu="wmenu"
 
-exec i3-msg rename workspace to "$("$@" | "$menu" -p "Rename workspace:")"
+wss="$(i3-msg -t get_workspaces | jq -r 'map({num: .num,name: .name,focused: .focused})')"
+ws_i="$(echo "$wss" | jq -r '[.[].focused] | index(true)')"
+ws="$(echo "$wss" | jq -r ".[$ws_i]")"
+ws_name="$(echo "$ws" | jq -r ".name")"
+ws_num="$(echo "$ws" | jq -r ".num")"
+
+ws_name_input="$(echo $("$@" | "$menu" -p "Rename workspace \"${ws_name}\":"))"
+
+[ "$ws_name_input" ] && {
+  name_new_is_num="0"
+
+  set -e
+  test "$ws_name_input" -eq "$ws_name_input" 2> /dev/null && name_new_is_num="1"
+  set +e
+
+  [ "$name_new_is_num" = "1" ] && exec i3-msg rename workspace "$ws_name" to "$ws_name_input"
+
+  # TODO: swap existing ws with the specified number
+
+  ws_name_new_name_num="$(echo "$ws_name_input" | cut -s -d":" -f "1")"
+
+  [ -z "$ws_name_new_name_num" ] && exec i3-msg rename workspace to "${ws_num}: ${ws_name_input}"
+
+  # TODO: swap existing ws with the specified number
+
+  ws_name_new_name_title="$(echo "$ws_name_input" | cut -s -d":" -f "2")"
+
+  [ -z "$(echo $ws_name_new_name_title)" ] && exit 2
+
+  exec i3-msg rename workspace to "${ws_name_new_name_num}: ${ws_name_new_name_title}"
+}
+
+exit 1
