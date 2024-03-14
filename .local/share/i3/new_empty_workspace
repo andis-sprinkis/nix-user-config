@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # TODO: explictly check if i3 or Sway session in focus so both don't interfere
-#
+
 # Assumes the integer index only name workspaces.
 
 workspaces="$(echo $(i3-msg -t get_workspaces | jq '.[].name' -r))"
