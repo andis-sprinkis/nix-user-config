@@ -5,6 +5,6 @@
 exec swayidle -w \
   timeout "60" "swaymsg 'output * dpms off'" \
     resume "swaymsg 'output * dpms on'" \
-  timeout "70" "swaylock -u -f -c 000000" \
+  timeout "75" "swaylock -u -f -c 000000" \
     resume "swaymsg 'output * dpms on'" \
   before-sleep "swaylock -u -f -c 000000"
