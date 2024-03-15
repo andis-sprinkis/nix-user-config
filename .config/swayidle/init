@@ -3,7 +3,8 @@
 [ "$(pidof "swayidle")" ] && killall -u "$(whoami)" "swayidle"
 
 exec swayidle -w \
-  timeout "60" "swaylock -u -f -c 000000" \
-  timeout "90" "swaymsg \"output * dpms off\"" \
-  resume "swaymsg \"output * dpms on\" && sway-audio-idle-inhibit &" \
+  timeout "60" "swaymsg 'output * dpms off'" \
+    resume "swaymsg 'output * dpms on'" \
+  timeout "65" "swaylock -u -f -c 000000" \
+    resume "swaymsg 'output * dpms on'" \
   before-sleep "swaylock -u -f -c 000000"
