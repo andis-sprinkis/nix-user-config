@@ -61,7 +61,7 @@ alias \
   yay="yay --color=auto"
 
   case $(uname) in "Darwin") is_macos="1" ;; esac
-  [ "$is_macos" ] || [ "$HAS_BREW_GNUBIN" ] && {
+  [ -z "$is_macos" ] || [ "$HAS_BREW_GNUBIN" ] && {
     alias \
       diff="diff --color=auto" \
       grep="grep --color=auto" \
