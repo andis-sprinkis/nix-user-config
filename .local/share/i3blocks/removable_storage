@@ -2,7 +2,7 @@
 
 fstab_mounts="$(grep -v -e "^#" -e "^$" < "/etc/fstab")"
 fstab_mounts_mount_points="$(echo "$fstab_mounts" | awk '{ print $2 }')"
-current_mounts="$(grep -v -P " \/(sys|run|dev|proc|tmp)(/| )" < "/proc/mounts")"
+current_mounts="$(grep -v -P " \/(sys|run|dev|proc|tmp|var)(/| )" < "/proc/mounts")"
 current_mounts_mount_points="$(echo "$current_mounts" | awk '{ print $2 }')"
 rsd_mounts="Removable storage devices mounted:"
 
