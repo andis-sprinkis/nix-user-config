@@ -25,6 +25,8 @@
 
   zle-line-init() { zle -K "viins" && echo_cur_beam }
 
+  # expand alias in insert mode
+
   function expand_alias() {
     zle "_expand_alias"
     zle "self-insert"
@@ -144,12 +146,22 @@ $prompt_symbol"
       "$HOME/.fzf/shell/completion.zsh"
     do; [ -f "$fzf_completion" ] && . "$fzf_completion" && break; done
 
+    # cd with fzf
+
     bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
     bindkey -M vicmd -s '^f' 'i^ucd "$(dirname "$(fzf)")"\n'
-  }
 
-  # list all shell options
-  alias shopt="printf '%s=%s\n' \"\${(@kv)options}\""
+    # search history with fzf
+
+    function fzf_search_history() {
+      BUFFER=$(fc -l -n "1" | uniq | fzf --no-preview --tac --query "$LBUFFER")
+      CURSOR="$#BUFFER"
+      zle "reset-prompt"
+    }
+
+    zle -N "fzf_search_history"
+    bindkey "^k" "fzf_search_history"
+  }
 
   # source local zsh plugins
   . "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
