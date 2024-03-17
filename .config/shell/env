@@ -57,6 +57,9 @@ main() {
     done
   }
 
+  # GUI envrironment variables script path
+  export GUI_ENV="${XDG_CONFIG_HOME:-$HOME/.config}/shell/gui"
+
   # configure makepkg
   is_exec "nproc" && {
     proc_units_no="$(nproc)"

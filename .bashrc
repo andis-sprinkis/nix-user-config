@@ -1,1 +1,1 @@
-./.config/bash/interactive.sh
+.config/bash/interactive

@@ -1,6 +1,6 @@
 () {
   # generic interactive shell configuration
-  . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/interactive.sh"
+  . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/interactive"
 
   # inactivity timeout
   TMOUT="1600"

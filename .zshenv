@@ -1,1 +1,1 @@
-.config/shell/env.sh
+.config/shell/env

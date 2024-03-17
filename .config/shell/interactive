@@ -29,7 +29,7 @@ main() {
   TMOUT="5400"
 
   # alias
-  . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/alias.sh"
+  . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/alias"
 
   # configure bat
   is_exec "bat" && is_exec_bat="1" && { 

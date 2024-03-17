@@ -1,11 +1,7 @@
 #!/usr/bin/env sh
 set -e
 
-# GUI environment variables
-
-. "${XDG_CONFIG_HOME:-$HOME/.config}/shell/gui.sh"
-
-# gsettings
+. "$GUI_ENV"
 
 gs="gsettings set"
 
