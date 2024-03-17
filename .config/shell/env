@@ -40,7 +40,7 @@ main() {
   [ -f "/etc/profile.d/locale.sh" ] && { unset LANG; . "/etc/profile.d/locale.sh"; }
 
   # set PAGER
-  export PAGER="pager"
+  export PAGER="less"
 
   # set TERMINAL
   export TERMINAL="terminal"
@@ -104,6 +104,7 @@ main() {
   export KERAS_HOME="${XDG_STATE_HOME:-$HOME/.local/state}/keras"
 
   # configure less
+  export LESS="--LINE-NUMBERS --LONG-PROMPT --RAW-CONTROL-CHARS --clear-screen --HILITE-UNREAD --incsearch --ignore-case --jump-target=.5\$ --line-num-width=5\$ --mouse --status-column --tabs=2\$ --tilde --use-color --wheel-lines=3\$ --wordwrap --color=P-\$ --color=N-\$"
   export LESSHISTFILE="-"
   export LESSOPEN="|${XDG_DATA_HOME:-$HOME/.local/share}/less/filter %s"
 

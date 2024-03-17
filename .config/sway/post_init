@@ -32,3 +32,4 @@ VBoxClient-all &
 # Local settings
 
 pathf_post_init_local="${XDG_CONFIG_HOME:-$HOME/.config}/sway/post_init_local"
+[ -f "$pathf_post_init_local" ] && exec "$pathf_post_init_local"
