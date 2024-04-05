@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://andis.work
-@version      0.66.0
+@version      0.67.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://andis.work)
@@ -35,6 +35,7 @@ domain("freedesktop.org"),
 domain("gentoo.org"),
 domain("git-lfs.com"),
 domain("git-scm.com"),
+domain("gitlab.com"),
 domain("gitlab.kitware.com"),
 domain("gnu.org"),
 domain("gnupg.org"),
