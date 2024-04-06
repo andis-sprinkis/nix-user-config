@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 set -eu
 
+pathf_model="${XDG_DATA_HOME:-$HOME/.local/share}/piper-voices/en/en_US/hfc_female/medium/en_US-hfc_female-medium.onnx"
 text=
 
 while read -r ln || [ -n "$ln" ]; do 
@@ -14,13 +15,14 @@ printf "\n%s\n" "${text}" | fmt --split-only --width="48"
 
 echo "$text" | \
   piper \
-    --output-raw --model "${XDG_DATA_HOME:-$HOME/.local/share}/piper-voices/en/en_US/hfc_female/medium/en_US-hfc_female-medium.onnx" | \
-      mpv \
-        --demuxer=rawaudio \
-        --demuxer-rawaudio-rate=22050 \
-        --demuxer-rawaudio-channels=1 \
-        --keep-open=yes \
-        --keep-open-pause=yes \
-        --loop-file=no \
-        --loop-playlist=no \
-        -
+    --output-raw \
+    --model "$pathf_model" | \
+  mpv \
+    --demuxer=rawaudio \
+    --demuxer-rawaudio-rate=22050 \
+    --demuxer-rawaudio-channels=1 \
+    --keep-open=yes \
+    --keep-open-pause=yes \
+    --loop-file=no \
+    --loop-playlist=no \
+    -
