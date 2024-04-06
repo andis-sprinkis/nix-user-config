@@ -29,14 +29,14 @@ cmd open ${{
     exec lf -remote "send $id push :open-with<space>"
   }
 
-  for f in $fx; do nohup $OPENER "$f" > /dev/null 2> /dev/null & done
+  for f in $fx; do nohup $OPENER "$f" 0</dev/null 1>/dev/null 2>/dev/null & done
 }}
 
 cmd open-with ${{
   IFS="
 "
 
-  for f in $fx; do nohup "$@" "$f" > /dev/null 2> /dev/null & done
+  for f in $fx; do nohup "$@" "$f" 0</dev/null 1>/dev/null 2>/dev/null & done
 }}
 
 cmd aunpack !{{
