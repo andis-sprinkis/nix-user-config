@@ -56,8 +56,9 @@ ${f}
   done
 }}
 
-cmd mkdir !{{
-  mkdir -pv "$PWD/$@"
+cmd mkdir %{{
+  mkdir -pv -- "$*"
+  lf -remote "send $id select \"$*\""
 }}
 
 cmd copy-path ${{
