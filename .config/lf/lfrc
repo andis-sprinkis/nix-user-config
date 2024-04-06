@@ -57,6 +57,7 @@ ${f}
 }}
 
 cmd mkdir %{{
+  IFS=" "
   mkdir -pv -- "$*"
   lf -remote "send $id select \"$*\""
 }}
