@@ -1,9 +1,9 @@
 #!/usr/bin/env sh
 
-path_appimage="${APPIMAGE_BIN_HOME:-$HOME/.local/opt/appimage/}"
+path_appimage="${APPIMAGE_BIN_HOME:-$HOME/.local/opt/appimage}"
 
 cmd_menu="${*:-dmenu}"
-cmd_applications_menu="(cat; stest -flx \"${path_appimage}\" | awk '{ print \"${path_appimage}\"\$0 }' | sort -u) | ${cmd_menu}"
+cmd_applications_menu="(cat; stest -flx \"${path_appimage}/\" | awk '{ print \"${path_appimage}/\"\$0 }' | sort -u) | ${cmd_menu}"
 
 killall -u "$(whoami)" "$cmd_menu"
 
