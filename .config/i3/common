@@ -129,10 +129,10 @@ bindsym $mod+Shift+n exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i
 set     $mode_resize "Resize container..."
 bindsym $mod+r mode $mode_resize
 mode $mode_resize {
-  bindsym $left  resize shrink width  48px
-  bindsym $down  resize shrink height 48px
-  bindsym $up    resize grow   height 48px
-  bindsym $right resize grow   width  48px
+  bindsym $left  resize shrink width  56px
+  bindsym $down  resize shrink height 56px
+  bindsym $up    resize grow   height 56px
+  bindsym $right resize grow   width  56px
 
   bindsym Return mode "default"
   bindsym Escape mode "default"
