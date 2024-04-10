@@ -36,7 +36,7 @@ cmd open-with ${{
   IFS="
 "
 
-  for f in $fx; do nohup "$@" "$f" 0</dev/null 1>/dev/null 2>/dev/null & done
+  for f in $fx; do nohup "$*" "$f" 0</dev/null 1>/dev/null 2>/dev/null & done
 }}
 
 cmd aunpack !{{
@@ -71,7 +71,7 @@ cmd copy-path ${{
 }}
 
 cmd paste-to-file ${{
-  paste_to_file "$PWD/$@"
+  paste_to_file "${PWD}/${*}"
 }}
 
 cmd on-cd &{{
