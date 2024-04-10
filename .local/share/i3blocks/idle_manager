@@ -1,0 +1,44 @@
+#!/usr/bin/env sh
+
+case "$BLOCK_BUTTON" in
+  "1")
+    case "$(idle_manager_status)" in
+      "enabled") 
+        echo "Idle"
+        screen_lock 1>/dev/null 2>/dev/null & disown
+        exit
+      ;;
+      "disabled") 
+        echo "Starting idle manager..."
+        idle_manager_enable 1>/dev/null 2>/dev/null & disown
+        exit
+      ;;
+    esac
+    exit
+  ;;
+  "3")
+    case "$(idle_manager_status)" in
+      "disabled")
+        echo "Starting idle manager..."
+        idle_manager_enable 1>/dev/null 2>/dev/null & disown
+        exit
+      ;;
+      "enabled") 
+        echo "Stopping idle manager..."
+        idle_manager_disable 1>/dev/null 2>/dev/null & disown
+        exit
+      ;;
+    esac
+  ;;
+esac
+
+case "$(idle_manager_status)" in
+  "disabled")
+    echo "Idle manager inactive"
+    exit
+  ;;
+  "enabled") 
+    echo "Idle"
+    exit
+  ;;
+esac
