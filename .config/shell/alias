@@ -61,8 +61,8 @@ alias \
 
 case $(uname) in "Darwin") is_macos="1" ;; esac
 [ -z "$is_macos" ] || [ "$HAS_BREW_GNUBIN" ] && {
-    alias \
-      diff="diff --color=auto" \
-      grep="grep --color=auto" \
-      ls="ls -xhAFNX --color=auto --group-directories-first --time-style=long-iso"
+  alias \
+    diff="diff --color=auto" \
+    grep="grep --color=auto" \
+    ls="ls -xhAFNX --color=auto --group-directories-first --time-style=long-iso"
 }
