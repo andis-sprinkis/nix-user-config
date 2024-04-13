@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://andis.work
-@version      0.70.0
+@version      0.71.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://andis.work)
@@ -94,6 +94,7 @@ domain("viss.gov.lv"),
 domain("visualstudio.com"),
 domain("w3schools.com"),
 domain("wiki.documentfoundation.org"),
+domain("wiki.sei.cmu.edu"),
 domain("yr.no") {
   @media (prefers-color-scheme: dark) {
     html,
