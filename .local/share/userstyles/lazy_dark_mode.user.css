@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://andis.work
-@version      0.69.0
+@version      0.70.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://andis.work)
@@ -15,6 +15,7 @@ domain("amazon.com"),
 domain("archlinux.org"),
 domain("askubuntu.com"),
 domain("baeldung.com"),
+domain("c-faq.com"),
 domain("caps.wiki"),
 domain("cmake.org"),
 domain("cpan.org"),

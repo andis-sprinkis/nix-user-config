@@ -9,7 +9,7 @@ case "$BLOCK_BUTTON" in
         exit
       ;;
       "disabled") 
-        echo "Starting idle manager..."
+        echo "Starting the idle manager..."
         idle_manager_enable 1>/dev/null 2>/dev/null & disown
         exit
       ;;
@@ -19,12 +19,12 @@ case "$BLOCK_BUTTON" in
   "3")
     case "$(idle_manager_status)" in
       "disabled")
-        echo "Starting idle manager..."
+        echo "Starting the idle manager..."
         idle_manager_enable 1>/dev/null 2>/dev/null & disown
         exit
       ;;
       "enabled") 
-        echo "Stopping idle manager..."
+        echo "Stopping the idle manager..."
         idle_manager_disable 1>/dev/null 2>/dev/null & disown
         exit
       ;;
