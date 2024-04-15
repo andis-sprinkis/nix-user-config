@@ -40,6 +40,7 @@ ln -s ../../../.config/firefox/user.js user.js
 1.  https://addons.mozilla.org/en-US/firefox/addon/styl-us/
 1.  https://addons.mozilla.org/en-US/firefox/addon/toggle-dark-mode/
 1.  https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/
+1.  https://addons.mozilla.org/en-US/firefox/addon/undo-close-tab-button/
 1.  https://addons.mozilla.org/en-US/firefox/addon/url-to-qrcode/
 1.  https://addons.mozilla.org/en-US/firefox/addon/view-page-archive/
 1.  https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/
