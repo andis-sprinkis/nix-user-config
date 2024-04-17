@@ -173,6 +173,7 @@ bar {
   status_command      i3blocks
   position            top
   mode                dock
+  modifier            none
   workspace_buttons   yes
   workspace_min_width 42
   separator_symbol    " "
@@ -198,3 +199,4 @@ bar {
   bindsym button3 exec --no-startup-id $applications_menu
 }
 
+bindsym $mod+b bar mode toggle
