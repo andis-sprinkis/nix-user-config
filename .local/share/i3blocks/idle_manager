@@ -34,7 +34,7 @@ esac
 
 case "$(idle_manager_status)" in
   "disabled")
-    echo "Idle manager inactive"
+    echo "Idle mgr. inactive"
     exit
   ;;
   "enabled") 
