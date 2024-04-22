@@ -79,6 +79,20 @@ cmd on-cd &{{
 }}
 on-cd
 
+cmd on-redraw %{{
+  if [ $lf_width -le 40 ]; then
+    lf -remote "send $id set ratios 100:1"
+  elif [ $lf_width -le 60 ]; then
+    lf -remote "send $id set ratios 1:2"
+  elif [ $lf_width -le 100 ]; then
+    lf -remote "send $id set ratios 1:2:3"
+  elif [ $lf_width -le 140 ]; then
+    lf -remote "send $id set ratios 1:2:3:4"
+  else
+    lf -remote "send $id set ratios 1:1:2:4:6"
+  fi
+}}
+
 map P push :paste-to-file<space>
 map R delete
 map Y copy-path
