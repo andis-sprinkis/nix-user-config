@@ -9,29 +9,33 @@ case "$BLOCK_BUTTON" in
   "5") brightnessctl -q set "2%-" ;; # scroll down, decrease
 esac
 
-label_full="Battery full"
-label_discharging="Battery discharging"
-label_charging="Battery charging"
-label_not_charging="Battery not charging"
-label_unknown="Battery state unknown"
-label_warn="⚠️ "
-
 for battery in /sys/class/power_supply/BAT?*; do
 	[ -n "${capacity+x}" ] && printf " "
 
-	case "$(cat "${battery}/status" 2>&1)" in
-		"Full") label="$label_full" ;;
-		"Discharging") label="$label_discharging" ;;
-		"Charging") label="$label_charging" ;;
-		"Not charging") label="$label_not_charging" ;;
-		"Unknown") label="$label_unknown" ;;
+	capacity="$(cat "${battery}/capacity" 2>&1)"
+  status="$(cat "${battery}/status" 2>&1)"
+
+	case "$status" in
+		"Full") 
+      label="Battery full"
+      printf "%s" "$label"
+      ;;
+		"Discharging")
+      label="Battery discharging"
+      [ "$capacity" -gt 25 ] && printf "%s, %s%%" "$label" "$capacity" || printf "%s, %s %d%%" "$label" "⚠️" "$capacity"
+      ;;
+		"Charging")
+      label="Battery charging"
+      printf "%s, %s%%" "$label" "$capacity"
+      ;;
+		"Not charging") 
+      label="Battery not charging"
+      printf "%s, %s %d%%" "$label" "⚠️" "$capacity"
+      ;;
+		"Unknown") 
+      label="Battery state unknown"
+      printf "%s, %s %d%%" "$label" "⚠️" "$capacity"
+      ;;
 		*) exit "1" ;;
 	esac
-
-	capacity="$(cat "${battery}/capacity" 2>&1)"
-
-	[ "$label" = "$label_discharging" ] && [ "$capacity" -le 25 ] && warn="$label_warn"
-
-	printf "%s, %s%d%%" "$label" "$warn" "$capacity"
-  unset warn
 done && printf "\\n"
