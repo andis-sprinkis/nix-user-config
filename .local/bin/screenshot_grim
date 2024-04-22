@@ -6,7 +6,7 @@ msg_usage="$(basename "$0") usage: [--active] [--select] [--help | -h]"
 path_dir="$HOME/scr"
 path_file="${path_dir}/$(date "+%s").png"
 
-[ -z "$1" ] && {
+[ -z "$*" ] && {
   mkdir -p "$path_dir"
   exec grim -o "$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')" "$path_file"
 }
