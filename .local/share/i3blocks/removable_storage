@@ -25,6 +25,6 @@ IFS="$old_ifs"
     $TERMINAL -e "$SHELL" -c "echo -n \"$win_title\"; printf \"$rsd_mounts\n\n\" | $PAGER" 1>/dev/null 2>/dev/null & disown
   }
 
-  [ "$num" = "1" ] && echo "Mounted $num device" && exit
-  echo "Mounted $num devices"
+  [ "$num" = "1" ] && echo "$num device mounted" && exit
+  echo "$num devices mounted"
 }
