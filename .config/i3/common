@@ -93,6 +93,17 @@ bindsym $mod+Shift+8 move container to workspace number  $ws8
 bindsym $mod+Shift+9 move container to workspace number  $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
+bindsym $mod+Shift+F1  move container to workspace number  $ws1; workspace number  $ws1
+bindsym $mod+Shift+F2  move container to workspace number  $ws2; workspace number  $ws2
+bindsym $mod+Shift+F3  move container to workspace number  $ws3; workspace number  $ws3
+bindsym $mod+Shift+F4  move container to workspace number  $ws4; workspace number  $ws4
+bindsym $mod+Shift+F5  move container to workspace number  $ws5; workspace number  $ws5
+bindsym $mod+Shift+F6  move container to workspace number  $ws6; workspace number  $ws6
+bindsym $mod+Shift+F7  move container to workspace number  $ws7; workspace number  $ws7
+bindsym $mod+Shift+F8  move container to workspace number  $ws8; workspace number  $ws8
+bindsym $mod+Shift+F9  move container to workspace number  $ws9; workspace number  $ws9
+bindsym $mod+Shift+F10 move container to workspace number $ws10; workspace number $ws10
+
 bindsym $mod+Shift+a workspace prev
 bindsym $mod+Shift+s workspace next
 bindsym $mod+a       workspace prev_on_output
