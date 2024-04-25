@@ -493,3 +493,6 @@ x-scheme-handler/vnd.libreoffice.cmis=doc.desktop
 x-scheme-handler/vnd.libreoffice.command=doc.desktop
 x-scheme-handler/vnd.sun.star.webdav=doc.desktop
 x-scheme-handler/vnd.sun.star.webdavs=doc.desktop
+
+application/vnd.ms-opentype=org.gnome.FontViewer.desktop
+font/sfnt=org.gnome.FontViewer.desktop
