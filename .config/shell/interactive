@@ -22,7 +22,7 @@ main() {
 
   # lfcd
   lfcd() {
-    cd "$(command lf -print-last-dir "$@")" || return
+    cd "$(command lf -last-dir-path "$@")" || return
   }
 
   # inactivity timeout
