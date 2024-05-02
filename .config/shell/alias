@@ -37,8 +37,8 @@ alias \
   g_submodule_init="git submodule update --init --recursive" \
   g_submodule_upgrade_latest_remote="git submodule update --recursive --remote" \
   h="tldr" \
-  ip="ip --color=auto" \
   inxi="inxi -c7 -F" \
+  ip="ip --color=auto" \
   mkdir="mkdir -pv" \
   mv="mv -v" \
   myip="curl https://ipinfo.io/" \
