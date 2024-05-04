@@ -35,6 +35,7 @@ ln -s ../../../.config/firefox/user.js user.js
 1.  https://addons.mozilla.org/en-US/firefox/addon/react-devtools/
 1.  https://addons.mozilla.org/en-US/firefox/addon/reduxdevtools/
 1.  https://addons.mozilla.org/en-US/firefox/addon/search_by_image/
+1.  https://addons.mozilla.org/en-US/firefox/addon/select-link-text/
 1.  https://addons.mozilla.org/en-US/firefox/addon/sponsorblock/
 1.  https://addons.mozilla.org/en-US/firefox/addon/stop-autoplay-next-for-youtube/
 1.  https://addons.mozilla.org/en-US/firefox/addon/styl-us/
