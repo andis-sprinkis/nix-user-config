@@ -10,9 +10,9 @@ export GUI_MENU_LINE_COUNT="25"
 
 # vscode dark
 export GUI_COLOR_FOREGROUND="#d4d4d4"
-export GUI_COLOR_BACKGROUND="#1e1e1e"
+export GUI_COLOR_BACKGROUND="#1f1f1f"
 export GUI_COLOR_CURSOR="#d4d4d4"
-export GUI_COLOR_0="#1e1e1e"
+export GUI_COLOR_0="#1f1f1f"
 export GUI_COLOR_1="#f44747"
 export GUI_COLOR_2="#608b4e"
 export GUI_COLOR_3="#dcdcaa"
