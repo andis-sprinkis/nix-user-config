@@ -93,11 +93,12 @@ cmd on-redraw %{{
   fi
 }}
 
+map <c-z> $ kill -STOP $PPID
 map P push :paste-to-file<space>
 map R delete
+map X aunpack
 map Y copy-path
 map ` !true
 map b :mark-load
 map m
 map o push :open-with<space>
-map X aunpack
