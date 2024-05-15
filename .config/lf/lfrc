@@ -18,7 +18,7 @@ cmd open ${{
 
   case $mime in
     application/octet-stream)
-      exec lf -remote "send $id push :open-with<space>" ;;
+      exec lf -remote "send ${id} push :open-with<space>" ;;
     application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
       exec $PAGER $fx ;;
     text/*|application/xml|application/*json*|application/xhtml*|application/javascript|application/x-httpd-php|application/x-wine-extension-ini|application/x-subrip|application/x-awk|inode/x-empty)
@@ -26,7 +26,7 @@ cmd open ${{
   esac
 
   [ "$(command -v "xdg-mime")" ] && [ -z "$(xdg-mime query default $mime)" ] && {
-    exec lf -remote "send $id push :open-with<space>"
+    exec lf -remote "send ${id} push :open-with<space>"
   }
 
   for f in $fx; do nohup $OPENER "$f" 0</dev/null 1>/dev/null 2>/dev/null & done
@@ -59,7 +59,7 @@ ${f}
 cmd mkdir %{{
   IFS=" "
   mkdir -pv -- "$*"
-  lf -remote "send $id select \"$*\""
+  lf -remote "send ${id} select \"${*}\""
 }}
 
 cmd copy-path ${{
@@ -75,22 +75,26 @@ cmd paste-to-file ${{
 }}
 
 cmd on-cd &{{
-  printf "\033]0;$PWD\007" > /dev/tty
+  printf "\033]0;${PWD}\007" > /dev/tty
 }}
 on-cd
 
 cmd on-redraw %{{
   if [ $lf_width -le 35 ]; then
-    lf -remote "send $id set ratios 100:1"
+    lf -remote "send ${id} set ratios 100:1"
   elif [ $lf_width -le 60 ]; then
-    lf -remote "send $id set ratios 1:2"
+    lf -remote "send ${id} set ratios 1:2"
   elif [ $lf_width -le 100 ]; then
-    lf -remote "send $id set ratios 2:3:4"
+    lf -remote "send ${id} set ratios 2:3:4"
   elif [ $lf_width -le 140 ]; then
-    lf -remote "send $id set ratios 1:2:3:4"
+    lf -remote "send ${id} set ratios 1:2:3:4"
   else
-    lf -remote "send $id set ratios 1:2:4:6:8"
+    lf -remote "send ${id} set ratios 1:2:4:6:8"
   fi
+}}
+
+cmd follow-symlink %{{
+  lf -remote "send ${id} select '$(readlink $f)'"
 }}
 
 map <c-z> $ kill -STOP $PPID
@@ -102,3 +106,4 @@ map ` !true
 map b :mark-load
 map m
 map o push :open-with<space>
+map gL follow-symlink
