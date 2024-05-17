@@ -1,0 +1,153 @@
+#!/usr/bin/env sh
+
+# Copyright (C) 2024 Andis Spriņķis <spr.andis@protonmail.com>
+# Copyright (C) 2014 Julien Bonjean <julien@bonjean.info>
+# Copyright (C) 2014 Alexander Keller <github@nycroth.com>
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+#------------------------------------------------------------------------
+
+# TODO: replace BLOCK_BUTTON, STEP, MIXER with command line opts (use getopts)
+
+script="$(basename "$0")"
+
+help_info="NAME
+    ${script} - Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+
+SYNOPSIS
+    ${script} -a STRING [-b STRING] [-c]
+
+DESCRIPTION
+    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+
+    -a STRING
+        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+
+    -b STRING
+        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+
+    -c
+        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+
+    -h
+        Prints this message.
+"
+
+opt_a=
+opt_b=
+opt_c=
+while getopts a:b:ch name; do
+  case $name in
+    a) opt_a="1"
+       arg_opt_a="$OPTARG"
+       ;;
+    b) opt_b="1"
+       arg_opt_c="$OPTARG"
+       ;;
+    c) opt_c="1"
+       ;;
+    h) echo "$help_info"
+       exit
+      ;;
+    ?) echo "$help_info" 1>&2
+       exit "2"
+       ;;
+  esac
+done
+
+[ ! "$opt_a" ] && {
+  echo "${script}: Option -a STRING is required." 1>&2
+  exit 1
+}
+
+# The second parameter overrides the mixer selection
+# For PulseAudio users, eventually use "pulse"
+# For Jack/Jack2 users, use "jackplug"
+# For ALSA users, you may use "default" for your primary card
+# or you may use hw:# where # is the number of the card desired
+[ -z "$MIXER" ] && {
+  MIXER="default"
+
+  command -v pulseaudio >/dev/null 2>&1 && pulseaudio --check && {
+    # PulseAudio is running, but not all installations use "pulse"
+    amixer -D pulse info >/dev/null 2>&1 && MIXER="pulse"
+  }
+
+  lsmod | grep -q "jack" && MIXER="jackplug"
+
+  MIXER="${2:-$MIXER}"
+}
+
+# The instance option sets the control to report and configure
+# This defaults to the first control of your selected mixer
+# For a list of the available, use `amixer -D $Your_Mixer scontrols`
+[ -z "$SCONTROL" ] && {
+  SCONTROL="${BLOCK_INSTANCE:-$(
+    amixer -D "$MIXER" scontrols | sed -n "s/Simple mixer control '\([^']*\)',0/\1/p" | head -n1
+  )}"
+}
+
+# The first parameter sets the step to change the volume by (and units to display)
+# This may be in in % or dB (eg. 5% or 3dB)
+[ -z "$STEP" ] && STEP="${1:-"5%"}"
+
+# AMIXER(1):
+# "Use the mapped volume for evaluating the percentage representation like alsamixer, to be
+# more natural for human ear."
+NATURAL_MAPPING=${NATURAL_MAPPING:-0}
+[ "$NATURAL_MAPPING" != "0" ] && AMIXER_PARAMS="-M"
+
+#------------------------------------------------------------------------
+
+cmd_amixer_status="amixer ${AMIXER_PARAMS} -D ${MIXER} get ${SCONTROL}"
+
+# Return "Capture" if the device is a capture device
+capability() { $cmd_amixer_status | sed -n "s/  Capabilities:.*cvolume.*/Capture/p"; }
+
+volume() { $cmd_amixer_status "$(capability)"; }
+
+#------------------------------------------------------------------------
+
+format() {
+  perl_filter='if (/.*\[(\d+%)\] (\[(-?\d+.\d+dB)\] )?\[(on|off)\]/)'
+  perl_filter="${perl_filter}{CORE::say \$4 eq \"off\" ? \"MUTE\" : \""
+
+  case "$STEP" in
+    *db) perl_filter="${perl_filter}\$3" ;;
+    *) perl_filter="${perl_filter}\$1" ;;
+  esac
+
+  # If dB was selected, print that instead
+  perl_filter="${perl_filter}\"; exit}"
+
+  output=$(perl -ne "$perl_filter")
+
+  # TODO: hardcode formatting
+  echo "${PREFIX}${output}${SUFFIX}"
+}
+
+#------------------------------------------------------------------------
+
+[ "$BLOCK_BUTTON" ] && {
+  amixer_cmd_btn="amixer ${AMIXER_PARAMS} -q -D ${MIXER} sset ${SCONTROL} $(capability)"
+
+  case $BLOCK_BUTTON in
+    3) $amixer_cmd_btn "toggle" ;; # right click, mute/unmute
+    4) $amixer_cmd_btn "${STEP}+" "unmute" ;; # scroll up, increase
+    5) $amixer_cmd_btn "${STEP}-" "unmute" ;; # scroll down, decrease
+  esac
+}
+
+volume | format
