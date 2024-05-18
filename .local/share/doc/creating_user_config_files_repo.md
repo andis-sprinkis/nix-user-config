@@ -1,4 +1,4 @@
-# Creating a repository for storing user configuration files
+# Creating a repository for storing the user configuration files
 
 ```sh
 mkdir -p "${XDG_STATE_HOME:-$HOME/.local/state}"
