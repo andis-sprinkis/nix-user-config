@@ -10,7 +10,7 @@ git --git-dir=$dir_git --work-tree=$HOME add $HOME/.zshrc
 git --git-dir=$dir_git --work-tree=$HOME commit -m "add .zshrc"
 ```
 
-## Git command shorthand
+## The Git command shorthand
 
 For executing Git commands with user config repository parameters, it is convenient to define a command:
 
