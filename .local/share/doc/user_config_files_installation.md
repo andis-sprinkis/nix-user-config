@@ -1,4 +1,4 @@
-# User configuration files installation
+# The user configuration files installation
 
 ```sh
 mkdir -p "${XDG_STATE_HOME:-$HOME/.local/state}"
