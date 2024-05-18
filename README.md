@@ -1,3 +1,3 @@
 # The Andis *nix user configuration files
 
-[Documentation](.local/share/doc)
+[The documentation](.local/share/doc)
