@@ -25,6 +25,7 @@ user_pref("browser.preferences.moreFromMozilla", false);
 user_pref("browser.safebrowsing.downloads.remote.enabled", false);
 user_pref("browser.safebrowsing.malware.enabled", false);
 user_pref("browser.safebrowsing.phishing.enabled", false);
+user_pref("browser.search.serpEventTelemetry.enabled", false);
 user_pref("browser.search.serpEventTelemetryCategorization.enabled", false);
 user_pref("browser.search.suggest.enabled", false);
 user_pref("browser.shell.checkDefaultBrowser", false);
