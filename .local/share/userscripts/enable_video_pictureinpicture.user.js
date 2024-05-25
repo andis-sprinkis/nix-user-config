@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        Enable video Picture-in-picture (PiP)
-// @namespace   https://andis.work
+// @namespace   https://sprinkis.com
 // @match       *://*/*
 // @grant       none
 // @version     0.2.0
