@@ -25,6 +25,10 @@ idle_manager_enable &
 
 VBoxClient-all &
 
+# Polkit authentication agent
+
+[ -z "$(pidof "polkit-gnome-authentication-agent-1")" ] && /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
 # Running EeasyEffects audio effects interface
 
 [ -z "$(pidof easyeffects)" ] && easyeffects --gapplication-service &

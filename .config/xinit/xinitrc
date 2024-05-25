@@ -28,6 +28,10 @@ pathf_xresources_local="${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xreso
 
 VBoxClient-all &
 
+# Polkit authentication agent
+
+[ -z "$(pidof "polkit-gnome-authentication-agent-1")" ] && /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
 # Disabling the console bell beep in X11
 
 xset b off &
