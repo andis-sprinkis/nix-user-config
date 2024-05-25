@@ -48,6 +48,7 @@ alias \
   q="exit" \
   qalc="qalc -c" \
   pacman="yay --color=auto" \
+  qrterm="qrencode -t ansiutf8" \
   r="radian" \
   rm="rm -vI" \
   rsync_progress="rsync --progress --human-readable --stats" \
