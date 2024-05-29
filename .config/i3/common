@@ -186,7 +186,7 @@ bar {
   mode                dock
   modifier            $mod+Shift
   workspace_buttons   yes
-  workspace_min_width 42
+  workspace_min_width 46
   separator_symbol    " "
   # padding             0 10 -4 0
   tray_padding        1
