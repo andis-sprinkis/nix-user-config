@@ -42,4 +42,5 @@ bindsym $mod+Shift+q exec swaynag -t warning -f $font -m 'Exit sway?' -B 'Yes' '
 
 exec_always ${XDG_CONFIG_HOME:-$HOME/.config}/sway/post_init
 
+include local
 include /etc/sway/config.d/*
