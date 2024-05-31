@@ -45,8 +45,6 @@ bindsym $mod+f           fullscreen toggle
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space       focus mode_toggle
 
-bindsym $mod+shift+f floating enable; exec --no-startup-id maximize_win_multimon_x
-
 bindsym $mod+Escape exec screen_lock
 
 bindsym $mod+d       layout toggle splitv splith tabbed stacking
