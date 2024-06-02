@@ -1,12 +1,13 @@
 #!/usr/bin/env sh
 
 # TODO: explictly check if i3 or Sway session in focus so both don't interfere
+# TODO: check if the current workspace is already empty
 
 # Assumes the integer index only name workspaces.
 
-workspaces="$(echo $(i3-msg -t get_workspaces | jq '.[].name' -r))"
+workspaces="$(echo $(i3-msg -t get_workspaces | jq '.[].num' -r | sort))"
 
-# TODO: loop through /n delimeted lines instead
+# TODO: loop through \n delimeted lines instead
 pre_ws="$(($(echo "$workspaces" | cut -d" " -f 1) - 1))"
 
 [ "$pre_ws" -ge 1 ] && exec i3-msg workspace 1
