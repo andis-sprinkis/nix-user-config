@@ -46,8 +46,9 @@
   # set window title
   set_window_title
 
-  # store history
-  HISTSIZE="1000000" SAVEHIST="1000000" HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
+  # storing history in history file
+  SAVEHIST="500"
+  HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
 
   # zsh opts
   setopt "SHARE_HISTORY" "AUTOCD" "PROMPT_SUBST" "INTERACTIVE_COMMENTS"

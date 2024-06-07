@@ -25,6 +25,9 @@ main() {
     cd "$(command lf -last-dir-path "$@")" || return
   }
 
+  # storing history in memory
+  HISTSIZE="1000000"
+
   # inactivity timeout
   TMOUT="5400"
 
