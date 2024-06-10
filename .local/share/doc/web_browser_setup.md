@@ -1,4 +1,4 @@
-# The web browser setup
+# The web browsers setup
 
 ## Configuration
 
