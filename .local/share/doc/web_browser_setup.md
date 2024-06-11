@@ -30,7 +30,6 @@ ln -s ../../../.config/firefox/user.js user.js
 1.  https://addons.mozilla.org/en-US/firefox/addon/mojeek-search/
 1.  https://addons.mozilla.org/en-US/firefox/addon/multi-account-containers/
 1.  https://addons.mozilla.org/en-US/firefox/addon/nomoreshorts/
-1.  https://addons.mozilla.org/en-US/firefox/addon/privacy-redirect/
 1.  https://addons.mozilla.org/en-US/firefox/addon/react-context-devtool/
 1.  https://addons.mozilla.org/en-US/firefox/addon/react-devtools/
 1.  https://addons.mozilla.org/en-US/firefox/addon/reduxdevtools/
@@ -58,7 +57,6 @@ ln -s ../../../.config/firefox/user.js user.js
 1.  https://chrome.google.com/webstore/detail/jump-to-anchor/fhbjjkmbahpmoegppmljagmakkeomlmb
 1.  https://chrome.google.com/webstore/detail/link-gopher/bpjdkodgnbfalgghnbeggfbfjpcfamkf
 1.  https://chrome.google.com/webstore/detail/localcdn/njdfdhgcmkocbgbhcioffdbicglldapd
-1.  https://chrome.google.com/webstore/detail/privacy-redirect/pmcmeagblkinmogikoikkdjiligflglb
 1.  https://chrome.google.com/webstore/detail/react-context-devtool/oddhnidmicpefilikhgeagedibnefkcf
 1.  https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi
 1.  https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd
