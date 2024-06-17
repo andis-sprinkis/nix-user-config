@@ -9,7 +9,7 @@ set $mod Mod4
 
 floating_modifier $mod
 
-bindsym $mod+shift+f floating enable; exec --no-startup-id maximize_win_multimon_x
+bindsym $mod+f floating enable; exec --no-startup-id maximize_win_multimon_x
 
 bindsym $mod+Print       exec --no-startup-id screenshot_maim
 bindsym $mod+Shift+Print exec --no-startup-id screenshot_maim --active

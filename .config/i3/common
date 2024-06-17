@@ -41,7 +41,7 @@ bindsym $mod+Shift+$right move right
 bindsym $mod+o split h
 bindsym $mod+v split v
 
-bindsym $mod+f           fullscreen toggle
+bindsym $mod+Shift+f     fullscreen toggle
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space       focus mode_toggle
 
