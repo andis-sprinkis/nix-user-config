@@ -50,7 +50,9 @@ alias \
   pacman="yay --color=auto" \
   q="exit" \
   qalc="qalc -c" \
-  qrterm="qrencode -t ansiutf8" \
+  qr_txt="qrencode -t ansiutf8" \
+  qr_receive="qrcp receive" \
+  qr_send="qrcp send" \
   r="radian" \
   rm="rm -vI" \
   rsync_progress="rsync --progress --human-readable --stats" \
