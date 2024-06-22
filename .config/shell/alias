@@ -8,6 +8,7 @@ alias \
   calc="qalc -c" \
   cp="cp -rv" \
   date_iso8601="date -u +\"%Y-%m-%dT%H:%M:%SZ\"" \
+  dmesg="sudo dmesg -HL" \
   dg="dotgit" \
   dg_submodule_init="dotgit submodule update --init --recursive" \
   dg_submodule_upgrade_latest_remote="dotgit submodule update --recursive --remote" \
