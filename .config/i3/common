@@ -17,6 +17,8 @@ default_floating_border       normal 1
 font                          $font
 show_marks                    yes
 
+set $applications_menu        applications_menu_desktop
+
 set $mod Mod4
 
 set $up    k

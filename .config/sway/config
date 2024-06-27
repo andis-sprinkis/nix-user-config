@@ -1,5 +1,4 @@
 set $font                     pango:sans-serif medium 13.5
-set $applications_menu        applications_menu_desktop wmenu
 
 include ${XDG_CONFIG_HOME:-HOME/.config}/i3/common
 
