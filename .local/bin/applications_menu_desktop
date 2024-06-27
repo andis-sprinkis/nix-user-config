@@ -5,6 +5,7 @@ path_usage_log="${XDG_CACHE_HOME:-HOME/.cache}/j4-dmenu-desktop/log"
 
 [ "$WAYLAND_DISPLAY" ] && cmd_menu="wmenu"
 [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && cmd_menu="dmenu"
+[ -z "$cmd_menu" ] && exit 1
 cmd_applications_menu="(cat; stest -flx \"${path_appimage}/\" | awk '{ print \"${path_appimage}/\"\$0 }' | sort -u) | ${cmd_menu}"
 
 killall -u "$(whoami)" "$cmd_menu"
