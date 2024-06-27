@@ -5,15 +5,11 @@
 [ "$BLOCK_BUTTON" ] && {
   case $BLOCK_BUTTON in
     1) easyeffects 1>/dev/null 2>/dev/null & disown ;;
-    3) wpctl set-mute @DEFAULT_SINK@ toggle ;; # right click, mute/unmute
-    4) wpctl set-mute @DEFAULT_SINK@ 0
-       wpctl set-volume @DEFAULT_SINK@ "${STEP}+" 
-       ;; # scroll up, increase
-    5) wpctl set-mute @DEFAULT_SINK@ 0
-       wpctl set-volume @DEFAULT_SINK@ "${STEP}-" 
-       ;; # scroll down, decrease
+    3) wpctl set-mute @DEFAULT_SINK@ toggle ;;
+    4) wpctl set-mute @DEFAULT_SINK@ 0; wpctl set-volume @DEFAULT_SINK@ "${STEP}+" ;;
+    5) wpctl set-mute @DEFAULT_SINK@ 0; wpctl set-volume @DEFAULT_SINK@ "${STEP}-" ;;
   esac
 }
 
-vol="$(wpctl get-volume @DEFAULT_SINK@ | cut -d' ' -f2)"
-[ "$vol" ] && echo "${PREFIX}$(printf '%.0f%%' "$(echo "100 * ${vol}" | bc)")${SUFFIX}"
+volume="$(wpctl get-volume @DEFAULT_SINK@ | cut -d' ' -f2)"
+[ "$volume" ] && echo "${PREFIX}$(printf '%.0f%%' "$(echo "100 * ${volume}" | bc)")${SUFFIX}"
