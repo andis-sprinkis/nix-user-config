@@ -7,8 +7,12 @@ case "$1" in
   "e")
     # TODO: paths in $EDITOR
     ;;
-  "y")
+  "Y")
     # TODO: copy paths
+    ;;
+  "y")
+    # TODO: copy image (sway)
+    while read file; do xclip -selection clipboard -target image/png "$file"; done
     ;;
   "o")
     # TODO: open with wmenu/dmenu prompt
