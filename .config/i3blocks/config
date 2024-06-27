@@ -41,6 +41,4 @@ interval=1
 signal=10
 PREFIX=Volume 
 SUFFIX=  
-STEP=1%
-# MIXER=[determined automatically]
-# SCONTROL=[determined automatically]
+STEP=1
