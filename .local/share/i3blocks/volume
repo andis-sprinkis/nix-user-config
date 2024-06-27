@@ -1,13 +1,13 @@
 #!/usr/bin/env sh
 
-[ -z "$STEP" ] && STEP="${1:-"5"}%"
+STEP="${STEP:-"5"}"
 
 [ "$BLOCK_BUTTON" ] && {
   case $BLOCK_BUTTON in
     1) easyeffects 1>/dev/null 2>/dev/null & disown ;;
     3) wpctl set-mute @DEFAULT_SINK@ toggle ;;
-    4) wpctl set-mute @DEFAULT_SINK@ 0; wpctl set-volume @DEFAULT_SINK@ "${STEP}+" ;;
-    5) wpctl set-mute @DEFAULT_SINK@ 0; wpctl set-volume @DEFAULT_SINK@ "${STEP}-" ;;
+    4) wpctl set-mute @DEFAULT_SINK@ 0; wpctl set-volume @DEFAULT_SINK@ "${STEP}%+" ;;
+    5) wpctl set-mute @DEFAULT_SINK@ 0; wpctl set-volume @DEFAULT_SINK@ "${STEP}%-" ;;
   esac
 }
 
