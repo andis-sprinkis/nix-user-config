@@ -5,10 +5,14 @@ case "$1" in
     while read file; do file_manager_desktop "$file" & done
     ;;
   "e")
-    # TODO: paths in $EDITOR
+    # TODO: paths in $TERMINAL $EDITOR
     ;;
   "Y")
-    # TODO: copy paths
+    files="$(while read file; do echo "$file"; done)"
+    [ "$WAYLAND_DISPLAY" ] && [ "$(command -v "wl-copy")" ] && { printf '%s' "$files" | wl-copy; } && exit
+    [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$(command -v "xclip")" ] && { printf '%s' "$files" | xclip -sel "clipboard"; } && exit
+
+    exit 1
     ;;
   "y")
     # TODO: copy image (sway)
