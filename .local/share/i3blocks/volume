@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+# TODO: replace with wpctl commands
+
 # Copyright (C) 2024 Andis Spriņķis <spr.andis@protonmail.com>
 # Copyright (C) 2014 Julien Bonjean <julien@bonjean.info>
 # Copyright (C) 2014 Alexander Keller <github@nycroth.com>
