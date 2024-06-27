@@ -4,7 +4,7 @@ case "$BLOCK_BUTTON" in
   "1")
     case "$(idle_manager_status)" in
       "enabled") 
-        echo "Lock"
+        echo "Idle lock"
         screen_lock 1>/dev/null 2>/dev/null & disown
         exit
       ;;
@@ -38,7 +38,7 @@ case "$(idle_manager_status)" in
     exit
   ;;
   "enabled") 
-    echo "Lock"
+    echo "Idle lock"
     exit
   ;;
 esac
