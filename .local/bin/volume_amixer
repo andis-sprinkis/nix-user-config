@@ -21,56 +21,56 @@
 
 # TODO: replace BLOCK_BUTTON, STEP, MIXER with command line opts (use getopts)
 
-script="$(basename "$0")"
+# script="$(basename "$0")"
+#
+# help_info="NAME
+#     ${script} - Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+#
+# SYNOPSIS
+#     ${script} -a STRING [-b STRING] [-c]
+#
+# DESCRIPTION
+#     Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+#
+#     -a STRING
+#         Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+#
+#     -b STRING
+#         Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+#
+#     -c
+#         Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
+#
+#     -h
+#         Prints this message.
+# "
 
-help_info="NAME
-    ${script} - Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-
-SYNOPSIS
-    ${script} -a STRING [-b STRING] [-c]
-
-DESCRIPTION
-    Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-
-    -a STRING
-        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-
-    -b STRING
-        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-
-    -c
-        Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.
-
-    -h
-        Prints this message.
-"
-
-opt_a=
-opt_b=
-opt_c=
-while getopts a:b:ch name; do
-  case $name in
-    a) opt_a="1"
-       arg_opt_a="$OPTARG"
-       ;;
-    b) opt_b="1"
-       arg_opt_c="$OPTARG"
-       ;;
-    c) opt_c="1"
-       ;;
-    h) echo "$help_info"
-       exit
-      ;;
-    ?) echo "$help_info" 1>&2
-       exit "2"
-       ;;
-  esac
-done
-
-[ ! "$opt_a" ] && {
-  echo "${script}: Option -a STRING is required." 1>&2
-  exit 1
-}
+# opt_a=
+# opt_b=
+# opt_c=
+# while getopts a:b:ch name; do
+#   case $name in
+#     a) opt_a="1"
+#        arg_opt_a="$OPTARG"
+#        ;;
+#     b) opt_b="1"
+#        arg_opt_c="$OPTARG"
+#        ;;
+#     c) opt_c="1"
+#        ;;
+#     h) echo "$help_info"
+#        exit
+#       ;;
+#     ?) echo "$help_info" 1>&2
+#        exit "2"
+#        ;;
+#   esac
+# done
+#
+# [ ! "$opt_a" ] && {
+#   echo "${script}: Option -a STRING is required." 1>&2
+#   exit 1
+# }
 
 # The second parameter overrides the mixer selection
 # For PulseAudio users, eventually use "pulse"
