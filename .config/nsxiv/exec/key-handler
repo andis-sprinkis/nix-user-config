@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+case "$1" in
+  "f")
+    while read file; do file_manager_desktop "$file" & done
+    ;;
+  "e")
+    # TODO: paths in $EDITOR
+    ;;
+  "y")
+    # TODO: copy paths
+    ;;
+  "o")
+    # TODO: open with wmenu/dmenu prompt
+    ;;
+  *)
+    exit 1;
+    ;;
+esac
