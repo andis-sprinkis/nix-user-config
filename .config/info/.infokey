@@ -1,3 +1,8 @@
+#var
+link-style=blue,bold
+active-link-style=blue,underline,bold
+match-style=bold,black,bgyellow
+
 #info
 g       first-node
 G       last-node
