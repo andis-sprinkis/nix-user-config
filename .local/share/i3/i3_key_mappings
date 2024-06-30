@@ -11,4 +11,4 @@ echo "$([ -f "$path_cfg_common" ] && cat "$path_cfg_common")$([ -f "$path_cfg_wm
   | sed -z 's/\\\n//g' \
   | grep "bindsym" \
   | sed -e 's/bindsym //g' -e 's/--whole-window //g' -e 's/--no-startup-id //g' -e 's/ exec / /g' -e 's/^ //g' \
-  | column -m -t -s' ' -l "2" -O "2,1" -R "2" -o "  <-  " -N "KEY MAPPING,COMMAND"
+  | column -m -t -s' ' -l "2" -O "2,1" -R "2" -o "$(printf "\x1b[0;90m -> \x1b[0;m")" -N "$(printf "\x1b[0;7;m KEY MAPPING \x1b[0;m,\x1b[0;7;m ACTION ")"
