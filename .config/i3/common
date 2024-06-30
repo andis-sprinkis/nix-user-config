@@ -137,6 +137,8 @@ bindsym $mod+n exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_
 bindsym $mod+m exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/menu_move_to_workspace
 bindsym $mod+Shift+n exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/menu_rename_workspace
 
+bindsym $mod+slash exec --no-startup-id i3_key_mappings_desktop
+
 set     $mode_resize "Resize container..."
 bindsym $mod+r mode $mode_resize
 mode $mode_resize {
