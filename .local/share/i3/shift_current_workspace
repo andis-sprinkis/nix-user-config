@@ -3,7 +3,6 @@ set -eu
 
 # TODO: support for multi-monitor setups
 # TODO: handling named workspaces without the index prefix
-# TODO: explictly check if i3 or Sway session in focus so both don't interfere
 # TODO: avoid creating ws 0 as the key 0 is typically mapped to ws 10
 
 # "next" or "prev"
