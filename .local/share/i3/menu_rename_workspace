@@ -1,8 +1,6 @@
 #!/usr/bin/env sh
 set -eu
 
-# TODO: explictly check if i3 or Sway session in focus so both don't interfere
-
 # If the current workspace is named "2":
 #
 # | Input       | The new name |
@@ -16,7 +14,7 @@ set -eu
 menu="dmenu"
 [ -z "$DISPLAY" ] && [ "$WAYLAND_DISPLAY" ] && menu="wmenu"
 
-wss="$(i3-msg -t get_workspaces | jq -r 'map({num: .num,name: .name,focused: .focused})')"
+wss="$(i3-msg -t get_workspaces | jq -r 'map({num,name,focused})')"
 ws_i="$(echo "$wss" | jq -r '[.[].focused] | index(true)')"
 ws="$(echo "$wss" | jq -r ".[$ws_i]")"
 ws_name="$(echo "$ws" | jq -r ".name")"

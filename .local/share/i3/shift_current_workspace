@@ -11,7 +11,7 @@ direction="${1:-next}"
 
 [ "$direction" != "next" ] && [ "$direction" != "prev" ] && exit 1
 
-wss="$(i3-msg -t get_workspaces | jq -r 'map({num: .num,name: .name,focused: .focused})')"
+wss="$(i3-msg -t get_workspaces | jq -r 'map({num,name,focused})')"
 ws_i="$(echo "$wss" | jq -r '[.[].focused] | index(true)')"
 ws="$(echo "$wss" | jq -r ".[$ws_i]")"
 ws_num="$(echo "$ws" | jq -r ".num")"

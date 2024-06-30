@@ -4,7 +4,7 @@
 
 wss="$(i3-msg -t get_workspaces | jq 'map({num,focused,representation})')"
 
-[ "$(echo "$wss" | jq -r ".[[.[].focused] | index(true)].representation")" = "null" ] && exec i3-msg workspace back_and_forth
+[ "$(echo "$wss" | jq -r ".[[.[].focused] | index(true)].representation")" = "null" ] && exit 1
 
 wss_num="$(echo $(echo "$wss" | jq '.[].num' -r | sort))"
 
@@ -13,8 +13,8 @@ pre_wsn="$(($(echo "$wss_num" | cut -d" " -f 1) - 1))"
 [ "$pre_wsn" -ge 1 ] && exec i3-msg workspace 1
 
 for wsn in $wss_num; do
-  [ $((pre_wsn + 1)) -ne "$wsn" ] && exec i3-msg workspace "$((pre_wsn + 1))"
+  [ $((pre_wsn + 1)) -ne "$wsn" ] && exec i3-msg "move container to workspace number $((pre_wsn + 1)); workspace number $((pre_wsn + 1))"
   pre_wsn="$wsn"
 done
 
-i3-msg workspace "$((wsn + 1))"
+i3-msg "move container to workspace number $((wsn + 1)); workspace number $((wsn + 1))"
