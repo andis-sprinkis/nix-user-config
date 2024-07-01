@@ -6,9 +6,9 @@ outputs_count="$(i3-msg -t get_outputs | jq 'length')"
 
 [ "$outputs_count" = "1" ] && {
   case "$1" in
-    "left") exec i3-msg focus workspace prev
+    "left") exec i3-msg workspace prev
     ;;
-    "right") exec i3-msg focus workspace prev
+    "right") exec i3-msg workspace next
     ;;
     *) exit 1;
     ;;
