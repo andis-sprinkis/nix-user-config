@@ -93,15 +93,15 @@ bindsym $mod+Shift+8 move container to workspace number  $ws8; workspace number 
 bindsym $mod+Shift+9 move container to workspace number  $ws9; workspace number  $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10; workspace number $ws10
 
-bindsym $mod+a       workspace prev
-bindsym $mod+s       workspace next
+bindsym $mod+a exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/focus_output_or_workspace_on_output left
+bindsym $mod+s exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/focus_output_or_workspace_on_output right
 bindsym $mod+Shift+a workspace prev_on_output
 bindsym $mod+Shift+s workspace next_on_output
 
-bindsym --whole-window button9      workspace prev
-bindsym --whole-window button8      workspace next
-bindsym --whole-window $mod+button9 workspace prev_on_output
-bindsym --whole-window $mod+button8 workspace next_on_output
+bindsym --whole-window button9 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/focus_output_or_workspace_on_output left 
+bindsym --whole-window button8 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/focus_output_or_workspace_on_output right
+bindsym --whole-window Shift+button9 workspace prev_on_output
+bindsym --whole-window Shift+button8 workspace next_on_output
 
 bindsym $mod+c workspace back_and_forth
 bindsym $mod+Shift+c move container to workspace back_and_forth; workspace back_and_forth
@@ -125,10 +125,9 @@ bindsym --whole-window $mod+button2 exec --no-startup-id 'wpctl set-mute @DEFAUL
 bindsym XF86MonBrightnessUp   exec --no-startup-id brightnessctl -q set +3%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl -q set 3%-
 
-bindsym $mod+n exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_empty_workspace
+bindsym $mod+n exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i5/new_empty_workspace
 bindsym $mod+Shift+n exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/move_to_new_empty_workspace
 bindsym $mod+m exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/menu_move_to_workspace
-bindsym $mod+e exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/menu_rename_workspace
 
 bindsym $mod+slash exec --no-startup-id i3_key_mappings_desktop
 

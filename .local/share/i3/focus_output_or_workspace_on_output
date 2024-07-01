@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+[ "$1" = "" ] && exit 1
+
+wss_count="$(i3-msg -t get_workspaces | jq 'length')"
+
+[ "$wss_count" = "1" ] && {
+  case "$1" in
+    "left") exec i3-msg focus workspace prev
+    ;;
+    "right") exec i3-msg focus workspace prev
+    ;;
+    *) exit 1;
+    ;;
+  esac
+}
+
+exec i3-msg focus output "$1"
