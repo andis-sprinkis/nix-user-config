@@ -2,9 +2,9 @@
 
 [ "$1" = "" ] && exit 1
 
-wss_count="$(i3-msg -t get_workspaces | jq 'length')"
+outputs_count="$(i3-msg -t get_outputs | jq 'length')"
 
-[ "$wss_count" = "1" ] && {
+[ "$outputs_count" = "1" ] && {
   case "$1" in
     "left") exec i3-msg focus workspace prev
     ;;
