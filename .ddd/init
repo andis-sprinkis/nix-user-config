@@ -1,4 +1,5 @@
 Ddd*saveOptionsOnExit: off
+Ddd*displayLineNumbers: on
 Ddd*XmText.background:             black
 Ddd*XmText.foreground:             white
 Ddd*XmTextField.background:        black
@@ -16,6 +17,7 @@ Ddd*rt*fontStyle: Regular
 Ddd*rt*fontSize: 12
 
 ! https://begriffs.com/posts/2022-07-17-debugging-gdb-ddd.html
+! /usr/share/ddd-3.4.0/ddd/Ddd
 
 ! DO NOT ADD ANYTHING BELOW THIS LINE -- DDD WILL OVERWRITE IT
 Ddd*dddinitVersion: 3.4.0
