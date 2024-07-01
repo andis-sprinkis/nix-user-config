@@ -100,8 +100,6 @@ bindsym $mod+Shift+s workspace next_on_output
 
 bindsym --whole-window button9 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/focus_output_or_workspace_on_output left 
 bindsym --whole-window button8 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/focus_output_or_workspace_on_output right
-bindsym --whole-window Shift+button9 workspace prev_on_output
-bindsym --whole-window Shift+button8 workspace next_on_output
 
 bindsym $mod+c workspace back_and_forth
 bindsym $mod+Shift+c move container to workspace back_and_forth; workspace back_and_forth
