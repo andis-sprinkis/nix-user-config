@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+opts="-a -b"
+
+[ -x "/usr/bin/nsxiv" ] && exec "/usr/bin/nsxiv" $opts "$@"
+[ -x "/usr/local/bin/nsxiv" ] && exec "/usr/local/bin/nsxiv" $opts "$@"
