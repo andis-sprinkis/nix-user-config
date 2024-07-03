@@ -9,9 +9,9 @@ status="$(idle_manager_status)"
     }
   }
 
-  _screen_lock() {
+  _idle_lock() {
     echo "Idle lock"
-    screen_lock 1>/dev/null 2>/dev/null & disown
+    idle_lock 1>/dev/null 2>/dev/null & disown
     exit
   }
 
@@ -31,7 +31,7 @@ status="$(idle_manager_status)"
 
   case "$BLOCK_BUTTON" in
     "1") case "$status" in
-        "started") _screen_lock ;;
+        "started") _idle_lock ;;
         "stopped") _idle_manager_start ;;
       esac
     ;;

@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=Application
-Name=Screen lock
-Exec=screen_lock
+Name=Idle lock
+Exec=idle_lock
