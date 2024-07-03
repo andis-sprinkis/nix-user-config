@@ -200,7 +200,6 @@ bar {
   bindsym button4 workspace prev_on_output
   bindsym button5 workspace next_on_output
 
-  bindsym button1 exec --no-startup-id 'pkill -SIGRTMIN+10 i3blocks'
   bindsym button2 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_empty_workspace
   bindsym button3 exec --no-startup-id $applications_menu
 }

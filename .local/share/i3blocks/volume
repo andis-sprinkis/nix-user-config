@@ -22,4 +22,4 @@ status="$(wpctl get-volume @DEFAULT_SINK@)"
   echo "${PREFIX}${volume_formatted}${muted:+, MUTE}${SUFFIX}"
 }
 
-[ "$reload" ] && exec pkill -SIGRTMIN+10 i3blocks
+[ "$reload" ] && exec pkill "-SIGRTMIN+${signal}" i3blocks

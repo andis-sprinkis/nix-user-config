@@ -1,5 +1,4 @@
 # vi: ft=ini
-signal=10
 
 [date]
 command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/date
@@ -17,6 +16,7 @@ REPORT_WAYLAND=0
 [connectivity_nm]
 command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/connectivity_nm
 interval=5
+signal=1
 
 [removable_storage]
 command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/removable_storage
@@ -33,6 +33,7 @@ interval=5
 [idle_manager]
 command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/idle_manager
 interval=5
+signal=2
 
 [battery]
 command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/battery
@@ -41,7 +42,7 @@ interval=10
 [volume]
 command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/volume
 interval=3
-signal=10
+signal=3
 PREFIX=Volume 
 SUFFIX=  
 STEP=1
