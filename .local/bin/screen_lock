@@ -2,11 +2,11 @@
 
 [ "$(idle_manager_status)" = "unknown" ] && exit 1
 
-[ "$(idle_manager_status)" = "disabled" ] && {
-  idle_manager_enable &
+[ "$(idle_manager_status)" = "stopped" ] && {
+  idle_manager_start &
 
-  while [ "$(idle_manager_status)" = "disabled" ]; do
-    sleep "1"
+  while [ "$(idle_manager_status)" = "stopped" ]; do
+    sleep "0.5"
   done
 }
 
