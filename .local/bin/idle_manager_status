@@ -2,16 +2,16 @@
 
 [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && {
   [ -z "$(pidof "xscreensaver")" ] || [ -z "$(pidof "xss-lock")" ] && {
-    exec echo "disabled"
+    exec echo "stopped"
   }
 
-  exec echo "enabled"
+  exec echo "started"
 }
 
 [ "$WAYLAND_DISPLAY" ] && {
-  [ -z "$(pidof "swayidle")" ] && exec echo "disabled"
+  [ -z "$(pidof "swayidle")" ] && exec echo "stopped"
 
-  exec echo "enabled"
+  exec echo "started"
 }
 
 echo "unknown"

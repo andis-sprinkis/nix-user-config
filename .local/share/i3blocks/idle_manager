@@ -15,35 +15,35 @@ status="$(idle_manager_status)"
     exit
   }
 
-  _idle_manager_enable() {
+  _idle_manager_start() {
     echo "Starting the idle manager..."
-    idle_manager_enable 1>/dev/null 2>/dev/null & disown
+    idle_manager_start 1>/dev/null 2>/dev/null & disown
     reload
     exit
   }
 
-  _idle_manager_disable() {
+  _idle_manager_stop() {
     echo "Stopping the idle manager..."
-    idle_manager_disable 1>/dev/null 2>/dev/null & disown
+    idle_manager_stop 1>/dev/null 2>/dev/null & disown
     reload
     exit
   }
 
   case "$BLOCK_BUTTON" in
     "1") case "$status" in
-        "enabled") _screen_lock ;;
-        "disabled") _idle_manager_enable ;;
+        "started") _screen_lock ;;
+        "stopped") _idle_manager_start ;;
       esac
     ;;
     "3") case "$status" in
-        "enabled") _idle_manager_disable ;;
-        "disabled") _idle_manager_enable ;;
+        "started") _idle_manager_stop ;;
+        "stopped") _idle_manager_start ;;
       esac
     ;;
   esac
 }
 
 case "$status" in
-  "enabled") echo "Idle lock" ;;
-  "disabled") echo "Idle mgr. inactive" ;;
+  "started") echo "Idle lock" ;;
+  "stopped") echo "Idle mgr. inactive" ;;
 esac
