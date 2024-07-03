@@ -1,4 +1,5 @@
 # vi: ft=ini
+signal=10
 
 [date]
 command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/date
