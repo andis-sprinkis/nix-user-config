@@ -14,7 +14,9 @@ connectivity="$(nmcli networking connectivity)"
 
   [ "$BLOCK_BUTTON" ] && {
     reload() {
-      (sleep "${1:-"0.5"}"; pkill "-SIGRTMIN+${signal}" i3blocks) 1>/dev/null 2>/dev/null & disown
+      [ "$signal" ] && {
+        (sleep "${1:-"0.5"}"; pkill "-SIGRTMIN+${signal}" i3blocks) 1>/dev/null 2>/dev/null & disown
+      }
     }
 
     case "$BLOCK_BUTTON" in

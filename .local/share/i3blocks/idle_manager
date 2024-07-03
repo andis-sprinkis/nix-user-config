@@ -4,7 +4,9 @@ status="$(idle_manager_status)"
 
 [ "$BLOCK_BUTTON" ] && {
   reload() {
-    (sleep "0.5"; pkill "-SIGRTMIN+${signal}" i3blocks) 1>/dev/null 2>/dev/null & disown
+    [ "${signal}" ] && {
+      (sleep "0.5"; pkill "-SIGRTMIN+${signal}" i3blocks) 1>/dev/null 2>/dev/null & disown
+    }
   }
 
   _screen_lock() {
