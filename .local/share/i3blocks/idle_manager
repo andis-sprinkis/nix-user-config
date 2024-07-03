@@ -33,6 +33,6 @@ status="$(idle_manager_status)"
 }
 
 case "$status" in
-  "disabled") echo "Idle mgr. inactive" ;;
   "enabled") echo "Idle lock" ;;
+  "disabled") echo "Idle mgr. inactive" ;;
 esac
