@@ -13,7 +13,8 @@ connectivity="$(nmcli networking connectivity)"
   label_other="Network connectivity status: ${connectivity}"
 
   [ "$BLOCK_BUTTON" = "1" ] && {
-    $TERMINAL -e "$SHELL" -c "sleep \"0.5\"; nmtui" 1>/dev/null 2>/dev/null & disown
+    cmd="sleep \"0.5\"; nmtui"
+    $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
   } 
 
   [ "$BLOCK_BUTTON" = "3" ] && {

@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 
 [ "$BLOCK_BUTTON" = "1" ] || [ "$BLOCK_BUTTON" = "3" ] && {
-  $TERMINAL -e "$SHELL" -c "timezone | \$PAGER" 1>/dev/null 2>/dev/null & disown
+  cmd="timezone | ${PAGER}"
+  $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
 }
 
 date +"%-H:%M"

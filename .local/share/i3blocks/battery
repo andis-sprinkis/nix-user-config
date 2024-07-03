@@ -2,8 +2,8 @@
 
 case "$BLOCK_BUTTON" in
   "1"|"3")
-    win_title="\033]0;Battery information\007"
-	  $TERMINAL -e "$SHELL" -c "echo -n \"$win_title\"; acpi -i | ${PAGER}" 1>/dev/null 2>/dev/null & disown
+    cmd="echo -n \"\033]0;Battery information\007\"; acpi -i | ${PAGER}"
+	  $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
     ;;
   "4") brightnessctl -q set "+2%" ;; # scroll up, increase
   "5") brightnessctl -q set "2%-" ;; # scroll down, decrease
