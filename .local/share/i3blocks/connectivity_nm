@@ -23,14 +23,10 @@ connectivity="$(nmcli networking connectivity)"
           echo "$label_disabling"
           exec nmcli networking off
         ;;
-        "none"|"unknown")
-          echo "$label_enabling"
-          exec nmcli networking on
-          ;;
         *)
           echo "$label_enabling"
-          exec nmcli networking off
-          ;;
+          exec nmcli networking on
+        ;;
       esac
     ;;
   esac
