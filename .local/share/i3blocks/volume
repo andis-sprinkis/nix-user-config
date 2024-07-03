@@ -4,12 +4,13 @@ LC_ALL="C"
 
 STEP="${STEP:-"5"}"
 BLOCK_BUTTON="${BLOCK_BUTTON:-""}"
+reload=""
 
 [ "$BLOCK_BUTTON" ] && case $BLOCK_BUTTON in
   "1") easyeffects 1>/dev/null 2>/dev/null & disown ;;
-  "3") wpctl set-mute @DEFAULT_SINK@ toggle ;;
-  "4") wpctl set-mute @DEFAULT_SINK@ 0; wpctl set-volume @DEFAULT_SINK@ "${STEP}%+" ;;
-  "5") wpctl set-mute @DEFAULT_SINK@ 0; wpctl set-volume @DEFAULT_SINK@ "${STEP}%-" ;;
+  "3") wpctl set-mute @DEFAULT_SINK@ toggle; reload="1" ;;
+  "4") wpctl set-mute @DEFAULT_SINK@ 0; wpctl set-volume @DEFAULT_SINK@ "${STEP}%+"; reload="1" ;;
+  "5") wpctl set-mute @DEFAULT_SINK@ 0; wpctl set-volume @DEFAULT_SINK@ "${STEP}%-"; reload="1" ;;
 esac
 
 status="$(wpctl get-volume @DEFAULT_SINK@)"
@@ -20,3 +21,5 @@ status="$(wpctl get-volume @DEFAULT_SINK@)"
   volume_formatted="$(printf '%.0f%%' "$(echo "100 * ${volume}" | bc)")"
   echo "${PREFIX}${volume_formatted}${muted:+, MUTE}${SUFFIX}"
 }
+
+[ "$reload" ] && exec pkill -SIGRTMIN+10 i3blocks

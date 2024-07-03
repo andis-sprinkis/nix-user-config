@@ -3,19 +3,28 @@
 status="$(idle_manager_status)"
 
 [ "$BLOCK_BUTTON" ] && {
+  reload() {
+    (sleep 1; pkill -SIGRTMIN+10 i3blocks) 1>/dev/null 2>/dev/null & disown
+  }
+
   _screen_lock() {
     echo "Idle lock"
-    exec screen_lock 1>/dev/null 2>/dev/null & disown
+    screen_lock 1>/dev/null 2>/dev/null & disown
+    exit
   }
 
   _idle_manager_enable() {
     echo "Starting the idle manager..."
-    exec idle_manager_enable 1>/dev/null 2>/dev/null & disown
+    idle_manager_enable 1>/dev/null 2>/dev/null & disown
+    reload
+    exit
   }
 
   _idle_manager_disable() {
     echo "Stopping the idle manager..."
-    exec idle_manager_disable 1>/dev/null 2>/dev/null & disown
+    idle_manager_disable 1>/dev/null 2>/dev/null & disown
+    reload
+    exit
   }
 
   case "$BLOCK_BUTTON" in

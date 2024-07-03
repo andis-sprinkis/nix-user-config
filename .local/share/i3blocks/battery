@@ -5,8 +5,8 @@
     cmd="echo -n \"\033]0;Battery information\007\"; acpi -i | ${PAGER}"
     $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
     ;;
-  "4") brightnessctl -q set "+2%" ;;
-  "5") brightnessctl -q set "2%-" ;;
+  "4") brightnessctl -q set "+2%" 1>/dev/null 2>/dev/null & disown ;;
+  "5") brightnessctl -q set "2%-" 1>/dev/null 2>/dev/null & disown ;;
 esac
 
 for battery in /sys/class/power_supply/BAT?*; do

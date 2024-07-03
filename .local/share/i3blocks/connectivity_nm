@@ -12,24 +12,32 @@ connectivity="$(nmcli networking connectivity)"
   label_unknown="Network connectivity unknown"
   label_other="Network connectivity status: ${connectivity}"
 
-  [ "$BLOCK_BUTTON" ] && case "$BLOCK_BUTTON" in
-    "1")
-      cmd="sleep \"0.5\"; nmtui"
-      $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
+  [ "$BLOCK_BUTTON" ] && {
+    reload() {
+      (sleep 1; pkill -SIGRTMIN+10 i3blocks) 1>/dev/null 2>/dev/null & disown
+    }
+
+    case "$BLOCK_BUTTON" in
+      "1")
+        cmd="sleep \"0.5\"; nmtui"
+        $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
+        ;;
+      "3")
+        case "$connectivity" in
+          "full"|"portal"|"limited") 
+            nmcli networking off 1>/dev/null 2>/dev/null & disown
+            reload
+            exec echo "$label_disabling"
+          ;;
+          *)
+            nmcli networking on 1>/dev/null 2>/dev/null & disown
+            reload
+            exec echo "$label_enabling"
+          ;;
+        esac
       ;;
-    "3")
-      case "$connectivity" in
-        "full"|"portal"|"limited") 
-          echo "$label_disabling"
-          exec nmcli networking off
-        ;;
-        *)
-          echo "$label_enabling"
-          exec nmcli networking on
-        ;;
-      esac
-    ;;
-  esac
+    esac 
+  }
 
   case "$connectivity" in
     "full") echo "$label_full";;
