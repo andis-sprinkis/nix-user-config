@@ -3,39 +3,44 @@
 case "$BLOCK_BUTTON" in
   "1"|"3")
     cmd="echo -n \"\033]0;Battery information\007\"; acpi -i | ${PAGER}"
-	  $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
+    $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
     ;;
   "4") brightnessctl -q set "+2%" ;; # scroll up, increase
   "5") brightnessctl -q set "2%-" ;; # scroll down, decrease
 esac
 
 for battery in /sys/class/power_supply/BAT?*; do
-	[ -n "${capacity+x}" ] && printf " "
+  [ -n "${capacity+x}" ] && printf " "
 
-	capacity="$(cat "${battery}/capacity" 2>&1)"
+  capacity="$(cat "${battery}/capacity" 2>&1)"
   status="$(cat "${battery}/status" 2>&1)"
 
-	case "$status" in
-		"Full") 
+  case "$status" in
+    "Full") 
       label="Battery full"
       printf "%s" "$label"
       ;;
-		"Discharging")
+    "Discharging")
       label="Battery discharging"
-      [ "$capacity" -gt 25 ] && printf "%s, %s%%" "$label" "$capacity" || printf "%s, %s %d%%" "$label" "⚠️" "$capacity"
+
+      if [ "$capacity" -gt 25 ]; then
+        printf "%s, %s%%" "$label" "$capacity"
+      else
+        printf "%s, %s %d%%" "$label" "⚠️" "$capacity"
+      fi
       ;;
-		"Charging")
+    "Charging")
       label="Battery charging"
       printf "%s, %s%%" "$label" "$capacity"
       ;;
-		"Not charging") 
+    "Not charging") 
       label="Battery not charging"
       printf "%s, %s %d%%" "$label" "⚠️" "$capacity"
       ;;
-		"Unknown") 
+    "Unknown") 
       label="Battery state unknown"
       printf "%s, %s %d%%" "$label" "⚠️" "$capacity"
       ;;
-		*) exit "1" ;;
-	esac
+    *) exit "1" ;;
+  esac
 done && printf "\\n"
