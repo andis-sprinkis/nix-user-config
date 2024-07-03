@@ -22,13 +22,17 @@ done
 IFS="$ifs_old"
 
 [ "$count" ] && {
-  [ "$BLOCK_BUTTON" = "1" ] || [ "$BLOCK_BUTTON" = "3" ] && {
-    title="Removable storage devices mounted"
-    cmd="echo -n \"\033]0;${title}\007\"; echo \"${title}:${rsd_mounts}\" | ${PAGER}"
+  [ "$BLOCK_BUTTON" ] && case "$BLOCK_BUTTON" in
+    "1"|"3")
+      title="Removable storage devices mounted"
+      cmd="echo -n \"\033]0;${title}\007\"; echo \"${title}:${rsd_mounts}\" | ${PAGER}"
 
-    $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
-  }
+      $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
+    ;;
+  esac
 
-  [ "$count" = "1" ] && echo "$count device mounted" && exit
-  echo "$count devices mounted"
+  case "$count" in
+    "1") echo "$count device mounted" ;;
+    *) echo "$count devices mounted" ;;
+  esac
 }

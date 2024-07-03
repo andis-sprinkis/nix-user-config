@@ -12,26 +12,30 @@ connectivity="$(nmcli networking connectivity)"
   label_unknown="Network connectivity unknown"
   label_other="Network connectivity status: ${connectivity}"
 
-  [ "$BLOCK_BUTTON" = "1" ] && {
-    cmd="sleep \"0.5\"; nmtui"
-    $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
-  } 
+  [ "$BLOCK_BUTTON" ] && case "$BLOCK_BUTTON" in
+    "1")
+      cmd="sleep \"0.5\"; nmtui"
+      $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
+      ;;
+    "3")
+      case "$connectivity" in
+        "full"|"portal"|"limited") 
+          echo "$label_disabling"
+          exec nmcli networking off
+        ;;
+        "none"|"unknown")
+          echo "$label_enabling"
+          exec nmcli networking on
+          ;;
+        *)
+          echo "$label_enabling"
+          exec nmcli networking off
+          ;;
+      esac
+    ;;
+  esac
 
-  [ "$BLOCK_BUTTON" = "3" ] && {
-    case "$connectivity" in
-      "full"|"portal"|"limited") echo "$label_disabling";;
-      "none"|"unknown") echo "$label_enabling";;
-      *) echo "$label_enabling";;
-    esac
-
-    if [ "$connectivity" = "none" ] || [ "$connectivity" = "unknown" ]; then
-      nmcli networking on
-    else
-      nmcli networking off
-    fi
-  }
-
-  case $connectivity in
+  case "$connectivity" in
     "full") echo "$label_full";;
     "none") echo "$label_none";;
     "portal") echo "$label_portal";;

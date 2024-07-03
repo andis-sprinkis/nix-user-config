@@ -1,8 +1,10 @@
 #!/usr/bin/env sh
 
-[ "$BLOCK_BUTTON" = "1" ] || [ "$BLOCK_BUTTON" = "3" ] && {
-  cmd="timezone | ${PAGER}"
-  $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
-}
+[ "$BLOCK_BUTTON" ] && case "$BLOCK_BUTTON" in
+  "1"|"3")
+    cmd="timezone | ${PAGER}"
+    $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
+  ;;
+esac
 
 date +"%-H:%M"
