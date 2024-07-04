@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+[ "$*" = "" ] && exit 1
+
+tmp="$(mktemp)"
+
+echo "$*" | qrencode -t PNG -s 128 -o - > "$tmp"
+
+case $(uname) in
+  "Darwin") open "$tmp" 1>/dev/null 2>/dev/null & disown ;;
+  *) xdg-open "$tmp" 1>/dev/null 2>/dev/null & disown ;;
+esac
+
+(sleep 1; rm -vI "$tmp") 1>/dev/null 2>/dev/null & disown
