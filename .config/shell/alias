@@ -68,7 +68,7 @@ alias \
   wget="wget --hsts-file=\"\${XDG_DATA_HOME:-\$HOME/.local/share}/wget-hsts\"" \
 
 # The 'yay' alias must precede 'pac_*'
-is_exec "yay" && { alias \
+is_exec "yay" && alias \
   pacman="yay --color=auto" \
   yay="yay --color=auto" \
   pac_ls_installed="yay -Q" \
@@ -83,7 +83,6 @@ is_exec "yay" && { alias \
   pac_stats="yay -P --stats" \
   pac_upgrade="yay" \
   pac_upgrade_db="yay -Sy"
-}
 
 case $(uname) in "Darwin") is_macos="1" ;; esac
 [ -z "$is_macos" ] || [ "$HAS_BREW_GNUBIN" ] && {
