@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.82.0
+@version      0.83.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
@@ -94,14 +94,15 @@ domain("tensorflow.org"),
 domain("thesaurus.com"),
 domain("translate.google.com"),
 domain("ubuntu.com"),
+domain("ubuntuforums.org"),
 domain("vestnesis.lv"),
 domain("vim.fandom.com"),
 domain("viss.gov.lv"),
 domain("visualstudio.com"),
 domain("w3schools.com"),
-domain("xn--kalendrs-m7a.lv"),
 domain("wiki.documentfoundation.org"),
 domain("wiki.sei.cmu.edu"),
+domain("xn--kalendrs-m7a.lv"),
 domain("yr.no") {
   @media (prefers-color-scheme: dark) {
     html,
