@@ -7,7 +7,10 @@
 
 set -e
 
-{ read -r wm_class wm_instance ; } < <(xprop -id "$(xprop -root | sed -n 's/_NET_ACTIVE_WINDOW(WINDOW): window id # \(.*.\)$/\1/p')" | sed -n 's/WM_CLASS(STRING) = "\(.*.\)", "\(.*.\)"$/\1 \2/p')
+wm_class_wm_instance="$(xprop -id "$(xprop -root | sed -n 's/_NET_ACTIVE_WINDOW(WINDOW): window id # \(.*.\)$/\1/p')" | sed -n 's/WM_CLASS(STRING) = "\(.*.\)", "\(.*.\)"$/\1 \2/p')"
+
+wm_class="$(echo "$wm_class_wm_instance" | cut -d' ' -f1)"
+wm_instance="$(echo "$wm_class_wm_instance" | cut -d' ' -f2)"
 
 case $wm_class in
   "libreoffice") exec libreoffice "--$(echo "$wm_instance" | sed -n 's/libreoffice-\(.*.\)/\1/p')";;
