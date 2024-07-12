@@ -18,6 +18,8 @@ output * {
 
 seat seat0 xcursor_theme default 42
 
+tiling_drag_threshold 1
+
 titlebar_padding 10 3
 
 exec_always swaymsg bar bar status_edge_padding 0
