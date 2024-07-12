@@ -19,7 +19,7 @@ pathf_xresources_local="${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xreso
 
 # swayidle, swaylock
 
-idle_manager_enable &
+idle_manager_start &
 
 # Starting VirtualBox guest service
 
