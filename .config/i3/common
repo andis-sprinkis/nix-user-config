@@ -46,7 +46,6 @@ bindsym $mod+v split v
 
 bindsym $mod+Shift+f     fullscreen toggle
 bindsym $mod+Shift+space floating toggle;
-bindsym button2          floating toggle; move position pointer
 bindsym $mod+space       focus mode_toggle
 
 bindsym $mod+Escape exec screen_lock
