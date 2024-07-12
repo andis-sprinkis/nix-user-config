@@ -63,7 +63,7 @@ fi
 
 # xscreensaver, xss-lock
 
-idle_manager_enable &
+idle_manager_start &
 
 # Running EeasyEffects audio effects interface
 
