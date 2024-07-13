@@ -321,7 +321,7 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     ```sh
     cd $HOME
     git clone https://github.com/andis-sprinkis/nix-user-config
-    cd nix-user-config/.local/share/doc/linux_install
+    cd nix-user-config/.local/share/pkg_list/arch
     ```
 1. Install the Arch official package repository packages.
     ```sh
@@ -586,7 +586,7 @@ Steps for adding any newly listed packages from the user package lists to an alr
     ```
 1. Change directory to the one with the user package lists.
     ```sh
-    cd $HOME/.local/share/doc/linux_install
+    cd $HOME/.local/share/pkg_list/arch
     ```
 1. Add the packages from the respective source lists.
 

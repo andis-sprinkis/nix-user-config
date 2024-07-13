@@ -10,7 +10,7 @@
 1. Clone the configuration setup repository and change the directory to it.
     ```sh
     git clone https://github.com/andis-sprinkis/nix-user-config $HOME/nix-user-config
-    cd $HOME/nix-user-config/.local/share/doc/macos_user_config
+    cd $HOME/nix-user-config/.local/share/pkg_list/macos
     ```
 1. Install Homebrew packages.
     ```sh
@@ -66,7 +66,7 @@ Steps for adding any newly listed packages from the user package lists to an alr
 
 1. Change directory to the one with the user package lists.
     ```sh
-    cd $HOME/.local/share/doc/macos_user_config
+    cd $HOME/.local/share/pkg_list/macos
     ```
 1. Add the packages from the respective source lists.
 
