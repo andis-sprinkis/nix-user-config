@@ -21,6 +21,9 @@ case "$1" in
   "o")
     # TODO: open with wmenu/dmenu prompt
     ;;
+  "?")
+    # TODO: help
+    ;;
   *)
     exit 1;
     ;;
