@@ -1,4 +1,4 @@
-# The documentation
+# Documentation
 
 -   [User configuration files installation](./user_config_files_installation.md)
 -   [Web browsers setup](./web_browser_setup.md)
