@@ -68,7 +68,7 @@ alias \
   viff="nvim -d" \
   wget="wget --hsts-file=\"\${XDG_DATA_HOME:-\$HOME/.local/share}/wget-hsts\"" \
 
-# The 'yay' alias must precede 'pac_*'
+# 'yay' alias must precede the 'pac_*' aliases
 is_exec "yay" && alias \
   pacman="yay --color=auto" \
   yay="yay --color=auto" \
