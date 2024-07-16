@@ -9,7 +9,7 @@ indent_style = space
 insert_final_newline = true
 max_line_length = 120
 
-[*.{md,mdx}]
+[*.{md,mdx,py}]
 indent_size = 4
 
 [{.gitmodules,makefile,Makefile}]
