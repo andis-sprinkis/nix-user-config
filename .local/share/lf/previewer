@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 BAT_STYLE="plain"
 
-mime="$(file --mime-type "$(readlink -f "$1")" -b)"
+mime="$(file --mime-type --brief "$(readlink -f "$1")")"
 
 echo "$mime"
 
