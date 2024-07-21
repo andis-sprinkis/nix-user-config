@@ -43,6 +43,7 @@ alias \
   h="tldr" \
   inxi="inxi -c7 -F" \
   ip="ip --color=auto" \
+  mime="file --mime-type -b" \
   mkdir="mkdir -pv" \
   mv="mv -v" \
   myip="curl https://ipinfo.io/" \

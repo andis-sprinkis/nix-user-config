@@ -14,7 +14,7 @@ set wrapscroll
 cmd open ${{
   IFS="
 "
-  mime="$(file --mime-type "$(readlink -f "$f")" -b)"
+  mime="$(file --mime-type --brief "$(readlink -f "$f")")"
 
   case $mime in
     application/octet-stream)
