@@ -30,7 +30,7 @@
   ignorecase = false
 
 [color]
-  ui = auto
+  ui = always
 
 [gpg]
   program = gpg
