@@ -2,6 +2,8 @@
 # fn: detect if given command is executable
 is_exec() { [ "$(command -v "$1")" ]; }
 
+# 'git' alias must precede the 'g*', 'g_*' aliases
+# 'dotgit' alias must precede the 'dg*', 'dg_*' aliases
 alias \
   aunpack="aunpack --subdir --explain" \
   bc="bc -ql" \
