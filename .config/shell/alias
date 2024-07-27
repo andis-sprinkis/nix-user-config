@@ -75,7 +75,7 @@ alias \
   umount="sudo umount" \
   tree="tree -CF" \
   viff="nvim -d" \
-  wget="wget --hsts-file=\"\${XDG_DATA_HOME:-\$HOME/.local/share}/wget-hsts\"" \
+  wget="wget --hsts-file=\"\${XDG_DATA_HOME:-\$HOME/.local/share}/wget-hsts\""
 
 # 'yay' alias must precede the 'pac_*' aliases
 is_exec "yay" && alias \
