@@ -29,6 +29,7 @@ for_window [shell="xwayland"] title_format "[XW] %title"
 
 for_window [app_id="firefox" title="Picture-in-Picture"] floating enable
 for_window [app_id="firefox" title="Picture-in-Picture"] sticky enable
+for_window [app_id="mpv" ] floating enable, sticky enable
 
 floating_modifier $mod normal
 
