@@ -521,7 +521,7 @@ LVM on LUKS.
     ```sh
     exec i3
     ```
-1. Use `xrandr` to define and test the display configuration.
+1. Use `arandr` to define and test the display configuration.
 1. Create file `/etc/X11/xorg.conf.d/30-displays.conf` with the display configuration parameters e.g.
 
     ```xf86conf

@@ -4,6 +4,7 @@ alsa-utils
 amdvlk
 android-file-transfer
 android-udev
+arandr
 atool
 autoconf
 automake
