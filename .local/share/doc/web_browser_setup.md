@@ -23,6 +23,7 @@ ln -s ../../../.config/firefox/user.js user.js
 1.  https://addons.mozilla.org/en-US/firefox/addon/hohser/
 1.  https://addons.mozilla.org/en-US/firefox/addon/istilldontcareaboutcookies/
 1.  https://addons.mozilla.org/en-US/firefox/addon/jump-to-anchor/
+1.  https://addons.mozilla.org/en-US/firefox/addon/libredirect/
 1.  https://addons.mozilla.org/en-US/firefox/addon/link-gopher/
 1.  https://addons.mozilla.org/en-US/firefox/addon/localcdn-fork-of-decentraleyes/
 1.  https://addons.mozilla.org/en-US/firefox/addon/mdn-search-provider/
@@ -67,11 +68,13 @@ ln -s ../../../.config/firefox/user.js user.js
 1.  https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm
 1.  https://chrome.google.com/webstore/detail/unhook-remove-youtube-rec/khncfooichmfjbepaaaebmommgaepoid
 1.  https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag
-1.  https://github.com/FastForwardTeam/FastForward/
+1.  https://libredirect.github.io/download_chromium.html
 
 ## Userscripts
 
 1.  https://github.com/zerodytrash/Simple-YouTube-Age-Restriction-Bypass/raw/main/dist/Simple-YouTube-Age-Restriction-Bypass.user.js
+1.  https://adsbypasser.github.io/
+1.  https://codeberg.org/Amm0ni4/bypass-all-shortlinks-debloated
 
 ## Userstyles
 
