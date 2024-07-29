@@ -45,7 +45,6 @@ ln -s ../../../.config/firefox/user.js user.js
 1.  https://addons.mozilla.org/en-US/firefox/addon/view-page-archive/
 1.  https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/
 1.  https://addons.mozilla.org/en-US/firefox/addon/youtube-recommended-videos/
-1.  https://github.com/FastForwardTeam/FastForward/
 
 ### Google Chrome
 
