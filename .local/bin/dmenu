@@ -4,9 +4,9 @@
 
 exec "/usr/bin/dmenu" \
   -nf "$GUI_COLOR_FOREGROUND" \
-  -nb "$GUI_COLOR_0" \
+  -nb "$GUI_COLOR_BACKGROUND" \
   -sb "$GUI_COLOR_FOREGROUND" \
-  -sf "$GUI_COLOR_0" \
+  -sf "$GUI_COLOR_BACKGROUND" \
   -fn "${GUI_FONT_FAMILY_GUI}:style=${GUI_FONT_STYLE}:size=${GUI_FONT_SIZE_X11}" \
   -l "$GUI_MENU_LINE_COUNT" \
   -i \
