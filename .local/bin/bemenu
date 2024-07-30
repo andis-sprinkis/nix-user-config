@@ -22,8 +22,10 @@ exec "/usr/bin/bemenu" \
   --scb \
   --scf \
   --fn "pango:${GUI_FONT_FAMILY_GUI} ${GUI_FONT_STYLE} ${GUI_FONT_SIZE}" \
+  -H "28px" \
   -l "$GUI_MENU_LINE_COUNT" \
   -p "" \
   -i \
   -b \
+  --fixed-height \
   "$@"
