@@ -13,19 +13,24 @@ exec "/usr/bin/bemenu" \
   --nf "$GUI_COLOR_FOREGROUND" \
   --hb "$GUI_COLOR_FOREGROUND" \
   --hf "$GUI_COLOR_BACKGROUND" \
-  --fbb \
-  --fbf \
+  --fbb "$GUI_COLOR_BACKGROUND" \
+  --fbf "$GUI_COLOR_3" \
   --sb "$GUI_COLOR_FOREGROUND" \
   --sf "$GUI_COLOR_BACKGROUND" \
   --ab "$GUI_COLOR_BACKGROUND" \
   --af "$GUI_COLOR_FOREGROUND" \
   --scb "$GUI_COLOR_BACKGROUND" \
-  --scf "$GUI_COLOR_FOREGROUND" \
+  --scf "$GUI_COLOR_8" \
+  --bdr "$GUI_COLOR_6" \
   --fn "pango:${GUI_FONT_FAMILY_GUI} ${GUI_FONT_STYLE} ${GUI_FONT_SIZE}" \
   -H "28px" \
-  -l "$GUI_MENU_LINE_COUNT" \
+  --list "$GUI_MENU_LINE_COUNT" \
   -p "" \
-  -i \
-  -b \
+  --ignorecase \
+  --border "1px" \
+  --width-factor "0.8" \
+  --margin "200px" \
+  --center \
   --fixed-height \
+  --no-overlap \
   "$@"
