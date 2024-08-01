@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-REPORT_WAYLAND="${REPORT_WAYLAND:-1}"
+REPORT_WAYLAND="${REPORT_WAYLAND:-0}"
 REPORT_X11="${REPORT_X11:-1}"
 
 [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && {

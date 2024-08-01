@@ -2,9 +2,9 @@
 set -eu
 LC_ALL="C"
 
-PREFIX="${PREFIX:-""}"
+PREFIX="${PREFIX:-"Volume "}"
 SUFFIX="${SUFFIX:-""}"
-STEP="${STEP:-"5"}"
+STEP="${STEP:-"1"}"
 BLOCK_BUTTON="${BLOCK_BUTTON:-""}"
 reload=""
 
