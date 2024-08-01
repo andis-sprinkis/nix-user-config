@@ -1,6 +1,8 @@
 # vi: ft=swayconfig
+# A custom configuration for forcing an output scale on individual applications.
+# EXEC="ddd" SCALE="3" sway -c ${XDG_CONFIG_HOME:-$HOME/.config}/sway/custom_scale
 
-set $font pango:sans-serif medium 6.75
+set $font pango:sans-serif medium 13.5
 
 gaps inner                    0
 gaps outer                    0
@@ -14,7 +16,6 @@ default_border                normal 1
 default_floating_border       normal 1
 font                          $font
 show_marks                    yes
-
 tiling_drag_threshold         1
 titlebar_padding              10 3
 
