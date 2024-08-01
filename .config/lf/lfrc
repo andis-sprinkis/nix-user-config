@@ -39,6 +39,10 @@ cmd open-with ${{
   for f in $fx; do nohup "$*" "$f" 0</dev/null 1>/dev/null 2>/dev/null & done
 }}
 
+cmd to-previewer ${{
+  ${XDG_DATA_HOME:-$HOME/.local/share}/lf/previewer "$f" | $PAGER
+}}
+
 cmd aunpack !{{
   IFS="
 "
@@ -94,7 +98,7 @@ cmd on-redraw %{{
 }}
 
 cmd follow-symlink %{{
-  lf -remote "send ${id} select '$(readlink $f)'"
+  lf -remote "send ${id} select '$(readlink "$f")'"
 }}
 
 map <c-z> $ kill -STOP $PPID
@@ -104,6 +108,6 @@ map X aunpack
 map Y copy-path
 map ` !true
 map b :mark-load
-map m
+map m to-previewer
 map o push :open-with<space>
 map gL follow-symlink
