@@ -16,5 +16,6 @@ case $mime in
   image/*) chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${2:-80}x${3:-120}" "$1"; exit 1;;
   *opendocument*) odt2txt "$1"; exit 1;;
   application/vnd.sqlite3|application/vnd.sqlite) sqlite3 "$1" '.tables'; exit 1;;
+  inode/directory) ls -la "$1"; exit 1;;
   *) bat --color always -- "$1"; exit 1;;
 esac
