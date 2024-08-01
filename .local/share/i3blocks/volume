@@ -2,6 +2,8 @@
 set -eu
 LC_ALL="C"
 
+PREFIX="${PREFIX:-""}"
+SUFFIX="${SUFFIX:-""}"
 STEP="${STEP:-"5"}"
 BLOCK_BUTTON="${BLOCK_BUTTON:-""}"
 reload=""
