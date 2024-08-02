@@ -141,30 +141,6 @@ $prompt_symbol"
   bindkey "^e" "edit-command-line"
   bindkey -a "^e" "edit-command-line"
 
-  # edit a copy of the active tmux pane in editor
-  [ "$TMUX" ] && {
-    edit_tmux_pane_copy() {
-      local buffer="$(tmux capture-pane -pS -)"
-
-      case "$EDITOR" in
-        "nvim"|"vim") 
-          buffer="# vi: nowrap ft=
-$buffer"
-          local lcount="$(echo "$buffer" | wc -l)"
-
-          echo "$buffer" | "$EDITOR" "+${lcount} -c"
-          ;;
-        *) echo "$buffer" | "$EDITOR"
-          ;;
-      esac
-    }
-
-    zle -N "edit_tmux_pane_copy"
-
-    bindkey "^w" "edit_tmux_pane_copy"
-    bindkey -a "^w" "edit_tmux_pane_copy"
-  }
-
   # configure tldr
   [ -f "$HOME/.local/bin/tldr" ] && compctl -k "($(tldr 2>/dev/null --list))" "tldr"
 

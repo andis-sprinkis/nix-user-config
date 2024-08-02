@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+tmp="$(mktemp --suffix="_tmux_pane_copy")"
+
+[ -z "$tmp" ] && exit 1
+
+echo "# vi: nowrap ft=
+$(tmux capture-pane -pS -)" > "$tmp"
+
+case "$EDITOR" in
+  "nvim"|"vim") tmux split-pane "cat \"${tmp}\" | ${EDITOR} \+$(wc -l "$tmp"); rm \"${tmp}\"" ;;
+  *) tmux split-pane "cat \"${tmp}\" | ${EDITOR}; rm \"${tmp}\"" ;;
+esac
