@@ -88,9 +88,8 @@
     local vcs_info="\$vcs_info_msg_0_%{$reset_color%}"
     local cwd_path="%{$bg[white]$fg[black]%} %/ %{$reset_color%}"
     local prompt_symbol="%{$fg[$role_params[1]]%}$role_params[2]%{$reset_color%} "
-    local delim="$(echo "\x1b[0;8m☻\x1b[0m")"
 
-    PS1="$userhost$ssh_status$vcs_info$cwd_path$delim
+    PS1="$userhost$ssh_status$vcs_info$cwd_path
 $prompt_symbol"
   }
 
