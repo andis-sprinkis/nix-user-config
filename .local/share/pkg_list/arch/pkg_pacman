@@ -161,6 +161,7 @@ wl-clipboard
 wlroots
 wlsunset
 wmenu
+wtype
 x11-ssh-askpass
 xclip
 xdg-desktop-portal-gtk
