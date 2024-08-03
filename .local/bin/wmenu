@@ -7,6 +7,8 @@ exec "/usr/bin/wmenu" \
   -n "$GUI_COLOR_FOREGROUND" \
   -S "$GUI_COLOR_FOREGROUND" \
   -s "$GUI_COLOR_BACKGROUND" \
+  -M "$GUI_COLOR_BACKGROUND" \
+  -m "$GUI_COLOR_FOREGROUND" \
   -f "pango:${GUI_FONT_FAMILY_GUI} ${GUI_FONT_STYLE} ${GUI_FONT_SIZE}" \
   -l "$GUI_MENU_LINE_COUNT" \
   -i \
