@@ -17,6 +17,8 @@ set -e
       tmp="$rest"
     done
   }
+
+  exit
 }
 
 [ "$WAYLAND_DISPLAY" ] && {
