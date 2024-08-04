@@ -15,7 +15,7 @@ case "$(tmux show-options -g status)" in
 
       echo "$id" > "$id_file_fpath"
 
-      sleep 5; 
+      sleep 5
 
       [ -f "$id_file_fpath" ] && [ "$id" = "$(cat "$id_file_fpath")" ] && {
         tmux set-option -g status off
