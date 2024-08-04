@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=Application
 Name=i3 window manager key mappings
-Exec=i3_key_mappings_desktop
+Exec=i3_key_mappings_desktop i3
