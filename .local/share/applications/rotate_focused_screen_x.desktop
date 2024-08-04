@@ -1,4 +1,4 @@
 [Desktop Entry]
 Type=Application
-Name=Rotate screen
+Name=Rotate screen (X11)
 Exec=rotate_focused_screen_x

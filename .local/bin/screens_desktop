@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+[ "$WAYLAND_DISPLAY" ] && exec wdisplays
+[ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && exec arandr
+
+exit "1"
