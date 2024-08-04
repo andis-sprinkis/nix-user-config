@@ -11,15 +11,15 @@ case "$(tmux show-options -g status)" in
 
       mkdir -p "$id_file_dir"
 
-      id="$(od -vAn -N2 -tu2 < "/dev/urandom" | tr -d ' ')"
+      id="$(od -vAn -N1 -tu1 < "/dev/urandom")"
 
       echo "$id" > "$id_file_fpath"
 
       sleep 5; 
 
       [ -f "$id_file_fpath" ] && [ "$id" = "$(cat "$id_file_fpath")" ] && {
-        rm "$id_file_fpath"
         tmux set-option -g status off
+        rm "$id_file_fpath"
       }
     ) 1>/dev/null 2>/dev/null & disown
   ;;
