@@ -11,8 +11,8 @@ set -eu
 # | 3: new name | 3: new name  |
 # | 3new name   | 2: 3new name |
 
-menu="dmenu"
-[ -z "$DISPLAY" ] && [ "$WAYLAND_DISPLAY" ] && menu="wmenu"
+[ "$WAYLAND_DISPLAY" ] && cmd_menu="wmenu"
+[ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && cmd_menu="dmenu"
 
 wss="$(i3-msg -t get_workspaces | jq -r 'map({num,name,focused})')"
 ws_i="$(echo "$wss" | jq -r '[.[].focused] | index(true)')"
@@ -20,7 +20,7 @@ ws="$(echo "$wss" | jq -r ".[$ws_i]")"
 ws_name="$(echo "$ws" | jq -r ".name")"
 ws_num="$(echo "$ws" | jq -r ".num")"
 
-ws_name_input="$(echo $("$@" | "$menu" -p "Rename workspace \"${ws_name}\":"))"
+ws_name_input="$(echo $("$@" | "$cmd_menu" -p "Rename workspace \"${ws_name}\":"))"
 
 [ "$ws_name_input" ] && {
   name_new_is_num="0"

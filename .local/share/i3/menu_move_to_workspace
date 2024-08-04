@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-menu="dmenu"
-[ -z "$DISPLAY" ] && [ "$WAYLAND_DISPLAY" ] && menu="wmenu"
+[ "$WAYLAND_DISPLAY" ] && cmd_menu="wmenu"
+[ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && cmd_menu="dmenu"
 
-exec i3-msg move container to workspace "$(i3-msg -t get_workspaces | jq '.[].name' -r | "$menu" -p "Move window to workspace:")"
+exec i3-msg move container to workspace "$(i3-msg -t get_workspaces | jq '.[].name' -r | "$cmd_menu" -p "Move window to workspace:")"
