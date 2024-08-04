@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+case "$(tmux show-options -g status)" in
+  "status off") 
+    tmux set-option -g status on
+    (sleep 5; tmux set-option -g status off) 1>/dev/null 2>/dev/null & disown
+  ;;
+  "status on") 
+    tmux set-option -g status off
+  ;;
+  *) 
+    exit 1
+  ;;
+esac
