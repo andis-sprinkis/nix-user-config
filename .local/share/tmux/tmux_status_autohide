@@ -11,7 +11,7 @@ case "$(tmux show-options -g status)" in
 
       mkdir -p "$id_file_dir"
 
-      id="$(od -vAn -N1 -tu1 < "/dev/urandom")"
+      id="$(od -vAn -N1 -tu1 "/dev/urandom")"
 
       echo "$id" > "$id_file_fpath"
 
