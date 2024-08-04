@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.89.0
+@version      0.90.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
@@ -22,6 +22,7 @@ domain("caps.wiki"),
 domain("cmake.org"),
 domain("cpan.org"),
 domain("cppreference.com"),
+domain("cutter.re"),
 domain("debian.org"),
 domain("deepl.com"),
 domain("delfi.lv"),
