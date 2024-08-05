@@ -67,7 +67,7 @@
     local tmout_status=""
     if [[ "$TMOUT" = "0" ]]; then tmout_status="TMOUT0 " fi
 
-    RPROMPT="${tmout_status}($?) %D{%K:%M:%S}"
+    RPROMPT="${tmout_status}(\$?) %D{%K:%M:%S}"
   }
 
   is_exec "git" && {
