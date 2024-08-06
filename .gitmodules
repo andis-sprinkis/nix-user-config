@@ -22,6 +22,6 @@
 [submodule ".local/opt/vidir"]
 	path = .local/opt/vidir
 	url = https://github.com/andis-sprinkis/vidir/
-[submodule ".local/opt/xdg-utils-simple"]
-	path = .local/opt/xdg-utils-simple
-	url = https://github.com/andis-sprinkis/xdg-utils-simple
+[submodule ".local/opt/xdg-open-simple"]
+	path = .local/opt/xdg-open-simple
+	url = https://github.com/andis-sprinkis/xdg-open-simple
