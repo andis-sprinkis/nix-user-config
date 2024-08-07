@@ -65,7 +65,7 @@
   # fn: set RPROMPT prompt
   set_prompt_rprompt() {
     local tmout_status=""
-    if [[ "$TMOUT" = "0" ]]; then tmout_status="TMOUT0 " fi
+    if [ "$TMOUT" = "0" ]; then tmout_status="TMOUT0 " fi
 
     RPROMPT="${tmout_status}(\$?) %D{%K:%M:%S}"
   }
@@ -82,7 +82,7 @@
 
   # set PS1 prompt
   () {
-    [[ "$(whoami)" == "root" ]] && local role_params=("magenta" "#") || local role_params=("cyan" "$")
+    [ "$(whoami)" = "root" ] && local role_params=("magenta" "#") || local role_params=("cyan" "$")
     local userhost="%{$bg[$role_params[1]] $fg[black]%}%n@%M %{$reset_color%}"
     local ssh_status=$([ "$SSH_CLIENT" ] || [ "$SSH_TTY" ] && echo "%{$bg[blue]$fg[black]%} SSH %{$reset_color%}")
     local vcs_info="\$vcs_info_msg_0_%{$reset_color%}"
