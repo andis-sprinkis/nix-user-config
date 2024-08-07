@@ -82,7 +82,7 @@
 
   # set PS1 prompt
   () {
-    [ "$(whoami)" = "root" ] && local role_params=("magenta" "#") || local role_params=("cyan" "$")
+    [ "$USER" = "root" ] && local role_params=("magenta" "#") || local role_params=("cyan" "$")
     local userhost="%{$bg[$role_params[1]] $fg[black]%}%n@%M %{$reset_color%}"
     local ssh_status=$([ "$SSH_CLIENT" ] || [ "$SSH_TTY" ] && echo "%{$bg[blue]$fg[black]%} SSH %{$reset_color%}")
     local vcs_info="\$vcs_info_msg_0_%{$reset_color%}"
