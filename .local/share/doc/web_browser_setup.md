@@ -72,7 +72,6 @@ ln -s ../../../.config/firefox/user.js user.js
 ## Userscripts
 
 1.  https://github.com/zerodytrash/Simple-YouTube-Age-Restriction-Bypass/raw/main/dist/Simple-YouTube-Age-Restriction-Bypass.user.js
-1.  https://codeberg.org/Amm0ni4/bypass-all-shortlinks-debloated
 
 ## Userstyles
 
