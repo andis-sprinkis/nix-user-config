@@ -25,17 +25,23 @@ titlebar_padding 10 3
 exec_always swaymsg bar bar status_edge_padding 0
 exec_always swaymsg bar bar height 32
 
-for_window [shell="xwayland"] title_format "[XW] %title"
+for_window {
+  [shell="xwayland"] title_format "[XW] %title"
+  [app_id="firefox" title="Picture-in-Picture"] floating enable, sticky enable
+  [app_id="mpv"] floating enable, sticky enable
+}
 
-for_window [app_id="firefox" title="Picture-in-Picture"] floating enable
-for_window [app_id="firefox" title="Picture-in-Picture"] sticky enable
-for_window [app_id="mpv" ] floating enable, sticky enable
+set $tabs_fw "wtype -M 'ctrl' -k 'tab' -m 'ctrl'"
+set $tabs_bw "wtype -M 'ctrl' -M 'shift' -k 'tab' -m 'ctrl' -m 'shift'"
+
+bindsym button5 exec swaymsg [app_id="firefox" con_id="__focused__"] exec $tabs_bw || swaymsg [class="Chromium" instance="chromium" con_id="__focused__"] exec $tabs_bw
+bindsym button4 exec swaymsg [app_id="firefox" con_id="__focused__"] exec $tabs_fw || swaymsg [class="Chromium" instance="chromium" con_id="__focused__"] exec $tabs_bw
 
 floating_modifier $mod normal
 
-bindsym $mod+Print       exec --no-startup-id screenshot_grim
-bindsym $mod+Shift+Print exec --no-startup-id screenshot_grim --active
-bindsym $mod+Ctrl+Print  exec --no-startup-id screenshot_grim --select
+bindsym $mod+Print       exec screenshot_grim
+bindsym $mod+Shift+Print exec screenshot_grim --active
+bindsym $mod+Ctrl+Print  exec screenshot_grim --select
 
 bindsym $mod+f fullscreen toggle global
 
