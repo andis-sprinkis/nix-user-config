@@ -8,14 +8,8 @@ local harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
 local M = {
   font_size = cfg_local_status and cfg_local['font_size'] or (os.getenv("WAYLAND_DISPLAY") and 13.5 or 12),
   font = wezterm.font_with_fallback({
-    {
-      family = 'Cascadia Code PL',
-      harfbuzz_features = harfbuzz_features,
-    },
-    {
-      family = 'monospace',
-      harfbuzz_features = harfbuzz_features,
-    },
+    { family = 'Cascadia Code PL', harfbuzz_features = harfbuzz_features },
+    { family = 'monospace', harfbuzz_features = harfbuzz_features },
   }),
   adjust_window_size_when_changing_font_size = false,
   color_scheme = 'vscode-dark',
@@ -28,12 +22,7 @@ local M = {
   initial_cols = 120,
   initial_rows = 30,
   animation_fps = 1,
-  window_padding = {
-    left = 0,
-    right = 0,
-    top = 0,
-    bottom = 0,
-  },
+  window_padding = { left = 0, right = 0, top = 0, bottom = 0 },
   keys = {
     { key = ')',        mods = 'CTRL',       action = act.ResetFontSize },
     { key = '+',        mods = 'CTRL',       action = act.IncreaseFontSize },
