@@ -84,17 +84,12 @@ cmd on-cd &{{
 on-cd
 
 cmd on-redraw %{{
-  if [ $lf_width -le 35 ]; then
-    lf -remote "send ${id} set ratios 100:1"
-  elif [ $lf_width -le 60 ]; then
-    lf -remote "send ${id} set ratios 1:2"
-  elif [ $lf_width -le 100 ]; then
-    lf -remote "send ${id} set ratios 2:3:4"
-  elif [ $lf_width -le 140 ]; then
-    lf -remote "send ${id} set ratios 1:2:3:4"
-  else
-    lf -remote "send ${id} set ratios 1:2:4:6:8"
-  fi
+  [ $lf_width -le 35  ] && { lf -remote "send ${id} set ratios 100:1"; exit }
+  [ $lf_width -le 60  ] && { lf -remote "send ${id} set ratios 1:2"; exit }
+  [ $lf_width -le 100 ] && { lf -remote "send ${id} set ratios 2:3:4"; exit }
+  [ $lf_width -le 140 ] && { lf -remote "send ${id} set ratios 1:2:3:4"; exit }
+
+  lf -remote "send ${id} set ratios 1:2:4:6:8"
 }}
 
 cmd follow-symlink %{{
