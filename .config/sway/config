@@ -34,8 +34,8 @@ for_window {
 set $tabs_fw "wtype -M 'ctrl' -k 'tab' -m 'ctrl'"
 set $tabs_bw "wtype -M 'ctrl' -M 'shift' -k 'tab' -m 'ctrl' -m 'shift'"
 
-bindsym button5 exec swaymsg [app_id="firefox" con_id="__focused__"] exec $tabs_bw || swaymsg [class="Chromium" instance="chromium" con_id="__focused__"] exec $tabs_bw
-bindsym button4 exec swaymsg [app_id="firefox" con_id="__focused__"] exec $tabs_fw || swaymsg [class="Chromium" instance="chromium" con_id="__focused__"] exec $tabs_bw
+bindsym button4 exec swaymsg [app_id="firefox" con_id="__focused__"] exec $tabs_bw || swaymsg [class="Chromium" instance="chromium" con_id="__focused__"] exec $tabs_bw
+bindsym button5 exec swaymsg [app_id="firefox" con_id="__focused__"] exec $tabs_fw || swaymsg [class="Chromium" instance="chromium" con_id="__focused__"] exec $tabs_bw
 
 floating_modifier $mod normal
 
