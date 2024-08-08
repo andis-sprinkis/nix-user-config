@@ -3,6 +3,8 @@
 inode/directory=file.desktop
 x-scheme-handler/file=file.desktop
 
+application/java-archive=nothing.desktop
+
 application/bzip2=file.desktop
 application/bzip=file.desktop
 application/gzip=file.desktop
