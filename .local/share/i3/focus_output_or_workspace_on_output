@@ -1,16 +1,20 @@
 #!/usr/bin/env sh
+set -eu
 
-[ "$1" = "" ] && exit 1
+[ "$1" = "" ] && exit "1"
 
-[ "$(i3-msg -t get_outputs | jq 'length')" = "1" ] && {
-  case "$1" in
-    "left") exec i3-msg workspace prev
-    ;;
-    "right") exec i3-msg workspace next
-    ;;
-    *) exit 1;
-    ;;
-  esac
-}
+outputs_count="$(i3-msg -t get_outputs | jq 'length')"
 
-exec i3-msg focus output "$1"
+case "$1" in
+  "left")
+    [ "$outputs_count" = "1" ] && exec i3-msg workspace prev
+    exec i3-msg focus output left
+  ;;
+  "right")
+    [ "$outputs_count" = "1" ] && exec i3-msg workspace next
+    exec i3-msg focus output right
+  ;;
+  *)
+    exit "1";
+  ;;
+esac
