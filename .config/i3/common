@@ -115,10 +115,10 @@ bindsym --whole-window $mod+Mod1+button8 exec --no-startup-id ${XDG_DATA_HOME:-$
 bindsym Menu exec --no-startup-id $applications_menu
 
 bindsym $mod+p            exec --no-startup-id 'playerctl play-pause'
-bindsym $mod+bracketleft  exec --no-startup-id 'playerctl position 10-'
-bindsym $mod+bracketright exec --no-startup-id 'playerctl position 10+'
-bindsym $mod+braceleft    exec --no-startup-id 'playerctl previous'
-bindsym $mod+braceright   exec --no-startup-id 'playerctl next'
+bindsym $mod+braceleft    exec --no-startup-id 'playerctl position 10-'
+bindsym $mod+braceright   exec --no-startup-id 'playerctl position 10+'
+bindsym $mod+bracketleft  exec --no-startup-id 'playerctl previous'
+bindsym $mod+bracketright exec --no-startup-id 'playerctl next'
 
 bindsym $mod+period exec --no-startup-id 'wpctl set-volume @DEFAULT_SINK@ 3%+'
 bindsym $mod+comma  exec --no-startup-id 'wpctl set-volume @DEFAULT_SINK@ 3%-'
