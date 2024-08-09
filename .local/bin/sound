@@ -1,84 +1,56 @@
 #!/usr/bin/env sh
 set -eu
 
-# WIP
-
-vol_change="3"
-signal="-SIGRTMIN+3"
-# pkill "$signal" "i3blocks"
-
-wpctl "set-mute" "@DEFAULT_AUDIO_SOURCE@" "0"
-wpctl "set-mute" "@DEFAULT_AUDIO_SOURCE@" "1"
-wpctl "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"
-wpctl "set-mute" "@DEFAULT_SINK@" "0"
-wpctl "set-mute" "@DEFAULT_SINK@" "1"
-wpctl "set-mute" "@DEFAULT_SINK@" "toggle"
-wpctl "set-volume" "@DEFAULT_AUDIO_SOURCE@" "3%+"
-wpctl "set-volume" "@DEFAULT_AUDIO_SOURCE@" "3%-"
-wpctl "set-volume" "@DEFAULT_SINK@" "3%+"
-wpctl "set-volume" "@DEFAULT_SINK@" "3%-"
-
-# -i +
-# -i -
-# -i 3%+
-# -i 3%-
-# -i mute
-# -i toggle
-# -i unmute
-# -o +
-# -o -
-# -o 3%+
-# -o 3%-
-# -o mute
-# -o toggle
-# -o unmute
-
-opt_has_i="0" opt_arg_i=""
-opt_has_o="0" opt_arg_o=""
 while getopts i:o: name; do
   case "$name" in
     "i")
-      opt_has_i="1"
-      # opt_arg_i="$OPTARG"
       case "$OPTARG" in
         "mute")
+          wpctl "set-mute" "@DEFAULT_AUDIO_SOURCE@" "1"
         ;;
         "toggle")
+          wpctl "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"
         ;;
         "unmute")
+          wpctl "set-mute" "@DEFAULT_AUDIO_SOURCE@" "0"
         ;;
-        "-")
+        *"%-"|"-")
+          wpctl "set-volume" "@DEFAULT_AUDIO_SOURCE@" "3%-"
         ;;
-        "+")
+        *"%+"|"+")
+          wpctl "set-volume" "@DEFAULT_AUDIO_SOURCE@" "3%+"
         ;;
-        *"%-")
-        ;;
-        *"%+")
-        ;;
+        *) exit "2"
       esac
     ;;
     "o")
-      opt_has_o="1"
-      # opt_arg_o="$OPTARG"
       case "$OPTARG" in
         "mute")
+          wpctl "set-mute" "@DEFAULT_SINK@" "0"
         ;;
         "toggle")
+          wpctl "set-mute" "@DEFAULT_SINK@" "toggle"
         ;;
         "unmute")
+          wpctl "set-mute" "@DEFAULT_SINK@" "1"
         ;;
         "-")
+          wpctl "set-volume" "@DEFAULT_SINK@" "3%-"
         ;;
         "+")
+          wpctl "set-volume" "@DEFAULT_SINK@" "3%+"
         ;;
         *"%-")
+          wpctl "set-volume" "@DEFAULT_SINK@" "3%-"
         ;;
         *"%+")
+          wpctl "set-volume" "@DEFAULT_SINK@" "3%+"
         ;;
       esac
+
+      [ "$(pidof "i3blocks")" ] && pkill "-SIGRTMIN+3" "i3blocks"
     ;;
     "?")
-      # echo "$help_info" 1>&2
       exit "2"
     ;;
   esac
