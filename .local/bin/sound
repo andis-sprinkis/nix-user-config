@@ -4,53 +4,33 @@ set -eu
 while getopts i:o: name; do
   case "$name" in
     "i")
-      case "$OPTARG" in
-        "mute")
-          wpctl "set-mute" "@DEFAULT_AUDIO_SOURCE@" "1"
-        ;;
-        "toggle")
-          wpctl "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"
-        ;;
-        "unmute")
-          wpctl "set-mute" "@DEFAULT_AUDIO_SOURCE@" "0"
-        ;;
-        *"%-"|"-")
-          wpctl "set-volume" "@DEFAULT_AUDIO_SOURCE@" "3%-"
-        ;;
-        *"%+"|"+")
-          wpctl "set-volume" "@DEFAULT_AUDIO_SOURCE@" "3%+"
-        ;;
-        *) exit "2"
-      esac
+      device="@DEFAULT_AUDIO_SOURCE@"
     ;;
     "o")
-      case "$OPTARG" in
-        "mute")
-          wpctl "set-mute" "@DEFAULT_SINK@" "0"
-        ;;
-        "toggle")
-          wpctl "set-mute" "@DEFAULT_SINK@" "toggle"
-        ;;
-        "unmute")
-          wpctl "set-mute" "@DEFAULT_SINK@" "1"
-        ;;
-        "-")
-          wpctl "set-volume" "@DEFAULT_SINK@" "3%-"
-        ;;
-        "+")
-          wpctl "set-volume" "@DEFAULT_SINK@" "3%+"
-        ;;
-        *"%-")
-          wpctl "set-volume" "@DEFAULT_SINK@" "3%-"
-        ;;
-        *"%+")
-          wpctl "set-volume" "@DEFAULT_SINK@" "3%+"
-        ;;
-      esac
-
-      [ "$(pidof "i3blocks")" ] && pkill "-SIGRTMIN+3" "i3blocks"
+      device="@DEFAULT_SINK@"
     ;;
-    "?")
+    *)
+      exit "2"
+    ;;
+  esac
+
+  case "$OPTARG" in
+    "mute")
+      exec wpctl "set-mute" "$device" "1"
+    ;;
+    "toggle")
+      exec wpctl "set-mute" "$device" "toggle"
+    ;;
+    "unmute")
+      exec wpctl "set-mute" "$device" "0"
+    ;;
+    *"%-"|"-")
+      exec wpctl "set-volume" "$device" "3%-"
+    ;;
+    *"%+"|"+")
+      exec wpctl "set-volume" "$device" "3%+"
+    ;;
+    *)
       exit "2"
     ;;
   esac
