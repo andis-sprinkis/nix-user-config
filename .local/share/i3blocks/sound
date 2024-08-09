@@ -9,10 +9,10 @@ BLOCK_BUTTON="${BLOCK_BUTTON:-""}"
 reload=""
 
 [ "$BLOCK_BUTTON" ] && case $BLOCK_BUTTON in
-  "1") easyeffects 1>/dev/null 2>/dev/null & disown ;;
-  "3") wpctl set-mute @DEFAULT_SINK@ toggle; reload="1" ;;
-  "4") wpctl set-volume @DEFAULT_SINK@ "${STEP}%+"; reload="1" ;;
-  "5") wpctl set-volume @DEFAULT_SINK@ "${STEP}%-"; reload="1" ;;
+  "1") easyeffects 1> "/dev/null" 2> "/dev/null" & disown ;;
+  "3") wpctl "set-mute" "@DEFAULT_SINK@" "toggle"; reload="1" ;;
+  "4") wpctl "set-volume" "@DEFAULT_SINK@" "${STEP}%+"; reload="1" ;;
+  "5") wpctl "set-volume" "@DEFAULT_SINK@" "${STEP}%-"; reload="1" ;;
 esac
 
 status="$(wpctl get-volume @DEFAULT_SINK@)"
