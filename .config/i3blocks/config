@@ -38,8 +38,8 @@ signal=2
 command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/battery
 interval=10
 
-[volume]
-command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/volume
+[sound]
+command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/sound
 interval=3
 signal=3
 SUFFIX=  
