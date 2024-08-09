@@ -232,15 +232,17 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     1. Create file `/etc/locale.conf`
         ```sh
         LANG=en_US.UTF-8
-        LC_ADDRESS=lv_LV.UTF-8
-        LC_COLLATE=lv_LV.UTF-8
         LC_CTYPE=lv_LV.UTF-8
-        LC_MEASUREMENT=lv_LV.UTF-8
-        LC_MONETARY=lv_LV.UTF-8
         LC_NUMERIC=lv_LV.UTF-8
-        LC_PAPER=lv_LV.UTF-8
-        LC_TELEPHONE=lv_LV.UTF-8
         LC_TIME=lv_LV.UTF-8
+        LC_COLLATE=lv_LV.UTF-8
+        LC_MONETARY=lv_LV.UTF-8
+        LC_MESSAGES=en_US.UTF-8
+        LC_PAPER=lv_LV.UTF-8
+        LC_NAME=lv_LV.UTF-8
+        LC_ADDRESS=lv_LV.UTF-8
+        LC_TELEPHONE=lv_LV.UTF-8
+        LC_MEASUREMENT=lv_LV.UTF-8
         ```
 1. Set the console font and keymap.
    Add to file `/etc/vconsole.conf`:
