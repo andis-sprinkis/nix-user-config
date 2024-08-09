@@ -106,6 +106,7 @@ pipewire-alsa
 pipewire-jack
 pipewire-pulse
 pkgconf
+playerctl
 polkit-gnome
 pyenv
 python
@@ -152,6 +153,7 @@ virtualbox
 virtualbox-guest-iso
 virtualbox-host-modules-arch
 wayland
+wev
 wezterm
 wf-recorder
 wget

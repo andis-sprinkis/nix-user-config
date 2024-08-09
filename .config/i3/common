@@ -48,7 +48,7 @@ bindsym $mod+Shift+f     fullscreen toggle
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space       focus mode_toggle
 
-bindsym $mod+Escape exec screen_lock
+bindsym $mod+Escape exec idle_lock
 
 bindsym $mod+d       layout toggle splitv splith tabbed stacking
 bindsym $mod+Shift+d layout toggle stacking tabbed splith splitv
@@ -114,21 +114,31 @@ bindsym --whole-window $mod+Mod1+button8 exec --no-startup-id ${XDG_DATA_HOME:-$
 
 bindsym Menu exec --no-startup-id $applications_menu
 
+bindsym $mod+p            exec --no-startup-id 'playerctl play-pause'
+bindsym $mod+bracketleft  exec --no-startup-id 'playerctl position 10-'
+bindsym $mod+bracketright exec --no-startup-id 'playerctl position 10+'
+bindsym $mod+braceleft    exec --no-startup-id 'playerctl previous'
+bindsym $mod+braceright   exec --no-startup-id 'playerctl next'
+
+bindsym $mod+period exec --no-startup-id 'wpctl set-volume @DEFAULT_SINK@ 5%+'
+bindsym $mod+comma  exec --no-startup-id 'wpctl set-volume @DEFAULT_SINK@ 5%-'
+bindsym $mod+m      exec --no-startup-id 'wpctl set-mute @DEFAULT_SINK@ toggle'
+
 bindsym XF86AudioRaiseVolume exec --no-startup-id 'wpctl set-volume @DEFAULT_SINK@ 5%+'
 bindsym XF86AudioLowerVolume exec --no-startup-id 'wpctl set-volume @DEFAULT_SINK@ 5%-'
 bindsym XF86AudioMute        exec --no-startup-id 'wpctl set-mute @DEFAULT_SINK@ toggle'
 bindsym XF86AudioMicMute     exec --no-startup-id 'wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle'
 
-bindsym --whole-window $mod+button4 exec --no-startup-id 'wpctl set-mute @DEFAULT_SINK@ 5%+'
-bindsym --whole-window $mod+button5 exec --no-startup-id 'wpctl set-mute @DEFAULT_SINK@ 5%-'
-bindsym --whole-window $mod+button2 exec --no-startup-id 'wpctl set-mute @DEFAULT_SINK@ toggle'
+bindsym $mod+button4 exec --no-startup-id 'wpctl set-mute @DEFAULT_SINK@ 5%+'
+bindsym $mod+button5 exec --no-startup-id 'wpctl set-mute @DEFAULT_SINK@ 5%-'
+bindsym $mod+button2 exec --no-startup-id 'wpctl set-mute @DEFAULT_SINK@ toggle'
 
 bindsym XF86MonBrightnessUp   exec --no-startup-id brightnessctl -q set +3%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl -q set 3%-
 
 bindsym $mod+n exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_empty_workspace
 bindsym $mod+Shift+n exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/move_to_new_empty_workspace
-bindsym $mod+m exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/menu_move_to_workspace
+bindsym $mod+w exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/menu_move_to_workspace
 
 bindsym $mod+slash exec --no-startup-id i3_key_mappings_desktop
 
