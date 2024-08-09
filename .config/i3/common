@@ -120,18 +120,18 @@ bindsym $mod+braceright   exec --no-startup-id 'playerctl position 10+'
 bindsym $mod+bracketleft  exec --no-startup-id 'playerctl previous'
 bindsym $mod+bracketright exec --no-startup-id 'playerctl next'
 
-bindsym $mod+period exec --no-startup-id 'wpctl set-volume @DEFAULT_SINK@ 3%+'
-bindsym $mod+comma  exec --no-startup-id 'wpctl set-volume @DEFAULT_SINK@ 3%-'
-bindsym $mod+m      exec --no-startup-id 'wpctl set-mute @DEFAULT_SINK@ toggle'
+bindsym $mod+period exec --no-startup-id 'sound "+"'
+bindsym $mod+comma  exec --no-startup-id 'sound "-"'
+bindsym $mod+m      exec --no-startup-id 'sound "toggle"'
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id 'wpctl set-volume @DEFAULT_SINK@ 3%+'
-bindsym XF86AudioLowerVolume exec --no-startup-id 'wpctl set-volume @DEFAULT_SINK@ 3%-'
-bindsym XF86AudioMute        exec --no-startup-id 'wpctl set-mute @DEFAULT_SINK@ toggle'
-bindsym XF86AudioMicMute     exec --no-startup-id 'wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle'
+bindsym XF86AudioRaiseVolume exec --no-startup-id 'sound "+"'
+bindsym XF86AudioLowerVolume exec --no-startup-id 'sound "-"'
+bindsym XF86AudioMute        exec --no-startup-id 'sound "toggle"'
+bindsym XF86AudioMicMute     exec --no-startup-id 'sound "toggle" "input"'
 
-bindsym $mod+button4 exec --no-startup-id 'wpctl set-mute @DEFAULT_SINK@ 3%+'
-bindsym $mod+button5 exec --no-startup-id 'wpctl set-mute @DEFAULT_SINK@ 3%-'
-bindsym $mod+button2 exec --no-startup-id 'wpctl set-mute @DEFAULT_SINK@ toggle'
+bindsym $mod+button4 exec --no-startup-id 'sound "+"'
+bindsym $mod+button5 exec --no-startup-id 'sound "-"'
+bindsym $mod+button2 exec --no-startup-id 'sound "toggle"'
 
 bindsym XF86MonBrightnessUp   exec --no-startup-id brightnessctl -q set +3%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl -q set 3%-

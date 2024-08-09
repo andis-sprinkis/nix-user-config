@@ -1,39 +1,43 @@
 #!/usr/bin/env sh
 set -eu
 
-while getopts i:o: name; do
-  case "$name" in
-    "i")
-      device="@DEFAULT_AUDIO_SOURCE@"
-    ;;
-    "o")
-      device="@DEFAULT_SINK@"
-    ;;
-    *)
-      exit "2"
-    ;;
-  esac
+[ "$1" ] || exit "2"
 
-  case "$OPTARG" in
-    "mute")
-      exec wpctl "set-mute" "$device" "1"
-    ;;
-    "toggle")
-      exec wpctl "set-mute" "$device" "toggle"
-    ;;
-    "unmute")
-      exec wpctl "set-mute" "$device" "0"
-    ;;
-    *"%-"|"-")
-      exec wpctl "set-volume" "$device" "3%-"
-    ;;
-    *"%+"|"+")
-      exec wpctl "set-volume" "$device" "3%+"
-    ;;
-    *)
-      exit "2"
-    ;;
-  esac
-done
+device=""
+change="3"
+signal="3"
 
-exit "1"
+case "${2:-"output"}" in
+  "source")
+    device="@DEFAULT_AUDIO_SOURCE@"
+  ;;
+  "output")
+    device="@DEFAULT_SINK@"
+  ;;
+  *)
+    device="$2"
+  ;;
+esac
+
+case "$1" in
+  "mute")
+    wpctl "set-mute" "$device" "1"
+  ;;
+  "toggle")
+    wpctl "set-mute" "$device" "toggle"
+  ;;
+  "unmute")
+    wpctl "set-mute" "$device" "0"
+  ;;
+  "-"|*"%-")
+    wpctl "set-volume" "$device" "${change}%-"
+  ;;
+  "+"|*"%+")
+    wpctl "set-volume" "$device" "${change}%+"
+  ;;
+  *)
+    exit "2"
+  ;;
+esac
+
+[ "$(pidof "i3blocks")" ] && pkill "-SIGRTMIN+${signal}" "i3blocks"
