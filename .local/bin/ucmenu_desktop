@@ -6,17 +6,17 @@ set -e
 
   output="$(ucmenu -m "dmenu -p '%P:'" -n "dmenu -p '%P:'" -r "dmenu -p '%P:'")"
 
-  [ "$output" ] && {
-    xdotool windowactivate "$win"
+  [ "$output" ] || exit
 
-    tmp="$output"
-    sleep "0.5"
-    while [ -n "$tmp" ]; do
-      rest="${tmp#?}" first="${tmp%"$rest"}"
-      xdotool key "U$(printf "$first" | iconv -f "utf8" -t "utf32le" | hexdump -e '"%04X\n"')"
-      tmp="$rest"
-    done
-  }
+  xdotool windowactivate "$win"
+
+  tmp="$output"
+  sleep "0.5"
+  while [ -n "$tmp" ]; do
+    rest="${tmp#?}" first="${tmp%"$rest"}"
+    xdotool key "U$(printf "$first" | iconv -f "utf8" -t "utf32le" | hexdump -e '"%04X\n"')"
+    tmp="$rest"
+  done
 
   exit
 }
@@ -24,8 +24,8 @@ set -e
 [ "$WAYLAND_DISPLAY" ] && {
   output="$(ucmenu -m "wmenu -p '%P:'" -n "wmenu -p '%P:'" -r "wmenu -p '%P:'")"
 
-  [ "$output" ] && {
-    sleep "0.5"
-    wtype "$output"
-  }
+  [ "$output" ] || exit
+
+  sleep "0.5"
+  wtype "$output"
 }
