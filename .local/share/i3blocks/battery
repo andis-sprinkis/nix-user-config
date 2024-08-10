@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+[ "$(find "/sys/class/power_supply/" -name "BAT*")" ] || exit
+
 [ "$BLOCK_BUTTON" ] && case "$BLOCK_BUTTON" in
   "1"|"3")
     cmd="echo -n \"\033]0;Battery information\007\"; acpi -i | ${PAGER}"

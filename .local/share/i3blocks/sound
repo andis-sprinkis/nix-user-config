@@ -25,3 +25,5 @@ status="$(wpctl get-volume @DEFAULT_SINK@)"
 }
 
 [ "$reload" ] && [ "$signal" ] && exec pkill "-SIGRTMIN+${signal}" i3blocks
+
+exit "0"
