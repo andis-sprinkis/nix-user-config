@@ -41,7 +41,7 @@ ws_name_input="$(echo $("$@" | "$cmd_menu" -p "Rename workspace \"${ws_name}\":"
 
   ws_name_new_name_title="$(echo "$ws_name_input" | cut -s -d":" -f "2")"
 
-  [ -z "$(echo $ws_name_new_name_title)" ] && exit 2
+  [ "$(echo $ws_name_new_name_title)" ] || exit 2
 
   exec i3-msg rename workspace to "${ws_name_new_name_num}: ${ws_name_new_name_title}"
 }
