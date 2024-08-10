@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+rfkill -rn -o "TYPE" | grep -xq "bluetooth" || exit
+
 BLOCK_BUTTON="${BLOCK_BUTTON:-""}" signal="${signal-""}"
 controller_id="" controller_is_on="0" dev_count="0"
 
@@ -12,7 +14,7 @@ controller_id="$(bluetoothctl "list" 2> "/dev/null" | grep "\[default\]" | cut -
 
 reload() {
   [ "${signal}" ] && {
-    (sleep "${1:-0.5}"; pkill "-SIGRTMIN+${signal}" i3blocks) 1>/dev/null 2>/dev/null & disown
+    (sleep "${1:-0.5}"; pkill "-SIGRTMIN+${signal}" i3blocks) 1> "/dev/null" 2> "/dev/null" & disown
   }
 }
 
@@ -24,12 +26,12 @@ case "$BLOCK_BUTTON" in
   "3")
     case "$controller_is_on" in
       "0")
-        rfkill unblock bluetooth
+        rfkill "unblock" "bluetooth" 1> "/dev/null" 2> "/dev/null" & disown
         echo "Enabling Bluetooth..."
         reload "5"
       ;;
       "1")
-        rfkill block bluetooth
+        rfkill "block" "bluetooth" 1> "/dev/null" 2> "/dev/null" & disown
         echo "Disabling Bluetooth..."
         reload
       ;;
