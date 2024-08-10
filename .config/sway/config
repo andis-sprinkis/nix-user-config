@@ -54,9 +54,9 @@ bindsym --locked $mod+period exec --no-startup-id 'sound "+"'
 bindsym --locked $mod+comma  exec --no-startup-id 'sound "-"'
 bindsym --locked $mod+m      exec --no-startup-id 'sound "toggle"'
 
-bindsym --locked $mod+button4 exec --no-startup-id 'sound "+"'
-bindsym --locked $mod+button5 exec --no-startup-id 'sound "-"'
-bindsym --locked $mod+button2 exec --no-startup-id 'sound "toggle"'
+bindsym --locked --whole-window $mod+button4 exec --no-startup-id 'sound "+"'
+bindsym --locked --whole-window $mod+button5 exec --no-startup-id 'sound "-"'
+bindsym --locked --whole-window $mod+button2 exec --no-startup-id 'sound "toggle"'
 
 bindsym --locked XF86AudioRaiseVolume exec --no-startup-id 'sound "+"'
 bindsym --locked XF86AudioLowerVolume exec --no-startup-id 'sound "-"'

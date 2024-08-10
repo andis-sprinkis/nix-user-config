@@ -129,9 +129,9 @@ bindsym XF86AudioLowerVolume exec --no-startup-id 'sound "-"'
 bindsym XF86AudioMute        exec --no-startup-id 'sound "toggle"'
 bindsym XF86AudioMicMute     exec --no-startup-id 'sound "toggle" "input"'
 
-bindsym $mod+button4 exec --no-startup-id 'sound "+"'
-bindsym $mod+button5 exec --no-startup-id 'sound "-"'
-bindsym $mod+button2 exec --no-startup-id 'sound "toggle"'
+bindsym --whole-window $mod+button4 exec --no-startup-id 'sound "+"'
+bindsym --whole-window $mod+button5 exec --no-startup-id 'sound "-"'
+bindsym --whole-window $mod+button2 exec --no-startup-id 'sound "toggle"'
 
 bindsym XF86MonBrightnessUp   exec --no-startup-id brightnessctl -q set +3%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl -q set 3%-
