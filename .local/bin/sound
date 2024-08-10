@@ -44,6 +44,4 @@ case "$1" in
   ;;
 esac
 
-[ "$(pidof "i3blocks")" ] && {
-  pkill "-SIGRTMIN+3" "i3blocks" 1> "/dev/null" 2> "/dev/null" & disown
-}
+[ "$(pidof "i3blocks")" ] && pkill "-SIGRTMIN+3" "i3blocks" 1> "/dev/null" 2> "/dev/null" & disown
