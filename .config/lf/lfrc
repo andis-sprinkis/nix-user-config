@@ -84,12 +84,13 @@ cmd on-cd &{{
 on-cd
 
 cmd on-redraw %{{
-  [ $lf_width -le 35  ] && { lf -remote "send ${id} set ratios 100:1"; exit; }
-  [ $lf_width -le 60  ] && { lf -remote "send ${id} set ratios 1:2"; exit; }
-  [ $lf_width -le 100 ] && { lf -remote "send ${id} set ratios 2:3:4"; exit; }
-  [ $lf_width -le 140 ] && { lf -remote "send ${id} set ratios 1:2:3:4"; exit; }
+  call() { exec lf -remote "send ${id} set ratios ${1}"; }
 
-  lf -remote "send ${id} set ratios 1:2:4:6:8"
+  [ $lf_width -le 35  ] && call "100:1"
+  [ $lf_width -le 60  ] && call "1:2"
+  [ $lf_width -le 100 ] && call "2:3:4"
+  [ $lf_width -le 140 ] && call "1:2:3:4"
+                           call "1:2:4:6:8"
 }}
 
 cmd follow-symlink %{{
@@ -97,12 +98,12 @@ cmd follow-symlink %{{
 }}
 
 map <c-z> $ kill -STOP $PPID
+map <enter> to-previewer
 map P push :paste-to-file<space>
 map R delete
 map X aunpack
 map Y copy-path
 map ` !true
 map b :mark-load
-map m to-previewer
-map o push :open-with<space>
 map gL follow-symlink
+map o push :open-with<space>
