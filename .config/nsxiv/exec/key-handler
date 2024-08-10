@@ -3,28 +3,44 @@
 case "$1" in
   "f")
     while read file; do file_manager_desktop "$file" & done
-    ;;
-  "e")
-    # TODO: paths in $TERMINAL $EDITOR
-    ;;
+  ;;
   "Y")
     files="$(while read file; do echo "\"$file\""; done)"
-    [ "$WAYLAND_DISPLAY" ] && [ "$(command -v "wl-copy")" ] && { printf '%s' "$files" | wl-copy; } && exit
-    [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$(command -v "xclip")" ] && { printf '%s' "$files" | xclip -sel "clipboard"; } && exit
 
-    exit 1
-    ;;
+    [ "$WAYLAND_DISPLAY" ] && [ "$(command -v "wl-copy")" ] && {
+      printf '%s' "$files" | wl-copy
+      exit
+    }
+
+    [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$(command -v "xclip")" ] && {
+      printf '%s' "$files" | xclip -sel "clipboard"
+      exit
+    }
+
+    exit "1"
+  ;;
   "y")
-    # TODO: copy image (sway)
-    while read file; do xclip -selection clipboard -target image/png "$file"; done
-    ;;
+    [ "$WAYLAND_DISPLAY" ] && [ "$(command -v "wl-copy")" ] && {
+      while read file; do "wl-copy" < "$file" ; done
+      exit
+    }
+
+    [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$(command -v "xclip")" ] && {
+      while read file; do xclip -selection "clipboard" -target "image/png" "$file"; done
+      exit
+    }
+
+    exit "1"
+  ;;
   "o")
     # TODO: open with wmenu/dmenu prompt
-    ;;
+  ;;
   "?")
     # TODO: help
-    ;;
+  ;;
   *)
-    exit 1;
-    ;;
+    exit "2";
+  ;;
 esac
+
+exit "2"
