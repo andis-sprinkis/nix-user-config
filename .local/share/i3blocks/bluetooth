@@ -10,27 +10,31 @@ controller_id="$(bluetoothctl "list" 2> "/dev/null" | grep "\[default\]" | cut -
   bluetoothctl show "$controller_id" 2> "/dev/null" | grep -q "PowerState: on" && controller_is_on="1"
 }
 
+reload() {
+  [ "${signal}" ] && {
+    (sleep "${1:-0.5}"; pkill "-SIGRTMIN+${signal}" i3blocks) 1>/dev/null 2>/dev/null & disown
+  }
+}
+
 case "$BLOCK_BUTTON" in
   # "1")
-  "1"|"3")
+  "1")
     blueman-manager 1> "/dev/null" 2> "/dev/null" & disown
   ;;
-  # "3")
-  #   case "$controller_is_on" in
-  #     "0")
-  #       set_power="on"
-  #     ;;
-  #     "1")
-  #       set_power="off"
-  #     ;;
-  #   esac
-  #
-  #   bluetoothctl power "$set_power" 1> "/dev/null" 2> "/dev/null" & disown;
-  #
-  #   [ "$signal" ] && {
-  #     (sleep "0.5"; pkill "-SIGRTMIN+${signal}" "i3blocks") 1> "/dev/null" 2> "/dev/null" & disown
-  #   }
-  # ;;
+  "3")
+    case "$controller_is_on" in
+      "0")
+        rfkill unblock bluetooth
+        echo "Enabling Bluetooth..."
+        reload "5"
+      ;;
+      "1")
+        rfkill block bluetooth
+        echo "Disabling Bluetooth..."
+        reload
+      ;;
+    esac
+  ;;
 esac
 
 case "$dev_count" in
