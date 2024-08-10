@@ -114,7 +114,7 @@ bindsym --whole-window $mod+Mod1+button8 exec --no-startup-id ${XDG_DATA_HOME:-$
 
 bindsym Menu exec --no-startup-id $applications_menu
 
-bindsym $mod+p            exec --no-startup-id 'playerctl play-pause'
+bindsym $mod+backslash    exec --no-startup-id 'playerctl play-pause'
 bindsym $mod+braceleft    exec --no-startup-id 'playerctl position 10-'
 bindsym $mod+braceright   exec --no-startup-id 'playerctl position 10+'
 bindsym $mod+bracketleft  exec --no-startup-id 'playerctl previous'

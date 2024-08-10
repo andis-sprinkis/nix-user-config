@@ -1,0 +1,52 @@
+#!/usr/bin/env sh
+
+BLOCK_BUTTON="${BLOCK_BUTTON:-""}" signal="${signal-""}"
+controller_id="" controller_is_on="0" dev_count="0"
+
+controller_id="$(bluetoothctl "list" 2> "/dev/null" | grep "\[default\]" | cut -f2 -d" ")"
+
+[ "$controller_id" ] || exit
+
+dev_count="$(bluetoothctl "devices" "Connected" 2> "/dev/null" | wc -l)"
+bluetoothctl show "$controller_id" 2> "/dev/null" | grep -q "PowerState: on" && controller_is_on="1"
+
+case "$BLOCK_BUTTON" in
+  "1")
+    blueman-manager 1> "/dev/null" 2> "/dev/null" & disown
+  ;;
+  "3")
+    case "$controller_is_on" in
+      "0")
+        set_power="on"
+      ;;
+      "1")
+        set_power="off"
+      ;;
+    esac
+
+    bluetoothctl power "$set_power" 1> "/dev/null" 2> "/dev/null" & disown;
+
+    [ "$signal" ] && {
+      (sleep "0.5"; pkill "-SIGRTMIN+${signal}" "i3blocks") 1> "/dev/null" 2> "/dev/null" & disown
+    }
+  ;;
+esac
+
+case "$dev_count" in
+  "0")
+    case "$controller_is_on" in
+      "0")
+        echo "Bluetooth disabled"
+      ;;
+      "1")
+        echo "Bluetooth enabled"
+      ;;
+    esac
+  ;;
+  "1")
+    echo "${dev_count} Bluetooth device"
+  ;;
+  "*")
+    echo "${dev_count} Bluetooth devices"
+  ;;
+esac

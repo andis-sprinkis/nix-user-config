@@ -43,7 +43,7 @@ bindsym $mod+Print       exec screenshot_grim
 bindsym $mod+Shift+Print exec screenshot_grim --active
 bindsym $mod+Ctrl+Print  exec screenshot_grim --select
 
-bindsym --locked $mod+p            exec --no-startup-id 'playerctl play-pause'
+bindsym --locked $mod+backslash    exec --no-startup-id 'playerctl play-pause'
 bindsym --locked $mod+braceleft    exec --no-startup-id 'playerctl position 10-'
 bindsym --locked $mod+braceright   exec --no-startup-id 'playerctl position 10+'
 bindsym --locked $mod+bracketleft  exec --no-startup-id 'playerctl previous'

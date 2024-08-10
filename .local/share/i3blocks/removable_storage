@@ -34,7 +34,7 @@ IFS="$ifs_old"
 
   case "$rsds_count" in
     "0") exit ;;
-    "1") echo "$rsds_count device mounted" ;;
-    *) echo "$rsds_count devices mounted" ;;
+    "1") echo "$rsds_count storage device" ;;
+    *) echo "$rsds_count storage devices" ;;
   esac
 }
