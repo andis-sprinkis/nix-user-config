@@ -1,0 +1,16 @@
+{
+    "output": {
+        "bass_loudness#0": {
+            "bypass": false,
+            "input-gain": 0.0,
+            "link": -12.999999999999986,
+            "loudness": -1.799999999999999,
+            "output": -8.99999999999999,
+            "output-gain": 0.4
+        },
+        "blocklist": [],
+        "plugins_order": [
+            "bass_loudness#0"
+        ]
+    }
+}
