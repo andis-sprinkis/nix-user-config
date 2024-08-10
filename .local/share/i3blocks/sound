@@ -8,7 +8,7 @@ STEP="${STEP:-"1"}"
 BLOCK_BUTTON="${BLOCK_BUTTON:-""}"
 reload=""
 
-case $BLOCK_BUTTON in
+[ "$BLOCK_BUTTON" ] && case $BLOCK_BUTTON in
   "1") easyeffects 1> "/dev/null" 2> "/dev/null" & disown ;;
   "3") wpctl "set-mute" "@DEFAULT_SINK@" "toggle"; reload="1" ;;
   "4") wpctl "set-volume" "@DEFAULT_SINK@" "${STEP}%+"; reload="1" ;;
