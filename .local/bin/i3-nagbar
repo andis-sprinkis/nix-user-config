@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+. "$GUI_ENV"
+
+exec "/usr/bin/i3-nagbar" \
+  --font "pango:${GUI_FONT_FAMILY_GUI} ${GUI_FONT_STYLE} ${GUI_FONT_SIZE_X11}" \
+  "$@"
