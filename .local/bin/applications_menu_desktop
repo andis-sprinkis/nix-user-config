@@ -13,7 +13,7 @@ cmd_inc_appimage=""
 
 cmd_applications_menu="(cat; ${cmd_inc_appimage}) | ${cmd_menu}"
 
-killall -u "$(whoami)" "$cmd_menu"
+killall -u "$(whoami)" "$cmd_menu" 2> "/dev/null"
 
 exec j4-dmenu-desktop \
   --no-generic \
