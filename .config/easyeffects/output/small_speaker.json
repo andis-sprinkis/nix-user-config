@@ -1,16 +1,32 @@
 {
     "output": {
+        "bass_enhancer#0": {
+            "amount": 2.0000000000000004,
+            "blend": 0.0,
+            "bypass": false,
+            "floor": 20.0,
+            "floor-active": false,
+            "harmonics": 8.5,
+            "input-gain": 1.7,
+            "output-gain": -0.6,
+            "scope": 100.0
+        },
         "bass_loudness#0": {
             "bypass": false,
             "input-gain": 0.0,
             "link": -12.999999999999986,
-            "loudness": -1.799999999999999,
+            "loudness": -1.899999999999999,
             "output": -8.99999999999999,
             "output-gain": 0.4
         },
         "blocklist": [],
+        "level_meter#0": {
+            "bypass": false
+        },
         "plugins_order": [
-            "bass_loudness#0"
+            "bass_enhancer#0",
+            "bass_loudness#0",
+            "level_meter#0"
         ]
     }
 }
