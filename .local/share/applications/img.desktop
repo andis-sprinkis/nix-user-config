@@ -2,4 +2,3 @@
 Type=Application
 Name=Image viewer
 Exec=nsxiv-rifle -- %f
-NoDisplay=true

@@ -35,10 +35,11 @@ case "$1" in
     exit "1"
   ;;
   "o")
-    # TODO: open with wmenu/dmenu prompt
+    files="$(while read file; do echo "\"$file\""; done)"
+    open_with_menu_desktop "$files"
   ;;
   "?")
-    # TODO: help
+    $TERMINAL -e "$SHELL" -c "$PAGER $HOME/.config/nsxiv/exec/key-handler"
   ;;
   *)
     exit "2";
