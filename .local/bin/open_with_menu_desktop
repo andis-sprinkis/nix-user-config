@@ -35,13 +35,12 @@ for a in $cmd_args; do
   cmd="${cmd:+$cmd }${arg}"
 done
 
-cmd="${cmd#"/bin/sh -c "}"
-
-[ "$cmd" ] || exit "2"
-
-echo "$cmd" | cut -f1 -d" " | grep -iq '^.*.\.appimage$' && {
+echo "$cmd" | cut -f3 -d" " | grep -iq '^.*.\.appimage$' && {
+  cmd="${cmd#"/bin/sh -c "}"
   $cmd "$@"
   exit
 }
 
-"$TERMINAL" -e "$cmd_args" "$@"
+[ "$cmd" ] || exit "2"
+
+$cmd "$*"
