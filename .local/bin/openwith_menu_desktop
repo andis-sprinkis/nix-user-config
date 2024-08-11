@@ -25,8 +25,6 @@ cmd_args="$(\
   2> "/dev/null" \
 )"
 
-[ "$cmd_args" ] || exit "2"
-
 cmd=""
 for a in $cmd_args; do
   arg="$a"
@@ -35,12 +33,21 @@ for a in $cmd_args; do
   cmd="${cmd:+$cmd }${arg}"
 done
 
-echo "$cmd" | cut -f3 -d" " | grep -iq '^.*.\.appimage$' && {
-  cmd="${cmd#"/bin/sh -c "}"
-  $cmd "$@"
+echo "$cmd" | grep -q "^${TERMINAL} -e " && {
+  $cmd "$*" 1> "/dev/null" 2> "/dev/null" & disown
   exit
 }
 
-[ "$cmd" ] || exit "2"
+echo "$cmd" | grep -q "^/bin/sh -c " || {
+  $cmd "$*" 1> "/dev/null" 2> "/dev/null" & disown 
+  exit
+}
 
-$cmd "$*"
+cmd="${cmd#"/bin/sh -c "}"
+
+echo "$cmd" | grep -iq '^.*.\.appimage$' && {
+  $cmd "$*" 1> "/dev/null" 2> "/dev/null" & disown
+  exit
+}
+
+$TERMINAL -e $cmd "$*" 1> "/dev/null" 2> "/dev/null" & disown
