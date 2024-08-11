@@ -15,7 +15,17 @@ cmd_applications_menu="(cat; ${cmd_inc_appimage}) | ${cmd_menu}"
 
 killall -u "$(whoami)" "$cmd_menu" 2> "/dev/null"
 
-cmd_args="$(j4-dmenu-desktop --no-generic --display-binary --term-mode="custom" --term="{cmdline@}" --dmenu="$cmd_applications_menu" --no-exec 2> "/dev/null")"
+cmd_args="$(\
+  j4-dmenu-desktop \
+  --no-generic \
+  --skip-i3-exec-check \
+  --display-binary \
+  --term-mode="custom" \
+  --term="${TERMINAL} -e {cmdline@}" \
+  --dmenu="$cmd_applications_menu" \
+  --no-exec \
+  2> "/dev/null" \
+)"
 
 [ "$cmd_args" ] || exit "2"
 
@@ -29,4 +39,4 @@ done
 
 [ "$cmd" ] || exit "2"
 
-$cmd "$@"
+$cmd "$*"

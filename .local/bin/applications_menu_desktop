@@ -18,7 +18,8 @@ killall -u "$(whoami)" "$cmd_menu" 2> "/dev/null"
 exec j4-dmenu-desktop \
   --no-generic \
   --display-binary \
-  --term "$TERMINAL" \
+  --skip-i3-exec-check \
+  --term="$TERMINAL" \
   --dmenu="$cmd_applications_menu" \
   --usage-log="$path_usage_log" \
   2> "/dev/null"
