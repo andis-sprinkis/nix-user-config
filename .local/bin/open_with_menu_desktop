@@ -19,7 +19,8 @@ cmd="$(j4-dmenu-desktop --no-generic --display-binary --term-mode="custom" --ter
 
 [ "$cmd" ] || exit "2"
 
-cmd="${cmd%\'}"
-cmd="${cmd#\'}"
+# TODO: fix commnad '' matching
+cmd="${cmd%%\'}"
+cmd="${cmd##\'}"
 
 $cmd "$@"

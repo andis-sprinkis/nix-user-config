@@ -35,7 +35,6 @@ case "$1" in
     exit "1"
   ;;
   "o")
-    # TODO: fix
     files="$(while read file; do echo "\"$file\""; done)"
     open_with_menu_desktop "$files"
   ;;
