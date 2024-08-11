@@ -38,8 +38,8 @@ case "$1" in
     files="$(while read file; do echo "\"$file\""; done)"
     open_with_menu_desktop "$files"
   ;;
-  "?")
-    $TERMINAL -e "$SHELL" -c "$PAGER $HOME/.config/nsxiv/exec/key-handler"
+  "h")
+    $TERMINAL -e "$SHELL" -c "$PAGER ${XDG_CONFIG_HOME:-$HOME/.config}/nsxiv/exec/key-handler" 1> "/dev/null" 2> "/dev/null" & disown
   ;;
   *)
     exit "2";
