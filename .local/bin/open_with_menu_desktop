@@ -27,4 +27,6 @@ for a in $cmd_args; do
   cmd="${cmd:+$cmd }${arg}"
 done
 
+[ "$cmd" ] || exit "2"
+
 $cmd "$@"

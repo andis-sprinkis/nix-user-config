@@ -7,7 +7,8 @@ case "$1" in
     while read file; do file_manager_desktop "$file" & done
   ;;
   "Y")
-    files="$(while read file; do echo "\"$file\""; done)"
+    files="$(while read file; do echo "${files:+
+}$file"; done)"
 
     [ "$WAYLAND_DISPLAY" ] && [ "$(command -v "wl-copy")" ] && {
       printf '%s' "$files" | wl-copy
@@ -35,8 +36,8 @@ case "$1" in
     exit "1"
   ;;
   "o")
-    # TODO: fix paths with spaces
-    files="$(while read file; do echo "\"$file\""; done)"
+    files="$(while read file; do echo "${files:+
+}$file"; done)"
     open_with_menu_desktop "$files"
   ;;
   "h")
