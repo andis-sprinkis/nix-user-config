@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
 cmd_menu=""
-[ "$WAYLAND_DISPLAY" ] && cmd_menu="wmenu"
-[ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && cmd_menu="dmenu"
+[ "$WAYLAND_DISPLAY" ] && cmd_menu="wmenu -p 'Open with:'"
+[ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && cmd_menu="dmenu -p 'Open with:'"
 [ "$cmd_menu" ] || exit "1"
 
 dir_appimage="${APPIMAGE_BIN_HOME:-$HOME/.local/opt/appimage}"
