@@ -1,23 +1,23 @@
 {
     "output": {
         "bass_enhancer#0": {
-            "amount": 2.0000000000000004,
+            "amount": 2.7755575615628914e-17,
             "blend": 0.0,
             "bypass": false,
             "floor": 20.0,
             "floor-active": false,
             "harmonics": 8.5,
-            "input-gain": 1.7,
-            "output-gain": -0.6,
+            "input-gain": 0.0,
+            "output-gain": 0.0,
             "scope": 100.0
         },
         "bass_loudness#0": {
             "bypass": false,
             "input-gain": 0.0,
-            "link": -12.999999999999986,
-            "loudness": -1.899999999999999,
-            "output": -8.99999999999999,
-            "output-gain": 0.4
+            "link": -9.1,
+            "loudness": -2.2999999999999994,
+            "output": -8.700000000000001,
+            "output-gain": 0.0
         },
         "blocklist": [],
         "equalizer#0": {
