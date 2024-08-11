@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
-cmd=""
-
 cmd_menu=""
 [ "$WAYLAND_DISPLAY" ] && cmd_menu="wmenu"
 [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && cmd_menu="dmenu"
