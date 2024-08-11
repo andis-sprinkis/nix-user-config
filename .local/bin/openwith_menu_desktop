@@ -25,6 +25,8 @@ cmd_args="$(\
   2> "/dev/null" \
 )"
 
+[ "$cmd_args" ] || exit
+
 cmd=""
 for a in $cmd_args; do
   arg="$a"
