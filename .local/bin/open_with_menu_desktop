@@ -35,6 +35,8 @@ for a in $cmd_args; do
   cmd="${cmd:+$cmd }${arg}"
 done
 
+cmd="${cmd#"/bin/sh -c "}"
+
 [ "$cmd" ] || exit "2"
 
 $cmd "$@"
