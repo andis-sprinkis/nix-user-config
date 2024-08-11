@@ -39,4 +39,9 @@ cmd="${cmd#"/bin/sh -c "}"
 
 [ "$cmd" ] || exit "2"
 
-$cmd "$@"
+echo "$cmd" | cut -f1 -d" " | grep -iq '^.*.\.appimage$' && {
+  $cmd "$@"
+  exit
+}
+
+"$TERMINAL" -e "$cmd_args" "$@"
