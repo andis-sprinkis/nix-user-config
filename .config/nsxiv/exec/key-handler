@@ -38,7 +38,7 @@ case "$1" in
   "o")
     files="$(while read file; do echo "${files:+
 }$file"; done)"
-    open_with_menu_desktop "$files"
+    openwith_menu_desktop "$files"
   ;;
   "h")
     $TERMINAL -e "$SHELL" -c "$PAGER ${XDG_CONFIG_HOME:-$HOME/.config}/nsxiv/exec/key-handler" 1> "/dev/null" 2> "/dev/null" & disown
