@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+# set -eu
+
+pid="$(swaymsg -t get_tree | jq '.. | select(.type?)| select(.focused == true).pid' 2> "/dev/null")"
+
+[ "$pid" ] || exit "1"
+
+swaynag -t "warning" -m "Kill process PID ${pid}?" -B "Yes" "kill -9 ${pid}"
