@@ -5,11 +5,13 @@ cmd_menu=""
 [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && cmd_menu="dmenu -p 'Open with:'"
 [ "$cmd_menu" ] || exit "1"
 
-dir_appimage="${APPIMAGE_BIN_HOME:-$HOME/.local/opt/appimage}"
-cmd_inc_appimage=""
-[ -d "$dir_appimage" ] && cmd_inc_appimage="stest -flx \"${dir_appimage}/\" | awk '{ print \"${dir_appimage}/\"\$0 }' | sort -u;"
+# dir_appimage="${APPIMAGE_BIN_HOME:-$HOME/.local/opt/appimage}"
+# cmd_inc_appimage=""
+# [ -d "$dir_appimage" ] && cmd_inc_appimage="(stest -flx \"${dir_appimage}/\" | awk '{ print \"${dir_appimage}/\"\$0 }' | sort -u);"
 
-cmd_applications_menu="(cat; ${cmd_inc_appimage}) | ${cmd_menu}"
+cmd_inc_bin_path="(stest -flx \$(echo \$PATH | tr : ' ')"
+
+cmd_applications_menu="(cat; ${cmd_inc_bin_path} | sort -u)) | ${cmd_menu}"
 
 killall -u "$(whoami)" "$cmd_menu" 2> "/dev/null"
 
