@@ -19,11 +19,14 @@ cmd open ${{
 
   case $mime in
     application/octet-stream)
-      exec lf -remote "send ${id} push :open-with<space>" ;;
+      exec lf -remote "send ${id} push :open-with<space>"
+    ;;
     application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
-      exec $PAGER $fx ;;
+      exec $PAGER $fx
+    ;;
     text/*|application/xml|application/*json*|application/xhtml*|application/javascript|application/x-httpd-php|application/x-wine-extension-ini|application/x-subrip|application/x-awk|inode/x-empty)
-      exec $PAGER $fx ;;
+      exec $PAGER $fx 
+    ;;
   esac
 
   [ "$(command -v "xdg-mime")" ] && [ -z "$(xdg-mime query default $mime)" ] && {
@@ -72,7 +75,7 @@ cmd copy-path ${{
   [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$(command -v "xclip")" ] && { printf '%s' "$fx" | xclip -sel "clipboard"; } && exit
   [ "$(command -v "pbcopy")" ] && { printf '%s' "$fx" | pbcopy; } && exit
 
-  exit 1
+  exit "1"
 }}
 
 cmd paste-to-file ${{
