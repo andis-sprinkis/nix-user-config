@@ -6,6 +6,7 @@ set font "sans-serif regular 12"
 set guioptions ""
 set recolor true
 set recolor-keephue true
+set selection-notification false
 set selection-clipboard clipboard
 set show-hidden true
 set statusbar-basename true
