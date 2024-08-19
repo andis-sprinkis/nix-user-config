@@ -13,6 +13,7 @@ set statusbar-basename true
 set window-title-basename true
 set window-title-page true
 set scroll-full-overlap 0.15
+set show-signature-information true
 
 map + zoom default
 map - zoom out
