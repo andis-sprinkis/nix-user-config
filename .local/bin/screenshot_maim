@@ -1,31 +1,31 @@
 #!/usr/bin/env sh
-set -e
+set -eu
 
 msg_usage="$(basename "$0") usage: [--active] [--select] [--help | -h]"
 
-path_dir="$HOME/scr"
-path_file="${path_dir}/$(date "+%s").png"
+path_dir="${HOME}/scr"
+path_img="${path_dir}/$(date "+%s").png"
 
-[ -z "$1" ] && {
+[ "$*" ] || {
   mkdir -p "$path_dir"
-  exec maim -u "$path_file"
+  exec maim -u "$path_img"
 }
 
 case "$1" in
   --help|-h)
     echo "$msg_usage"
     exit
-    ;;
+  ;;
   --active)
     mkdir -p "$path_dir"
-    exec maim -u --window "$(xdotool getactivewindow)" "$path_file"
-    ;;
+    exec maim -u --window "$(xdotool getactivewindow)" "$path_img"
+  ;;
   --select)
     mkdir -p "$path_dir"
-    exec maim -u --select "$path_file"
-    ;;
+    exec maim -u --select "$path_img"
+  ;;
   *)
     echo "$msg_usage"
-    exit 1
-    ;;
+    exit "1"
+  ;;
 esac

@@ -3,30 +3,30 @@ set -eu
 
 msg_usage="$(basename "$0") usage: [--active] [--select] [--help | -h]"
 
-path_dir="$HOME/scr"
-path_file="${path_dir}/$(date "+%s").png"
+path_dir="${HOME}/scr"
+path_img="${path_dir}/$(date "+%s").png"
 
-[ -z "$*" ] && {
+[ "$*" ] || {
   mkdir -p "$path_dir"
-  exec grim -o "$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')" "$path_file"
+  exec grim -o "$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')" "$path_img"
 }
 
 case "$1" in
   --help|-h)
     echo "$msg_usage"
     exit
-    ;;
+  ;;
   --active)
     mkdir -p "$path_dir"
-    exec grim -g "$(swaymsg -t get_tree | jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$path_file"
-    ;;
+    exec grim -g "$(swaymsg -t get_tree | jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$path_img"
+  ;;
   --select)
     mkdir -p "$path_dir"
-    exec grim -g "$(slurp)" "$path_file"
+    exec grim -g "$(slurp)" "$path_img"
     exit
-    ;;
+  ;;
   *)
     echo "$msg_usage"
-    exit 1
-    ;;
+    exit "1"
+  ;;
 esac
