@@ -35,7 +35,7 @@ ws_name_input="$(echo $("$@" | "$cmd_menu" -p "Rename workspace \"${ws_name}\":"
 
   ws_name_new_name_num="$(echo "$ws_name_input" | cut -s -d":" -f "1")"
 
-  [ -z "$ws_name_new_name_num" ] && exec i3-msg rename workspace to "${ws_num}: ${ws_name_input}"
+  [ "$ws_name_new_name_num" ] || exec i3-msg rename workspace to "${ws_num}: ${ws_name_input}"
 
   # TODO: swap existing ws with the specified number
 
