@@ -5,4 +5,4 @@
 [ "$(command -v "st")" ] && exec st "$@"
 [ "$(command -v "xterm")" ] && exec xterm "$@"
 
-exit 1
+exit "1"
