@@ -4,7 +4,8 @@
 
 wss="$(i3-msg -t get_workspaces | jq 'map({num,focused,representation})')"
 
-[ "$(echo "$wss" | jq -r ".[[.[].focused] | index(true)].representation")" = "null" ] && exit 1
+# In Sway checking if workspace is already empty. i3 containers have no 'representation' property.
+[ "$WAYLAND_DISPLAY" ] && [ "$(echo "$wss" | jq -r ".[[.[].focused] | index(true)].representation")" = "null" ] && exit 1
 
 wss_num="$(echo $(echo "$wss" | jq '.[].num' -r | sort))"
 
