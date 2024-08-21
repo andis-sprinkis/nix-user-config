@@ -15,6 +15,6 @@ case "$1" in
     exec i3-msg focus output right
   ;;
   *)
-    exit "1";
+    exit "1"
   ;;
 esac
