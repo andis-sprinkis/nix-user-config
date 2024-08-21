@@ -10,7 +10,7 @@ case $mime in
     pdfinfo "$1"
     echo
     pdftotext -- "$1" -
-    exit 1
+    exit "1"
   ;;
   application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip) als -- "$1"; exit 1;;
   image/*) chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${2:-80}x${3:-120}" "$1"; exit 1;;
