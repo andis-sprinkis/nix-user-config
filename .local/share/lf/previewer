@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 set -eu
-BAT_STYLE="plain"
 
 mime="$(file --mime-type --brief "$(readlink -f "$1")")"
 
@@ -31,7 +30,7 @@ case $mime in
     ls -la "$1"
   ;;
   *)
-    bat --color always -- "$1"
+    bat --color=always --style=plain -- "$1"
   ;;
 esac
 
