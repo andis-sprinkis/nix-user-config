@@ -15,7 +15,7 @@ cmd_applications_menu="(cat; ${cmd_inc_bin_path} | sort -u)) | ${cmd_menu}"
 
 killall -u "$(whoami)" "$cmd_menu" 2> "/dev/null"
 
-cmd_args="$(\
+cmd_args="$(
   j4-dmenu-desktop \
   --no-generic \
   --skip-i3-exec-check \
@@ -24,7 +24,7 @@ cmd_args="$(\
   --term="${TERMINAL} -e {cmdline@}" \
   --dmenu="$cmd_applications_menu" \
   --no-exec \
-  2> "/dev/null" \
+  2> "/dev/null"
 )"
 
 [ "$cmd_args" ] || exit
