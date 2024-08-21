@@ -9,7 +9,7 @@ case $mime in
   application/eps|application/pdf|application/postscript|application/x-eps|image/x-eps) 
     pdfinfo "$1"
     echo
-    pdftotext -- "$1" -
+    pdftotext -l "2" -nopgbrk -q -- "$1" -
     exit "1"
   ;;
   application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip) als -- "$1"; exit 1;;
