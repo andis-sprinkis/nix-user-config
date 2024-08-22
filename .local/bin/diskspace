@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-table_columns="Target,Used%,Used,Available,Size,Source"
+table_columns="Target,Use %,Used,Available,Size,Source"
 col_right="1,2,3,4,5"
 df_output="target,pcent,used,avail,size,source"
 
