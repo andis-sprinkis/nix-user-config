@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+set -eu
+
+json_output="$(i3-msg -t get_outputs | jq ".[] | select(.focused == true).rect")"
+output_width="$(echo "$json_output" | jq ".width")"
+output_height="$(echo "$json_output" | jq ".height")"
+
+max_width="1920"
+max_height="1920"
+
+padding="$(echo "(0.05 * ${output_width} + 0.05 * ${output_height}) / 2" | bc)"
+width="$(echo "${output_width} - ${padding}" | bc)"
+height="$(echo "${output_height} - ${padding}" | bc)"
+
+[ "$width" -gt "$max_width" ] && width="$max_width"
+[ "$height" -gt "$max_height" ] && height="$max_height"
+
+i3-msg "floating toggle; resize set width ${width} height ${height}"
