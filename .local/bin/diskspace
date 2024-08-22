@@ -4,4 +4,11 @@ table_columns="Target,Used%,Used,Available,Size,Source"
 col_right="1,2,3,4,5"
 df_output="target,pcent,used,avail,size,source"
 
-df -h --output="$df_output" | tail -n "+2" | sort | column -t -N"$table_columns" -R"$col_right"
+df -h --output="$df_output" \
+  | tail -n "+2" \
+  | sort \
+  | sed \
+    -e "s/\([67][0-9]\%\)/\\x1b[0;33m\1\\x1b[0m/g" \
+    -e "s/\([89][0-9]\%\)/\\x1b[0;31;1m\1\\x1b[0m/g" \
+    -e "s/\(100\%\)/\\x1b[0;31;1m\1\\x1b[0m/g" \
+  | column -t -N"${table_columns}" -R"$col_right"
