@@ -101,6 +101,12 @@ cmd follow-symlink %{{
   lf -remote "send ${id} select '$(readlink "$f")'"
 }}
 
+
+cmd follow-search ${{
+  fpath="$(fzf)"
+  [ "$fpath" ] && lf -remote "send ${id} select \"${fpath}\""
+}}
+
 map <c-z> $ kill -STOP $PPID
 map <enter> to-previewer
 map P push :paste-to-file<space>
@@ -109,5 +115,6 @@ map X aunpack
 map Y copy-path
 map ` !true
 map b :mark-load
-map gL follow-symlink
+map gl follow-symlink
+map gs follow-search
 map o push :open-with<space>
