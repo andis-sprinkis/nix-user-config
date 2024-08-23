@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+set -eu
 
 table_columns="Mount,Use %,Use,Free,Size,Device"
 col_right="1,2,3,4,5"
