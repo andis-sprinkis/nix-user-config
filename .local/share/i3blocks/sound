@@ -15,7 +15,7 @@ reload=""
   "5") wpctl "set-volume" "@DEFAULT_SINK@" "${STEP}%-"; reload="1" ;;
 esac
 
-status="$(wpctl get-volume @DEFAULT_SINK@)"
+status="$(wpctl "get-volume" "@DEFAULT_SINK@")"
 
 [ "$status" ] && {
   volume="$(echo "$status" | cut -d' ' -f2)"
