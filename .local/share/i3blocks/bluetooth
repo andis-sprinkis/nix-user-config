@@ -20,7 +20,6 @@ controller_id="$(bluetoothctl "list" 2> "/dev/null" | grep "\[default\]" | cut -
   }
 
   case "$BLOCK_BUTTON" in
-    # "1")
     "1")
       blueman-manager 1> "/dev/null" 2> "/dev/null" & disown
     ;;
