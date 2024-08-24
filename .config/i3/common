@@ -59,7 +59,7 @@ bindsym $mod+Shift+z focus child
 bindsym $mod+t sticky toggle
 
 bindsym $mod+Shift+minus exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/move_scratchpad_fit
-bindsym $mod+minus       scratchpad show; sticky enable
+bindsym $mod+minus       scratchpad show; move position center; sticky enable
 
 set  $ws1  1
 set  $ws2  2
