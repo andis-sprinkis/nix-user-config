@@ -1,13 +1,14 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.94.0
+@version      0.95.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
 @preprocessor default
 ==/UserStyle== */
-@-moz-document domain("abbreviations.com"),
+@-moz-document domain("1188.lv"),
+domain("abbreviations.com"),
 domain("about.gitlab.com"),
 domain("accessibilityinsights.io"),
 domain("airbnb.com"),
