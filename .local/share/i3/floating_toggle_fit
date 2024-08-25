@@ -7,8 +7,9 @@ output_height="$(echo "$json_output" | jq ".height")"
 
 max_width="1920"
 max_height="1280"
+padding_percent="0.075"
 
-padding="$(echo "(0.1 * ${output_width} + 0.1 * ${output_height}) / 2" | bc)"
+padding="$(echo "(${padding_percent} * ${output_width} + ${padding_percent} * ${output_height}) / 2" | bc)"
 width="$(echo "${output_width} - ${padding}" | bc)"
 height="$(echo "${output_height} - ${padding}" | bc)"
 
