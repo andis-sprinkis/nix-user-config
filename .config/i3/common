@@ -99,18 +99,18 @@ bindsym $mod+s exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/focu
 bindsym $mod+Shift+a workspace prev_on_output
 bindsym $mod+Shift+s workspace next_on_output
 
-bindsym --whole-window button9 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/focus_output_or_workspace_on_output left 
-bindsym --whole-window button8 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/focus_output_or_workspace_on_output right
-bindsym --whole-window $mod+button9 workspace prev_on_output
-bindsym --whole-window $mod+button8 workspace next_on_output
+bindsym --whole-window button8 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/focus_output_or_workspace_on_output left 
+bindsym --whole-window button9 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/focus_output_or_workspace_on_output right
+bindsym --whole-window $mod+button8 workspace prev_on_output
+bindsym --whole-window $mod+button9 workspace next_on_output
 
 bindsym $mod+c workspace back_and_forth
 bindsym $mod+Shift+c move container to workspace back_and_forth; workspace back_and_forth
 
 bindsym $mod+Mod1+a                      exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/shift_current_workspace prev
 bindsym $mod+Mod1+s                      exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/shift_current_workspace next
-bindsym --whole-window $mod+Mod1+button9 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/shift_current_workspace prev
-bindsym --whole-window $mod+Mod1+button8 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/shift_current_workspace next
+bindsym --whole-window $mod+Mod1+button8 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/shift_current_workspace prev
+bindsym --whole-window $mod+Mod1+button9 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/shift_current_workspace next
 
 bindsym Menu exec --no-startup-id $applications_menu
 
