@@ -327,7 +327,7 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     ```
 1. Install the Arch official package repository packages.
     ```sh
-    sudo pacman -S --needed $(echo $(cat ./pkg_pacman))
+    sudo pacman -S --needed $(echo $(cat ./pacman))
     ```
 1. If installation target computer is a VirtualBox guest, install and enable the VirtualBox guest utilities.
     ```sh
@@ -348,7 +348,7 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     ```
 1. Install AUR packages.
     ```sh
-    yay -S --needed $(echo $(cat ./pkg_aur))
+    yay -S --needed $(echo $(cat ./aur))
     ```
 1. Install user general configuration.
     ```sh
@@ -377,16 +377,16 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     ```
 1. Install AppImage packages.
     ```sh
-    for p in $(echo $(cat ./pkg_appimage)); do curl --location --output-dir "$HOME/.local/opt/appimage" --remote-name "$p"; done
+    for p in $(echo $(cat ./appimage)); do curl --location --output-dir "$HOME/.local/opt/appimage" --remote-name "$p"; done
     chmod +x $HOME/.local/opt/appimage/*
     ```
 1. Install npm packages.
     ```sh
-    volta install $(echo $(cat ./pkg_npm))
+    volta install $(echo $(cat ./npm))
     ```
 1. Install PyPi packages.
     ```sh
-    for p in $(echo $(cat ./pkg_pypi)); do pipx install $p; done
+    for p in $(echo $(cat ./pypi)); do pipx install $p; done
     ```
 1. Enable the audio system.
     ```sh
@@ -595,13 +595,13 @@ Steps for adding any newly listed packages from the user package lists to an alr
     - The Arch package repository:
 
         ```sh
-        yay --color=auto -S --needed $(echo $(cat "./pkg_base")) $(echo $(cat "./pkg_pacman"))
+        yay --color=auto -S --needed $(echo $(cat "./base")) $(echo $(cat "./pacman"))
         ```
 
     - AUR:
 
         ```sh
-        yay --color=auto -S --needed $(echo $(cat "./pkg_aur"))
+        yay --color=auto -S --needed $(echo $(cat "./aur"))
         ```
 
     - AppImage sources:
@@ -609,7 +609,7 @@ Steps for adding any newly listed packages from the user package lists to an alr
         ```sh
         path_dir_appimage="$HOME/.local/opt/appimage"
 
-        for p in $(echo $(cat "./pkg_appimage")); do
+        for p in $(echo $(cat "./appimage")); do
           [ ! -f "${path_dir_appimage}/${p}" ] && curl --location --output-dir "$path_dir_appimage" --remote-name "$p"
         done
 
@@ -624,13 +624,13 @@ Steps for adding any newly listed packages from the user package lists to an alr
             ```
         - Sync with the package list.
             ```sh
-            for p in $(echo $(cat "./pkg_pypi")); do pipx install "$p"; done
+            for p in $(echo $(cat "./pypi")); do pipx install "$p"; done
             ```
 
     - npm:
 
         ```sh
-        volta install $(echo $(cat "./pkg_npm"))
+        volta install $(echo $(cat "./npm"))
         ```
 
 ## Connecting to Wi-Fi
