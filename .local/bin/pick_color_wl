@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
 set -eu
 
-grim -g "$(slurp -p)" -t ppm - | convert - -format '%[pixel:p{0,0}]' txt:-
+sel_crd="$(slurp -p)"
+grim -g "$sel_crd" -t ppm - | magick - -format '%[pixel:p{0,0}]' txt:- | tail -n 1 | sed -e "s/  / /g" | cut -d" " -f2,3,4
