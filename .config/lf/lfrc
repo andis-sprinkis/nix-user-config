@@ -43,6 +43,10 @@ cmd open-with ${{
   for f in $fx; do nohup "$*" "$f" 0</dev/null 1>/dev/null 2>/dev/null & done
 }}
 
+cmd open-with-menu-desktop ${{
+  nohup open_with_menu_desktop "$fx" 0</dev/null 1>/dev/null 2>/dev/null &
+}}
+
 cmd to-previewer ${{
   ${XDG_DATA_HOME:-$HOME/.local/share}/lf/previewer "$f" | $PAGER
 }}
@@ -118,3 +122,4 @@ map b :mark-load
 map gl follow-symlink
 map gs follow-search
 map o push :open-with<space>
+map O :open-with-menu-desktop
