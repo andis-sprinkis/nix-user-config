@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Pick color (Wayland)
+Exec=pick_color_wl_desktop

@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+set -eu
+
+[ "$WAYLAND_DISPLAY" ] && [ "$(command -v "wl-copy")" ] && { pick_color_wl | wl-copy; } && exit
+
+exit "1"
