@@ -318,7 +318,6 @@ application/x-matroska=video.desktop
 application/x-mpegurl=video.desktop
 application/x-ogg=video.desktop
 application/x-ogm-audio=video.desktop
-application/x-ogm-video=video.desktop
 application/x-ogm=video.desktop
 application/x-shorten=video.desktop
 application/x-smil=video.desktop
@@ -384,6 +383,8 @@ audio/x-vorbis+ogg=video.desktop
 audio/x-vorbis=video.desktop
 audio/x-wav=video.desktop
 audio/x-wavpack=video.desktop
+
+application/x-ogm-video=video.desktop
 video/3gp=video.desktop
 video/3gpp2=video.desktop
 video/3gpp=video.desktop

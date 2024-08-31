@@ -1,36 +1,50 @@
 #!/usr/bin/env sh
 set -eu
 
-mime="$(file --mime-type --brief "$(readlink -f "$1")")"
+fpath="$(readlink -f "$1")"
+width_chr="${2:-80}"
+height_chr="${3:-120}"
+FPATH_THUMB=""
+
+init_thumb_cache() {
+  dir_cache_thumb="${XDG_CACHE_HOME:-$HOME/.cache}/lf/thumbnails"
+  [ -d "$dir_cache_thumb" ] || mkdir -p "$dir_cache_thumb"
+  FPATH_THUMB="${dir_cache_thumb}/$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$fpath" | sha256sum | cut -d" " -f1)"
+}
+
+mime="$(file --mime-type --brief "$fpath")"
 
 echo "$mime"
 
 case $mime in
   application/eps|application/pdf|application/postscript|application/x-eps|image/x-eps)
-    pdfinfo "$1"
+    init_thumb_cache
+    [ -f "${FPATH_THUMB}.jpg" ] || pdftoppm -jpeg -jpegopt quality=50 -f "1" -singlefile "$1" "$FPATH_THUMB"
+    chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${width_chr}x${height_chr}" "${FPATH_THUMB}.jpg"
+    pdfinfo "$fpath"
     echo
-    pdftotext -l "2" -nopgbrk -q -- "$1" -
+    pdftotext -l "2" -nopgbrk -q -- "$fpath" -
   ;;
   application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
-    als -- "$1"
+    als -- "$fpath"
   ;;
   image/*)
-    chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${2:-80}x${3:-120}" "$1"
+    chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${width_chr}x${height_chr}" "$fpath"
   ;;
   audio/mpeg)
-    mpg123-id3dump -- "$1"
+    mpg123-id3dump -- "$fpath"
   ;;
   *opendocument*)
-    odt2txt "$1"
+    odt2txt "$fpath"
   ;;
   application/vnd.sqlite3|application/vnd.sqlite)
-    sqlite3 "$1" '.tables'
+    sqlite3 "$fpath" '.tables'
   ;;
   inode/directory)
-    ls -la "$1"
+    ls -la "$fpath"
   ;;
   *)
-    bat --color=always --style=plain -- "$1"
+    bat --color=always --style=plain -- "$fpath"
   ;;
 esac
 
