@@ -6,6 +6,8 @@ chafa
 coreutils
 curl
 fd
+ffmpeg
+ffmpegthumbnailer
 findutils
 fzf
 gawk
@@ -19,6 +21,7 @@ grep
 htop
 jq
 lf
+media-info
 ncdu
 neovim
 pipenv

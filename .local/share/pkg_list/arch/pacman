@@ -78,6 +78,7 @@ make
 man-db
 man-pages
 mda.lv2
+mediainfo
 mesa
 mesa-utils
 mpg123
