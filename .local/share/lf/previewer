@@ -15,6 +15,7 @@ thumb_cache_create() {
 mime="$(file --mime-type --brief "$fpath")"
 
 echo "$mime"
+echo
 
 case $mime in
   application/eps|application/pdf|application/postscript|application/x-eps|image/x-eps)
@@ -22,8 +23,8 @@ case $mime in
 
     [ -f "${FPATH_THUMB}.jpg" ] || pdftoppm -jpeg -jpegopt quality=50 -f "1" -singlefile "$1" "$FPATH_THUMB"
 
-    resz_width_chr="$(echo "scale = 0; ${width_chr} * 0.35" | bc)"
-    resz_height_chr="$(echo "scale = 0; ${height_chr} * 0.35" | bc)"
+    resz_width_chr="$(echo "scale = 0; ${width_chr} * 0.5" | bc)"
+    resz_height_chr="$(echo "scale = 0; ${height_chr} * 0.5" | bc)"
 
     chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${resz_width_chr}x${resz_height_chr}" "${FPATH_THUMB}.jpg"
     echo
@@ -35,17 +36,29 @@ case $mime in
     als -- "$fpath"
   ;;
   image/*)
-    chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${width_chr}x${height_chr}" "$fpath"
+    resz_width_chr="$(echo "scale = 0; ${width_chr} * 0.85" | bc)"
+    resz_height_chr="$(echo "scale = 0; ${height_chr} * 0.85" | bc)"
+    chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${resz_width_chr}x${resz_height_chr}" "$fpath"
+    echo
+    mediainfo "$fpath" | sed -e 's/ \+: /: /g'
   ;;
   audio/mpeg)
+    mediainfo "$fpath" | sed -e 's/ \+: /: /g'
     mpg123-id3dump -- "$fpath"
+  ;;
+  audio/*)
+    mediainfo "$fpath" | sed -e 's/ \+: /: /g'
   ;;
   video/*)
     thumb_cache_create
+    resz_width_chr="$(echo "scale = 0; ${width_chr} * 0.85" | bc)"
+    resz_height_chr="$(echo "scale = 0; ${height_chr} * 0.85" | bc)"
 
     [ -f "${FPATH_THUMB}.jpg" ] || ffmpegthumbnailer -i "$1" -o "${FPATH_THUMB}.jpg" -s "0" -q "5"
 
-    chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${width_chr}x${height_chr}" "${FPATH_THUMB}.jpg"
+    chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${resz_width_chr}x${resz_height_chr}" "${FPATH_THUMB}.jpg"
+    echo
+    mediainfo "$fpath" | sed -e 's/ \+: /: /g'
   ;;
   *opendocument*)
     odt2txt "$fpath"
