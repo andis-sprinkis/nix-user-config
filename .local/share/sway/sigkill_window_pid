@@ -5,4 +5,4 @@ pid="$(swaymsg -t get_tree | jq '.. | select(.type?)| select(.focused == true).p
 
 [ "$pid" ] || exit "1"
 
-swaynag -t "warning" -m "Kill process PID ${pid}?" -B "Yes" "kill -9 ${pid}"
+swaynag -t "warning" -m "Kill process PID ${pid}?" -Z "Yes" "kill -9 ${pid}"
