@@ -36,8 +36,8 @@ case $mime in
     als -- "$fpath"
   ;;
   image/*)
-    resz_width_chr="$(echo "scale = 0; ${width_chr} * 0.85" | bc)"
-    resz_height_chr="$(echo "scale = 0; ${height_chr} * 0.85" | bc)"
+    resz_width_chr="$(echo "scale = 0; ${width_chr} * 0.9" | bc)"
+    resz_height_chr="$(echo "scale = 0; ${height_chr} * 0.9" | bc)"
     chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${resz_width_chr}x${resz_height_chr}" "$fpath"
     echo
     mediainfo "$fpath" | sed -e 's/ \+: /: /g'
@@ -51,8 +51,8 @@ case $mime in
   ;;
   video/*)
     thumb_cache_create
-    resz_width_chr="$(echo "scale = 0; ${width_chr} * 0.85" | bc)"
-    resz_height_chr="$(echo "scale = 0; ${height_chr} * 0.85" | bc)"
+    resz_width_chr="$(echo "scale = 0; ${width_chr} * 0.9" | bc)"
+    resz_height_chr="$(echo "scale = 0; ${height_chr} * 0.9" | bc)"
 
     [ -f "${FPATH_THUMB}.jpg" ] || ffmpegthumbnailer -i "$1" -o "${FPATH_THUMB}.jpg" -s "0" -q "5"
 
