@@ -12,6 +12,10 @@ thumb_cache_create() {
   FPATH_THUMB="${dir_cache_thumb}/$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$fpath" | sha256sum | cut -d" " -f1)"
 }
 
+print_mediainfo() {
+  mediainfo "$fpath" | head -n -1 | sed -e 's/ \+: /: /g' -e '/^General$/d'
+}
+
 mime="$(file --mime-type --brief "$fpath")"
 
 echo "$mime"
@@ -29,20 +33,13 @@ case $mime in
     pdftotext -l "2" -nopgbrk -q -- "$fpath" -
   ;;
   application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
-    mediainfo "$fpath" | head -n -1 | sed -e 's/ \+: /: /g' -e '/^General$/d'
+    print_mediainfo
     als -- "$fpath"
   ;;
   image/*)
     chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${width_chr}x${height_chr}" "$fpath"
     echo
-    mediainfo "$fpath" | head -n -1 | sed -e 's/ \+: /: /g' -e '/^General$/d'
-  ;;
-  audio/mpeg)
-    mediainfo "$fpath" | head -n -1 | sed -e 's/ \+: /: /g' -e '/^General$/d'
-    mpg123-id3dump -- "$fpath"
-  ;;
-  audio/*|application/mxf|application/ogg|application/sdp|application/smil|application/streamingmedia|application/vnd.apple.mpegurl|application/vnd.ms-asf|application/vnd.rn-realmedia-vbr|application/vnd.rn-realmedia|application/x-cue|application/x-extension-m4a|application/x-extension-mp4|application/x-matroska|application/x-mpegurl|application/x-ogg|application/x-ogm-audio|application/x-ogm|application/x-shorten|application/x-smil|application/x-streamingmedia)
-    mediainfo "$fpath" | head -n -1 | sed -e 's/ \+: /: /g' -e '/^General$/d'
+    print_mediainfo
   ;;
   video/*|application/x-ogm-video)
     thumb_cache_create
@@ -51,10 +48,17 @@ case $mime in
 
     chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${width_chr}x${height_chr}" "${FPATH_THUMB}.jpg"
     echo
-    mediainfo "$fpath" | head -n -1 | sed -e 's/ \+: /: /g' -e '/^General$/d'
+    print_mediainfo
   ;;
   *opendocument*)
     odt2txt "$fpath"
+  ;;
+  audio/mpeg)
+    print_mediainfo
+    mpg123-id3dump -- "$fpath"
+  ;;
+  audio/*|application/mxf|application/ogg|application/sdp|application/smil|application/streamingmedia|application/vnd.apple.mpegurl|application/vnd.ms-asf|application/vnd.rn-realmedia-vbr|application/vnd.rn-realmedia|application/x-cue|application/x-extension-m4a|application/x-extension-mp4|application/x-matroska|application/x-mpegurl|application/x-ogg|application/x-ogm-audio|application/x-ogm|application/x-shorten|application/x-smil|application/x-streamingmedia)
+    print_mediainfo
   ;;
   application/vnd.sqlite*)
     sqlite3 "$fpath" '.tables'
