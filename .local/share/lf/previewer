@@ -29,20 +29,20 @@ case $mime in
     pdftotext -l "2" -nopgbrk -q -- "$fpath" -
   ;;
   application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
-    mediainfo "$fpath" | head -n -1 | sed -e 's/ \+: /: /g'
+    mediainfo "$fpath" | head -n -1 | sed -e 's/ \+: /: /g' -e '/^General$/d'
     als -- "$fpath"
   ;;
   image/*)
     chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${width_chr}x${height_chr}" "$fpath"
     echo
-    mediainfo "$fpath" | head -n -1 | sed -e 's/ \+: /: /g'
+    mediainfo "$fpath" | head -n -1 | sed -e 's/ \+: /: /g' -e '/^General$/d'
   ;;
   audio/mpeg)
-    mediainfo "$fpath" | head -n -1 | sed -e 's/ \+: /: /g'
+    mediainfo "$fpath" | head -n -1 | sed -e 's/ \+: /: /g' -e '/^General$/d'
     mpg123-id3dump -- "$fpath"
   ;;
   audio/*)
-    mediainfo "$fpath" | head -n -1 | sed -e 's/ \+: /: /g'
+    mediainfo "$fpath" | head -n -1 | sed -e 's/ \+: /: /g' -e '/^General$/d'
   ;;
   video/*)
     thumb_cache_create
@@ -51,7 +51,7 @@ case $mime in
 
     chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${width_chr}x${height_chr}" "${FPATH_THUMB}.jpg"
     echo
-    mediainfo "$fpath" | head -n -1 | sed -e 's/ \+: /: /g'
+    mediainfo "$fpath" | head -n -1 | sed -e 's/ \+: /: /g' -e '/^General$/d'
   ;;
   *opendocument*)
     odt2txt "$fpath"
