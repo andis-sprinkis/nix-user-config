@@ -41,10 +41,10 @@ case $mime in
     mediainfo "$fpath" | head -n -1 | sed -e 's/ \+: /: /g' -e '/^General$/d'
     mpg123-id3dump -- "$fpath"
   ;;
-  audio/*)
+  audio/*|application/mxf|application/ogg|application/sdp|application/smil|application/streamingmedia|application/vnd.apple.mpegurl|application/vnd.ms-asf|application/vnd.rn-realmedia-vbr|application/vnd.rn-realmedia|application/x-cue|application/x-extension-m4a|application/x-extension-mp4|application/x-matroska|application/x-mpegurl|application/x-ogg|application/x-ogm-audio|application/x-ogm|application/x-shorten|application/x-smil|application/x-streamingmedia)
     mediainfo "$fpath" | head -n -1 | sed -e 's/ \+: /: /g' -e '/^General$/d'
   ;;
-  video/*)
+  video/*|application/x-ogm-video)
     thumb_cache_create
 
     [ -f "${FPATH_THUMB}.jpg" ] || ffmpegthumbnailer -i "$1" -o "${FPATH_THUMB}.jpg" -s "0" -q "5"
@@ -56,7 +56,7 @@ case $mime in
   *opendocument*)
     odt2txt "$fpath"
   ;;
-  application/vnd.sqlite3|application/vnd.sqlite)
+  application/vnd.sqlite*)
     sqlite3 "$fpath" '.tables'
   ;;
   inode/directory)
