@@ -2,8 +2,8 @@
 set -eu
 
 fpath="$(readlink -f "$1")"
-width_chr="${2:-80}"
-height_chr="${3:-120}"
+w_chr="${2:-80}"
+h_chr="${3:-120}"
 FPATH_THUMB=""
 
 thumb_cache_create() {
@@ -26,7 +26,7 @@ case $mime in
 
     [ -f "${FPATH_THUMB}.jpg" ] || pdftoppm -jpeg -jpegopt quality=50 -f "1" -singlefile "$1" "$FPATH_THUMB"
 
-    chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${width_chr}x${height_chr}" "${FPATH_THUMB}.jpg"
+    chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${w_chr}x${h_chr}" "${FPATH_THUMB}.jpg"
     echo
     pdfinfo "$fpath"
     echo
@@ -37,7 +37,7 @@ case $mime in
     als -- "$fpath"
   ;;
   image/*)
-    chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${width_chr}x${height_chr}" "$fpath"
+    chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${w_chr}x${h_chr}" "$fpath"
     echo
     print_mediainfo
   ;;
@@ -46,7 +46,7 @@ case $mime in
 
     [ -f "${FPATH_THUMB}.jpg" ] || ffmpegthumbnailer -i "$1" -o "${FPATH_THUMB}.jpg" -s "0" -q "5"
 
-    chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${width_chr}x${height_chr}" "${FPATH_THUMB}.jpg"
+    chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "${w_chr}x${h_chr}" "${FPATH_THUMB}.jpg"
     echo
     print_mediainfo
   ;;
