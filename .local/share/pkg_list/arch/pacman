@@ -27,6 +27,7 @@ chromium
 clang
 cmake
 curl
+dash
 dmenu
 docker
 docker-compose
