@@ -12,8 +12,8 @@
   set_window_title() { echo -n "\033]0;${PWD}\007" }
 
   # fn: cursor shape for different vi modes
-  echo_cur_beam() { echo -ne "\e[5 q" }
-  echo_cur_block() { echo -ne "\e[1 q" }
+  echo_cur_beam() { echo -ne "\033[5 q" }
+  echo_cur_block() { echo -ne "\033[1 q" }
 
   # fn: zle widgets
   zle-keymap-select() {
@@ -40,7 +40,7 @@
     echo_cur_beam 
 
     # increase inactivity timeout
-    TMOUT="5400"
+    [ "$TMOUT" != "0" ] && TMOUT="5400"
   }
 
   # set window title
@@ -52,12 +52,12 @@
 
   # zsh opts
   setopt "SHARE_HISTORY" "AUTOCD" "PROMPT_SUBST" "INTERACTIVE_COMMENTS"
-  disable r
+  disable "r"
 
   # remember last dir
   autoload -Uz "chpwd_recent_dirs" "cdr" "add-zsh-hook"
   add-zsh-hook "chpwd" "chpwd_recent_dirs"
-  zstyle ':chpwd:*' recent-dirs-file "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/chpwd-recent-dirs"
+  zstyle ':chpwd:*' "recent-dirs-file" "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/chpwd-recent-dirs"
 
   # enable colors
   autoload -U "colors" && colors
@@ -65,7 +65,7 @@
   # fn: set RPROMPT prompt
   set_prompt_rprompt() {
     local tmout_status=""
-    if [ "$TMOUT" = "0" ]; then tmout_status="TMOUT0 " fi
+    [ "$TMOUT" = "0" ] && tmout_status="TMOUT0 "
 
     RPROMPT="${tmout_status}(\$?) %D{%K:%M:%S}"
   }
