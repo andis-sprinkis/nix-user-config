@@ -9,7 +9,7 @@
 }
 
 [ "$WAYLAND_DISPLAY" ] && {
-  [ -z "$(pidof "swayidle")" ] && exec echo "stopped"
+  [ "$(pidof "swayidle")" ] || exec echo "stopped"
 
   exec echo "started"
 }

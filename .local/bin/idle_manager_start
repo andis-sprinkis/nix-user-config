@@ -11,7 +11,7 @@
 
   ## Starting xss-lock
 
-  [ -z "$(pidof xss-lock)" ] && \
+  [ "$(pidof xss-lock)" ] || \
     exec xss-lock --ignore-sleep -- xscreensaver-command -lock \
     1>/dev/null 2>/dev/null & disown
 
