@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-[ "$(idle_manager_status)" = "unknown" ] && exit 1
+[ "$(idle_manager_status)" = "unknown" ] && exit "1"
 
 [ "$(idle_manager_status)" = "stopped" ] && {
   idle_manager_start &
