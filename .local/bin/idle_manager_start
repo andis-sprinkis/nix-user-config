@@ -28,6 +28,8 @@
       resume "swaymsg 'output * dpms on'" \
     before-sleep "swaylock -u -f -c 000000" \
     1>/dev/null 2>/dev/null & disown
+
+  exit
 }
 
 exit "1"
