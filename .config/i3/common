@@ -213,6 +213,7 @@ bar {
 
   bindsym button1 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_empty_workspace
   bindsym button2 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_empty_workspace
+  bindsym button3 exec --no-startup-id $applications_menu
 }
 
 bindsym $mod+b bar mode toggle
