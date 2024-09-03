@@ -1,14 +1,14 @@
 #!/usr/bin/env sh
 
-[ "$(idle_manager_status)" = "unknown" ] && exit "1"
-
-[ "$(idle_manager_status)" = "stopped" ] && {
-  idle_manager_start &
-
-  while [ "$(idle_manager_status)" = "stopped" ]; do
-    sleep "0.5"
-  done
-}
+case "$(idle_manager_status)" in
+  "unknown")
+    exit "1"
+  ;;
+  "stopped")
+    idle_manager_start &
+    while [ "$(idle_manager_status)" = "stopped" ]; do sleep "0.5"; done
+  ;;
+esac
 
 [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && {
   exec xscreensaver-command -lock
