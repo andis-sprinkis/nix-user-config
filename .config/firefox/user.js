@@ -114,6 +114,7 @@ user_pref("signon.firefoxRelay.feature", "disabled");
 user_pref("signon.generation.enabled", false);
 user_pref("toolkit.coverage.endpoint.base", "");
 user_pref("toolkit.coverage.opt-out", true);
+user_pref("toolkit.tabbox.switchByScrolling", true);
 user_pref("toolkit.telemetry.archive.enabled", false);
 user_pref("toolkit.telemetry.bhrPing.enabled", false);
 user_pref("toolkit.telemetry.coverage.opt-out", true);
@@ -125,3 +126,4 @@ user_pref("toolkit.telemetry.shutdownPingSender.enabled", false);
 user_pref("toolkit.telemetry.unified", false);
 user_pref("toolkit.telemetry.updatePing.enabled", false);
 user_pref("toolkit.winRegisterApplicationRestart", false);
+user_pref("toolkit.zoomManager.zoomValues", ".3,.5,.67,.8,.9,1,1.1,1.15,1.2,1.25,1.33,1.5,1.7,2,2.4,3,4,5")
