@@ -8,4 +8,4 @@ done
 [ "$web_browser" ] && exec $web_browser "$@"
 
 echo "$(basename "$0"): No known web browser available" 2>&1
-exit 1
+exit "1"
