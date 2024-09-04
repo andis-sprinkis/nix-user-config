@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-# Sets the default web browser for paths opened via xdg-open.
 
 for web_browser in "firefox" "chromium" "chrome" "epiphany"; do
   [ "$(command -v "$web_browser")" ] && exec $web_browser "$@"
