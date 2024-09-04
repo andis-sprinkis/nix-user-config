@@ -2,27 +2,28 @@
 
 # Merging the xsettingsd common and local configurations
 
-pathd_cfg_xsettingsd="${XDG_CONFIG_HOME:-$HOME/.config}/xsettingsd"
-pathf_cfg_xsettingsd="${pathd_cfg_xsettingsd}/xsettingsd.conf"
-pathf_cfg_xsettingsd_common="${pathd_cfg_xsettingsd}/common.conf"
-pathf_cfg_xsettingsd_local="${pathd_cfg_xsettingsd}/local.conf"
+pathd_cfg="${XDG_CONFIG_HOME:-$HOME/.config}/xsettingsd"
 
-if [ -f "$pathf_cfg_xsettingsd_local" ]; then
-  cfg_xsettingsd_local="$(cat "$pathf_cfg_xsettingsd_local")"
+pathf_cfg_local="${pathd_cfg}/local.conf"
+pathf_cfg_common="${pathd_cfg}/common.conf"
+pathf_cfg="${pathd_cfg}/xsettingsd.conf"
+
+if [ -f "$pathf_cfg_local" ]; then
+  cfg_local="$(cat "$pathf_cfg_local")"
 
   echo "$(
-    [ -f "$pathf_cfg_xsettingsd_common" ] && while IFS=' ' read -r key val; do
+    [ -f "$pathf_cfg_common" ] && while IFS=' ' read -r key val; do
       [ "${key##\#*}" ] || continue
-      echo "$cfg_xsettingsd_local" | grep -q "^${key} " && continue
+      echo "$cfg_local" | grep -q "^${key} " && continue
       printf '%s %s\n' "$key" "$val"
-    done < "$pathf_cfg_xsettingsd_common"
+    done < "$pathf_cfg_common"
   )
-${cfg_xsettingsd_local}" > "$pathf_cfg_xsettingsd"
+${cfg_local}" > "$pathf_cfg"
 else
-  [ -f "$pathf_cfg_xsettingsd_common" ] && cat "$pathf_cfg_xsettingsd_common" > "$pathf_cfg_xsettingsd"
+  [ -f "$pathf_cfg_common" ] && cat "$pathf_cfg_common" > "$pathf_cfg"
 fi
 
 # Starting or reloading xsettingsd
 
 killall -e "xsettingsd"
-exec xsettingsd -c "$pathf_cfg_xsettingsd"
+exec xsettingsd -c "$pathf_cfg"
