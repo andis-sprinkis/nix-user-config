@@ -59,8 +59,9 @@ alias \
   py="python3 -q" \
   python="python3 -q" \
   python3="python3 -q" \
-  q="exit" \
   :q="exit" \
+  q="exit" \
+  qq="exit" \
   qalc="qalc -c" \
   qr_txt="qrencode -t ansiutf8" \
   qr_receive="qrcp receive" \
