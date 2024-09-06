@@ -29,7 +29,7 @@ case "$1" in
     }
 
     [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$(command -v "xclip")" ] && {
-      while read file; do xclip -selection "clipboard" -target "image/png" "$file"; done
+      while read file; do xclip -sel "clipboard" -target "image/png" "$file"; done
       exit
     }
 
