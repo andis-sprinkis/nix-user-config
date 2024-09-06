@@ -7,7 +7,7 @@ cmd_menu=""
 [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && cmd_menu="dmenu"
 [ "$cmd_menu" ] || exit "1"
 
-dir_appimage="${APPIMAGE_BIN_HOME:-$HOME/.local/opt/appimage}"
+dir_appimage="${APPIMAGE_DATA_HOME:-$HOME/.local/opt/appimage}"
 cmd_inc_appimage=""
 [ -d "$dir_appimage" ] && cmd_inc_appimage="stest -flx \"${dir_appimage}/\" | awk '{ print \"${dir_appimage}/\"\$0 }' | sort -u;"
 

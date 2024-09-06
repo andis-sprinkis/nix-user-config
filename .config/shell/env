@@ -30,8 +30,8 @@ main() {
   PATH="$HOME/.local/bin:$PATH"
 
   # set user AppImages location
-  export APPIMAGE_BIN_HOME="$HOME/.local/opt/appimage"
-  PATH="$APPIMAGE_BIN_HOME:$PATH"
+  export APPIMAGE_DATA_HOME="$HOME/.local/opt/appimage"
+  PATH="$APPIMAGE_DATA_HOME:$PATH"
 
   # set language
   [ "$LANG" ] || export LANG='en_US.UTF-8'
