@@ -15,6 +15,7 @@ ln -s ../../../.config/firefox/user.js user.js
 
 1.  https://addons.mozilla.org/en-US/firefox/addon/accessibility-checker/
 1.  https://addons.mozilla.org/en-US/firefox/addon/add-brave-search/
+1.  https://addons.mozilla.org/en-US/firefox/addon/auto-close-tabs/
 1.  https://addons.mozilla.org/en-US/firefox/addon/clearurls/
 1.  https://addons.mozilla.org/en-US/firefox/addon/copy-as-markdown/
 1.  https://addons.mozilla.org/en-US/firefox/addon/ddg-lite-search-provider/
