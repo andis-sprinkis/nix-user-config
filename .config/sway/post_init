@@ -11,7 +11,10 @@
 xrdb -retain -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
 
 pathf_xresources_local="${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources"
-[ -f "$pathf_xresources_local" ] && xrdb -retain -override "$pathf_xresources_local"
+
+if [ -f "$pathf_xresources_local" ]; then
+  xrdb -retain -override "$pathf_xresources_local"
+fi
 
 ## xsettingsd
 
@@ -31,9 +34,14 @@ VBoxClient-all &
 
 # Running EeasyEffects audio effects interface
 
-[ "$(pidof easyeffects)" ] || easyeffects --gapplication-service &
+if [ -z "$(pidof easyeffects)" ]; then
+  easyeffects --gapplication-service &
+fi
 
 # Local settings
 
 pathf_post_init_local="${XDG_CONFIG_HOME:-$HOME/.config}/sway/post_init_local"
-[ -f "$pathf_post_init_local" ] && exec "$pathf_post_init_local"
+
+if [ -f "$pathf_post_init_local" ]; then
+  exec "$pathf_post_init_local"
+fi
