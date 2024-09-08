@@ -1,6 +1,19 @@
 #!/usr/bin/env sh
+set -eu
+export LC_ALL="C"
 
-[ "$WAYLAND_DISPLAY" ] && cmd_menu="wmenu"
-[ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && cmd_menu="dmenu"
+cmd_menu="${WAYLAND_DISPLAY:+"wmenu"}"
 
-exec i3-msg move container to workspace "$(i3-msg -t get_workspaces | jq '.[].name' -r | "$cmd_menu" -p "Move window to workspace:")"
+if [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ]; then
+  cmd_menu="dmenu"
+fi
+
+if [ -z "$cmd_menu" ]; then
+  exit "1"
+fi
+
+ws="$(i3-msg -t get_workspaces | jq '.[].name' -r | "$cmd_menu" -p "Move window to workspace:")"
+
+if [ "$ws" ]; then
+  exec i3-msg move container to workspace "$ws"
+fi

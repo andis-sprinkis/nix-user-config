@@ -20,9 +20,15 @@ case $wm_class in
 esac
 
 for i in "$wm_class" "$wm_instance"; do
-  [ "$(command -v "$i")" ] && exec "$i"
+  if [ "$(command -v "$i")" ]; then
+    exec "$i"
+  fi
+
   i_lc="$(echo "$i" | tr '[:upper:]' '[:lower:]')"
-  [ "$(command -v "$i_lc")" ] && exec "$i_lc"
+
+  if [ "$(command -v "$i_lc")" ]; then
+    exec "$i_lc"
+  fi
 done
 
-exit 1
+exit "1"

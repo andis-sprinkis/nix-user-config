@@ -1,17 +1,19 @@
 #!/usr/bin/env sh
 
-[ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && {
-  [ -z "$(pidof "xscreensaver")" ] || [ -z "$(pidof "xss-lock")" ] && {
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+  if [ -z "$(pidof "xscreensaver")" ] || [ -z "$(pidof "xss-lock")" ]; then
     exec echo "stopped"
-  }
+  fi
 
   exec echo "started"
-}
+fi
 
-[ "$WAYLAND_DISPLAY" ] && {
-  [ "$(pidof "swayidle")" ] || exec echo "stopped"
+if [ "${WAYLAND_DISPLAY:-""}" ]; then
+  if [ -z "$(pidof "swayidle")" ]; then
+    exec echo "stopped"
+  fi
 
   exec echo "started"
-}
+fi
 
 echo "unknown"

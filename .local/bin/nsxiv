@@ -2,5 +2,10 @@
 
 opts="-a -b"
 
-[ -x "/usr/bin/nsxiv" ] && exec "/usr/bin/nsxiv" $opts "$@"
-[ -x "/usr/local/bin/nsxiv" ] && exec "/usr/local/bin/nsxiv" $opts "$@"
+if [ -x "/usr/bin/nsxiv" ]; then
+  exec "/usr/bin/nsxiv" $opts "$@"
+fi
+
+if [ -x "/usr/local/bin/nsxiv" ]; then
+  exec "/usr/local/bin/nsxiv" $opts "$@"
+fi

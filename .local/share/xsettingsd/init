@@ -12,15 +12,25 @@ if [ -f "$pathf_cfg_local" ]; then
   cfg_local="$(cat "$pathf_cfg_local")"
 
   echo "$(
-    [ -f "$pathf_cfg_common" ] && while IFS=' ' read -r key val; do
-      [ "${key##\#*}" ] || continue
-      echo "$cfg_local" | grep -q "^${key} " && continue
-      printf '%s %s\n' "$key" "$val"
-    done < "$pathf_cfg_common"
+    if [ -f "$pathf_cfg_common" ]; then
+      while IFS=' ' read -r key val; do
+        if [ -z "${key##\#*}" ]; then
+          continue
+        fi
+
+        if echo "$cfg_local" | grep -q "^${key} "; then
+          continue
+        fi
+
+        printf '%s %s\n' "$key" "$val"
+      done < "$pathf_cfg_common"
+    fi
   )
 ${cfg_local}" > "$pathf_cfg"
 else
-  [ -f "$pathf_cfg_common" ] && cat "$pathf_cfg_common" > "$pathf_cfg"
+  if [ -f "$pathf_cfg_common" ]; then
+    cat "$pathf_cfg_common" > "$pathf_cfg"
+  fi
 fi
 
 # Starting or reloading xsettingsd

@@ -1,15 +1,21 @@
 #!/usr/bin/env sh
+set -eu
 
-cmd_menu=""
-[ "$WAYLAND_DISPLAY" ] && cmd_menu="wmenu -p 'Open with:'"
-[ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && cmd_menu="dmenu -p 'Open with:'"
-[ "$cmd_menu" ] || exit "1"
+cmd_menu="${WAYLAND_DISPLAY:+"wmenu -p 'Open with:'"}"
+
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+  cmd_menu="dmenu -p 'Open with:'"
+fi
+
+if [ -z "$cmd_menu" ]; then
+  exit "1"
+fi
 
 cmd_inc_bin_path="(stest -flx \$(echo \$PATH | tr : ' ')"
 
 cmd_applications_menu="(cat; ${cmd_inc_bin_path} | sort -u)) | ${cmd_menu}"
 
-killall -u "$(whoami)" "$cmd_menu" 2> "/dev/null"
+set +e; killall -u "$(whoami)" "$cmd_menu" 2> "/dev/null"; set -e
 
 cmd_args="$(
   j4-dmenu-desktop \
@@ -23,7 +29,9 @@ cmd_args="$(
   2> "/dev/null"
 )"
 
-[ "$cmd_args" ] || exit
+if [ -z "$cmd_args" ]; then
+  exit "0"
+fi
 
 cmd=""
 for a in $cmd_args; do
@@ -33,21 +41,23 @@ for a in $cmd_args; do
   cmd="${cmd:+$cmd }${arg}"
 done
 
-echo "$cmd" | grep -q "^${TERMINAL} -e " && {
+if echo "$cmd" | grep -q "^${TERMINAL} -e "; then
   $cmd "$*" 1> "/dev/null" 2> "/dev/null" & disown
-  exit
-}
+  exit "0"
+fi
 
-echo "$cmd" | grep -q "^/bin/sh -c " || {
+if ! echo "$cmd" | grep -q "^/bin/sh -c "; then
   $cmd "$*" 1> "/dev/null" 2> "/dev/null" & disown 
-  exit
-}
+  exit "0"
+fi
 
 cmd="${cmd#"/bin/sh -c "}"
 
-echo "$cmd" | grep -iq '^.*.\.appimage$' && {
+if echo "$cmd" | grep -iq '^.*.\.appimage$'; then
   $cmd "$*" 1> "/dev/null" 2> "/dev/null" & disown
-  exit
-}
+  exit "0"
+fi
 
 $TERMINAL -e $cmd "$*" 1> "/dev/null" 2> "/dev/null" & disown
+
+exit "0"

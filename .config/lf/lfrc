@@ -29,9 +29,9 @@ cmd open ${{
     ;;
   esac
 
-  [ "$(command -v "xdg-mime")" ] && [ -z "$(xdg-mime query default $mime)" ] && {
+  if [ "$(command -v "xdg-mime")" ] && [ -z "$(xdg-mime query default $mime)" ]; then
     exec lf -remote "send ${id} push :open-with<space>"
-  }
+  fi
 
   for f in $fx; do nohup $OPENER "$f" 0</dev/null 1>/dev/null 2>/dev/null & done
 }}
@@ -75,9 +75,20 @@ cmd mkdir %{{
 }}
 
 cmd copy-path ${{
-  [ "$WAYLAND_DISPLAY" ] && [ "$(command -v "wl-copy")" ] && { printf '%s' "$fx" | wl-copy; } && exit
-  [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$(command -v "xclip")" ] && { printf '%s' "$fx" | xclip -sel "clipboard"; } && exit
-  [ "$(command -v "pbcopy")" ] && { printf '%s' "$fx" | pbcopy; } && exit
+  if [ "${WAYLAND_DISPLAY:-""}" ] && [ "$(command -v "wl-copy")" ]; then 
+    printf '%s' "$fx" | wl-copy
+    exit
+  fi
+
+  if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && [ "$(command -v "xclip")" ]; then
+    printf '%s' "$fx" | xclip -sel "clipboard"
+    exit
+  fi
+
+  if [ "$(command -v "pbcopy")" ]; then 
+    printf '%s' "$fx" | pbcopy;
+    exit
+  fi
 
   exit "1"
 }}
@@ -94,11 +105,11 @@ on-cd
 cmd on-redraw %{{
   call() { exec lf -remote "send ${id} set ratios ${1}"; }
 
-  [ $lf_width -le 35  ] && call "100:1"
-  [ $lf_width -le 60  ] && call "1:2"
-  [ $lf_width -le 100 ] && call "2:3:4"
-  [ $lf_width -le 140 ] && call "1:3:4:5"
-                           call "1:2:4:6:8"
+  if [ $lf_width -le 35  ]; then call "100:1";    fi
+  if [ $lf_width -le 60  ]; then call "1:2";      fi
+  if [ $lf_width -le 100 ]; then call "2:3:4";    fi
+  if [ $lf_width -le 140 ]; then call "1:3:4:5";  fi
+                                 call "1:2:4:6:8"
 }}
 
 cmd follow-symlink %{{
@@ -108,7 +119,10 @@ cmd follow-symlink %{{
 
 cmd follow-search ${{
   fpath="$(fzf)"
-  [ "$fpath" ] && lf -remote "send ${id} select \"${fpath}\""
+
+  if [ "$fpath" ]; then 
+    lf -remote "send ${id} select \"${fpath}\""
+  fi
 }}
 
 map <c-z> $ kill -STOP $PPID

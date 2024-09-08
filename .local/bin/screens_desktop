@@ -1,6 +1,12 @@
 #!/usr/bin/env sh
+set -eu
 
-[ "$WAYLAND_DISPLAY" ] && exec wdisplays
-[ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && exec arandr
+if [ "${WAYLAND_DISPLAY:-""}" ]; then
+  exec wdisplays
+fi
+
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+  exec arandr
+fi
 
 exit "1"

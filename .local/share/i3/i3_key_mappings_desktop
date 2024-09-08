@@ -1,8 +1,10 @@
 #!/usr/bin/env sh
+set -eu
+export LC_ALL="C"
 
-wm="$1"
-[ -z "$wm" ] && [ "$WAYLAND_DISPLAY" ] && wm="sway"
-[ -z "$wm" ] && wm="i3"
+wm="${1:-""}"
+wm="${WAYLAND_DISPLAY:+"sway"}"
+wm="${wm:-"i3"}"
 
 win_title="\033]0;\"${wm}\" key mappings\007"
 

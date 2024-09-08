@@ -7,11 +7,16 @@ directions="normal left right"
 menu_options=""
 
 for direction in $directions; do
-  [ "$current_rotation" = "$direction" ] && continue
-  menu_options="$menu_options$direction
+  if [ "$current_rotation" = "$direction" ]; then
+    continue
+  fi
+
+  menu_options="${menu_options}${direction}
 "
 done
 
 new_rotation="$(echo "$menu_options" | head -n -1 | dmenu -b -p "\"$screen\" screen rotation:")"
 
-[ "$new_rotation" ] && xrandr --output "$screen" --rotate "$new_rotation" || exit 1
+if [ "$new_rotation" ]; then
+  xrandr --output "$screen" --rotate "$new_rotation"
+fi

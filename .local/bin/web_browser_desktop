@@ -1,7 +1,9 @@
 #!/usr/bin/env sh
 
 for web_browser in "firefox" "chromium" "chrome" "epiphany"; do
-  [ "$(command -v "$web_browser")" ] && exec $web_browser "$@"
+  if [ "$(command -v "$web_browser")" ]; then
+    exec $web_browser "$@"
+  fi
 done
 
 echo "$(basename "$0"): No known web browser available" 2>&1

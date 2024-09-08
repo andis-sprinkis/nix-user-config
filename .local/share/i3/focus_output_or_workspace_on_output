@@ -1,17 +1,26 @@
 #!/usr/bin/env sh
 set -eu
+export LC_ALL="C"
 
-[ "$1" ] || exit "1"
+if [ -z "${1:-""}" ]; then
+  exit "1"
+fi
 
 outputs_count="$(i3-msg -t get_outputs | jq '[.[] | select(.active == true)] | length')"
 
 case "$1" in
   "left")
-    [ "$outputs_count" = "1" ] && exec i3-msg workspace prev
+    if [ "$outputs_count" = "1" ]; then 
+      exec i3-msg workspace prev
+    fi
+
     exec i3-msg focus output left
   ;;
   "right")
-    [ "$outputs_count" = "1" ] && exec i3-msg workspace next
+    if [ "$outputs_count" = "1" ]; then 
+      exec i3-msg workspace next
+    fi
+
     exec i3-msg focus output right
   ;;
   *)

@@ -1,12 +1,14 @@
 #!/usr/bin/env sh
 set -e
 
-[ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && {
+[ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && {
   win="$(xdotool getwindowfocus)"
 
   output="$(ucmenu -m "dmenu -p '%P:'" -n "dmenu -p '%P:'" -r "dmenu -p '%P:'")"
 
-  [ "$output" ] || exit
+  if [ -z "$output" ]; then
+    exit "0"
+  fi
 
   xdotool windowactivate "$win"
 
@@ -18,13 +20,15 @@ set -e
     tmp="$rest"
   done
 
-  exit
+  exit "0"
 }
 
-[ "$WAYLAND_DISPLAY" ] && {
+[ "${WAYLAND_DISPLAY:-""}" ] && {
   output="$(ucmenu -m "wmenu -p '%P:'" -n "wmenu -p '%P:'" -r "wmenu -p '%P:'")"
 
-  [ "$output" ] || exit
+  if [ -z "$output" ]; then
+    exit "0"
+  fi
 
   sleep "0.5"
   wtype "$output"

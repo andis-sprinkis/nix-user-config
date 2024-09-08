@@ -18,7 +18,10 @@ fi
 xrdb -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
 
 pathf_xresources_local="${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources"
-[ -f "$pathf_xresources_local" ] && xrdb -override "$pathf_xresources_local"
+
+if [ -f "$pathf_xresources_local" ]; then
+  xrdb -override "$pathf_xresources_local"
+fi
 
 ## xsettingsd
 
@@ -46,7 +49,9 @@ xkbcomp -w 4 -I"${XDG_CONFIG_HOME:-$HOME/.config}/xkb" "${XDG_CONFIG_HOME:-$HOME
 
 # Running unclutter to automatically hide the mouse pointer
 
-[ -z "$(pidof unclutter)" ] && unclutter --timeout 1 --start-hidden &
+if [ -z "$(pidof unclutter)" ]; then
+  unclutter --timeout 1 --start-hidden &
+fi
 
 # Setting the X11 root window background
 
@@ -67,7 +72,9 @@ idle_manager_start &
 
 # Running EeasyEffects audio effects interface
 
-[ -z "$(pidof easyeffects)" ] && easyeffects --gapplication-service &
+if [ -z "$(pidof easyeffects)" ]; then
+  easyeffects --gapplication-service &
+fi
 
 # Starting or reloading i3 window manager
 

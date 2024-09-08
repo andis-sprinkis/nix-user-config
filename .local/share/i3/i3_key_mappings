@@ -1,13 +1,23 @@
 #!/usr/bin/env sh
+set -eu
+export LC_ALL="C"
 
-wm="$1"
-[ -z "$wm" ] && [ "$WAYLAND_DISPLAY" ] && wm="sway"
-[ -z "$wm" ] && wm="i3"
+wm="${1:-""}"
+wm="${WAYLAND_DISPLAY:+"sway"}"
+wm="${wm:-"i3"}"
 
 path_cfg_common="${XDG_CONFIG_HOME:-$HOME/.config}/i3/common"
 path_cfg_wm="${XDG_CONFIG_HOME:-$HOME/.config}/${wm}/config"
 
-echo "$([ -f "$path_cfg_common" ] && cat "$path_cfg_common")$([ -f "$path_cfg_wm" ] && cat "$path_cfg_wm")" \
+if [ -r "$path_cfg_common" ]; then
+  cfg_common="$(cat "$path_cfg_common")"
+fi
+
+if [ -r "$path_cfg_wm" ]; then
+  cfg_wm="$(cat "$path_cfg_wm")"
+fi
+
+echo "${cfg_common:-""}${cfg_wm:-""}" \
   | sed 's/  */ /g' \
   | sed -z 's/\\\n//g' \
   | grep "bindsym" \

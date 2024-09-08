@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+# TODO: rewrite in POSIX sh
+
 mime="$(file --mime-type "$(readlink -f "$1")" -b)"
 
 case $mime in

@@ -1,20 +1,29 @@
 #!/usr/bin/env sh
+set -eu
+export LC_ALL="C"
 
 # Assumes the integer index only name workspaces.
 
 wss="$(i3-msg -t get_workspaces | jq 'map({num,focused,representation})')"
 
 # In Sway checking if workspace is already empty. i3 containers have no 'representation' property.
-[ "$WAYLAND_DISPLAY" ] && [ "$(echo "$wss" | jq -r ".[[.[].focused] | index(true)].representation")" = "null" ] && exec i3-msg workspace back_and_forth
+if [ "$WAYLAND_DISPLAY" ] && [ "$(echo "$wss" | jq -r ".[[.[].focused] | index(true)].representation")" = "null" ]; then
+  exec i3-msg workspace back_and_forth
+fi
 
 wss_num="$(echo "$wss" | jq '.[].num' -r | tr '\n' ' ' | sort)"
 
 pre_wsn="$(($(echo "$wss_num" | cut -d" " -f 1) - 1))"
 
-[ "$pre_wsn" -ge 1 ] && exec i3-msg workspace 1
+if [ "$pre_wsn" -ge 1 ]; then
+  exec i3-msg workspace 1
+fi
 
 for wsn in $wss_num; do
-  [ $((pre_wsn + 1)) -ne "$wsn" ] && exec i3-msg workspace "$((pre_wsn + 1))"
+  if [ $((pre_wsn + 1)) -ne "$wsn" ]; then
+    exec i3-msg workspace "$((pre_wsn + 1))"
+  fi
+
   pre_wsn="$wsn"
 done
 

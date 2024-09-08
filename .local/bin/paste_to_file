@@ -1,15 +1,22 @@
 #!/usr/bin/env sh
 set -eu
 
-[ "$*" ] || {
+if [ -z "$*" ]; then
   echo "$(basename "$0"): No path specified"
+
   exit "1"
-}
+fi
 
-[ "$WAYLAND_DISPLAY" ] && [ "$(command -v "wl-paste")" ] && exec wl-paste >> "$@"
+if [ "${WAYLAND_DISPLAY:-""}" ] && [ "$(command -v "wl-paste")" ]; then
+  exec wl-paste >> "$@"
+fi
 
-[ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$(command -v "xclip")" ] && exec xclip -o -sel "clipboard" >> "$@"
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && [ "$(command -v "xclip")" ]; then
+  exec xclip -o -sel "clipboard" >> "$@"
+fi
 
-[ "$(command -v "pbcopy")" ] && exec pbpaste >> "$@"
+if [ "$(command -v "pbcopy")" ]; then
+  exec pbpaste >> "$@"
+fi
 
 exit "1"

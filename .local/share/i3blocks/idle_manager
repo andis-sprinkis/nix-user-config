@@ -4,9 +4,9 @@ export LC_ALL="C"
 
 status="$(idle_manager_status)"
 
-[ "${BLOCK_BUTTON:-""}" ] && {
+if [ "${BLOCK_BUTTON:-""}" ]; then
   reload() {
-    [ "${signal-""}" ] && {
+    [ "$signal" ] && {
       (sleep "0.5"; pkill "-SIGRTMIN+${signal}" i3blocks) 1>/dev/null 2>/dev/null & disown
     }
   }
@@ -43,7 +43,7 @@ status="$(idle_manager_status)"
       esac
     ;;
   esac
-}
+fi
 
 case "$status" in
   "started") echo "Idle lock" ;;

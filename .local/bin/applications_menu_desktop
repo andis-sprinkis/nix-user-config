@@ -1,11 +1,17 @@
 #!/usr/bin/env sh
+set -eu
 
 path_usage_log="${XDG_CACHE_HOME:-HOME/.cache}/j4-dmenu-desktop/log"
 
-cmd_menu=""
-[ "$WAYLAND_DISPLAY" ] && cmd_menu="wmenu"
-[ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && cmd_menu="dmenu"
-[ "$cmd_menu" ] || exit "1"
+cmd_menu="${WAYLAND_DISPLAY:+"wmenu"}"
+
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+  cmd_menu="dmenu"
+fi
+
+if [ -z "$cmd_menu" ]; then
+  exit "1"
+fi
 
 dir_appimage="${APPIMAGE_DATA_HOME:-$HOME/.local/opt/appimage}"
 cmd_inc_appimage=""
@@ -13,7 +19,7 @@ cmd_inc_appimage=""
 
 cmd_applications_menu="(cat; ${cmd_inc_appimage}) | ${cmd_menu}"
 
-killall -u "$(whoami)" "$cmd_menu" 2> "/dev/null"
+set +e; killall -u "$(whoami)" "$cmd_menu" 2> "/dev/null"; set -e
 
 exec j4-dmenu-desktop \
   --no-generic \

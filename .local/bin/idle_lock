@@ -10,8 +10,8 @@ case "$(idle_manager_status)" in
   ;;
 esac
 
-[ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && {
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   exec xscreensaver-command -lock
-}
+fi
 
 exec killall -u "$(whoami)" -s "SIGUSR1" "swayidle"
