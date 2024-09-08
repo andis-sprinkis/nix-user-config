@@ -26,10 +26,8 @@ set -e
 [ "${WAYLAND_DISPLAY:-""}" ] && {
   output="$(ucmenu -m "wmenu -p '%P:'" -n "wmenu -p '%P:'" -r "wmenu -p '%P:'")"
 
-  if [ -z "$output" ]; then
-    exit "0"
+  if [ "$output" ]; then
+    sleep "0.5"
+    wtype "$output"
   fi
-
-  sleep "0.5"
-  wtype "$output"
 }
