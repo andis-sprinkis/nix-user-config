@@ -1,48 +1,66 @@
 #!/usr/bin/env sh
+set -eu
+export LC_ALL="C"
 
-[ "$(find "/sys/class/power_supply/" -name "BAT*")" ] || exit
+if [ -z "$(find "/sys/class/power_supply/" -name "BAT*")" ]; then
+  exit "0"
+fi
 
-[ "$BLOCK_BUTTON" ] && case "$BLOCK_BUTTON" in
-  "1"|"3")
-    cmd="echo -n \"\033]0;Battery information\007\"; acpi -i | ${PAGER}"
-    $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
-  ;;
-  "4") brightnessctl -q set "+2%" 1>/dev/null 2>/dev/null & disown ;;
-  "5") brightnessctl -q set "2%-" 1>/dev/null 2>/dev/null & disown ;;
-esac
-
-for battery in /sys/class/power_supply/BAT?*; do
-  [ -n "${capacity+x}" ] && printf " "
-
-  capacity="$(cat "${battery}/capacity" 2>&1)"
-  status="$(cat "${battery}/status" 2>&1)"
-
-  case "$status" in
-    "Full")
-      label="Battery full"
-      printf "%s" "$label"
+if [ "${BLOCK_BUTTON:-""}" ]; then
+  case "$BLOCK_BUTTON" in
+    "1"|"3")
+      cmd="echo -n \"\033]0;Battery information\007\"; acpi -i | ${PAGER}"
+      $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
     ;;
-    "Discharging")
-      label="Battery discharging"
-
-      if [ "$capacity" -gt 25 ]; then
-        printf "%s, %s%%" "$label" "$capacity"
-      else
-        printf "%s, %s %d%%" "$label" "⚠️" "$capacity"
-      fi
+    "4") 
+      brightnessctl -q set "+2%" 1>/dev/null 2>/dev/null & disown
     ;;
-    "Charging")
-      label="Battery charging"
-      printf "%s, %s%%" "$label" "$capacity"
+    "5")
+      brightnessctl -q set "2%-" 1>/dev/null 2>/dev/null & disown
     ;;
-    "Not charging")
-      label="Battery not charging"
-      printf "%s, %s %d%%" "$label" "⚠️" "$capacity"
-    ;;
-    "Unknown")
-      label="Battery state unknown"
-      printf "%s, %s %d%%" "$label" "⚠️" "$capacity"
-    ;;
-    *) exit "1" ;;
   esac
-done && printf "\\n"
+fi
+
+info="$(
+  for battery in /sys/class/power_supply/BAT?*; do
+    if [ -n "${capacity+x}" ]; then
+      printf " "
+    fi
+
+    capacity="$(cat "${battery}/capacity" 2>&1)"
+    status="$(cat "${battery}/status" 2>&1)"
+
+    case "$status" in
+      "Full")
+        label="Battery full"
+        printf "%s" "$label"
+      ;;
+      "Discharging")
+        label="Battery discharging"
+
+        if [ "$capacity" -gt 25 ]; then
+          printf "%s, %s%%" "$label" "$capacity"
+        else
+          printf "%s, %s %d%%" "$label" "⚠️" "$capacity"
+        fi
+      ;;
+      "Charging")
+        label="Battery charging"
+        printf "%s, %s%%" "$label" "$capacity"
+      ;;
+      "Not charging")
+        label="Battery not charging"
+        printf "%s, %s %d%%" "$label" "⚠️" "$capacity"
+      ;;
+      *)
+        label="Battery state unknown"
+        printf "%s, %s %d%%" "$label" "⚠️" "$capacity"
+      ;;
+    esac
+  done
+)"
+
+if [ "$info" ]; then
+  echo "${info}
+"
+fi

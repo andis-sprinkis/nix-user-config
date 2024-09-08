@@ -1,29 +1,40 @@
 #!/usr/bin/env sh
 set -eu
-LC_ALL="C"
+export LC_ALL="C"
 
 PREFIX="${PREFIX:-"Volume "}"
 SUFFIX="${SUFFIX:-""}"
 STEP="${STEP:-"1"}"
-BLOCK_BUTTON="${BLOCK_BUTTON:-""}"
 reload=""
 
-[ "$BLOCK_BUTTON" ] && case $BLOCK_BUTTON in
-  "1") easyeffects 1> "/dev/null" 2> "/dev/null" & disown ;;
-  "3") wpctl "set-mute" "@DEFAULT_SINK@" "toggle"; reload="1" ;;
-  "4") wpctl "set-volume" "@DEFAULT_SINK@" "${STEP}%+"; reload="1" ;;
-  "5") wpctl "set-volume" "@DEFAULT_SINK@" "${STEP}%-"; reload="1" ;;
-esac
+if [ "${BLOCK_BUTTON:-""}" ]; then
+  case $BLOCK_BUTTON in
+    "1")
+      easyeffects 1> "/dev/null" 2> "/dev/null" & disown
+    ;;
+    "3")
+      wpctl "set-mute" "@DEFAULT_SINK@" "toggle"; reload="1"
+    ;;
+    "4")
+      wpctl "set-volume" "@DEFAULT_SINK@" "${STEP}%+"; reload="1"
+    ;;
+    "5")
+      wpctl "set-volume" "@DEFAULT_SINK@" "${STEP}%-"; reload="1"
+    ;;
+  esac
+fi
 
 status="$(wpctl "get-volume" "@DEFAULT_SINK@")"
 
-[ "$status" ] && {
+if [ "$status" ]; then
   volume="$(echo "$status" | cut -d' ' -f2)"
   muted="$(echo "$status" | cut -d' ' -f3)"
   volume_formatted="$(printf '%.0f%%' "$(echo "100 * ${volume}" | bc)")"
   echo "${PREFIX}${volume_formatted}${muted:+, MUTE}${SUFFIX}"
-}
+fi
 
-[ "$reload" ] && [ "$signal" ] && exec pkill "-SIGRTMIN+${signal}" i3blocks
+if [ "$reload" ] && [ "${signal:-""}" ]; then
+  exec pkill "-SIGRTMIN+${signal}" i3blocks
+fi
 
 exit "0"

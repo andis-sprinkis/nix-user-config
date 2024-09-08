@@ -1,22 +1,28 @@
 #!/usr/bin/env sh
+set -eu
+export LC_ALL="C"
 
-rfkill -rn -o "TYPE" | grep -xq "bluetooth" || exit
+if ! rfkill -rn -o "TYPE" | grep -xq "bluetooth"; then
+  exit "0"
+fi
 
-BLOCK_BUTTON="${BLOCK_BUTTON:-""}" signal="${signal-""}"
 controller_id="" controller_is_on="0" dev_count="0"
 
 controller_id="$(bluetoothctl "list" 2> "/dev/null" | grep "\[default\]" | cut -f2 -d" ")"
 
-[ "$controller_id" ] && {
+if [ "$controller_id" ]; then
   dev_count="$(bluetoothctl "devices" "Connected" 2> "/dev/null" | wc -l)"
-  bluetoothctl show "$controller_id" 2> "/dev/null" | grep -q "PowerState: on" && controller_is_on="1"
-}
 
-[ "$BLOCK_BUTTON" ] && {
+  if bluetoothctl show "$controller_id" 2> "/dev/null" | grep -q "PowerState: on"; then
+    controller_is_on="1"
+  fi
+fi
+
+if [ "${BLOCK_BUTTON:-""}" ]; then
   reload() {
-    [ "${signal}" ] && {
+    if [ "${signal-""}" ]; then
       (sleep "${1:-0.5}"; pkill "-SIGRTMIN+${signal}" i3blocks) 1> "/dev/null" 2> "/dev/null" & disown
-    }
+    fi
   }
 
   case "$BLOCK_BUTTON" in
@@ -38,7 +44,7 @@ controller_id="$(bluetoothctl "list" 2> "/dev/null" | grep "\[default\]" | cut -
       esac
     ;;
   esac
-}
+fi
 
 case "$dev_count" in
   "0")

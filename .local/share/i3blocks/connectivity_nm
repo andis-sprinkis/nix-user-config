@@ -1,8 +1,12 @@
 #!/usr/bin/env sh
+set -eu
+export LC_ALL="C"
 
 connectivity="$(nmcli networking connectivity)"
 
-[ "$connectivity" ] || exit
+if [ ! "$connectivity" ]; then
+  exit "0"
+fi
 
 label_disabling="Disabling connectivity..."
 label_enabling="Enabling connectivity..."
@@ -13,11 +17,11 @@ label_limited="Network connected (limited)"
 label_unknown="Network connectivity unknown"
 label_other="Network connectivity status: ${connectivity}"
 
-[ "$BLOCK_BUTTON" ] && {
+if [ "${BLOCK_BUTTON:-""}" ]; then
   reload() {
-    [ "$signal" ] && {
+    if [ "${signal-""}" ]; then
       (sleep "${1:-"0.5"}"; pkill "-SIGRTMIN+${signal}" i3blocks) 1>/dev/null 2>/dev/null & disown
-    }
+    fi
   }
 
   case "$BLOCK_BUTTON" in
@@ -40,7 +44,7 @@ label_other="Network connectivity status: ${connectivity}"
       esac
     ;;
   esac 
-}
+fi
 
 case "$connectivity" in
   "full") echo "$label_full";;

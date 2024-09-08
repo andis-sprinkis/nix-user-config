@@ -1,12 +1,14 @@
 #!/usr/bin/env sh
+set -eu
+export LC_ALL="C"
 
-systemctl is-active --quiet sshd && {
-  [ "$BLOCK_BUTTON" = "3" ] && {
+if systemctl is-active --quiet sshd; then
+  if [ "${BLOCK_BUTTON:-""}" ] && [ "$BLOCK_BUTTON" = "3" ]; then
     cmd="echo -n \"\033]0;Stop SSHD service\007\"; systemctl stop sshd; read"
     $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
-  }
+  fi
 
   exec echo "SSHD active"
-}
+fi
 
 exit "0"

@@ -1,12 +1,14 @@
 #!/usr/bin/env sh
+set -eu
+export LC_ALL="C"
 
-systemctl is-active --quiet smb && {
-  [ "$BLOCK_BUTTON" = "3" ] && {
+if systemctl is-active --quiet smb; then
+  if ${BLOCK_BUTTON:-""} && [ "$BLOCK_BUTTON" = "3" ]; then
     cmd="echo -n \"\033]0;Stop SMB service\007\"; systemctl stop smb; read"
     $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
-  }
+  fi
 
   echo "SMB active"
-}
+fi
 
 exit "0"

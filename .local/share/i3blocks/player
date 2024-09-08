@@ -1,53 +1,59 @@
 #!/usr/bin/env sh
 set -eu
+export LC_ALL="C"
 
-BLOCK_BUTTON="${BLOCK_BUTTON:-""}"
 message=""
 
 case "$(playerctl status)" in
   "Playing")
-    [ "$BLOCK_BUTTON" ] && case $BLOCK_BUTTON in
-      "1")
-         playerctl pause 1> "/dev/null" 2> "/dev/null" & disown
-         message="Media paused"
-      ;;
-      "3")
-         playerctl stop 1> "/dev/null" 2> "/dev/null" & disown
-         message="Media stopped"
-      ;;
-      "4")
-         playerctl position "5+" 1> "/dev/null" 2> "/dev/null" & disown
-      ;;
-      "5")
-         playerctl position "5-" 1> "/dev/null" 2> "/dev/null" & disown
-      ;;
-    esac
+    if [ "${BLOCK_BUTTON:-""}" ]; then
+      case "$BLOCK_BUTTON" in
+        "1")
+           playerctl pause 1> "/dev/null" 2> "/dev/null" & disown
+           message="Media paused"
+        ;;
+        "3")
+           playerctl stop 1> "/dev/null" 2> "/dev/null" & disown
+           message="Media stopped"
+        ;;
+        "4")
+           playerctl position "5+" 1> "/dev/null" 2> "/dev/null" & disown
+        ;;
+        "5")
+           playerctl position "5-" 1> "/dev/null" 2> "/dev/null" & disown
+        ;;
+      esac
+    fi
     message="${message:-"Media playing"}"
   ;;
   "Paused")
-    [ "$BLOCK_BUTTON" ] && case $BLOCK_BUTTON in
-      "1")
-         playerctl play 1> "/dev/null" 2> "/dev/null" & disown
-         message="Media playing"
-      ;;
-      "3")
-         playerctl stop 1> "/dev/null" 2> "/dev/null" & disown
-         message="Media stopped"
-      ;;
-    esac
+    if [ "${BLOCK_BUTTON:-""}" ]; then
+      case $BLOCK_BUTTON in
+        "1")
+           playerctl play 1> "/dev/null" 2> "/dev/null" & disown
+           message="Media playing"
+        ;;
+        "3")
+           playerctl stop 1> "/dev/null" 2> "/dev/null" & disown
+           message="Media stopped"
+        ;;
+      esac
+    fi
     message="${message:-"Media paused"}"
   ;;
   "Stopped")
-    [ "$BLOCK_BUTTON" ] && case $BLOCK_BUTTON in
-      "1"|"3")
-         playerctl play 1> "/dev/null" 2> "/dev/null" & disown
-         message="Media playing"
-      ;;
-    esac
+    if [ "${BLOCK_BUTTON:-""}" ]; then
+      case $BLOCK_BUTTON in
+        "1"|"3")
+          playerctl play 1> "/dev/null" 2> "/dev/null" & disown
+          message="Media playing"
+        ;;
+      esac
+    fi
     message="${message:-"Media stopped"}"
   ;;
   *)
-    exit
+    exit "0"
   ;;
 esac
 

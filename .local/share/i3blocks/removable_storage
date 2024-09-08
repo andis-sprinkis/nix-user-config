@@ -1,9 +1,11 @@
 #!/usr/bin/env sh
+set -eu
+export LC_ALL="C"
 
-fstab_mounts="$(grep -v -e "^#" -e "^$" < "/etc/fstab")"
+fstab_mounts="$(set +e; grep -v -e "^#" -e "^$" < "/etc/fstab"; set -e)"
 fstab_mounts_mpts="$(echo "$fstab_mounts" | awk '{ print $2 }')"
 
-active_mounts="$(grep -v -P " \/(sys|run|dev|proc|tmp|var)(/| )" < "/proc/mounts")"
+active_mounts="$(set +e; grep -v -P " \/(sys|run|dev|proc|tmp|var)(/| )" < "/proc/mounts"; set -e)"
 active_mounts_mpts="$(echo "$active_mounts" | awk '{ print $2 }')"
 
 rsds_mounts=""
@@ -13,28 +15,33 @@ ifs_old="$IFS"; IFS="
 "
 
 for i in $active_mounts_mpts; do
-  echo "$fstab_mounts_mpts" | grep -xq "$i" || {
+  if ! echo "$fstab_mounts_mpts" | grep -xq "$i"; then
     rsds_count="$(("$rsds_count" + "1"))"
+
     rsds_mounts="$rsds_mounts
 - $(echo "$active_mounts" | grep " $i ")"
-  }
+  fi
 done
 
 IFS="$ifs_old"
 
-[ "$rsds_count" ] && {
-  [ "$BLOCK_BUTTON" ] && case "$BLOCK_BUTTON" in
-    "1"|"3")
-      title="Removable storage devices mounted"
-      cmd="echo -n \"\033]0;${title}\007\"; echo \"${title}:${rsds_mounts}\" | ${PAGER}"
+if [ "$rsds_count" ]; then
+  if [ "${BLOCK_BUTTON:-""}" ]; then
+    case "$BLOCK_BUTTON" in
+      "1"|"3")
+        title="Removable storage devices mounted"
+        cmd="echo -n \"\033]0;${title}\007\"; echo \"${title}:${rsds_mounts}\" | ${PAGER}"
 
-      $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
-    ;;
-  esac
+        $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
+      ;;
+    esac
+  fi
 
   case "$rsds_count" in
     "0") exit ;;
     "1") echo "$rsds_count storage device" ;;
     *) echo "$rsds_count storage devices" ;;
   esac
-}
+fi
+
+exit "0"
