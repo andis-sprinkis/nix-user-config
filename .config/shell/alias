@@ -97,10 +97,15 @@ is_exec "yay" && alias \
   pac_upgrade="yay" \
   pac_upgrade_db="yay -Sy"
 
-case "$(uname)" in "Darwin") is_macos="1" ;; esac
-[ -z "$is_macos" ] || [ "$HAS_BREW_GNUBIN" ] && {
+case "$(uname)" in
+  "Darwin")
+    is_macos="1"
+  ;;
+esac
+
+if [ -z "$is_macos" ] || [ "${HAS_BREW_GNUBIN:-""}" ]; then
   alias \
     diff="diff --color=always" \
     grep="grep --color=always" \
     ls="ls -xhAFNX --color=always --group-directories-first --time-style=long-iso"
-}
+fi

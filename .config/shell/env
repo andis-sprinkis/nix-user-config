@@ -5,20 +5,25 @@ is_exec() { [ "$(command -v "$1")" ]; }
 
 main() {
   # initialize homebrew
-  [ -f "/opt/homebrew/bin/brew" ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+  if [ -f "/opt/homebrew/bin/brew" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  fi
 
   # default macOS homebrew dir. path
   prefix="$(brew --prefix 2> /dev/null)"
   export BREW_PREFIX="${prefix:-/opt/homebrew}"
 
   # determine if GNU utilities have been installed with homebrew
-  [ -d "$BREW_PREFIX/opt/coreutils/libexec/gnubin" ] && export HAS_BREW_GNUBIN="1"
+  HAS_BREW_GNUBIN=""
+  if [ -d "$BREW_PREFIX/opt/coreutils/libexec/gnubin" ]; then
+    export HAS_BREW_GNUBIN="1"
+  fi
 
   # use the GNU utils on macOS
-  [ "$HAS_BREW_GNUBIN" ] && {
+  if [ "$HAS_BREW_GNUBIN" ]; then
     PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
     export MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
-  }
+  fi
 
   # XDG base directories
   export XDG_CACHE_HOME="$HOME/.cache"
@@ -34,7 +39,9 @@ main() {
   PATH="$APPIMAGE_DATA_HOME:$PATH"
 
   # set language
-  [ "$LANG" ] || export LANG='en_US.UTF-8'
+  if [ -z "${LANG:-""}" ]; then
+    export LANG='en_US.UTF-8'
+  fi
 
   # set locale
   [ -f "/etc/profile.d/locale.sh" ] && { unset LANG; . "/etc/profile.d/locale.sh"; }
@@ -45,26 +52,29 @@ main() {
   # set TERMINAL
   export TERMINAL="terminal"
 
-  is_exec "nvim" && {
+  if is_exec "nvim"; then
     # configure nvim as EDITOR, MANPAGER
     export EDITOR="nvim"
     export MANWIDTH="999"
     export MANPAGER="nvim +Man!"
-  } || {
+  else
     # or set a different avail. EDITOR
     for editor in "vim" "vi" "nano"; do
       is_exec "$editor" && export EDITOR="$editor" && break
     done
-  }
+  fi
 
   # GUI envrironment variables script path
   export GUI_ENV="${XDG_CONFIG_HOME:-$HOME/.config}/shell/gui"
 
   # configure makepkg
-  is_exec "nproc" && {
+  if is_exec "nproc"; then
     proc_units_no="$(nproc)"
-    [ "$proc_units_no" ] && export MAKEFLAGS="-j${proc_units_no}"
-  }
+
+    if [ "$proc_units_no" ]; then
+      export MAKEFLAGS="-j${proc_units_no}"
+    fi
+  fi
 
   # configure X11
   export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/xinit/xinitrc"

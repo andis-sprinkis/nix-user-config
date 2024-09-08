@@ -40,7 +40,9 @@
     echo_cur_beam 
 
     # increase inactivity timeout
-    [ "$TMOUT" != "0" ] && TMOUT="5400"
+    if [ "${TMOUT:-""}" != "0" ]; then
+      TMOUT="5400"
+    fi
   }
 
   # set window title
@@ -65,12 +67,14 @@
   # fn: set RPROMPT prompt
   set_prompt_rprompt() {
     local tmout_status=""
-    [ "$TMOUT" = "0" ] && tmout_status="TMOUT0 "
+    if [ "${TMOUT:-""}" = "0" ]; then 
+      tmout_status="TMOUT0 ";
+    fi
 
     RPROMPT="${tmout_status}(\$?) %D{%K:%M:%S}"
   }
 
-  is_exec "git" && {
+  if is_exec "git"; then
     # git-completion plugin
     fpath=($fpath "${XDG_DATA_HOME:-$HOME/.local/share}/git-completion/zsh")
 
@@ -78,13 +82,26 @@
     autoload -Uz "vcs_info"
     precmd_functions+=("set_prompt_rprompt" "vcs_info" "set_window_title")
     zstyle ":vcs_info:git:*" "formats" "$bg[white]$fg[black]  %b "
-  } || precmd_functions+=("set_prompt_rprompt" "set_window_title")
+  else 
+    precmd_functions+=("set_prompt_rprompt" "set_window_title")
+  fi
 
   # set PS1 prompt
   () {
-    [ "$USER" = "root" ] && local role_params=("magenta" "#") || local role_params=("cyan" "$")
+    if [ "$USER" = "root" ]; then 
+      local role_params=("magenta" "#")
+    else 
+      local role_params=("cyan" "$")
+    fi
+
     local userhost="%{$bg[$role_params[1]] $fg[black]%}%n@%M %{$reset_color%}"
-    local ssh_status=$([ "$SSH_CLIENT" ] || [ "$SSH_TTY" ] && echo "%{$bg[blue]$fg[black]%} SSH %{$reset_color%}")
+
+    local ssh_status="$(
+      if [ "$SSH_CLIENT" ] || [ "$SSH_TTY" ]; then 
+        echo "%{$bg[blue]$fg[black]%} SSH %{$reset_color%}";
+      fi
+    )"
+
     local vcs_info="\$vcs_info_msg_0_%{$reset_color%}"
     local cwd_path="%{$bg[white]$fg[black]%} %/ %{$reset_color%}"
     local prompt_symbol="%{$fg[$role_params[1]]%}$role_params[2]%{$reset_color%} "
@@ -142,15 +159,23 @@ $prompt_symbol"
   bindkey -a "^e" "edit-command-line"
 
   # configure tldr
-  [ -f "$HOME/.local/bin/tldr" ] && compctl -k "($(tldr 2>/dev/null --list))" "tldr"
+  if [ -f "$HOME/.local/bin/tldr" ]; then
+    compctl -k "($(tldr 2>/dev/null --list))" "tldr"
+  fi
 
   # configure fzf
-  is_exec "fzf" && {
-    local fzf_completion; for fzf_completion in \
+  if is_exec "fzf"; then
+    local fzf_completion
+    for fzf_completion in \
       "/usr/share/fzf/completion.zsh" \
       "$BREW_PREFIX/opt/fzf/shell/completion.zsh" \
       "$HOME/.fzf/shell/completion.zsh"
-    do; [ -f "$fzf_completion" ] && . "$fzf_completion" && break; done
+    do
+      if [ -f "$fzf_completion" ]; then
+        . "$fzf_completion"
+        break
+      fi
+    done
 
     # cd with fzf
 
@@ -167,7 +192,7 @@ $prompt_symbol"
 
     zle -N "fzf_search_history"
     bindkey "^k" "fzf_search_history"
-  }
+  fi
 
   # source local zsh plugins
   . "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
