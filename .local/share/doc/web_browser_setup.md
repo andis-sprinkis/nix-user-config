@@ -19,6 +19,7 @@ ln -s ../../../.config/firefox/user.js user.js
 1.  https://addons.mozilla.org/en-US/firefox/addon/clearurls/
 1.  https://addons.mozilla.org/en-US/firefox/addon/copy-as-markdown/
 1.  https://addons.mozilla.org/en-US/firefox/addon/ddg-lite-search-provider/
+1.  https://addons.mozilla.org/en-US/firefox/addon/extension-copycat/
 1.  https://addons.mozilla.org/en-US/firefox/addon/favicon-detector/
 1.  https://addons.mozilla.org/en-US/firefox/addon/github-search/
 1.  https://addons.mozilla.org/en-US/firefox/addon/hohser/
