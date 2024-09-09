@@ -28,7 +28,7 @@ status="$(wpctl "get-volume" "@DEFAULT_SINK@")"
 if [ "$status" ]; then
   volume="$(echo "$status" | cut -d' ' -f2)"
   muted="$(echo "$status" | cut -d' ' -f3)"
-  volume_formatted="$(printf '%.0f%%' "$(echo "100 * ${volume}" | bc)")"
+  volume_formatted="$(LC_ALL=C printf '%.0f%%' "$(echo "100 * ${volume}" | bc)")"
   echo "${PREFIX}${volume_formatted}${muted:+, MUTE}${SUFFIX}"
 fi
 
