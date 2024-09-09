@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -eu
 
-if [ -z "$*" ] || [ -z "$1" ]; then
+if [ -z "${*:-""}" ] || [ -z "${1:-""}" ]; then
   exit "1"
 fi
 
