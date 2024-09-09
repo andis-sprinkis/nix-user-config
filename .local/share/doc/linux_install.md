@@ -42,7 +42,7 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
 1. Wipe the installation target disk. This document assumes installation target disk is `/dev/nvme0n1` (use `lsblk` to list block devices).
     ```sh
     cryptsetup open --type plain -d /dev/urandom /dev/nvme0n1 to_be_wiped
-    dd if=/dev/zero of=/dev/mapper/to_be_wiped bs=1M status=progress 2> /dev/null
+    dd if=/dev/zero of=/dev/mapper/to_be_wiped bs=1M status=progress
     cryptsetup close to_be_wiped
     ```
 1. Create the top level physical partitions. Choose the option `GPT partitioning`.
