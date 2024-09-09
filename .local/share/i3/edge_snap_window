@@ -1,0 +1,103 @@
+#!/usr/bin/env sh
+set -eu
+
+direction="${1:-""}"
+
+if [ -z "$direction" ]; then
+  exit "1"
+fi
+
+calc() {
+  out_rect="$(i3-msg -t get_outputs | jq ".[] | select(.focused == true).rect")"
+
+  out_rect_x="$(echo "$out_rect" | jq -r ".x")"
+  out_rect_y="$(echo "$out_rect" | jq -r ".y")"
+  out_rect_width="$(echo "$out_rect" | jq -r ".width")"
+  out_rect_height="$(echo "$out_rect" | jq -r ".height")"
+
+  ws_rect="$(i3-msg -t get_workspaces | jq ".[] | select(.focused == true).rect")"
+
+  # ws_rect_x="$(echo "$ws_rect" | jq -r ".x")"
+  ws_rect_y="$(echo "$ws_rect" | jq -r ".y")"
+  # ws_rect_width="$(echo "$ws_rect" | jq -r ".width")"
+  # ws_rect_height="$(echo "$ws_rect" | jq -r ".height")"
+
+  win="$(swaymsg -t get_tree | jq -r '.. | select(.type?) | select(.focused == true)')"
+  win_rect="$(echo "$win" | jq -r '.rect')"
+  # win_window_rect="$(echo "$win" | jq -r '.window_rect')"
+  win_deco_rect="$(echo "$win" | jq -r '.deco_rect')"
+  # win_geometry="$(echo "$win" | jq -r '.geometry')"
+
+  win_rect_x="$(echo "$win_rect" | jq -r '.x')"
+  win_rect_y="$(echo "$win_rect" | jq -r '.y')"
+  win_rect_width="$(echo "$win_rect" | jq -r '.width')"
+  win_rect_height="$(echo "$win_rect" | jq -r '.height')"
+
+  # win_deco_rect_x="$(echo "$win_deco_rect" | jq -r '.x')"
+  # win_deco_rect_y="$(echo "$win_deco_rect" | jq -r '.y')"
+  # win_deco_rect_width="$(echo "$win_deco_rect" | jq -r '.width')"
+  win_deco_rect_height="$(echo "$win_deco_rect" | jq -r '.height')"
+}
+
+y_top() {
+  echo "$ws_rect_y"
+}
+
+y_bottom() {
+  echo "$((out_rect_y + out_rect_height - win_rect_height - win_deco_rect_height))"
+}
+
+x_left() {
+  echo "$out_rect_x"
+}
+
+x_right() {
+  echo "$((out_rect_x + out_rect_width - win_rect_width))"
+}
+
+x() {
+  echo "$win_rect_x"
+}
+
+y() {
+  echo "$((win_rect_y - win_deco_rect_height))"
+}
+
+calc
+
+case "$direction" in
+  "up")
+    i3-msg "floating enable; move absolute position $(x) $(y_top)"
+  ;;
+  "down")
+    i3-msg "floating enable; move absolute position $(x) $(y_bottom)"
+  ;;
+  "left")
+    i3-msg "floating enable; move absolute position $(x_left) $(y)"
+  ;;
+  "right")
+    i3-msg "floating enable; move absolute position $(x_right) $(y)"
+  ;;
+  "top_left")
+    i3-msg "floating enable; move absolute position $(x_left) $(y_top)"
+  ;;
+  "top_right")
+    i3-msg "floating enable; move absolute position $(x_right) $(y_top)"
+  ;;
+  "bottom_left")
+    i3-msg "floating enable; move absolute position $(x_left) $(y_bottom)"
+  ;;
+  "bottom_right")
+    i3-msg "floating enable; move absolute position $(x_right) $(y_bottom)"
+  ;;
+  # "closest_y")
+  # ;;
+  # "closest_x")
+  # ;;
+  # "closest")
+  # ;;
+  *)
+    exit "1"
+  ;;
+esac
+
