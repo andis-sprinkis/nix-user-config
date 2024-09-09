@@ -39,56 +39,104 @@ calc() {
   win_deco_rect_height="$(echo "$win_deco_rect" | jq -r '.height')"
 }
 
-y_top() {
+win_goes_top() {
   echo "$ws_rect_y"
 }
 
-y_bottom() {
+win_goes_bottom() {
   echo "$((out_rect_y + out_rect_height - win_rect_height - win_deco_rect_height))"
 }
 
-x_left() {
+win_goes_left() {
   echo "$out_rect_x"
 }
 
-x_right() {
+win_goes_right() {
   echo "$((out_rect_x + out_rect_width - win_rect_width))"
 }
 
-x() {
+win_stays_x() {
   echo "$win_rect_x"
 }
 
-y() {
+win_stays_y() {
   echo "$((win_rect_y - win_deco_rect_height))"
+}
+
+win_snaps_top() {
+  exec i3-msg "floating enable; move absolute position $(win_stays_x) $(win_goes_top)"
+}
+
+win_snaps_bottom() {
+  exec i3-msg "floating enable; move absolute position $(win_stays_x) $(win_goes_bottom)"
+}
+
+win_snaps_left() {
+  exec i3-msg "floating enable; move absolute position $(win_goes_left) $(win_stays_y)"
+}
+
+win_snaps_right() {
+  exec i3-msg "floating enable; move absolute position $(win_goes_right) $(win_stays_y)"
+}
+
+win_snaps_top_left() {
+  exec i3-msg "floating enable; move absolute position $(win_goes_left) $(win_goes_top)"
+}
+
+win_snaps_top_right() {
+  exec i3-msg "floating enable; move absolute position $(win_goes_right) $(win_goes_top)"
+}
+
+win_snaps_bottom_left() {
+  exec i3-msg "floating enable; move absolute position $(win_goes_left) $(win_goes_bottom)"
+}
+
+win_snaps_bottom_right() {
+  exec i3-msg "floating enable; move absolute position $(win_goes_right) $(win_goes_bottom)"
 }
 
 calc
 
 case "$direction" in
   "up")
-    i3-msg "floating enable; move absolute position $(x) $(y_top)"
+    if [ "$((win_rect_y - win_deco_rect_height + win_rect_height))" -gt "$((out_rect_y + out_rect_height))" ]; then
+      win_snaps_bottom
+    fi
+
+    win_snaps_top
   ;;
   "down")
-    i3-msg "floating enable; move absolute position $(x) $(y_bottom)"
+    if [ "$win_rect_y" -lt "$ws_rect_y" ]; then
+      win_snaps_top
+    fi
+
+    win_snaps_bottom
   ;;
   "left")
-    i3-msg "floating enable; move absolute position $(x_left) $(y)"
+    if [ "$((win_rect_x + win_rect_width))" -gt "$((out_rect_x + out_rect_width))" ]; then
+      win_snaps_right
+    fi
+
+    win_snaps_left
   ;;
   "right")
-    i3-msg "floating enable; move absolute position $(x_right) $(y)"
+    if [ "$win_rect_x" -lt "$out_rect_x" ]; then
+      win_snaps_left
+    fi
+
+    win_snaps_right
   ;;
-  "top_left")
-    i3-msg "floating enable; move absolute position $(x_left) $(y_top)"
+  "up_left")
+    win_snaps_top_left
   ;;
-  "top_right")
-    i3-msg "floating enable; move absolute position $(x_right) $(y_top)"
+  "up_right")
+    win_snaps_top_right
   ;;
-  "bottom_left")
-    i3-msg "floating enable; move absolute position $(x_left) $(y_bottom)"
+  "down_left")
+    win_snaps_bottom_left
   ;;
-  "bottom_right")
-    i3-msg "floating enable; move absolute position $(x_right) $(y_bottom)"
+  "down_right")
+    win_snaps_bottom_right
   ;;
   # "closest_y")
   # ;;
