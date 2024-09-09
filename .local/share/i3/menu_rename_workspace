@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 set -eu
-export LC_ALL="C"
 
 # If the current workspace is named "2":
 #

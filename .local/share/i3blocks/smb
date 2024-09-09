@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 set -eu
-export LC_ALL="C"
 
 if systemctl is-active --quiet smb; then
   if ${BLOCK_BUTTON:-""} && [ "$BLOCK_BUTTON" = "3" ]; then

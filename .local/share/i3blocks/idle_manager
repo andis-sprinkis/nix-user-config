@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 set -eu
-export LC_ALL="C"
 
 status="$(idle_manager_status)"
 

@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 set -eu
-export LC_ALL="C"
 
 if [ -z "$(find "/sys/class/power_supply/" -name "BAT*")" ]; then
   exit "0"

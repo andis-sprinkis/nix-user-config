@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 set -eu
-export LC_ALL="C"
 
 if ! rfkill -rn -o "TYPE" | grep -xq "bluetooth"; then
   exit "0"
