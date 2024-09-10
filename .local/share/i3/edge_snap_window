@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 set -eu
+set -x
 
 direction="${1:-""}"
 
@@ -18,10 +19,10 @@ out_rect_height="$(echo "$out_rect" | jq -r ".height")"
 
 ws_rect="$(i3-msg -t get_workspaces | jq ".[] | select(.focused == true).rect")"
 
-# ws_rect_x="$(echo "$ws_rect" | jq -r ".x")"
+ws_rect_x="$(echo "$ws_rect" | jq -r ".x")"
 ws_rect_y="$(echo "$ws_rect" | jq -r ".y")"
-# ws_rect_width="$(echo "$ws_rect" | jq -r ".width")"
-# ws_rect_height="$(echo "$ws_rect" | jq -r ".height")"
+ws_rect_width="$(echo "$ws_rect" | jq -r ".width")"
+ws_rect_height="$(echo "$ws_rect" | jq -r ".height")"
 
 win="$(swaymsg -t get_tree | jq -r '.. | select(.type?) | select(.focused == true)')"
 win_type="$(echo "$win" | jq -r ".type")"
@@ -94,8 +95,28 @@ out_edge_bottom() {
 
 # Workspace properties
 
+ws_height() {
+  echo "$ws_rect_height"
+}
+
+ws_width() {
+  echo "$ws_rect_width"
+}
+
+ws_edge_left() {
+  echo "$ws_rect_x"
+}
+
+ws_edge_right() {
+  echo $(($(ws_edge_left) + $(ws_width)))
+}
+
 ws_edge_top() {
   echo "$ws_rect_y"
+}
+
+ws_edge_bottom() {
+  echo $(($(ws_edge_top) + $(ws_height)))
 }
 
 # Window Y coordinate translations
