@@ -41,10 +41,10 @@ bindsym $mod+Shift+$down  move down
 bindsym $mod+Shift+$up    move up
 bindsym $mod+Shift+$right move right
 
-bindsym $mod+Mod1+Shift+$left  move left  176
-bindsym $mod+Mod1+Shift+$down  move down  176
-bindsym $mod+Mod1+Shift+$up    move up    176
-bindsym $mod+Mod1+Shift+$right move right 176
+bindsym $mod+Mod1+Shift+$left  floating enable; move left  176
+bindsym $mod+Mod1+Shift+$down  floating enable; move down  176
+bindsym $mod+Mod1+Shift+$up    floating enable; move up    176
+bindsym $mod+Mod1+Shift+$right floating enable; move right 176
 
 bindsym $mod+o split h
 bindsym $mod+v split v
