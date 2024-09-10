@@ -13,7 +13,7 @@ set -eu
 
 cmd_menu="${WAYLAND_DISPLAY:+"wmenu"}"
 
-if [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ]; then
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   cmd_menu="dmenu"
 fi
 

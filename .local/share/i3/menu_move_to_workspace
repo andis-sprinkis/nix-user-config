@@ -3,7 +3,7 @@ set -eu
 
 cmd_menu="${WAYLAND_DISPLAY:+"wmenu"}"
 
-if [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ]; then
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   cmd_menu="dmenu"
 fi
 
@@ -14,5 +14,5 @@ fi
 ws="$(i3-msg -t get_workspaces | jq '.[].name' -r | "$cmd_menu" -p "Move window to workspace:")"
 
 if [ "$ws" ]; then
-  exec i3-msg -q move container to workspace "$ws"
+  exec i3-msg -q "move container to workspace ${ws}; workspace ${ws}"
 fi

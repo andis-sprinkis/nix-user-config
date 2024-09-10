@@ -6,7 +6,7 @@ set -eu
 wss="$(i3-msg -t get_workspaces | jq 'map({num,focused,representation})')"
 
 # In Sway checking if workspace is already empty. i3 containers have no 'representation' property.
-if [ "$WAYLAND_DISPLAY" ] && [ "$(echo "$wss" | jq -r ".[[.[].focused] | index(true)].representation")" = "null" ]; then
+if [ "${WAYLAND_DISPLAY:-""}" ] && [ "$(echo "$wss" | jq -r ".[[.[].focused] | index(true)].representation")" = "null" ]; then
   exec i3-msg -q workspace back_and_forth
 fi
 
