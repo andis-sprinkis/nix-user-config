@@ -102,7 +102,7 @@ if [ "$win_type" != "floating_con" ]; then exec i3-msg "floating enable"; fi
 
 case "$direction" in
   "up")
-    if [ "$((win_rect_y - win_deco_rect_height + win_rect_height))" -gt "$((out_rect_y + out_rect_height))" ]; then
+    if [ "$win_rect_height" -lt "$out_rect_height" ] && [ "$((win_rect_y - win_deco_rect_height + win_rect_height))" -gt "$((out_rect_y + out_rect_height))" ]; then
       win_snaps_bottom
     fi
 
@@ -113,7 +113,7 @@ case "$direction" in
     win_snaps_top
   ;;
   "down")
-    if [ "$win_rect_y" -lt "$ws_rect_y" ]; then
+    if [ "$win_rect_height" -lt "$out_rect_height" ] && [ "$win_rect_y" -lt "$ws_rect_y" ]; then
       win_snaps_top
     fi
 
@@ -132,7 +132,7 @@ case "$direction" in
       exit
     fi
 
-    if [ "$((win_rect_x + win_rect_width))" -gt "$((out_rect_x + out_rect_width))" ]; then
+    if [ "$win_rect_width" -le "$out_rect_width" ] && [ "$((win_rect_x + win_rect_width))" -gt "$((out_rect_x + out_rect_width))" ]; then
       win_snaps_right
     fi
 
@@ -143,7 +143,7 @@ case "$direction" in
     #   exec i3-msg move right "176"
     # fi
 
-    if [ "$win_rect_x" -lt "$out_rect_x" ]; then
+    if [ "$win_rect_width" -le "$out_rect_width" ] && [ "$win_rect_x" -lt "$out_rect_x" ]; then
       win_snaps_left
     fi
 
