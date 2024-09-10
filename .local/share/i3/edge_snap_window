@@ -119,32 +119,30 @@ ws_edge_bottom() {
   echo $(($(ws_edge_top) + $(ws_height)))
 }
 
-# Window Y coordinate translations
+# Window X and Y coordinate translations
+
+win_x_goes_left() {
+  ws_edge_left
+}
+
+win_x_goes_right() {
+  echo "$(($(ws_edge_right) - $(win_width)))"
+}
+
+win_x_stays() {
+  win_edge_left
+}
 
 win_y_goes_top() {
   ws_edge_top
 }
 
 win_y_goes_bottom() {
-  echo "$(($(out_edge_bottom) - $(win_height)))"
+  echo "$(($(ws_edge_bottom) - $(win_height)))"
 }
 
 win_y_stays() {
   win_edge_top
-}
-
-# Window X coordinate translations
-
-win_x_goes_left() {
-  out_edge_left
-}
-
-win_x_goes_right() {
-  echo "$(($(out_edge_right) - $(win_width)))"
-}
-
-win_x_stays() {
-  win_edge_left
 }
 
 # Window manager edge snap actions
@@ -185,7 +183,7 @@ if [ "$win_type" != "floating_con" ]; then exec i3-msg "floating enable"; fi
 
 case "$direction" in
   "up")
-    if [ "$(win_width)" -lt "$(out_height)" ] && [ "$(win_edge_bottom)" -gt "$(out_edge_bottom)" ]; then
+    if [ "$(win_height)" -lt "$(ws_height)" ] && [ "$(win_edge_bottom)" -gt "$(ws_edge_bottom)" ]; then
       win_snaps_bottom
     fi
 
@@ -196,33 +194,33 @@ case "$direction" in
     win_snaps_top
   ;;
   "down")
-    if [ "$(win_height)" -lt "$(out_height)" ] && [ "$(win_edge_top)" -lt "$(ws_edge_top)" ]; then
+    if [ "$(win_height)" -lt "$(ws_height)" ] && [ "$(win_edge_top)" -lt "$(ws_edge_top)" ]; then
       win_snaps_top
     fi
 
-    if [ "$(win_edge_bottom)" -gt "$(out_edge_bottom)" ]; then
+    if [ "$(win_edge_bottom)" -gt "$(ws_edge_bottom)" ]; then
       exit
     fi
 
     win_snaps_bottom
   ;;
   "left")
-    if [ "$(win_edge_left)" -le "$(out_edge_left)" ]; then
+    if [ "$(win_edge_left)" -le "$(ws_edge_left)" ]; then
       exit
     fi
 
-    if [ "$(win_width)" -le "$(out_width)" ] && [ "$(win_edge_right)" -gt "$(out_edge_right)" ]; then
+    if [ "$(win_width)" -le "$(ws_width)" ] && [ "$(win_edge_right)" -gt "$(ws_edge_right)" ]; then
       win_snaps_right
     fi
 
     win_snaps_left
   ;;
   "right")
-    if [ "$(win_width)" -le "$(out_width)" ] && [ "$(win_edge_left)" -lt "$(out_edge_left)" ]; then
+    if [ "$(win_width)" -le "$(ws_width)" ] && [ "$(win_edge_left)" -lt "$(ws_edge_left)" ]; then
       win_snaps_left
     fi
 
-    if [ "$(win_edge_right)" -gt "$(out_edge_right)" ]; then
+    if [ "$(win_edge_right)" -gt "$(ws_edge_right)" ]; then
       exit
     fi
 
