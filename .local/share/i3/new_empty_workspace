@@ -10,7 +10,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ] && [ "$(echo "$wss" | jq -r ".[[.[].focused] | i
   exec i3-msg -q workspace back_and_forth
 fi
 
-wss_num="$(echo "$wss" | jq '.[].num' -r | tr '\n' ' ' | sort)"
+wss_num="$(echo "$wss" | jq '.[].num' -r | sort | tr '\n' ' ')"
 
 pre_wsn="$(($(echo "$wss_num" | cut -d" " -f 1) - 1))"
 
