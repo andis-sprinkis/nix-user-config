@@ -3,14 +3,14 @@ set -eu
 
 # Assumes the integer index only name workspaces.
 
-wss="$(i3-msg -t get_workspaces | jq 'map({num,focused,representation})')"
+wss="$(i3-msg -t get_workspaces | jq -r 'map({num,focused,representation})')"
 
 # In Sway checking if workspace is already empty. i3 containers have no 'representation' property.
 if [ "${WAYLAND_DISPLAY:-""}" ] && [ "$(echo "$wss" | jq -r ".[[.[].focused] | index(true)].representation")" = "null" ]; then
   exec i3-msg -q workspace back_and_forth
 fi
 
-wss_num="$(echo "$wss" | jq '.[].num' -r | sort | tr '\n' ' ')"
+wss_num="$(echo "$wss" | jq -r '.[].num' | sort | tr '\n' ' ')"
 
 pre_wsn="$(($(echo "$wss_num" | cut -d" " -f 1) - 1))"
 
