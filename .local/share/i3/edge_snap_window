@@ -121,79 +121,98 @@ ws_edge_bottom() {
 
 # Window X and Y coordinate translations
 
-win_x_goes_left() {
+win_x_moves_up() {
+  echo "$(($(win_edge_top) - 128))"
+}
+
+win_x_moves_down() {
+  echo "$(($(win_edge_top) + 128))"
+}
+
+win_x_moves_left() {
+  echo "$(($(win_edge_left) - 128))"
+}
+
+win_x_moves_right() {
+  echo "$(($(win_edge_left) + 128))"
+}
+
+win_x_snaps_left() {
   ws_edge_left
 }
 
-win_x_goes_right() {
+win_x_snaps_right() {
   echo "$(($(out_edge_right) - $(win_width)))"
+}
+
+win_y_snaps_top() {
+  ws_edge_top
+}
+
+win_y_snaps_bottom() {
+  echo "$(($(ws_edge_bottom) - $(win_height)))"
 }
 
 win_x_stays() {
   win_edge_left
 }
 
-win_y_goes_top() {
-  ws_edge_top
-}
-
-win_y_goes_bottom() {
-  echo "$(($(ws_edge_bottom) - $(win_height)))"
-}
-
 win_y_stays() {
   win_edge_top
 }
 
-win_x_goes_out_right() {
+win_x_snaps_out_right() {
   ws_edge_right
 }
 
-win_x_goes_out_left() {
+win_x_snaps_out_left() {
   echo "$(($(out_edge_left) - $(win_width)))"
 }
 
-win_y_goes_out_top() {
+win_y_snaps_out_top() {
   echo "$(($(out_edge_top) - $(win_height)))"
 }
 
-win_y_goes_out_bottom() {
+win_y_snaps_out_bottom() {
   out_edge_bottom
 }
 
 # Window manager edge snap actions
 
 win_snaps_top() {
-  exec i3-msg "move absolute position $(win_x_stays) $(win_y_goes_top)"
+  exec i3-msg "move absolute position $(win_x_stays) $(win_y_snaps_top)"
 }
 
 win_snaps_bottom() {
-  exec i3-msg "move absolute position $(win_x_stays) $(win_y_goes_bottom)"
+  exec i3-msg "move absolute position $(win_x_stays) $(win_y_snaps_bottom)"
 }
 
 win_snaps_left() {
-  exec i3-msg "move absolute position $(win_x_goes_left) $(win_y_stays)"
+  exec i3-msg "move absolute position $(win_x_snaps_left) $(win_y_stays)"
 }
 
 win_snaps_right() {
-  exec i3-msg "move absolute position $(win_x_goes_right) $(win_y_stays)"
+  exec i3-msg "move absolute position $(win_x_snaps_right) $(win_y_stays)"
 }
 
 win_snaps_out_top() {
-  exec i3-msg "move absolute position $(win_x_stays) $(win_y_goes_out_top)"
+  exec i3-msg "move absolute position $(win_x_stays) $(win_y_snaps_out_top)"
 }
 
 win_snaps_out_bottom() {
-  exec i3-msg "move absolute position $(win_x_stays) $(win_y_goes_out_bottom)"
+  exec i3-msg "move absolute position $(win_x_stays) $(win_y_snaps_out_bottom)"
 }
 
 win_snaps_out_left() {
-  exec i3-msg "move absolute position $(win_x_goes_out_left) $(win_y_stays)"
+  exec i3-msg "move absolute position $(win_x_snaps_out_left) $(win_y_stays)"
 }
 
 win_snaps_out_right() {
-  exec i3-msg "move absolute position $(win_x_goes_out_right) $(win_y_stays)"
+  exec i3-msg "move absolute position $(win_x_snaps_out_right) $(win_y_stays)"
 }
+
+# Window moving actions
+
 
 if [ "$win_type" != "floating_con" ]; then exec i3-msg "floating enable"; fi
 
