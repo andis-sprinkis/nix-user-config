@@ -126,7 +126,7 @@ win_x_goes_left() {
 }
 
 win_x_goes_right() {
-  echo "$(($(ws_edge_right) - $(win_width)))"
+  echo "$(($(out_edge_right) - $(win_width)))"
 }
 
 win_x_stays() {
@@ -143,6 +143,22 @@ win_y_goes_bottom() {
 
 win_y_stays() {
   win_edge_top
+}
+
+win_x_goes_out_right() {
+  ws_edge_right
+}
+
+win_x_goes_out_left() {
+  echo "$(($(out_edge_left) - $(win_width)))"
+}
+
+win_y_goes_out_top() {
+  echo "$(($(out_edge_top) - $(win_height)))"
+}
+
+win_y_goes_out_bottom() {
+  out_edge_bottom
 }
 
 # Window manager edge snap actions
@@ -163,26 +179,30 @@ win_snaps_right() {
   exec i3-msg "move absolute position $(win_x_goes_right) $(win_y_stays)"
 }
 
-# win_snaps_top_left() {
-#   exec i3-msg "move absolute position $(win_x_goes_left) $(win_y_goes_top)"
-# }
-#
-# win_snaps_top_right() {
-#   exec i3-msg "move absolute position $(win_x_goes_right) $(win_y_goes_top)"
-# }
-#
-# win_snaps_bottom_left() {
-#   exec i3-msg "move absolute position $(win_x_goes_left) $(win_y_goes_bottom)"
-# }
-#
-# win_snaps_bottom_right() {
-#   exec i3-msg "move absolute position $(win_x_goes_right) $(win_y_goes_bottom)"
-# }
+win_snaps_out_top() {
+  exec i3-msg "move absolute position $(win_x_stays) $(win_y_goes_out_top)"
+}
+
+win_snaps_out_bottom() {
+  exec i3-msg "move absolute position $(win_x_stays) $(win_y_goes_out_bottom)"
+}
+
+win_snaps_out_left() {
+  exec i3-msg "move absolute position $(win_x_goes_out_left) $(win_y_stays)"
+}
+
+win_snaps_out_right() {
+  exec i3-msg "move absolute position $(win_x_goes_out_right) $(win_y_stays)"
+}
 
 if [ "$win_type" != "floating_con" ]; then exec i3-msg "floating enable"; fi
 
 case "$direction" in
   "up")
+    if [ "$(win_edge_top)" -le "$(ws_edge_top)" ]; then
+      win_snaps_out_top
+    fi
+
     if [ "$(win_height)" -lt "$(ws_height)" ] && [ "$(win_edge_bottom)" -gt "$(ws_edge_bottom)" ]; then
       win_snaps_bottom
     fi
@@ -194,6 +214,10 @@ case "$direction" in
     win_snaps_top
   ;;
   "down")
+    if [ "$(win_edge_bottom)" -ge "$(ws_edge_bottom)" ]; then
+      win_snaps_out_bottom
+    fi
+
     if [ "$(win_height)" -lt "$(ws_height)" ] && [ "$(win_edge_top)" -lt "$(ws_edge_top)" ]; then
       win_snaps_top
     fi
@@ -206,7 +230,7 @@ case "$direction" in
   ;;
   "left")
     if [ "$(win_edge_left)" -le "$(ws_edge_left)" ]; then
-      exit
+      win_snaps_out_left
     fi
 
     if [ "$(win_width)" -le "$(ws_width)" ] && [ "$(win_edge_right)" -gt "$(ws_edge_right)" ]; then
@@ -216,6 +240,10 @@ case "$direction" in
     win_snaps_left
   ;;
   "right")
+    if [ "$(win_edge_right)" -ge "$(ws_edge_right)" ]; then
+      win_snaps_out_right
+    fi
+
     if [ "$(win_width)" -le "$(ws_width)" ] && [ "$(win_edge_left)" -lt "$(ws_edge_left)" ]; then
       win_snaps_left
     fi
@@ -226,24 +254,6 @@ case "$direction" in
 
     win_snaps_right
   ;;
-  # "up_left")
-  #   win_snaps_top_left
-  # ;;
-  # "up_right")
-  #   win_snaps_top_right
-  # ;;
-  # "down_left")
-  #   win_snaps_bottom_left
-  # ;;
-  # "down_right")
-  #   win_snaps_bottom_right
-  # ;;
-  # "closest_y")
-  # ;;
-  # "closest_x")
-  # ;;
-  # "closest")
-  # ;;
   *)
     exit "1"
   ;;
