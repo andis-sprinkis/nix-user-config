@@ -26,4 +26,4 @@ for wsn in $wss_num; do
   pre_wsn="$wsn"
 done
 
-i3-msg -q workspace "$((wsn + 1))"
+exec i3-msg -q workspace "$((wsn + 1))"
