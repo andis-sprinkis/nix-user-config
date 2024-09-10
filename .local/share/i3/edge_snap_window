@@ -124,6 +124,10 @@ case "$direction" in
     win_snaps_bottom
   ;;
   "left")
+    # if [ "$((win_rect_x - out_rect_x))" -ge "176" ]; then
+    #   exec i3-msg move left "176"
+    # fi
+
     if [ "$((win_rect_x))" -le "$((out_rect_x))" ]; then
       exit
     fi
@@ -135,6 +139,10 @@ case "$direction" in
     win_snaps_left
   ;;
   "right")
+    # if [ "$((out_rect_x + out_rect_width - (win_rect_x + win_rect_width)))" -ge "176" ]; then
+    #   exec i3-msg move right "176"
+    # fi
+
     if [ "$win_rect_x" -lt "$out_rect_x" ]; then
       win_snaps_left
     fi
