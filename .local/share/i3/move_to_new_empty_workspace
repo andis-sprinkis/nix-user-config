@@ -14,15 +14,15 @@ wss_num="$(echo $(echo "$wss" | jq '.[].num' -r | sort))"
 pre_wsn="$(($(echo "$wss_num" | cut -d" " -f 1) - 1))"
 
 if [ "$pre_wsn" -ge 1 ]; then
-  i3-msg "move container to workspace number 1; workspace number 1"
+  i3-msg -q "move container to workspace number 1; workspace number 1"
 fi
 
 for wsn in $wss_num; do
   if [ $((pre_wsn + 1)) -ne "$wsn" ]; then
-    exec i3-msg "move container to workspace number $((pre_wsn + 1)); workspace number $((pre_wsn + 1))"
+    exec i3-msg -q "move container to workspace number $((pre_wsn + 1)); workspace number $((pre_wsn + 1))"
   fi
 
   pre_wsn="$wsn"
 done
 
-i3-msg "move container to workspace number $((wsn + 1)); workspace number $((wsn + 1))"
+i3-msg -q "move container to workspace number $((wsn + 1)); workspace number $((wsn + 1))"

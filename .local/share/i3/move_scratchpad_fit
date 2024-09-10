@@ -21,4 +21,4 @@ if [ "$height" -gt "$max_height" ]; then
   height="$max_height"
 fi
 
-i3-msg "floating enable; resize set width ${width} height ${height}; move scratchpad"
+i3-msg -q "floating enable; resize set width ${width} height ${height}; move scratchpad"

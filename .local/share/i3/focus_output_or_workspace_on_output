@@ -10,17 +10,17 @@ outputs_count="$(i3-msg -t get_outputs | jq '[.[] | select(.active == true)] | l
 case "$1" in
   "left")
     if [ "$outputs_count" = "1" ]; then 
-      exec i3-msg workspace prev
+      exec i3-msg -q workspace prev
     fi
 
-    exec i3-msg focus output left
+    exec i3-msg -q focus output left
   ;;
   "right")
     if [ "$outputs_count" = "1" ]; then 
-      exec i3-msg workspace next
+      exec i3-msg -q workspace next
     fi
 
-    exec i3-msg focus output right
+    exec i3-msg -q focus output right
   ;;
   *)
     exit "1"

@@ -37,7 +37,7 @@ ws_name_input="$(echo $("$@" | "$cmd_menu" -p "Rename workspace \"${ws_name}\":"
   set +e
 
   if [ "$name_new_is_num" = "1" ]; then
-    exec i3-msg rename workspace "$ws_name" to "$ws_name_input"
+    exec i3-msg -q rename workspace "$ws_name" to "$ws_name_input"
   fi
 
   # TODO: swap existing ws with the specified number
@@ -45,7 +45,7 @@ ws_name_input="$(echo $("$@" | "$cmd_menu" -p "Rename workspace \"${ws_name}\":"
   ws_name_new_name_num="$(echo "$ws_name_input" | cut -s -d":" -f "1")"
 
   if [ -z "$ws_name_new_name_num" ]; then
-    exec i3-msg rename workspace to "${ws_num}: ${ws_name_input}"
+    exec i3-msg -q rename workspace to "${ws_num}: ${ws_name_input}"
   fi
 
   # TODO: swap existing ws with the specified number
@@ -56,7 +56,7 @@ ws_name_input="$(echo $("$@" | "$cmd_menu" -p "Rename workspace \"${ws_name}\":"
     exit "2"
   fi
 
-  exec i3-msg rename workspace to "${ws_name_new_name_num}: ${ws_name_new_name_title}"
+  exec i3-msg -q rename workspace to "${ws_name_new_name_num}: ${ws_name_new_name_title}"
 }
 
 exit 1

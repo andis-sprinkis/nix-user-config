@@ -36,21 +36,21 @@ esac
     ws_beside_name="$(echo "$ws_beside" | jq -r ".name")"
     ws_beside_name_title="$(echo "$ws_beside_name" | cut -s -d":" -f "2")"
 
-    i3-msg rename workspace "$ws_beside_name" to "$ws_tmp_name"
+    i3-msg -q rename workspace "$ws_beside_name" to "$ws_tmp_name"
 
     ws_name_new="$num_beside"
     [ "$ws_name_title" ] && ws_name_new="$num_beside:$ws_name_title"
 
-    i3-msg rename workspace "$ws_name" to "$ws_name_new"
+    i3-msg -q rename workspace "$ws_name" to "$ws_name_new"
 
     ws_beside_name_new="$ws_num"
     [ "$ws_beside_name_title" ] && ws_beside_name_new="$ws_num:$ws_beside_name_title"
 
-    exec i3-msg rename workspace "$ws_tmp_name" to "$ws_beside_name_new"
+    exec i3-msg -q rename workspace "$ws_tmp_name" to "$ws_beside_name_new"
   }
 }
 
 ws_name_new="$num_beside"
 [ "$ws_name_title" ] && ws_name_new="$num_beside:$ws_name_title"
 
-exec i3-msg rename workspace "$ws_name" to "$ws_name_new"
+exec i3-msg -q rename workspace "$ws_name" to "$ws_name_new"

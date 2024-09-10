@@ -197,56 +197,56 @@ win_y_snaps_out_bottom() {
 # Window manager edge snap actions
 
 win_snaps_top() {
-  exec i3-msg "move absolute position $(win_x_stays) $(win_y_snaps_top)"
+  exec i3-msg -q "move absolute position $(win_x_stays) $(win_y_snaps_top)"
 }
 
 win_snaps_bottom() {
-  exec i3-msg "move absolute position $(win_x_stays) $(win_y_snaps_bottom)"
+  exec i3-msg -q "move absolute position $(win_x_stays) $(win_y_snaps_bottom)"
 }
 
 win_snaps_left() {
-  exec i3-msg "move absolute position $(win_x_snaps_left) $(win_y_stays)"
+  exec i3-msg -q "move absolute position $(win_x_snaps_left) $(win_y_stays)"
 }
 
 win_snaps_right() {
-  exec i3-msg "move absolute position $(win_x_snaps_right) $(win_y_stays)"
+  exec i3-msg -q "move absolute position $(win_x_snaps_right) $(win_y_stays)"
 }
 
 win_snaps_out_top() {
-  exec i3-msg "move absolute position $(win_x_stays) $(win_y_snaps_out_top)"
+  exec i3-msg -q "move absolute position $(win_x_stays) $(win_y_snaps_out_top)"
 }
 
 win_snaps_out_bottom() {
-  exec i3-msg "move absolute position $(win_x_stays) $(win_y_snaps_out_bottom)"
+  exec i3-msg -q "move absolute position $(win_x_stays) $(win_y_snaps_out_bottom)"
 }
 
 win_snaps_out_left() {
-  exec i3-msg "move absolute position $(win_x_snaps_out_left) $(win_y_stays)"
+  exec i3-msg -q "move absolute position $(win_x_snaps_out_left) $(win_y_stays)"
 }
 
 win_snaps_out_right() {
-  exec i3-msg "move absolute position $(win_x_snaps_out_right) $(win_y_stays)"
+  exec i3-msg -q "move absolute position $(win_x_snaps_out_right) $(win_y_stays)"
 }
 
 # Window moving actions
 
 win_moves_down() {
-  exec i3-msg "move absolute position $(win_x_stays) $(win_y_moves_down)"
+  exec i3-msg -q "move absolute position $(win_x_stays) $(win_y_moves_down)"
 }
 
 win_moves_up() {
-  exec i3-msg "move absolute position $(win_x_stays) $(win_y_moves_up)"
+  exec i3-msg -q "move absolute position $(win_x_stays) $(win_y_moves_up)"
 }
 
 win_moves_left() {
-  exec i3-msg "move absolute position $(win_x_moves_left) $(win_y_stays)"
+  exec i3-msg -q "move absolute position $(win_x_moves_left) $(win_y_stays)"
 }
 
 win_moves_right() {
-  exec i3-msg "move absolute position $(win_x_moves_right) $(win_y_stays)"
+  exec i3-msg -q "move absolute position $(win_x_moves_right) $(win_y_stays)"
 }
 
-if [ "$win_type" != "floating_con" ]; then exec i3-msg "floating enable"; fi
+if [ "$win_type" != "floating_con" ]; then exec i3-msg -q "floating enable"; fi
 
 case "$direction" in
   "up")
