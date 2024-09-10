@@ -7,147 +7,201 @@ if [ -z "$direction" ]; then
   exit "1"
 fi
 
-calc() {
-  out_rect="$(i3-msg -t get_outputs | jq ".[] | select(.focused == true).rect")"
+# Window manaager data
 
-  out_rect_x="$(echo "$out_rect" | jq -r ".x")"
-  out_rect_y="$(echo "$out_rect" | jq -r ".y")"
-  out_rect_width="$(echo "$out_rect" | jq -r ".width")"
-  out_rect_height="$(echo "$out_rect" | jq -r ".height")"
+out_rect="$(i3-msg -t get_outputs | jq ".[] | select(.focused == true).rect")"
 
-  ws_rect="$(i3-msg -t get_workspaces | jq ".[] | select(.focused == true).rect")"
+out_rect_x="$(echo "$out_rect" | jq -r ".x")"
+out_rect_y="$(echo "$out_rect" | jq -r ".y")"
+out_rect_width="$(echo "$out_rect" | jq -r ".width")"
+out_rect_height="$(echo "$out_rect" | jq -r ".height")"
 
-  # ws_rect_x="$(echo "$ws_rect" | jq -r ".x")"
-  ws_rect_y="$(echo "$ws_rect" | jq -r ".y")"
-  # ws_rect_width="$(echo "$ws_rect" | jq -r ".width")"
-  # ws_rect_height="$(echo "$ws_rect" | jq -r ".height")"
+ws_rect="$(i3-msg -t get_workspaces | jq ".[] | select(.focused == true).rect")"
 
-  win="$(swaymsg -t get_tree | jq -r '.. | select(.type?) | select(.focused == true)')"
-  win_type="$(echo "$win" | jq -r ".type")"
-  win_rect="$(echo "$win" | jq -r '.rect')"
-  # win_window_rect="$(echo "$win" | jq -r '.window_rect')"
-  win_deco_rect="$(echo "$win" | jq -r '.deco_rect')"
-  # win_geometry="$(echo "$win" | jq -r '.geometry')"
+# ws_rect_x="$(echo "$ws_rect" | jq -r ".x")"
+ws_rect_y="$(echo "$ws_rect" | jq -r ".y")"
+# ws_rect_width="$(echo "$ws_rect" | jq -r ".width")"
+# ws_rect_height="$(echo "$ws_rect" | jq -r ".height")"
 
-  win_rect_x="$(echo "$win_rect" | jq -r '.x')"
-  win_rect_y="$(echo "$win_rect" | jq -r '.y')"
-  win_rect_width="$(echo "$win_rect" | jq -r '.width')"
-  win_rect_height="$(echo "$win_rect" | jq -r '.height')"
+win="$(swaymsg -t get_tree | jq -r '.. | select(.type?) | select(.focused == true)')"
+win_type="$(echo "$win" | jq -r ".type")"
+win_rect="$(echo "$win" | jq -r '.rect')"
+# win_window_rect="$(echo "$win" | jq -r '.window_rect')"
+win_deco_rect="$(echo "$win" | jq -r '.deco_rect')"
+# win_geometry="$(echo "$win" | jq -r '.geometry')"
 
-  # win_deco_rect_x="$(echo "$win_deco_rect" | jq -r '.x')"
-  # win_deco_rect_y="$(echo "$win_deco_rect" | jq -r '.y')"
-  # win_deco_rect_width="$(echo "$win_deco_rect" | jq -r '.width')"
-  win_deco_rect_height="$(echo "$win_deco_rect" | jq -r '.height')"
+win_rect_x="$(echo "$win_rect" | jq -r '.x')"
+win_rect_y="$(echo "$win_rect" | jq -r '.y')"
+win_rect_width="$(echo "$win_rect" | jq -r '.width')"
+win_rect_height="$(echo "$win_rect" | jq -r '.height')"
+
+# win_deco_rect_x="$(echo "$win_deco_rect" | jq -r '.x')"
+# win_deco_rect_y="$(echo "$win_deco_rect" | jq -r '.y')"
+# win_deco_rect_width="$(echo "$win_deco_rect" | jq -r '.width')"
+win_deco_rect_height="$(echo "$win_deco_rect" | jq -r '.height')"
+
+# Window properties
+
+win_height() {
+  echo $((win_rect_height + win_deco_rect_height))
 }
 
-win_goes_top() {
-  echo "$ws_rect_y"
+win_width() {
+  echo "$win_rect_width"
 }
 
-win_goes_bottom() {
-  echo "$((out_rect_y + out_rect_height - win_rect_height - win_deco_rect_height))"
-}
-
-win_goes_left() {
-  echo "$out_rect_x"
-}
-
-win_goes_right() {
-  echo "$((out_rect_x + out_rect_width - win_rect_width))"
-}
-
-win_stays_x() {
+win_edge_left() {
   echo "$win_rect_x"
 }
 
-win_stays_y() {
+win_edge_right() {
+  echo $(($(win_edge_left) + $(win_width)))
+}
+
+win_edge_top() {
   echo "$((win_rect_y - win_deco_rect_height))"
 }
 
+win_edge_bottom() {
+  echo "$(($(win_edge_top) + $(win_height)))"
+}
+
+# Output properties
+
+out_height() {
+  echo "$out_rect_height"
+}
+
+out_width() {
+  echo "$out_rect_width"
+}
+
+out_edge_left() {
+  echo "$out_rect_x"
+}
+
+out_edge_right() {
+  echo $(($(out_edge_left) + $(out_width)))
+}
+
+out_edge_top() {
+  echo "$out_rect_y"
+}
+
+out_edge_bottom() {
+  echo $(($(out_edge_top) + $(out_height)))
+}
+
+# Workspace properties
+
+ws_edge_top() {
+  echo "$ws_rect_y"
+}
+
+# Window Y coordinate translations
+
+win_y_goes_top() {
+  ws_edge_top
+}
+
+win_y_goes_bottom() {
+  echo "$(($(out_edge_bottom) - $(win_height)))"
+}
+
+win_y_stays() {
+  win_edge_top
+}
+
+# Window X coordinate translations
+
+win_x_goes_left() {
+  out_edge_left
+}
+
+win_x_goes_right() {
+  echo "$(($(out_edge_right) - $(win_width)))"
+}
+
+win_x_stays() {
+  win_edge_left
+}
+
+# Window manager edge snap actions
+
 win_snaps_top() {
-  exec i3-msg "move absolute position $(win_stays_x) $(win_goes_top)"
+  exec i3-msg "move absolute position $(win_x_stays) $(win_y_goes_top)"
 }
 
 win_snaps_bottom() {
-  exec i3-msg "move absolute position $(win_stays_x) $(win_goes_bottom)"
+  exec i3-msg "move absolute position $(win_x_stays) $(win_y_goes_bottom)"
 }
 
 win_snaps_left() {
-  exec i3-msg "move absolute position $(win_goes_left) $(win_stays_y)"
+  exec i3-msg "move absolute position $(win_x_goes_left) $(win_y_stays)"
 }
 
 win_snaps_right() {
-  exec i3-msg "move absolute position $(win_goes_right) $(win_stays_y)"
+  exec i3-msg "move absolute position $(win_x_goes_right) $(win_y_stays)"
 }
 
 # win_snaps_top_left() {
-#   exec i3-msg "move absolute position $(win_goes_left) $(win_goes_top)"
+#   exec i3-msg "move absolute position $(win_x_goes_left) $(win_y_goes_top)"
 # }
 #
 # win_snaps_top_right() {
-#   exec i3-msg "move absolute position $(win_goes_right) $(win_goes_top)"
+#   exec i3-msg "move absolute position $(win_x_goes_right) $(win_y_goes_top)"
 # }
 #
 # win_snaps_bottom_left() {
-#   exec i3-msg "move absolute position $(win_goes_left) $(win_goes_bottom)"
+#   exec i3-msg "move absolute position $(win_x_goes_left) $(win_y_goes_bottom)"
 # }
 #
 # win_snaps_bottom_right() {
-#   exec i3-msg "move absolute position $(win_goes_right) $(win_goes_bottom)"
+#   exec i3-msg "move absolute position $(win_x_goes_right) $(win_y_goes_bottom)"
 # }
-
-calc
 
 if [ "$win_type" != "floating_con" ]; then exec i3-msg "floating enable"; fi
 
 case "$direction" in
   "up")
-    if [ "$win_rect_height" -lt "$out_rect_height" ] && [ "$((win_rect_y - win_deco_rect_height + win_rect_height))" -gt "$((out_rect_y + out_rect_height))" ]; then
+    if [ "$(win_width)" -lt "$(out_height)" ] && [ "$(win_edge_bottom)" -gt "$(out_edge_bottom)" ]; then
       win_snaps_bottom
     fi
 
-    if [ "$win_rect_y" -lt "$ws_rect_y" ]; then
+    if [ "$(win_edge_top)" -lt "$(ws_edge_top)" ]; then
       exit
     fi
 
     win_snaps_top
   ;;
   "down")
-    if [ "$win_rect_height" -lt "$out_rect_height" ] && [ "$win_rect_y" -lt "$ws_rect_y" ]; then
+    if [ "$(win_height)" -lt "$(out_height)" ] && [ "$(win_edge_top)" -lt "$(ws_edge_top)" ]; then
       win_snaps_top
     fi
 
-    if [ "$((win_rect_y - win_deco_rect_height + win_rect_height))" -gt "$((out_rect_y + out_rect_height))" ]; then
+    if [ "$(win_edge_bottom)" -gt "$(out_edge_bottom)" ]; then
       exit
     fi
 
     win_snaps_bottom
   ;;
   "left")
-    # if [ "$((win_rect_x - out_rect_x))" -ge "176" ]; then
-    #   exec i3-msg move left "176"
-    # fi
-
-    if [ "$((win_rect_x))" -le "$((out_rect_x))" ]; then
+    if [ "$(win_edge_left)" -le "$(out_edge_left)" ]; then
       exit
     fi
 
-    if [ "$win_rect_width" -le "$out_rect_width" ] && [ "$((win_rect_x + win_rect_width))" -gt "$((out_rect_x + out_rect_width))" ]; then
+    if [ "$(win_width)" -le "$(out_width)" ] && [ "$(win_edge_right)" -gt "$(out_edge_right)" ]; then
       win_snaps_right
     fi
 
     win_snaps_left
   ;;
   "right")
-    # if [ "$((out_rect_x + out_rect_width - (win_rect_x + win_rect_width)))" -ge "176" ]; then
-    #   exec i3-msg move right "176"
-    # fi
-
-    if [ "$win_rect_width" -le "$out_rect_width" ] && [ "$win_rect_x" -lt "$out_rect_x" ]; then
+    if [ "$(win_width)" -le "$(out_width)" ] && [ "$(win_edge_left)" -lt "$(out_edge_left)" ]; then
       win_snaps_left
     fi
 
-    if [ "$((win_rect_x + win_rect_width))" -gt "$((out_rect_x + out_rect_width))" ]; then
+    if [ "$(win_edge_right)" -gt "$(out_edge_right)" ]; then
       exit
     fi
 
