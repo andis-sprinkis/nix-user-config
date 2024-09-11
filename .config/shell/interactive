@@ -11,8 +11,7 @@ main() {
 
   # launch tmux
   if
-    is_exec "tmux" && \
-    {
+    is_exec "tmux" && {
       { [ -z "${TMUX:-""}" ] && [ "$TERM" != "linux" ]; } || [ "${NVIM:-""}" ];
     }
   then

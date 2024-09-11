@@ -7,13 +7,16 @@ is_exec() { [ "$(command -v "$1")" ]; }
 alias \
   aunpack="aunpack --subdir --explain" \
   bc="bc -ql" \
-  c="clear" \
+  cl="clear" \
   cal="calcurse" \
   calc="qalc -c" \
+  c="\$EDITOR \"\${XDG_CONFIG_HOME:-\$HOME/.config/}\"" \
   convert="magick" \
   cp="cp -rv" \
   date_iso8601="date -u +\"%Y-%m-%dT%H:%M:%SZ\"" \
   dmesg="sudo dmesg -HL" \
+  d="\$EDITOR \"\${XDG_DATA_HOME:-\$HOME/.local/share}\"" \
+  doc="\$EDITOR \"\${XDG_DATA_HOME:-\$HOME/.local/share}/doc/\"" \
   dotgit="dotgit -c color.ui=always" \
   dg="dotgit" \
   dg_submodule_init="dotgit submodule update --init --recursive" \
