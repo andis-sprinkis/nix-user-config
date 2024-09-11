@@ -19,24 +19,24 @@ label_other="Network connectivity status: ${connectivity}"
 if [ "${BLOCK_BUTTON:-""}" ]; then
   reload() {
     if [ "${signal-""}" ]; then
-      (sleep "${1:-"0.5"}"; pkill "-SIGRTMIN+${signal}" i3blocks) 1>/dev/null 2>/dev/null & disown
+      (sleep "${1:-"0.5"}"; pkill "-SIGRTMIN+${signal}" i3blocks) 1> "/dev/null" 2> "/dev/null" & disown
     fi
   }
 
   case "$BLOCK_BUTTON" in
     "1")
       cmd="sleep \"0.5\"; nmtui"
-      $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
+      $TERMINAL -e "$SHELL" -c "$cmd" 1> "/dev/null" 2> "/dev/null" & disown
     ;;
     "3")
       case "$connectivity" in
         "full"|"portal"|"limited") 
-          nmcli networking off 1>/dev/null 2>/dev/null & disown
+          nmcli networking off 1> "/dev/null" 2> "/dev/null" & disown
           reload
           exec echo "$label_disabling"
         ;;
         *)
-          nmcli networking on 1>/dev/null 2>/dev/null & disown
+          nmcli networking on 1> "/dev/null" 2> "/dev/null" & disown
           reload "2"
           exec echo "$label_enabling"
         ;;

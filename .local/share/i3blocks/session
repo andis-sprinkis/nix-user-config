@@ -1,12 +1,12 @@
 #!/usr/bin/env sh
 set -eu
 
-REPORT_WAYLAND="${REPORT_WAYLAND:-0}"
-REPORT_X11="${REPORT_X11:-1}"
+REPORT_WAYLAND="${REPORT_WAYLAND:-"0"}"
+REPORT_X11="${REPORT_X11:-"1"}"
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   if [ "$REPORT_X11" = "1" ]; then
-    exec echo "${LABEL_X11:-On X11}"
+    exec echo "${LABEL_X11:-"On X11"}"
   fi
 
   exit "0"
@@ -14,7 +14,7 @@ fi
 
 if [ "${WAYLAND_DISPLAY:-""}" ]; then
   if [ "$REPORT_WAYLAND" = "1" ]; then
-    exec echo "${LABEL_WAYLAND:-On Wayland}"
+    exec echo "${LABEL_WAYLAND:-"On Wayland"}"
   fi
 
   exit "0"

@@ -4,8 +4,8 @@ set -eu
 if [ "${BLOCK_BUTTON:-""}" ]; then
   case "$BLOCK_BUTTON" in
     "1"|"3")
-      cmd="timezone | ${PAGER}"
-      $TERMINAL -e "$SHELL" -c "$cmd" 1>/dev/null 2>/dev/null & disown
+      cmd="timezone | \${PAGER}"
+      $TERMINAL -e "$SHELL" -c "$cmd" 1> "/dev/null" 2> "/dev/null" & disown
     ;;
   esac
 fi
