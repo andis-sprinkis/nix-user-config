@@ -7,7 +7,7 @@ fstab_mounts_mpts="$(echo "$fstab_mounts" | awk '{ print $2 }')"
 active_mounts="$(set +e; grep -v -P " \/(sys|run|dev|proc|tmp|var)(/| )" < "/proc/mounts"; set -e)"
 active_mounts_mpts="$(echo "$active_mounts" | awk '{ print $2 }')"
 
-rsds_mounts="" rsds_count="0" 
+rsds_mounts="" rsds_count="0"
 
 mpts_parsed_count="0"
 IFS_="$IFS"; IFS="
