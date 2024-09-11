@@ -33,7 +33,7 @@ if [ "$status" ]; then
 fi
 
 if [ "$reload" ] && [ "${signal:-""}" ]; then
-  exec pkill "-SIGRTMIN+${signal}" i3blocks
+  exec pkill "-SIGRTMIN+${signal}" "i3blocks"
 fi
 
 exit "0"

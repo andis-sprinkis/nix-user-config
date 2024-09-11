@@ -6,7 +6,7 @@ status="$(idle_manager_status)"
 if [ "${BLOCK_BUTTON:-""}" ]; then
   reload() {
     [ "$signal" ] && {
-      (sleep "0.5"; pkill "-SIGRTMIN+${signal}" i3blocks) 1> "/dev/null" 2> "/dev/null" & disown
+      (sleep "0.5"; pkill "-SIGRTMIN+${signal}" "i3blocks") 1> "/dev/null" 2> "/dev/null" & disown
     }
   }
 
