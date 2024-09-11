@@ -16,7 +16,7 @@ out_rect_y="$(echo "$out_rect" | jq -r ".y")"
 out_rect_width="$(echo "$out_rect" | jq -r ".width")"
 out_rect_height="$(echo "$out_rect" | jq -r ".height")"
 
-ws_rect="$(i3-msg -t get_workspaces | jq ".[] | select(.focused == true).rect")"
+ws_rect="$(i3-msg -t get_workspaces | jq -r ".[] | select(.focused == true).rect")"
 
 ws_rect_x="$(echo "$ws_rect" | jq -r ".x")"
 ws_rect_y="$(echo "$ws_rect" | jq -r ".y")"
