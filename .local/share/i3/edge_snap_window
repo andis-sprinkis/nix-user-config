@@ -82,7 +82,7 @@ out_edge_left() {
 }
 
 out_edge_right() {
-  echo $(($(out_edge_left) + $(out_width)))
+  echo "$(($(out_edge_left) + $(out_width)))"
 }
 
 out_edge_top() {
@@ -90,7 +90,7 @@ out_edge_top() {
 }
 
 out_edge_bottom() {
-  echo $(($(out_edge_top) + $(out_height)))
+  echo "$(($(out_edge_top) + $(out_height)))"
 }
 
 # Workspace properties
@@ -108,7 +108,7 @@ ws_edge_left() {
 }
 
 ws_edge_right() {
-  echo $(($(ws_edge_left) + $(ws_width)))
+  echo "$(($(ws_edge_left) + $(ws_width)))"
 }
 
 ws_edge_top() {
@@ -116,7 +116,7 @@ ws_edge_top() {
 }
 
 ws_edge_bottom() {
-  echo $(($(ws_edge_top) + $(ws_height)))
+  echo "$(($(ws_edge_top) + $(ws_height)))"
 }
 
 # Workspace-Window relation properties
