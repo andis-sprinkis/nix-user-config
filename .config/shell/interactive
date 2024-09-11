@@ -11,9 +11,7 @@ main() {
 
   # launch tmux
   if
-    is_exec "tmux" && {
-      { [ -z "${TMUX:-""}" ] && [ "$TERM" != "linux" ]; } || [ "${NVIM:-""}" ];
-    }
+    is_exec "tmux" && [ -z "${TMUX:-""}" ] && [ "$TERM" != "linux" ]
   then
     ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true" exec tmux
   fi
