@@ -46,6 +46,7 @@ user_pref("browser.tabs.closeWindowWithLastTab", false);
 user_pref("browser.tabs.crashReporting.sendReport", false);
 user_pref("browser.tabs.firefox-view", false);
 user_pref("browser.tabs.firefox-view-next", false);
+user_pref("browser.tabs.insertAfterCurrent", true);
 user_pref("browser.tabs.loadBookmarksInTabs", true);
 user_pref("browser.tabs.searchclipboardfor.middleclick", false);
 user_pref("browser.translations.enable", false);
@@ -126,4 +127,5 @@ user_pref("toolkit.telemetry.shutdownPingSender.enabled", false);
 user_pref("toolkit.telemetry.unified", false);
 user_pref("toolkit.telemetry.updatePing.enabled", false);
 user_pref("toolkit.winRegisterApplicationRestart", false);
-user_pref("toolkit.zoomManager.zoomValues", ".3,.5,.67,.8,.9,1,1.1,1.15,1.2,1.25,1.33,1.5,1.7,2,2.4,3,4,5")
+user_pref("toolkit.zoomManager.zoomValues", ".3,.5,.67,.8,.9,1,1.1,1.15,1.2,1.25,1.33,1.5,1.7,2,2.4,3,4,5");
+user_pref("zoom.minPercent", 1);
