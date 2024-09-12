@@ -41,11 +41,6 @@ bindsym $mod+Shift+$down  move down
 bindsym $mod+Shift+$up    move up
 bindsym $mod+Shift+$right move right
 
-bindsym $mod+Mod1+Shift+$left  fullscreen disable; floating enable; move left  176
-bindsym $mod+Mod1+Shift+$down  fullscreen disable; floating enable; move down  176
-bindsym $mod+Mod1+Shift+$up    fullscreen disable; floating enable; move up    176
-bindsym $mod+Mod1+Shift+$right fullscreen disable; floating enable; move right 176
-
 bindsym $mod+o split h
 bindsym $mod+v split v
 
