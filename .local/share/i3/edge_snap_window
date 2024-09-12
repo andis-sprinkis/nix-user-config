@@ -82,134 +82,142 @@ win_edge_bottom() {
 # Output properties
 
 out_height() {
-  echo "$out_rect_height"
+  c_out_height="${out_height:-"$out_rect_height"}"
+  echo "$c_out_height"
 }
 
 out_width() {
-  echo "$out_rect_width"
+  c_out_width="${c_out_width:-"$out_rect_width"}"
+  echo "$c_out_width"
 }
 
 out_edge_left() {
-  echo "$out_rect_x"
+  c_out_edge_left="${c_out_edge_left:-"$out_rect_x"}"
+  echo "$c_out_edge_left"
 }
 
 out_edge_right() {
-  c_out_edge_right="${c_out_edge_right:-"$(($(out_edge_left) + $(out_width)))"}"
+  c_out_edge_right="${c_out_edge_right:-"$(("${c_out_edge_left:-"$(out_edge_left)"}" + "${c_out_width:-"$(out_width)"}"))"}"
   echo "$c_out_edge_right"
 }
 
 out_edge_top() {
-  echo "$out_rect_y"
+  c_out_edge_top="${c_out_edge_top:-"$out_rect_y"}"
+  echo "$c_out_edge_top"
 }
 
 out_edge_bottom() {
-  c_out_edge_bottom="${c_out_edge_bottom:-"$(($(out_edge_top) + $(out_height)))"}"
+  c_out_edge_bottom="${c_out_edge_bottom:-"$(("${c_out_edge_top:-"$(out_edge_top)"}" + "${c_out_height:-"$(out_height)"}"))"}"
   echo "$c_out_edge_bottom"
 }
 
 # Workspace properties
 
 ws_height() {
-  echo "$ws_rect_height"
+  c_ws_height="${c_ws_height:-"$ws_rect_height"}"
+  echo "$c_ws_height"
 }
 
 ws_width() {
-  echo "$ws_rect_width"
+  c_ws_width="${c_ws_width:-"$ws_rect_width"}"
+  echo "$c_ws_width"
 }
 
 ws_edge_left() {
-  echo "$ws_rect_x"
+  c_ws_edge_left="${c_ws_edge_left:-"$ws_rect_x"}"
+  echo "$c_ws_edge_left"
 }
 
 ws_edge_right() {
-  c_ws_edge_right="${c_ws_edge_right:-"$(($(ws_edge_left) + $(ws_width)))"}"
+  c_ws_edge_right="${c_ws_edge_right:-"$(("${c_ws_edge_left:-"$(ws_edge_left)"}" + "${c_ws_width:-"$(ws_width)"}"))"}"
   echo "$c_ws_edge_right"
 }
 
 ws_edge_top() {
-  echo "$ws_rect_y"
-}
-
-ws_edge_bottom() {
-  c_ws_edge_top="${c_ws_edge_top:-"$(($(ws_edge_top) + $(ws_height)))"}"
+  c_ws_edge_top="${c_ws_edge_top:-"$ws_rect_y"}"
   echo "$c_ws_edge_top"
 }
 
-# Workspace-Window relation properties
-
-win_edge_top_dist_ws_edge_top() {
-  echo "$(($(win_edge_top) - $(ws_edge_top)))"
+ws_edge_bottom() {
+  c_ws_edge_bottom="${c_ws_edge_bottom:-"$(("${c_ws_edge_top:-"$(ws_edge_top)"}" + "${c_ws_height:-"$(ws_height)"}"))"}"
+  echo "$c_ws_edge_bottom"
 }
 
-win_edge_bottom_dist_ws_edge_bottom() {
-  echo "$(($(ws_edge_bottom) - $(win_edge_bottom)))"
-}
-
-win_edge_left_dist_ws_edge_left() {
-  echo "$(($(win_edge_left) - $(ws_edge_left)))"
-}
-
-win_edge_right_dist_ws_edge_right() {
-  echo "$(($(ws_edge_right) - $(win_edge_right)))"
-}
+# # Workspace-Window relation properties
+#
+# win_edge_top_dist_ws_edge_top() {
+#   echo "$(($(win_edge_top) - $(ws_edge_top)))"
+# }
+#
+# win_edge_bottom_dist_ws_edge_bottom() {
+#   echo "$(($(ws_edge_bottom) - $(win_edge_bottom)))"
+# }
+#
+# win_edge_left_dist_ws_edge_left() {
+#   echo "$(($(win_edge_left) - $(ws_edge_left)))"
+# }
+#
+# win_edge_right_dist_ws_edge_right() {
+#   echo "$(($(ws_edge_right) - $(win_edge_right)))"
+# }
 
 # Window X and Y coordinate translations
 
-win_x_moves_left() {
-  echo "$(($(win_edge_left) - 128))"
-}
-
-win_x_moves_right() {
-  echo "$(($(win_edge_left) + 128))"
-}
-
-win_y_moves_up() {
-  echo "$(($(win_edge_top) - 128))"
-}
-
-win_y_moves_down() {
-  echo "$(($(win_edge_top) + 128))"
-}
-
 win_x_snaps_left() {
-  ws_edge_left
+  echo "${c_ws_edge_left:-"$(ws_edge_left)"}"
 }
 
 win_x_snaps_right() {
-  echo "$(($(out_edge_right) - $(win_width)))"
+  echo "$(("${c_ws_edge_right:-"$(ws_edge_right)"}" - "${c_win_width:-"$(win_width)"}"))"
 }
 
 win_y_snaps_top() {
-  ws_edge_top
+  echo "${c_ws_edge_top:-"$(ws_edge_top)"}"
 }
 
 win_y_snaps_bottom() {
-  echo "$(($(ws_edge_bottom) - $(win_height)))"
+  echo "$(("${c_ws_edge_bottom:-"$(ws_edge_bottom)"}" - "${c_ws_win_height:-"$(win_height)"}"))"
 }
 
 win_x_stays() {
-  win_edge_left
+  echo "${c_win_edge_left:-"$(win_edge_left)"}"
 }
 
 win_y_stays() {
-  win_edge_top
+  echo "${c_win_edge_top:-"$(win_edge_top)"}"
 }
 
 win_x_snaps_out_right() {
-  ws_edge_right
+  echo "${c_out_edge_right:-"$(out_edge_right)"}"
 }
 
 win_x_snaps_out_left() {
-  echo "$(($(out_edge_left) - $(win_width)))"
+  echo "$(("${c_out_edge_left:-$(out_edge_left)}" - "${c_win_width:-"$(win_width)"}"))"
 }
 
 win_y_snaps_out_top() {
-  echo "$(($(out_edge_top) - $(win_height)))"
+  echo "$(("${c_out_edge_top:-"$(out_edge_top)"}" - "${c_win_height:-"$(win_height)"}"))"
 }
 
 win_y_snaps_out_bottom() {
-  out_edge_bottom
+  echo "${c_out_edge_bottom:-"$(out_edge_bottom)"}"
 }
+
+# win_x_moves_left() {
+#   echo "$(($(win_edge_left) - 128))"
+# }
+#
+# win_x_moves_right() {
+#   echo "$(($(win_edge_left) + 128))"
+# }
+#
+# win_y_moves_up() {
+#   echo "$(($(win_edge_top) - 128))"
+# }
+#
+# win_y_moves_down() {
+#   echo "$(($(win_edge_top) + 128))"
+# }
 
 # Window manager edge snap actions
 
@@ -247,21 +255,21 @@ win_snaps_out_right() {
 
 # Window moving actions
 
-win_moves_down() {
-  exec i3-msg -q "move absolute position $(win_x_stays) $(win_y_moves_down)"
-}
-
-win_moves_up() {
-  exec i3-msg -q "move absolute position $(win_x_stays) $(win_y_moves_up)"
-}
-
-win_moves_left() {
-  exec i3-msg -q "move absolute position $(win_x_moves_left) $(win_y_stays)"
-}
-
-win_moves_right() {
-  exec i3-msg -q "move absolute position $(win_x_moves_right) $(win_y_stays)"
-}
+# win_moves_down() {
+#   exec i3-msg -q "move absolute position $(win_x_stays) $(win_y_moves_down)"
+# }
+#
+# win_moves_up() {
+#   exec i3-msg -q "move absolute position $(win_x_stays) $(win_y_moves_up)"
+# }
+#
+# win_moves_left() {
+#   exec i3-msg -q "move absolute position $(win_x_moves_left) $(win_y_stays)"
+# }
+#
+# win_moves_right() {
+#   exec i3-msg -q "move absolute position $(win_x_moves_right) $(win_y_stays)"
+# }
 
 if [ "$win_fullscreen_mode" != "0" ]; then
   exec i3-msg -q "fullscreen disable; floating enable"
@@ -273,44 +281,44 @@ fi
 
 case "$direction" in
   "up")
-    if [ "$(win_edge_bottom)" -gt "$(ws_edge_bottom)" ]; then
+    if [ "${c_win_edge_bottom:-"$(win_edge_bottom)"}" -gt "${c_ws_edge_bottom:-"$(ws_edge_bottom)"}" ]; then
       win_snaps_bottom
     fi
 
-    if [ "$(win_edge_top)" -le "$(ws_edge_top)" ]; then
+    if [ "${c_win_edge_top:-"$(win_edge_top)"}" -le "${c_ws_edge_top:-"$(ws_edge_top)"}" ]; then
       win_snaps_out_top
     fi
 
     win_snaps_top
   ;;
   "down")
-    if [ "$(win_edge_top)" -lt "$(ws_edge_top)" ]; then
+    if [ "${c_win_edge_top:-"$(win_edge_top)"}" -lt "${c_ws_edge_top:-"$(ws_edge_top)"}" ]; then
       win_snaps_top
     fi
 
-    if [ "$(win_edge_bottom)" -ge "$(ws_edge_bottom)" ]; then
+    if [ "${c_win_edge_bottom:-"$(win_edge_bottom)"}" -ge "${c_ws_edge_bottom:-"$(ws_edge_bottom)"}" ]; then
       win_snaps_out_bottom
     fi
 
     win_snaps_bottom
   ;;
   "left")
-    if [ "$(win_edge_right)" -gt "$(ws_edge_right)" ]; then
+    if [ "${c_win_edge_right:-"$(win_edge_right)"}" -gt "${c_ws_edge_right:-"$(ws_edge_right)"}" ]; then
       win_snaps_right
     fi
 
-    if [ "$(win_edge_left)" -le "$(ws_edge_left)" ]; then
+    if [ "${c_win_edge_left:-"$(win_edge_left)"}" -le "${c_ws_edge_left:-"$(ws_edge_left)"}" ]; then
       win_snaps_out_left
     fi
 
     win_snaps_left
   ;;
   "right")
-    if [ "$(win_edge_left)" -lt "$(ws_edge_left)" ]; then
+    if [ "${c_win_edge_left:-"$(win_edge_left)"}" -lt "${c_ws_edge_left:-"$(ws_edge_left)"}" ]; then
       win_snaps_left
     fi
 
-    if [ "$(win_edge_right)" -ge "$(ws_edge_right)" ]; then
+    if [ "${c_win_edge_right:-"$(win_edge_right)"}" -ge "${c_ws_edge_right:-"$(ws_edge_right)"}" ]; then
       win_snaps_out_right
     fi
 
