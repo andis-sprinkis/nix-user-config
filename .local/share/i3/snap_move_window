@@ -280,6 +280,8 @@ win_moves_right() {
   exec i3-msg -q "move absolute position $(win_x_moves_right) $(win_y_stays)"
 }
 
+# Main
+
 if [ "$win_fullscreen_mode" != "0" ]; then
   exec i3-msg -q "fullscreen disable; floating enable; move absolute position $(win_x_stays) $(win_y_stays)"
 fi
