@@ -11,35 +11,34 @@ fi
 
 out_rect="$(i3-msg -t get_outputs | jq -r ".[] | select(.focused == true).rect | .x,.y,.width,.height")"
 
-out_rect_x="$(echo "$out_rect" | sed "1q;d")"
-out_rect_y="$(echo "$out_rect" | sed "2q;d")"
-out_rect_width="$(echo "$out_rect" | sed "3q;d")"
+out_rect_x="$(     echo "$out_rect" | sed "1q;d")"
+out_rect_y="$(     echo "$out_rect" | sed "2q;d")"
+out_rect_width="$( echo "$out_rect" | sed "3q;d")"
 out_rect_height="$(echo "$out_rect" | sed "4q;d")"
 
 ws_rect="$(i3-msg -t get_workspaces | jq -r ".[] | select(.focused == true).rect | .x,.y,.width,.height")"
 
-ws_rect_x="$(echo "$ws_rect" | sed "1q;d")"
-ws_rect_y="$(echo "$ws_rect" | sed "2q;d")"
-ws_rect_width="$(echo "$ws_rect" | sed "3q;d")" 
+ws_rect_x="$(     echo "$ws_rect" | sed "1q;d")"
+ws_rect_y="$(     echo "$ws_rect" | sed "2q;d")"
+ws_rect_width="$( echo "$ws_rect" | sed "3q;d")" 
 ws_rect_height="$(echo "$ws_rect" | sed "4q;d")"
 
-win="$(swaymsg -t get_tree | jq -r '.. | select(.type?) | select(.focused == true)')"
-win_type="$(echo "$win" | jq -r ".type")"
-win_fullscreen_mode="$(echo "$win" | jq -r ".fullscreen_mode")"
-win_rect="$(echo "$win" | jq -r '.rect')"
-# win_window_rect="$(echo "$win" | jq -r '.window_rect')"
-win_deco_rect="$(echo "$win" | jq -r '.deco_rect')"
-# win_geometry="$(echo "$win" | jq -r '.geometry')"
+win="$(swaymsg -t get_tree | jq -r ".. | select(.type?) | select(.focused == true) | .type,.fullscreen_mode,.rect.x,.rect.y,.rect.width,.rect.height,.window_rect.x,.window_rect.y,.window_rect.width,.window_rect.height,.deco_rect.x,.deco_rect.y,.deco_rect.width,.deco_rect.height,.geometry.x,.geometry.y,.geometry.width,.geometry.height")"
 
-win_rect_x="$(echo "$win_rect" | jq -r '.x')"
-win_rect_y="$(echo "$win_rect" | jq -r '.y')"
-win_rect_width="$(echo "$win_rect" | jq -r '.width')"
-win_rect_height="$(echo "$win_rect" | jq -r '.height')"
-
-# win_deco_rect_x="$(echo "$win_deco_rect" | jq -r '.x')"
-# win_deco_rect_y="$(echo "$win_deco_rect" | jq -r '.y')"
-# win_deco_rect_width="$(echo "$win_deco_rect" | jq -r '.width')"
-win_deco_rect_height="$(echo "$win_deco_rect" | jq -r '.height')"
+win_type="$(              echo "$win" | sed  "1q;d")"
+win_fullscreen_mode="$(   echo "$win" | sed  "2q;d")"
+win_rect_x="$(            echo "$win" | sed  "3q;d")"
+win_rect_y="$(            echo "$win" | sed  "4q;d")"
+win_rect_width="$(        echo "$win" | sed  "5q;d")"
+win_rect_height="$(       echo "$win" | sed  "6q;d")"
+# win_window_rect_x="$(     echo "$win" | sed  "7q;d")"
+# win_window_rect_y="$(     echo "$win" | sed  "8q;d")"
+# win_window_rect_width="$( echo "$win" | sed  "9q;d")"
+# win_window_rect_height="$(echo "$win" | sed "10q;d")"
+# win_deco_rect_x="$(       echo "$win" | sed "11q;d")"
+# win_deco_rect_y="$(       echo "$win" | sed "12q;d")"
+# win_deco_rect_width="$(   echo "$win" | sed "13q;d")"
+win_deco_rect_height="$(  echo "$win" | sed "14q;d")"
 
 # Window properties
 
