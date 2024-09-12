@@ -59,7 +59,7 @@ win_edge_left() {
 }
 
 win_edge_right() {
-  c_win_edge_right="${c_win_edge_right:-"$((${c_win_edge_left:-"$(win_edge_left)"} + ${c_win_width:-"$(win_width)"}))"}"
+  c_win_edge_right="${c_win_edge_right:-"$(("${c_win_edge_left:-"$(win_edge_left)"}" + "${c_win_width:-"$(win_width)"}"))"}"
   echo "$c_win_edge_right"
 }
 
