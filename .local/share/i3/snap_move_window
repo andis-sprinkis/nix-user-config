@@ -281,11 +281,11 @@ win_moves_right() {
 }
 
 if [ "$win_fullscreen_mode" != "0" ]; then
-  exec i3-msg -q "fullscreen disable; floating enable"
+  exec i3-msg -q "fullscreen disable; floating enable; move absolute position $(win_x_stays) $(win_y_stays)"
 fi
 
 if [ "$win_type" != "floating_con" ]; then
-  exec i3-msg -q "floating enable"
+  exec i3-msg -q "floating enable; move absolute position $(win_x_stays) $(win_y_stays)"
 fi
 
 case "$direction" in
@@ -320,7 +320,7 @@ case "$direction" in
     win_snaps_bottom
   ;;
   "left")
-    if [ "${c_win_edge_left:-"$(win_edge_left)"}" -gt "${ws_edge_thres_left:-"$(ws_edge_thres_left)"}" ] && [ "${c_win_edge_right:-"$(win_edge_right)"}" -le "${c_ws_edge_right:-"$(ws_edge_right)"}" ]; then
+    if [ "${c_win_edge_left:-"$(win_edge_left)"}" -gt "${c_ws_edge_thres_left:-"$(ws_edge_thres_left)"}" ] && [ "${c_win_edge_right:-"$(win_edge_right)"}" -le "${c_ws_edge_right:-"$(ws_edge_right)"}" ]; then
       win_moves_left
     fi
 
@@ -335,7 +335,7 @@ case "$direction" in
     win_snaps_left
   ;;
   "right")
-    if [ "${c_win_edge_right:-"$(win_edge_right)"}" -lt "${ws_edge_thres_right:-"$(ws_edge_thres_right)"}" ] && [ "${c_win_edge_left:-"$(win_edge_left)"}" -ge "${c_ws_edge_left:-"$(ws_edge_left)"}" ]; then
+    if [ "${c_win_edge_right:-"$(win_edge_right)"}" -lt "${c_ws_edge_thres_right:-"$(ws_edge_thres_right)"}" ] && [ "${c_win_edge_left:-"$(win_edge_left)"}" -ge "${c_ws_edge_left:-"$(ws_edge_left)"}" ]; then
       win_moves_right
     fi
 
