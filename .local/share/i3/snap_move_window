@@ -7,6 +7,8 @@ if [ -z "$direction" ]; then
   exit "1"
 fi
 
+# TODO: fix i3 issues (works under Sway)
+
 # Window manager data
 
 out_rect="$(
