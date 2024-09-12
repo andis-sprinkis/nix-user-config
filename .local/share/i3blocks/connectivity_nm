@@ -3,7 +3,7 @@ set -eu
 
 connectivity="$(nmcli networking connectivity)"
 
-if [ ! "$connectivity" ]; then
+if [ -z "$connectivity" ]; then
   exit "0"
 fi
 
