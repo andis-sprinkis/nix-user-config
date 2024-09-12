@@ -49,15 +49,17 @@ win_height() {
 }
 
 win_width() {
-  echo "$win_rect_width"
+  c_win_width="${c_win_width:-"$win_rect_width"}"
+  echo "$c_win_width"
 }
 
 win_edge_left() {
-  echo "$win_rect_x"
+  c_win_rect_x="${c_win_rect_x:-"$win_rect_x"}"
+  echo "$c_win_rect_x"
 }
 
 win_edge_right() {
-  c_win_edge_right="${c_win_edge_right:-"$(($(win_edge_left) + $(win_width)))"}"
+  c_win_edge_right="${c_win_edge_right:-"$((${c_win_edge_left:-"$(win_edge_left)"} + ${c_win_width:-"$(win_width)"}))"}"
   echo "$c_win_edge_right"
 }
 
@@ -67,7 +69,7 @@ win_edge_top() {
 }
 
 win_edge_bottom() {
-  c_win_edge_bottom="${c_win_edge_bottom:-"$(($(win_edge_top) + $(win_height)))"}"
+  c_win_edge_bottom="${c_win_edge_bottom:-"$(("${c_win_edge_top:-"$(win_edge_top)"}" + "${c_win_height:-"$(win_height)"}"))"}"
   echo "$c_win_edge_bottom"
 }
 
