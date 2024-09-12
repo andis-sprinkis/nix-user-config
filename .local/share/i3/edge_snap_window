@@ -9,19 +9,19 @@ fi
 
 # Window manaager data
 
-out_rect="$(i3-msg -t get_outputs | jq -r ".[] | select(.focused == true).rect")"
+out_rect="$(i3-msg -t get_outputs | jq -r ".[] | select(.focused == true).rect | .x,.y,.width,.height")"
 
-out_rect_x="$(echo "$out_rect" | jq -r ".x")"
-out_rect_y="$(echo "$out_rect" | jq -r ".y")"
-out_rect_width="$(echo "$out_rect" | jq -r ".width")"
-out_rect_height="$(echo "$out_rect" | jq -r ".height")"
+out_rect_x="$(echo "$out_rect" | sed "1q;d")"
+out_rect_y="$(echo "$out_rect" | sed "2q;d")"
+out_rect_width="$(echo "$out_rect" | sed "3q;d")"
+out_rect_height="$(echo "$out_rect" | sed "4q;d")"
 
-ws_rect="$(i3-msg -t get_workspaces | jq -r ".[] | select(.focused == true).rect")"
+ws_rect="$(i3-msg -t get_workspaces | jq -r ".[] | select(.focused == true).rect | .x,.y,.width,.height")"
 
-ws_rect_x="$(echo "$ws_rect" | jq -r ".x")"
-ws_rect_y="$(echo "$ws_rect" | jq -r ".y")"
-ws_rect_width="$(echo "$ws_rect" | jq -r ".width")"
-ws_rect_height="$(echo "$ws_rect" | jq -r ".height")"
+ws_rect_x="$(echo "$ws_rect" | sed "1q;d")"
+ws_rect_y="$(echo "$ws_rect" | sed "2q;d")"
+ws_rect_width="$(echo "$ws_rect" | sed "3q;d")" 
+ws_rect_height="$(echo "$ws_rect" | sed "4q;d")"
 
 win="$(swaymsg -t get_tree | jq -r '.. | select(.type?) | select(.focused == true)')"
 win_type="$(echo "$win" | jq -r ".type")"
