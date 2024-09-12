@@ -9,9 +9,18 @@ fi
 
 # Window manaager data
 
-out_rect="$(  i3-msg -t get_outputs | jq -r ".[] | select(.focused == true).rect | .x,.y,.width,.height")"
-ws_rect="$(i3-msg -t get_workspaces | jq -r ".[] | select(.focused == true).rect | .x,.y,.width,.height")"
-win="$(          i3-msg -t get_tree | jq -r ".. | select(.type?) | select(.focused == true) | .type,.fullscreen_mode,.rect.x,.rect.y,.rect.width,.rect.height,.window_rect.x,.window_rect.y,.window_rect.width,.window_rect.height,.deco_rect.x,.deco_rect.y,.deco_rect.width,.deco_rect.height,.geometry.x,.geometry.y,.geometry.width,.geometry.height")"
+out_rect="$(
+  i3-msg -t "get_outputs"    | jq -r \
+  ".[] | select(.focused == true).rect | .x, .y, .width, .height"
+)"
+ws_rect="$(
+  i3-msg -t "get_workspaces" | jq -r \
+  ".[] | select(.focused == true).rect | .x, .y, .width, .height"
+)"
+win="$(
+  i3-msg -t "get_tree"       | jq -r \
+  ".. | select(.type?) | select(.focused == true) | .type, .fullscreen_mode, .rect.x, .rect.y, .rect.width, .rect.height, .window_rect.x, .window_rect.y, .window_rect.width, .window_rect.height, .deco_rect.x, .deco_rect.y, .deco_rect.width, .deco_rect.height, .geometry.x, .geometry.y, .geometry.width, .geometry.height"
+)"
 
 out_rect_x="$(       echo "$out_rect" | sed  "1q;d")"
 out_rect_y="$(       echo "$out_rect" | sed  "2q;d")"
