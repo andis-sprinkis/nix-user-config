@@ -154,10 +154,10 @@ mode $mode_resize {
   bindsym Escape mode "default"
 }
 
-bindsym $mod+Mod1+$left  exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/edge_snap_window left
-bindsym $mod+Mod1+$down  exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/edge_snap_window down
-bindsym $mod+Mod1+$up    exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/edge_snap_window up
-bindsym $mod+Mod1+$right exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/edge_snap_window right
+bindsym $mod+Mod1+$left  exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/snap_move_window left
+bindsym $mod+Mod1+$down  exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/snap_move_window down
+bindsym $mod+Mod1+$up    exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/snap_move_window up
+bindsym $mod+Mod1+$right exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/snap_move_window right
 
 set $color0      #1f1f1f
 set $color1      #f44747
