@@ -352,7 +352,7 @@ case "$direction" in
     win_snaps_right
   ;;
   *)
-    exit "1"
+    exit "2"
   ;;
 esac
 
