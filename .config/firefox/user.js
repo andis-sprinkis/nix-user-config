@@ -102,6 +102,7 @@ user_pref("network.http.speculative-parallel-limit", 0);
 user_pref("network.predictor.enable-prefetch", false);
 user_pref("network.predictor.enabled", false);
 user_pref("network.prefetch-next", false);
+user_pref("network.protocol-handler.external.mailto", false);
 user_pref("privacy.donottrackheader.enabled", true);
 user_pref("privacy.globalprivacycontrol.enabled", true);
 user_pref("privacy.globalprivacycontrol.functionality.enabled", true);
