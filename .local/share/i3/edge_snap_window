@@ -44,7 +44,8 @@ win_deco_rect_height="$(echo "$win_deco_rect" | jq -r '.height')"
 # Window properties
 
 win_height() {
-  echo $((win_rect_height + win_deco_rect_height))
+  c_win_height="${c_win_height:-"$((win_rect_height + win_deco_rect_height))"}"
+  echo "$c_win_height"
 }
 
 win_width() {
@@ -56,15 +57,18 @@ win_edge_left() {
 }
 
 win_edge_right() {
-  echo $(($(win_edge_left) + $(win_width)))
+  c_win_edge_right="${c_win_edge_right:-"$(($(win_edge_left) + $(win_width)))"}"
+  echo "$c_win_edge_right"
 }
 
 win_edge_top() {
-  echo "$((win_rect_y - win_deco_rect_height))"
+  c_win_edge_top="${c_win_edge_top:-"$((win_rect_y - win_deco_rect_height))"}"
+  echo "$c_win_edge_top"
 }
 
 win_edge_bottom() {
-  echo "$(($(win_edge_top) + $(win_height)))"
+  c_win_edge_bottom="${c_win_edge_bottom:-"$(($(win_edge_top) + $(win_height)))"}"
+  echo "$c_win_edge_bottom"
 }
 
 # Output properties
@@ -82,7 +86,8 @@ out_edge_left() {
 }
 
 out_edge_right() {
-  echo "$(($(out_edge_left) + $(out_width)))"
+  c_out_edge_right="${c_out_edge_right:-"$(($(out_edge_left) + $(out_width)))"}"
+  echo "$c_out_edge_right"
 }
 
 out_edge_top() {
@@ -90,7 +95,8 @@ out_edge_top() {
 }
 
 out_edge_bottom() {
-  echo "$(($(out_edge_top) + $(out_height)))"
+  c_out_edge_bottom="${c_out_edge_bottom:-"$(($(out_edge_top) + $(out_height)))"}"
+  echo "$c_out_edge_bottom"
 }
 
 # Workspace properties
@@ -108,7 +114,8 @@ ws_edge_left() {
 }
 
 ws_edge_right() {
-  echo "$(($(ws_edge_left) + $(ws_width)))"
+  c_ws_edge_right="${c_ws_edge_right:-"$(($(ws_edge_left) + $(ws_width)))"}"
+  echo "$c_ws_edge_right"
 }
 
 ws_edge_top() {
@@ -116,7 +123,8 @@ ws_edge_top() {
 }
 
 ws_edge_bottom() {
-  echo "$(($(ws_edge_top) + $(ws_height)))"
+  c_ws_edge_top="${c_ws_edge_top:-"$(($(ws_edge_top) + $(ws_height)))"}"
+  echo "$c_ws_edge_top"
 }
 
 # Workspace-Window relation properties
