@@ -1,25 +1,35 @@
 #!/usr/bin/env sh
 
-# Assumes the integer index only name workspaces.
+wm="${WAYLAND_DISPLAY:+"sway"}"
+wm="${wm:-"i3"}"
 
-wss="$(i3-msg -t get_workspaces | jq 'map({num,focused,representation})')"
+case "$wm" in
+  "sway")
+    wm_cmd="swaymsg"
+  ;;
+  "i3")
+    wm_cmd="i3-msg"
+  ;;
+esac
 
-# In Sway checking if workspace is already empty. i3 containers have no 'representation' property.
+wss="$($wm_cmd -t get_workspaces | jq 'map({num,focused,representation})')"
+
+# In Sway - checking if workspace is already empty.
+# In i3 the containers have no 'representation' property.
 if [ "${WAYLAND_DISPLAY:-""}" ] && [ "$(echo "$wss" | jq -r ".[[.[].focused] | index(true)].representation")" = "null" ]; then
   exit "1"
 fi
 
-wss_num="$(echo $(echo "$wss" | jq '.[].num' -r | sort))"
-
-pre_wsn="$(($(echo "$wss_num" | cut -d" " -f 1) - 1))"
+wss_num="$(echo "$wss" | jq -r '.[].num' | sort | tr '\n' ' ')"
+pre_wsn="$(("${wss_num%% *}" - 1))"
 
 if [ "$pre_wsn" -ge 1 ]; then
-  i3-msg -q "move container to workspace number 1; workspace number 1"
+  $wm_cmd -q "move container to workspace number 1; workspace number 1"
 fi
 
 for wsn in $wss_num; do
-  if [ $((pre_wsn + 1)) -ne "$wsn" ]; then
-    exec i3-msg -q "move container to workspace number $((pre_wsn + 1)); workspace number $((pre_wsn + 1))"
+  if [ "$((pre_wsn + 1))" -ne "$wsn" ]; then
+    exec $wm_cmd -q "move container to workspace number $((pre_wsn + 1)); workspace number $((pre_wsn + 1))"
   fi
 
   pre_wsn="$wsn"

@@ -21,9 +21,11 @@ echo "${cfg_common:-""}${cfg_wm:-""}" \
   | sed -z 's/\\\n//g' \
   | grep "bindsym" \
   | sed \
+    -e 's/^#.*.$//g' \
     -e 's/bindsym //g' \
     -e 's/--whole-window //g' \
     -e 's/--no-startup-id //g' \
+    -e 's/--locked //g' \
     -e 's/ exec / /g' \
     -e 's/^ //g' \
   | column \

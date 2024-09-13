@@ -1,9 +1,11 @@
 #!/usr/bin/env sh
 set -eu
 
-# TODO: support for multi-monitor setups
-# TODO: handling named workspaces without the index prefix
-# TODO: avoid creating ws 0 as the key 0 is typically mapped to ws 10
+# TODO - rewrite
+# - support for multi-monitor setups
+# - handling named workspaces without the index prefix
+# - avoid creating ws 0 as the key 0 is typically mapped to ws 10
+# - use a single i3-msg call
 
 # "next" or "prev"
 direction="${1:-next}"
@@ -18,14 +20,14 @@ ws_name="$(echo "$ws" | jq -r ".name")"
 ws_name_title="$(echo "$ws_name" | cut -s -d":" -f "2")"
 
 case "$direction" in
-  "next") 
+  "next")
     ws_beside="$(echo "$wss" | jq -r ".[$((ws_i + 1))]")" 
     num_beside="$((ws_num + 1))"
-    ;;
-  "prev") 
+  ;;
+  "prev")
     ws_beside="$(echo "$wss" | jq -r ".[$((ws_i - 1))]")" 
     num_beside="$((ws_num - 1))"
-    ;;
+  ;;
 esac
 
 [ "$ws_beside" != "null" ] && {
