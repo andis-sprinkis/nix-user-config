@@ -36,10 +36,10 @@ bindsym $mod+$down  focus down
 bindsym $mod+$up    focus up
 bindsym $mod+$right focus right
 
-bindsym $mod+Shift+$left  move left
-bindsym $mod+Shift+$down  move down
-bindsym $mod+Shift+$up    move up
-bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+$left  move left  56px
+bindsym $mod+Shift+$down  move down  56px
+bindsym $mod+Shift+$up    move up    56px
+bindsym $mod+Shift+$right move right 56px
 
 bindsym $mod+o split h
 bindsym $mod+v split v
@@ -142,17 +142,22 @@ bindsym $mod+w exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/menu
 
 bindsym $mod+slash exec --no-startup-id i3_key_mappings_desktop
 
-set     $mode_resize "Resize container..."
-bindsym $mod+r mode $mode_resize
-mode $mode_resize {
-  bindsym $left  resize shrink width  56px
-  bindsym $down  resize shrink height 56px
-  bindsym $up    resize grow   height 56px
-  bindsym $right resize grow   width  56px
+# set     $mode_resize "Resize container..."
+# bindsym $mod+r mode $mode_resize
+# mode $mode_resize {
+#   bindsym $left  resize shrink width  56px
+#   bindsym $down  resize shrink height 56px
+#   bindsym $up    resize grow   height 56px
+#   bindsym $right resize grow   width  56px
+#
+#   bindsym Return mode "default"
+#   bindsym Escape mode "default"
+# }
 
-  bindsym Return mode "default"
-  bindsym Escape mode "default"
-}
+bindsym $mod+Mod1+Shift+$left  resize shrink width  56px
+bindsym $mod+Mod1+Shift+$down  resize shrink height 56px
+bindsym $mod+Mod1+Shift+$up    resize grow   height 56px
+bindsym $mod+Mod1+Shift+$right resize grow   width  56px
 
 bindsym $mod+Mod1+$left  exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/snap_move_window left
 bindsym $mod+Mod1+$down  exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/snap_move_window down
