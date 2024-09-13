@@ -19,11 +19,11 @@ ws="$(
   ".[] | select(.focused == true) | .rect.x, .rect.y, .rect.width, .rect.height, .output"
 )"
 
-ws_rect_x="$(         echo "$ws" | sed  "1q;d")"
-ws_rect_y="$(         echo "$ws" | sed  "2q;d")"
-ws_rect_width="$(     echo "$ws" | sed  "3q;d")" 
-ws_rect_height="$(    echo "$ws" | sed  "4q;d")"
-ws_output="$(         echo "$ws" | sed  "5q;d")"
+ws_rect_x="$(              echo "$ws" | sed  "1q;d")"
+ws_rect_y="$(              echo "$ws" | sed  "2q;d")"
+ws_rect_width="$(          echo "$ws" | sed  "3q;d")" 
+ws_rect_height="$(         echo "$ws" | sed  "4q;d")"
+ws_output="$(              echo "$ws" | sed  "5q;d")"
 
 out_rect="$(
   i3-msg -t "get_outputs"    | jq -r \
@@ -68,7 +68,7 @@ ws_edge_thres_y="$move_step_y"
 win_height() {
   c_win_height="${c_win_height:-"$(
     case "$wm" in
-      "sway") echo 1
+      "sway")
         echo "$((win_rect_height + win_deco_rect_height))"
       ;;
       "i3")
@@ -98,7 +98,7 @@ win_edge_right() {
 win_edge_top() {
   c_win_edge_top="${c_win_edge_top:-"$(
     case "$wm" in
-      "sway") echo 1
+      "sway")
         echo "$((win_rect_y - win_deco_rect_height))"
       ;;
       "i3")
