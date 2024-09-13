@@ -39,23 +39,24 @@ out_rect_height="$(  echo "$out_rect" | sed  "4q;d")"
 
 win="$(
   i3-msg -t "get_tree"       | jq -r \
-  ".. | select(.type?) | select(.focused == true) | .type, .fullscreen_mode, .rect.x, .rect.y, .rect.width, .rect.height, .window_rect.x, .window_rect.y, .window_rect.width, .window_rect.height, .deco_rect.x, .deco_rect.y, .deco_rect.width, .deco_rect.height, .geometry.x, .geometry.y, .geometry.width, .geometry.height"
+  ".. | select(.type?) | select(.focused == true) | .type, .floating, .fullscreen_mode, .rect.x, .rect.y, .rect.width, .rect.height, .window_rect.x, .window_rect.y, .window_rect.width, .window_rect.height, .deco_rect.x, .deco_rect.y, .deco_rect.width, .deco_rect.height, .geometry.x, .geometry.y, .geometry.width, .geometry.height"
 )"
 
 win_type="$(              echo "$win" | sed  "1q;d")"
-win_fullscreen_mode="$(   echo "$win" | sed  "2q;d")"
-win_rect_x="$(            echo "$win" | sed  "3q;d")"
-win_rect_y="$(            echo "$win" | sed  "4q;d")"
-win_rect_width="$(        echo "$win" | sed  "5q;d")"
-win_rect_height="$(       echo "$win" | sed  "6q;d")"
-# win_window_rect_x="$(     echo "$win" | sed  "7q;d")"
-# win_window_rect_y="$(     echo "$win" | sed  "8q;d")"
-# win_window_rect_width="$( echo "$win" | sed  "9q;d")"
-# win_window_rect_height="$(echo "$win" | sed "10q;d")"
-# win_deco_rect_x="$(       echo "$win" | sed "11q;d")"
-# win_deco_rect_y="$(       echo "$win" | sed "12q;d")"
-# win_deco_rect_width="$(   echo "$win" | sed "13q;d")"
-win_deco_rect_height="$(  echo "$win" | sed "14q;d")"
+win_floating="$(          echo "$win" | sed  "2q;d")" # i3
+win_fullscreen_mode="$(   echo "$win" | sed  "3q;d")"
+win_rect_x="$(            echo "$win" | sed  "4q;d")"
+win_rect_y="$(            echo "$win" | sed  "5q;d")"
+win_rect_width="$(        echo "$win" | sed  "6q;d")"
+win_rect_height="$(       echo "$win" | sed  "7q;d")"
+# win_window_rect_x="$(     echo "$win" | sed  "8q;d")"
+# win_window_rect_y="$(     echo "$win" | sed  "9q;d")"
+# win_window_rect_width="$( echo "$win" | sed  "10q;d")"
+# win_window_rect_height="$(echo "$win" | sed "11q;d")"
+# win_deco_rect_x="$(       echo "$win" | sed "12q;d")"
+# win_deco_rect_y="$(       echo "$win" | sed "13q;d")"
+# win_deco_rect_width="$(   echo "$win" | sed "14q;d")"
+win_deco_rect_height="$(  echo "$win" | sed "15q;d")"
 
 # Window moving properties
 
@@ -290,15 +291,31 @@ win_moves_right() {
   exec i3-msg -q "move absolute position $(win_x_moves_right) $(win_y_stays)"
 }
 
+win_stays() {
+  exec i3-msg -q "floating enable; move absolute position $(win_x_stays) $(win_y_stays)"
+}
+
 # Main
 
 if [ "$win_fullscreen_mode" != "0" ]; then
   exec i3-msg -q "fullscreen disable; floating enable; move absolute position $(win_x_stays) $(win_y_stays)"
 fi
 
-if [ "$win_type" != "floating_con" ]; then
-  exec i3-msg -q "floating enable; move absolute position $(win_x_stays) $(win_y_stays)"
-fi
+case "$wm" in
+  "sway")
+    if [ "$win_type" != "floating_con" ]; then
+      win_stays
+    fi
+  ;;
+  "i3")
+    case "$win_floating" in
+      *"_off")
+        win_stays
+      ;;
+    esac
+  ;;
+esac
+
 
 case "$direction" in
   "up")

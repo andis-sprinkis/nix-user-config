@@ -1,7 +1,10 @@
 #!/usr/bin/env sh
 set -eu
 
-json_output="$(i3-msg -t get_outputs | jq ".[] | select(.focused == true).rect")"
+# TODO: workspace, not output relative size
+
+ws_output_name="$(i3-msg -t "get_workspaces" | jq -r ".[] | select(.focused == true) | .output")"
+json_output="$(i3-msg -t get_outputs | jq ".[] | select(.name == \"${ws_output_name}\").rect")"
 output_width="$(echo "$json_output" | jq ".width")"
 output_height="$(echo "$json_output" | jq ".height")"
 
@@ -21,4 +24,4 @@ if [ "$height" -gt "$max_height" ]; then
   height="$max_height"
 fi
 
-i3-msg -q "floating toggle; resize set width ${width} height ${height}"
+i3-msg -q "floating toggle; resize set width ${width} height ${height}; move position center"
