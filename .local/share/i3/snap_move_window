@@ -26,8 +26,6 @@ ws_rect_width="$(     echo "$ws" | sed  "3q;d")"
 ws_rect_height="$(    echo "$ws" | sed  "4q;d")"
 ws_output="$(         echo "$ws" | sed  "5q;d")"
 
-echo "$ws_output"
-
 out_rect="$(
   i3-msg -t "get_outputs"    | jq -r \
   ".[] | select(.name == \"${ws_output}\").rect | .x, .y, .width, .height"
