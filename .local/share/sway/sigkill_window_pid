@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -eu
 
-pid="$(swaymsg -t get_tree | jq '.. | select(.type?)| select(.focused == true).pid' 2> "/dev/null")"
+pid="$(swaymsg -t get_tree | jq '.. | select(.type?)| select(.focused == true).pid')"
 
 if [ -z "$pid" ]; then
   exit "1"
