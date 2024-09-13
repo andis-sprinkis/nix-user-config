@@ -8,6 +8,8 @@ if [ -z "$direction" ]; then
 fi
 
 # TODO: fix i3 issues (works under Sway)
+# - i3: get_outputs doesn't use .focused. use .active instead ?
+# - i3: .rect.x, .rect.y are the same coordinates as .deco_rect.x, .deco_rect.y ?
 
 # Window manager data
 
