@@ -67,6 +67,7 @@ user_pref("browser.urlbar.unitConversion.enabled", true);
 user_pref("browser.urlbar.update2.engineAliasRefresh", true);
 user_pref("browser.urlbar.weather.featureGate", false);
 user_pref("browser.urlbar.yelp.featureGate", false);
+user_pref("browser.vpn_promo.enabled", false);
 user_pref("clipboard.autocopy", false);
 user_pref("datareporting.healthreport.uploadEnabled", false);
 user_pref("datareporting.policy.dataSubmissionEnabled", false);
