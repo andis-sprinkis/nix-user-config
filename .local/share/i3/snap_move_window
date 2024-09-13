@@ -11,7 +11,6 @@ wm="${WAYLAND_DISPLAY:+"sway"}"
 wm="${wm:-"i3"}"
 
 # TODO: fix i3 issues (works under Sway)
-# - i3: .rect.x, .rect.y are the same coordinates as .deco_rect.x, .deco_rect.y ?
 
 # Window manager data
 
@@ -67,7 +66,17 @@ ws_edge_thres_y="$move_step_y"
 # Window properties
 
 win_height() {
-  c_win_height="${c_win_height:-"$((win_rect_height + win_deco_rect_height))"}"
+  c_win_height="${c_win_height:-"$(
+    case "$wm" in
+      "sway") echo 1
+        echo "$((win_rect_height + win_deco_rect_height))"
+      ;;
+      "i3")
+        echo "$win_rect_height"
+      ;;
+    esac
+  )"}"
+
   echo "$c_win_height"
 }
 
@@ -87,7 +96,17 @@ win_edge_right() {
 }
 
 win_edge_top() {
-  c_win_edge_top="${c_win_edge_top:-"$((win_rect_y - win_deco_rect_height))"}"
+  c_win_edge_top="${c_win_edge_top:-"$(
+    case "$wm" in
+      "sway") echo 1
+        echo "$((win_rect_y - win_deco_rect_height))"
+      ;;
+      "i3")
+        echo "$win_rect_y"
+      ;;
+    esac
+  )"}"
+
   echo "$c_win_edge_top"
 }
 
