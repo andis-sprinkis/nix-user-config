@@ -7,10 +7,10 @@ if [ -z "$direction" ]; then
   exit "1"
 fi
 
+# Detecting window manager
+
 wm="${WAYLAND_DISPLAY:+"sway"}"
 wm="${wm:-"i3"}"
-
-# TODO: fix i3 issues (works under Sway)
 
 # Window manager data
 
