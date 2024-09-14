@@ -1,7 +1,11 @@
 #!/usr/bin/env sh
 set -eu
 
-# TODO: workspace, not output relative size
+# TODO
+# - workspace, not output relative size
+# - try to fit window x and y "geometry" ratio within ws x y boundaries
+#   - (geometry - object - The natural geometry of the contents if it were to size itself)
+#   - first try without padding?
 
 ws_out_name="$(i3-msg -t "get_workspaces" | jq -r ".[] | select(.focused == true) | .output")"
 out="$(i3-msg -t get_outputs | jq ".[] | select(.name == \"${ws_out_name}\").rect | .width,.height")"
