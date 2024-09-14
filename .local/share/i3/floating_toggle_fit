@@ -3,18 +3,18 @@ set -eu
 
 # TODO: workspace, not output relative size
 
-ws_output_name="$(i3-msg -t "get_workspaces" | jq -r ".[] | select(.focused == true) | .output")"
-json_output="$(i3-msg -t get_outputs | jq ".[] | select(.name == \"${ws_output_name}\").rect")"
-output_width="$(echo "$json_output" | jq ".width")"
-output_height="$(echo "$json_output" | jq ".height")"
+ws_out_name="$(i3-msg -t "get_workspaces" | jq -r ".[] | select(.focused == true) | .output")"
+out="$(i3-msg -t get_outputs | jq ".[] | select(.name == \"${ws_out_name}\").rect | .width,.height")"
+out_width="$(echo "$out" | sed  "1q;d")"
+out_height="$(echo "$out" | sed  "2q;d")"
 
 max_width="1920"
 max_height="1280"
 padding_percent="0.075"
 
-padding="$(echo "(${padding_percent} * ${output_width} + ${padding_percent} * ${output_height}) / 2" | bc)"
-width="$(echo "${output_width} - ${padding}" | bc)"
-height="$(echo "${output_height} - ${padding}" | bc)"
+padding="$(echo "(${padding_percent} * ${out_width} + ${padding_percent} * ${out_height}) / 2" | bc)"
+width="$(echo "${out_width} - ${padding}" | bc)"
+height="$(echo "${out_height} - ${padding}" | bc)"
 
 if [ "$width" -gt "$max_width" ]; then
   width="$max_width"
