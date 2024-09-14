@@ -79,6 +79,7 @@ alias \
   T="TMOUT=5400" \
   T0="TMOUT=0" \
   umount="sudo umount" \
+  unlock_user="sudo faillock --reset --user" \
   tree="tree -CF" \
   viff="nvim -d" \
   wget="wget --hsts-file=\"\${XDG_DATA_HOME:-\$HOME/.local/share}/wget-hsts\""
