@@ -5,22 +5,35 @@ if [ -z "${1:-""}" ]; then
   exit "1"
 fi
 
-outputs_count="$(i3-msg -t get_outputs | jq '[.[] | select(.active == true)] | length')"
+wm="${1:-""}"
+wm="${WAYLAND_DISPLAY:+"sway"}"
+wm="${wm:-"i3"}"
+
+case "$wm" in
+  "sway")
+    wm_cmd="swaymsg"
+  ;;
+  "i3")
+    wm_cmd="i3-msg"
+  ;;
+esac
+
+outputs_count="$($wm_cmd -t get_outputs | jq '[.[] | select(.active == true)] | length')"
 
 case "$1" in
   "left")
     if [ "$outputs_count" = "1" ]; then 
-      exec i3-msg -q workspace prev
+      exec $wm_cmd -q "workspace prev"
     fi
 
-    exec i3-msg -q focus output left
+    exec $wm_cmd -q "focus output left"
   ;;
   "right")
     if [ "$outputs_count" = "1" ]; then 
-      exec i3-msg -q workspace next
+      exec $wm_cmd -q "workspace next"
     fi
 
-    exec i3-msg -q focus output right
+    exec $wm_cmd -q "focus output right"
   ;;
   *)
     exit "1"
