@@ -62,6 +62,10 @@ win_rect_height="$(       echo "$win" | sed  "7q;d")"
 # win_deco_rect_y="$(       echo "$win" | sed "13q;d")"
 # win_deco_rect_width="$(   echo "$win" | sed "14q;d")"
 win_deco_rect_height="$(  echo "$win" | sed "15q;d")"
+# win_geometry_x="$(        echo "$win" | sed "16q;d")"
+# win_geometry_y="$(        echo "$win" | sed "17q;d")"
+# win_geometry_width="$(    echo "$win" | sed "18q;d")"
+# win_geometry_height="$(   echo "$win" | sed "19q;d")"
 
 # Window moving properties
 
