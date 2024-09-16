@@ -66,7 +66,7 @@ ws_rect_height="$(         echo "$ws" | sed  "4q;d")"
 # win_geometry_width="$(    echo "$win" | sed "18q;d")"
 # win_geometry_height="$(   echo "$win" | sed "19q;d")"
 
-max_width="1920"
+max_width="1280"
 max_height="1280"
 padding_percent="0.075"
 
