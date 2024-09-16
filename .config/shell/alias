@@ -14,6 +14,9 @@ alias \
   convert="magick" \
   cp="cp -rv" \
   date_iso8601="date -u +\"%Y-%m-%dT%H:%M:%SZ\"" \
+  date_iso8601_dash="date -u +\"%Y-%m-%dT%H-%M-%SZ\"" \
+  date_iso8601_nosep="date -u +\"%Y%m%dT%H%M%SZ\"" \
+  date_iso8601_underscore="date -u +\"%Y_%m_%dT%H_%M_%SZ\"" \
   dmesg="sudo dmesg -HL" \
   d="\$EDITOR \"\${XDG_DATA_HOME:-\$HOME/.local/share}\"" \
   doc="\$EDITOR \"\${XDG_DATA_HOME:-\$HOME/.local/share}/doc/\"" \
