@@ -138,6 +138,9 @@ $prompt_symbol"
   # vi mode
   bindkey -v
 
+  # use alt-enter to enter a new line in insert mode
+  bindkey '^[^M' self-insert-unmeta
+
   # cycle through history based on entered prefix
   autoload -U "history-search-end"
   zle -N "history-beginning-search-backward-end" "history-search-end"
