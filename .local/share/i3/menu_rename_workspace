@@ -11,52 +11,56 @@ set -eu
 # | 3: new name | 3: new name  |
 # | 3new name   | 2: 3new name |
 
-cmd_menu="${WAYLAND_DISPLAY:+"wmenu"}"
+wm="${WAYLAND_DISPLAY:+"sway"}"
+wm="${wm:-"i3"}"
 
-if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-  cmd_menu="dmenu"
-fi
+case "$wm" in
+  "sway")
+    wm_cmd="swaymsg"
+    cmd_menu="wmenu"
+  ;;
+  "i3")
+    wm_cmd="i3-msg"
+    cmd_menu="dmenu"
+  ;;
+  *)
+    exit "1"
+  ;;
+esac
 
-if [ -z "$cmd_menu" ]; then
-  exit "1"
-fi
-
-wss="$(i3-msg -t get_workspaces | jq -r 'map({num,name,focused})')"
-ws_i="$(echo "$wss" | jq -r '[.[].focused] | index(true)')"
-ws="$(echo "$wss" | jq -r ".[$ws_i]")"
-ws_name="$(echo "$ws" | jq -r ".name")"
-ws_num="$(echo "$ws" | jq -r ".num")"
+ws="$(
+  $wm_cmd -t "get_workspaces" | jq -r \
+  ".[] | select(.focused == true) | .num, .name"
+)"
+ws_num="$( echo "$ws" | sed  "1q;d")"
+ws_name="$(echo "$ws" | sed  "2q;d")"
 
 ws_name_input="$(echo $("$@" | "$cmd_menu" -p "Rename workspace \"${ws_name}\":"))"
 
-[ "$ws_name_input" ] && {
-  name_new_is_num="0"
+[ "$ws_name_input" ] || exit "2"
 
-  set -e
-  test "$ws_name_input" -eq "$ws_name_input" 2> /dev/null && name_new_is_num="1"
-  set +e
+name_new_is_num="0"
 
-  if [ "$name_new_is_num" = "1" ]; then
-    exec i3-msg -q rename workspace "$ws_name" to "$ws_name_input"
-  fi
+set -e
+test "$ws_name_input" -eq "$ws_name_input" 2> /dev/null && name_new_is_num="1"
+set +e
 
-  # TODO: swap existing ws with the specified number
+if [ "$name_new_is_num" = "1" ]; then
+  exec i3-msg -q rename workspace "$ws_name" to "$ws_name_input"
+fi
 
-  ws_name_new_name_num="$(echo "$ws_name_input" | cut -s -d":" -f "1")"
+# TODO: swap existing ws with the specified number
 
-  if [ -z "$ws_name_new_name_num" ]; then
-    exec i3-msg -q rename workspace to "${ws_num}: ${ws_name_input}"
-  fi
+ws_name_new_name_num="$(echo "$ws_name_input" | cut -s -d":" -f "1")"
 
-  # TODO: swap existing ws with the specified number
+if [ -z "$ws_name_new_name_num" ]; then
+  exec i3-msg -q rename workspace to "${ws_num}: ${ws_name_input}"
+fi
 
-  ws_name_new_name_title="$(echo "$ws_name_input" | cut -s -d":" -f "2")"
+ws_name_new_name_title="$(echo "$ws_name_input" | cut -s -d":" -f "2")"
 
-  if [ -z "$(echo $ws_name_new_name_title)" ]; then
-    exit "2"
-  fi
+if [ -z "$(echo $ws_name_new_name_title)" ]; then
+  exit "2"
+fi
 
-  exec i3-msg -q rename workspace to "${ws_name_new_name_num}: ${ws_name_new_name_title}"
-}
-
-exit 1
+exec i3-msg -q rename workspace to "${ws_name_new_name_num}: ${ws_name_new_name_title}"
