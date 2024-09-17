@@ -5,8 +5,8 @@
 ### Mozilla Firefox
 
 ```sh
-cd $HOME/.mozilla/firefox/PROFILE_ID.default-release
-ln -s ../../../.config/firefox/user.js user.js
+cd "$HOME/.mozilla/firefox/PROFILE_ID.default-release"
+ln -s "../../../.config/firefox/user.js" "user.js"
 ```
 
 ## Addons
