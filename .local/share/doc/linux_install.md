@@ -561,9 +561,10 @@ LVM on LUKS.
 1.  Create file `${XDG_CONFIG_HOME:-$HOME/.config}/sway/local` with the display configuration parameters e.g.
 
     ```swayconfig
-    output DP-1 pos 4902 0 res 2560x1440 transform 90
-    output DP-2 pos 6342 0 res 2560x1440 transform 90
-    output HDMI-A-1 pos 3462 0 res 2560x1440 transform 90
+    # vi: ft=swayconfig
+    output HDMI-A-1 pos 0    0 res 2560x1440 transform 90
+    output DP-1     pos 1440 0 res 2560x1440 transform 90
+    output DP-2     pos 2880 0 res 2560x1440 transform 90
     ```
 
 1.  Include it in `${XDG_CONFIG_HOME:-$HOME/.config}/sway/config`, before the `/etc/sway/config.d/*` include.
