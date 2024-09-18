@@ -20,7 +20,7 @@ local M = {
   line_height = 1.29,
   max_fps = 75,
   initial_cols = 120,
-  initial_rows = 40,
+  initial_rows = 30,
   animation_fps = 1,
   window_padding = { left = 0, right = 0, top = 0, bottom = 0 },
   keys = {
