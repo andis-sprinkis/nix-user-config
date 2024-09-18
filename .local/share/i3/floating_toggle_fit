@@ -41,10 +41,10 @@ ws_rect_height="$(         echo "$ws" | sed  "4q;d")"
 # out_rect_width="$(   echo "$out_rect" | sed  "3q;d")"
 # out_rect_height="$(  echo "$out_rect" | sed  "4q;d")"
 
-# win="$(
-#   $wm_cmd -t "get_tree"       | jq -r \
-#   ".. | select(.type?) | select(.focused == true) | .type, .floating, .fullscreen_mode, .rect.x, .rect.y, .rect.width, .rect.height, .window_rect.x, .window_rect.y, .window_rect.width, .window_rect.height, .deco_rect.x, .deco_rect.y, .deco_rect.width, .deco_rect.height, .geometry.x, .geometry.y, .geometry.width, .geometry.height"
-# )"
+win="$(
+  $wm_cmd -t "get_tree"       | jq -r \
+  ".. | select(.type?) | select(.focused == true) | .type, .floating, .fullscreen_mode, .rect.x, .rect.y, .rect.width, .rect.height, .window_rect.x, .window_rect.y, .window_rect.width, .window_rect.height, .deco_rect.x, .deco_rect.y, .deco_rect.width, .deco_rect.height, .geometry.x, .geometry.y, .geometry.width, .geometry.height"
+)"
 
 # win_type="$(              echo "$win" | sed  "1q;d")"
 # win_floating="$(          echo "$win" | sed  "2q;d")" # i3
@@ -63,23 +63,20 @@ ws_rect_height="$(         echo "$ws" | sed  "4q;d")"
 # win_deco_rect_height="$(  echo "$win" | sed "15q;d")"
 # win_geometry_x="$(        echo "$win" | sed "16q;d")"
 # win_geometry_y="$(        echo "$win" | sed "17q;d")"
-# win_geometry_width="$(    echo "$win" | sed "18q;d")"
-# win_geometry_height="$(   echo "$win" | sed "19q;d")"
+win_geometry_width="$(    echo "$win" | sed "18q;d")"
+win_geometry_height="$(   echo "$win" | sed "19q;d")"
 
-max_width="1280"
-max_height="1280"
-padding_percent="0.075"
+win_new_width="$win_geometry_width"
+win_new_height="$win_geometry_height"
 
-padding="$(echo "(${padding_percent} * ${ws_rect_width} + ${padding_percent} * ${ws_rect_height}) / 2" | bc)"
-width="$(echo "${ws_rect_width} - ${padding}" | bc)"
-height="$(echo "${ws_rect_height} - ${padding}" | bc)"
-
-if [ "$width" -gt "$max_width" ]; then
-  width="$max_width"
+if [ "$win_new_width" -gt "$ws_rect_width" ]; then
+  win_new_height="scale=0; ${win_new_height} / (${win_new_width} / ${ws_rect_width})"
+  win_new_width="$ws_rect_width"
 fi
 
-if [ "$height" -gt "$max_height" ]; then
-  height="$max_height"
+if [ "$win_new_height" -gt "$ws_rect_height" ]; then
+  win_new_width="scale=0; ${win_new_width} / (${win_new_height} / ${ws_rect_height})"
+  win_new_height="$ws_rect_height"
 fi
 
-i3-msg -q "floating toggle; resize set width ${width} height ${height}; move position center"
+i3-msg -q "floating toggle; resize set width ${win_new_width} height ${win_new_height}; move position center"
