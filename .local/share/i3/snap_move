@@ -374,6 +374,7 @@ fi
 case "$wm" in
   "sway")
     if [ "$win_type" != "floating_con" ]; then
+      # TODO: create and use methods based on win_geometry_* to immediately position the window after 'floating_enable' ?
       win_stays
     fi
   ;;
