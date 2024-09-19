@@ -2,3 +2,4 @@
 Type=Application
 Name=Toggle SSHD
 Exec=toggle_sshd_desktop
+Categories=Utility;System;

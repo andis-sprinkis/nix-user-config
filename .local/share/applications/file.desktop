@@ -2,3 +2,4 @@
 Type=Application
 Name=File manager
 Exec=file_manager_desktop %u
+Categories=System;FileTools;FileManager

@@ -30,7 +30,9 @@ VBoxClient-all &
 
 # Polkit authentication agent
 
-[ "$(pidof "polkit-gnome-authentication-agent-1")" ] || /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+if [ "$(pidof "polkit-gnome-authentication-agent-1")" ]; then
+  /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+fi
 
 # Running EeasyEffects audio effects interface
 

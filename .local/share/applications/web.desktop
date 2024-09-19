@@ -2,3 +2,4 @@
 Type=Application
 Name=Web browser
 Exec=web_browser_desktop %u
+Categories=Network;WebBrowser;

@@ -2,3 +2,4 @@
 Type=Application
 Name=Sway key mappings
 Exec=i3_key_mappings_desktop sway
+Categories=Utility;System;

@@ -2,3 +2,4 @@
 Type=Application
 Name=Text pager
 Exec=pager_desktop %F
+Categories=Utility;Viewer;

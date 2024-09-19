@@ -2,3 +2,4 @@
 Type=Application
 Name=Test microphone
 Exec=terminal_shell_cmd test_microphone_alsa
+Categories=Utility;System;

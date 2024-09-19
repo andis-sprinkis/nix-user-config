@@ -2,3 +2,4 @@
 Type=Application
 Name=Power off
 Exec=systemctl poweroff
+Categories=Utility;System;

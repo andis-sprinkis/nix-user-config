@@ -2,3 +2,4 @@
 Type=Application
 Name=Text editor
 Exec=editor_desktop %F
+Categories=Utility;TextEditor;

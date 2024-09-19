@@ -2,3 +2,4 @@
 Type=Application
 Name=Idle lock
 Exec=idle_lock
+Categories=Utility;System;

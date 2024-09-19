@@ -2,3 +2,4 @@
 Type=Application
 Name=Image viewer
 Exec=nsxiv-rifle -- %f
+Categories=Graphics;2DGraphics;RasterGraphics;Viewer;

@@ -2,3 +2,4 @@
 Type=Application
 Name=Toggle idle manager
 Exec=idle_manager_toggle
+Categories=Utility;System;

@@ -2,3 +2,4 @@
 Type=Application
 Name=Insert Unicode
 Exec=ucmenu_desktop
+Categories=Utility;System;

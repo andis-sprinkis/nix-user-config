@@ -2,3 +2,4 @@
 Type=Application
 Name=Screens
 Exec=screens_desktop
+Categories=Settings;HardwareSettings;

@@ -2,3 +2,4 @@
 Type=Application
 Name=Rotate screen (X11)
 Exec=rotate_focused_screen_x
+Categories=Settings;HardwareSettings;

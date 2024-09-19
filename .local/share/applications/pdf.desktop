@@ -2,3 +2,4 @@
 Type=Application
 Name=PDF reader
 Exec=zathura -- %U
+Categories=Office;Viewer;

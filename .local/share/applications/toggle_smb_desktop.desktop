@@ -2,3 +2,4 @@
 Type=Application
 Name=Toggle SMB
 Exec=toggle_smb_desktop
+Categories=Utility;System;
