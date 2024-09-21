@@ -139,7 +139,8 @@ domain("yr.no") {
   }
 }
 
-@-moz-document domain("rapidtables.com"),
+@-moz-document domain("aws.amazon.com"),
+domain("rapidtables.com"),
 domain("scribbr.com"),
 domain("skillbuilder.aws") {
   @media (prefers-color-scheme: dark) {
