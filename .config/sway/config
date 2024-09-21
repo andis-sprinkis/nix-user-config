@@ -13,7 +13,7 @@ input type:pointer {
 }
 
 output * {
-  bg $background solid_color
+  bg $rootBackground solid_color
 }
 
 seat seat0 xcursor_theme default 42

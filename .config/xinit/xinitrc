@@ -55,7 +55,7 @@ fi
 
 # Setting the X11 root window background
 
-hsetroot -solid "$(xrdb -get background)" &
+hsetroot -solid "$(xrdb -get rootBackground)" &
 
 # Starting or reloading X11 display compositor
 
