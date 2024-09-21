@@ -35,4 +35,4 @@ for wsn in $wss_num; do
   pre_wsn="$wsn"
 done
 
-i3-msg -q "move container to workspace number $((wsn + 1)); workspace number $((wsn + 1))"
+exec $wm_cmd -q "move container to workspace number $((wsn + 1)); workspace number $((wsn + 1))"

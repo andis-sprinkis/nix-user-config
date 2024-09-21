@@ -1,18 +1,27 @@
 #!/usr/bin/env sh
 set -eu
 
-cmd_menu="${WAYLAND_DISPLAY:+"wmenu"}"
+wm="${WAYLAND_DISPLAY:+"sway"}"
+wm="${wm:-"i3"}"
 
-if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-  cmd_menu="dmenu"
-fi
+case "$wm" in
+  "sway")
+    wm_cmd="swaymsg"
+    cmd_menu="wmenu"
+  ;;
+  "i3")
+    wm_cmd="i3-msg"
+    cmd_menu="dmenu"
+  ;;
+  *)
+    exit "1"
+  ;;
+esac
 
-if [ -z "$cmd_menu" ]; then
-  exit "1"
-fi
-
-ws="$(i3-msg -t get_workspaces | jq '.[].name' -r | "$cmd_menu" -p "Move window to workspace:")"
+ws="$($wm_cmd -t get_workspaces | jq '.[].name' -r | "$cmd_menu" -p "Move window to workspace:")"
 
 if [ "$ws" ]; then
-  exec i3-msg -q "move container to workspace ${ws}; workspace ${ws}"
+  exec $wm_cmd -q "move container to workspace ${ws}; workspace ${ws}"
 fi
+
+exit "0"
