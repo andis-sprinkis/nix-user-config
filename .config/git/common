@@ -1,3 +1,5 @@
+; vi: ft=gitconfig
+
 ; In file ~/.config/git/config include:
 ;
 ; [include]
