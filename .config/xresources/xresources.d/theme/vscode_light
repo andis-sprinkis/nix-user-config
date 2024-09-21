@@ -1,3 +1,4 @@
+! vi: ft=xdefaults
 ! vscode light .Xresources
 
 *.foreground: #000000
