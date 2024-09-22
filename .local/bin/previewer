@@ -1,9 +1,12 @@
 #!/usr/bin/env sh
 set -eu
 
+lines="$(tput lines)"
+columns="$(tput cols)"
+
 fpath="$(readlink -f "$1")"
-w_chr="${2:-80}"
-h_chr="${3:-120}"
+w_chr="${2:-"$columns"}"
+h_chr="${3:-"$lines"}"
 FPATH_THUMB=""
 
 thumb_cache_create() {
