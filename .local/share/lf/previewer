@@ -7,7 +7,7 @@ h_chr="${3:-120}"
 FPATH_THUMB=""
 
 thumb_cache_create() {
-  dir_cache_thumb="${XDG_CACHE_HOME:-$HOME/.cache}/lf/thumbnails"
+  dir_cache_thumb="${XDG_CACHE_HOME:-$HOME/.cache}/previewer/thumbnails"
 
   if [ ! -d "$dir_cache_thumb" ]; then
     mkdir -p "$dir_cache_thumb"
@@ -90,4 +90,4 @@ case $mime in
   ;;
 esac
 
-exit "1"
+exit "0"
