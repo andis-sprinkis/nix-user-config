@@ -5,7 +5,7 @@ set mouse
 set numberfmt "\033[90m"
 set cursorparentfmt "\033[4m"
 set period 1
-set previewer ~/.local/share/lf/previewer
+set previewer previewer
 set promptfmt "\033[32;1m%u@%h\033[0m \033[34;1m%d\033[0m\033[1m%f\033[0m"
 set scrolloff 12
 set shellopts '-eu'
@@ -48,7 +48,7 @@ cmd open-with-menu-desktop ${{
 }}
 
 cmd to-previewer ${{
-  ${XDG_DATA_HOME:-$HOME/.local/share}/lf/previewer "$f" | $PAGER
+  previewer "$f" | $PAGER
 }}
 
 cmd aunpack !{{
