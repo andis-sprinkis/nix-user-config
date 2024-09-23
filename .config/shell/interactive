@@ -18,11 +18,7 @@ main() {
 
   # set Linux console colors
   if [ "$TERM" = "linux" ]; then
-    . "$GUI_ENV"
-
-    printf "\033]P0%s;P1%s;P2%s;P3%s;P4%s;P5%s;P6%s;P7%s;P8%s;P9%s;PA%s;PB%s;PC%s;PD%s;PE%s;PF%s" "${GUI_COLOR_0#\#}" "${GUI_COLOR_1#\#}" "${GUI_COLOR_2#\#}" "${GUI_COLOR_3#\#}" "${GUI_COLOR_4#\#}" "${GUI_COLOR_5#\#}" "${GUI_COLOR_6#\#}" "${GUI_COLOR_7#\#}" "${GUI_COLOR_8#\#}" "${GUI_COLOR_9#\#}" "${GUI_COLOR_10#\#}" "${GUI_COLOR_11#\#}" "${GUI_COLOR_12#\#}" "${GUI_COLOR_13#\#}" "${GUI_COLOR_14#\#}" "${GUI_COLOR_15#\#}"
-
-    clear
+    setvtrgb "${XDG_DATA_HOME:-$HOME/.local/share/vtrgb/colors/vscode_dark}"
   fi
 
   # use the GNU utils on macOS
