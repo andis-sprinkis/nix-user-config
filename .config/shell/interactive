@@ -16,10 +16,10 @@ main() {
     ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true" exec tmux
   fi
 
-  # set Linux console colors
-  if [ "$TERM" = "linux" ]; then
-    setvtrgb "${XDG_DATA_HOME:-$HOME/.local/share}/vtrgb/colors/vscode_dark"
-  fi
+  # # set Linux console colors
+  # if [ "$TERM" = "linux" ]; then
+  #   setvtrgb -C "$(tty)" "${XDG_DATA_HOME:-$HOME/.local/share}/vtrgb/colors/vscode_dark"
+  # fi
 
   # use the GNU utils on macOS
   if [ "$HAS_BREW_GNUBIN" ]; then
