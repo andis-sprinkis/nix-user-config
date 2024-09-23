@@ -19,22 +19,9 @@ main() {
   # set Linux console colors
   if [ "$TERM" = "linux" ]; then
     . "$GUI_ENV"
-    printf "\033]P0%s" "${GUI_COLOR_0#\#}"
-    printf "\033]P1%s" "${GUI_COLOR_1#\#}"
-    printf "\033]P2%s" "${GUI_COLOR_2#\#}"
-    printf "\033]P3%s" "${GUI_COLOR_3#\#}"
-    printf "\033]P4%s" "${GUI_COLOR_4#\#}"
-    printf "\033]P5%s" "${GUI_COLOR_5#\#}"
-    printf "\033]P6%s" "${GUI_COLOR_6#\#}"
-    printf "\033]P7%s" "${GUI_COLOR_7#\#}"
-    printf "\033]P8%s" "${GUI_COLOR_8#\#}"
-    printf "\033]P9%s" "${GUI_COLOR_9#\#}"
-    printf "\033]PA%s" "${GUI_COLOR_10#\#}"
-    printf "\033]PB%s" "${GUI_COLOR_11#\#}"
-    printf "\033]PC%s" "${GUI_COLOR_12#\#}"
-    printf "\033]PD%s" "${GUI_COLOR_13#\#}"
-    printf "\033]PE%s" "${GUI_COLOR_14#\#}"
-    printf "\033]PF%s" "${GUI_COLOR_15#\#}"
+
+    printf "\033]P0%s;P1%s;P2%s;P3%s;P4%s;P5%s;P6%s;P7%s;P8%s;P9%s;PA%s;PB%s;PC%s;PD%s;PE%s;PF%s" "${GUI_COLOR_0#\#}" "${GUI_COLOR_1#\#}" "${GUI_COLOR_2#\#}" "${GUI_COLOR_3#\#}" "${GUI_COLOR_4#\#}" "${GUI_COLOR_5#\#}" "${GUI_COLOR_6#\#}" "${GUI_COLOR_7#\#}" "${GUI_COLOR_8#\#}" "${GUI_COLOR_9#\#}" "${GUI_COLOR_10#\#}" "${GUI_COLOR_11#\#}" "${GUI_COLOR_12#\#}" "${GUI_COLOR_13#\#}" "${GUI_COLOR_14#\#}" "${GUI_COLOR_15#\#}"
+
     clear
   fi
 
