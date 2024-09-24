@@ -1,6 +1,10 @@
 @-moz-document url(chrome://browser/content/browser.xul),
 url(chrome://browser/content/browser.xhtml)
 {
+  #tabbrowser-tabs {
+    --tab-min-width: 200px !important;
+  }
+
   #tabbrowser-tabs :not(:hover) .tabbrowser-tab .tab-close-button {
     display: none !important;
   }
