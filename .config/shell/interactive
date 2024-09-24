@@ -16,28 +16,6 @@ main() {
     ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true" exec tmux
   fi
 
-  # set Linux console colors
-  if [ "$TERM" = "linux" ]; then
-    . "$GUI_ENV"
-
-    printf "\033]P0%s" "${GUI_COLOR_0#\#}"
-    printf "\033]P1%s" "${GUI_COLOR_1#\#}"
-    printf "\033]P2%s" "${GUI_COLOR_2#\#}"
-    printf "\033]P3%s" "${GUI_COLOR_3#\#}"
-    printf "\033]P4%s" "${GUI_COLOR_4#\#}"
-    printf "\033]P5%s" "${GUI_COLOR_5#\#}"
-    printf "\033]P6%s" "${GUI_COLOR_6#\#}"
-    printf "\033]P7%s" "${GUI_COLOR_7#\#}"
-    printf "\033]P8%s" "${GUI_COLOR_8#\#}"
-    printf "\033]P9%s" "${GUI_COLOR_9#\#}"
-    printf "\033]PA%s" "${GUI_COLOR_A#\#}"
-    printf "\033]PB%s" "${GUI_COLOR_B#\#}"
-    printf "\033]PC%s" "${GUI_COLOR_C#\#}"
-    printf "\033]PD%s" "${GUI_COLOR_D#\#}"
-    printf "\033]PE%s" "${GUI_COLOR_E#\#}"
-    printf "\033]PF%s" "${GUI_COLOR_F#\#}"
-  fi
-
   # use the GNU utils on macOS
   if [ "$HAS_BREW_GNUBIN" ]; then
     PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
