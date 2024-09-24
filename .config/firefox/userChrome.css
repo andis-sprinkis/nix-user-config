@@ -9,6 +9,10 @@
   }
 
   #tabbrowser-tabs .tabbrowser-tab:not([pinned="true"]) {
-    max-width: 320px !important;
+    max-width: 304px !important;
+  }
+
+  #tabbrowser-tabs #tabbrowser-arrowscrollbox-periphery {
+    margin-left: auto !important;
   }
 }
