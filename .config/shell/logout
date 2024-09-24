@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+if [ "$TERM" = "linux" ]; then
+  reset
+fi
+
+echo "test"
+
+sleep 1
