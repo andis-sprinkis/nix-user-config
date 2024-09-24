@@ -1,9 +1,14 @@
-@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+@-moz-document url(chrome://browser/content/browser.xul),
+               url(chrome://browser/content/browser.xhtml) {
+  #tabbrowser-tabs :not(:hover) .tabbrowser-tab .tab-close-button {
+    display: none !important;
+  }
 
-#tabbrowser-tabs :not(:hover) .tabbrowser-tab .tab-close-button {
-  display: none !important;
-}
+  #tabbrowser-tabs .tabbrowser-tab[label="New Tab"] .tab-content .tab-icon-stack {
+    display: none !important;
+  }
 
-#tabbrowser-tabs .tabbrowser-tab[label="New Tab"] .tab-content .tab-icon-stack {
-  display: none !important;
+  button.personalize-button {
+    display: none !important;
+  }
 }
