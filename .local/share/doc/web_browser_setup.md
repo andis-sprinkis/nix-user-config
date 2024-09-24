@@ -7,6 +7,10 @@
 ```sh
 cd "$HOME/.mozilla/firefox/PROFILE_ID.default-release"
 ln -s "../../../.config/firefox/user.js" "user.js"
+
+mkdir "chrome"
+cd "chrome"
+ln -s "../../../../.config/firefox/userChrome.css" "userChrome.css"
 ```
 
 ## Addons
