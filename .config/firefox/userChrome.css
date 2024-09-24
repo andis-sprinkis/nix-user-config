@@ -3,3 +3,7 @@
 #tabbrowser-tabs .tabbrowser-tab .tab-close-button {
   display: none !important;
 }
+
+#tabbrowser-tabs .tabbrowser-tab[label="New Tab"] .tab-content .tab-icon-stack {
+  display: none !important;
+}
