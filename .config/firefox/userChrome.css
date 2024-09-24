@@ -4,11 +4,11 @@
     display: none !important;
   }
 
-  #tabbrowser-tabs .tabbrowser-tab[label="New Tab"] .tab-content .tab-icon-stack {
+  #tabbrowser-tabs .tabbrowser-tab:not([pinned="true"])[label="New Tab"] .tab-content .tab-icon-stack {
     display: none !important;
   }
 
-  button.personalize-button {
-    display: none !important;
+  #tabbrowser-tabs .tabbrowser-tab:not([pinned="true"]) {
+    max-width: 320px !important;
   }
 }
