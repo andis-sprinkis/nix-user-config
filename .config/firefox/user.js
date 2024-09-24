@@ -88,7 +88,7 @@ user_pref("geo.provider.use_gpsd", false);
 user_pref("identity.fxaccounts.enabled", false);
 user_pref("intl.accept_languages", "en-US, en");
 user_pref("javascript.use_us_english_locale", true);
-user_pref("layout.testing.overlay-scrollbars.always-visible", true)
+user_pref("layout.testing.overlay-scrollbars.always-visible", true);
 user_pref("media.autoplay.default", 5);
 user_pref("media.videocontrols.picture-in-picture.improved-video-controls.enabled", true);
 user_pref("media.videocontrols.picture-in-picture.respect-disablePictureInPicture", false);
