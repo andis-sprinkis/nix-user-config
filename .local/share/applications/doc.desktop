@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
 Name=Document editor
-Exec=libreoffice %U
+Exec=libreoffice %f
 Categories=Office;

@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
 Name=BitTorrent client
-Exec=qbittorrent %U
+Exec=qbittorrent %f
 Categories=Network;FileTransfer;P2P;

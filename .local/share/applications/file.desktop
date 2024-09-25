@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
 Name=File manager
-Exec=file_manager_desktop %u
+Exec=file_manager_desktop %f
 Categories=System;FileTools;FileManager
