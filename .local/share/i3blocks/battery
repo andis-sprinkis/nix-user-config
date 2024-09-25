@@ -11,7 +11,7 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
       cmd="echo -n \"\033]0;Battery information\007\"; acpi -i | ${PAGER}"
       $TERMINAL -e "$SHELL" -c "$cmd" 1> "/dev/null/" 2> "/dev/null/" & disown
     ;;
-    "4") 
+    "4")
       brightnessctl -q set "+2%" 1> "/dev/null/" 2> "/dev/null/" & disown
     ;;
     "5")
