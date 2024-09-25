@@ -9,5 +9,5 @@
 PS1='[\u@\h \W]\$ '
 
 # storing history in history file
-HISTFILESIZE="500"
-HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/bash/history"
+export HISTFILESIZE="500"
+export HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/bash/history"
