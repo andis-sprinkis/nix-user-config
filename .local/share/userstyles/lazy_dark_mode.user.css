@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.111.0
+@version      0.112.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
@@ -37,6 +37,7 @@ domain("dhl.com"),
 domain("dictionary.com"),
 domain("digitalocean.com"),
 domain("dpdgroup.com"),
+domain("developers.google.com"),
 domain("drive.google.com"),
 domain("ebay.com"),
 domain("eds.vid.gov.lv"),
