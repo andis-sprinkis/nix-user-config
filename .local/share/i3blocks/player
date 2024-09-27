@@ -1,9 +1,7 @@
 #!/usr/bin/env sh
 set -eu
 
-message=""
-
-case "$(playerctl status)" in
+case "$(set +e; playerctl status 2> "/dev/null"; set -e)" in
   "Playing")
     if [ "${BLOCK_BUTTON:-""}" ]; then
       case "$BLOCK_BUTTON" in

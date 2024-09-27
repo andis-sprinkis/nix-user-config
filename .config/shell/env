@@ -71,7 +71,7 @@ main() {
   . "$GUI_ENV"
 
   export FZF_DEFAULT_OPTS=\
-"--color=fg:${GUI_COLOR_FOREGROUND:-""},fg+:${GUI_COLOR_FOREGROUND:-""},bg:${GUI_COLOR_BACKGROUND:-""},bg+:${GUI_COLOR_BACKGROUND:-""},hl:${GUI_COLOR_A:-""},hl+:${GUI_COLOR_D:-""},info:${GUI_COLOR_D:-""},marker:${GUI_COLOR_D:-""},prompt:${GUI_COLOR_D:-""},spinner:${GUI_COLOR_D:-""},pointer:${GUI_COLOR_D:-""},header:${GUI_COLOR_A:-""},border:${GUI_COLOR_8:-""},label:${GUI_COLOR_D:-""},query:${GUI_COLOR_FOREGROUND:-""}"
+"--color=fg:${GUI_COLOR_FOREGROUND:-""},fg+:${GUI_COLOR_FOREGROUND:-""},bg:${GUI_COLOR_BACKGROUND:-""},bg+:${GUI_COLOR_BACKGROUND:-""},hl:${GUI_COLOR_A:-""},hl+:${GUI_COLOR_D:-""},info:${GUI_COLOR_D:-""},marker:${GUI_COLOR_D:-""},prompt:${GUI_COLOR_D:-""},spinner:${GUI_COLOR_D:-""},pointer:${GUI_COLOR_D:-""},header:${GUI_COLOR_A:-""},border:${GUI_COLOR_8:-""},label:${GUI_COLOR_D:-""},query:${GUI_COLOR_FOREGROUND:-""} "
 
   # configure makepkg
   if is_exec "nproc"; then
