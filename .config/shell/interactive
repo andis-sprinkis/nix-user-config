@@ -46,10 +46,7 @@ main() {
 
   # configure fzf
   if is_exec "fzf"; then
-    . "$GUI_ENV"
-
-    export FZF_DEFAULT_OPTS=\
-"--tabstop=2 --cycle --layout=reverse --color=fg:${GUI_COLOR_FOREGROUND:-""},fg+:${GUI_COLOR_FOREGROUND:-""},bg:${GUI_COLOR_BACKGROUND:-""},bg+:${GUI_COLOR_BACKGROUND:-""},hl:${GUI_COLOR_A:-""},hl+:${GUI_COLOR_D:-""},info:${GUI_COLOR_D:-""},marker:${GUI_COLOR_D:-""},prompt:${GUI_COLOR_D:-""},spinner:${GUI_COLOR_D:-""},pointer:${GUI_COLOR_D:-""},header:${GUI_COLOR_A:-""},border:${GUI_COLOR_8:-""},label:${GUI_COLOR_D:-""},query:${GUI_COLOR_FOREGROUND:-""}${is_exec_bat:+" --preview 'bat --color=always {}'"}"
+    export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-""}--tabstop=2 --cycle --layout=reverse${is_exec_bat:+" --preview 'bat --color=always {}'"}"
   fi
 
   # file name colors
