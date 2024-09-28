@@ -12,14 +12,37 @@
   set_window_title() { echo -n "\033]0;${PWD}\007" }
 
   # fn: cursor shape for different vi modes
-  echo_cur_beam() { echo -ne "\033[5 q" }
-  echo_cur_block() { echo -ne "\033[1 q" }
+  echo_cur_beam() {
+    case "$TERM" in
+      "linux") 
+        printf "\x1b\x5b?2\x63"
+      ;;
+      *)
+        echo -ne "\033[5 q"
+      ;;
+    esac
+  }
+
+  echo_cur_block() {
+    case "$TERM" in
+      "linux") 
+        printf "\x1b\x5b?6;$((8+4+2+1));$((37+0+8+4+2+1))\x63"
+      ;;
+      *)
+        echo -ne "\033[1 q"
+      ;;
+    esac
+  }
 
   # fn: zle widgets
   zle-keymap-select() {
     case "$KEYMAP" in
-      "vicmd") echo_cur_block;;
-      "viins"|"main") echo_cur_beam;;
+      "vicmd")
+        echo_cur_block
+      ;;
+      "viins"|"main")
+        echo_cur_beam
+      ;;
     esac
   }
 
@@ -37,8 +60,6 @@
 
   # fn: preexec
   preexec() {
-    echo_cur_beam
-
     # increase inactivity timeout
     if [ "${TMOUT:-""}" != "0" ]; then
       TMOUT="5400"
