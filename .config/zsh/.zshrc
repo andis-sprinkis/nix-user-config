@@ -37,7 +37,7 @@
 
   # fn: preexec
   preexec() {
-    echo_cur_beam 
+    echo_cur_beam
 
     # increase inactivity timeout
     if [ "${TMOUT:-""}" != "0" ]; then
