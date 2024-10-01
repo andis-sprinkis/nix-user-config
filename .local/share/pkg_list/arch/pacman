@@ -122,6 +122,7 @@ qrencode
 r
 reflector
 ripgrep
+rmlint
 rsync
 rust
 samba
