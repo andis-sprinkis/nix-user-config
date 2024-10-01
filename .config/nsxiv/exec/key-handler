@@ -6,6 +6,14 @@ case "$1" in
   "f")
     while read file; do file_manager_desktop "$file" & done
   ;;
+  "r")
+    while read file; do nsxiv-rifle "$file" & done
+  ;;
+  "o")
+    files="$(while read file; do echo "${files:+
+}$file"; done)"
+    open_with_menu_desktop "$files"
+  ;;
   "Y")
     files="$(while read file; do echo "${files:+
 }$file"; done)"
@@ -34,11 +42,6 @@ case "$1" in
     }
 
     exit "1"
-  ;;
-  "o")
-    files="$(while read file; do echo "${files:+
-}$file"; done)"
-    open_with_menu_desktop "$files"
   ;;
   "h")
     $TERMINAL -e "$SHELL" -c "$PAGER ${XDG_CONFIG_HOME:-$HOME/.config}/nsxiv/exec/key-handler" 1> "/dev/null" 2> "/dev/null" & disown
