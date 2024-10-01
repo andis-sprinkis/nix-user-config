@@ -34,7 +34,7 @@ case "$1" in
   ;;
   "y")
     [ "$WAYLAND_DISPLAY" ] && [ "$(command -v "wl-copy")" ] && {
-      while read file; do "wl-copy" < "$file" ; done
+      while read file; do "wl-copy" < "$file"; done
       exit
     }
 
