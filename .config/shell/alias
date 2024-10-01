@@ -35,6 +35,7 @@ alias \
   dgs="dotgit status" \
   dgt="dotgit checkout" \
   dirsize="du -sch *" \
+  dup="rmlint" \
   e="\$EDITOR" \
   fsize="du -ah" \
   git="git -c color.ui=always" \
