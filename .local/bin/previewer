@@ -86,7 +86,10 @@ case $mime in
   inode/directory)
     ls -la "$fpath"
   ;;
-  application/octet-stream|application/x-bittorrent)
+  application/octet-stream)
+    hexdump --color=always --canonical --length "134217728" "$fpath"
+  ;;
+  application/x-bittorrent)
   ;;
   *)
     bat --color=always --style=plain -- "$fpath"
