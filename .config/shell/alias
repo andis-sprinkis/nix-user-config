@@ -52,7 +52,7 @@ alias \
   gs="git status" \
   gt="git checkout" \
   h="tldr" \
-  hexdump="hexdump --color=always" \
+  hexdump="hexdump --color=always --canonical" \
   inxi="inxi -c7 -F" \
   ip="ip --color=auto" \
   mime="file --mime-type --brief" \
