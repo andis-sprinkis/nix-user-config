@@ -65,6 +65,7 @@ user_pref("browser.urlbar.quicksuggest.enabled", false);
 user_pref("browser.urlbar.speculativeConnect.enabled", false);
 user_pref("browser.urlbar.suggest.calculator", false);
 user_pref("browser.urlbar.suggest.engines", false);
+user_pref("browser.urlbar.suggest.recentsearches", false);
 user_pref("browser.urlbar.suggest.searches", false);
 user_pref("browser.urlbar.suggest.topsites", false);
 user_pref("browser.urlbar.trending.featureGate", false);
