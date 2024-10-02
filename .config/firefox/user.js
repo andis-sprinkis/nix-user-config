@@ -51,6 +51,7 @@ user_pref("browser.tabs.firefox-view-next", false);
 user_pref("browser.tabs.hoverPreview.enabled", true);
 user_pref("browser.tabs.hoverPreview.showThumbnails", true);
 user_pref("browser.tabs.insertAfterCurrent", true);
+user_pref("browser.tabs.loadBookmarksInBackground", true);
 user_pref("browser.tabs.loadBookmarksInTabs", true);
 user_pref("browser.tabs.searchclipboardfor.middleclick", false);
 user_pref("browser.translations.enable", false);
