@@ -5,7 +5,7 @@ if [ -z "$1" ]; then
 fi
 
 case "$1" in
-  "f")
+  "e")
     while read file; do file_manager_desktop "$file" & done
   ;;
   "r")
