@@ -1,15 +1,18 @@
 #!/usr/bin/env sh
 set -eu
 
+# TODO: process each column sepeartely
+
 table_columns="Mount,Use %,Use,Free,Size,Device"
 col_right="1,2,3,4,5"
 df_output="target,pcent,used,avail,size,source"
 
-df -h --output="$df_output" \
+LC_ALL=C df -h --output="$df_output" \
+  | column -t -o";" | sed -e 's/\s*\;/\;/g' \
   | tail -n "+2" \
   | sort \
+  | column -t -s";" -o"  " -N"${table_columns}" -R"${col_right}" \
   | sed \
     -e "s/\([67][0-9]\%\)/\\x1b[0;33m\1\\x1b[0m/g" \
     -e "s/\([89][0-9]\%\)/\\x1b[0;31;1m\1\\x1b[0m/g" \
     -e "s/\(100\%\)/\\x1b[0;31;1m\1\\x1b[0m/g" \
-  | column -t -N"${table_columns}" -R"${col_right}"
