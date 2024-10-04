@@ -1,5 +1,4 @@
-@-moz-document url(chrome://browser/content/browser.xul),
-url(chrome://browser/content/browser.xhtml){
+@-moz-document url(chrome://browser/content/browser.xul), url(chrome://browser/content/browser.xhtml){
 #tabbrowser-tabs {
   --tab-min-width: 200px !important;
 }
