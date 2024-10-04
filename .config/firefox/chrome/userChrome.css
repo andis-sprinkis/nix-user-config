@@ -1,29 +1,31 @@
 @-moz-document url(chrome://browser/content/browser.xul),
-url(chrome://browser/content/browser.xhtml)
-{
-  #tabbrowser-tabs {
-    --tab-min-width: 200px !important;
-  }
+url(chrome://browser/content/browser.xhtml){
+#tabbrowser-tabs {
+  --tab-min-width: 200px !important;
+}
 
-  #tabbrowser-tabs .tabbrowser-tab:not(:focus-within, :hover) .tab-close-button {
-    display: none !important;
-  }
+#tabbrowser-tabs .tabbrowser-tab:not(:focus-within, :hover) .tab-close-button {
+  display: none !important;
+}
 
-  #tabbrowser-tabs .tabbrowser-tab:not([pinned="true"])[label="New Tab"] .tab-content .tab-icon-stack {
-    display: none !important;
-  }
+#tabbrowser-tabs .tabbrowser-tab:not([pinned="true"])[label="New Tab"] .tab-content .tab-icon-stack {
+  display: none !important;
+}
 
-  #tabbrowser-tabs .tabbrowser-tab:not([pinned="true"]) {
-    max-width: 312px !important;
-  }
+#tabbrowser-tabs .tabbrowser-tab:not([pinned="true"]) {
+  max-width: 312px !important;
+}
 
-  #tabbrowser-tabs #tabbrowser-arrowscrollbox-periphery {
-    margin-left: auto !important;
-  }
+#tabbrowser-tabs #tabbrowser-arrowscrollbox-periphery {
+  margin-left: auto !important;
+}
 
-  #tabbrowser-tabs[haspinnedtabs]:not([positionpinnedtabs])
-    > #tabbrowser-arrowscrollbox
-    > .tabbrowser-tab:nth-child(1 of :not([pinned], [hidden])) {
-    margin-inline-start: 5px !important;
-  }
+#scrollbutton-up[disabled="true"],
+#scrollbutton-down[disabled="true"] {
+  display: none !important;
+}
+
+#tabbrowser-tabs[haspinnedtabs]:not([positionpinnedtabs])>#tabbrowser-arrowscrollbox>.tabbrowser-tab:nth-child(1 of :not([pinned], [hidden])) {
+  margin-inline-start: 5px !important;
+}
 }
