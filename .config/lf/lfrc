@@ -74,6 +74,10 @@ cmd mkdir %{{
   lf -remote "send ${id} select \"${*}\""
 }}
 
+cmd vidir ${{
+  vidir "$PWD"
+}}
+
 cmd copy-path ${{
   if [ "${WAYLAND_DISPLAY:-""}" ] && [ "$(command -v "wl-copy")" ]; then 
     printf '%s' "$fx" | wl-copy
