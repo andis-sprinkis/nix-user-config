@@ -116,7 +116,7 @@ user_pref("privacy.globalprivacycontrol.enabled", true);
 user_pref("privacy.globalprivacycontrol.functionality.enabled", true);
 user_pref("privacy.globalprivacycontrol.was_ever_enabled", true);
 user_pref("privacy.sanitize.timeSpan", 0);
-user_pref("privacy.spoof_english", 1);
+user_pref("privacy.spoof_english", 2);
 user_pref("reader.parse-on-load.enabled", false);
 user_pref("security.certerrors.recordEventTelemetry", false);
 user_pref("signon.autofillForms", false);
