@@ -79,9 +79,9 @@ Steps for adding any newly listed packages from the user package lists to an alr
             ```
         - Sync with the package lists.
             ```sh
-            brew tap $(echo $(< "./brew_tap"))
-            brew install $(echo $(< "./brew"))
-            brew install --cask $(echo $(< "./brew_cask"))
+            brew tap $(echo $(cat "./brew_tap"))
+            brew install $(echo $(cat "./brew"))
+            brew install --cask $(echo $(cat "./brew_cask"))
             ```
 
     - PyPI:
