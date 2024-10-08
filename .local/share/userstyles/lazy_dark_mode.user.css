@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.122.0
+@version      0.123.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
@@ -88,8 +88,10 @@ domain("metacpan.org"),
 domain("nasm.us"),
 domain("noyaml.com"),
 domain("ollama.com"),
+domain("omniva.lv"),
 domain("openjdk.org"),
 domain("opensource.com"),
+domain("pasts.lv"),
 domain("pcre.org"),
 domain("perl.org"),
 domain("pgpkeys.eu"),
