@@ -134,6 +134,7 @@ map <enter> to-previewer
 map P push :paste-to-file<space>
 map R delete
 map X aunpack
+map V vidir
 map Y copy-path
 map ` !true
 map b :mark-load
