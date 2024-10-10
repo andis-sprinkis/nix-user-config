@@ -536,6 +536,7 @@ LVM on LUKS.
          Identifier "DisplayPort-1"
          Option "Rotate" "right"
          Option "RightOf" "DisplayPort-0"
+         Option "Primary" "true"
     EndSection
 
     Section "Monitor"
