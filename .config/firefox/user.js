@@ -16,6 +16,7 @@ user_pref("browser.fixup.alternate.enabled", false);
 user_pref("browser.formfill.enable", false);
 user_pref("browser.fullscreen.autohide", true);
 user_pref("browser.messaging-system.whatsNewPanel.enabled", false);
+user_pref("browser.ml.chat.enabled", false);
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);
 user_pref("browser.newtabpage.activity-stream.default.sites", "");
