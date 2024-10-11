@@ -19,10 +19,10 @@
   margin-left: auto !important;
 }
 
-#scrollbutton-up[disabled="true"],
-#scrollbutton-down[disabled="true"] {
-  display: none !important;
-}
+/* #scrollbutton-up[disabled="true"], */
+/* #scrollbutton-down[disabled="true"] { */
+/*   display: none !important; */
+/* } */
 
 #tabbrowser-tabs[haspinnedtabs]:not([positionpinnedtabs])>#tabbrowser-arrowscrollbox>.tabbrowser-tab:nth-child(1 of :not([pinned], [hidden])) {
   margin-inline-start: 5px !important;
