@@ -31,7 +31,7 @@
   }
 
   #tabbrowser-tabs .tabbrowser-tab:not([pinned="true"]) {
-    max-width: 312px !important;
+    max-width: 304px !important;
   }
 
   #tabbrowser-tabs #tabbrowser-arrowscrollbox-periphery {
