@@ -1,5 +1,11 @@
 @-moz-document url(chrome://browser/content/browser.xul), url(chrome://browser/content/browser.xhtml)
 {
+  :root {
+    &[uidensity="compact"] {
+      --toolbarbutton-outer-padding: 1px !important;
+    }
+  }
+
   #tabbrowser-tabs {
     --tab-min-width: 200px !important;
   }
@@ -30,4 +36,3 @@
     height: 2.5em !important;
   }
 }
-
