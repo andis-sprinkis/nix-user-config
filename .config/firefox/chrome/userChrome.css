@@ -1,8 +1,20 @@
 @-moz-document url(chrome://browser/content/browser.xul), url(chrome://browser/content/browser.xhtml)
 {
   :root {
-    &[uidensity="compact"] {
-      --toolbarbutton-outer-padding: 1px !important;
+    --toolbarbutton-outer-padding: 2px !important;
+  }
+
+  #urlbar-container {
+    --urlbar-container-height: 30px !important;
+  }
+
+  #PanelUI-menu-button {
+    padding-inline-end: 5px !important;
+  }
+
+  #nav-bar-customization-target {
+    & > :is(toolbarbutton, toolbaritem):first-child {
+      padding-inline-start: 5px !important;
     }
   }
 
