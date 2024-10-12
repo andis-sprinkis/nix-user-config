@@ -77,6 +77,8 @@ user_pref("browser.vpn_promo.enabled", false);
 user_pref("clipboard.autocopy", false);
 user_pref("datareporting.healthreport.uploadEnabled", false);
 user_pref("datareporting.policy.dataSubmissionEnabled", false);
+user_pref("devtools.chrome.enabled", true);
+user_pref("devtools.debugger.remote-enabled", true);
 user_pref("dom.private-attribution.submission.enabled", false);
 user_pref("dom.security.https_only_mode", true);
 user_pref("extensions.experiments.enabled", false);
