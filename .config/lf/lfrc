@@ -79,7 +79,7 @@ cmd vidir ${{
 }}
 
 cmd copy-path ${{
-  if [ "${WAYLAND_DISPLAY:-""}" ] && [ "$(command -v "wl-copy")" ]; then 
+  if [ "${WAYLAND_DISPLAY:-""}" ] && [ "$(command -v "wl-copy")" ]; then
     printf '%s' "$fx" | wl-copy
     exit
   fi
@@ -89,7 +89,7 @@ cmd copy-path ${{
     exit
   fi
 
-  if [ "$(command -v "pbcopy")" ]; then 
+  if [ "$(command -v "pbcopy")" ]; then
     printf '%s' "$fx" | pbcopy;
     exit
   fi
