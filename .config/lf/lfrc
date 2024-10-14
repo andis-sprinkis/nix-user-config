@@ -25,7 +25,7 @@ cmd open ${{
       exec $PAGER $fx
     ;;
     text/*|application/xml|application/*json*|application/xhtml*|application/javascript|application/x-httpd-php|application/x-wine-extension-ini|application/x-subrip|application/x-awk|inode/x-empty)
-      exec $PAGER $fx 
+      exec $PAGER $fx
     ;;
   esac
 
