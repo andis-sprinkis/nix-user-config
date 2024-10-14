@@ -32,6 +32,7 @@ Xft.lcdfilter: lcddefault
 
 xterm*faceName: font_family_term
 xterm*faceSize: font_size
+xterm*cursorBlink: never
 
 Xcursor.size: 42
 
