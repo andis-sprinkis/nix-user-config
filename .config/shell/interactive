@@ -27,6 +27,9 @@ main() {
     cd "$(command lf -print-last-dir "$@")" || return
   }
 
+  # history file path
+  export HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/shell/history"
+
   # storing history in memory
   HISTSIZE="1000000"
 

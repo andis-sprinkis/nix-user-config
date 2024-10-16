@@ -145,11 +145,7 @@ main() {
   # configure shell
   export HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/shell/history"
 
-  # configure bash
-  export HISTFILESIZE="500"
-
   # configure zsh
-  export SAVEHIST="500"
   export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 }
 

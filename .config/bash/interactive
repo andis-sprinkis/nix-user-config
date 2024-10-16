@@ -7,3 +7,6 @@
 . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/interactive"
 
 PS1='[\u@\h \W]\$ '
+
+# history file length in lines
+export HISTFILESIZE="500"

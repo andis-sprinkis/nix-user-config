@@ -66,6 +66,9 @@
     fi
   }
 
+  # history file length in lines
+  export SAVEHIST="500"
+
   # set window title
   set_window_title
 
