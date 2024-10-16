@@ -5,7 +5,8 @@ tmp="$(mktemp --suffix="_tmux_pane_copy")"
 
 [ "$tmp" ] || exit "1"
 
-echo "# vi: nowrap ft=$(tmux capture-pane -pS -)" > "$tmp"
+echo "# vi: nowrap ft=
+$(tmux capture-pane -pS -)" > "$tmp"
 
 arg=""
 case "$EDITOR" in
