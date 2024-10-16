@@ -1,31 +1,31 @@
 # vi: ft=dosini
 
-message-padding=6px
-button-padding=8px
-button-gap=16px
-button-margin-right=0px
-border-bottom-size=1px
-button-border-size=0px
-button-dismiss-gap=48px
+# message-padding=6px
+# button-padding=8px
+# button-gap=16px
+# button-margin-right=0px
+# border-bottom-size=1px
+# button-border-size=0px
+# button-dismiss-gap=48px
 
 # vscode dark swaynag colorscheme
-[warning]
-background=#1f1f1f
-border-bottom=#dcdcaa
-border=#dcdcaa
-button-background=#dcdcaa
-button-text=#1f1f1f
-details-background=#1f1f1f
-text=#d4d4d4
+# [warning]
+# background=#1f1f1f
+# border-bottom=#dcdcaa
+# border=#dcdcaa
+# button-background=#dcdcaa
+# button-text=#1f1f1f
+# details-background=#1f1f1f
+# text=#d4d4d4
 
-[error]
-background=#1f1f1f
-border-bottom=#f44747
-border=#f44747
-button-background=#f44747
-button-text=#1f1f1f
-details-background=#1f1f1f
-text=#d4d4d4
+# [error]
+# background=#1f1f1f
+# border-bottom=#f44747
+# border=#f44747
+# button-background=#f44747
+# button-text=#1f1f1f
+# details-background=#1f1f1f
+# text=#d4d4d4
 
 # TODO: vscode light swaynag colorscheme
 # [warning]
