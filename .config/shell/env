@@ -142,9 +142,6 @@ main() {
   export HOMEBREW_NO_ANALYTICS="1"
   export HOMEBREW_NO_EMOJI="1"
 
-  # configure shell
-  export HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/shell/history"
-
   # configure zsh
   export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 }
