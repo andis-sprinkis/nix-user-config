@@ -7,7 +7,3 @@
 . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/interactive"
 
 PS1='[\u@\h \W]\$ '
-
-# storing history in history file
-export HISTFILESIZE="500"
-export HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/bash/history"
