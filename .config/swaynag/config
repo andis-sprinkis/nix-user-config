@@ -1,0 +1,39 @@
+# vi: ft=dosini
+
+# vscode dark swaynag colorscheme
+[warning]
+# background=
+# border=
+# border-bottom=
+# button-background=
+# text=
+# button-text=
+# details-background=
+
+[error]
+# background=
+# border=
+# border-bottom=
+# button-background=
+# text=
+# button-text=
+# details-background=
+
+# vscode light swaynag colorscheme
+# [warning]
+# background=
+# border=
+# border-bottom=
+# button-background=
+# text=
+# button-text=
+# details-background=
+
+# [error]
+# background=
+# border=
+# border-bottom=
+# button-background=
+# text=
+# button-text=
+# details-background=
