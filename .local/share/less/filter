@@ -2,7 +2,7 @@
 
 # TODO: rewrite in POSIX sh
 
-mime="$(file --mime-type "$(readlink -f "$1")" -b)"
+mime="$(file --mime-type --brief "$(readlink -f "$1")")"
 
 case $mime in
   application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
