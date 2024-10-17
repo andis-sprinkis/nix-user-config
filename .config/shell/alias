@@ -62,9 +62,9 @@ alias \
   mkdir="mkdir -pv" \
   mount="sudo mount" \
   mv="mv -v" \
-  myip="curl https://ipinfo.io/" \
+  myip="curl --silent \"https://ipinfo.io/\" | jq" \
   n="\$EDITOR \$HOME/note/" \
-  ncdu="ncdu -x" \
+  ncdu="ncdu --color dark -x" \
   p="python3 -q" \
   py="python3 -q" \
   python="python3 -q" \
