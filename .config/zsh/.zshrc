@@ -117,7 +117,7 @@
     local userhost="%{$bg[$role_params[1]] $fg[black]%}%n@%M %{$reset_color%}"
 
     local ssh_status="$(
-      if [ "${SSH_CLIENT:-""}" ] || [ "${SSH_TTY:-""}" ]; then 
+      if [ "${SSH_CONNECTION:-""}" ] || [ "${SSH_CLIENT:-""}" ] || [ "${SSH_TTY:-""}" ]; then
         echo "%{$bg[blue]$fg[black]%} SSH %{$reset_color%}";
       fi
     )"
