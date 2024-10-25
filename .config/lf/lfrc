@@ -120,7 +120,6 @@ cmd follow-symlink %{{
   lf -remote "send ${id} select '$(readlink "$f")'"
 }}
 
-
 cmd follow-search ${{
   fpath="$(fzf)"
 
