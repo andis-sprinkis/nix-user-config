@@ -44,7 +44,10 @@ main() {
   fi
 
   # set locale
-  [ -f "/etc/profile.d/locale.sh" ] && { unset LANG; . "/etc/profile.d/locale.sh"; }
+  if [ -f "/etc/profile.d/locale.sh" ]; then
+    unset LANG
+    . "/etc/profile.d/locale.sh"
+  fi
 
   # set PAGER
   export PAGER="less"
