@@ -82,6 +82,7 @@ user_pref("devtools.debugger.remote-enabled", true);
 user_pref("dom.private-attribution.submission.enabled", false);
 user_pref("dom.security.https_only_mode", true);
 user_pref("extensions.experiments.enabled", false);
+user_pref("extensions.formautofill.creditCards.available", false);
 user_pref("extensions.getAddons.showPane", false);
 user_pref("extensions.htmlaboutaddons.discover.enabled", false);
 user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
