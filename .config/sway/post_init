@@ -30,7 +30,7 @@ VBoxClient-all &
 
 # Polkit authentication agent
 
-if [ "$(pidof "polkit-gnome-authentication-agent-1")" ]; then
+if [ -z "$(pidof "polkit-gnome-authentication-agent-1")" ]; then
   /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 fi
 
