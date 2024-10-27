@@ -48,7 +48,13 @@ case $mime in
   application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
     print_mediainfo
     echo
-    als -- "$fpath"
+    if [ "$mime" = "application/x-7z-compressed" ]; then
+      set +e
+      als --format-option=-p="" -- "$fpath"
+      set -e
+    else
+      als -- "$fpath"
+    fi
   ;;
   image/*)
     print_chafa "${w_chr}x${h_chr}" "$fpath"
