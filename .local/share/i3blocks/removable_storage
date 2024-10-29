@@ -23,7 +23,7 @@ for mpt in $active_mounts_mpts; do
   rsds_count="$(("$rsds_count" + "1"))"
   rsd_mount="$(echo "$active_mounts" | sed "${mpts_parsed_count}q;d")"
   rsds_mounts="${rsds_mounts:+"${rsds_mounts}
-"}${rsds_count}. ${rsd_mount}"
+"}\x1b[0;90m${rsds_count}.\x1b[0m ${rsd_mount}"
 done
 IFS="$IFS_"
 
