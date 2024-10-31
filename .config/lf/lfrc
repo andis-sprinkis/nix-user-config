@@ -130,14 +130,16 @@ cmd follow-search ${{
 
 map <c-z> $ kill -STOP $PPID
 map <enter> to-previewer
+map <m-6> updir
+map <m-7> open
+map O :open-with-menu-desktop
 map P push :paste-to-file<space>
 map R delete
-map X aunpack
 map V vidir
+map X aunpack
 map Y copy-path
 map ` !true
 map b :mark-load
 map gl follow-symlink
 map gs follow-search
 map o push :open-with<space>
-map O :open-with-menu-desktop
