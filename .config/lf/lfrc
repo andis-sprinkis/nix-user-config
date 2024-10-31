@@ -123,7 +123,7 @@ cmd follow-symlink %{{
 cmd follow-search ${{
   fpath="$(fzf)"
 
-  if [ "$fpath" ]; then 
+  if [ "$fpath" ]; then
     lf -remote "send ${id} select \"${fpath}\""
   fi
 }}
