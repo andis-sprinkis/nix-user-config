@@ -1,10 +1,22 @@
 #!/usr/bin/env sh
 set -eu
 
-pid="$(swaymsg -t get_tree | jq '.. | select(.type?)| select(.focused == true).pid')"
+win="$(swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused == true)')"
+pid="$(echo "$win" | jq '.pid')"
+name="$(echo "$win" | jq '.name')"
+
+details_ps="$(ps --no-headers -p "${pid}" -o "pid,user,group,comm,args" | tr -s " ")"
+details_ps="${details_ps%% }"
+details_ps="${details_ps## }"
+
+details="Process:
+${details_ps}
+
+Window title:
+${name}"
 
 if [ -z "$pid" ]; then
   exit "1"
 fi
 
-swaynag -t "warning" -m "Kill process PID ${pid}?" -Z "Yes" "kill -9 ${pid}"
+printf "%s" "$details" | swaynag -t "warning" -l -b "htop" "htop -p ${pid}" -m "Kill process ${pid} ${name}?" -Z "Yes" "kill -9 ${pid}"
