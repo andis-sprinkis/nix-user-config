@@ -19,4 +19,4 @@ if [ -z "$pid" ]; then
   exit "1"
 fi
 
-printf "%s" "$details" | swaynag -t "warning" -l -b "htop" "htop -p ${pid}" -m "Kill process ${pid} ${name}?" -Z "Yes" "kill -9 ${pid}"
+printf "%s" "$details" | swaynag -t "warning" -l -b "htop" "htop -p ${pid}" -m "Kill process PID ${pid} of window ${name}?" -Z "Yes" "kill -9 ${pid}"
