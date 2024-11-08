@@ -176,6 +176,7 @@ xorg-server
 xorg-xdpyinfo
 xorg-xev
 xorg-xinit
+xorg-xkill
 xorg-xrandr
 xorg-xset
 xorg-xwayland
