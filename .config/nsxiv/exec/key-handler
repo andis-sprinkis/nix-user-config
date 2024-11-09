@@ -9,7 +9,7 @@ case "$1" in
     while read file; do file_manager_desktop "$file" & done
   ;;
   "r")
-    while read file; do nsxiv-rifle "$file" & done
+    while read file; do NSXIV_OPTS="-t" nsxiv-rifle "$file" & done
   ;;
   "o")
     files="$(while read file; do echo "${files:+
