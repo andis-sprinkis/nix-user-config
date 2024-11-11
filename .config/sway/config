@@ -23,7 +23,7 @@ tiling_drag_threshold 1
 titlebar_padding 10 2
 
 exec_always swaymsg bar bar status_edge_padding 0
-exec_always swaymsg bar bar height 30
+exec_always swaymsg bar bar height 32
 
 for_window {
   [shell="xwayland"] title_format "[XW] %title"
