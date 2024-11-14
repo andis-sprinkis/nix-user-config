@@ -22,4 +22,4 @@ ${details_ps}
 Window title:
 ${name}"
 
-printf "%s" "$details" | swaynag -t "warning" -l -b "htop" "htop -p ${pid}" -m "Kill process ${pid} \"${comm}\" of window ${name}?" -Z "Yes" "kill -9 ${pid}"
+printf "%s" "$details" | swaynag -t "warning" -l -b "htop" "htop -p ${pid}" -m "Kill (9) process ${pid} \"${comm}\" of window ${name}?" -Z "Yes" "kill -9 ${pid}"
