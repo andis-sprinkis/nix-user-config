@@ -4,7 +4,7 @@ set -eu
 win="$(swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused == true)')"
 pid="$(echo "$win" | jq '.pid')"
 
-if [ -z "$pid" ]; then
+if [ "$pid" = "null" ]; then
   exit "1"
 fi
 
@@ -14,10 +14,12 @@ details_ps="$(ps --no-headers -p "${pid}" -o "pid,user,group,comm,args" | tr -s 
 details_ps="${details_ps%% }"
 details_ps="${details_ps## }"
 
+comm="$(echo "$details_ps" | cut -d" " -f4)"
+
 details="Process:
 ${details_ps}
 
 Window title:
 ${name}"
 
-printf "%s" "$details" | swaynag -t "warning" -l -b "htop" "htop -p ${pid}" -m "Kill process ${pid} of window ${name}?" -Z "Yes" "kill -9 ${pid}"
+printf "%s" "$details" | swaynag -t "warning" -l -b "htop" "htop -p ${pid}" -m "Kill process ${pid} \"${comm}\" of window ${name}?" -Z "Yes" "kill -9 ${pid}"
