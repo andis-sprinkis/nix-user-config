@@ -1,12 +1,27 @@
 #!/usr/bin/env sh
+set -eu
+
+cmd_menu="${WAYLAND_DISPLAY:+"wmenu -p 'Device:'"}"
+
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+  cmd_menu="dmenu -p 'Device:'"
+fi
+
+if [ -z "$cmd_menu" ]; then
+  exit "1"
+fi
 
 devices="$(find "/dev" -type "c" -name 'video*')"
 
-if [ -z "$devices" ]; then exit "1"; fi
+if [ -z "$devices" ]; then
+  exit "2"
+fi
 
-device="$(echo "$devices" | dmenu -b -p "Device:")"
+device="$(echo "$devices" | dmenu -p "Device:")"
 
-if [ -z "$device" ]; then exit "2"; fi
+if [ -z "$device" ]; then
+  exit "3"
+fi
 
 exec mpv \
   --demuxer-lavf-format=video4linux2 \
