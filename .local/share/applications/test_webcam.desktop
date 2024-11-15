@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Test webcam
+Exec=test_webcam_desktop
+Categories=Utility;System;
