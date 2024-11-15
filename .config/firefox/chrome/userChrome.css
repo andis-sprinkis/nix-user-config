@@ -34,9 +34,9 @@
     max-width: 304px !important;
   }
 
-  #tabbrowser-tabs #tabbrowser-arrowscrollbox-periphery {
-    margin-left: auto !important;
-  }
+  /* #tabbrowser-tabs #tabbrowser-arrowscrollbox-periphery { */
+  /*   margin-left: auto !important; */
+  /* } */
 
   #tabbrowser-tabs[haspinnedtabs]:not([positionpinnedtabs])
     > #tabbrowser-arrowscrollbox
