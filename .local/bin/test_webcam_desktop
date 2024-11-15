@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 set -eu
 
-cmd_menu="${WAYLAND_DISPLAY:+"wmenu -p 'Device:'"}"
+cmd_menu="${WAYLAND_DISPLAY:+"wmenu"}"
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-  cmd_menu="dmenu -p 'Device:'"
+  cmd_menu="dmenu"
 fi
 
 if [ -z "$cmd_menu" ]; then
@@ -17,7 +17,7 @@ if [ -z "$devices" ]; then
   exit "2"
 fi
 
-device="$(echo "$devices" | $cmd_menu)"
+device="$(echo "$devices" | "$cmd_menu" -p 'Device:')"
 
 if [ -z "$device" ]; then
   exit "3"
