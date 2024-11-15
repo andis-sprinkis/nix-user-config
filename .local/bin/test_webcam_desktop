@@ -17,7 +17,7 @@ if [ -z "$devices" ]; then
   exit "2"
 fi
 
-device="$(echo "$devices" | dmenu -p "Device:")"
+device="$(echo "$devices" | "$cmd_menu")"
 
 if [ -z "$device" ]; then
   exit "3"
