@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 set -eu
 
+script="$(basename "$0")"
 lines="$(tput lines)"
 columns="$(tput cols)"
 
@@ -8,6 +9,8 @@ fpath="$(readlink -f "$1")"
 w_chr="${2:-"$columns"}"
 h_chr="${3:-"$lines"}"
 FPATH_THUMB=""
+
+is_exec() { [ "$(command -v "$1")" ]; }
 
 thumb_cache_create() {
   dir_cache_thumb="${XDG_CACHE_HOME:-$HOME/.cache}/previewer/thumbnails"
@@ -20,10 +23,22 @@ thumb_cache_create() {
 }
 
 print_mediainfo() {
+  if ! is_exec "mediainfo"; then
+    echo "${script}: mediainfo utility not found."
+
+    return
+  fi
+
   mediainfo "$fpath" | head -n -2 | sed -e 's/ \+: /: /g' -e '/^General$/d'
 }
 
 print_chafa() {
+  if ! is_exec "chafa"; then
+    echo "${script}: chafa utility not found."
+
+    return
+  fi
+
   chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "$1" "$2"
 }
 
@@ -36,69 +51,125 @@ case $mime in
     thumb_cache_create
 
     if [ ! -f "${FPATH_THUMB}.jpg" ]; then
-      pdftoppm -jpeg -jpegopt quality=50 -f "1" -singlefile "$1" "$FPATH_THUMB"
+      if ! is_exec "pdftoppm"; then
+        echo "${script}: ptftoppm utility not found."
+      else
+        pdftoppm -jpeg -jpegopt quality=50 -f "1" -singlefile "$1" "$FPATH_THUMB"
+      fi
     fi
 
     print_chafa "${w_chr}x${h_chr}" "${FPATH_THUMB}.jpg"
+
     echo
-    pdfinfo "$fpath"
+
+    if ! is_exec "pdfinfo"; then
+      echo "${script}: pdfinfo utility not found."
+    else
+      pdfinfo "$fpath"
+    fi
+
     echo
-    pdftotext -l "2" -nopgbrk -q -- "$fpath" -
+
+    if ! is_exec "pdftotext"; then
+      echo "${script}: pdftotext utility not found."
+    else
+      pdftotext -l "2" -nopgbrk -q -- "$fpath" -
+    fi
   ;;
   application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
     print_mediainfo
+
     echo
-    if [ "$mime" = "application/x-7z-compressed" ]; then
-      set +e
-      als --format-option=-p="" -- "$fpath"
-      set -e
+
+    if ! is_exec "als"; then
+      echo "${script}: als utility not found."
     else
-      als -- "$fpath"
+      if [ "$mime" = "application/x-7z-compressed" ]; then
+        set +e
+        als --format-option=-p="" -- "$fpath"
+        set -e
+      else
+        als -- "$fpath"
+      fi
     fi
   ;;
   image/*)
     print_chafa "${w_chr}x${h_chr}" "$fpath"
+
     echo
+
     print_mediainfo
   ;;
   video/*|application/x-ogm-video)
     thumb_cache_create
 
     if [ ! -f "${FPATH_THUMB}.jpg" ]; then
-      ffmpegthumbnailer -i "$1" -o "${FPATH_THUMB}.jpg" -s "0" -q "5"
+      if ! is_exec "ffmpegthumbnailer"; then
+        echo "${script}: ffmpegthumbnailer utility not found."
+      else
+        ffmpegthumbnailer -i "$1" -o "${FPATH_THUMB}.jpg" -s "0" -q "5"
+      fi
     fi
 
     print_chafa "${w_chr}x${h_chr}" "${FPATH_THUMB}.jpg"
+
     echo
+
     print_mediainfo
   ;;
   *opendocument*)
-    odt2txt "$fpath"
+    if ! is_exec "odt2txt"; then
+      echo "${script}: odt2txt utility not found."
+    else
+      odt2txt "$fpath"
+    fi
   ;;
   audio/mpeg)
     print_mediainfo
+
     echo
-    mpg123-id3dump -- "$fpath"
+
+    if ! is_exec "mpg123-id3dump"; then
+      echo "${script}: mpg123-id3dump utility not found."
+    else
+      mpg123-id3dump -- "$fpath"
+    fi
   ;;
   audio/*|application/mxf|application/ogg|application/sdp|application/smil|application/streamingmedia|application/vnd.apple.mpegurl|application/vnd.ms-asf|application/vnd.rn-realmedia-vbr|application/vnd.rn-realmedia|application/x-cue|application/x-extension-m4a|application/x-extension-mp4|application/x-matroska|application/x-mpegurl|application/x-ogg|application/x-ogm-audio|application/x-ogm|application/x-shorten|application/x-smil|application/x-streamingmedia)
     print_mediainfo
   ;;
   application/vnd.sqlite*)
-    sqlite3 "$fpath" '.tables'
+    if ! is_exec "sqlite3"; then
+      echo "${script}: sqlite3 utility not found."
+    else
+      sqlite3 "$fpath" '.tables'
+    fi
   ;;
   application/x-executable|application/x-object)
-    readelf -a "$fpath"
+    if ! is_exec "readelf"; then
+      echo "${script}: readelf utility not found."
+    else
+      readelf -a "$fpath"
+    fi
   ;;
   inode/directory)
     ls -la "$fpath"
   ;;
   application/octet-stream)
-    hexdump --color=always --canonical --length "134217728" "$fpath"
+    if ! is_exec "hexdump"; then
+      echo "${script}: hexdump utility not found."
+    else
+      hexdump --color=always --canonical --length "134217728" "$fpath"
+    fi
   ;;
   application/x-bittorrent)
   ;;
   *)
-    bat --color=always --style=plain -- "$fpath"
+    if ! is_exec "bat"; then
+      echo "${script}: bat utility not found."
+    else
+      bat --color=always --style=plain -- "$fpath"
+    fi
   ;;
 esac
 
