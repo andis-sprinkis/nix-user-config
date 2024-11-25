@@ -128,6 +128,10 @@ cmd follow-search ${{
   fi
 }}
 
+cmd q ${{
+  lf -remote "send ${id} quit"
+}}
+
 map <c-z> $ kill -STOP $PPID
 map <enter> to-previewer
 map <m-left> updir
