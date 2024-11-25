@@ -130,6 +130,8 @@ cmd follow-search ${{
 
 map <c-z> $ kill -STOP $PPID
 map <enter> to-previewer
+map <m-left> updir
+map <m-right> open
 map <m-6> updir
 map <m-7> open
 map O :open-with-menu-desktop
