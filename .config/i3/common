@@ -112,7 +112,7 @@ bindsym $mod+Mod1+s                      exec --no-startup-id ${XDG_DATA_HOME:-$
 bindsym --whole-window $mod+Mod1+button8 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/shift_current_workspace prev
 bindsym --whole-window $mod+Mod1+button9 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/shift_current_workspace next
 
-bindsym Menu exec --no-startup-id $applications_menu
+bindsym Hyper_L exec --no-startup-id $applications_menu
 
 bindsym $mod+backslash    exec --no-startup-id playerctl play-pause
 bindsym $mod+braceleft    exec --no-startup-id playerctl position "10-"

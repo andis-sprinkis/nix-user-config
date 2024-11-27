@@ -1,5 +1,6 @@
 partial modifier_keys
 xkb_symbols "kb_swaps" {
   replace key <CAPS> { [ Super_L ] };
-  replace key <LWIN> { [ Menu ] };
+  replace key <LWIN> { [ Hyper_L ] };
+  replace key <RCTL> { [ Menu ] };
 };
