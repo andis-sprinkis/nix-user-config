@@ -65,6 +65,7 @@ alias \
   myip="curl --silent \"https://ipinfo.io/\" | jq" \
   n="\$EDITOR \$HOME/note/" \
   ncdu="ncdu --color dark -x" \
+  nethogs="sudo nethogs -l" \
   p="python3 -q" \
   py="python3 -q" \
   python="python3 -q" \
