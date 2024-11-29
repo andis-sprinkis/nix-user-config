@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.132.0
+@version      0.133.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
@@ -85,7 +85,6 @@ domain("man.freebsd.org"),
 domain("man7.org"),
 domain("manned.org"),
 domain("mathoverflow.net"),
-domain("mathworld.wolfram.com"),
 domain("medium.com"),
 domain("merriam-webster.com"),
 domain("metacpan.org"),
@@ -159,6 +158,7 @@ domain("yr.no") {
 @-moz-document domain("aws.amazon.com"),
 domain("d2l.ai"),
 domain("developers.google.com"),
+domain("mathworld.wolfram.com"),
 domain("rapidtables.com"),
 domain("scribbr.com"),
 domain("skillbuilder.aws"),
