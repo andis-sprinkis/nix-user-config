@@ -69,6 +69,7 @@ keepassxc
 lf
 libqalculate
 libreoffice-fresh
+libvncserver
 linux-headers
 lm_sensors
 lsp-plugins-lv2
@@ -122,6 +123,7 @@ qpwgraph
 qrencode
 r
 reflector
+remmina
 ripgrep
 rmlint
 rsync
