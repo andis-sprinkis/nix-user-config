@@ -29,7 +29,8 @@ set $right l
 
 bindsym $mod+Return exec --no-startup-id $TERMINAL
 
-bindsym $mod+q kill
+bindsym $mod+q      kill
+bindsym $mod+Mod1+q exec ${XDG_DATA_HOME:-$HOME/.local/share}/i3/sigkill_window_pid
 
 bindsym $mod+$left  focus left
 bindsym $mod+$down  focus down
