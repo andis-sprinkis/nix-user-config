@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 set -eu
 
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+  exec "xkill"
+fi
+
 win="$(swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused == true)')"
 pid="$(echo "$win" | jq '.pid')"
 
