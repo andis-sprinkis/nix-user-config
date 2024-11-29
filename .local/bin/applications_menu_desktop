@@ -19,7 +19,11 @@ cmd_inc_appimage=""
 
 cmd_applications_menu="(cat; ${cmd_inc_appimage}) | ${cmd_menu}"
 
-set +e; killall -u "$(whoami)" "$cmd_menu" 2> "/dev/null"; set -e
+# set +e; killall -u "$(whoami)" "$cmd_menu" 2> "/dev/null"; set -e
+
+if [ "$(pidof "$cmd_menu")" ]; then
+  exit "2"
+fi
 
 exec j4-dmenu-desktop \
   --no-generic \
