@@ -13,9 +13,10 @@ if [ -z "$cmd_menu" ]; then
   exit "1"
 fi
 
-dir_appimage="${APPIMAGE_DATA_HOME:-$HOME/.local/opt/appimage}"
-cmd_inc_appimage=""
-[ -d "$dir_appimage" ] && cmd_inc_appimage="stest -flx \"${dir_appimage}/\" | awk '{ print \"${dir_appimage}/\"\$0 }' | sort -u;"
+dir_appimage="${APPIMAGE_DATA_HOME:-$HOME/.local/opt/appimage}" cmd_inc_appimage=""
+if [ -d "$dir_appimage" ]; then
+  cmd_inc_appimage="stest -flx \"${dir_appimage}/\" | awk '{ print \"${dir_appimage}/\"\$0 }' | sort -u;"
+fi
 
 cmd_applications_menu="(cat; ${cmd_inc_appimage}) | ${cmd_menu}"
 

@@ -15,7 +15,11 @@ cmd_inc_bin_path="(stest -flx \$(echo \$PATH | tr : ' ')"
 
 cmd_applications_menu="(cat; ${cmd_inc_bin_path} | sort -u)) | ${cmd_menu}"
 
-set +e; killall -u "$(whoami)" "$cmd_menu" 2> "/dev/null"; set -e
+# set +e; killall -u "$(whoami)" "$cmd_menu" 2> "/dev/null"; set -e
+
+if [ "$(pidof "$cmd_menu")" ]; then
+  exit "2"
+fi
 
 cmd_args="$(
   j4-dmenu-desktop \
@@ -42,22 +46,22 @@ for a in $cmd_args; do
 done
 
 if echo "$cmd" | grep -q "^${TERMINAL} -e "; then
-  $cmd "$*" 1> "/dev/null" 2> "/dev/null" & disown
+  $cmd "$@" 1> "/dev/null" 2> "/dev/null" & disown
   exit "0"
 fi
 
 if ! echo "$cmd" | grep -q "^/bin/sh -c "; then
-  $cmd "$*" 1> "/dev/null" 2> "/dev/null" & disown 
+  $cmd "$@" 1> "/dev/null" 2> "/dev/null" & disown 
   exit "0"
 fi
 
 cmd="${cmd#"/bin/sh -c "}"
 
 if echo "$cmd" | grep -iq '^.*.\.appimage$'; then
-  $cmd "$*" 1> "/dev/null" 2> "/dev/null" & disown
+  $cmd "$@" 1> "/dev/null" 2> "/dev/null" & disown
   exit "0"
 fi
 
-$TERMINAL -e $cmd "$*" 1> "/dev/null" 2> "/dev/null" & disown
+$TERMINAL -e $cmd "$@" 1> "/dev/null" 2> "/dev/null" & disown
 
 exit "0"
