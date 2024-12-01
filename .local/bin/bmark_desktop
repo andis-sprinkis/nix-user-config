@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -eu
 
-# Shows menu that lists bookmarks of URI or file paths to be opened via xdg-open.
+# Shows menu that lists bookmarks of URIs or file paths to be opened via xdg-open.
 #
 # The bookmark line format:
 #
