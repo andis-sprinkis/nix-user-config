@@ -2,7 +2,10 @@
 set -eu
 
 # The bookmark line format:
+#
 # #  Bookmark title  ~  Bookmark URI or file path
+#
+# The lines that don't begin with '#  ' are ignored.
 
 bmark_file="${XDG_DATA_HOME:-$HOME/.local/share}/bmark_desktop/marks"
 
