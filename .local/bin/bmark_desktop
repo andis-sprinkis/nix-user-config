@@ -7,8 +7,6 @@ set -eu
 #
 # The lines that don't begin with '#  ' are ignored.
 
-bmark_file="${XDG_DATA_HOME:-$HOME/.local/share}/bmark_desktop/marks"
-
 cmd_menu="${WAYLAND_DISPLAY:+"wmenu"}"
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
@@ -19,16 +17,24 @@ if [ -z "$cmd_menu" ]; then
   exit "7"
 fi
 
-bmark_lines="$(grep "^#  " < "$bmark_file")"
+bmark_file_dir="${XDG_DATA_HOME:-$HOME/.local/share}/bmark_desktop"
+bmark_file="${bmark_file_dir}/marks"
 
-if [ -z "$bmark_lines" ]; then
-  exit "8"
+if [ ! -f "$bmark_file" ]; then
+  mkdir -p "$bmark_file_dir"
+  touch "$bmark_file"
 fi
+
+if [ ! -r "$bmark_file" ]; then
+  exit "9"
+fi
+
+bmark_lines="$(set +e; grep "^#  " < "$bmark_file"; set -e)"
 
 line_edit_bmarks="Edit bookmarks..."
 
-menu_lines="$(echo "$bmark_lines" | sed -e 's/^#  //g' -e 's/  \~  / \(/g' -e 's/$/\)/g')
-$line_edit_bmarks"
+menu_lines="${bmark_lines:+$(echo "$bmark_lines" | sed -e 's/^#  //g' -e 's/  \~  / \(/g' -e 's/$/\)/g')
+}$line_edit_bmarks"
 
 sel_txt="$(echo "$menu_lines" | "$cmd_menu" -p "Bookmark:")"
 
