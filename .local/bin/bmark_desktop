@@ -3,7 +3,7 @@ set -eu
 
 # Shows menu that lists bookmarks of URIs or file paths to be opened via xdg-open.
 #
-# The bookmark line format:
+# The bookmarks file entry format:
 #
 # #  Bookmark title  ~  Bookmark URI or file path
 #
