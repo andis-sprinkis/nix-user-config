@@ -115,6 +115,8 @@ bindsym --whole-window $mod+Mod1+button9 exec --no-startup-id ${XDG_DATA_HOME:-$
 
 bindsym Hyper_L exec --no-startup-id $applications_menu
 
+bindsym $mod+x exec --no-startup-id bmark_desktop
+
 bindsym $mod+backslash    exec --no-startup-id playerctl play-pause
 bindsym $mod+braceleft    exec --no-startup-id playerctl position "10-"
 bindsym $mod+braceright   exec --no-startup-id playerctl position "10+"
