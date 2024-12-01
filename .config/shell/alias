@@ -57,7 +57,8 @@ alias \
   hexdump="hexdump --color=always --canonical" \
   hosts="sudo \$EDITOR /etc/hosts" \
   inxi="inxi -c7 -F" \
-  ip="ip --color=auto" \
+  ip="ip --color=always" \
+  jq="jq -C" \
   mime="file --mime-type --brief" \
   mkdir="mkdir -pv" \
   mount="sudo mount" \
@@ -95,8 +96,8 @@ alias \
 
 # 'yay' alias must precede the 'pac_*' aliases
 is_exec "yay" && alias \
-  pacman="yay --color=auto" \
-  yay="yay --color=auto" \
+  pacman="yay --color=always" \
+  yay="yay --color=always" \
   pac_ls_installed="yay -Q" \
   pac_ls_installed_explicit="yay -Qe" \
   pac_ls_installed_in_sync_db="yay -Qn" \
