@@ -8,26 +8,29 @@ if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
 fi
 
 if [ -z "$cmd_menu" ]; then
-  exit "1"
+  exit "7"
 fi
 
 bmark_file="${XDG_DATA_HOME:-$HOME/.local/share}/bmark_desktop/marks"
 bmark_lines="$(grep "^#  " < "$bmark_file")"
 
 if [ -z "$bmark_lines" ]; then
-  exit "2"
+  exit "8"
 fi
 
-menu_lines="$(echo "$bmark_lines" | sed -e 's/^#  //g' -e 's/  \~  / \(/g' -e 's/$/\)/g')"
+line_edit_bmarks="Edit bookmarks..."
 
-if [ -z "$menu_lines" ]; then
-  exit "2"
-fi
+menu_lines="$(echo "$bmark_lines" | sed -e 's/^#  //g' -e 's/  \~  / \(/g' -e 's/$/\)/g')
+$line_edit_bmarks"
 
 sel_txt="$(echo "$menu_lines" | "$cmd_menu")"
 
 if [ -z "$sel_txt" ]; then
-  exit "2"
+  exit "8"
+fi
+
+if [ -z "${sel_txt#"$line_edit_bmarks"}" ]; then
+  exec "editor_desktop" "$bmark_file" 1> "/dev/null" 2> "/dev/null" & disown
 fi
 
 sel_idx="$(echo "$menu_lines" | grep --line-number -x "$sel_txt" | cut -d ":" -f 1)"
@@ -35,7 +38,7 @@ sel_bmark_line="$(echo "$bmark_lines" | sed "${sel_idx}q;d")"
 sel_uri="$(echo "$sel_bmark_line" | awk -F"  ~  " '{ print $2 }')"
 
 if [ -z "$sel_uri" ]; then
-  exit "2"
+  exit "8"
 fi
 
-exec "xdg-open" "$sel_uri" 1> "/dev/null" 2> "/dev/null" & disown
+xdg-open "$sel_uri" 1> "/dev/null" 2> "/dev/null" & disown
