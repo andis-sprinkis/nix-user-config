@@ -11,8 +11,7 @@ if [ -z "$cmd_menu" ]; then
   exit "1"
 fi
 
-bmark_file="$HOME/.local/share/bmark_desktop/marks"
-
+bmark_file="${XDG_DATA_HOME:-$HOME/.local/share}/bmark_desktop/marks"
 bmark_lines="$(grep "^#  " < "$bmark_file")"
 
 if [ -z "$bmark_lines" ]; then
