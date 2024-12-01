@@ -1,6 +1,11 @@
 #!/usr/bin/env sh
 set -eu
 
+# The bookmark line format:
+# #  Bookmark title  ~  Bookmark URI or file path
+
+bmark_file="${XDG_DATA_HOME:-$HOME/.local/share}/bmark_desktop/marks"
+
 cmd_menu="${WAYLAND_DISPLAY:+"wmenu"}"
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
@@ -11,7 +16,6 @@ if [ -z "$cmd_menu" ]; then
   exit "7"
 fi
 
-bmark_file="${XDG_DATA_HOME:-$HOME/.local/share}/bmark_desktop/marks"
 bmark_lines="$(grep "^#  " < "$bmark_file")"
 
 if [ -z "$bmark_lines" ]; then
