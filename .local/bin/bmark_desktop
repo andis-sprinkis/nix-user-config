@@ -30,7 +30,7 @@ line_edit_bmarks="Edit bookmarks..."
 menu_lines="$(echo "$bmark_lines" | sed -e 's/^#  //g' -e 's/  \~  / \(/g' -e 's/$/\)/g')
 $line_edit_bmarks"
 
-sel_txt="$(echo "$menu_lines" | "$cmd_menu")"
+sel_txt="$(echo "$menu_lines" | "$cmd_menu" -p "Bookmark:")"
 
 if [ -z "$sel_txt" ]; then
   exit "8"
