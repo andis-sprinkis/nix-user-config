@@ -1,0 +1,42 @@
+#!/usr/bin/env sh
+set -eu
+
+cmd_menu="${WAYLAND_DISPLAY:+"wmenu"}"
+
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+  cmd_menu="dmenu"
+fi
+
+if [ -z "$cmd_menu" ]; then
+  exit "1"
+fi
+
+bmark_file="$HOME/.local/share/bmark_desktop/marks"
+
+bmark_lines="$(grep "^#  " < "$bmark_file")"
+
+if [ -z "$bmark_lines" ]; then
+  exit "2"
+fi
+
+menu_lines="$(echo "$bmark_lines" | sed -e 's/^#  //g' -e 's/  \~  / \(/g' -e 's/$/\)/g')"
+
+if [ -z "$menu_lines" ]; then
+  exit "2"
+fi
+
+sel_txt="$(echo "$menu_lines" | "$cmd_menu")"
+
+if [ -z "$sel_txt" ]; then
+  exit "2"
+fi
+
+sel_idx="$(echo "$menu_lines" | grep --line-number -x "$sel_txt" | cut -d ":" -f 1)"
+sel_bmark_line="$(echo "$bmark_lines" | sed "${sel_idx}q;d")"
+sel_uri="$(echo "$sel_bmark_line" | awk -F"  ~  " '{ print $2 }')"
+
+if [ -z "$sel_uri" ]; then
+  exit "2"
+fi
+
+exec "xdg-open" "$sel_uri" 1> "/dev/null" 2> "/dev/null" & disown
