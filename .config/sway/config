@@ -1,6 +1,6 @@
 set $font pango:sans-serif medium 13.5
 
-include ${XDG_CONFIG_HOME:-HOME/.config}/i3/common
+include ${XDG_CONFIG_HOME:-$HOME/.config}/i3/common
 
 input type:keyboard {
   xkb_file ${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd
