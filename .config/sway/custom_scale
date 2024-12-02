@@ -62,9 +62,10 @@ input type:pointer {
 
 exec_always xrdb -retain -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
 
+# man 5 sway-output
 output * {
   bg $rootBackground solid_color
-  scale_filter nearest
+  scale_filter smart
 }
 
 include /etc/sway/config.d/*
