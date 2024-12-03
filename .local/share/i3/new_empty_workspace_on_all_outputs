@@ -66,6 +66,6 @@ IFS="$_IFS"
 
 query="${query}${query_ws_return}"
 
-echo "$query"
+# echo "$query"
 
 $wm_cmd "$query"
