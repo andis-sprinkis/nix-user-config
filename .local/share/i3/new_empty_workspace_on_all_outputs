@@ -44,20 +44,22 @@ query="" query_ws_return=""
 wss_vis_new_num_cols="$(echo "$wss_vis_nums
 $wss_new_nums" | pr -2 -t -s' ')"
 
-# TODO fix the first iteration referencing itself
-initial="1"
 IFS="
 "
 for c in $wss_vis_new_num_cols; do
   IFS="$_IFS"
 
-  c_vis_num="$(echo "$c" | cut -d" " -f1)"
-  c_vis_match_num="$(echo "$c" | cut -d" " -f2)"
+  c_num_vis="$(echo "$c" | cut -d" " -f1)"
+  c_num_vis_match="$(echo "$c" | cut -d" " -f2)"
 
-  query="${query}$(printf "%s" "workspace ${c_vis_num};workspace ${c_vis_match_num};")"
+  if [ "$c_num_vis" = "$ws_focused_num" ] && [ "$c_num_vis" = "$(echo "$wss_vis_nums" | head -n "1")" ]; then
+      query="${query}$(printf "%s" "workspace ${c_num_vis_match};")"
+  else
+    query="${query}$(printf "%s" "workspace ${c_num_vis};workspace ${c_num_vis_match};")"
+  fi
 
-  if [ "$c_vis_num" = "$ws_focused_num" ] && [ ! "$c_vis_match_num" = "$(echo "$wss_new_nums" | tail -n "1")" ]; then
-    query_ws_return="workspace ${c_vis_match_num};"
+  if [ "$c_num_vis" = "$ws_focused_num" ] && [ ! "$c_num_vis_match" = "$(echo "$wss_new_nums" | tail -n "1")" ]; then
+    query_ws_return="workspace ${c_num_vis_match};"
   fi
 done
 IFS="$_IFS"
