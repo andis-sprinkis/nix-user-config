@@ -68,4 +68,4 @@ query="${query}${query_ws_return}"
 
 # echo "$query"
 
-$wm_cmd "$query"
+$wm_cmd -q "$query"
