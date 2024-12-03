@@ -5,7 +5,7 @@ set -eu
 #
 # The bookmarks file entry format:
 #
-# #  Bookmark title  ~  Bookmark URI or file path
+# #  Bookmark title  ~  Bookmark URI or file path  ~  Hostname to restrict the bookmark entry visibility
 #
 # The lines that don't begin with '#  ' are ignored.
 
@@ -31,14 +31,34 @@ if [ ! -r "$bmark_file" ]; then
   exit "9"
 fi
 
-bmark_lines="$(set +e; grep "^#  " < "$bmark_file"; set -e)"
+bmark_file_lines="$(set +e; grep "^#  " < "$bmark_file"; set -e)"
+
+hostname="$(uname -n)"
+
+bmark_lines="$(
+  IFS_="$IFS"
+  IFS="
+"
+  for line in $bmark_file_lines ; do
+    IFS="$IFS_"
+
+    bmark_hostname="$(printf "%s\n" "$line" | awk -F"  ~  " '{ print $3 }')"
+
+    if [ "$bmark_hostname" ] && [ ! "$bmark_hostname" = "$hostname" ]; then
+      continue
+    fi
+
+    echo "$line"
+  done
+  IFS="$IFS_"
+)"
 
 line_edit_bmarks="Edit bookmarks..."
 
-menu_lines="${bmark_lines:+$(echo "$bmark_lines" | sed -e 's/^#  //g' -e 's/  \~  / \(/g' -e 's/$/\)/g')
+menu_lines="${bmark_lines:+$(echo "$bmark_lines" | sed -e 's/^#  //g' -e "s/  \~  ${hostname}$//g")
 }$line_edit_bmarks"
 
-sel_txt="$(echo "$menu_lines" | "$cmd_menu" -p "Bookmark:")"
+sel_txt="$(printf "%s\n" "$menu_lines" | "$cmd_menu" -p "Bookmark:")"
 
 if [ -z "$sel_txt" ]; then
   exit "8"
@@ -48,7 +68,7 @@ if [ -z "${sel_txt#"$line_edit_bmarks"}" ]; then
   exec "editor_desktop" "$bmark_file" 1> "/dev/null" 2> "/dev/null" & disown
 fi
 
-sel_idx="$(echo "$menu_lines" | grep --line-number -x "$sel_txt" | cut -d ":" -f 1)"
+sel_idx="$(printf "%s\n" "$menu_lines" | grep --line-number -x "$sel_txt" | cut -d ":" -f 1)"
 sel_bmark_line="$(echo "$bmark_lines" | sed "${sel_idx}q;d")"
 sel_uri="$(echo "$sel_bmark_line" | awk -F"  ~  " '{ print $2 }')"
 
