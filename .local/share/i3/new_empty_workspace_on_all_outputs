@@ -1,0 +1,57 @@
+#!/usr/bin/env sh
+set -eu
+
+_IFS="$IFS"
+
+wm="${WAYLAND_DISPLAY:+"sway"}"
+wm="${wm:-"i3"}"
+
+case "$wm" in
+  "sway")
+    wm_cmd="swaymsg"
+  ;;
+  "i3")
+    wm_cmd="i3-msg"
+  ;;
+esac
+
+wss="$(swaymsg -t "get_workspaces" | jq -r "map({num,visible,focused})")"
+wss_num="$(echo "$wss" | jq -r "[.[] | .num] | sort")"
+wss_num_max="$(echo "$wss_num" | jq -r "max")"
+wss_vis_num="$(echo "$wss" | jq -r "[.[] | select(.visible == true) | .num] | sort")"
+wss_vis_count="$(echo "$wss_vis_num" | jq -r "length")"
+ws_focused_num="$(echo "$wss" | jq -r ".[] | select(.focused == true) | .num")"
+
+wss_num_gaps="$(
+IFS="
+"
+for i in $(seq "$wss_num_max"); do
+  IFS="$_IFS"
+  if echo "$wss_num" | jq -r ".[]" | grep -xq "$i"; then
+    continue
+  fi
+
+  echo "$i"
+done
+IFS="$_IFS")"
+
+wss_new_num="$(echo "${wss_num_gaps:+$wss_num_gaps
+}$(seq "$((wss_num_max + 1))" "$((wss_num_max + wss_vis_count))")" | head -n"$wss_vis_count")"
+
+query=""
+query_ws_return=""
+
+IFS="
+"
+for i in $(echo "$wss_vis_num" | jq -r ".[]"); do
+  IFS="$_IFS"
+  match="$(echo "$wss_new_num" | sed "${i}q;d")"
+  query="$query$(printf "%s" "workspace ${i};workspace ${match};")"
+
+  if [ "$i" = "$ws_focused_num" ] && [ ! "$match" = "$(echo "$wss_new_num" | tail -n "1")" ]; then
+    query_ws_return="workspace ${match};"
+  fi
+done
+IFS="$_IFS"
+
+exec $wm_cmd "${query}${query_ws_return}"
