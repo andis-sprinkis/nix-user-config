@@ -44,6 +44,8 @@ query="" query_ws_return=""
 wss_vis_new_num_cols="$(echo "$wss_vis_nums
 $wss_new_nums" | pr -2 -t -s' ')"
 
+
+# TODO fix the first iteration referencing itself
 IFS="
 "
 for c in $wss_vis_new_num_cols; do
