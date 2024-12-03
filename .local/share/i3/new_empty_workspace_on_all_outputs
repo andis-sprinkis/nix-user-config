@@ -52,11 +52,7 @@ for c in $wss_vis_new_num_cols; do
   c_vis_num="$(echo "$c" | cut -d" " -f1)"
   c_vis_match_num="$(echo "$c" | cut -d" " -f2)"
 
-  if [ "$c_vis_num" = "$ws_focused_num" ]; then
-    query="${query}$(printf "%s" "workspace ${c_vis_match_num};")"
-  else
-    query="${query}$(printf "%s" "workspace ${c_vis_num};workspace ${c_vis_match_num};")"
-  fi
+  query="${query}$(printf "%s" "workspace ${c_vis_num};workspace ${c_vis_match_num};")"
 
   if [ "$c_vis_num" = "$ws_focused_num" ] && [ ! "$c_vis_match_num" = "$(echo "$wss_new_nums" | tail -n "1")" ]; then
     query_ws_return="workspace ${c_vis_match_num};"
