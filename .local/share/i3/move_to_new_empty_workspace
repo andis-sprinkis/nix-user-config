@@ -45,7 +45,7 @@ wss_vis_new_num_cols="$(echo "$wss_vis_nums
 $wss_new_nums" | pr -2 -t -s' ')"
 
 ws_first_vis_num="$(echo "$wss_vis_nums" | head -n "1")"
-ws_last_vis_num="$(echo "$wss_new_nums" | tail -n "1")"
+ws_last_new_num="$(echo "$wss_new_nums" | tail -n "1")"
 
 IFS="
 "
@@ -61,7 +61,7 @@ for c in $wss_vis_new_num_cols; do
     query="${query}$(printf "%s" "workspace ${c_num_vis};workspace ${c_num_vis_match};")"
   fi
 
-  if [ "$c_num_vis" = "$ws_focused_num" ] && [ ! "$c_num_vis_match" = "$ws_last_vis_num" ]; then
+  if [ "$c_num_vis" = "$ws_focused_num" ] && [ ! "$c_num_vis_match" = "$ws_last_new_num" ]; then
     query_ws_return="workspace ${c_num_vis_match};"
   fi
 done
