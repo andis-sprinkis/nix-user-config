@@ -1,0 +1,80 @@
+#!/usr/bin/env sh
+set -eu
+
+# Almost works.
+
+_IFS="$IFS"
+
+wm="${WAYLAND_DISPLAY:+"sway"}"
+wm="${wm:-"i3"}"
+
+case "$wm" in
+  "sway")
+    wm_cmd="swaymsg"
+  ;;
+  "i3")
+    wm_cmd="i3-msg"
+  ;;
+esac
+
+wss="$(swaymsg -t "get_workspaces" | jq -r "map({num,visible,focused})")"
+wss_nums="$(echo "$wss" | jq -r "[.[] | .num] | sort | .[]")"
+wss_vis_nums="$(echo "$wss" | jq -r "[.[] | select(.visible == true) | .num] | sort | .[]")"
+ws_focused_num="$(echo "$wss" | jq -r ".[] | select(.focused == true) | .num")"
+
+wss_vis_count="$(echo "$wss_vis_nums" | wc -l)"
+wss_num_max="$(echo "$wss_nums" | tail -n1)"
+
+wss_num_gaps="$(IFS="
+"
+for c in $(seq "$wss_num_max"); do
+  IFS="$_IFS"
+
+  if echo "$wss_nums" | grep -xq "$c"; then
+    continue
+  fi
+
+  echo "$c"
+done
+IFS="$_IFS")"
+
+wss_new_nums="$(echo "${wss_num_gaps:+$wss_num_gaps
+}$(seq "$((wss_num_max + 1))" "$((wss_num_max + wss_vis_count))")" | head -n"$wss_vis_count")"
+
+query="" query_ws_return=""
+
+wss_vis_new_num_cols="$(echo "$wss_vis_nums
+$wss_new_nums" | pr -2 -t -s' ')"
+
+ws_first_vis_num="$(echo "$wss_vis_nums" | head -n "1")"
+ws_last_new_num="$(echo "$wss_new_nums" | tail -n "1")"
+
+IFS="
+"
+for c in $wss_vis_new_num_cols; do
+  IFS="$_IFS"
+
+  c_num_vis="$(echo "$c" | cut -d" " -f1)"
+  c_num_vis_match="$(echo "$c" | cut -d" " -f2)"
+
+  if [ "$c_num_vis" = "$ws_focused_num" ]; then
+    query="${query}$(printf "%s" "move container to workspace ${c_num_vis_match}; workspace ${c_num_vis};")"
+  fi
+
+  if [ "$c_num_vis" = "$ws_focused_num" ] && [ "$c_num_vis" = "$ws_first_vis_num" ]; then
+    query="${query}$(printf "%s" "workspace ${c_num_vis_match};")"
+  else
+    query="${query}$(printf "%s" "workspace ${c_num_vis};workspace ${c_num_vis_match};")"
+  fi
+
+  if [ "$c_num_vis" = "$ws_focused_num" ] && [ ! "$c_num_vis_match" = "$ws_last_new_num" ]; then
+    query_ws_return="workspace ${c_num_vis_match};"
+  fi
+done
+IFS="$_IFS"
+
+query="${query}${query_ws_return}"
+
+# echo "$query"
+
+$wm_cmd -q "$query"
