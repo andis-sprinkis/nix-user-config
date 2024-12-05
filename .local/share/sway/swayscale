@@ -5,7 +5,7 @@
 
 if [ -z "${1:-""}" ] || [ -z "${2:-""}" ]; then
   echo "$(basename "$0"):
-    Must provide the arguments - the scale multiplier (\$1) and the program executable command (\$2).
+    Must provide arguments - the scale multiplier (\$1) and the program executable command (\$2).
     An example: $(basename "$0") \"1.75\" \"ddd\"" 2>&1
 
   exit "1"
