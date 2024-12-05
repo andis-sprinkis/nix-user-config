@@ -1,21 +1,28 @@
 #!/usr/bin/env sh
 
-# $1: Scale multiplyer, $2: The program 'exec' command
-# e.g. swayscale "1.75" "ddd"
+# $1: Scale multiplyer, $2+: The program 'exec' command
+# e.g. swayscale 1.75 ddd
+
+# Script directory path
+dir="$(cd -P -- "$(dirname -- "$0")" && pwd -P)"
 
 if [ -z "${1:-""}" ] || [ -z "${2:-""}" ]; then
   echo "$(basename "$0"):
   Must provide arguments:
     1. The scale multiplier (int or float number)
-    2. The program executable command
+    2. The program executable command (words as separate arguments)
   For example:
-    $(basename "$0") \"1.75\" \"ddd\"" 2>&1
+    $(basename "$0") 1.75 ddd" 2>&1
 
   exit "1"
 fi
 
+export SWAYSCALE_SCALE="${1:-1}"
+
+shift
+
 font_size="$(awk "BEGIN { printf \"%.20f\n\",13.5 / ${1} }")"
 
-export SWAYSCALE_SCALE="${1:-1}" SWAYSCALE_EXEC="$2" SWAYSCALE_FONT_SIZE="$font_size"
+export SWAYSCALE_EXEC="$*" SWAYSCALE_FONT_SIZE="$font_size"
 
-sway -c "${XDG_CONFIG_HOME:-$HOME/.config}/sway/custom_scale"
+sway -c "${dir}/config"
