@@ -17,7 +17,7 @@ fi
 default_font_size="13.5"
 scaled_font_size="$(awk "BEGIN { printf \"%.20f\n\",${default_font_size} / ${1} }")"
 
-export SWAYSCALE_SCALE="${1:-1}" SWAYSCALE_FONT_SIZE="$scaled_font_size"
+export SWAYSCALE_SCALE="$1" SWAYSCALE_FONT_SIZE="$scaled_font_size"
 
 shift
 
