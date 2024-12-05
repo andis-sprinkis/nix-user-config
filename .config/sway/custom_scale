@@ -1,6 +1,7 @@
 # vi: ft=swayconfig
 # A non-standard configuration for forcing an output display scale on individual applications.
 # SWAYSCALE_EXEC="ddd" SWAYSCALE_SCALE="2" SWAYSCALE_FONT_SIZE="6.75" sway -c "${XDG_CONFIG_HOME:-$HOME/.config}/sway/custom_scale"
+# See https://github.com/andis-sprinkis/swayscale
 
 gaps inner                    0
 gaps outer                    0
