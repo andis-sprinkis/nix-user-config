@@ -1,8 +1,6 @@
 # vi: ft=swayconfig
-# A non-standard configuration for forcing an output scale on individual applications.
-# EXEC="ddd" SCALE="2" sway -c ${XDG_CONFIG_HOME:-$HOME/.config}/sway/custom_scale
-
-set $font sans-serif medium 13.5
+# A non-standard configuration for forcing an output display scale on individual applications.
+# SWAYSCALE_EXEC="ddd" SWAYSCALE_SCALE="2" SWAYSCALE_FONT_SIZE="6.75" sway -c "${XDG_CONFIG_HOME:-$HOME/.config}/sway/custom_scale"
 
 gaps inner                    0
 gaps outer                    0
@@ -13,7 +11,6 @@ focus_wrapping                yes
 title_align                   center
 default_border                normal 1
 default_floating_border       normal 1
-font                          $font
 tiling_drag_threshold         1
 titlebar_padding              10 2
 
@@ -58,15 +55,14 @@ input type:pointer {
   scroll_factor 0.75
 }
 
-exec_always xrdb -retain -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
-
-# man 5 sway-output
 output * {
   bg $rootBackground solid_color
   scale_filter smart
 }
 
+exec_always xrdb -retain -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
+
 include /etc/sway/config.d/*
 
-exec swaymsg "output * scale ${SCALE:-2}"
-exec $EXEC
+exec swaymsg "output * scale ${SWAYSCALE_SCALE:-1}; font sans-serif medium ${SWAYSCALE_FONT_SIZE:-13.5}"
+exec $SWAYSCALE_EXEC && swaymsg "exit"
