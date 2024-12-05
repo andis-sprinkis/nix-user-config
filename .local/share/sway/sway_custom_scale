@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+# $1: Scale multiplyer, $2+: The program 'exec' command
+# e.g. custom_scale_init "1.75" "ddd"
+
+if [ -z "${1:-""}" ] || [ -z "${2:-""}" ]; then
+  echo "$(basename "$0"):
+    Must provide the arguments - the scale multiplier (\$1) and the program executable command (\$2).
+    An example: $(basename "$0") \"1.75\" \"ddd\"" 2>&1
+
+  exit "1"
+fi
+
+font_size="$(awk "BEGIN { printf \"%.20f\n\",13.5 / ${1} }")"
+
+export SWAYSCALE_SCALE="${1:-1}" SWAYSCALE_EXEC="$2" SWAYSCALE_FONT_SIZE="$font_size"
+
+sway -c "${XDG_CONFIG_HOME:-$HOME/.config}/sway/custom_scale"
