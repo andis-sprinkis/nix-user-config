@@ -7,7 +7,6 @@ gaps outer                    0
 smart_borders                 on
 hide_edge_borders             both
 focus_follows_mouse           yes
-focus_wrapping                yes
 title_align                   center
 default_border                normal 1
 default_floating_border       normal 1
