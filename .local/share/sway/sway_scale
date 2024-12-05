@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # $1: Scale multiplyer, $2: The program 'exec' command
-# e.g. custom_scale_init "1.75" "ddd"
+# e.g. swayscale "1.75" "ddd"
 
 if [ -z "${1:-""}" ] || [ -z "${2:-""}" ]; then
   echo "$(basename "$0"):
