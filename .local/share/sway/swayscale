@@ -14,12 +14,12 @@ if [ -z "${1:-""}" ] || [ -z "${2:-""}" ]; then
   exit "1"
 fi
 
-export SWAYSCALE_SCALE="${1:-1}"
+font_size="$(awk "BEGIN { printf \"%.20f\n\",13.5 / ${1} }")"
+
+export SWAYSCALE_SCALE="${1:-1}" SWAYSCALE_FONT_SIZE="$font_size"
 
 shift
 
-font_size="$(awk "BEGIN { printf \"%.20f\n\",13.5 / ${1} }")"
+export SWAYSCALE_EXEC="$*"
 
-export SWAYSCALE_EXEC="$*" SWAYSCALE_FONT_SIZE="$font_size"
-
-sway -c "${XDG_DATA_HOME:-$HOME/.config/sway}/custom_scale"
+sway -c "${XDG_CONFIG_HOME:-$HOME/.config}/sway/custom_scale"
