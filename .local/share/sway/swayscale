@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # $1: Scale multiplyer, $2+: The program 'exec' command
-# e.g. swayscale 1.75 ddd
+# e.g. swayscale 1.25 ddd
 
 if [ -z "${1:-""}" ] || [ -z "${2:-""}" ]; then
   echo "$(basename "$0"):
@@ -14,9 +14,10 @@ if [ -z "${1:-""}" ] || [ -z "${2:-""}" ]; then
   exit "1"
 fi
 
-font_size="$(awk "BEGIN { printf \"%.20f\n\",13.5 / ${1} }")"
+default_font_size="13.5"
+scaled_font_size="$(awk "BEGIN { printf \"%.20f\n\",${default_font_size} / ${1} }")"
 
-export SWAYSCALE_SCALE="${1:-1}" SWAYSCALE_FONT_SIZE="$font_size"
+export SWAYSCALE_SCALE="${1:-1}" SWAYSCALE_FONT_SIZE="$scaled_font_size"
 
 shift
 

@@ -45,10 +45,6 @@ client.placeholder       $color6 $color0 $color6 $color6 $color8
 
 client.background $color6
 
-for_window {
-  [shell="xwayland"] title_format "[XW] %title"
-}
-
 input type:keyboard {
   xkb_file ${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/kbd
   repeat_delay 165
@@ -66,7 +62,9 @@ output * {
 
 exec_always xrdb -retain -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
 
+bindsym Mod1+q kill
+
 include /etc/sway/config.d/*
 
-exec swaymsg "output * scale ${SWAYSCALE_SCALE:-1}; font sans-serif medium ${SWAYSCALE_SCALED_FONT_SIZE:-13.5}"
+exec swaymsg "output * scale ${SWAYSCALE_SCALE:-1}; font sans-serif medium ${SWAYSCALE_FONT_SIZE:-13.5}"
 exec $SWAYSCALE_EXEC && swaymsg "exit"
