@@ -3,9 +3,6 @@
 # $1: Scale multiplyer, $2+: The program 'exec' command
 # e.g. swayscale 1.75 ddd
 
-# Script directory path
-dir="$(cd -P -- "$(dirname -- "$0")" && pwd -P)"
-
 if [ -z "${1:-""}" ] || [ -z "${2:-""}" ]; then
   echo "$(basename "$0"):
   Must provide arguments:
@@ -25,4 +22,4 @@ font_size="$(awk "BEGIN { printf \"%.20f\n\",13.5 / ${1} }")"
 
 export SWAYSCALE_EXEC="$*" SWAYSCALE_FONT_SIZE="$font_size"
 
-sway -c "${dir}/config"
+sway -c "${XDG_DATA_HOME:-$HOME/.config/sway}/custom_scale"
