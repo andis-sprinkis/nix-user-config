@@ -1,4 +1,4 @@
-set $font pango:sans-serif medium 13.5
+set $font sans-serif medium 13.5
 
 include ${XDG_CONFIG_HOME:-$HOME/.config}/i3/common
 
