@@ -62,7 +62,27 @@ output * {
 
 exec_always xrdb -retain -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
 
-bindsym Mod1+q kill
+set $mod Mod1
+
+set $up    k
+set $down  j
+set $left  h
+set $right l
+
+bindsym $mod+$left        focus left
+bindsym $mod+$down        focus down
+bindsym $mod+$up          focus up
+bindsym $mod+$right       focus right
+
+bindsym $mod+Shift+$left  move left  56px
+bindsym $mod+Shift+$down  move down  56px
+bindsym $mod+Shift+$up    move up    56px
+bindsym $mod+Shift+$right move right 56px
+
+bindsym $mod+Shift+Space floating toggle
+bindsym $mod+Shift+f     fullscreen toggle
+
+bindsym $mod+q kill
 
 include /etc/sway/config.d/*
 
