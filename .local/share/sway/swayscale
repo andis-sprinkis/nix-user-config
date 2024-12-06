@@ -9,7 +9,7 @@ if [ -z "${1:-""}" ] || [ -z "${2:-""}" ]; then
     1. The scale multiplier (int or float number)
     2. The program executable command (words as separate arguments)
   For example:
-    $(basename "$0") 1.75 ddd" 2>&1
+    $(basename "$0") 1.25 ddd" 2>&1
 
   exit "1"
 fi
