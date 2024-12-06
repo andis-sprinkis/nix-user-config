@@ -1,0 +1,17 @@
+Ddd*saveOptionsOnExit: off
+Ddd*variableWidthFont: Noto Sans
+Ddd*fixedWidthFont: Cascadia Code
+Ddd*dataFont: Cascadia Code
+Ddd*defaultFontSize: 120
+Ddd*variableWidthFontSize: 11
+Ddd*fixedWidthFontSize: 12
+Ddd*dataFontSize: 12
+Ddd*tabWidth: 2
+Ddd*indentCode: 2
+Ddd*displayLineNumbers: on
+Ddd*startupTips: off
+Ddd*darkMode: on
+
+! DO NOT ADD ANYTHING BELOW THIS LINE -- DDD WILL OVERWRITE IT
+Ddd*dddinitVersion: 3.4.1
+
