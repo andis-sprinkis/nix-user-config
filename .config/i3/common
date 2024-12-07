@@ -179,15 +179,14 @@ set $background     #1f1f1f
 set $rootBackground #2f2f2f
 set $cursorColor    #d4d4d4
 
-# class, border, bg, text, indicator, child border
+# class, border, background, text, indicator, child border
 client.focused           $color6 $color6 $color0 $color6 $color6
 client.focused_inactive  $color8 $color8 $color0 $color8 $color8
 client.unfocused         $color8 $color0 $color8 $color8 $color8
 client.focused_tab_title $color6 $color0 $color6
 client.urgent            $color3 $color0 $color3 $color8 $color8
 client.placeholder       $color6 $color0 $color6 $color6 $color8
-
-client.background $color6
+client.background                $color6
 
 bar {
   id                  bar
