@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=projectMSDL
+Exec=/usr/share/projectMSDL
+Categories=Audio;Video;
