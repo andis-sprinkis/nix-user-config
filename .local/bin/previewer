@@ -162,7 +162,7 @@ case $mime in
       hexdump --color=always --canonical --length "134217728" "$fpath"
     fi
   ;;
-  application/x-bittorrent)
+  application/x-bittorrent|inode/socket)
   ;;
   *)
     if ! is_exec "bat"; then

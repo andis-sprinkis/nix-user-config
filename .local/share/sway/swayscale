@@ -23,4 +23,4 @@ shift
 
 export SWAYSCALE_EXEC="$*"
 
-sway -c "${XDG_CONFIG_HOME:-$HOME/.config}/sway/custom_scale"
+exec sway -c "${XDG_CONFIG_HOME:-$HOME/.config}/sway/custom_scale"
