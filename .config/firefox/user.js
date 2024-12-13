@@ -125,6 +125,7 @@ user_pref("network.predictor.enable-prefetch", false);
 user_pref("network.predictor.enabled", false);
 user_pref("network.prefetch-next", false);
 user_pref("network.protocol-handler.external.mailto", false);
+user_pref("network.trr.uri", "https://firefox.dns.nextdns.io/")
 user_pref("pdfjs.enableScripting", false);
 user_pref("privacy.donottrackheader.enabled", true);
 user_pref("privacy.globalprivacycontrol.enabled", true);
