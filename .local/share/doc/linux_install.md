@@ -597,13 +597,13 @@ Steps for adding any newly listed packages from the user package lists to an alr
     - The Arch package repository:
 
         ```sh
-        yay --color=auto -S --needed $(echo $(cat "./base")) $(echo $(cat "./arch"))
+        yay --color=auto -S --needed $(cat "./base" | paste -s -d ' ') $(cat "./arch" | paste -s -d ' ')
         ```
 
     - AUR:
 
         ```sh
-        yay --color=auto -S --needed $(echo $(cat "./aur"))
+        yay --color=auto -S --needed $(cat "./aur" | paste -s -d ' ')
         ```
 
     - AppImage sources:
@@ -611,7 +611,7 @@ Steps for adding any newly listed packages from the user package lists to an alr
         ```sh
         path_dir_appimage="$HOME/.local/opt/appimage"
 
-        for p in $(echo $(cat "./appimage")); do
+        for p in $(cat "./appimage" | paste -s -d ' '); do
           [ ! -f "${path_dir_appimage}/${p}" ] && curl --location --output-dir "$path_dir_appimage" --remote-name "$p"
         done
 
@@ -626,13 +626,13 @@ Steps for adding any newly listed packages from the user package lists to an alr
             ```
         - Sync with the package list.
             ```sh
-            for p in $(echo $(cat "./pypi")); do pipx install "$p"; done
+            for p in $(cat "./pypi" | paste -s -d ' '); do pipx install "$p"; done
             ```
 
     - npm:
 
         ```sh
-        volta install $(echo $(cat "./npm"))
+        volta install $(cat "./npm" | paste -s -d ' ')
         ```
 
 ## Connecting to Wi-Fi
