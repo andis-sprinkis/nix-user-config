@@ -13,6 +13,7 @@ esac
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   exec xscreensaver-command -lock
 fi
+
 exec killall -u "$(whoami)" -s "SIGUSR1" "swayidle"
 
 # [SIGUSR1 gets queued up when idle inhibitor is active · Issue #51 · swaywm/swayidle](https://github.com/swaywm/swayidle/issues/51)
