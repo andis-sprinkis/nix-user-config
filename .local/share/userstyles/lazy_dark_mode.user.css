@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.137.0
+@version      0.138.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
@@ -14,6 +14,7 @@ domain("about.gitlab.com"),
 domain("accessibilityinsights.io"),
 domain("adobe.com"),
 domain("airbnb.com"),
+domain("ajprodukti.lv"),
 domain("amazon.co.uk"),
 domain("amazon.com"),
 domain("amiunique.org"),
