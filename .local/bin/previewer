@@ -173,7 +173,19 @@ case "$mime" in
   inode/directory)
     echo "$mime" "(${brief})"
 
-    ls -la "$fpath"
+    is_macos=""
+    case "$(uname)" in
+      "Darwin")
+        is_macos="1"
+      ;;
+    esac
+
+    if [ -z "$is_macos" ] || [ "${HAS_BREW_GNUBIN:-""}" ]; then
+      ls -lahAFNX --color=always --group-directories-first --time-style=long-iso "$fpath"
+    else
+      ls -la "$fpath"
+    fi
+
   ;;
   application/octet-stream)
     echo "$mime" "(${brief})"
