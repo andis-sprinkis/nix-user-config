@@ -1,37 +1,39 @@
 #!/usr/bin/env sh
 
+exec previewer "$1"
+
 # TODO: rewrite in POSIX sh
+#
+# mime="$(file --mime-type --brief "$(readlink -f "$1")")"
 
-mime="$(file --mime-type --brief "$(readlink -f "$1")")"
-
-case $mime in
-  application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
-    exec als "$1" ;;
-  *)
-    path_file="$(readlink -f "$1")"
-    name_file="$(basename "$path_file")"
-    bat_args="bat --paging never --color always --style plain"
-    types_patterns_groups="$(bat -L)"
-
-    i="0"
-    while IFS= read -r patterns_group; do
-      i="$(("$i" + "1"))"
-
-      while read -r pattern; do
-        case "$name_file" in 
-          ($pattern|*"."$pattern)
-            exec $bat_args --language "$(echo "$types_patterns_groups" | sed "${i}!d" | cut --delimiter=":" --fields="1")" < "$1"
-          ;;
-        esac
-
-        case "$path_file" in
-          ($pattern)
-            exec $bat_args --language "$(echo "$types_patterns_groups" | sed "${i}!d" | cut --delimiter=":" --fields="1")" < "$1"
-          ;;
-        esac
-      done <<< "$(echo "$patterns_group" | sed 's/,/\n/g')"
-    done <<< "$(echo "$types_patterns_groups" | cut --delimiter=":" --fields="2")"
-
-    exec $bat_args < "$1"
-  ;;
-esac
+# case $mime in
+#   application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
+#     exec als "$1" ;;
+#   *)
+#     path_file="$(readlink -f "$1")"
+#     name_file="$(basename "$path_file")"
+#     bat_args="bat --paging never --color always --style plain"
+#     types_patterns_groups="$(bat -L)"
+#
+#     i="0"
+#     while IFS= read -r patterns_group; do
+#       i="$(("$i" + "1"))"
+#
+#       while read -r pattern; do
+#         case "$name_file" in 
+#           ($pattern|*"."$pattern)
+#             exec $bat_args --language "$(echo "$types_patterns_groups" | sed "${i}!d" | cut --delimiter=":" --fields="1")" < "$1"
+#           ;;
+#         esac
+#
+#         case "$path_file" in
+#           ($pattern)
+#             exec $bat_args --language "$(echo "$types_patterns_groups" | sed "${i}!d" | cut --delimiter=":" --fields="1")" < "$1"
+#           ;;
+#         esac
+#       done <<< "$(echo "$patterns_group" | sed 's/,/\n/g')"
+#     done <<< "$(echo "$types_patterns_groups" | cut --delimiter=":" --fields="2")"
+#
+#     exec $bat_args < "$1"
+#   ;;
+# esac
