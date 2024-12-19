@@ -43,11 +43,14 @@ print_chafa() {
 }
 
 mime="$(file --mime-type --brief "$fpath")"
-
-echo "$mime" "($(file --brief "$fpath"))"
+brief="$(file --brief "$fpath")"
+newlines=""
 
 case $mime in
   application/eps|application/pdf|application/postscript|application/x-eps|image/x-eps)
+    newlines="$(wc -l "$fpath" | cut -d" " -f1)"
+    echo "$mime" "(${newlines} lines, ${brief})"
+
     thumb_cache_create
 
     if [ ! -f "${FPATH_THUMB}.jpg" ]; then
@@ -77,6 +80,8 @@ case $mime in
     fi
   ;;
   application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
+    echo "$mime" "(${brief})"
+
     print_mediainfo
 
     echo
@@ -94,6 +99,8 @@ case $mime in
     fi
   ;;
   image/*)
+    echo "$mime" "(${brief})"
+
     print_chafa "${w_chr}x${h_chr}" "$fpath"
 
     echo
@@ -101,6 +108,8 @@ case $mime in
     print_mediainfo
   ;;
   video/*|application/x-ogm-video)
+    echo "$mime" "(${brief})"
+
     thumb_cache_create
 
     if [ ! -f "${FPATH_THUMB}.jpg" ]; then
@@ -118,6 +127,8 @@ case $mime in
     print_mediainfo
   ;;
   *opendocument*)
+    echo "$mime" "(${brief})"
+
     if ! is_exec "odt2txt"; then
       echo "${script}: odt2txt utility not found."
     else
@@ -125,6 +136,8 @@ case $mime in
     fi
   ;;
   audio/mpeg)
+    echo "$mime" "(${brief})"
+
     print_mediainfo
 
     echo
@@ -136,9 +149,13 @@ case $mime in
     fi
   ;;
   audio/*|application/mxf|application/ogg|application/sdp|application/smil|application/streamingmedia|application/vnd.apple.mpegurl|application/vnd.ms-asf|application/vnd.rn-realmedia-vbr|application/vnd.rn-realmedia|application/x-cue|application/x-extension-m4a|application/x-extension-mp4|application/x-matroska|application/x-mpegurl|application/x-ogg|application/x-ogm-audio|application/x-ogm|application/x-shorten|application/x-smil|application/x-streamingmedia)
+    echo "$mime" "(${brief})"
+
     print_mediainfo
   ;;
   application/vnd.sqlite*)
+    echo "$mime" "(${brief})"
+
     if ! is_exec "sqlite3"; then
       echo "${script}: sqlite3 utility not found."
     else
@@ -146,6 +163,8 @@ case $mime in
     fi
   ;;
   application/x-executable|application/x-object)
+    echo "$mime" "(${brief})"
+
     if ! is_exec "readelf"; then
       echo "${script}: readelf utility not found."
     else
@@ -153,9 +172,13 @@ case $mime in
     fi
   ;;
   inode/directory)
+    echo "$mime" "(${brief})"
+
     ls -la "$fpath"
   ;;
   application/octet-stream)
+    echo "$mime" "(${brief})"
+
     if ! is_exec "hexdump"; then
       echo "${script}: hexdump utility not found."
     else
@@ -163,8 +186,12 @@ case $mime in
     fi
   ;;
   application/x-bittorrent|inode/socket)
+    echo "$mime" "(${brief})"
   ;;
   *)
+    newlines="$(wc -l "$fpath" | cut -d" " -f1)"
+    echo "$mime" "(${newlines} lines, ${brief})"
+
     if ! is_exec "bat"; then
       echo "${script}: bat utility not found."
     else
