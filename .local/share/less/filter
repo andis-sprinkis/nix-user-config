@@ -2,7 +2,7 @@
 
 exec previewer "$1"
 
-# TODO: rewrite in POSIX sh
+## TODO: rewrite in POSIX sh
 #
 # mime="$(file --mime-type --brief "$(readlink -f "$1")")"
 
