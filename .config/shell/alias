@@ -59,6 +59,7 @@ alias \
   inxi="inxi -c7 -F" \
   ip="ip --color=always" \
   jq="jq -C" \
+  l="lf" \
   mime="file --mime-type --brief" \
   mkdir="mkdir -pv" \
   mount="sudo mount" \
