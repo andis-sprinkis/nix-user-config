@@ -18,7 +18,7 @@ fi
 
 url="$(echo "$result" | awk -F" :: " '{ print $1 }')"
 
-echo "$(basename "$0"): A jupyter-notebook instance is already running from this directory.
+echo "$(basename "$0"): A Jupyter server instance is already running from this directory.
 
       URL: ${url}
 Directory: ${PWD}" 1>&2
