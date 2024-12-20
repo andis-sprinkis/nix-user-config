@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+set -eu
+
+list="$(pipenv run jupyter notebook list)"
+result="$(set +e; echo "$list" | grep " :: ${PWD}$"; set -e)"
+
+if [ -z "$result" ]; then
+  exec pipenv run jupyter-notebook --no-browser
+fi
+
+url="$(echo "$result" | awk -F" :: " '{ print $1 }')"
+
+echo "$(basename "$0"): jupyter-notebook is already running from this directory.
+
+        URL: ${url}
+  Directory: ${PWD}" 1>&2
+
+exit "1"
