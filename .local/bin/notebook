@@ -5,7 +5,7 @@ list="$(pipenv run jupyter notebook list)"
 result="$(set +e; echo "$list" | grep " :: ${PWD}$"; set -e)"
 
 if [ -z "$result" ]; then
-  exec pipenv run jupyter-notebook --no-browser
+  exec pipenv run jupyter-notebook
 fi
 
 url="$(echo "$result" | awk -F" :: " '{ print $1 }')"
