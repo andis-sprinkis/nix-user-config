@@ -24,7 +24,7 @@ wss_num="$(echo "$wss" | jq -r '.[].num' | sort | tr '\n' ' ')"
 pre_wsn="$(("${wss_num%% *}" - 1))"
 
 if [ "$pre_wsn" -ge 1 ]; then
-  $wm_cmd -q "move container to workspace number 1; workspace number 1"
+  exec $wm_cmd -q "move container to workspace number 1; workspace number 1"
 fi
 
 for wsn in $wss_num; do
