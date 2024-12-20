@@ -12,15 +12,15 @@ fi
 list="$(pipenv run jupyter notebook list)"
 result="$(set +e; echo "$list" | grep " :: ${PWD}$"; set -e)"
 
-if [ -z "$result" ]; then
-  exec pipenv run jupyter-notebook
-fi
+if [ "$result" ]; then
+  url="$(echo "$result" | awk -F" :: " '{ print $1 }')"
 
-url="$(echo "$result" | awk -F" :: " '{ print $1 }')"
-
-echo "$(basename "$0"): A Jupyter server instance is already running from this directory.
+  echo "$(basename "$0"): A Jupyter server instance is already running from this directory.
 
       URL: ${url}
 Directory: ${PWD}" 1>&2
 
 exit "2"
+fi
+
+exec pipenv run jupyter-notebook
