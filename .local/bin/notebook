@@ -1,6 +1,14 @@
 #!/usr/bin/env sh
 set -eu
 
+if [ ! -f "Pipfile" ]; then
+echo "$(basename "$0"): pipenv not initialized in this directory.
+
+Directory: ${PWD}" 1>&2
+
+  exit "1"
+fi
+
 list="$(pipenv run jupyter notebook list)"
 result="$(set +e; echo "$list" | grep " :: ${PWD}$"; set -e)"
 
@@ -10,9 +18,9 @@ fi
 
 url="$(echo "$result" | awk -F" :: " '{ print $1 }')"
 
-echo "$(basename "$0"): jupyter-notebook is already running from this directory.
+echo "$(basename "$0"): A jupyter-notebook instance is already running from this directory.
 
-        URL: ${url}
-  Directory: ${PWD}" 1>&2
+      URL: ${url}
+Directory: ${PWD}" 1>&2
 
-exit "1"
+exit "2"
