@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+unset NSXIV_OPTS
+
 if [ -z "$1" ]; then
   exit "2"
 fi
