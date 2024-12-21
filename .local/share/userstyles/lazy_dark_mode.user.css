@@ -160,6 +160,7 @@ domain("xkpasswd.net"),
 domain("xn--kalendrs-m7a.lv"),
 domain("yr.no") {
   @media (prefers-color-scheme: dark) {
+
     html,
     img,
     video,
@@ -179,6 +180,7 @@ domain("scribbr.com"),
 domain("skillbuilder.aws"),
 domain("zsh.sourceforge.io") {
   @media (prefers-color-scheme: dark) {
+
     html,
     img,
     video,
@@ -195,6 +197,7 @@ domain("zsh.sourceforge.io") {
 
 @-moz-document domain("soundcloud.com") {
   @media (prefers-color-scheme: dark) {
+
     span.sc-artwork,
     html,
     img,
@@ -219,6 +222,7 @@ domain("wikiversity.org"),
 domain("wikivoyage.org"),
 domain("wiktionary.org") {
   @media (prefers-color-scheme: dark) {
+
     .legend-color,
     .color_swatch,
     html,
