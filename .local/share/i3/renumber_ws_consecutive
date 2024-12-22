@@ -1,0 +1,30 @@
+#!/usr/bin/env sh
+
+IFS_="$IFS"
+wm="${WAYLAND_DISPLAY:+"sway"}"
+wm="${wm:-"i3"}"
+
+case "$wm" in
+  "sway")
+    wm_cmd="swaymsg"
+  ;;
+  "i3")
+    wm_cmd="i3-msg"
+  ;;
+  *)
+    exit "1"
+  ;;
+esac
+
+wss_num="$($wm_cmd -t get_workspaces | jq '[.[] | select(.num != -1 ) | .num] | sort | .[]')"
+i="1"
+IFS="
+"
+echo "$wss_num" | while read -r workspace; do
+  IFS="$IFS_"
+
+  $wm_cmd -q rename workspace "$workspace" to "$i"
+
+  i="$((i + "1"))"
+done
+IFS="$IFS_"
