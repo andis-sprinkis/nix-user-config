@@ -23,6 +23,7 @@ ln -s "../../../.config/firefox/chrome" "chrome"
 1.  https://addons.mozilla.org/en-US/firefox/addon/extension-copycat/
 1.  https://addons.mozilla.org/en-US/firefox/addon/favicon-detector/
 1.  https://addons.mozilla.org/en-US/firefox/addon/github-search/
+1.  https://addons.mozilla.org/en-US/firefox/addon/global-speed/
 1.  https://addons.mozilla.org/en-US/firefox/addon/hohser/
 1.  https://addons.mozilla.org/en-US/firefox/addon/istilldontcareaboutcookies/
 1.  https://addons.mozilla.org/en-US/firefox/addon/jump-to-anchor/
