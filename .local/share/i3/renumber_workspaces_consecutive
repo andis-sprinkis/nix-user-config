@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+set -eu
 
 IFS_="$IFS"
 wm="${WAYLAND_DISPLAY:+"sway"}"
