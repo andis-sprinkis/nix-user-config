@@ -30,6 +30,7 @@ exec_always swaymsg bar bar height 32
 
 for_window {
   [shell="xwayland"] title_format "[XW] %title"
+  [app_id="blueman-manager"] floating enable, sticky enable
   [app_id="firefox" title="Picture-in-Picture"] floating enable, sticky enable
   [app_id="mpv"] floating enable, sticky enable
 }
