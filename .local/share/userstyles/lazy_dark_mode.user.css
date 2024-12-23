@@ -8,8 +8,6 @@
 @preprocessor default
 ==/UserStyle== */
 
-/* With CSS tweaks */
-
 @-moz-document domain("aws.amazon.com"),
 domain("d2l.ai"),
 domain("developers.google.com"),
@@ -77,8 +75,6 @@ domain("wiktionary.org") {
     }
   }
 }
-
-/* Without CSS tweaks */
 
 @-moz-document domain("1188.lv"),
 domain("220.lv"),
