@@ -1,12 +1,85 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.155.0
+@version      0.156.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
 @preprocessor default
 ==/UserStyle== */
+
+/* With CSS tweaks */
+
+@-moz-document domain("aws.amazon.com"),
+domain("d2l.ai"),
+domain("developers.google.com"),
+domain("mathworld.wolfram.com"),
+domain("rapidtables.com"),
+domain("scribbr.com"),
+domain("skillbuilder.aws"),
+domain("zsh.sourceforge.io") {
+  @media (prefers-color-scheme: dark) {
+
+    html,
+    img,
+    video,
+    iframe,
+    object {
+      filter: invert();
+    }
+  }
+
+  img {
+    background-color: white;
+  }
+}
+
+@-moz-document domain("soundcloud.com") {
+  @media (prefers-color-scheme: dark) {
+
+    span.sc-artwork,
+    html,
+    img,
+    video,
+    iframe,
+    object {
+      filter: invert();
+    }
+  }
+}
+
+@-moz-document domain("mediawiki.org"),
+domain("wikipedia.org"),
+domain("wikibooks.org"),
+domain("wikidata.org"),
+domain("wikimedia.org"),
+domain("wikinews.org"),
+domain("wikipedia.org"),
+domain("wikiquote.org"),
+domain("wikisource.org"),
+domain("wikiversity.org"),
+domain("wikivoyage.org"),
+domain("wiktionary.org") {
+  @media (prefers-color-scheme: dark) {
+
+    .legend-color,
+    .color_swatch,
+    html,
+    img:not([src*="/math/"]),
+    video,
+    iframe,
+    object {
+      filter: invert();
+    }
+
+    img[src*="/upload.wikimedia.org/"] {
+      background-color: white;
+    }
+  }
+}
+
+/* Without CSS tweaks */
+
 @-moz-document domain("1188.lv"),
 domain("220.lv"),
 domain("abbreviations.com"),
@@ -154,6 +227,7 @@ domain("typst.app"),
 domain("ubuntu.com"),
 domain("ubuntuforums.org"),
 domain("ups.com"),
+domain("varam.gov.lv"),
 domain("ventasbalss.lv"),
 domain("ventspilsnovads.lv"),
 domain("vestnesis.lv"),
@@ -177,74 +251,6 @@ domain("yr.no") {
     iframe,
     object {
       filter: invert();
-    }
-  }
-}
-
-@-moz-document domain("aws.amazon.com"),
-domain("d2l.ai"),
-domain("developers.google.com"),
-domain("mathworld.wolfram.com"),
-domain("rapidtables.com"),
-domain("scribbr.com"),
-domain("skillbuilder.aws"),
-domain("zsh.sourceforge.io") {
-  @media (prefers-color-scheme: dark) {
-
-    html,
-    img,
-    video,
-    iframe,
-    object {
-      filter: invert();
-    }
-  }
-
-  img {
-    background-color: white;
-  }
-}
-
-@-moz-document domain("soundcloud.com") {
-  @media (prefers-color-scheme: dark) {
-
-    span.sc-artwork,
-    html,
-    img,
-    video,
-    iframe,
-    object {
-      filter: invert();
-    }
-  }
-}
-
-@-moz-document domain("mediawiki.org"),
-domain("wikipedia.org"),
-domain("wikibooks.org"),
-domain("wikidata.org"),
-domain("wikimedia.org"),
-domain("wikinews.org"),
-domain("wikipedia.org"),
-domain("wikiquote.org"),
-domain("wikisource.org"),
-domain("wikiversity.org"),
-domain("wikivoyage.org"),
-domain("wiktionary.org") {
-  @media (prefers-color-scheme: dark) {
-
-    .legend-color,
-    .color_swatch,
-    html,
-    img:not([src*="/math/"]),
-    video,
-    iframe,
-    object {
-      filter: invert();
-    }
-
-    img[src*="/upload.wikimedia.org/"] {
-      background-color: white;
     }
   }
 }
