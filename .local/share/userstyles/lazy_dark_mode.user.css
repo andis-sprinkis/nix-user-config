@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.151.0
+@version      0.153.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
@@ -87,6 +87,7 @@ domain("linuxquestions.org"),
 domain("linuxreviews.org"),
 domain("lite.duckduckgo.com"),
 domain("llvm.org"),
+domain("lm.gov.lv"),
 domain("lsm.lv"),
 domain("lua.org"),
 domain("lvportals.lv"),
@@ -154,9 +155,11 @@ domain("ups.com"),
 domain("ventasbalss.lv"),
 domain("ventspilsnovads.lv"),
 domain("vestnesis.lv"),
+domain("vid.gov.lv"),
 domain("vim.fandom.com"),
 domain("viss.gov.lv"),
 domain("visualstudio.com"),
+domain("vsaa.gov.lv"),
 domain("w3schools.com"),
 domain("wiki.documentfoundation.org"),
 domain("wiki.openstreetmap.org"),
