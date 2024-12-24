@@ -2,7 +2,6 @@
 set -eu
 IFS_="$IFS"
 
-# table_columns="Mount,Use %,Use,Free,Size,Device"
 df_output="target,pcent,used,avail,size,source"
 
 data="$(LC_ALL=C df --output="$df_output" \
