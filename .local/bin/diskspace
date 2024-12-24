@@ -88,8 +88,8 @@ for line in $data; do
 
   set_severity "$val_use_pcnt"
 
-  msg="$(severity_fmt " $(severity_sym) [ ${val_p_mount} ] [ Device: ${val_p_dev} ]")
-$(severity_fmt "   [ Use: $(human "$val_use_b") | ${val_use_pcnt}% ] [ Free: $(human "$val_free_b") | ${val_free_pcnt}% ] [ Size: $(human "$val_size_b") ]")
+  msg="$(severity_fmt " $(severity_sym) [ ${val_p_mount} ] [ ${val_p_dev} ] [ $(human "$val_size_b") ]")
+$(severity_fmt "   [ Use: ${val_use_pcnt}% | $(human "$val_use_b") ] [ Free: ${val_free_pcnt}% | $(human "$val_free_b") ]")
 
 "
 
