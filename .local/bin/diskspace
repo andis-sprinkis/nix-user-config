@@ -68,6 +68,11 @@ severity_sym() {
   esac
 }
 
+msg_low=""
+msg_medium=""
+msg_high=""
+
+msg=""
 IFS="
 "
 for line in $data; do
@@ -83,7 +88,22 @@ for line in $data; do
 
   set_severity "$val_use_pcnt"
 
-  echo "$(severity_fmt " $(severity_sym) [ Mount: ${val_p_mount} ] [ Device: ${val_p_dev} ]")
+  msg="$(severity_fmt " $(severity_sym) [ Mount: ${val_p_mount} ] [ Device: ${val_p_dev} ]")
 $(severity_fmt "   [ Free: $(human "$val_free_b") | ${val_free_pcnt}% ] [ Use: $(human "$val_use_b") | ${val_use_pcnt}% ] [ Size: $(human "$val_size_b") ]")
+
 "
-done | head -n-1
+
+  case "$SEVERITY" in
+    "0")
+      msg_low="${msg_low}${msg}"
+    ;;
+    "1")
+      msg_medium="${msg_medium}${msg}"
+    ;;
+    "2")
+      msg_high="${msg_high}${msg}"
+    ;;
+  esac
+done
+
+echo "${msg_high:+$msg_high}${msg_medium:+$msg_medium}${msg_low:+$msg_low}"
