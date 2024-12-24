@@ -1,18 +1,75 @@
 #!/usr/bin/env sh
 set -eu
+IFS_="$IFS"
 
-# TODO: process each column sepeartely
-
-table_columns="Mount,Use %,Use,Free,Size,Device"
-col_right="1,2,3,4,5"
+# table_columns="Mount,Use %,Use,Free,Size,Device"
 df_output="target,pcent,used,avail,size,source"
 
-LC_ALL=C df -h --output="$df_output" \
+data="$(LC_ALL=C df --output="$df_output" \
   | column -t -o";" | sed -e 's/\s*\;/\;/g' \
   | tail -n "+2" \
-  | sort \
-  | column -t -s";" -o"  " -N"${table_columns}" -R"${col_right}" \
-  | sed \
-    -e "s/\([67][0-9]\%\)/\\x1b[0;33m\1\\x1b[0m/g" \
-    -e "s/\([89][0-9]\%\)/\\x1b[0;31;1m\1\\x1b[0m/g" \
-    -e "s/\(100\%\)/\\x1b[0;31;1m\1\\x1b[0m/g" \
+  | sort)"
+
+SEVERITY="0"
+
+set_severity() {
+  if [ "$1" -ge "90" ]; then
+    SEVERITY="2"
+    return "0"
+  fi
+
+  if [ "$1" -ge "70" ]; then
+    SEVERITY="1"
+    return "0"
+  fi
+
+  SEVERITY="0"
+  return "0"
+}
+
+kb_mb="1024"
+kb_gb="1048576"
+kb_tb="1073741824"
+kb_pb="1099511627776"
+kb_eb="1125899906842624"
+
+human() {
+  if [ "$1" -lt "$kb_mb" ]; then printf "%sKB\n" "$1";  return; fi
+  if [ "$1" -lt "$kb_gb" ]; then printf "%sMB\n" "$(echo "scale = 2; ${1} / ${kb_mb}" | bc)"; return; fi
+  if [ "$1" -lt "$kb_tb" ]; then printf "%sGB\n" "$(echo "scale = 2; ${1} / ${kb_gb}" | bc)"; return; fi
+  if [ "$1" -lt "$kb_pb" ]; then printf "%sTB\n" "$(echo "scale = 2; ${1} / ${kb_tb}" | bc)"; return; fi
+  if [ "$1" -lt "$kb_eb" ]; then printf "%sPB\n" "$(echo "scale = 2; ${1} / ${kb_pb}" | bc)"; return; fi
+}
+
+severity_weight_color() {
+  case "$SEVERITY" in
+    "0")
+      printf "%s" "$1"
+    ;;
+    "1")
+      printf "\x1b[0;1;33m%s\x1b[0m\n" "$1"
+    ;;
+    "2")
+      printf "\x1b[0;1;31m%s\x1b[0m\n" "$1"
+    ;;
+  esac
+}
+
+IFS="
+"
+for line in $data; do
+  IFS="$IFS_"
+
+  val_use_pcnt="$(echo "$line" | cut -d";" -f2 | sed -e "s/\%//g")"
+  set_severity "$val_use_pcnt"
+  val_free_pcnt="$((100 - val_use_pcnt))"
+  val_p_mount="$(echo "$line" | cut -d";" -f1)"
+  val_use_b="$(echo "$line" | cut -d";" -f3)"
+  val_free_b="$(echo "$line" | cut -d";" -f4)"
+  val_size_b="$(echo "$line" | cut -d";" -f5)"
+  val_p_dev="$(echo "$line" | cut -d";" -f6)"
+
+  echo "$(severity_weight_color "[ Mount: ${val_p_mount} | Device: ${val_p_dev} ]")
+$(severity_weight_color "[ Free: $(human "$val_free_b") (${val_free_pcnt}%) | Use: $(human "$val_use_b") (${val_use_pcnt}%) | Size: $(human "$val_size_b") ]")
+"
+done
