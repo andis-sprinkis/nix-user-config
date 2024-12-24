@@ -88,8 +88,8 @@ for line in $data; do
 
   set_severity "$val_use_pcnt"
 
-  msg="$(severity_fmt " $(severity_sym) [ ${val_p_mount} ] [ ${val_p_dev} ] [ $(human "$val_size_b") ]")
-$(severity_fmt "   [ Use: ${val_use_pcnt}% | $(human "$val_use_b") ] [ Free: ${val_free_pcnt}% | $(human "$val_free_b") ]")
+  msg="$(severity_fmt "$(severity_sym) [ ${val_p_mount} ] [ ${val_p_dev} ] [ $(human "$val_size_b") ]")
+$(severity_fmt "  [ Use: ${val_use_pcnt}% | $(human "$val_use_b") ] [ Free: ${val_free_pcnt}% | $(human "$val_free_b") ]")
 
 "
 
@@ -107,4 +107,4 @@ $(severity_fmt "   [ Use: ${val_use_pcnt}% | $(human "$val_use_b") ] [ Free: ${v
 done
 IFS="$IFS_"
 
-echo "${msg_high:+$msg_high}${msg_medium:+$msg_medium}${msg_low:+$msg_low}"
+echo "${msg_high:+$msg_high}${msg_medium:+$msg_medium}${msg_low:+$msg_low}" | head -n-2
