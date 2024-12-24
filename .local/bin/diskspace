@@ -69,7 +69,7 @@ for line in $data; do
   val_size_b="$(echo "$line" | cut -d";" -f5)"
   val_p_dev="$(echo "$line" | cut -d";" -f6)"
 
-  echo "$(severity_weight_color "[ Mount: ${val_p_mount} | Device: ${val_p_dev} ]")
-$(severity_weight_color "[ Free: $(human "$val_free_b") (${val_free_pcnt}%) | Use: $(human "$val_use_b") (${val_use_pcnt}%) | Size: $(human "$val_size_b") ]")
+  echo "$(severity_weight_color "[ Mount: ${val_p_mount} ] [ Device: ${val_p_dev} ]")
+$(severity_weight_color "[ Free: $(human "$val_free_b") | ${val_free_pcnt}% ] [ Use: $(human "$val_use_b") | ${val_use_pcnt}% ] [ Size: $(human "$val_size_b") ]")
 "
-done
+done | head -n-1
