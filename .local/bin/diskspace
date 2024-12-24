@@ -54,6 +54,20 @@ severity_fmt() {
   esac
 }
 
+severity_sym() {
+  case "$SEVERITY" in
+    "0")
+      printf "%s" "  "
+    ;;
+    "1")
+      printf "%s" "? "
+    ;;
+    "2")
+      printf "%s" "! "
+    ;;
+  esac
+}
+
 IFS="
 "
 for line in $data; do
@@ -69,7 +83,7 @@ for line in $data; do
 
   set_severity "$val_use_pcnt"
 
-  echo "$(severity_fmt "[ Mount: ${val_p_mount} ] [ Device: ${val_p_dev} ]")
-$(severity_fmt "[ Free: $(human "$val_free_b") | ${val_free_pcnt}% ] [ Use: $(human "$val_use_b") | ${val_use_pcnt}% ] [ Size: $(human "$val_size_b") ]")
+  echo "$(severity_fmt "$(severity_sym)[ Mount: ${val_p_mount} ] [ Device: ${val_p_dev} ]")
+$(severity_fmt "  [ Free: $(human "$val_free_b") | ${val_free_pcnt}% ] [ Use: $(human "$val_use_b") | ${val_use_pcnt}% ] [ Size: $(human "$val_size_b") ]")
 "
 done | head -n-1
