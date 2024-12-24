@@ -57,7 +57,7 @@ severity_fmt() {
 severity_sym() {
   case "$SEVERITY" in
     "0")
-      printf "%s" "  "
+      printf "%s" "- "
     ;;
     "1")
       printf "%s" "? "
