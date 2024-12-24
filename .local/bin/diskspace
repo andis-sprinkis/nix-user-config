@@ -105,5 +105,6 @@ $(severity_fmt "   [ Free: $(human "$val_free_b") | ${val_free_pcnt}% ] [ Use: $
     ;;
   esac
 done
+IFS="$IFS_"
 
 echo "${msg_high:+$msg_high}${msg_medium:+$msg_medium}${msg_low:+$msg_low}"
