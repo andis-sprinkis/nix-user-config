@@ -40,7 +40,7 @@ human() {
   if [ "$1" -lt "$kb_eb" ]; then printf "%sPB\n" "$(echo "scale = 2; ${1} / ${kb_pb}" | bc)"; return; fi
 }
 
-severity_weight_color() {
+severity_fmt() {
   case "$SEVERITY" in
     "0")
       printf "%s" "$1"
@@ -60,7 +60,6 @@ for line in $data; do
   IFS="$IFS_"
 
   val_use_pcnt="$(echo "$line" | cut -d";" -f2 | sed -e "s/\%//g")"
-  set_severity "$val_use_pcnt"
   val_free_pcnt="$((100 - val_use_pcnt))"
   val_p_mount="$(echo "$line" | cut -d";" -f1)"
   val_use_b="$(echo "$line" | cut -d";" -f3)"
@@ -68,7 +67,9 @@ for line in $data; do
   val_size_b="$(echo "$line" | cut -d";" -f5)"
   val_p_dev="$(echo "$line" | cut -d";" -f6)"
 
-  echo "$(severity_weight_color "[ Mount: ${val_p_mount} ] [ Device: ${val_p_dev} ]")
-$(severity_weight_color "[ Free: $(human "$val_free_b") | ${val_free_pcnt}% ] [ Use: $(human "$val_use_b") | ${val_use_pcnt}% ] [ Size: $(human "$val_size_b") ]")
+  set_severity "$val_use_pcnt"
+
+  echo "$(severity_fmt "[ Mount: ${val_p_mount} ] [ Device: ${val_p_dev} ]")
+$(severity_fmt "[ Free: $(human "$val_free_b") | ${val_free_pcnt}% ] [ Use: $(human "$val_use_b") | ${val_use_pcnt}% ] [ Size: $(human "$val_size_b") ]")
 "
 done | head -n-1
