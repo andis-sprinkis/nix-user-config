@@ -71,13 +71,20 @@ IFS="
 for line in $data; do
   IFS="$IFS_"
 
+  val_p_dev="$(echo "$line" | cut -d";" -f6)"
+
+  case "$val_p_dev" in
+    "tmpfs"|"efivarfs"|"run"|"dev")
+      continue
+    ;;
+  esac
+
   val_use_pcnt="$(echo "$line" | cut -d";" -f2 | sed -e "s/\%//g")"
   val_free_pcnt="$((100 - val_use_pcnt))"
   val_p_mount="$(echo "$line" | cut -d";" -f1)"
   val_use_b="$(echo "$line" | cut -d";" -f3)"
   val_free_b="$(echo "$line" | cut -d";" -f4)"
   val_size_b="$(echo "$line" | cut -d";" -f5)"
-  val_p_dev="$(echo "$line" | cut -d";" -f6)"
 
   set_severity "$val_use_pcnt"
 
