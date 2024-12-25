@@ -59,13 +59,13 @@ mute() {
 severity_fmt() {
   case "$SEVERITY" in
     "0")
-      printf "\x1b[0;1;32m%s\x1b[0m\n" "$1"
+      printf "\x1b[0;32m%s\x1b[0m\n" "$1"
     ;;
     "1")
-      printf "\x1b[0;1;33m%s\x1b[0m\n" "$1"
+      printf "\x1b[0;33m%s\x1b[0m\n" "$1"
     ;;
     "2")
-      printf "\x1b[0;1;31m%s\x1b[0m\n" "$1"
+      printf "\x1b[0;31m%s\x1b[0m\n" "$1"
     ;;
   esac
 }
