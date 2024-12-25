@@ -40,10 +40,14 @@ human() {
   if [ "$1" -lt "$kb_eb" ]; then printf "%s PB\n" "$(echo "scale = 1; ${1} / ${kb_pb}" | bc)"; return; fi
 }
 
+mute() {
+  printf "\x1b[0;90m%s\x1b[0m\n" "$1"
+}
+
 severity_fmt() {
   case "$SEVERITY" in
     "0")
-      printf "%s" "$1"
+      printf "\x1b[0;1;32m%s\x1b[0m\n" "$1"
     ;;
     "1")
       printf "\x1b[0;1;33m%s\x1b[0m\n" "$1"
@@ -83,7 +87,7 @@ for line in $data; do
 
   set_severity "$val_use_pcnt"
 
-  echo "- ${val_p_mount} | ${val_p_dev} | $(human "$val_size_b")
-  $(severity_fmt "$(severity_sym)")Use: $(severity_fmt "${val_use_pcnt}%") ($(severity_fmt "$(human "$val_use_b")")) | Free: $(severity_fmt "${val_free_pcnt}%") ($(severity_fmt "$(human "$val_free_b")"))"
+  echo "${val_p_mount} $(mute "(${val_p_dev})")
+$(mute "└─") $(severity_fmt "$(severity_sym)")Use$(mute ":") $(severity_fmt "${val_use_pcnt}%") $(mute "(")$(severity_fmt "$(human "$val_use_b")")$(mute ")") $(mute "─") Free$(mute ":") $(severity_fmt "${val_free_pcnt}%") $(mute "(")$(severity_fmt "$(human "$val_free_b")")$(mute ")") $(mute "─") Size$(mute ":") $(human "$val_size_b")"
 done
 IFS="$IFS_"
