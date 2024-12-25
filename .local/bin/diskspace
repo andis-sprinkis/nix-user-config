@@ -70,18 +70,13 @@ severity_fmt() {
   esac
 }
 
-severity_sym() {
-  case "$SEVERITY" in
-    "0")
-      printf "%s" "─╴"
-    ;;
-    "1")
-      printf "%s" "$(severity_fmt "?")$(mute "╴")"
-    ;;
-    "2")
-      printf "%s" "$(severity_fmt "!")$(mute "╴")"
-    ;;
-  esac
+path_fmt() {
+  if [ "$1" = "/" ]; then
+    echo "/"
+    return
+  fi
+
+  echo "$(mute "${1%/*}/")${1##*/}"
 }
 
 SEVERITY="0"
@@ -99,6 +94,24 @@ set_severity() {
 
   SEVERITY="0"
   return "0"
+}
+
+severity_sym_0="$(mute "└─╴")"
+severity_sym_1="$(mute "└")$(SEVERITY="1" severity_fmt "?")$(mute "╴")"
+severity_sym_2="$(mute "└")$(SEVERITY="2" severity_fmt "!")$(mute "╴")"
+
+severity_sym() {
+  case "$SEVERITY" in
+    "0")
+      printf "%s" "$severity_sym_0"
+    ;;
+    "1")
+      printf "%s" "$severity_sym_1"
+    ;;
+    "2")
+      printf "%s" "$severity_sym_2"
+    ;;
+  esac
 }
 
 IFS="
@@ -125,7 +138,7 @@ for line in $data; do
 
   set_severity "$val_use_pcnt"
 
-  echo "${val_p_mount} $(mute "($(human "$val_size_b"))") $(mute "(${val_p_dev})")
-$(mute "└$(severity_sym)")$(severity_fmt "${val_free_pcnt}% free") $(mute "(")$(severity_fmt "$(human "$val_free_b")")$(mute ")")$(mute "╶─╴")$(severity_fmt "${val_use_pcnt}% use") $(mute "(")$(severity_fmt "$(human "$val_use_b")")$(mute ")")"
+echo "$(path_fmt "$val_p_mount") $(mute "($(human "$val_size_b"))") $(mute "(${val_p_dev})")
+$(severity_sym)$(severity_fmt "${val_free_pcnt}% free") $(mute "(")$(severity_fmt "$(human "$val_free_b")")$(mute ")")$(mute "╶─╴")$(severity_fmt "${val_use_pcnt}% use") $(mute "(")$(severity_fmt "$(human "$val_use_b")")$(mute ")")"
 done
 IFS="$IFS_"
