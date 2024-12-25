@@ -84,6 +84,6 @@ for line in $data; do
   set_severity "$val_use_pcnt"
 
   echo "- ${val_p_mount} | ${val_p_dev} | $(human "$val_size_b")
-  $(severity_fmt "$(severity_sym)")Use: $(severity_fmt "${val_use_pcnt} %"), $(severity_fmt "$(human "$val_use_b")") | Free: $(severity_fmt "${val_free_pcnt}%"), $(severity_fmt "$(human "$val_free_b")")"
+  $(severity_fmt "$(severity_sym)")Use: $(severity_fmt "${val_use_pcnt}%") ($(severity_fmt "$(human "$val_use_b")")) | Free: $(severity_fmt "${val_free_pcnt}%") ($(severity_fmt "$(human "$val_free_b")"))"
 done
 IFS="$IFS_"
