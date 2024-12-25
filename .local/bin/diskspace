@@ -33,11 +33,11 @@ kb_pb="1099511627776"
 kb_eb="1125899906842624"
 
 human() {
-  if [ "$1" -lt "$kb_mb" ]; then printf "%sKB\n" "$1";  return; fi
-  if [ "$1" -lt "$kb_gb" ]; then printf "%sMB\n" "$(echo "scale = 2; ${1} / ${kb_mb}" | bc)"; return; fi
-  if [ "$1" -lt "$kb_tb" ]; then printf "%sGB\n" "$(echo "scale = 2; ${1} / ${kb_gb}" | bc)"; return; fi
-  if [ "$1" -lt "$kb_pb" ]; then printf "%sTB\n" "$(echo "scale = 2; ${1} / ${kb_tb}" | bc)"; return; fi
-  if [ "$1" -lt "$kb_eb" ]; then printf "%sPB\n" "$(echo "scale = 2; ${1} / ${kb_pb}" | bc)"; return; fi
+  if [ "$1" -lt "$kb_mb" ]; then printf "%s KB\n" "$1";  return; fi
+  if [ "$1" -lt "$kb_gb" ]; then printf "%s MB\n" "$(echo "scale = 1; ${1} / ${kb_mb}" | bc)"; return; fi
+  if [ "$1" -lt "$kb_tb" ]; then printf "%s GB\n" "$(echo "scale = 1; ${1} / ${kb_gb}" | bc)"; return; fi
+  if [ "$1" -lt "$kb_pb" ]; then printf "%s TB\n" "$(echo "scale = 1; ${1} / ${kb_tb}" | bc)"; return; fi
+  if [ "$1" -lt "$kb_eb" ]; then printf "%s PB\n" "$(echo "scale = 1; ${1} / ${kb_pb}" | bc)"; return; fi
 }
 
 severity_fmt() {
@@ -57,22 +57,17 @@ severity_fmt() {
 severity_sym() {
   case "$SEVERITY" in
     "0")
-      printf "%s" "-"
+      return
     ;;
     "1")
-      printf "%s" "?"
+      printf "%s" "? "
     ;;
     "2")
-      printf "%s" "!"
+      printf "%s" "! "
     ;;
   esac
 }
 
-msg_low=""
-msg_medium=""
-msg_high=""
-
-msg=""
 IFS="
 "
 for line in $data; do
@@ -88,22 +83,7 @@ for line in $data; do
 
   set_severity "$val_use_pcnt"
 
-  msg="$(severity_fmt "$(severity_sym) [ ${val_p_mount} ] [ ${val_p_dev} ]")
-$(severity_fmt "  [ $(human "$val_size_b") ] [ Use: ${val_use_pcnt}% | $(human "$val_use_b") ] [ Free: ${val_free_pcnt}% | $(human "$val_free_b") ]")
-"
-
-  case "$SEVERITY" in
-    "0")
-      msg_low="${msg_low}${msg}"
-    ;;
-    "1")
-      msg_medium="${msg_medium}${msg}"
-    ;;
-    "2")
-      msg_high="${msg_high}${msg}"
-    ;;
-  esac
+  echo "- ${val_p_mount} | ${val_p_dev} | $(human "$val_size_b")
+  $(severity_fmt "$(severity_sym)")Use: $(severity_fmt "${val_use_pcnt} %"), $(severity_fmt "$(human "$val_use_b")") | Free: $(severity_fmt "${val_free_pcnt}%"), $(severity_fmt "$(human "$val_free_b")")"
 done
 IFS="$IFS_"
-
-echo "${msg_high:+$msg_high}${msg_medium:+$msg_medium}${msg_low:+$msg_low}" | head -n-1
