@@ -2,6 +2,41 @@
 set -eu
 IFS_="$IFS"
 
+script="$(basename "$0")"
+
+help_info="NAME
+    ${script} - Show disk utilization.
+
+SYNOPSIS
+    ${script} [-f]
+
+DESCRIPTION
+    Shows disk utilization.
+
+    -f
+        Shows utilization for all devices (including 'tmpfs', 'efivarf', 'run', 'dev').
+
+    -h
+        Prints this message.
+"
+
+opt_has_f="0"
+while getopts fh name; do
+  case "$name" in
+    "f")
+      opt_has_f="1"
+    ;;
+    "h")
+      echo "$help_info"
+      exit
+    ;;
+    "?")
+      echo "$help_info" 1>&2
+      exit "2"
+    ;;
+  esac
+done
+
 data="$(LC_ALL=C df --output="target,pcent,used,avail,size,source" \
   | column -t -o";" | sed -e 's/\s*\;/\;/g' \
   | tail -n "+2" \
@@ -73,11 +108,13 @@ for line in $data; do
 
   val_p_dev="$(echo "$line" | cut -d";" -f6)"
 
-  case "$val_p_dev" in
-    "tmpfs"|"efivarfs"|"run"|"dev")
-      continue
-    ;;
-  esac
+  if [ "$opt_has_f" = "0" ]; then
+    case "$val_p_dev" in
+      "tmpfs"|"efivarfs"|"run"|"dev")
+        continue
+      ;;
+    esac
+  fi
 
   val_use_pcnt="$(echo "$line" | cut -d";" -f2 | sed -e "s/\%//g")"
   val_free_pcnt="$((100 - val_use_pcnt))"
@@ -88,7 +125,7 @@ for line in $data; do
 
   set_severity "$val_use_pcnt"
 
-  echo "${val_p_mount} $(mute "(${val_p_dev})")
+  echo "$(mute "┌") ${val_p_mount} $(mute "(${val_p_dev})")
 $(mute "└─") $(severity_fmt "$(severity_sym)")Use$(mute ":") $(severity_fmt "${val_use_pcnt}%") $(mute "(")$(severity_fmt "$(human "$val_use_b")")$(mute ")") $(mute "─") Free$(mute ":") $(severity_fmt "${val_free_pcnt}%") $(mute "(")$(severity_fmt "$(human "$val_free_b")")$(mute ")") $(mute "─ $(human "$val_size_b")")"
 done
 IFS="$IFS_"
