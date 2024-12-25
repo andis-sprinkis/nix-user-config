@@ -45,11 +45,11 @@ data="$(LC_ALL=C df --output="target,pcent,used,avail,size,source" \
 kb_mb="1024" kb_gb="1048576" kb_tb="1073741824" kb_pb="1099511627776" kb_eb="1125899906842624"
 
 human() {
-  if [ "$1" -lt "$kb_mb" ]; then printf "%s KB\n" "$1";  return; fi
-  if [ "$1" -lt "$kb_gb" ]; then printf "%s MB\n" "$(echo "scale = 1; ${1} / ${kb_mb}" | bc)"; return; fi
-  if [ "$1" -lt "$kb_tb" ]; then printf "%s GB\n" "$(echo "scale = 1; ${1} / ${kb_gb}" | bc)"; return; fi
-  if [ "$1" -lt "$kb_pb" ]; then printf "%s TB\n" "$(echo "scale = 1; ${1} / ${kb_tb}" | bc)"; return; fi
-  if [ "$1" -lt "$kb_eb" ]; then printf "%s PB\n" "$(echo "scale = 1; ${1} / ${kb_pb}" | bc)"; return; fi
+  if [ "$1" -lt "$kb_mb" ]; then printf "%sKB\n" "$1";  return; fi
+  if [ "$1" -lt "$kb_gb" ]; then printf "%sMB\n" "$(echo "scale = 1; ${1} / ${kb_mb}" | bc)"; return; fi
+  if [ "$1" -lt "$kb_tb" ]; then printf "%sGB\n" "$(echo "scale = 1; ${1} / ${kb_gb}" | bc)"; return; fi
+  if [ "$1" -lt "$kb_pb" ]; then printf "%sTB\n" "$(echo "scale = 1; ${1} / ${kb_tb}" | bc)"; return; fi
+  if [ "$1" -lt "$kb_eb" ]; then printf "%sPB\n" "$(echo "scale = 1; ${1} / ${kb_pb}" | bc)"; return; fi
 }
 
 mute() {
@@ -126,6 +126,6 @@ for line in $data; do
   set_severity "$val_use_pcnt"
 
   echo "${val_p_mount} $(mute "($(human "$val_size_b"))") $(mute "(${val_p_dev})")
-$(mute "└$(severity_sym)")$(severity_fmt "${val_free_pcnt}% free") $(mute "(")$(severity_fmt "$(human "$val_free_b")")$(mute ")")$(mute "╶╴")$(severity_fmt "${val_use_pcnt}% use") $(mute "╶╴")$(severity_fmt "$(human "$val_use_b")")"
+$(mute "└$(severity_sym)")$(severity_fmt "${val_free_pcnt}% free")$(mute "╶╴")$(severity_fmt "$(human "$val_free_b")")$(mute "╶─╴")$(severity_fmt "${val_use_pcnt}% use")$(mute "╶╴")$(severity_fmt "$(human "$val_use_b")")"
 done
 IFS="$IFS_"
