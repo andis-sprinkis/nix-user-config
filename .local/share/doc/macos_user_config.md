@@ -14,9 +14,9 @@
     ```
 1. Install Homebrew packages.
     ```sh
-    [ -s ./brew_tap ] && brew tap $(echo $(cat ./brew_tap))
-    [ -s ./brew ] && brew install $(echo $(cat ./brew))
-    [ -s ./brew_cask ] && brew install --cask $(echo $(cat ./brew_cask))
+    [ -s ./brew_tap ] && brew tap $(cat ./brew_tap | paste -s -d ' ')
+    [ -s ./brew ] && brew install $(cat ./brew | paste -s -d ' ')
+    [ -s ./brew_cask ] && brew install --cask $(cat ./brew_cask | paste -s -d ' ')
     ```
 1. Install user general configuration.
     ```sh
@@ -33,11 +33,11 @@
     export VOLTA_HOME="$HOME/.local/share/volta"
     PATH="$VOLTA_HOME/bin:$PATH"
     cd $HOME/macos-user-config
-    [ -s ./npm ] && volta install $(echo $(cat ./npm))
+    [ -s ./npm ] && volta install $(cat ./npm | paste -s -d ' ')
     ```
 1. Install PyPi packages.
     ```sh
-    [ -s ./pypi ] && for p in $(echo $(cat ./pypi)); do pipx install $p; done
+    [ -s ./pypi ] && for p in $(cat ./pypi | paste -s -d ' '); do pipx install $p; done
     ```
 1. Install user Neovim configuration.
     ```sh
@@ -79,9 +79,9 @@ Steps for adding any newly listed packages from the user package lists to an alr
             ```
         - Sync with the package lists.
             ```sh
-            brew tap $(echo $(cat "./brew_tap"))
-            brew install $(echo $(cat "./brew"))
-            brew install --cask $(echo $(cat "./brew_cask"))
+            brew tap $(cat "./brew_tap" | paste -s -d ' ')
+            brew install $(cat "./brew" | paste -s -d ' ')
+            brew install --cask $(cat "./brew_cask" | paste -s -d ' ')
             ```
 
     - PyPI:
@@ -92,11 +92,11 @@ Steps for adding any newly listed packages from the user package lists to an alr
             ```
         - Sync with the package list.
             ```sh
-            for p in $(echo $(cat "./pypi")); do pipx install "$p"; done
+            for p in $(cat "./pypi" | paste -s -d ' '); do pipx install "$p"; done
             ```
 
     - npm:
 
         ```sh
-        volta install $(echo $(cat "./npm"))
+        volta install $(cat "./npm" | paste -s -d ' ')
         ```
