@@ -327,7 +327,7 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     ```
 1. Install the Arch official package repository packages.
     ```sh
-    sudo pacman -S --needed $(echo $(cat ./arch))
+    sudo pacman -S --needed $(cat ./arch | paste -s -d ' ')
     ```
 1. If installation target computer is a VirtualBox guest, install and enable the VirtualBox guest utilities.
     ```sh
@@ -348,7 +348,7 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     ```
 1. Install AUR packages.
     ```sh
-    yay -S --needed $(echo $(cat ./aur))
+    yay -S --needed $(cat ./aur | paste -s -d ' ')
     ```
 1. Install user general configuration.
     ```sh
@@ -377,16 +377,16 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     ```
 1. Install AppImage packages.
     ```sh
-    for p in $(echo $(cat ./appimage)); do curl --location --output-dir "$HOME/.local/opt/appimage" --remote-name "$p"; done
+    for p in $(cat ./appimage | paste -s -d ' '); do curl --location --output-dir "$HOME/.local/opt/appimage" --remote-name "$p"; done
     chmod +x $HOME/.local/opt/appimage/*
     ```
 1. Install npm packages.
     ```sh
-    volta install $(echo $(cat ./npm))
+    volta install $(cat ./npm | paste -s -d ' ')
     ```
 1. Install PyPi packages.
     ```sh
-    for p in $(echo $(cat ./pypi)); do pipx install $p; done
+    for p in $(cat ./pypi | paste -s -d ' '); do pipx install $p; done
     ```
 1. Enable the audio system.
     ```sh
