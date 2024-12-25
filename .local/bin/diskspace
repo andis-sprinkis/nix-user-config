@@ -72,11 +72,11 @@ severity_fmt() {
 
 path_fmt() {
   if [ "$1" = "/" ]; then
-    echo "/"
+    severity_fmt "/"
     return
   fi
 
-  echo "$(mute "${1%/*}/")${1##*/}"
+  echo "$(mute "${1%/*}")$(severity_fmt "/${1##*/}")"
 }
 
 SEVERITY="0"
@@ -116,7 +116,7 @@ sym_severity() {
 
 sym_parenl_mute="$(mute "(")"
 sym_parenr_mute="$(mute ")")"
-sym_bigdash_mute="$(mute "╶─╴")"
+sym_bigdash_mute="$(mute "╶╴")"
 
 IFS="
 "
