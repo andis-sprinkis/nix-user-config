@@ -125,7 +125,7 @@ for line in $data; do
 
   set_severity "$val_use_pcnt"
 
-  echo "$(mute "┌") ${val_p_mount} $(mute "(${val_p_dev})")
+  echo "${val_p_mount} $(mute "(${val_p_dev})")
 $(mute "└─") $(severity_fmt "$(severity_sym)")Free$(mute ":") $(severity_fmt "${val_free_pcnt}%") $(mute "(")$(severity_fmt "$(human "$val_free_b")")$(mute ")") $(mute "─") Use$(mute ":") $(severity_fmt "${val_use_pcnt}%") $(mute "(")$(severity_fmt "$(human "$val_use_b")")$(mute ")") $(mute "─ $(human "$val_size_b")")"
 done
 IFS="$IFS_"
