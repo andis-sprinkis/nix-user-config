@@ -56,7 +56,7 @@ alias \
   h="tldr" \
   hexdump="hexdump --color=always --canonical" \
   hosts="sudo \$EDITOR /etc/hosts" \
-  htop="htop -t -s PERCENT_CPU" \
+  htop="htop -t -s PERCENT_CPU --highlight-changes=10" \
   inxi="inxi -c7 -F" \
   ip="ip --color=always" \
   jq="jq -C" \
