@@ -1,13 +1,10 @@
 #!/usr/bin/env sh
 
 cmd="${WAYLAND_DISPLAY:+"bemenu"}"
+cmd="${cmd:-"${DISPLAY:+"bemenu"}"}"
 
-if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-  cmd="bemenu"
+if [ "$cmd" ]; then
+  exec "$cmd" "$@"
 fi
 
-if [ -z "$cmd" ]; then
-  exit "1"
-fi
-
-exec "$cmd" "$@"
+exit "1"
