@@ -9,16 +9,6 @@ set -eu
 #
 # The lines that don't begin with '#  ' are ignored.
 
-cmd_menu="${WAYLAND_DISPLAY:+"wmenu"}"
-
-if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-  cmd_menu="dmenu"
-fi
-
-if [ -z "$cmd_menu" ]; then
-  exit "7"
-fi
-
 bmark_file_dir="${XDG_DATA_HOME:-$HOME/.local/share}/bmark_desktop"
 bmark_file="${bmark_file_dir}/marks"
 
@@ -58,7 +48,7 @@ line_edit_bmarks="Edit bookmarks..."
 menu_lines="${bmark_lines:+$(echo "$bmark_lines" | sed -e 's/^#  //g' -e "s/  \~  ${hostname}$//g")
 }$line_edit_bmarks"
 
-sel_txt="$(printf "%s\n" "$menu_lines" | "$cmd_menu" -p "Bookmark:")"
+sel_txt="$(printf "%s\n" "$menu_lines" | menu_desktop -p "Bookmark:")"
 
 if [ -z "$sel_txt" ]; then
   exit "8"

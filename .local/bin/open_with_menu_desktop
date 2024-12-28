@@ -1,25 +1,9 @@
 #!/usr/bin/env sh
 set -eu
 
-cmd_menu="${WAYLAND_DISPLAY:+"wmenu -p 'Open with:'"}"
-
-if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-  cmd_menu="dmenu -p 'Open with:'"
-fi
-
-if [ -z "$cmd_menu" ]; then
-  exit "1"
-fi
-
 cmd_inc_bin_path="(stest -flx \$(echo \$PATH | tr : ' ')"
 
-cmd_applications_menu="(cat; ${cmd_inc_bin_path} | sort -u)) | ${cmd_menu}"
-
-# set +e; killall -u "$(whoami)" "$cmd_menu" 2> "/dev/null"; set -e
-
-if [ "$(pidof "$cmd_menu")" ]; then
-  exit "2"
-fi
+cmd_applications_menu="(cat; ${cmd_inc_bin_path} | sort -u)) | menu_desktop"
 
 cmd_args="$(
   j4-dmenu-desktop \
