@@ -109,11 +109,52 @@ on-cd
 cmd on-redraw %{{
   call() { exec lf -remote "send ${id} set ratios ${1}"; }
 
-  if [ $lf_width -le 35  ]; then call "100:1";    fi
-  if [ $lf_width -le 60  ]; then call "1:2";      fi
-  if [ $lf_width -le 100 ]; then call "2:3:4";    fi
-  if [ $lf_width -le 140 ]; then call "1:3:4:5";  fi
-                                 call "1:2:4:6:8"
+  if [ "$lf_width" -le "35"  ]; then call "100:1";    fi
+  if [ "$lf_width" -le "60"  ]; then call "1:2";      fi
+  if [ "$lf_width" -le "100" ]; then call "2:3:4";    fi
+  if [ "$lf_width" -le "140" ]; then call "1:3:4:5";  fi
+                                     call "1:2:4:6:8"
+}}
+
+cmd ratios %{{
+  IFS_="$IFS"
+  r="100:1 1:2 2:3:4 1:3:4:5 1:2:4:6:8"
+  r_current="$lf_ratios" r_new=""
+  i="1"
+
+  IFS=" "
+  for ratios in $r; do
+    IFS="$IFS_"
+
+    if [ "$ratios" = "$r_current" ]; then
+      case "$1" in
+        "-")
+          if [ "$i" -gt "1" ]; then
+            r_new="$(echo "$r" | cut -d" " -f "$((i - 1))")"
+          else
+            r_new="1:2:4:6:8"
+          fi
+        ;;
+        "+")
+          r_new="$(echo "$r" | cut -d" " -f "$((i + 1))")"
+          r_new="${r_new:-"100:1"}"
+        ;;
+        *)
+          exit "1"
+        ;;
+      esac
+
+      if [ -z "$r_new" ]; then
+        exit "2"
+      fi
+
+      lf -remote "send ${id} set ratios ${r_new}"
+      lf -remote "send ${id} reload"
+      exit
+    fi
+
+    i="$((i + "1"))"
+  done
 }}
 
 cmd follow-symlink %{{
@@ -138,6 +179,9 @@ map <m-left> updir
 map <m-right> open
 map <m-6> updir
 map <m-7> open
+map + ratios +
+map = ratios +
+map - ratios -
 map O :open-with-menu-desktop
 map P push :paste-to-file<space>
 map R delete
