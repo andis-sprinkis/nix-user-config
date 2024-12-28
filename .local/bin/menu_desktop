@@ -3,7 +3,7 @@
 cmd="${WAYLAND_DISPLAY:+"bemenu"}"
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-  cmd="bemenu"
+  cmd="dmenu"
 fi
 
 if [ -z "$cmd" ]; then
