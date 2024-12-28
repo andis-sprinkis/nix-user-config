@@ -37,6 +37,7 @@ exec "/usr/bin/bemenu" \
   --fixed-height    \
   --single-instance \
   --no-overlap      \
-  --binding         "vim" \
-  --vim-esc-exits   \
   "$@"
+
+  # --binding         "vim" \
+  # --vim-esc-exits   \
