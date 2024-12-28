@@ -144,9 +144,7 @@ cmd ratios %{{
         ;;
       esac
 
-      if [ -z "$r_new" ]; then
-        exit "2"
-      fi
+      r_new="${r_new:-"100:1"}"
 
       lf -remote "send ${id} set ratios ${r_new}"
       lf -remote "send ${id} reload"
@@ -157,7 +155,7 @@ cmd ratios %{{
     i="$((i + "1"))"
   done
 
-  exit "3"
+  exit "2"
 }}
 
 cmd follow-symlink %{{
