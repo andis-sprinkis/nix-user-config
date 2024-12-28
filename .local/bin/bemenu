@@ -25,11 +25,10 @@ exec "/usr/bin/bemenu" \
   --bdr             "$GUI_COLOR_6" \
   --fn              "pango:${GUI_FONT_FAMILY_GUI} ${GUI_FONT_STYLE} ${GUI_FONT_SIZE}" \
   --cw              "2px" \
-  --line-height     "16px" \
   --list            "$GUI_MENU_LINE_COUNT" \
   -p                "" \
   --ignorecase      \
-  --border          "4px" \
+  --border          "5px" \
   --width-factor    "0.8" \
   --margin          "100px" \
   --center          \

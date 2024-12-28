@@ -3,7 +3,7 @@ set -eu
 
 cmd_inc_bin_path="(stest -flx \$(echo \$PATH | tr : ' ')"
 
-cmd_applications_menu="(cat; ${cmd_inc_bin_path} | sort -u)) | menu_desktop"
+cmd_applications_menu="(cat; ${cmd_inc_bin_path} | sort -u)) | menu_desktop -p 'Open with:'"
 
 cmd_args="$(
   j4-dmenu-desktop \
