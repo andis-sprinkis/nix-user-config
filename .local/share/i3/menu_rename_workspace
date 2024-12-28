@@ -17,11 +17,9 @@ wm="${wm:-"i3"}"
 case "$wm" in
   "sway")
     wm_cmd="swaymsg"
-    cmd_menu="wmenu"
   ;;
   "i3")
     wm_cmd="i3-msg"
-    cmd_menu="dmenu"
   ;;
   *)
     exit "1"
@@ -35,7 +33,7 @@ ws="$(
 ws_num="$( echo "$ws" | sed  "1q;d")"
 ws_name="$(echo "$ws" | sed  "2q;d")"
 
-ws_name_input="$(echo $("$@" | "$cmd_menu" -p "Rename workspace \"${ws_name}\":"))"
+ws_name_input="$(echo $("$@" | menu_desktop -p "Rename workspace \"${ws_name}\":"))"
 
 if [ -z "$ws_name_input" ]; then
   exit "0"

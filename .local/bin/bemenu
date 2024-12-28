@@ -4,38 +4,39 @@ set -eu
 . "$GUI_ENV"
 
 exec "/usr/bin/bemenu" \
-  --tb            "$GUI_COLOR_BACKGROUND" \
-  --tf            "$GUI_COLOR_FOREGROUND" \
-  --fb            "$GUI_COLOR_BACKGROUND" \
-  --ff            "$GUI_COLOR_FOREGROUND" \
-  --cb            "$GUI_COLOR_BACKGROUND" \
-  --cf            "$GUI_COLOR_FOREGROUND" \
-  --nb            "$GUI_COLOR_BACKGROUND" \
-  --nf            "$GUI_COLOR_FOREGROUND" \
-  --hb            "$GUI_COLOR_FOREGROUND" \
-  --hf            "$GUI_COLOR_BACKGROUND" \
-  --fbb           "$GUI_COLOR_BACKGROUND" \
-  --fbf           "$GUI_COLOR_3" \
-  --sb            "$GUI_COLOR_FOREGROUND" \
-  --sf            "$GUI_COLOR_BACKGROUND" \
-  --ab            "$GUI_COLOR_BACKGROUND" \
-  --af            "$GUI_COLOR_FOREGROUND" \
-  --scb           "$GUI_COLOR_BACKGROUND" \
-  --scf           "$GUI_COLOR_8" \
-  --bdr           "$GUI_COLOR_6" \
-  --fn            "pango:${GUI_FONT_FAMILY_GUI} ${GUI_FONT_STYLE} ${GUI_FONT_SIZE}" \
-  --cw            "2px" \
-  --line-height   "16px" \
-  --list          "$GUI_MENU_LINE_COUNT" \
-  -p              "" \
-  --ignorecase    \
-  --border        "4px" \
-  --width-factor  "0.8" \
-  --margin        "200px" \
-  --center        \
-  --wrap          \
-  --fixed-height  \
-  --no-overlap    \
-  --binding       "vim" \
-  --vim-esc-exits \
+  --tb              "$GUI_COLOR_BACKGROUND" \
+  --tf              "$GUI_COLOR_FOREGROUND" \
+  --fb              "$GUI_COLOR_BACKGROUND" \
+  --ff              "$GUI_COLOR_FOREGROUND" \
+  --cb              "$GUI_COLOR_BACKGROUND" \
+  --cf              "$GUI_COLOR_FOREGROUND" \
+  --nb              "$GUI_COLOR_BACKGROUND" \
+  --nf              "$GUI_COLOR_FOREGROUND" \
+  --hb              "$GUI_COLOR_FOREGROUND" \
+  --hf              "$GUI_COLOR_BACKGROUND" \
+  --fbb             "$GUI_COLOR_BACKGROUND" \
+  --fbf             "$GUI_COLOR_3" \
+  --sb              "$GUI_COLOR_FOREGROUND" \
+  --sf              "$GUI_COLOR_BACKGROUND" \
+  --ab              "$GUI_COLOR_BACKGROUND" \
+  --af              "$GUI_COLOR_FOREGROUND" \
+  --scb             "$GUI_COLOR_BACKGROUND" \
+  --scf             "$GUI_COLOR_8" \
+  --bdr             "$GUI_COLOR_6" \
+  --fn              "pango:${GUI_FONT_FAMILY_GUI} ${GUI_FONT_STYLE} ${GUI_FONT_SIZE}" \
+  --cw              "2px" \
+  --line-height     "16px" \
+  --list            "$GUI_MENU_LINE_COUNT" \
+  -p                "" \
+  --ignorecase      \
+  --border          "4px" \
+  --width-factor    "0.8" \
+  --margin          "200px" \
+  --center          \
+  --wrap            \
+  --fixed-height    \
+  --single-instance \
+  --no-overlap      \
+  --binding         "vim" \
+  --vim-esc-exits   \
   "$@"

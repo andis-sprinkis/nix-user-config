@@ -7,18 +7,16 @@ wm="${wm:-"i3"}"
 case "$wm" in
   "sway")
     wm_cmd="swaymsg"
-    cmd_menu="wmenu"
   ;;
   "i3")
     wm_cmd="i3-msg"
-    cmd_menu="dmenu"
   ;;
   *)
     exit "1"
   ;;
 esac
 
-ws="$($wm_cmd -t get_workspaces | jq '.[].name' -r | "$cmd_menu" -p "Move window to workspace:")"
+ws="$($wm_cmd -t get_workspaces | jq '.[].name' -r | menu_desktop -p "Move window to workspace:")"
 
 if [ "$ws" ]; then
   exec $wm_cmd -q "move container to workspace ${ws}; workspace ${ws}"

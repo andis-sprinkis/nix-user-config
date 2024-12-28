@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-cmd="${WAYLAND_DISPLAY:+"wmenu"}"
+cmd="${WAYLAND_DISPLAY:+"bemenu"}"
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   cmd="dmenu"
