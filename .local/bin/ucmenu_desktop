@@ -4,7 +4,7 @@ set -e
 [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && {
   win="$(xdotool getwindowfocus)"
 
-  output="$(ucmenu -m "dmenu -p '%P:'" -n "dmenu -p '%P:'" -r "dmenu -p '%P:'")"
+  output="$(ucmenu -m "menu_desktop -p '%P:'" -n "menu_desktop -p '%P:'" -r "menu_desktop -p '%P:'")"
 
   if [ -z "$output" ]; then
     exit "0"
@@ -24,7 +24,7 @@ set -e
 }
 
 [ "${WAYLAND_DISPLAY:-""}" ] && {
-  output="$(ucmenu -m "wmenu -p '%P:'" -n "wmenu -p '%P:'" -r "wmenu -p '%P:'")"
+  output="$(ucmenu -m "menu_desktop -p '%P:'" -n "menu_desktop -p '%P:'" -r "menu_desktop -p '%P:'")"
 
   if [ "$output" ]; then
     sleep "0.5"
