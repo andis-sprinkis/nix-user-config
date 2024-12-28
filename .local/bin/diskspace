@@ -84,16 +84,15 @@ SEVERITY="0"
 set_severity() {
   if [ "$1" -ge "90" ]; then
     SEVERITY="2"
-    return "0"
+    return
   fi
 
   if [ "$1" -ge "70" ]; then
     SEVERITY="1"
-    return "0"
+    return
   fi
 
   SEVERITY="0"
-  return "0"
 }
 
 sym_smdashl_mute="$(mute "╴")"
