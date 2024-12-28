@@ -96,9 +96,16 @@ set_severity() {
   return "0"
 }
 
-sym_severity_0="$(mute "└─╴")"
-sym_severity_1="$(mute "└")$(SEVERITY="1" severity_fmt "?")$(mute "╴")"
-sym_severity_2="$(mute "└")$(SEVERITY="2" severity_fmt "!")$(mute "╴")"
+sym_smdashl_mute="$(mute "╴")"
+sym_angle_up_r_mute="$(mute "└")"
+sym_dash_mute="$(mute "─")"
+sym_parenl_mute="$(mute "(")"
+sym_parenr_mute="$(mute ")")"
+sym_bigdash_mute="$(mute "╶╴")"
+
+sym_severity_0="${sym_angle_up_r_mute}${sym_dash_mute}${sym_smdashl_mute}"
+sym_severity_1="${sym_angle_up_r_mute}$(SEVERITY="1" severity_fmt "?")${sym_smdashl_mute}"
+sym_severity_2="${sym_angle_up_r_mute}$(SEVERITY="2" severity_fmt "!")${sym_smdashl_mute}"
 
 sym_severity() {
   case "$SEVERITY" in
@@ -113,10 +120,6 @@ sym_severity() {
     ;;
   esac
 }
-
-sym_parenl_mute="$(mute "(")"
-sym_parenr_mute="$(mute ")")"
-sym_bigdash_mute="$(mute "╶╴")"
 
 IFS="
 "
