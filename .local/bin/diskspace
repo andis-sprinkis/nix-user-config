@@ -135,7 +135,7 @@ for line in $data; do
     esac
   fi
 
-  val_use_pcnt="$(echo "$line" | cut -d";" -f2 | sed -e "s/\%//g")"
+  val_use_pcnt="$(echo "$line" | cut -d";" -f2 | cut -d "%" -f1)"
   val_free_pcnt="$((100 - val_use_pcnt))"
   val_p_mount="$(echo "$line" | cut -d";" -f1)"
   val_use_b="$(echo "$line" | cut -d";" -f3)"
