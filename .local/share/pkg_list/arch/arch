@@ -12,6 +12,8 @@ autossh
 base-devel
 bat
 bc
+bemenu
+bemenu-x11
 bemenu-wayland
 binutils
 blueman

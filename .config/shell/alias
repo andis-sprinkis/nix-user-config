@@ -71,6 +71,7 @@ alias \
   ncdu="ncdu --color dark -x" \
   nethogs="sudo nethogs -l" \
   p="python3 -q" \
+  pkg="\$EDITOR \"\${XDG_DATA_HOME:-\$HOME/.local/share}/pkg_list/\"" \
   ports="sudo ss -tunlp" \
   py="python3 -q" \
   python3="python3 -q" \
