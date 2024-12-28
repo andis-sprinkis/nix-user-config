@@ -130,13 +130,13 @@ cmd ratios %{{
       case "$1" in
         "+")
           if [ "$i" -gt "1" ]; then
-            r_new="$(echo "$ratios" | cut -d" " -f "$((i - 1))")"
+            r_new="$(echo "$ratios" | cut -d" " -f "$((i - "1"))")"
           else
             r_new="1:2:4:6:8"
           fi
         ;;
         "-")
-          r_new="$(echo "$ratios" | cut -d" " -f "$((i + 1))")"
+          r_new="$(echo "$ratios" | cut -d" " -f "$((i + "1"))")"
           r_new="${r_new:-"100:1"}"
         ;;
         *)
