@@ -142,7 +142,7 @@ for line in $data; do
 
   set_severity "$val_use_pcnt"
 
-echo "$(path_fmt "$val_p_mount") $(mute "($(human "$val_size_b"))") $(mute "(${val_p_dev})")
+echo "$(path_fmt "$val_p_mount") ${sym_parenl_mute}$(human "$val_size_b")${sym_parenr_mute} $(mute "(${val_p_dev})")
 $(sym_severity)$(severity_fmt "${val_free_pcnt}% free") ${sym_parenl_mute}$(severity_fmt "$(human "$val_free_b")")${sym_parenr_mute}${sym_bigdash_mute}$(severity_fmt "${val_use_pcnt}% used") ${sym_parenl_mute}$(severity_fmt "$(human "$val_use_b")")${sym_parenr_mute}"
 done
 IFS="$IFS_"
