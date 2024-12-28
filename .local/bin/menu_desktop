@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+cmd="${WAYLAND_DISPLAY:+"wmenu"}"
+
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+  cmd="dmenu"
+fi
+
+if [ -z "$cmd" ]; then
+  exit "1"
+fi
+
+exec "$cmd" "$@"
