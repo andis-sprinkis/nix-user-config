@@ -49,10 +49,10 @@ case "$dev_count" in
   "0")
     case "$controller_is_on" in
       "0")
-        echo "Bluetooth disabled"
+        echo "Bluetooth off"
       ;;
       "1")
-        echo "Bluetooth enabled"
+        echo "Bluetooth on"
       ;;
     esac
   ;;
