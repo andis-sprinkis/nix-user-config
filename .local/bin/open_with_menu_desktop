@@ -26,7 +26,7 @@ for a in $cmd_args; do
   arg="$a"
   arg="${arg#"'"}"
   arg="${arg%"'"}"
-  cmd="${cmd:+$cmd }${arg}"
+  cmd="${cmd:+"$cmd "}${arg}"
 done
 
 if echo "$cmd" | grep -q "^${TERMINAL} -e "; then
