@@ -3,7 +3,7 @@ set -eu
 
 status() {
   if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-    if [ -z "$(pidof "xscreensaver")" ] && [ -z "$(pidof "xss-lock")" ]; then
+    if [ -z "$(pidof "xscreensaver")" ] || [ -z "$(pidof "xss-lock")" ]; then
       echo "stopped"
       return "0"
     fi
