@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -eu
 
-status="$(idle_manager_status)"
+status="$(idle_manager "status")"
 
 if [ "${BLOCK_BUTTON:-""}" ]; then
   reload() {
@@ -12,31 +12,33 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
 
   _idle_lock() {
     echo "Idle lock"
-    idle_lock 1> "/dev/null" 2> "/dev/null" & disown
+    idle_manager "lock" 1> "/dev/null" 2> "/dev/null" & disown
     exit
   }
 
   _idle_manager_start() {
     echo "Enabling the idle manager..."
-    idle_manager_start 1> "/dev/null" 2> "/dev/null" & disown
+    idle_manager "start" 1> "/dev/null" 2> "/dev/null" & disown
     reload
     exit
   }
 
   _idle_manager_stop() {
     echo "Disabling the idle manager..."
-    idle_manager_stop 1> "/dev/null" 2> "/dev/null" & disown
+    idle_manager "stop" 1> "/dev/null" 2> "/dev/null" & disown
     reload
     exit
   }
 
   case "$BLOCK_BUTTON" in
-    "1") case "$status" in
+    "1")
+      case "$status" in
         "started") _idle_lock ;;
         "stopped") _idle_manager_start ;;
       esac
     ;;
-    "3") case "$status" in
+    "3")
+      case "$status" in
         "started") _idle_manager_stop ;;
         "stopped") _idle_manager_start ;;
       esac
@@ -45,6 +47,10 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
 fi
 
 case "$status" in
-  "started") echo "Idle lock" ;;
-  "stopped") echo "Idle mgr. off" ;;
+  "started")
+    echo "Idle lock"
+  ;;
+  "stopped")
+    echo "Idle mgr. off"
+  ;;
 esac

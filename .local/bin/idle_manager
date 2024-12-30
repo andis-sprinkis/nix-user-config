@@ -1,0 +1,143 @@
+#!/usr/bin/env sh
+set -eu
+
+status() {
+  if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+    if [ -z "$(pidof "xscreensaver")" ] || [ -z "$(pidof "xss-lock")" ]; then
+      echo "stopped"
+      return "0"
+    fi
+
+    echo "started"
+    return "0"
+  fi
+
+  if [ "${WAYLAND_DISPLAY:-""}" ]; then
+    if [ -z "$(pidof "swayidle")" ]; then
+      echo "stopped"
+      return "0"
+    fi
+
+    echo "started"
+    return "0"
+  fi
+
+  echo "unknown"
+}
+
+start() {
+  if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+    ## Starting or reloading xscreensaver
+
+    if [ "$(pidof "xscreensaver")" ]; then 
+      xscreensaver-command --restart 1> "/dev/null" 2> "/dev/null" & disown
+    else
+      xscreensaver --no-splash 1> "/dev/null" 2> "/dev/null" & disown
+    fi
+
+    ## Starting xss-lock
+
+    if [ -z "$(pidof "xss-lock")" ]; then
+      xss-lock --ignore-sleep -- xscreensaver-command -lock 1> "/dev/null" 2> "/dev/null" & disown
+    fi
+
+    return "0"
+  fi
+
+  if [ "${WAYLAND_DISPLAY:-""}" ]; then
+    if [ "$(pidof "swayidle")" ]; then
+      set +e
+      killall -u "$(whoami)" "swayidle"
+      set -e
+    fi
+
+    swayidle -w \
+      timeout "100" "swaymsg 'output * power off'" \
+        resume "swaymsg 'output * power on'" \
+      timeout "120" "swaylock -u -f -c 000000" \
+        resume "swaymsg 'output * power on'" \
+      before-sleep "playerctl pause; swaylock -u -f -c 000000" \
+      1> "/dev/null" 2> "/dev/null" & disown
+
+    return "0"
+  fi
+
+  return "1"
+}
+
+stop() {
+  if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+    set +e
+    killall -e -s "9" "xss-lock"
+    killall -e -s "9" "xscreensaver"
+    killall -e -s "9" "xscreensaver-systemd"
+    set -e
+
+    return "0"
+  fi
+
+  if [ "${WAYLAND_DISPLAY:-""}" ]; then
+    set +e
+    killall -e -s "9" "swayidle"
+    set -e
+
+    return "0"
+  fi
+
+  return "1"
+}
+
+toggle() {
+  case "$(status)" in
+    "stopped")
+      exec start
+    ;;
+    "started")
+      exec stop
+    ;;
+  esac
+
+  return "1"
+}
+
+lock() {
+  case "$(status)" in
+    "unknown")
+      exit "1"
+    ;;
+    "stopped")
+      start &
+      while [ "$(status)" = "stopped" ]; do sleep "0.5"; done
+    ;;
+  esac
+
+  if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+    exec xscreensaver-command -lock
+  fi
+
+  exec killall -u "$(whoami)" -s "SIGUSR1" "swayidle"
+
+  # [SIGUSR1 gets queued up when idle inhibitor is active · Issue #51 · swaywm/swayidle](https://github.com/swaywm/swayidle/issues/51)
+}
+
+case "$1" in
+  "status")
+    status
+  ;;
+  "start")
+    start 
+  ;;
+  "stop")
+    stop
+  ;;
+  "lock")
+    lock
+  ;;
+  "toggle")
+    toggle
+  ;;
+  *)
+    exit "2"
+  ;;
+esac
+

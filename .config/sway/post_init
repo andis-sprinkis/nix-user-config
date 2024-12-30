@@ -22,7 +22,7 @@ fi
 
 # swayidle, swaylock
 
-idle_manager_start &
+idle_manager "start" &
 
 # Starting VirtualBox guest service
 
