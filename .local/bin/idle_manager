@@ -3,8 +3,16 @@ set -eu
 
 status() {
   if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-    if [ -z "$(pidof "xscreensaver")" ] || [ -z "$(pidof "xss-lock")" ]; then
+    pidof_xscreensaver="$(pidof "xscreensaver")"
+    pidof_xsslock="$(pidof "xss-lock")"
+
+    if [ -z "$pidof_xscreensaver" ] && [ -z "$pidof_xscreensaver" ]; then
       echo "stopped"
+      return "0"
+    fi
+
+    if [ -z "$pidof_xscreensaver" ] || [ -z "$pidof_xsslock" ]; then
+      echo "partial"
       return "0"
     fi
 
@@ -29,7 +37,7 @@ start() {
   if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
     ## Starting or reloading xscreensaver
 
-    if [ "$(pidof "xscreensaver")" ]; then 
+    if [ "$(pidof "xscreensaver")" ]; then
       xscreensaver-command --restart 1> "/dev/null" 2> "/dev/null" & disown
     else
       xscreensaver --no-splash 1> "/dev/null" 2> "/dev/null" & disown
@@ -107,7 +115,11 @@ lock() {
     ;;
     "stopped")
       start &
-      while [ "$(status)" = "stopped" ]; do sleep "0.5"; done
+      status="$(status)"
+      while [ "$status" = "stopped" ] || [ "$status" = "partial" ]; do
+        sleep "0.5";
+        status="$(status)"
+      done
     ;;
   esac
 
