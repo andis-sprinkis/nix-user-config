@@ -15,5 +15,5 @@ indent_size = 4
 [{.gitmodules,makefile,Makefile}]
 indent_style = tab
 
-[{*/i3/common,*/i3/config,*/sway/config}]
+[{*/i3/common,*/i3/config,*/sway/config,*/sway/custom_scale}]
 max_line_length = 0
