@@ -28,7 +28,6 @@ ln -s "../../../.config/firefox/chrome" "chrome"
 1.  https://addons.mozilla.org/en-US/firefox/addon/istilldontcareaboutcookies/
 1.  https://addons.mozilla.org/en-US/firefox/addon/jump-to-anchor/
 1.  https://addons.mozilla.org/en-US/firefox/addon/libredirect/
-1.  https://addons.mozilla.org/en-US/firefox/addon/link-gopher/
 1.  https://addons.mozilla.org/en-US/firefox/addon/localcdn-fork-of-decentraleyes/
 1.  https://addons.mozilla.org/en-US/firefox/addon/mdn-search-provider/
 1.  https://addons.mozilla.org/en-US/firefox/addon/metager-searchengine/
@@ -61,7 +60,6 @@ ln -s "../../../.config/firefox/chrome" "chrome"
 1.  https://chrome.google.com/webstore/detail/i-still-dont-care-about-c/edibdbjcniadpccecjdfdjjppcpchdlm
 1.  https://chrome.google.com/webstore/detail/ibm-equal-access-accessib/lkcagbfjnkomcinoddgooolagloogehp
 1.  https://chrome.google.com/webstore/detail/jump-to-anchor/fhbjjkmbahpmoegppmljagmakkeomlmb
-1.  https://chrome.google.com/webstore/detail/link-gopher/bpjdkodgnbfalgghnbeggfbfjpcfamkf
 1.  https://chrome.google.com/webstore/detail/localcdn/njdfdhgcmkocbgbhcioffdbicglldapd (Manifest v2)
 1.  https://chrome.google.com/webstore/detail/react-context-devtool/oddhnidmicpefilikhgeagedibnefkcf
 1.  https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi
