@@ -514,6 +514,7 @@ LVM on LUKS.
 ### i3 window manager, X11
 
 1. Start X11 and the window manager.
+
     ```sh
     startx
     ```
@@ -523,6 +524,7 @@ LVM on LUKS.
     ```sh
     exec i3
     ```
+
 1. Use `arandr` to define and test the display configuration.
 1. Create file `/etc/X11/xorg.conf.d/30-displays.conf` with the display configuration parameters e.g.
 
@@ -559,7 +561,7 @@ LVM on LUKS.
     sway
     ```
 1.  Use `wdisplays` to define and test the display configuration.
-1.  Create file `${XDG_CONFIG_HOME:-$HOME/.config}/sway/local` with the display configuration parameters e.g.
+1.  Create file `/etc/sway/config.d/20-outputs.conf` with the display configuration parameters e.g.
 
     ```swayconfig
     # vi: ft=swayconfig
@@ -568,10 +570,11 @@ LVM on LUKS.
     output DP-2     pos 2880 0 res 2560x1440 transform 90
     ```
 
-1.  Include it in `${XDG_CONFIG_HOME:-$HOME/.config}/sway/config`, before the `/etc/sway/config.d/*` include.
+1.  Include file `/etc/sway/config.d/20-outputs.conf` in end of the `${XDG_CONFIG_HOME:-$HOME/.config}/sway/config` file.
+
+    For example, using the `/etc/sway/config.d/*` wildcard:
 
     ```swayconfig
-    include local
     include /etc/sway/config.d/*
     ```
 
@@ -637,35 +640,35 @@ Steps for adding any newly listed packages from the user package lists to an alr
 
 ## Connecting to Wi-Fi
 
--   Installation media environment:
+- Installation media environment:
     ```sh
     iwctl station list
     iwctl station $station scan
     iwctl station $station get-networks
     iwctl station $station connect $network_name
     ```
--   The installed OS environment:
-    -   Interactively:
+- The installed OS environment:
+    - Interactively:
         ```sh
         nmtui
         ```
-    -   Non-interactively:
+    - Non-interactively:
         ```sh
         nmcli device wifi connect $ssid password $password
         ```
 
 ## Related resources
 
--   `xorg.conf`, `xrandr` manpages
--   [AMDGPU - ArchWiki](https://wiki.archlinux.org/title/AMDGPU)
--   [Backlight - ArchWiki](https://wiki.archlinux.org/title/Backlight)
--   [Intel graphics - ArchWiki](https://wiki.archlinux.org/title/Intel_graphics)
--   [Intel graphics - LinuxReviews](https://linuxreviews.org/Intel_graphics) ([archived](https://archive.is/km0z3))
--   [NVIDIA - ArchWiki](https://wiki.archlinux.org/title/NVIDIA)
--   [Network UPS Tools - ArchWiki](https://wiki.archlinux.org/title/Network_UPS_Tools)
--   [Network UPS Tools - Hardware compatibility list](https://networkupstools.org/stable-hcl.html)
--   [Persistent block device naming - ArchWiki](https://wiki.archlinux.org/title/Persistent_block_device_naming)
--   [Smartcards - ArchWiki](https://wiki.archlinux.org/title/Smartcards)
--   [The Framebuffer Console — The Linux Kernel documentation](https://www.kernel.org/doc/html/latest/fb/fbcon.html)
--   [User/Group Name Syntax](https://systemd.io/USER_NAMES/)
--   [Xorg - ArchWiki](https://wiki.archlinux.org/title/Xorg)
+- `xorg.conf`, `xrandr` manpages
+- [AMDGPU - ArchWiki](https://wiki.archlinux.org/title/AMDGPU)
+- [Backlight - ArchWiki](https://wiki.archlinux.org/title/Backlight)
+- [Intel graphics - ArchWiki](https://wiki.archlinux.org/title/Intel_graphics)
+- [Intel graphics - LinuxReviews](https://linuxreviews.org/Intel_graphics) ([archived](https://archive.is/km0z3))
+- [NVIDIA - ArchWiki](https://wiki.archlinux.org/title/NVIDIA)
+- [Network UPS Tools - ArchWiki](https://wiki.archlinux.org/title/Network_UPS_Tools)
+- [Network UPS Tools - Hardware compatibility list](https://networkupstools.org/stable-hcl.html)
+- [Persistent block device naming - ArchWiki](https://wiki.archlinux.org/title/Persistent_block_device_naming)
+- [Smartcards - ArchWiki](https://wiki.archlinux.org/title/Smartcards)
+- [The Framebuffer Console — The Linux Kernel documentation](https://www.kernel.org/doc/html/latest/fb/fbcon.html)
+- [User/Group Name Syntax](https://systemd.io/USER_NAMES/)
+- [Xorg - ArchWiki](https://wiki.archlinux.org/title/Xorg)
