@@ -95,6 +95,28 @@ stop() {
   return "1"
 }
 
+reload() {
+  stop &
+
+  status="$(status)"
+
+  case "$(status)" in
+    "unknown")
+      exit "1"
+    ;;
+    "stopped")
+      start &
+
+      while [ "$status" = "started" ] || [ "$status" = "partial" ]; do
+        sleep "0.5";
+        status="$(status)"
+      done
+    ;;
+  esac
+
+  start
+}
+
 toggle() {
   case "$(status)" in
     "stopped")
@@ -117,6 +139,7 @@ lock() {
     ;;
     "stopped")
       start &
+
       while [ "$status" = "stopped" ] || [ "$status" = "partial" ]; do
         sleep "0.5";
         status="$(status)"
@@ -142,6 +165,9 @@ case "$1" in
   ;;
   "stop")
     stop
+  ;;
+  "reload")
+    reload
   ;;
   "lock")
     lock

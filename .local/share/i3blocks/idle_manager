@@ -10,22 +10,29 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
     }
   }
 
-  _idle_lock() {
+  _idle_manager_lock() {
     echo "Idle lock"
     idle_manager "lock" 1> "/dev/null" 2> "/dev/null" & disown
     exit
   }
 
   _idle_manager_start() {
-    echo "Enabling the idle manager..."
+    echo "Starting the idle manager..."
     idle_manager "start" 1> "/dev/null" 2> "/dev/null" & disown
     reload
     exit
   }
 
   _idle_manager_stop() {
-    echo "Disabling the idle manager..."
+    echo "Stopping the idle manager..."
     idle_manager "stop" 1> "/dev/null" 2> "/dev/null" & disown
+    reload
+    exit
+  }
+
+  _idle_manager_reload() {
+    echo "Stopping the idle manager..."
+    idle_manager "reload" 1> "/dev/null" 2> "/dev/null" & disown
     reload
     exit
   }
@@ -33,13 +40,14 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
   case "$BLOCK_BUTTON" in
     "1")
       case "$status" in
-        "started") _idle_lock ;;
+        "started") _idle_manager_lock ;;
         "stopped") _idle_manager_start ;;
+        "partial") _idle_manager_reload ;;
       esac
     ;;
     "3")
       case "$status" in
-        "started") _idle_manager_stop ;;
+        "started"|"partial") _idle_manager_stop ;;
         "stopped") _idle_manager_start ;;
       esac
     ;;
