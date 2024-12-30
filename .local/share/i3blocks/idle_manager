@@ -53,4 +53,7 @@ case "$status" in
   "stopped")
     echo "Idle mgr. off"
   ;;
+  "partial")
+    echo "Idle mgr. off (partial)"
+  ;;
 esac
