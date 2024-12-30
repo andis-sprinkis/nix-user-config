@@ -25,7 +25,7 @@ case "$1" in
     exec maim -u --select "$path_img"
   ;;
   *)
-    echo "$msg_usage"
+    echo "$msg_usage" 1>&2
     exit "1"
   ;;
 esac
