@@ -1,8 +1,12 @@
 #!/usr/bin/env sh
 
 case "$(idle_manager_status)" in
-  "stopped") exec idle_manager_start ;;
-  "started") exec idle_manager_stop ;;
+  "stopped")
+    exec idle_manager_start
+  ;;
+  "started")
+    exec idle_manager_stop
+  ;;
 esac
 
 exit "1"
