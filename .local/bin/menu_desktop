@@ -1,9 +1,14 @@
 #!/usr/bin/env sh
+set -eu
 
 cmd="${WAYLAND_DISPLAY:+"bemenu"}"
 cmd="${cmd:-"${DISPLAY:+"bemenu"}"}"
 
 if [ "$cmd" ]; then
+  set +e
+  killall -u "$(whoami)" "$cmd"
+  set -e
+
   exec "$cmd" "$@"
 fi
 
