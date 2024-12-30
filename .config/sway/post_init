@@ -45,5 +45,5 @@ fi
 pathf_post_init_local="${XDG_CONFIG_HOME:-$HOME/.config}/sway/post_init_local"
 
 if [ -f "$pathf_post_init_local" ]; then
-  exec "$pathf_post_init_local"
+  exec_always "$pathf_post_init_local"
 fi
