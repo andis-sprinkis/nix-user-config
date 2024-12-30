@@ -20,7 +20,7 @@ if [ "$result" ]; then
       URL: ${url}
 Directory: ${PWD}" 1>&2
 
-exit "2"
+  exit "2"
 fi
 
 exec pipenv run jupyter-notebook
