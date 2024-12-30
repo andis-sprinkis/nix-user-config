@@ -13,8 +13,8 @@ base-devel
 bat
 bc
 bemenu
-bemenu-x11
 bemenu-wayland
+bemenu-x11
 binutils
 blueman
 bluez
@@ -28,6 +28,7 @@ chafa
 chromium
 clang
 cmake
+colord
 curl
 dash
 dmenu
