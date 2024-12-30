@@ -109,13 +109,14 @@ toggle() {
 }
 
 lock() {
+  status="$(status)"
+
   case "$(status)" in
     "unknown")
       exit "1"
     ;;
     "stopped")
       start &
-      status="$(status)"
       while [ "$status" = "stopped" ] || [ "$status" = "partial" ]; do
         sleep "0.5";
         status="$(status)"
