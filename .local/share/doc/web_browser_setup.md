@@ -48,6 +48,7 @@ ln -s "../../../.config/firefox/chrome" "chrome"
 1.  https://addons.mozilla.org/en-US/firefox/addon/undoclosetabbutton
 1.  https://addons.mozilla.org/en-US/firefox/addon/view-page-archive/
 1.  https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/
+1.  https://addons.mozilla.org/en-US/firefox/addon/webpage-extractor/
 1.  https://addons.mozilla.org/en-US/firefox/addon/youtube-recommended-videos/
 
 ### Google Chrome
