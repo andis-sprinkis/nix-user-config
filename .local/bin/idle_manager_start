@@ -21,7 +21,9 @@ fi
 
 if [ "${WAYLAND_DISPLAY:-""}" ]; then
   if [ "$(pidof "swayidle")" ]; then
+    set +e
     killall -u "$(whoami)" "swayidle"
+    set -e
   fi
 
   swayidle -w \
