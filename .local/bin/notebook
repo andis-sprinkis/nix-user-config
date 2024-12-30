@@ -2,7 +2,7 @@
 set -eu
 
 if [ ! -f "Pipfile" ]; then
-echo "$(basename "$0"): pipenv not initialized in this directory.
+  echo "$(basename "$0"): pipenv not initialized in this directory.
 
 Directory: ${PWD}" 1>&2
 
