@@ -5,7 +5,7 @@ if ! rfkill -rn -o "TYPE" | grep -xq "bluetooth"; then
   exit "0"
 fi
 
-controller_id="" controller_is_on="0" dev_count="0"
+controller_is_on="0" dev_count="0"
 
 controller_id="$(bluetoothctl "list" 2> "/dev/null" | grep "\[default\]" | cut -f2 -d" ")"
 
