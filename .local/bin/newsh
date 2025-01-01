@@ -38,16 +38,20 @@ chmod "+x" "$fpath"
 
 dirpath="$(dirname "$(readlink -f "$fpath")")"
 
+dircmd() {
+  printf 'cd "%s"; ls "%s"' "$dirpath" "$fname"
+}
+
 if [ "$WAYLAND_DISPLAY" ] && [ "$(command -v "wl-copy")" ]; then
-  printf 'cd "%s"; ls "%s"' "$dirpath" "$fname" | wl-copy
+  dircmd | wl-copy
 fi
 
 if [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$(command -v "xclip")" ]; then
-  printf 'cd "%s"; ls "%s"' "$dirpath" "$fname" | xclip -sel "clipboard"
+  dircmd | xclip -sel "clipboard"
 fi
 
 if [ "$(command -v "pbcopy")" ]; then
-  printf 'cd "%s"; ls "%s"' "$dirpath" "$fname" | pbcopy;
+  dircmd | pbcopy;
 fi
 
 case "$EDITOR" in
