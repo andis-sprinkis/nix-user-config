@@ -50,4 +50,11 @@ if [ "$(command -v "pbcopy")" ]; then
   printf 'cd "%s"; ls "%s"' "$dirpath" "$fname" | pbcopy;
 fi
 
-$EDITOR "+$(echo "$template" | wc -l)" "$fpath"
+case "$EDITOR" in
+  "vim"|"nvim")
+    $EDITOR "+$(echo "$template" | wc -l)" "$fpath"
+  ;;
+  *)
+    $EDITOR "$fpath"
+  ;;
+esac
