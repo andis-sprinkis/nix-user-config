@@ -10,7 +10,7 @@ $(tmux capture-pane -pS -)" > "$tmp"
 
 arg=""
 case "$EDITOR" in
-  "vi"|"nvim"|"vim") arg="\+$(wc -l "$tmp")" ;;
+  "vi"|"vim"|"nvim"|"nano") arg="\+$(wc -l "$tmp")" ;;
 esac
 
 tmux split-pane "cat ${tmp} | ${EDITOR} ${arg}; rm ${tmp}"
