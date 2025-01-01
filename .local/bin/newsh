@@ -51,7 +51,7 @@ if [ "$(command -v "pbcopy")" ]; then
 fi
 
 case "$EDITOR" in
-  "vim"|"nvim")
+  "vi"|"vim"|"nvim")
     $EDITOR "+$(echo "$template" | wc -l)" "$fpath"
   ;;
   *)
