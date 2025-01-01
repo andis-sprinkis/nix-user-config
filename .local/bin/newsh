@@ -21,7 +21,7 @@ fname="$(basename "$fpath")"
 
 template="#!/usr/bin/env sh
 set -eu
-
+# IFS_=\"\$IFS\"
 # dir=\"\$(cd -P -- \"\$(dirname -- \"\$0\")\" && pwd -P)\"
 # script=\"\$(basename \"\$0\")\"
 
