@@ -1,0 +1,8 @@
+# vi: ft=conf
+
+#line-edit
+
+#command
+x toggle-option ^PS
+
+#env
