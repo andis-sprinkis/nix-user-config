@@ -16,12 +16,6 @@ main() {
     ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true" exec tmux
   fi
 
-  # use the GNU utils on macOS
-  if [ "$HAS_BREW_GNUBIN" ]; then
-    PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
-    export MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
-  fi
-
   # lfcd
   lfcd() {
     cd "$(command lf -print-last-dir "$@")" || return
