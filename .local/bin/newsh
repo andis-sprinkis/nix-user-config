@@ -1,0 +1,53 @@
+#!/usr/bin/env sh
+set -eu
+
+if [ -z "${1:-""}" ]; then
+  exit "1"
+fi
+
+fpath="${1}"
+
+if [ -e "$fpath" ]; then
+  exit "2"
+fi
+
+touch "$fpath"
+
+if [ ! -r "$fpath" ]; then
+  exit "3"
+fi
+
+fname="$(basename "$fpath")"
+
+template="#!/usr/bin/env sh
+set -eu
+
+# dir=\"\$(cd -P -- \"\$(dirname -- \"\$0\")\" && pwd -P)\"
+# script=\"\$(basename \"\$0\")\"
+
+# if [ -z \"\${1:-\"\"}\" ]; then
+#   echo \"\${script}: Requires an argument.\" 2>&1
+#   exit \"1\"
+# fi
+
+"
+
+echo "$template" > "$fpath"
+
+chmod "+x" "$fpath"
+
+dirpath="$(dirname "$(readlink -f "$fpath")")"
+
+if [ "$WAYLAND_DISPLAY" ] && [ "$(command -v "wl-copy")" ]; then
+  printf 'cd "%s"; ls "%s"' "$dirpath" "$fname" | wl-copy
+fi
+
+if [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$(command -v "xclip")" ]; then
+  printf 'cd "%s"; ls "%s"' "$dirpath" "$fname" | xclip -sel "clipboard"
+fi
+
+if [ "$(command -v "pbcopy")" ]; then
+  printf 'cd "%s"; ls "%s"' "$dirpath" "$fname" | pbcopy;
+fi
+
+$EDITOR "+$(echo "$template" | wc -l)" "$fpath"
