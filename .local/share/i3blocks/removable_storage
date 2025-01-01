@@ -48,10 +48,12 @@ case "$rsds_count" in
     exit "0"
   ;;
   "1") 
-    echo "$rsds_count storage device"
+    echo "$rsds_count storage device
+$rsds_count stor. dev."
   ;;
   *)
-    echo "$rsds_count storage devices"
+    echo "$rsds_count storage devices
+$rsds_count stor. dev."
   ;;
 esac
 

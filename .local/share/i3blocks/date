@@ -9,4 +9,5 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
   esac
 fi
 
-date +"%A — %-d. %B" | sed 's/./\u&/'
+date "+%A — %-d. %B
+%a, %-d. %b." | sed -e 's/./\u&/' -e 's/ //g'

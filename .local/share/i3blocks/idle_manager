@@ -17,21 +17,24 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
   }
 
   _idle_manager_start() {
-    echo "Starting the idle manager..."
+    echo "Starting the idle manager...
+Starting idle mgr."
     idle_manager "start" 1> "/dev/null" 2> "/dev/null" & disown
     reload
     exit
   }
 
   _idle_manager_stop() {
-    echo "Stopping the idle manager..."
+    echo "Stopping the idle manager...
+Stopping idle mgr."
     idle_manager "stop" 1> "/dev/null" 2> "/dev/null" & disown
     reload
     exit
   }
 
   _idle_manager_reload() {
-    echo "Stopping the idle manager..."
+    echo "Stopping the idle manager...
+Stopping idle mgr."
     idle_manager "reload" 1> "/dev/null" 2> "/dev/null" & disown
     reload
     exit
@@ -59,9 +62,11 @@ case "$status" in
     echo "Idle lock"
   ;;
   "stopped")
-    echo "Idle mgr. off"
+    echo "Idle manager off
+Idle mgr. off"
   ;;
   "partial")
-    echo "Idle mgr. off (partial)"
+    echo "Idle manager off (partial)
+Idle mgr. off (partial)"
   ;;
 esac

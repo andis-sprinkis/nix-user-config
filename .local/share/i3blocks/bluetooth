@@ -32,12 +32,14 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
       case "$controller_is_on" in
         "0")
           rfkill "unblock" "bluetooth" 1> "/dev/null" 2> "/dev/null" & disown
-          echo "Enabling Bluetooth..."
+          echo "Enabling Bluetooth...
+Enabling Bluet."
           reload "5"
         ;;
         "1")
           rfkill "block" "bluetooth" 1> "/dev/null" 2> "/dev/null" & disown
-          echo "Disabling Bluetooth..."
+          echo "Disabling Bluetooth...
+Disabling Bluet."
           reload
         ;;
       esac
@@ -49,17 +51,21 @@ case "$dev_count" in
   "0")
     case "$controller_is_on" in
       "0")
-        echo "Bluetooth off"
+        echo "Bluetooth off
+Bluet. off"
       ;;
       "1")
-        echo "Bluetooth on"
+        echo "Bluetooth on
+Bluet. on"
       ;;
     esac
   ;;
   "1")
-    echo "${dev_count} Bluetooth device"
+    echo "${dev_count} Bluetooth device
+${dev_count} Bluet. dev."
   ;;
   "*")
-    echo "${dev_count} Bluetooth devices"
+    echo "${dev_count} Bluetooth devices
+${dev_count} Bluet. dev."
   ;;
 esac

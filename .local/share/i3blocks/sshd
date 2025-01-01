@@ -7,7 +7,7 @@ if systemctl is-active --quiet sshd; then
     $TERMINAL -e "$SHELL" -c "$cmd" 1> "/dev/null" 2> "/dev/null" & disown
   fi
 
-  exec echo "SSHD active"
+  exec echo "SSHD on"
 fi
 
 exit "0"

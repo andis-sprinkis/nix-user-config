@@ -4,20 +4,14 @@ set -eu
 REPORT_WAYLAND="${REPORT_WAYLAND:-"0"}"
 REPORT_X11="${REPORT_X11:-"1"}"
 
-if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-  if [ "$REPORT_X11" = "1" ]; then
-    exec echo "${LABEL_X11:-"On X11"}"
-  fi
-
-  exit "0"
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && [ "$REPORT_X11" = "1" ]; then
+  exec echo "On X11
+X11"
 fi
 
-if [ "${WAYLAND_DISPLAY:-""}" ]; then
-  if [ "$REPORT_WAYLAND" = "1" ]; then
-    exec echo "${LABEL_WAYLAND:-"On Wayland"}"
-  fi
-
-  exit "0"
+if [ "${WAYLAND_DISPLAY:-""}" ] && [ "$REPORT_WAYLAND" = "1" ]; then
+  exec echo "On Wayland
+Wayland"
 fi
 
 exit "1"

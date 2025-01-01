@@ -3,6 +3,6 @@
 #line-edit
 
 #command
-x toggle-option ^PS
+a toggle-option ^PS
 
 #env

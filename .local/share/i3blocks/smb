@@ -7,7 +7,7 @@ if systemctl is-active --quiet smb; then
     $TERMINAL -e "$SHELL" -c "$cmd" 1> "/dev/null" 2> "/dev/null" & disown
   fi
 
-  echo "SMB active"
+  echo "SMB on"
 fi
 
 exit "0"

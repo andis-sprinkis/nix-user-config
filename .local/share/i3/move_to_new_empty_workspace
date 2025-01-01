@@ -20,7 +20,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ] && [ "$(echo "$wss" | jq -r ".[[.[].focused] | i
   exit "1"
 fi
 
-wss_num="$(echo "$wss" | jq -r '.[].num' | sort | tr '\n' ' ')"
+wss_num="$(echo "$wss" | jq -r '.[].num' | sort -n | tr '\n' ' ')"
 pre_wsn="$(("${wss_num%% *}" - 1))"
 
 if [ "$pre_wsn" -ge 1 ]; then
