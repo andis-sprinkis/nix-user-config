@@ -1,9 +1,30 @@
 #!/usr/bin/env sh
 set -eu
+IFS_="$IFS"
 
-cmd_inc_bin_path="(stest -flx \$(echo \$PATH | tr : ' ')"
+file_list="" cmd=""
 
-cmd_applications_menu="(cat; ${cmd_inc_bin_path} | sort -u)) | menu_desktop -p 'Open with:'"
+open_with_cmd() {
+  IFS="
+"
+  for f in $file_list; do
+    IFS="$IFS_"
+    $cmd "$f" 1> "/dev/null" 2> "/dev/null" & disown 
+  done
+
+  exit "0"
+}
+
+open_with_cmd_terminal() {
+  IFS="
+"
+  for f in $file_list; do
+    IFS="$IFS_"
+    $TERMINAL -e $cmd "$f" 1> "/dev/null" 2> "/dev/null" & disown
+  done
+
+  exit "0"
+}
 
 cmd_args="$(
   j4-dmenu-desktop \
@@ -12,7 +33,7 @@ cmd_args="$(
   --display-binary \
   --term-mode="custom" \
   --term="${TERMINAL} -e {cmdline@}" \
-  --dmenu="$cmd_applications_menu" \
+  --dmenu="(cat; (stest -flx \$(echo \$PATH | tr : ' ') | sort -u)) | menu_desktop -p 'Open with:'" \
   --no-exec \
   2> "/dev/null"
 )"
@@ -21,7 +42,30 @@ if [ -z "$cmd_args" ]; then
   exit "0"
 fi
 
-cmd=""
+if [ -z "$*" ]; then
+  while read file; do
+    if [ "$file" ]; then
+      file_list="${file_list:+"$file_list"
+}${file}"
+    fi
+  done
+else
+  args_count="$#"
+  while [ "$args_count" -gt "0" ]; do
+    if [ "$1" ]; then
+      file_list="${file_list:+"$file_list"
+}${1}"
+    fi
+
+    shift
+    args_count="$((args_count - "1"))"
+  done
+fi
+
+if [ -z "$file_list" ]; then
+  exit "1"
+fi
+
 for a in $cmd_args; do
   arg="$a"
   arg="${arg#"'"}"
@@ -30,22 +74,17 @@ for a in $cmd_args; do
 done
 
 if echo "$cmd" | grep -q "^${TERMINAL} -e "; then
-  $cmd "$@" 1> "/dev/null" 2> "/dev/null" & disown
-  exit "0"
+  open_with_cmd
 fi
 
 if ! echo "$cmd" | grep -q "^/bin/sh -c "; then
-  $cmd "$@" 1> "/dev/null" 2> "/dev/null" & disown 
-  exit "0"
+  open_with_cmd
 fi
 
 cmd="${cmd#"/bin/sh -c "}"
 
 if echo "$cmd" | grep -iq '^.*.\.appimage$'; then
-  $cmd "$@" 1> "/dev/null" 2> "/dev/null" & disown
-  exit "0"
+  open_with_cmd
 fi
 
-$TERMINAL -e $cmd "$@" 1> "/dev/null" 2> "/dev/null" & disown
-
-exit "0"
+open_with_cmd_terminal
