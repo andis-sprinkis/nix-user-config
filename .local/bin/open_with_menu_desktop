@@ -20,7 +20,9 @@ open_with_cmd_terminal() {
 "
   for f in $file_list; do
     IFS="$IFS_"
-    $TERMINAL -e $cmd "$f" 1> "/dev/null" 2> "/dev/null" & disown
+
+    $TERMINAL -e "$SHELL" -c "$cmd ${f}
+echo \"(\$?) Press any key to exit\"; read" 1> "/dev/null" 2> "/dev/null" & disown
   done
 
   exit "0"

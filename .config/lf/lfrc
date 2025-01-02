@@ -46,7 +46,7 @@ cmd open-with ${{
 }}
 
 cmd open-with-menu-desktop ${{
-  nohup open_with_menu_desktop "$fx" 0</dev/null 1>/dev/null 2>/dev/null &
+  echo "$fx" | open_with_menu_desktop 1> "/dev/null" 2> "/dev/null" & disown
 }}
 
 cmd to-previewer ${{

@@ -15,12 +15,12 @@ case "$1" in
   ;;
   "o")
     files="$(while read file; do echo "${files:+
-}$file"; done)"
-    open_with_menu_desktop "$files"
+}${file}"; done)"
+    echo "$files" | open_with_menu_desktop
   ;;
   "Y")
     files="$(while read file; do echo "${files:+
-}$file"; done)"
+}${file}"; done)"
 
     [ "$WAYLAND_DISPLAY" ] && [ "$(command -v "wl-copy")" ] && {
       printf '%s' "$files" | wl-copy
