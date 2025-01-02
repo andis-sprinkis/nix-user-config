@@ -22,9 +22,13 @@ thumb_cache_create() {
   FPATH_THUMB="${dir_cache_thumb}/$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$fpath" | sha256sum | cut -d" " -f1)"
 }
 
+print_util_not_found() {
+  echo "${script}: '${1}' utility not found."
+}
+
 print_mediainfo() {
   if ! is_exec "mediainfo"; then
-    echo "${script}: mediainfo utility not found."
+    print_util_not_found "mediainfo"
 
     return
   fi
@@ -34,7 +38,7 @@ print_mediainfo() {
 
 print_chafa() {
   if ! is_exec "chafa"; then
-    echo "${script}: chafa utility not found."
+    print_util_not_found "chafa"
 
     return
   fi
@@ -54,26 +58,26 @@ case "$mime" in
 
     if [ ! -f "${FPATH_THUMB}.jpg" ]; then
       if ! is_exec "pdftoppm"; then
-        echo "${script}: ptftoppm utility not found."
+        print_util_not_found "pdftoppm"
       else
         pdftoppm -jpeg -jpegopt quality=50 -f "1" -singlefile "$1" "$FPATH_THUMB"
       fi
+    else
+      print_chafa "${w_chr}x${h_chr}" "${FPATH_THUMB}.jpg"
+
+      echo
     fi
-
-    print_chafa "${w_chr}x${h_chr}" "${FPATH_THUMB}.jpg"
-
-    echo
 
     if ! is_exec "pdfinfo"; then
-      echo "${script}: pdfinfo utility not found."
+      print_util_not_found "pdfinfo"
     else
       pdfinfo "$fpath"
+
+      echo
     fi
 
-    echo
-
     if ! is_exec "pdftotext"; then
-      echo "${script}: pdftotext utility not found."
+      print_util_not_found "pdftotext"
     else
       pdftotext -l "2" -nopgbrk -q -- "$fpath" -
     fi
@@ -86,9 +90,9 @@ case "$mime" in
 
     if [ ! -f "${FPATH_THUMB}.jpg" ]; then
       if ! is_exec "ddjvu"; then
-        echo "${script}: ddjvu utility not found."
+        print_util_not_found "ddjvu"
       elif ! is_exec "magick"; then
-        echo "${script}: magick utility not found."
+        print_util_not_found "magick"
       else
         ddjvu -format=ppm -page=1 "$1" | magick "-" "${FPATH_THUMB}.jpg"
       fi
@@ -104,7 +108,7 @@ case "$mime" in
     echo
 
     if ! is_exec "als"; then
-      echo "${script}: als utility not found."
+      print_util_not_found "als"
     else
       if [ "$mime" = "application/x-7z-compressed" ]; then
         set +e
@@ -131,7 +135,7 @@ case "$mime" in
 
     if [ ! -f "${FPATH_THUMB}.jpg" ]; then
       if ! is_exec "ffmpegthumbnailer"; then
-        echo "${script}: ffmpegthumbnailer utility not found."
+        print_util_not_found "ffmpegthumbnailer"
       else
         ffmpegthumbnailer -i "$1" -o "${FPATH_THUMB}.jpg" -s "0" -q "5"
       fi
@@ -147,7 +151,7 @@ case "$mime" in
     echo "$mime" "(${brief})"
 
     if ! is_exec "odt2txt"; then
-      echo "${script}: odt2txt utility not found."
+      print_util_not_found "odt2txt"
     else
       odt2txt "$fpath"
     fi
@@ -160,7 +164,7 @@ case "$mime" in
     echo
 
     if ! is_exec "mpg123-id3dump"; then
-      echo "${script}: mpg123-id3dump utility not found."
+      print_util_not_found "mpg123-id3dump"
     else
       mpg123-id3dump -- "$fpath"
     fi
@@ -174,7 +178,7 @@ case "$mime" in
     echo "$mime" "(${brief})"
 
     if ! is_exec "sqlite3"; then
-      echo "${script}: sqlite3 utility not found."
+      print_util_not_found "sqlite3"
     else
       sqlite3 "$fpath" '.tables'
     fi
@@ -183,7 +187,7 @@ case "$mime" in
     echo "$mime" "(${brief})"
 
     if ! is_exec "readelf"; then
-      echo "${script}: readelf utility not found."
+      print_util_not_found "readelf"
     else
       readelf -a "$fpath"
     fi
@@ -209,7 +213,7 @@ case "$mime" in
     echo "$mime" "(${brief})"
 
     if ! is_exec "hexdump"; then
-      echo "${script}: hexdump utility not found."
+      print_util_not_found "hexdump"
     else
       hexdump --color=always --canonical --length "134217728" "$fpath"
     fi
@@ -222,7 +226,7 @@ case "$mime" in
     echo "$mime" "(${newlines} lines, ${brief})"
 
     if ! is_exec "bat"; then
-      echo "${script}: bat utility not found."
+      print_util_not_found "bat"
     else
       bat --color=always --style=plain -- "$fpath"
     fi
