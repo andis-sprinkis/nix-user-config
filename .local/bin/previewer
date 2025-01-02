@@ -78,6 +78,24 @@ case "$mime" in
       pdftotext -l "2" -nopgbrk -q -- "$fpath" -
     fi
   ;;
+  image/vnd.djvu*)
+    newlines="$(wc -l "$fpath" | cut -d" " -f1)"
+    echo "$mime" "(${newlines} lines, ${brief})"
+
+    thumb_cache_create
+
+    if [ ! -f "${FPATH_THUMB}.jpg" ]; then
+      if ! is_exec "ddjvu"; then
+        echo "${script}: ddjvu utility not found."
+      elif ! is_exec "magick"; then
+        echo "${script}: magick utility not found."
+      else
+        ddjvu -format=ppm -page=1 "$1" | magick "-" "${FPATH_THUMB}.jpg"
+      fi
+    fi
+
+    print_chafa "${w_chr}x${h_chr}" "${FPATH_THUMB}.jpg"
+  ;;
   application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
     echo "$mime" "(${brief})"
 
