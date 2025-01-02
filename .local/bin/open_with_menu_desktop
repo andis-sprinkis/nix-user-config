@@ -89,6 +89,4 @@ if echo "$cmd" | grep -iq '^.*.\.appimage$'; then
   open_with_cmd
 fi
 
-echo "$cmd"
-
 open_with_cmd_terminal
