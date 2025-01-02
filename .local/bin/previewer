@@ -43,7 +43,9 @@ print_chafa() {
     return
   fi
 
-  chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "$1" "$2"
+  if [ -f "$2" ]; then
+    chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "$1" "$2"
+  fi
 }
 
 mime="$(file --mime-type --brief "$fpath")"
@@ -62,11 +64,11 @@ case "$mime" in
       else
         pdftoppm -jpeg -jpegopt quality=50 -f "1" -singlefile "$1" "$FPATH_THUMB"
       fi
-    else
-      print_chafa "${w_chr}x${h_chr}" "${FPATH_THUMB}.jpg"
-
-      echo
     fi
+
+    print_chafa "${w_chr}x${h_chr}" "${FPATH_THUMB}.jpg"
+
+    echo
 
     if ! is_exec "pdfinfo"; then
       print_util_not_found "pdfinfo"
