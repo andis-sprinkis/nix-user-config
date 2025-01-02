@@ -14,7 +14,7 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
     echo "Idle lock
 Lock"
     idle_manager "lock" 1> "/dev/null" 2> "/dev/null" & disown
-    exit
+    exit "0"
   }
 
   _idle_manager_start() {
@@ -22,7 +22,7 @@ Lock"
 Starting idle mgr."
     idle_manager "start" 1> "/dev/null" 2> "/dev/null" & disown
     reload
-    exit
+    exit "0"
   }
 
   _idle_manager_stop() {
@@ -30,7 +30,7 @@ Starting idle mgr."
 Stopping idle mgr."
     idle_manager "stop" 1> "/dev/null" 2> "/dev/null" & disown
     reload
-    exit
+    exit "0"
   }
 
   _idle_manager_reload() {
@@ -38,7 +38,7 @@ Stopping idle mgr."
 Stopping idle mgr."
     idle_manager "reload" 1> "/dev/null" 2> "/dev/null" & disown
     reload
-    exit
+    exit "0"
   }
 
   case "$BLOCK_BUTTON" in
