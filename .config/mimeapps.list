@@ -277,8 +277,8 @@ application/pdf=pdf.desktop
 application/postscript=pdf.desktop
 application/x-eps=pdf.desktop
 application/x-fictionbook=pdf.desktop
-image/vnd.djvu+multipage=pager.desktop
-image/vnd.djvu=pager.desktop
+image/vnd.djvu+multipage=pdf.desktop
+image/vnd.djvu=pdf.desktop
 image/x-eps=pdf.desktop
 
 image/bmp=img.desktop
