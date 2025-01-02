@@ -21,7 +21,7 @@ open_with_cmd_terminal() {
   for f in $file_list; do
     IFS="$IFS_"
 
-    $TERMINAL -e "$SHELL" -c "$cmd ${f}
+    $TERMINAL -e "$SHELL" -c "$cmd \"${f}\"
 echo \"(\$?) Press any key to exit\"; read" 1> "/dev/null" 2> "/dev/null" & disown
   done
 
@@ -44,7 +44,7 @@ if [ -z "$cmd_args" ]; then
   exit "0"
 fi
 
-if [ -z "$*" ]; then
+if [ "$#" -eq "0" ]; then
   while read file; do
     if [ "$file" ]; then
       file_list="${file_list:+"$file_list"
@@ -88,5 +88,7 @@ cmd="${cmd#"/bin/sh -c "}"
 if echo "$cmd" | grep -iq '^.*.\.appimage$'; then
   open_with_cmd
 fi
+
+echo "$cmd"
 
 open_with_cmd_terminal
