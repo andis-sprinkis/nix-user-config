@@ -11,7 +11,8 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
   }
 
   _idle_manager_lock() {
-    echo "Idle lock"
+    echo "Idle lock
+Lock"
     idle_manager "lock" 1> "/dev/null" 2> "/dev/null" & disown
     exit
   }
@@ -59,7 +60,8 @@ fi
 
 case "$status" in
   "started")
-    echo "Idle lock"
+    echo "Idle lock
+Lock"
   ;;
   "stopped")
     echo "Idle manager off
