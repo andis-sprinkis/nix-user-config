@@ -427,6 +427,7 @@ video/x-theora=video.desktop
 application/msword-template=doc.desktop
 application/msword=doc.desktop
 application/rtf=doc.desktop
+text/rtf=doc.desktop
 application/vnd.ms-access=doc.desktop
 application/vnd.ms-asf=doc.desktop
 application/vnd.ms-cab-compressed=doc.desktop

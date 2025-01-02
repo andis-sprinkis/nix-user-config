@@ -21,6 +21,8 @@ cmd open ${{
     application/octet-stream)
       exec lf -remote "send ${id} push :open-with<space>"
     ;;
+    text/rtf)
+    ;;
     application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
       exec $PAGER $fx
     ;;
