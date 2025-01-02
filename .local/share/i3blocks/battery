@@ -1,9 +1,8 @@
 #!/usr/bin/env sh
 set -eu
+IFS_="$IFS"
 
-if [ -z "$(find "/sys/class/power_supply/" -name "BAT*")" ]; then
-  exit "0"
-fi
+batteries="$(find "/sys/class/power_supply/" -name "BAT*")"
 
 if [ "${BLOCK_BUTTON:-""}" ]; then
   case "$BLOCK_BUTTON" in
@@ -21,45 +20,47 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
 fi
 
 info="$(
-  for battery in /sys/class/power_supply/BAT?*; do
-    if [ -n "${capacity+x}" ]; then
-      printf " "
-    fi
+IFS="
+"
+for battery in $batteries; do
+  IFS="$IFS_"
 
-    capacity="$(cat "${battery}/capacity" 2>&1)"
-    status="$(cat "${battery}/status" 2>&1)"
+  capacity="$(cat "${battery}/capacity" 2>&1)"
+  status="$(cat "${battery}/status" 2>&1)"
 
-    case "$status" in
-      "Full")
-        label="Battery full"
-        printf "%s" "$label"
-      ;;
-      "Discharging")
-        label="Battery discharging"
-
-        if [ "$capacity" -gt 25 ]; then
-          printf "%s, %s%%" "$label" "$capacity"
-        else
-          printf "%s, %s %d%%" "$label" "⚠️" "$capacity"
-        fi
-      ;;
-      "Charging")
-        label="Battery charging"
-        printf "%s, %s%%" "$label" "$capacity"
-      ;;
-      "Not charging")
-        label="Battery not charging"
-        printf "%s, %s %d%%" "$label" "⚠️" "$capacity"
-      ;;
-      *)
-        label="Battery state unknown"
-        printf "%s, %s %d%%" "$label" "⚠️" "$capacity"
-      ;;
-    esac
-  done
+  case "$status" in
+    "Full")
+      echo "Battery full
+Bat. full"
+    ;;
+    "Discharging")
+      if [ "$capacity" -gt 25 ]; then
+        echo "Battery discharging, ${capacity}%
+Bat. discharging, ${capacity}%"
+      else
+        echo "Battery discharging, ⚠️ ${capacity}%
+Bat. discharging, ⚠️ ${capacity}%"
+      fi
+    ;;
+    "Charging")
+      echo "Battery charging, ${capacity}%
+Bat. charging, ${capacity}%"
+    ;;
+    "Not charging")
+      echo "Battery not charging, ⚠️ ${capacity}%
+Bat. not charging, ⚠️ ${capacity}%"
+    ;;
+    *)
+      echo "Battery state unknown, ⚠️ ${capacity}%
+Bat. state unknown, ⚠️ ${capacity}%"
+    ;;
+  esac
+done
+IFS="$IFS_"
 )"
 
+cols="$(echo "$batteries" | wc -l)"
+
 if [ "$info" ]; then
-  echo "${info}
-"
+  echo "$info" | pr -"$cols" -t -s' '
 fi
