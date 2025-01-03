@@ -156,5 +156,4 @@ user_pref("toolkit.telemetry.unified", false);
 user_pref("toolkit.telemetry.updatePing.enabled", false);
 user_pref("toolkit.winRegisterApplicationRestart", false);
 user_pref("toolkit.zoomManager.zoomValues", ".3,.5,.67,.8,.9,1,1.1,1.15,1.2,1.25,1.33,1.5,1.7,2,2.4,3,4,5");
-user_pref("userchrome.toolbars-below-content.tabs-at-bottom.enabled", true);
 user_pref("zoom.minPercent", 1);
