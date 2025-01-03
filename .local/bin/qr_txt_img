@@ -7,7 +7,7 @@ fi
 
 tmp="$(mktemp)"
 
-echo "$*" | qrencode -t PNG -s 128 -o - > "$tmp"
+echo "$*" | qrencode -t PNG -s "128" -o - > "$tmp"
 
 case "$(uname)" in
   "Darwin")
@@ -18,4 +18,4 @@ case "$(uname)" in
   ;;
 esac
 
-(sleep 1; rm -vI "$tmp") 1>/dev/null 2>/dev/null & disown
+(sleep "1"; rm -vI "$tmp") 1>/dev/null 2>/dev/null & disown
