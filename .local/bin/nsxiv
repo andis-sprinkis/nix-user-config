@@ -2,10 +2,10 @@
 
 opts="-a -b ${NSXIV_OPTS:-""}"
 
-if [ -x "/usr/bin/nsxiv" ]; then
-  exec "/usr/bin/nsxiv" $opts "$@"
-fi
+set -- $opts "$@"
 
-if [ -x "/usr/local/bin/nsxiv" ]; then
-  exec "/usr/local/bin/nsxiv" $opts "$@"
-fi
+for executable in "/usr/bin/nsxiv" "/usr/local/bin/nsxiv"; do
+  if [ -x "$executable" ]; then
+    exec "$executable" "$@"
+  fi
+done
