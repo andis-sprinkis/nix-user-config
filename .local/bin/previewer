@@ -217,7 +217,7 @@ case "$mime" in
     if ! is_exec "hexdump"; then
       print_util_not_found "hexdump"
     else
-      hexdump --color=always --canonical --length "134217728" "$fpath"
+      hexdump --color=always --canonical --length "1048576" "$fpath"
     fi
   ;;
   application/x-bittorrent|inode/socket)
