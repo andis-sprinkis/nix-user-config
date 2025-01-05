@@ -53,23 +53,6 @@ cmd to-previewer ${{
   previewer "$f" | $PAGER
 }}
 
-cmd aunpack !{{
-  IFS="
-"
-
-  echo "Selected to extract:
-$fx"
-
-  for f in $fx; do 
-    echo "
----
-
-${f}
-"
-    aunpack --explain --subdir "$f"
-  done
-}}
-
 cmd apack !{{
   if [ -z "${1:-""}" ]; then
     exit "1"
@@ -96,6 +79,23 @@ cmd apack !{{
   echo "$fy"
 
   printf "%s" "$fy" | apack "$@"
+}}
+
+cmd aunpack !{{
+  IFS="
+"
+
+  echo "Selected to extract:
+$fx"
+
+  for f in $fx; do 
+    echo "
+---
+
+${f}
+"
+    aunpack --explain --subdir "$f"
+  done
 }}
 
 cmd mkdir %{{
