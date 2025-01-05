@@ -70,6 +70,34 @@ ${f}
   done
 }}
 
+cmd apack !{{
+  if [ -z "${1:-""}" ]; then
+    exit "1"
+  fi
+
+  if [ -e "${1:-""}" ]; then
+    exit "2"
+  fi
+
+  IFS_="$IFS"
+
+  fy=""
+
+  IFS="
+"
+  for f in $fx; do
+    IFS="$IFS_"
+
+    fy="${fy}${fy:+
+}$(basename "$f")"
+  done
+  IFS="$IFS_"
+
+  echo "$fy"
+
+  printf "%s" "$fy" | apack "$@"
+}}
+
 cmd mkdir %{{
   IFS=" "
   mkdir -pv -- "$*"
