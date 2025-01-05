@@ -78,7 +78,7 @@ cmd apack !{{
 
   echo "$fy"
 
-  printf "%s" "$fy" | apack "$@"
+  printf "%s" "$fy" | apack --explain "$@"
 }}
 
 cmd aunpack !{{

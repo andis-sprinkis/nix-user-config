@@ -6,6 +6,7 @@ is_exec() { [ "$(command -v "$1")" ]; }
 # 'dotgit' alias must precede the 'dg*', 'dg_*' aliases
 # 'htop' alias must precede the 't' alias
 alias \
+  apack="apack --explain" \
   aunpack="aunpack --subdir --explain" \
   bc="bc -ql" \
   cl="clear" \
