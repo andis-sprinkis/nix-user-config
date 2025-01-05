@@ -3,7 +3,7 @@ set incfilter
 set incsearch
 set mouse
 set cursorparentfmt "\033[4m"
-set dupfilefmt "~%n~%f"
+set dupfilefmt "%b.~%n~%e"
 set numberfmt "\033[90m"
 set period 1
 set previewer previewer
