@@ -178,6 +178,7 @@ cmd ratios %{{
 
       lf -remote "send ${id} set ratios ${r_new}"
       lf -remote "send ${id} reload"
+      lf -remote "send ${id} echo ${r_new}"
 
       exit "0"
     fi
@@ -210,6 +211,7 @@ map <m-left> updir
 map <m-right> open
 map <m-6> updir
 map <m-7> open
+map <esc> reload
 map + ratios +
 map = ratios +
 map - ratios -
