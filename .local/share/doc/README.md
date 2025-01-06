@@ -5,4 +5,4 @@
 -   [User configuration files installation](./user_config_files_installation.md)
 -   [Web browsers setup](./web_browser_setup.md)
 -   [macOS user environment setup](./macos_user_config.md)
--   [Packages](../pkg_list/)
+-   [Package lists](../pkg_list/)
