@@ -53,16 +53,9 @@ main() {
   tty="$(tty)"
   export GPG_TTY="$tty"
 
-  # configure wsl2 and windows terminal
+  # configure windows terminal
   if is_exec "systemd-detect-virt" && [ "$(systemd-detect-virt)" = "wsl" ]; then
     export COLORTERM="truecolor"
-
-    xdg_runtime_dir="$HOME/.local/state/xdg_runtime"
-    if [ ! -d "$xdg_runtime_dir" ]; then
-      mkdir -p "$xdg_runtime_dir"
-      chmod "0700" "$xdg_runtime_dir"
-      export XDG_RUNTIME_DIR="$xdg_runtime_dir"
-    fi
   fi
 }
 
