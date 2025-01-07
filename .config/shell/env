@@ -143,6 +143,7 @@ main() {
   # configure volta
   export VOLTA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/volta"
   PATH="$VOLTA_HOME/bin:$PATH"
+  export VOLTA_FEATURE_PNPM="1"
 
   # configure homebrew
   export HOMEBREW_NO_ANALYTICS="1"
