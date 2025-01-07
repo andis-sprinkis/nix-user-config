@@ -56,6 +56,10 @@ main() {
   # configure windows terminal
   if is_exec "systemd-detect-virt" && [ "$(systemd-detect-virt)" = "wsl" ]; then
     export COLORTERM="truecolor"
+
+    mkdir -p "$HOME/.local/state/xdg_runtime"
+    chmod "0700" "$HOME/.local/state/xdg_runtime"
+    export XDG_RUNTIME_DIR="$HOME/.local/state/xdg_runtime"
   fi
 }
 
