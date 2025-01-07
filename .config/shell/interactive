@@ -53,7 +53,7 @@ main() {
   tty="$(tty)"
   export GPG_TTY="$tty"
 
-  # configure windows terminal
+  # configure wsl2 and windows terminal
   if is_exec "systemd-detect-virt" && [ "$(systemd-detect-virt)" = "wsl" ]; then
     export COLORTERM="truecolor"
 
