@@ -9,6 +9,11 @@ main() {
     export ZSH_SYSTEM_CLIPBOARD_METHOD="xcc"
   fi
 
+  # configure windows terminal
+  if [ "$WT_SESSION" ]; then
+    export COLORTERM="truecolor"
+  fi
+
   # launch tmux
   if
     is_exec "tmux" && [ -z "${TMUX:-""}" ] && [ "$TERM" != "linux" ]
@@ -52,11 +57,6 @@ main() {
   # configure gpg
   tty="$(tty)"
   export GPG_TTY="$tty"
-
-  # configure windows terminal
-  if [ "$WT_SESSION" ]; then
-    export COLORTERM="truecolor"
-  fi
 }
 
 main
