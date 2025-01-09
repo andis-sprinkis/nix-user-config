@@ -54,7 +54,7 @@ main() {
   export GPG_TTY="$tty"
 
   # configure windows terminal
-  if is_exec "systemd-detect-virt" && [ "$(systemd-detect-virt)" = "wsl" ]; then
+  if [ "$WT_SESSION" ]; then
     export COLORTERM="truecolor"
   fi
 }
