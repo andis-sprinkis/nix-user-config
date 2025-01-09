@@ -152,7 +152,7 @@ main() {
   # configure zsh
   export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 
-  # configure WSL2
+  # configure WSL
   if grep -q "microsoft" "/proc/version"; then
     xdg_runtime_dir="$HOME/.local/state/xdg_runtime"
 
