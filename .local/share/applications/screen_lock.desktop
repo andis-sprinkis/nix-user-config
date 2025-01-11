@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
 Name=Idle lock
-Exec=idle_lock
+Exec=idle_manager lock
 Categories=Utility;System;
