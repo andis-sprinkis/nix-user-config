@@ -2,6 +2,13 @@
 
 msg_usage="$(basename "$0") usage: [--active] [--select] [--help | -h]"
 
+case "$1" in
+  --help|-h)
+    echo "$msg_usage"
+    exit
+  ;;
+esac
+
 path_dir="${HOME}/scr"
 path_img="${path_dir}/$(date "+%s").png"
 
@@ -9,15 +16,10 @@ mkdir -p "$path_dir"
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   if [ -z "${*:-""}" ]; then
-    mkdir -p "$path_dir"
     exec maim -u "$path_img"
   fi
 
   case "$1" in
-    --help|-h)
-      echo "$msg_usage"
-      exit
-    ;;
     --active)
       exec maim -u --window "$(xdotool getactivewindow)" "$path_img"
     ;;
@@ -33,23 +35,18 @@ fi
 
 if [ "${WAYLAND_DISPLAY:-""}" ]; then
   if [ -z "${*:-""}" ]; then
-    mkdir -p "$path_dir"
     exec grim -o "$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')" "$path_img"
   fi
 
   case "$1" in
-    --help|-h)
-      echo "$msg_usage"
-      exit
-    ;;
     --active)
       exec grim -g "$(swaymsg -t get_tree | jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$path_img"
     ;;
     --select)
       exec grim -g "$(slurp)" "$path_img"
-      exit
     ;;
     *)
+      echo "$msg_usage" 1>&2
       exit "1"
     ;;
   esac
