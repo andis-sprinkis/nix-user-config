@@ -10,10 +10,6 @@ floating_modifier $mod
 
 bindsym $mod+f floating enable; exec --no-startup-id maximize_win_multimon_x
 
-bindsym $mod+Print       exec --no-startup-id screenshot_maim
-bindsym $mod+Shift+Print exec --no-startup-id screenshot_maim --active
-bindsym $mod+Ctrl+Print  exec --no-startup-id screenshot_maim --select
-
 bindsym $mod+Mod1+c exec --no-startup-id exec_active_win_x
 
 bindsym $mod+Shift+r exec --no-startup-id ${XDG_CONFIG_HOME:-HOME/.config}/xinit/xinitrc

@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+  exec screenshot_maim "$@"
+fi
+
+if [ "${WAYLAND_DISPLAY:-""}" ]; then
+  exec screenshot_grim "$@"
+fi
+
+exit "1"

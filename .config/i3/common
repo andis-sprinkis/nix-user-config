@@ -116,6 +116,10 @@ bindsym --whole-window $mod+Mod1+button9 exec --no-startup-id ${XDG_DATA_HOME:-$
 
 bindsym Hyper_L exec --no-startup-id $applications_menu
 
+bindsym $mod+Print       exec screenshot
+bindsym $mod+Shift+Print exec screenshot --active
+bindsym $mod+Ctrl+Print  exec screenshot --select
+
 bindsym $mod+b exec --no-startup-id bmark_desktop
 
 bindsym $mod+backslash    exec --no-startup-id playerctl play-pause

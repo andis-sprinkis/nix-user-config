@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
-set -e
+set -eu
 
-[ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && {
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   win="$(xdotool getwindowfocus)"
 
   output="$(ucmenu -m "menu_desktop -p '%P:'" -n "menu_desktop -p '%P:'" -r "menu_desktop -p '%P:'")"
@@ -21,13 +21,13 @@ set -e
   done
 
   exit "0"
-}
+fi
 
-[ "${WAYLAND_DISPLAY:-""}" ] && {
+if [ "${WAYLAND_DISPLAY:-""}" ]; then
   output="$(ucmenu -m "menu_desktop -p '%P:'" -n "menu_desktop -p '%P:'" -r "menu_desktop -p '%P:'")"
 
   if [ "$output" ]; then
     sleep "0.5"
     wtype "$output"
   fi
-}
+fi
