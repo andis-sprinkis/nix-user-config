@@ -344,10 +344,10 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     git clone https://aur.archlinux.org/yay.git $temp_path
     cd $temp_path
     makepkg -si
-    cd $HOME/linux-install
     ```
 1. Install AUR packages.
     ```sh
+    cd $HOME/nix-user-config/.local/share/doc/pkg_list/arch
     yay -S --needed $(cat ./aur | paste -s -d ' ')
     ```
 1. Install user general configuration.
