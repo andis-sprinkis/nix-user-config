@@ -8,9 +8,6 @@
   # fn: detect if given command is executable
   is_exec() { [ "$(command -v "$1")" ] }
 
-  # fn: set terminal emulator window title
-  set_window_title() { echo -n "\033]0;${PWD}\007" }
-
   # fn: cursor shape for different vi modes
   echo_cur_beam() {
     case "$TERM" in
@@ -68,9 +65,6 @@
 
   # history file length in lines
   export SAVEHIST="500"
-
-  # set window title
-  set_window_title
 
   # zsh opts
   setopt "SHARE_HISTORY" "AUTOCD" "PROMPT_SUBST" "INTERACTIVE_COMMENTS"
@@ -143,9 +137,6 @@ $prompt_symbol"
 
   # background pseudo-terminal mod. for applications that use it (e.g. nvim cmp-zsh)
   zmodload "zsh/zpty"
-
-  # disable ctrl-s to freeze terminal
-  stty "stop" "undef"
 
   # use vim keys in tab complete menu
   bindkey -M "menuselect" "h" "vi-backward-char"
