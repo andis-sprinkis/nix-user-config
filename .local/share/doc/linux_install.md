@@ -169,7 +169,8 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
         - [Intel graphics - LinuxReviews](https://linuxreviews.org/Intel_graphics#Kernel_Parameters) ([archived](https://archive.is/km0z3))
 
 1. Add boot-loader initramfs fallback entry.
-   Create file `/boot/loader/entries/arch_fallback.conf`:
+
+    Create file `/boot/loader/entries/arch_fallback.conf`:
 
     ```
     title Arch Linux (fallback)
