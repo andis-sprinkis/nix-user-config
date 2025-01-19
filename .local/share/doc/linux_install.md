@@ -168,6 +168,16 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
         - [Issue with Kernel Panic on Dell Latitude 7490 and i915 - English / Hardware - openSUSE Forums](https://forums.opensuse.org/t/issue-with-kernel-panic-on-dell-latitude-7490-and-i915/164462) ([archived](https://archive.is/7IAD6))
         - [Intel graphics - LinuxReviews](https://linuxreviews.org/Intel_graphics#Kernel_Parameters) ([archived](https://archive.is/km0z3))
 
+1. Add boot-loader initramfs fallback entry.
+   Create file `/boot/loader/entries/arch_fallback.conf`:
+
+    ```
+    title Arch Linux (fallback)
+    linux /vmlinuz-linux
+    initrd /initramfs-linux-fallback.img
+    options cryptdevice=UUID=<LUKS container partition UUID>:nvme0n1_luks0 root=/dev/nvme0n1_luks0_volgrp0/root resume=/dev/nvme0n1_luks0_volgrp0/swap module_blacklist=pcspkr,snd_pcsp
+    ```
+
 1. Configure boot-loader.
    Create file `/boot/loader/loader.conf`:
     ```
