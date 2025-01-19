@@ -136,7 +136,8 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     blkid --match-tag UUID -o value /dev/nvme0n1p2
     ```
 1. Add boot-loader entry.
-   Create file `/boot/loader/entries/arch.conf`:
+
+    Create file `/boot/loader/entries/arch.conf`:
 
     ```
     title Arch Linux
