@@ -73,6 +73,19 @@ domain("wiktionary.org") {
   }
 }
 
+@-moz-document domain("applitools.com") {
+  @media (prefers-color-scheme: dark) {
+    canvas,
+    html,
+    img,
+    video,
+    iframe,
+    object {
+      filter: invert();
+    }
+  }
+}
+
 @-moz-document domain("1188.lv"),
 domain("220.lv"),
 domain("abbreviations.com"),
