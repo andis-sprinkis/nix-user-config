@@ -132,6 +132,10 @@ cmd paste-to-file ${{
   paste_to_file "${PWD}/${*}"
 }}
 
+cmd reopen-lf-desktop ${{
+  nohup $TERMINAL -e "$SHELL" -c "lf -command select \"$(echo "$fx" | head -n1)\"" 0</dev/null 1>/dev/null 2>/dev/null &
+}}
+
 cmd on-cd &{{
   printf "\033]0;${PWD}\007" > /dev/tty
 }}
@@ -217,6 +221,7 @@ map + ratios +
 map = ratios +
 map - ratios -
 map O :open-with-menu-desktop
+map W :reopen-lf-desktop
 map P push :paste-to-file<space>
 map R delete
 map V vidir
