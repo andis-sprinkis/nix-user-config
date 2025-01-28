@@ -33,7 +33,7 @@
     ```sh
     export VOLTA_HOME="$HOME/.local/share/volta"
     PATH="$VOLTA_HOME/bin:$PATH"
-    cd $HOME/nix-user-config
+    cd $HOME/nix-user-config/.local/share/pkg_list/macos
     [ -s ./npm ] && volta install $(cat ./npm | paste -s -d ' ' -)
     ```
 1. Install PyPi packages.
