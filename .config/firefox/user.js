@@ -12,6 +12,8 @@ user_pref("browser.bookmarks.openInTabClosesMenu", false);
 user_pref("browser.chrome.site_icons", false);
 user_pref("browser.compactmode.show", true);
 user_pref("browser.crashReports.unsubmittedCheck.autoSubmit2", false);
+user_pref("mousewheel.with_control.action", 3);
+user_pref("mousewheel.with_meta.action", 3);
 user_pref("browser.discovery.enabled", false);
 user_pref("browser.download.manager.addToRecentDocs", false);
 user_pref("browser.fixup.alternate.enabled", false);
