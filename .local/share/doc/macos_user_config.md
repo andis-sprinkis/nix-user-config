@@ -53,6 +53,10 @@
     ```sh
     defaults write com.apple.Finder AppleShowAllFiles true; killall Finder
     ```
+1. Enable showing all file extensions in Finder.
+    ```sh
+    defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true" && killall Finder
+    ```
 1. Increase the keyboard key repetition rate.
     1. ```sh
        defaults write -g ApplePressAndHoldEnabled -bool false
@@ -101,3 +105,7 @@ Steps for adding any newly listed packages from the user package lists to an alr
         ```sh
         volta install $(cat "./npm" | paste -s -d ' ' -)
         ```
+
+## Resources
+
+- [macOS defaults list](https://macos-defaults.com/)
