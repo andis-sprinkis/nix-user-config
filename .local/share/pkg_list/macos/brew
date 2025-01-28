@@ -26,6 +26,7 @@ ncdu
 neovim
 pipenv
 pipx
+pyenv
 python3
 ripgrep
 sd
