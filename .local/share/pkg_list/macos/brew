@@ -20,6 +20,7 @@ gnutls
 grep
 htop
 jq
+less
 lf
 media-info
 ncdu
