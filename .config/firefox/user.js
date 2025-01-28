@@ -144,6 +144,7 @@ user_pref("privacy.sanitize.timeSpan", 0);
 user_pref("privacy.spoof_english", 2);
 user_pref("reader.parse-on-load.enabled", false);
 user_pref("security.certerrors.recordEventTelemetry", false);
+user_pref("sidebar.position_start", false);
 user_pref("signon.autofillForms", false);
 user_pref("signon.firefoxRelay.feature", "disabled");
 user_pref("signon.formlessCapture.enabled", false);
