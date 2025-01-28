@@ -18,12 +18,6 @@ if [ -d "$BREW_PREFIX/opt/coreutils/libexec/gnubin" ]; then
   export HAS_BREW_GNUBIN="1"
 fi
 
-# use the GNU utils on macOS
-if [ "$HAS_BREW_GNUBIN" ]; then
-  PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
-  export MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
-fi
-
 # XDG base directories
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
