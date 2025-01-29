@@ -45,18 +45,24 @@
     cd $HOME/.config
     git clone https://github.com/andis-sprinkis/nvim-user-config nvim
     ```
-1. Disable Dock show and hide transition.
+
+1. Close any Sytem Preferences windows.
     ```sh
-    defaults write com.apple.dock autohide-delay -float 0; killall Dock
+    osascript -e 'tell application "System Preferences" to quit'
     ```
-1. Enable showing hidden files in Finder.
+
+1. Enable the keyboard navigation.
+
     ```sh
-    defaults write com.apple.Finder AppleShowAllFiles true; killall Finder
+    defaults write NSGlobalDomain AppleKeyboardUIMode -int 2
     ```
-1. Enable showing all file extensions in Finder.
+
+1. Disable displaying the accents menu on keyboard key hold.
+
     ```sh
-    defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true" && killall Finder
+    defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
     ```
+
 1. Increase the keyboard key repetition rate.
     1. ```sh
        defaults write -g ApplePressAndHoldEnabled -bool false
@@ -65,6 +71,98 @@
        ```
     1. Log out and log in.
 
+1. Configure Finder.
+
+    ```sh
+    # Enable displaying the hidden files
+    defaults write com.apple.Finder AppleShowAllFiles true
+
+    # Enable displaying all file extensions
+    defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+    # Enable the path bar
+    defaults write com.apple.finder ShowPathbar -bool true
+
+    # Enable long path in the title bar
+    defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+
+    # Set the column view as the default
+    defaults write com.apple.finder FXPreferredViewStyle -string clmv
+
+    # Keep the directories on top
+    defaults write com.apple.finder _FXSortFoldersFirst -bool true
+
+    # Disable the file extenion change warning
+    defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+    # Allow text selection in Quick Look
+    defaults write com.apple.finder QLEnableTextSelection -bool true
+
+    # Set the sidebar icon size to the largest
+    defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 3
+
+    # Show the $HOME/Library directory
+    chflags nohidden ~/Library
+
+    # Expand the File Info window panes
+    defaults write com.apple.finder FXInfoPanesExpanded -dict General -bool true OpenWith -bool true Privileges -bool true
+    # Reload Finder
+    killall Finder
+    ```
+
+1. Configure Dock.
+
+    ```sh
+    # Don't show the recent applications
+    defaults write com.apple.dock show-recents -bool false
+
+    ```
+
+1. Configure TextEdit.
+
+    ```sh
+    # Use the plain-text mode by default
+    defaults write com.apple.TextEdit RichText -int 0
+
+    # Use UTF-8 encoding
+    defaults write com.apple.TextEdit PlainTextEncoding -int 4
+    defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
+
+    # Set the text indentation width to 2 spaces
+    defaults write com.apple.TextEdit TabWidth 2
+    ```
+
+1. Disable the animations.
+    ```sh
+    # The Finder windows animations and the 'Get Info' animations
+    defaults write com.apple.finder DisableAllAnimations -bool true
+
+    # Showing and hiding Dock
+    defaults write com.apple.dock autohide-time-modifier -float 0
+    defaults write com.apple.dock autohide-delay -float 0
+
+    # Showing and hiding Mission Control
+    defaults write com.apple.dock expose-animation-duration -float 0
+
+    # Showing and hiding LaunchPad
+    defaults write com.apple.dock springboard-show-duration -float 0
+    defaults write com.apple.dock springboard-hide-duration -float 0
+
+    # Changing the pages in LaunchPad
+    defaults write com.apple.dock springboard-page-duration -float 0
+
+    # Scrolling column views
+    defaults write -g NSBrowserColumnAnimationSpeedMultiplier -float 0
+
+    # Showing a toolbar or menu in full-screen
+    defaults write -g NSToolbarFullScreenAnimationDuration -float 0
+
+    # Reload Dock
+    killall Dock
+
+    # Reload Finder
+    killall Finder
+    ```
 ## Addition of newly listed packages to an existing setup
 
 Steps for adding any newly listed packages from the user package lists to an already existing setup.
@@ -109,3 +207,4 @@ Steps for adding any newly listed packages from the user package lists to an alr
 ## Resources
 
 - [macOS defaults list](https://macos-defaults.com/)
+- [Prefs Editor](https://apps.tempel.org/PrefsEditor/)
