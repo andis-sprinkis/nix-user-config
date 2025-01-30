@@ -25,7 +25,7 @@
     dir_cfg_git="$HOME/.local/state/dotfiles_git"
     temp_path=$(mktemp -d)
     git clone --separate-git-dir=$dir_cfg_git $git_url_cfg $temp_path
-    rsync --recursive --verbose --exclude '.git' $temp_path/ $HOME
+    rsync --recursive --verbose --exclude '.git/' $temp_path/ $HOME
     git --git-dir=$dir_cfg_git --work-tree=$HOME config --local status.showUntrackedFiles no
     git --git-dir=$dir_cfg_git --work-tree=$HOME submodule update --init
     ```
