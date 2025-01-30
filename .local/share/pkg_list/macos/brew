@@ -19,6 +19,7 @@ gnu-tar
 gnutls
 grep
 htop
+imagemagick
 jq
 less
 lf
