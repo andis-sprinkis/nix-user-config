@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.188.0
+@version      0.189.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
@@ -250,6 +250,7 @@ domain("ss.lv"),
 domain("stackexchange.com"),
 domain("stackoverflow.com"),
 domain("superuser.com"),
+domain("support.apple.com"),
 domain("support.google.com"),
 domain("support.microsoft.com"),
 domain("talsunovads.lv"),
@@ -282,6 +283,7 @@ domain("webaim.org"),
 domain("wiki.documentfoundation.org"),
 domain("wiki.openstreetmap.org"),
 domain("wiki.sei.cmu.edu"),
+domain("www.apple.com"),
 domain("www.microsoft.com"),
 domain("xkpasswd.net"),
 domain("xn--kalendrs-m7a.lv"),
