@@ -21,7 +21,7 @@ if [ ! -r "$bmark_file" ]; then
   exit "9"
 fi
 
-bmark_file_lines="$(set +e; grep "^#  " < "$bmark_file"; set -e)"
+bmark_file_lines="$(set +e; grep "^# " < "$bmark_file"; set -e)"
 
 hostname="$(uname -n)"
 
@@ -45,7 +45,7 @@ bmark_lines="$(
 
 line_edit_bmarks="Edit bookmarks..."
 
-menu_lines="${bmark_lines:+$(echo "$bmark_lines" | sed -e 's/^#  //g' -e "s/  \~  ${hostname}$//g")
+menu_lines="${bmark_lines:+$(echo "$bmark_lines" | sed -e 's/^# //g' -e "s/  \~  ${hostname}$//g")
 }$line_edit_bmarks"
 
 sel_txt="$(printf "%s\n" "$menu_lines" | menu_desktop -p "Bookmark:")"
