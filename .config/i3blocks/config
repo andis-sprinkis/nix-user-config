@@ -4,12 +4,12 @@
 command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/date
 interval=15
 
-[time_local]
-command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/time
-interval=15
-
 [time_utc]
 command=TZ= ${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/time
+interval=15
+
+[time_local]
+command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/time
 interval=15
 
 [session]
