@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.191.0
+@version      0.192.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
@@ -91,7 +91,7 @@ domain("wiktionary.org") {
   }
 }
 
-@-moz-document domain("archive.com") {
+@-moz-document domain("archive.org") {
   @media (prefers-color-scheme: dark) {
     canvas,
     html,
