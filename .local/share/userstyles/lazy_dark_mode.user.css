@@ -93,8 +93,6 @@ domain("wiktionary.org") {
 
 @-moz-document domain("archive.org") {
   @media (prefers-color-scheme: dark) {
-    image-block,
-    item-image,
     canvas,
     html,
     img,
