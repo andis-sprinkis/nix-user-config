@@ -75,6 +75,14 @@ print_mime_newlines() {
   fi
 }
 
+print_strings() {
+  if ! is_exec "strings"; then
+  print_util_not_found "strings"
+  else
+  strings "$FPATH"
+  fi
+}
+
 print_mediainfo() {
   if ! is_exec "mediainfo"; then
     print_util_not_found "mediainfo"
@@ -261,7 +269,7 @@ ${tables}
       fi
     fi
 
-    strings "$FPATH"
+    print_strings
   ;;
   application/x-executable|application/x-object)
     print_mime
@@ -294,26 +302,23 @@ ${tables}
   ;;
   application/octet-stream)
     print_mime
-    if ! is_exec "strings"; then
-      print_util_not_found "strings"
-    else
-      strings "$FPATH"
-    fi
-
-    bytes="1048576"
-
-    echo "
-
-First ${bytes} bytes:"
+    print_strings
 
     if ! is_exec "hexdump"; then
       print_util_not_found "hexdump"
     else
+      bytes="1048576"
+
+      echo "
+
+First ${bytes} bytes or less:"
+
       hexdump --color=always --canonical --length "$bytes" "$FPATH"
     fi
   ;;
   application/x-bittorrent|application/x-lz4+json)
     print_mime
+    print_strings
   ;;
   *)
     print_mime_newlines
