@@ -314,6 +314,9 @@ ${tables}
     print_mime
     print_stat
   ;;
+  application/vnd.debian.binary-package)
+    print_mime
+  ;;
   application/octet-stream)
     print_mime
     print_strings
