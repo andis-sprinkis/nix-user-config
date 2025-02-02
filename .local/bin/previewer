@@ -26,10 +26,18 @@ print_util_not_found() {
   echo "${script}: '${1}' utility not found."
 }
 
+print_mime() {
+  echo "$mime" "(${brief})"
+}
+
+print_mime_newlines() {
+  newlines="$(wc -l "$fpath" | cut -d" " -f1)"
+  echo "$mime" "(${newlines} lines, ${brief})"
+}
+
 print_mediainfo() {
   if ! is_exec "mediainfo"; then
     print_util_not_found "mediainfo"
-
     return
   fi
 
@@ -39,7 +47,6 @@ print_mediainfo() {
 print_chafa() {
   if ! is_exec "chafa"; then
     print_util_not_found "chafa"
-
     return
   fi
 
@@ -48,13 +55,21 @@ print_chafa() {
   fi
 }
 
+print_als_zip() {
+  if ! is_exec "als"; then
+    print_util_not_found "als"
+    return
+  fi
+
+  als --format=zip -- "$fpath"
+}
+
 mime="$(file --mime-type --brief "$fpath")"
 brief="$(file --brief "$fpath")"
 
 case "$mime" in
   application/eps|application/pdf|application/postscript|application/x-eps|image/x-eps)
-    newlines="$(wc -l "$fpath" | cut -d" " -f1)"
-    echo "$mime" "(${newlines} lines, ${brief})"
+    print_mime_newlines
 
     thumb_cache_create
 
@@ -85,8 +100,7 @@ case "$mime" in
     fi
   ;;
   image/vnd.djvu*)
-    newlines="$(wc -l "$fpath" | cut -d" " -f1)"
-    echo "$mime" "(${newlines} lines, ${brief})"
+    print_mime_newlines
 
     thumb_cache_create
 
@@ -102,8 +116,13 @@ case "$mime" in
 
     print_chafa "${w_chr}x${h_chr}" "${FPATH_THUMB}.jpg"
   ;;
+  application/epub+zip)
+    print_mime
+
+    print_als_zip
+  ;;
   application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
-    echo "$mime" "(${brief})"
+    print_mime
 
     print_mediainfo
 
@@ -121,11 +140,8 @@ case "$mime" in
       fi
     fi
   ;;
-  application/x-lz4+json)
-    echo "$mime" "(${brief})"
-  ;;
   image/*)
-    echo "$mime" "(${brief})"
+    print_mime
 
     print_chafa "${w_chr}x${h_chr}" "$fpath"
 
@@ -134,7 +150,7 @@ case "$mime" in
     print_mediainfo
   ;;
   video/*|application/x-ogm-video)
-    echo "$mime" "(${brief})"
+    print_mime
 
     thumb_cache_create
 
@@ -153,7 +169,7 @@ case "$mime" in
     print_mediainfo
   ;;
   *opendocument*)
-    echo "$mime" "(${brief})"
+    print_mime
 
     if ! is_exec "odt2txt"; then
       print_util_not_found "odt2txt"
@@ -163,23 +179,15 @@ case "$mime" in
 
     echo
 
-    if ! is_exec "als"; then
-      print_util_not_found "als"
-    else
-      als --format=zip -- "$fpath"
-    fi
+    print_als_zip
   ;;
   *openxmlformats-officedocument*)
-    echo "$mime" "(${brief})"
+    print_mime
 
-    if ! is_exec "als"; then
-      print_util_not_found "als"
-    else
-      als --format=zip -- "$fpath"
-    fi
+    print_als_zip
   ;;
   audio/mpeg)
-    echo "$mime" "(${brief})"
+    print_mime
 
     print_mediainfo
 
@@ -192,12 +200,12 @@ case "$mime" in
     fi
   ;;
   audio/*|application/mxf|application/ogg|application/sdp|application/smil|application/streamingmedia|application/vnd.apple.mpegurl|application/vnd.ms-asf|application/vnd.rn-realmedia-vbr|application/vnd.rn-realmedia|application/x-cue|application/x-extension-m4a|application/x-extension-mp4|application/x-matroska|application/x-mpegurl|application/x-ogg|application/x-ogm-audio|application/x-ogm|application/x-shorten|application/x-smil|application/x-streamingmedia)
-    echo "$mime" "(${brief})"
+    print_mime
 
     print_mediainfo
   ;;
   application/vnd.sqlite*)
-    echo "$mime" "(${brief})"
+    print_mime
 
     if ! is_exec "sqlite3"; then
       print_util_not_found "sqlite3"
@@ -206,7 +214,7 @@ case "$mime" in
     fi
   ;;
   application/x-executable|application/x-object)
-    echo "$mime" "(${brief})"
+    print_mime
 
     if ! is_exec "readelf"; then
       print_util_not_found "readelf"
@@ -215,7 +223,7 @@ case "$mime" in
     fi
   ;;
   inode/directory)
-    echo "$mime" "(${brief})"
+    print_mime
 
     is_macos=""
     case "$(uname)" in
@@ -232,7 +240,7 @@ case "$mime" in
 
   ;;
   application/octet-stream)
-    echo "$mime" "(${brief})"
+    print_mime
 
     if ! is_exec "hexdump"; then
       print_util_not_found "hexdump"
@@ -248,12 +256,11 @@ case "$mime" in
       strings "$fpath"
     fi
   ;;
-  application/x-bittorrent|inode/socket)
-    echo "$mime" "(${brief})"
+  inode/socket|application/x-bittorrent|application/x-lz4+json)
+    print_mime
   ;;
   *)
-    newlines="$(wc -l "$fpath" | cut -d" " -f1)"
-    echo "$mime" "(${newlines} lines, ${brief})"
+    print_mime_newlines
 
     if ! is_exec "bat"; then
       print_util_not_found "bat"
