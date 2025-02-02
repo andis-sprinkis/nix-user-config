@@ -1,16 +1,49 @@
 #!/usr/bin/env sh
 set -eu
 
-script="$(basename "$0")"
-lines="$(tput lines)"
-columns="$(tput cols)"
+FPATH_INPUT="$1"
+FPATH="$(set +e; readlink -f "$FPATH_INPUT"; set -e)"
 
-fpath="$(readlink -f "$1")"
-w_chr="${2:-"$columns"}"
-h_chr="${3:-"$lines"}"
+print_stat() {
+  echo "----"
+  if [ -L "$FPATH_INPUT" ] ; then
+    if [ -e "$FPATH" ]; then
+      stat "$FPATH_INPUT"
+      echo
+      stat "$FPATH"
+    else
+      stat "$FPATH_INPUT"
+    fi
+  else
+    stat "$FPATH"
+  fi
+}
+
+print_symlink() {
+  if [ -L "$FPATH_INPUT" ] ; then
+    if [ ! -e "$FPATH" ] ; then
+      echo "Broken symbolic link of ${FPATH}
+"
+      print_stat
+      exit
+    fi
+
+    echo "Symbolic link of ${FPATH}"
+  fi
+}
+
+print_symlink
+
+MIME="$(file --mime-type --brief "$FPATH")"
+BRIEF="$(file --brief "$FPATH")"
+
+W_CHR="${2:-""}"
+H_CHR="${3:-""}"
 FPATH_THUMB=""
 
-is_exec() { [ "$(command -v "$1")" ]; }
+is_exec() {
+  [ "$(command -v "$1")" ]
+}
 
 thumb_cache_create() {
   dir_cache_thumb="${XDG_CACHE_HOME:-$HOME/.cache}/previewer/thumbnails"
@@ -19,20 +52,28 @@ thumb_cache_create() {
     mkdir -p "$dir_cache_thumb"
   fi
 
-  FPATH_THUMB="${dir_cache_thumb}/$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$fpath" | sha256sum | cut -d" " -f1)"
+  FPATH_THUMB="${dir_cache_thumb}/$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$FPATH" | sha256sum | cut -d" " -f1)"
 }
 
 print_util_not_found() {
-  echo "${script}: '${1}' utility not found."
+  echo "$(basename "$0"): '${1}' utility not found."
 }
 
 print_mime() {
-  echo "$mime" "(${brief})"
+  if [ -r "$FPATH" ]; then
+    echo "$MIME" "(${BRIEF})"
+  else
+    echo "$MIME"
+  fi
 }
 
 print_mime_newlines() {
-  newlines="$(wc -l "$fpath" | cut -d" " -f1)"
-  echo "$mime" "(${newlines} lines, ${brief})"
+  if [ -r "$FPATH" ]; then
+    newlines="$(wc -l "$FPATH" | cut -d" " -f1)"
+    echo "$MIME" "(${newlines} lines, ${BRIEF})"
+  else
+    echo "$MIME"
+  fi
 }
 
 print_mediainfo() {
@@ -41,7 +82,7 @@ print_mediainfo() {
     return
   fi
 
-  mediainfo "$fpath" | head -n -2 | sed -e 's/ \+: /: /g' -e '/^General$/d'
+  mediainfo "$FPATH" | head -n -2 | sed -e 's/ \+: /: /g' -e '/^General$/d'
 }
 
 print_chafa() {
@@ -50,8 +91,18 @@ print_chafa() {
     return
   fi
 
-  if [ -f "$2" ]; then
-    chafa --format "symbols" --font-ratio "1/2" --animate "off" --polite "on" --work "1" -s "$1" "$2"
+  lines="$(tput lines)"
+  columns="$(tput cols)"
+
+  if [ -f "$1" ]; then
+    chafa \
+      --format "symbols" \
+      --font-ratio "1/2" \
+      --animate "off" \
+      --polite "on" \
+      --work "1" \
+      -s "${W_CHR:-"$columns"}x${H_CHR:-"$lines"}" \
+      "$1"
   fi
 }
 
@@ -61,13 +112,10 @@ print_als_zip() {
     return
   fi
 
-  als --format=zip -- "$fpath"
+  als --format=zip -- "$FPATH"
 }
 
-mime="$(file --mime-type --brief "$fpath")"
-brief="$(file --brief "$fpath")"
-
-case "$mime" in
+case "$MIME" in
   application/eps|application/pdf|application/postscript|application/x-eps|image/x-eps)
     print_mime_newlines
 
@@ -81,14 +129,14 @@ case "$mime" in
       fi
     fi
 
-    print_chafa "${w_chr}x${h_chr}" "${FPATH_THUMB}.jpg"
+    print_chafa "${FPATH_THUMB}.jpg"
 
     echo
 
     if ! is_exec "pdfinfo"; then
       print_util_not_found "pdfinfo"
     else
-      pdfinfo "$fpath"
+      pdfinfo "$FPATH"
 
       echo
     fi
@@ -96,7 +144,7 @@ case "$mime" in
     if ! is_exec "pdftotext"; then
       print_util_not_found "pdftotext"
     else
-      pdftotext -l "2" -nopgbrk -q -- "$fpath" -
+      pdftotext -l "2" -nopgbrk -q -- "$FPATH" -
     fi
   ;;
   image/vnd.djvu*)
@@ -114,9 +162,9 @@ case "$mime" in
       fi
     fi
 
-    print_chafa "${w_chr}x${h_chr}" "${FPATH_THUMB}.jpg"
+    print_chafa "${FPATH_THUMB}.jpg"
   ;;
-  application/epub+zip)
+  application/epub+zip|application/java-archive|*openxmlformats-officedocument*)
     print_mime
 
     print_als_zip
@@ -131,19 +179,19 @@ case "$mime" in
     if ! is_exec "als"; then
       print_util_not_found "als"
     else
-      if [ "$mime" = "application/x-7z-compressed" ]; then
+      if [ "$MIME" = "application/x-7z-compressed" ]; then
         set +e
-        als --format-option=-p="" -- "$fpath"
+        als --format-option=-p="" -- "$FPATH"
         set -e
       else
-        als -- "$fpath"
+        als -- "$FPATH"
       fi
     fi
   ;;
   image/*)
     print_mime
 
-    print_chafa "${w_chr}x${h_chr}" "$fpath"
+    print_chafa "$FPATH"
 
     echo
 
@@ -162,7 +210,7 @@ case "$mime" in
       fi
     fi
 
-    print_chafa "${w_chr}x${h_chr}" "${FPATH_THUMB}.jpg"
+    print_chafa "${FPATH_THUMB}.jpg"
 
     echo
 
@@ -174,15 +222,10 @@ case "$mime" in
     if ! is_exec "odt2txt"; then
       print_util_not_found "odt2txt"
     else
-      odt2txt "$fpath"
+      odt2txt "$FPATH"
     fi
 
     echo
-
-    print_als_zip
-  ;;
-  *openxmlformats-officedocument*)
-    print_mime
 
     print_als_zip
   ;;
@@ -196,7 +239,7 @@ case "$mime" in
     if ! is_exec "mpg123-id3dump"; then
       print_util_not_found "mpg123-id3dump"
     else
-      mpg123-id3dump -- "$fpath"
+      mpg123-id3dump -- "$FPATH"
     fi
   ;;
   audio/*|application/mxf|application/ogg|application/sdp|application/smil|application/streamingmedia|application/vnd.apple.mpegurl|application/vnd.ms-asf|application/vnd.rn-realmedia-vbr|application/vnd.rn-realmedia|application/x-cue|application/x-extension-m4a|application/x-extension-mp4|application/x-matroska|application/x-mpegurl|application/x-ogg|application/x-ogm-audio|application/x-ogm|application/x-shorten|application/x-smil|application/x-streamingmedia)
@@ -210,8 +253,16 @@ case "$mime" in
     if ! is_exec "sqlite3"; then
       print_util_not_found "sqlite3"
     else
-      sqlite3 "$fpath" '.tables'
+      tables="$(set +e; sqlite3 "$FPATH" '.tables'; set -e)"
+
+      if [ "${tables:-""}" ]; then
+        echo ".tables:
+${tables}
+"
+      fi
     fi
+
+    strings "$FPATH"
   ;;
   application/x-executable|application/x-object)
     print_mime
@@ -219,7 +270,7 @@ case "$mime" in
     if ! is_exec "readelf"; then
       print_util_not_found "readelf"
     else
-      readelf -a "$fpath"
+      readelf -a "$FPATH"
     fi
   ;;
   inode/directory)
@@ -233,41 +284,50 @@ case "$mime" in
     esac
 
     if [ -z "$is_macos" ] || [ "${HAS_BREW_GNUBIN:-""}" ]; then
-      ls -lahAFNX --color=always --group-directories-first --time-style=long-iso "$fpath"
+      ls -lahAFNX --color=always --group-directories-first --time-style=long-iso "$FPATH"
     else
-      ls -la "$fpath"
+      ls -la "$FPATH"
     fi
-
+  ;;
+  inode/*)
+    print_mime
   ;;
   application/octet-stream)
     print_mime
+    if ! is_exec "strings"; then
+      print_util_not_found "strings"
+    else
+      strings "$FPATH"
+    fi
+
+    bytes="1048576"
+
+    echo "
+
+First ${bytes} bytes:"
 
     if ! is_exec "hexdump"; then
       print_util_not_found "hexdump"
     else
-      hexdump --color=always --canonical --length "1048576" "$fpath"
-    fi
-
-    echo
-
-    if ! is_exec "strings"; then
-      print_util_not_found "strings"
-    else
-      strings "$fpath"
+      hexdump --color=always --canonical --length "$bytes" "$FPATH"
     fi
   ;;
-  inode/socket|application/x-bittorrent|application/x-lz4+json)
+  application/x-bittorrent|application/x-lz4+json)
     print_mime
   ;;
   *)
     print_mime_newlines
 
-    if ! is_exec "bat"; then
-      print_util_not_found "bat"
-    else
-      bat --color=always --style=plain -- "$fpath"
+    if [ -r "$FPATH" ]; then
+      if ! is_exec "bat"; then
+        print_util_not_found "bat"
+      else
+        bat --color=always --style=plain -- "$FPATH"
+      fi
     fi
   ;;
 esac
+
+# print_stat
 
 exit "0"
