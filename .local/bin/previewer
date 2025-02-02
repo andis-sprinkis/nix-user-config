@@ -21,13 +21,16 @@ print_stat() {
 print_symlink() {
   if [ -L "$FPATH_INPUT" ]; then
     if [ ! -e "$FPATH" ]; then
-      echo "Broken symbolic link of ${FPATH}
+      echo "Broken symbolic link:
+${FPATH}
 "
       print_stat
       exit
     fi
 
-    echo "Symbolic link of ${FPATH}"
+    echo "Symbolic link:
+${FPATH}
+"
   fi
 }
 
