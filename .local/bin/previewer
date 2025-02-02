@@ -121,6 +121,9 @@ case "$mime" in
       fi
     fi
   ;;
+  application/x-lz4+json)
+    echo "$mime" "(${brief})"
+  ;;
   image/*)
     echo "$mime" "(${brief})"
 
@@ -160,12 +163,20 @@ case "$mime" in
 
     echo
 
-    als --format=zip -- "$fpath"
+    if ! is_exec "als"; then
+      print_util_not_found "als"
+    else
+      als --format=zip -- "$fpath"
+    fi
   ;;
   *openxmlformats-officedocument*)
     echo "$mime" "(${brief})"
 
-    als --format=zip -- "$fpath"
+    if ! is_exec "als"; then
+      print_util_not_found "als"
+    else
+      als --format=zip -- "$fpath"
+    fi
   ;;
   audio/mpeg)
     echo "$mime" "(${brief})"
