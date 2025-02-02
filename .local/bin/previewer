@@ -157,6 +157,15 @@ case "$mime" in
     else
       odt2txt "$fpath"
     fi
+
+    echo
+
+    als --format=zip -- "$fpath"
+  ;;
+  *openxmlformats-officedocument*)
+    echo "$mime" "(${brief})"
+
+    als --format=zip -- "$fpath"
   ;;
   audio/mpeg)
     echo "$mime" "(${brief})"
