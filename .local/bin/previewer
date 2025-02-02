@@ -335,10 +335,13 @@ First ${bytes} bytes or less:"
     print_strings
   ;;
   application/x-iso9660-image)
+    print_mime
     if ! is_exec "iso-info"; then
       print_util_not_found "iso-info"
     else
-      iso-info "$FPATH"
+      iso-info --no-header -U "$FPATH"
+      echo
+      iso-info --no-header -l "$FPATH"
     fi
   ;;
   *)
