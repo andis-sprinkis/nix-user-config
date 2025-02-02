@@ -314,9 +314,6 @@ ${tables}
     print_mime
     print_stat
   ;;
-  application/vnd.debian.binary-package)
-    print_mime
-  ;;
   application/octet-stream)
     print_mime
     print_strings
@@ -333,9 +330,16 @@ First ${bytes} bytes or less:"
       hexdump --color=always --canonical --length "$bytes" "$FPATH"
     fi
   ;;
-  application/x-bittorrent|application/x-lz4+json)
+  application/x-bittorrent|application/x-lz4+json|application/vnd.debian.binary-package)
     print_mime
     print_strings
+  ;;
+  application/x-iso9660-image)
+    if ! is_exec "iso-info"; then
+      print_util_not_found "iso-info"
+    else
+      iso-info "$FPATH"
+    fi
   ;;
   *)
     print_mime_newlines
