@@ -5,7 +5,6 @@ FPATH_INPUT="$1"
 FPATH="$(set +e; readlink -f "$FPATH_INPUT"; set -e)"
 
 print_stat() {
-  echo "----"
   if [ -L "$FPATH_INPUT" ] ; then
     if [ -e "$FPATH" ]; then
       stat "$FPATH_INPUT"
@@ -291,6 +290,7 @@ ${tables}
   ;;
   inode/*)
     print_mime
+    print_stat
   ;;
   application/octet-stream)
     print_mime
@@ -327,7 +327,5 @@ First ${bytes} bytes:"
     fi
   ;;
 esac
-
-# print_stat
 
 exit "0"
