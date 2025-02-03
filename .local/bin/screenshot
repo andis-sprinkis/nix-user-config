@@ -14,7 +14,7 @@ path_img="${path_dir}/$(date "+%s").png"
 
 mkdir -p "$path_dir"
 
-if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+if [ "${WAYLAND_DISPLAY:-""}" ]; then
   if [ -z "${*:-""}" ]; then
     exec maim -u "$path_img"
   fi
@@ -33,7 +33,7 @@ if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   esac
 fi
 
-if [ "${WAYLAND_DISPLAY:-""}" ]; then
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   if [ -z "${*:-""}" ]; then
     exec grim -o "$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')" "$path_img"
   fi
