@@ -8,17 +8,16 @@ if [ -d "/opt/homebrew" ]; then
   export BREW_PREFIX="/opt/homebrew"
 
   # initialize homebrew
-  if [ "${BREW_PREFIX:-""}" ] && [ -f "${BREW_PREFIX}/bin/brew" ]; then
+  if [ -f "${BREW_PREFIX}/bin/brew" ]; then
     eval "$("${BREW_PREFIX}/bin/brew" shellenv)"
 
     # determine if GNU utilities have been installed with homebrew
     HAS_BREW_GNUBIN=""
     if [ -d "${BREW_PREFIX}/opt/coreutils/libexec/gnubin" ]; then
       export HAS_BREW_GNUBIN="1"
-    fi
 
-    # use the GNU utils on macOS
-    if [ "$HAS_BREW_GNUBIN" ]; then
+      # use the GNU utils on macOS
+      export MANPATH="${BREW_PREFIX}/opt/coreutils/libexec/gnuman:${MANPATH}"
       PATH="${BREW_PREFIX}/opt/coreutils/libexec/gnubin:${PATH}"
     fi
   fi

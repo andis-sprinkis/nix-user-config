@@ -16,7 +16,6 @@ if [ "${BREW_PREFIX:-""}" ] && [ -f "${BREW_PREFIX}/bin/brew" ]; then
   # use the GNU utils on macOS
   if [ "$HAS_BREW_GNUBIN" ]; then
     PATH="${BREW_PREFIX}/opt/coreutils/libexec/gnubin:${PATH}"
-    export MANPATH="${BREW_PREFIX}/opt/coreutils/libexec/gnuman:${MANPATH}"
   fi
 fi
 
