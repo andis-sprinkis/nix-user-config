@@ -9,7 +9,7 @@ if [ -d "/opt/homebrew" ]; then
 
   # initialize homebrew
   if [ -f "${BREW_PREFIX}/bin/brew" ]; then
-    eval "$("${BREW_PREFIX}/bin/brew" shellenv)"
+    eval "$("${BREW_PREFIX}/bin/brew" "shellenv")"
 
     # determine if GNU utilities have been installed with homebrew
     HAS_BREW_GNUBIN=""
