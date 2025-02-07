@@ -41,7 +41,6 @@ alias \
   dup="rmlint" \
   e="\$EDITOR" \
   fsize="du -ah" \
-  git="git -c color.ui=always" \
   g="git" \
   g_submodule_init="git submodule update --init --recursive" \
   g_submodule_upgrade_latest_remote="git submodule update --recursive --remote" \
