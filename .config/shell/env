@@ -25,6 +25,11 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 
+# initialize homebrew
+if [ -f "${BREW_PREFIX}/bin/brew" ]; then
+  eval "$("${BREW_PREFIX}/bin/brew" shellenv)"
+fi
+
 # set local bin PATH
 PATH="$HOME/.local/bin:$PATH"
 
