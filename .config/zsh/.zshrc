@@ -208,6 +208,11 @@ $prompt_symbol"
     bindkey "^k" "fzf_search_history"
   fi
 
+  # configure pyenv
+  if is_exec "pyenv"; then
+    eval "$(pyenv init - zsh)"
+  fi
+
   # source local zsh plugins
   . "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
   . "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
