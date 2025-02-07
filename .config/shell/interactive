@@ -10,14 +10,14 @@ set_window_title() { printf "\033]0;%s\007" "$PWD"; }
 lfcd() { cd "$(command lf -print-last-dir "$@")" || return; }
 
 # initialize homebrew
-if [ -f "/opt/homebrew/bin/brew" ]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
+if [ "${BREW_PREFIX:-""}" ] && [ -f "${BREW_PREFIX}/bin/brew" ]; then
+  eval "$("${BREW_PREFIX}/bin/brew" "shellenv")"
 
-# use the GNU utils on macOS
-if [ "$HAS_BREW_GNUBIN" ]; then
-  PATH="${BREW_PREFIX}/opt/coreutils/libexec/gnubin:${PATH}"
-  export MANPATH="${BREW_PREFIX}/opt/coreutils/libexec/gnuman:${MANPATH}"
+  # use the GNU utils on macOS
+  if [ "$HAS_BREW_GNUBIN" ]; then
+    PATH="${BREW_PREFIX}/opt/coreutils/libexec/gnubin:${PATH}"
+    export MANPATH="${BREW_PREFIX}/opt/coreutils/libexec/gnuman:${MANPATH}"
+  fi
 fi
 
 # configure zsh-system-clipboard
