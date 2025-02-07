@@ -14,12 +14,6 @@ if [ -f "/opt/homebrew/bin/brew" ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# use the GNU utils on macOS
-if [ "$HAS_BREW_GNUBIN" ]; then
-  PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
-  export MANPATH="$BREW_PREFIX/opt/coreutils/libexec/gnuman:$MANPATH"
-fi
-
 # configure zsh-system-clipboard
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   export ZSH_SYSTEM_CLIPBOARD_METHOD="xcc"
