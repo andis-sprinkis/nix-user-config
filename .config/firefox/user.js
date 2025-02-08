@@ -8,7 +8,6 @@ user_pref("browser.aboutConfig.showWarning", false);
 user_pref("browser.aboutwelcome.enabled", false);
 user_pref("browser.backspace_action", 0);
 user_pref("browser.bookmarks.defaultLocation", "menu");
-user_pref("browser.bookmarks.editDialog.firstEditField", "folderTree");
 user_pref("browser.bookmarks.max_backups", 0);
 user_pref("browser.bookmarks.openInTabClosesMenu", false);
 user_pref("browser.chrome.site_icons", false);

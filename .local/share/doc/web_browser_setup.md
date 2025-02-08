@@ -41,6 +41,7 @@
 1.  https://addons.mozilla.org/en-US/firefox/addon/mojeek-search/
 1.  https://addons.mozilla.org/en-US/firefox/addon/multi-account-containers/
 1.  https://addons.mozilla.org/en-US/firefox/addon/nomoreshorts/
+1.  https://addons.mozilla.org/en-US/firefox/addon/pretty-xml/
 1.  https://addons.mozilla.org/en-US/firefox/addon/react-context-devtool/
 1.  https://addons.mozilla.org/en-US/firefox/addon/react-devtools/
 1.  https://addons.mozilla.org/en-US/firefox/addon/reduxdevtools/
