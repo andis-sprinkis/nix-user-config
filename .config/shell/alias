@@ -16,10 +16,10 @@ alias \
   convert="magick" \
   cp="cp -rv" \
   curl="curl --location" \
-  date_iso8601="TZ= date -u +\"%Y-%m-%dT%H:%M:%SZ\"" \
-  date_iso8601_dash="TZ= date -u +\"%Y-%m-%dT%H-%M-%SZ\"" \
-  date_iso8601_nosep="TZ= date -u +\"%Y%m%dT%H%M%SZ\"" \
-  date_iso8601_underscore="TZ= date -u +\"%Y_%m_%dT%H_%M_%SZ\"" \
+  date_iso8601_utc="TZ= date -u +\"%Y-%m-%dT%H:%M:%SZ\"" \
+  date_iso8601_utc_dash="TZ= date -u +\"%Y-%m-%dT%H-%M-%SZ\"" \
+  date_iso8601_utc_nosep="TZ= date -u +\"%Y%m%dT%H%M%SZ\"" \
+  date_iso8601_utc_underscore="TZ= date -u +\"%Y_%m_%dT%H_%M_%SZ\"" \
   dmesg="sudo dmesg -HL" \
   d="\$EDITOR \"\${XDG_DATA_HOME:-\$HOME/.local/share}\"" \
   doc="\$EDITOR \"\${XDG_DATA_HOME:-\$HOME/.local/share}/doc/\"" \
