@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+echo ".bash_logout / .logout / .zlogout"
+
 if [ "$TERM" = "linux" ]; then
   reset
 fi

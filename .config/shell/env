@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+echo ".profile / .zshenv"
+
 # fn: detect if given command is executable
 is_exec() { [ "$(command -v "$1")" ]; }
 

@@ -1,3 +1,7 @@
+#!/usr/bin/env sh
+
+echo ".zshrc"
+
 () {
   # generic interactive shell configuration
   . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/interactive"

@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+echo ".zlogin"
+
 () {
   # generic login shell configuration
   . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/login"
