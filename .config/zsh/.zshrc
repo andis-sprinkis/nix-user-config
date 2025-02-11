@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-echo ".zshrc"
+# echo ".zshrc"
 
 () {
   # generic interactive shell configuration

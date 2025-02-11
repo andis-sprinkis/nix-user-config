@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-echo ".zlogin"
+# echo ".zlogin"
 
 () {
   # generic login shell configuration
