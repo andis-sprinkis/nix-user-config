@@ -11,7 +11,8 @@ lfcd() { cd "$(command lf -print-last-dir "$@")" || return; }
 
 # initialize homebrew
 if [ "${BREW_PREFIX:-""}" ] && [ -f "${BREW_PREFIX}/bin/brew" ]; then
-  eval "$("${BREW_PREFIX}/bin/brew" "shellenv")"
+  # eval "$("${BREW_PREFIX}/bin/brew" "shellenv")"
+  PATH="${BREW_PREFIX}/bin:${BREW_PREFIX}/sbin:${PATH}"
 
   # use the GNU utils on macOS
   if [ "$HAS_BREW_GNUBIN" ]; then
