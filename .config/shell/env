@@ -9,7 +9,17 @@ if [ -d "/opt/homebrew" ]; then
 
   # initialize homebrew
   if [ -f "${BREW_PREFIX}/bin/brew" ]; then
-    eval "$("${BREW_PREFIX}/bin/brew" "shellenv")"
+    # eval "$("${BREW_PREFIX}/bin/brew" "shellenv")"
+    export HOMEBREW_PREFIX="$BREW_PREFIX"
+    export HOMEBREW_CELLAR="${BREW_PREFIX}/Cellar"
+    export HOMEBREW_REPOSITORY="${BREW_PREFIX}/Homebrew"
+    PATH="${BREW_PREFIX}/bin:${BREW_PREFIX}/sbin:${PATH}"
+
+    if [ "${MANPATH:-""}" ]; then
+      export MANPATH=":${MANPATH#:}"
+    fi
+
+    export INFOPATH="${BREW_PREFIX}/share/info:${INFOPATH:-""}"
 
     # determine if GNU utilities have been installed with homebrew
     HAS_BREW_GNUBIN=""

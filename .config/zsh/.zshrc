@@ -88,6 +88,11 @@
     RPROMPT="${tmout_status}(\$?) %D{%K:%M:%S}"
   }
 
+  # use homebrew site-functions
+  if [ "${BREW_PREFIX:-""}" ] && [ -f "${BREW_PREFIX}/bin/brew" ]; then
+    fpath[1,0]="${BREW_PREFIX}/share/zsh/site-functions"
+  fi
+
   if is_exec "git"; then
     # git-completion plugin
     fpath=($fpath "${XDG_DATA_HOME:-$HOME/.local/share}/git-completion/zsh")
