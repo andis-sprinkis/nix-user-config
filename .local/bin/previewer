@@ -287,7 +287,7 @@ ${tables}
     if ! is_exec "readelf"; then
       print_util_not_found "readelf"
     else
-      readef -a "$FPATH"
+      readelf -a "$FPATH"
     fi
   ;;
   inode/directory)
