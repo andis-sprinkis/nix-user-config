@@ -24,6 +24,7 @@ imagemagick
 jq
 less
 lf
+libqalculate
 media-info
 ncdu
 neovim
