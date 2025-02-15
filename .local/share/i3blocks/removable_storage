@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 set -eu
+IFS_="$IFS"
 
 fstab_mounts="$(set +e; grep -v -e "^#" -e "^$" < "/etc/fstab"; set -e)"
 fstab_mounts_mpts="$(echo "$fstab_mounts" | awk '{ print $2 }')"
@@ -10,7 +11,7 @@ active_mounts_mpts="$(echo "$active_mounts" | awk '{ print $2 }')"
 rsds_mounts="" rsds_count="0"
 
 mpts_parsed_count="0"
-IFS_="$IFS"; IFS="
+IFS="
 "
 for mpt in $active_mounts_mpts; do
   IFS="$IFS_"
@@ -44,10 +45,10 @@ ${rsds_mounts}\" | ${PAGER}"
 fi
 
 case "$rsds_count" in
-  "0") 
+  "0")
     exit "0"
   ;;
-  "1") 
+  "1")
     echo "$rsds_count storage device
 $rsds_count stor. dev."
   ;;
