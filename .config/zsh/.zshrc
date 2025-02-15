@@ -109,9 +109,9 @@
 
   # set PS1 prompt
   () {
-    if [ "$USER" = "root" ]; then 
+    if [ "$USER" = "root" ]; then
       local role_params=("magenta" "#")
-    else 
+    else
       local role_params=("cyan" "$")
     fi
 
