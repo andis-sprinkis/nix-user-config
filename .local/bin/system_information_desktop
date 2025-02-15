@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+set -eu
+
+win_title="\033]0;System information\007"
+
+exec $TERMINAL -e "$SHELL" -c "echo -n \"$win_title\"; inxi -c7 -F -xxx -y 120 --indent 15 --indents 4 | \${PAGER}"

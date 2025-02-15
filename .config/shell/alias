@@ -59,7 +59,7 @@ alias \
   hexdump="hexdump --color=always --canonical" \
   hosts="sudo \$EDITOR /etc/hosts" \
   htop="htop -t -s PERCENT_CPU --highlight-changes=10" \
-  inxi="inxi -c7 -F" \
+  inxi="inxi -c7 -F -xxx -y 120 --indent 15 --indents 4" \
   ip="ip --color=always" \
   jq="jq -C" \
   l="lf" \
