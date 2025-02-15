@@ -196,13 +196,23 @@ case "$MIME" in
     if ! is_exec "als"; then
       print_util_not_found "als"
     else
-      if [ "$MIME" = "application/x-7z-compressed" ]; then
-        set +e
-        als --format-option=-p="" -- "$FPATH"
-        set -e
-      else
-        als -- "$FPATH"
-      fi
+      case "$MIME" in
+        "application/zip")
+          if [ "${FPATH##*.}" = "xpi" ]; then
+            als --format=zip -- "$FPATH"
+          else
+            als -- "$FPATH"
+          fi
+        ;;
+        "application/x-7z-compressed")
+          set +e
+          als --format-option=-p="" -- "$FPATH"
+          set -e
+        ;;
+        *)
+          als -- "$FPATH"
+        ;;
+      esac
     fi
   ;;
   image/*)
