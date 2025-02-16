@@ -211,7 +211,7 @@ case "$MIME" in
     if ! is_exec "als"; then
       print_util_not_found "als"
     else
-      # Pass an empty password to avoid a lock-up.
+      # Passing an empty password to avoid a lock-up.
       set +e; als --format-option=-p="" -- "$FPATH"; set -e
     fi
   ;;
