@@ -237,3 +237,4 @@ map b mark-load
 map gl follow-symlink
 map gs follow-search
 map o push :open-with<space>
+map t
