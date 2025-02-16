@@ -307,14 +307,8 @@ ${tables}
   inode/directory)
     print_mime
 
-    is_macos=""
-    case "$(uname)" in
-      "Darwin")
-        is_macos="1"
-      ;;
-    esac
-
-    if [ -z "$is_macos" ] || [ "${HAS_BREW_GNUBIN:-""}" ]; then
+    # shellcheck disable=SC2010
+    if ls --version 2> "/dev/null" | grep -q "GNU"; then
       ls -lahAFNX --color=always --group-directories-first --time-style=long-iso "$FPATH"
     else
       ls -la "$FPATH"
