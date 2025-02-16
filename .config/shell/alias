@@ -119,15 +119,16 @@ is_exec "yay" && alias \
   pac_upgrade="yay" \
   pac_upgrade_db="yay -Sy"
 
-case "$(uname)" in
-  "Darwin")
-    is_macos="1"
-  ;;
-esac
-
-if [ -z "$is_macos" ] || [ "${HAS_BREW_GNUBIN:-""}" ]; then
-  alias \
-    diff="diff --color=always" \
-    grep="grep --color=always" \
-    ls="ls -xhAFNX --color=always --group-directories-first --time-style=long-iso"
+# shellcheck disable=SC2010
+if \ls --version 2> "/dev/null" | \grep -q "GNU"; then
+  alias ls="ls -xhAFNX --color=always --group-directories-first --time-style=long-iso"
 fi
+
+if \grep --version 2> "/dev/null" | \grep -q "GNU"; then
+  alias grep="grep --color=always"
+fi
+
+if \diff --version 2> "/dev/null" | \grep -q "GNU"; then
+  alias diff="diff --color=always" 
+fi
+
