@@ -342,12 +342,32 @@ First ${bytes} bytes or less:"
   ;;
   application/x-iso9660-image)
     print_mime
-    if ! is_exec "iso-info"; then
-      print_util_not_found "iso-info"
-    else
-      iso-info --no-header -U "$FPATH"
-      echo
-      iso-info --no-header -l "$FPATH"
+
+    if [ -r "$FPATH" ]; then
+      if ! is_exec "iso-info"; then
+        print_util_not_found "iso-info"
+      else
+        iso-info --no-header -U "$FPATH"
+        echo
+        iso-info --no-header -l "$FPATH"
+      fi
+    fi
+  ;;
+  text/x-ssh-public-key|application/x-pem-file)
+    print_mime_newlines
+
+    if [ -r "$FPATH" ]; then
+      if ! is_exec "ssh-keygen"; then
+        print_util_not_found "ssh-keygen"
+      else
+        ssh-keygen -lv -f "$FPATH"
+      fi
+
+      if ! is_exec "bat"; then
+        print_util_not_found "bat"
+      else
+        bat --color=always --style=plain -- "$FPATH"
+      fi
     fi
   ;;
   *)
