@@ -24,7 +24,11 @@ cmd open ${{
     ;;
     text/rtf)
     ;;
-    application/bzip*|application/gzip|application/vnd.rar|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-xz|application/zip)
+    application/gzip|application/java-archive|application/vnd.debian.binary-package|application/vnd.ms-cab-compressed|application/vnd.rar|application/x-7z-compressed|application/x-7z-compressed|application/x-ace|application/x-alz|application/x-archive|application/x-arj|application/x-bzip1|application/x-bzip1-compressed-tar|application/x-bzip2|application/x-bzip2-compressed-tar|application/x-compress|application/x-compressed-tar|application/x-cpio|application/x-lha|application/x-lrzip|application/x-lzip|application/x-lzip-compressed-tar|application/x-lzma-compressed-tar|application/x-lzma|application/x-lzop|application/x-rpm|application/x-tar|application/x-tarz|application/x-tzo|application/x-xz|application/x-xz-compressed-tar|application/zip)
+      # Archive types that 'als' recognizes.
+      exec $PAGER $fx
+    ;;
+    application/x-iso9660-image)
       exec $PAGER $fx
     ;;
     text/*|application/xml|application/*json*|application/xhtml*|application/javascript|application/x-httpd-php|application/x-wine-extension-ini|application/x-subrip|application/x-awk|inode/x-empty)
