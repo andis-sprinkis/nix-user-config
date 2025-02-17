@@ -54,10 +54,10 @@ thumb_cache_create() {
 }
 
 print_hardlink() {
-  links="$(stat -c '%h' -- "$FPATH")"
+  links_count="$(stat -c '%h' -- "$FPATH")"
 
-  if [ "$links" -gt "1" ]; then
-    echo "${links} hard links"
+  if [ "$links_count" -gt "1" ]; then
+    echo "${links_count} hard links"
   fi
 }
 
