@@ -4,6 +4,13 @@ set -eu
 FPATH_INPUT="$1"
 FPATH="$(set +e; readlink -f "$FPATH_INPUT"; set -e)"
 
+MIME="$(file --mime-type --brief "$FPATH")"
+BRIEF="$(file --brief "$FPATH")"
+
+W_CHR="${2:-""}"
+H_CHR="${3:-""}"
+FPATH_THUMB=""
+
 print_stat() {
   if [ -L "$FPATH_INPUT" ] ; then
     if [ -e "$FPATH" ]; then
@@ -29,15 +36,6 @@ print_symlink() {
     printf "\x1b[0;1m%s\x1b[0m\n%s\n\n" "Symbolic link:" "${FPATH}"
   fi
 }
-
-print_symlink
-
-MIME="$(file --mime-type --brief "$FPATH")"
-BRIEF="$(file --brief "$FPATH")"
-
-W_CHR="${2:-""}"
-H_CHR="${3:-""}"
-FPATH_THUMB=""
 
 is_exec() {
   [ "$(command -v "$1")" ]
@@ -130,6 +128,7 @@ print_als_zip() {
   als --format=zip -- "$FPATH"
 }
 
+print_symlink
 print_hardlink
 
 case "$MIME" in
