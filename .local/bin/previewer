@@ -11,6 +11,24 @@ W_CHR="${2:-""}"
 H_CHR="${3:-""}"
 FPATH_THUMB=""
 
+is_exec() {
+  [ "$(command -v "$1")" ]
+}
+
+print_util_not_found() {
+  echo "$(basename "$0"): '${1}' utility not found."
+}
+
+thumb_cache_create() {
+  dir_cache_thumb="${XDG_CACHE_HOME:-$HOME/.cache}/previewer/thumbnails"
+
+  if [ ! -d "$dir_cache_thumb" ]; then
+    mkdir -p "$dir_cache_thumb"
+  fi
+
+  FPATH_THUMB="${dir_cache_thumb}/$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$FPATH" | sha256sum | cut -d" " -f1)"
+}
+
 print_stat() {
   if [ -L "$FPATH_INPUT" ] ; then
     if [ -e "$FPATH" ]; then
@@ -37,46 +55,11 @@ print_symlink() {
   fi
 }
 
-is_exec() {
-  [ "$(command -v "$1")" ]
-}
-
-thumb_cache_create() {
-  dir_cache_thumb="${XDG_CACHE_HOME:-$HOME/.cache}/previewer/thumbnails"
-
-  if [ ! -d "$dir_cache_thumb" ]; then
-    mkdir -p "$dir_cache_thumb"
-  fi
-
-  FPATH_THUMB="${dir_cache_thumb}/$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$FPATH" | sha256sum | cut -d" " -f1)"
-}
-
 print_hardlink() {
   links_count="$(stat -c '%h' -- "$FPATH")"
 
   if [ "$links_count" -gt "1" ]; then
     echo "${links_count} hard links"
-  fi
-}
-
-print_util_not_found() {
-  echo "$(basename "$0"): '${1}' utility not found."
-}
-
-print_mime() {
-  if [ -r "$FPATH" ]; then
-    echo "$MIME" "(${BRIEF})"
-  else
-    echo "$MIME"
-  fi
-}
-
-print_mime_newlines() {
-  if [ -r "$FPATH" ]; then
-    newlines="$(wc -l "$FPATH" | cut -d" " -f1)"
-    echo "$MIME" "(${newlines} lines, ${BRIEF})"
-  else
-    echo "$MIME"
   fi
 }
 
@@ -132,6 +115,23 @@ print_bat() {
     print_util_not_found "bat"
   else
     bat --color=always --style=plain -- "$FPATH"
+  fi
+}
+
+print_mime() {
+  if [ -r "$FPATH" ]; then
+    echo "$MIME" "(${BRIEF})"
+  else
+    echo "$MIME"
+  fi
+}
+
+print_mime_newlines() {
+  if [ -r "$FPATH" ]; then
+    newlines="$(wc -l "$FPATH" | cut -d" " -f1)"
+    echo "$MIME" "(${newlines} lines, ${BRIEF})"
+  else
+    echo "$MIME"
   fi
 }
 
