@@ -63,6 +63,7 @@ alias \
   ip="ip --color=always" \
   jq="jq -C" \
   l="lf" \
+  lsl="ls -l" \
   mime="file --mime-type --brief" \
   mkdir="mkdir -pv" \
   mount="sudo mount" \
