@@ -59,7 +59,6 @@ print_hardlink() {
   fi
 }
 
-
 print_util_not_found() {
   echo "$(basename "$0"): '${1}' utility not found."
 }
