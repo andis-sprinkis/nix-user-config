@@ -113,9 +113,10 @@ print_als_zip() {
 print_bat() {
   if ! is_exec "bat"; then
     print_util_not_found "bat"
-  else
-    bat --color=always --style=plain -- "$FPATH"
+    return
   fi
+
+  bat --color=always --style=plain -- "$FPATH"
 }
 
 print_mime() {
