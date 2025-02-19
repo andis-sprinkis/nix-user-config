@@ -128,6 +128,14 @@ print_als_zip() {
   als --format=zip -- "$FPATH"
 }
 
+print_bat() {
+  if ! is_exec "bat"; then
+    print_util_not_found "bat"
+  else
+    bat --color=always --style=plain -- "$FPATH"
+  fi
+}
+
 print_symlink
 print_hardlink
 
@@ -363,21 +371,13 @@ First ${bytes} bytes or less:"
       ssh-keygen -lv -f "$FPATH"
     fi
 
-    if ! is_exec "bat"; then
-      print_util_not_found "bat"
-    else
-      bat --color=always --style=plain -- "$FPATH"
-    fi
+    print_bat
   ;;
   *)
     print_mime_newlines
 
     if [ -r "$FPATH" ]; then
-      if ! is_exec "bat"; then
-        print_util_not_found "bat"
-      else
-        bat --color=always --style=plain -- "$FPATH"
-      fi
+      print_bat
     fi
   ;;
 esac
