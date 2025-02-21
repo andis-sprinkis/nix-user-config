@@ -41,12 +41,14 @@
     [ -s ./pypi ] && for p in $(cat ./pypi | paste -s -d ' ' -); do pipx install $p; done
     ```
 1. Install user Neovim configuration.
+
     ```sh
     cd $HOME/.config
     git clone https://github.com/andis-sprinkis/nvim-user-config nvim
     ```
 
 1. Close any Sytem Preferences windows.
+
     ```sh
     osascript -e 'tell application "System Preferences" to quit'
     ```
@@ -64,12 +66,19 @@
     ```
 
 1. Increase the keyboard key repetition rate.
+
     1. ```sh
        defaults write -g ApplePressAndHoldEnabled -bool false
        defaults write -g InitialKeyRepeat -int 9
        defaults write -g KeyRepeat -int 1
        ```
     1. Log out and log in.
+
+1. Disable the input source switch pop-up widget.
+
+    ```sh
+    defaults write kCFPreferencesAnyApplication TSMLanguageIndicatorEnabled 0
+    ```
 
 1. Configure Finder.
 
@@ -133,6 +142,7 @@
     ```
 
 1. Disable the animations.
+
     ```sh
     # The Finder windows animations and the 'Get Info' animations
     defaults write com.apple.finder DisableAllAnimations -bool true
