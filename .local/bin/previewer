@@ -302,7 +302,7 @@ ${tables}
 
     print_strings
   ;;
-  application/x-executable|application/x-object)
+  application/x-executable|application/x-pie-executable|application/x-object)
     print_mime
 
     if ! is_exec "readelf"; then
