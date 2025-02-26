@@ -101,13 +101,13 @@ print_chafa() {
   fi
 }
 
-print_als_zip() {
+print_als() {
   if ! is_exec "als"; then
     print_util_not_found "als"
     return
   fi
 
-  als --format=zip -- "$FPATH"
+  als --format="${1}" -- "$FPATH"
 }
 
 print_bat() {
@@ -190,18 +190,67 @@ case "$MIME" in
   ;;
   application/zip|application/epub+zip|application/java-archive|*openxmlformats-officedocument*)
     print_mime
-
-    print_als_zip
+    print_als "zip"
   ;;
-  application/vnd.ms-cab-compressed|application/vnd.rar|application/x-ace|application/x-archive|application/x-arj|application/x-bzip1-compressed-tar|application/x-bzip2-compressed-tar|application/x-compressed-tar|application/x-cpio|application/x-lha|application/x-lzip-compressed-tar|application/x-lzma-compressed-tar|application/x-tar|application/x-tarz|application/x-tzo|application/x-xz-compressed-tar)
-    # Archive types that 'als' recognizes and can list.
+  "application/x-compressed-tar")
     print_mime
-
-    if ! is_exec "als"; then
-      print_util_not_found "als"
-    else
-      als -- "$FPATH"
-    fi
+    print_als "tar+gzip"
+  ;;
+  "application/x-bzip1-compressed-tar")
+    print_mime
+    print_als "tar+bzip"
+  ;;
+  "application/x-bzip2-compressed-tar")
+    print_mime
+    print_als "tar+bzip2"
+  ;;
+  "application/x-tarz")
+    print_mime
+    print_als "tar+compress"
+  ;;
+  "application/x-tzo")
+    print_mime
+    print_als "tar+lzop"
+  ;;
+  "application/x-lzip-compressed-tar"|"application/x-lzma-compressed-tar")
+    print_mime
+    print_als "tar+lzip"
+  ;;
+  "application/x-xz-compressed-tar")
+    print_mime
+    print_als "tar+xz"
+  ;;
+  "application/x-tar")
+    print_mime
+    print_als "tar"
+  ;;
+  "application/vnd.rar")
+    print_mime
+    print_als "rar"
+  ;;
+  "application/x-lha")
+    print_mime
+    print_als "lha"
+  ;;
+  "application/x-ace")
+    print_mime
+    print_als "ace"
+  ;;
+  "application/x-archive")
+    print_mime
+    print_als "ar"
+  ;;
+  "application/x-arj")
+    print_mime
+    print_als "arj"
+  ;;
+  "application/vnd.ms-cab-compressed")
+    print_mime
+    print_als "cab"
+  ;;
+  "application/x-cpio")
+    print_mime
+    print_als "cpio"
   ;;
   "application/x-7z-compressed")
     print_mime
@@ -256,7 +305,7 @@ case "$MIME" in
 
     echo
 
-    print_als_zip
+    print_als "zip"
   ;;
   audio/mpeg)
     print_mime
