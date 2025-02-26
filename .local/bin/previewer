@@ -204,6 +204,8 @@ case "$MIME" in
     fi
   ;;
   "application/zip")
+    print_mime
+
     if ! is_exec "als"; then
       print_util_not_found "als"
     else
@@ -215,6 +217,8 @@ case "$MIME" in
     fi
   ;;
   "application/x-7z-compressed")
+    print_mime
+
     if ! is_exec "als"; then
       print_util_not_found "als"
     else
