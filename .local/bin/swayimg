@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+SWAYSOCK="" exec /usr/bin/swayimg "$@"
