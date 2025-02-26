@@ -188,7 +188,7 @@ case "$MIME" in
 
     print_chafa "${FPATH_THUMB}.jpg"
   ;;
-  application/epub+zip|application/java-archive|*openxmlformats-officedocument*)
+  application/zip|application/epub+zip|application/java-archive|*openxmlformats-officedocument*)
     print_mime
 
     print_als_zip
@@ -203,19 +203,6 @@ case "$MIME" in
       als -- "$FPATH"
     fi
   ;;
-  "application/zip")
-    print_mime
-
-    if ! is_exec "als"; then
-      print_util_not_found "als"
-    else
-      if [ "${FPATH##*.}" = "xpi" ]; then
-        als --format=zip -- "$FPATH"
-      else
-        als -- "$FPATH"
-      fi
-    fi
-  ;;
   "application/x-7z-compressed")
     print_mime
 
@@ -223,7 +210,7 @@ case "$MIME" in
       print_util_not_found "als"
     else
       # Passing an empty password to avoid a lock-up.
-      set +e; als --format-option=-p="" -- "$FPATH"; set -e
+      set +e; als --format=7z --format-option=-p="" -- "$FPATH"; set -e
     fi
   ;;
   application/gzip|application/x-bzip1|application/x-bzip2|application/x-compress|application/x-lzma|application/x-lzop|application/x-lzip|application/x-xz|application/x-lrzip|application/x-alz)
