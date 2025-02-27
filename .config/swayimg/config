@@ -58,11 +58,11 @@ preload = 20
 # Size of the thumbnail (pixels)
 size = 200
 # Max number of thumbnails in memory cache, 0 for unlimited
-cache = 100
+cache = 500
 # Enable/disable storing thumbnails in persistent storage (yes/no)
-pstore = no
+pstore = yes
 # Fill the entire tile with thumbnail (yes/no)
-fill = yes
+fill = no
 # Anti-aliasing mode for thumbnails (none/box/bilinear/bicubic/mks13)
 antialiasing = mks13
 # Background color of the window (RGBA)
