@@ -30,7 +30,7 @@ app_id = swayimg
 # Window background color (RGBA)
 window = #00000000
 # Background for transparent images (grid/RGBA)
-transparency = grid
+transparency = #00000000
 # Default image scale (optimal/fit/width/height/fill/real)
 # scale = optimal
 scale = fit
@@ -58,7 +58,7 @@ preload = 20
 # Size of the thumbnail (pixels)
 size = 200
 # Max number of thumbnails in memory cache, 0 for unlimited
-cache = 500
+cache = 0
 # Enable/disable storing thumbnails in persistent storage (yes/no)
 pstore = yes
 # Fill the entire tile with thumbnail (yes/no)
@@ -161,10 +161,16 @@ Shift+s = slideshow
 s = animation
 f = fullscreen
 Return = mode
+
 Left = step_left 10
 Right = step_right 10
 Up = step_up 10
 Down = step_down 10
+h = step_left 10
+l = step_right 10
+k = step_up 10
+j = step_down 10
+
 Equal = zoom +10
 Plus = zoom +10
 Minus = zoom -10
@@ -180,12 +186,15 @@ bracketright = rotate_right
 m = flip_vertical
 Shift+m = flip_horizontal
 a = antialiasing
-r = reload
+Shift+r = reload
 i = info
 # Shift+Delete = exec rm "%"; skip_file
 Shift+Delete = exec ""
 Escape = exit
 q = exit
+
+r = exec swayimg --config=general.mode=gallery "%" 1> "/dev/null" 2> "/dev/null" & disown
+e = exec file_manager_desktop "%" 1> "/dev/null" 2> "/dev/null" & disown
 
 # Mouse related
 ScrollLeft = step_right 5
@@ -228,7 +237,7 @@ c = skip_file
 f = fullscreen
 Return = mode
 a = antialiasing
-r = reload
+Shift+r = reload
 i = info
 # Shift+Delete = exec rm "%"; skip_file
 Shift+Delete = exec ""
@@ -239,3 +248,6 @@ ScrollLeft = step_right
 ScrollRight = step_left
 ScrollUp = step_up
 ScrollDown = step_down
+
+r = exec swayimg --config=general.mode=gallery "%" 1> "/dev/null" 2> "/dev/null" & disown
+e = exec file_manager_desktop "%" 1> "/dev/null" 2> "/dev/null" & disown
