@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
 Name=Image viewer
-Exec=nsxiv-rifle -- %f
+Exec=image_viewer_desktop %f
 Categories=Graphics;2DGraphics;RasterGraphics;Viewer;
