@@ -21,6 +21,7 @@ user_pref("browser.formfill.enable", false);
 user_pref("browser.fullscreen.autohide", true);
 user_pref("browser.link.open_newwindow", 3);
 user_pref("browser.link.open_newwindow.restriction", 0);
+user_pref("browser.menu.showViewImageInfo", true);
 user_pref("browser.messaging-system.whatsNewPanel.enabled", false);
 user_pref("browser.ml.chat.enabled", false);
 user_pref("browser.ml.chat.sidebar", false);
