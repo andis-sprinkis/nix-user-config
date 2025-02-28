@@ -83,7 +83,7 @@ shadow = #00000000
 # Default order (none/alpha/reverse/random)
 order = alpha
 # Looping list of images (yes/no)
-loop = yes
+loop = no
 # Read directories recursively (yes/no)
 recursive = no
 # Open all files in the directory of the specified file (yes/no)
