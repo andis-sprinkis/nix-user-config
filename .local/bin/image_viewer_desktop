@@ -1,12 +1,12 @@
 #!/usr/bin/env sh
 
 if [ "${WAYLAND_DISPLAY:-""}" ]; then
-  swayimg "$@"
+  exec swayimg "$@"
 fi
 
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-  nsxiv-rifle -- "$@"
+  exec nsxiv-rifle -- "$@"
 fi
 
-exit "2"
+exit "1"
