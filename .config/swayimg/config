@@ -8,13 +8,10 @@
 # Mode at startup (viewer/gallery)
 mode = viewer
 # Window position (parent or absolute coordinates, e.g. 100,200)
-# position = parent
 position = 0,0
 # Window size (fullscreen/parent/image, or absolute size, e.g. 800,600)
-# size = parent
 size = image
 # Use window decoration (yes/no)
-# decoration = no
 decoration = yes
 # Action performed by SIGUSR1 signal (same format as for key bindings)
 sigusr1 = reload
@@ -32,7 +29,6 @@ window = #00000000
 # Background for transparent images (grid/RGBA)
 transparency = #00000000
 # Default image scale (optimal/fit/width/height/fill/real)
-# scale = optimal
 scale = fit
 # Keep absolute zoom across images (yes/no)
 keep_zoom = no
@@ -99,7 +95,6 @@ name = sans-serif
 # Font size (pt)
 size = 14
 # Font color (RGBA)
-# color = #ccccccff
 color = #ffffffff
 # Shadow color (RGBA)
 shadow = #00000000
