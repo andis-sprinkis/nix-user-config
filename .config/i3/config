@@ -10,7 +10,5 @@ floating_modifier $mod
 
 bindsym $mod+f floating enable; exec --no-startup-id maximize_win_multimon_x
 
-bindsym $mod+Mod1+c exec --no-startup-id exec_active_win_x
-
 bindsym $mod+Shift+r exec --no-startup-id ${XDG_CONFIG_HOME:-HOME/.config}/xinit/xinitrc
 bindsym $mod+Shift+q exec i3-nagbar -t warning -m 'Exit i3?' -b 'Yes' 'i3-msg exit'
