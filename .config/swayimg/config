@@ -83,7 +83,6 @@ loop = no
 # Read directories recursively (yes/no)
 recursive = no
 # Open all files in the directory of the specified file (yes/no)
-# all = no
 all = yes
 
 ################################################################################
