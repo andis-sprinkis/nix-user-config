@@ -24,7 +24,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       exec grim -g "$(swaymsg -t get_tree | jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$path_img"
     ;;
     --select)
-      exec grim -g "$(slurp)" "$path_img"
+      exec dulcepan -f "png" -o "$path_img"
     ;;
     *)
       echo "$msg_usage" 1>&2
