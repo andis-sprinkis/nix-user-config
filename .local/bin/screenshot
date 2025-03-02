@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -eu
 
-msg_usage="$(basename "$0") usage: [--active] [--select] [--help | -h]"
+msg_usage="$(basename "$0") usage: no arguments OR [--output|--window|--area] OR [--help|-h]"
 
 case "$1" in
   --help|-h)
