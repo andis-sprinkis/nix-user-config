@@ -21,6 +21,8 @@ output * {
 
 seat seat0 xcursor_theme default 42
 
+mouse_warping container
+
 tiling_drag_threshold 1
 
 titlebar_padding 10 2
