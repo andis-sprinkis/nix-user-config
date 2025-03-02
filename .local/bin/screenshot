@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+set -eu
 
 msg_usage="$(basename "$0") usage: [--active] [--select] [--help | -h]"
 
