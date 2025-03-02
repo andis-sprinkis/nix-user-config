@@ -16,51 +16,49 @@ path_img="${path_dir}/$(date "+%s").png"
 mkdir -p "$path_dir"
 
 if [ "${WAYLAND_DISPLAY:-""}" ]; then
-  if [ -z "${1:-""}" ]; then
-    grim "$path_img"
-  else
-    case "${1:-""}" in
-      --output)
-        grim -o "$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')" "$path_img"
-      ;;
-      --window)
-        grim -g "$(swaymsg -t get_tree | jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$path_img"
-      ;;
-      --area)
-        dulcepan -f "png" -o "$path_img"
-      ;;
-      *)
-        echo "$msg_usage" 1>&2
-        exit "1"
-      ;;
-    esac
-  fi
+  case "${1:-""}" in
+    "")
+      grim "$path_img"
+    ;;
+    --output)
+      grim -o "$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')" "$path_img"
+    ;;
+    --window)
+      grim -g "$(swaymsg -t get_tree | jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$path_img"
+    ;;
+    --area)
+      dulcepan -f "png" -o "$path_img"
+    ;;
+    *)
+      echo "$msg_usage" 1>&2
+      exit "1"
+    ;;
+  esac
 
   printf '%s' "$path_img" | wl-copy
   exit "0"
 fi
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-  if [ -z "${1:-""}" ]; then
-    maim -u "$path_img"
-  else
-    case "${1:-""}" in
-      --output)
-        exit "3"
-        # TODO
-      ;;
-      --window)
-        maim -u --window "$(xdotool getactivewindow)" "$path_img"
-      ;;
-      --area)
-        maim -u --select "$path_img"
-      ;;
-      *)
-        echo "$msg_usage" 1>&2
-        exit "1"
-      ;;
-    esac
-  fi
+  case "${1:-""}" in
+    "")
+      maim -u "$path_img"
+    ;;
+    --output)
+      exit "3"
+      # TODO
+    ;;
+    --window)
+      maim -u --window "$(xdotool getactivewindow)" "$path_img"
+    ;;
+    --area)
+      maim -u --select "$path_img"
+    ;;
+    *)
+      echo "$msg_usage" 1>&2
+      exit "1"
+    ;;
+  esac
 
   printf '%s' "$path_img" | xclip -sel "clipboard"
   exit "0"
