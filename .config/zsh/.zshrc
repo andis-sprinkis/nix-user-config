@@ -49,7 +49,7 @@
 
   # expand alias in insert mode
 
-  function expand_alias() {
+  expand_alias() {
     zle "_expand_alias"
     zle "self-insert"
   }
@@ -205,7 +205,7 @@ $prompt_symbol"
 
     # search history with fzf
 
-    function fzf_search_history() {
+    fzf_search_history() {
       BUFFER=$(fc -l -n "1" | uniq | fzf --no-preview --tac --query "$LBUFFER")
       CURSOR="$#BUFFER"
       zle "reset-prompt"
