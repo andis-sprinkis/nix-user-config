@@ -216,9 +216,30 @@ $prompt_symbol"
   fi
 
   # configure pyenv
-  if is_exec "pyenv"; then
-    eval "$(pyenv init - zsh)"
-  fi
+
+  # if is_exec "pyenv"; then
+  #   eval "$(pyenv init - zsh)"
+  # fi
+
+  export PATH="/home/usr0/.local/share/pyenv/shims:${PATH}"
+  export PYENV_SHELL="zsh"
+
+  pyenv() {
+    local command="${1:-""}"
+
+    if [ "$#" -gt 0 ]; then
+      shift
+    fi
+
+    case "$command" in
+      "rehash"|"shell")
+        eval "$(pyenv "sh-$command" "$@")"
+      ;;
+      *)
+        command pyenv "$command" "$@"
+      ;;
+    esac
+  }
 
   # source local zsh plugins
   . "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
