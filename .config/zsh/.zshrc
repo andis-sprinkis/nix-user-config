@@ -13,7 +13,7 @@
   # fn: cursor shape for different vi modes
   echo_cur_beam() {
     case "$TERM" in
-      "linux") 
+      "linux")
         printf "\x1b\x5b?2\x63"
       ;;
       *)
