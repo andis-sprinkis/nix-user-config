@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.198.0
+@version      0.199.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
@@ -316,7 +316,9 @@ domain("www.apple.com"),
 domain("www.microsoft.com"),
 domain("xkpasswd.net"),
 domain("xn--kalendrs-m7a.lv"),
-domain("yr.no") {
+domain("yr.no"),
+url-prefix("https://www.w3.org/WAI/")
+{
   @media (prefers-color-scheme: dark) {
     html,
     img,
