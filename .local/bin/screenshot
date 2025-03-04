@@ -16,6 +16,10 @@ path_img="${path_dir}/$(date "+%s").png"
 mkdir -p "$path_dir"
 
 if [ "${WAYLAND_DISPLAY:-""}" ]; then
+  if [ "$(pidof "grim")" ] || [ "$(pidof "dulcepan")" ]; then
+    exit "3"
+  fi
+
   case "${1:-""}" in
     "")
       grim "$path_img"
@@ -45,7 +49,7 @@ if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
       maim -u "$path_img"
     ;;
     --output)
-      exit "3"
+      exit "4"
       # TODO
     ;;
     --window)
