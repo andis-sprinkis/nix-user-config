@@ -180,7 +180,7 @@ $prompt_symbol"
   bindkey -a "^e" "edit-command-line"
 
   # configure tldr
-  if [ -f "$HOME/.local/bin/tldr" ]; then
+  if [ -f "${HOME}/.local/bin/tldr" ]; then
     compctl -k "($(tldr 2>/dev/null --list))" "tldr"
   fi
 
@@ -189,8 +189,8 @@ $prompt_symbol"
     local fzf_completion
     for fzf_completion in \
       "/usr/share/fzf/completion.zsh" \
-      "$BREW_PREFIX/opt/fzf/shell/completion.zsh" \
-      "$HOME/.fzf/shell/completion.zsh"
+      "${BREW_PREFIX:+"${BREW_PREFIX}/opt/fzf/shell/completion.zsh"}" \
+      "${HOME}/.fzf/shell/completion.zsh"
     do
       if [ -f "$fzf_completion" ]; then
         . "$fzf_completion"
@@ -223,6 +223,10 @@ $prompt_symbol"
 
   export PATH="/home/usr0/.local/share/pyenv/shims:${PATH}"
   export PYENV_SHELL="zsh"
+
+  if [ -f "${BREW_PREFIX:+"${BREW_PREFIX}/opt/pyenv/completions/pyenv.zsh"}" ]; then
+    . "/opt/homebrew/opt/pyenv/completions/pyenv.zsh"
+  fi
 
   pyenv() {
     local command="${1:-""}"
