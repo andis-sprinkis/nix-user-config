@@ -24,7 +24,7 @@
 
   echo_cur_block() {
     case "$TERM" in
-      "linux") 
+      "linux")
         printf "\x1b\x5b?6;$((8+4+2+1));$((37+0+8+4+2+1))\x63"
       ;;
       *)
