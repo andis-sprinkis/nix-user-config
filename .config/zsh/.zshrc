@@ -181,9 +181,9 @@ $prompt_symbol"
   bindkey -a "^e" "edit-command-line"
 
   # configure tldr
-  if [ -f "${HOME}/.local/bin/tldr" ]; then
-    compctl -k "($(tldr 2>/dev/null --list))" "tldr"
-  fi
+  # if [ -f "${HOME}/.local/bin/tldr" ]; then
+  #   compctl -k "($(tldr 2>/dev/null --list))" "tldr"
+  # fi
 
   # configure fzf
   if is_exec "fzf"; then
