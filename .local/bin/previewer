@@ -12,7 +12,7 @@ H_CHR="${3:-""}"
 FPATH_THUMB=""
 
 is_exec() {
-  [ "$(command -v "$1")" ]
+  command -v "$1" 1>/dev/null 2>/dev/null
 }
 
 print_util_not_found() {
