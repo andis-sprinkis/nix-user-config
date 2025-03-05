@@ -12,7 +12,29 @@ PS1='[\u@\h \W]\$ '
 export HISTFILESIZE="500"
 
 # configure pyenv
-if is_exec "pyenv"; then
-  eval "$(pyenv init - bash)"
-fi
 
+# if is_exec "pyenv"; then
+#   eval "$(pyenv init - bash)"
+# fi
+
+export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/pyenv/shims:${PATH}"
+export PYENV_SHELL="bash"
+
+pyenv() {
+  command="${1:-""}"
+
+  if [ "$#" -gt 0 ]; then
+    shift
+  fi
+
+  case "$command" in
+    "rehash"|"shell")
+      eval "$(pyenv "sh-$command" "$@")"
+    ;;
+    *)
+      command pyenv "$command" "$@"
+    ;;
+  esac
+
+  unset command
+}

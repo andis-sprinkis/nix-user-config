@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 # fn: detect if given command is executable
-is_exec() { [ "$(command -v "$1")" ]; }
+is_exec() {
+  command -v "$1" 1>/dev/null 2>/dev/null
+}
 
 # 'git' alias must precede the 'g*', 'g_*' aliases
 # 'dotgit' alias must precede the 'dg*', 'dg_*' aliases
@@ -104,21 +106,23 @@ alias \
   wget="wget --hsts-file=\"\${XDG_DATA_HOME:-\$HOME/.local/share}/wget-hsts\""
 
 # 'yay' alias must precede the 'pac_*' aliases
-is_exec "yay" && alias \
-  pacman="yay --color=always" \
-  yay="yay --color=always" \
-  pac_ls_installed="yay -Q" \
-  pac_ls_installed_explicit="yay -Qe" \
-  pac_ls_installed_in_sync_db="yay -Qn" \
-  pac_ls_installed_not_in_sync_db="yay -Qm" \
-  pac_pkg_db_info="yay -Si" \
-  pac_pkg_installed_info="yay -Qi" \
-  pac_pkg_installed_info_files="yay -Qlk" \
-  pac_search_db="yay -Ss" \
-  pac_search_installed="yay -Qs" \
-  pac_stats="yay -P --stats" \
-  pac_upgrade="yay" \
-  pac_upgrade_db="yay -Sy"
+if is_exec "yay"; then
+  alias \
+    pacman="yay --color=always" \
+    yay="yay --color=always" \
+    pac_ls_installed="yay -Q" \
+    pac_ls_installed_explicit="yay -Qe" \
+    pac_ls_installed_in_sync_db="yay -Qn" \
+    pac_ls_installed_not_in_sync_db="yay -Qm" \
+    pac_pkg_db_info="yay -Si" \
+    pac_pkg_installed_info="yay -Qi" \
+    pac_pkg_installed_info_files="yay -Qlk" \
+    pac_search_db="yay -Ss" \
+    pac_search_installed="yay -Qs" \
+    pac_stats="yay -P --stats" \
+    pac_upgrade="yay" \
+    pac_upgrade_db="yay -Sy"
+fi
 
 # shellcheck disable=SC2010
 if \ls --version 2> "/dev/null" | \grep -q "GNU"; then

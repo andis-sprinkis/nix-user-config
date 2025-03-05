@@ -8,7 +8,9 @@
   TMOUT="1600"
 
   # fn: detect if given command is executable
-  is_exec() { [ "$(command -v "$1")" ] }
+  is_exec() {
+    command -v "$1" 1>/dev/null 2>/dev/null
+  }
 
   # fn: cursor shape for different vi modes
   echo_cur_beam() {
@@ -117,11 +119,10 @@
 
     local userhost="%{$bg[$role_params[1]] $fg[black]%}%n@%M %{$reset_color%}"
 
-    local ssh_status="$(
-      if [ "${SSH_CONNECTION:-""}" ] || [ "${SSH_CLIENT:-""}" ] || [ "${SSH_TTY:-""}" ]; then
-        echo "%{$bg[blue]$fg[black]%} SSH %{$reset_color%}";
-      fi
-    )"
+    local ssh_status
+    if [ "${SSH_CONNECTION:-""}" ] || [ "${SSH_CLIENT:-""}" ] || [ "${SSH_TTY:-""}" ]; then
+      ssh_status="%{$bg[blue]$fg[black]%} SSH %{$reset_color%}";
+    fi
 
     local vcs_info="\$vcs_info_msg_0_%{$reset_color%}"
     local cwd_path="%{$bg[white]$fg[black]%} %/ %{$reset_color%}"
