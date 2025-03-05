@@ -13,27 +13,26 @@
   }
 
   # fn: cursor shape for different vi modes
-  echo_cur_beam() {
-    case "$TERM" in
-      "linux")
-        printf "\x1b\x5b?2\x63"
-      ;;
-      *)
-        echo -ne "\033[5 q"
-      ;;
-    esac
-  }
-
-  echo_cur_block() {
-    case "$TERM" in
-      "linux")
+  case "$TERM" in
+    "linux")
+      echo_cur_block() {
         printf "\x1b\x5b?6;$((8+4+2+1));$((37+0+8+4+2+1))\x63"
-      ;;
-      *)
+      }
+
+      echo_cur_beam() {
+        printf "\x1b\x5b?2\x63"
+      }
+    ;;
+    *)
+      echo_cur_block() {
         echo -ne "\033[1 q"
-      ;;
-    esac
-  }
+      }
+
+      echo_cur_beam() {
+        echo -ne "\033[5 q"
+      }
+    ;;
+  esac
 
   # fn: zle widgets
   zle-keymap-select() {
@@ -47,7 +46,11 @@
     esac
   }
 
-  zle-line-init() { zle -K "viins" && echo_cur_beam }
+  zle-line-init() {
+    if zle -K "viins"; then
+      echo_cur_beam
+    fi
+  }
 
   # expand alias in insert mode
 
