@@ -9,6 +9,9 @@ indent_style = space
 insert_final_newline = true
 max_line_length = 120
 
+[*.{md,mdx}]
+max_line_length = 0
+
 [*.{md,mdx,py}]
 indent_size = 4
 
