@@ -58,7 +58,6 @@ alias \
   gs="git status" \
   gt="git checkout" \
   h="tldr" \
-  hexdump="hexdump --color=always --canonical" \
   hosts="sudo \$EDITOR /etc/hosts" \
   htop="htop -t -s PERCENT_CPU --highlight-changes=10" \
   inxi="inxi -c7 -F -xxx -y 120 --indent 15 --indents 4" \
@@ -135,5 +134,11 @@ fi
 
 if \diff --version 2> "/dev/null" | \grep -q "GNU"; then
   alias diff="diff --color=always" 
+fi
+
+if \hexdump --version 2> "/dev/null" | \grep -q "util-linux"; then
+  alias hexdump="hexdump --color=always --canonical"
+else
+  alias hexdump="hexdump -C"
 fi
 

@@ -378,7 +378,7 @@ ${tables}
 
 First ${bytes} bytes or less:"
 
-      hexdump --color=always --canonical --length "$bytes" "$FPATH"
+      hexdump -C -n "$bytes" "$FPATH"
     fi
   ;;
   application/vnd.debian.binary-package|application/x-rpm)
