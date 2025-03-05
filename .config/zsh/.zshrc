@@ -221,7 +221,7 @@ $prompt_symbol"
   #   eval "$(pyenv init - zsh)"
   # fi
 
-  export PATH="/home/usr0/.local/share/pyenv/shims:${PATH}"
+  export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/pyenv/shims:${PATH}"
   export PYENV_SHELL="zsh"
 
   if [ -f "${BREW_PREFIX:+"${BREW_PREFIX}/opt/pyenv/completions/pyenv.zsh"}" ]; then
