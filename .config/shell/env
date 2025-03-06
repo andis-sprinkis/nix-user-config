@@ -59,6 +59,9 @@ if [ -f "/etc/profile.d/locale.sh" ]; then
   . "/etc/profile.d/locale.sh"
 fi
 
+# set OPENER
+export OPENER="opener"
+
 # set PAGER
 export PAGER="less"
 
