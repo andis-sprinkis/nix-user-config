@@ -39,10 +39,8 @@ alias \
   dgps="dotgit push" \
   dgs="dotgit status" \
   dgt="dotgit checkout" \
-  dirsize="du -sch *" \
   dup="rmlint" \
   e="\$EDITOR" \
-  fsize="du -ah" \
   fd="fd --hidden" \
   g="git" \
   g_submodule_init="git submodule update --init --recursive" \
