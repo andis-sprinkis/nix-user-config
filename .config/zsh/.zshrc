@@ -144,13 +144,6 @@ $prompt_symbol"
 
   autoload -Uz "compinit"
 
-
-  if uname | grep -q "Darwin"; then
-    local mod_time_fmt="-f %m"
-  else
-    local mod_time_fmt="-c %Y"
-  fi
-
   if uname | grep -q "Darwin"; then
     if [ ! -f "${ZDOTDIR:-$HOME}/.zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C stat -f '%m' "${ZDOTDIR:-$HOME}/.zcompdump")"))" -gt "86400" ]; then
       compinit
