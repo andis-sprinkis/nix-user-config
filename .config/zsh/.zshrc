@@ -144,21 +144,24 @@ $prompt_symbol"
 
   autoload -Uz "compinit"
 
-  # if uname | grep -q "Darwin"; then
-  #   if [ ! -f "${ZDOTDIR:-$HOME}/.zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C /usr/bin/stat -f '%m' "${ZDOTDIR:-$HOME}/.zcompdump")"))" -gt "86400" ]; then
-  #     compinit
-  #   else
-  #     compinit -C
-  #   fi
-  # else
-  #   if [ ! -f "${ZDOTDIR:-$HOME}/.zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C stat -c '%Y' "${ZDOTDIR:-$HOME}/.zcompdump")"))" -gt "86400" ]; then
-  #     compinit
-  #   else
-  #     compinit -C
-  #   fi
-  # fi
+  local zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
 
-  compinit -C
+  case "$(uname)" in
+    "Darwin") 
+      if [ ! -f "$zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C /usr/bin/stat -f '%m' "$zcompdump")"))" -gt "86400" ]; then
+        compinit
+      else
+        compinit -C
+      fi
+    ;;
+    *)
+      if [ ! -f "$zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C stat -c '%Y' "$zcompdump")"))" -gt "86400" ]; then
+        compinit
+      else
+        compinit -C
+      fi
+    ;;
+  esac
 
   zstyle ':completion:*' "completer" "_expand_alias" "_complete" "_ignored"
   zstyle ':completion:*' "matcher-list" '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
