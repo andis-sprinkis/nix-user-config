@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 () {
-  # zmodload zsh/zprof
+  zmodload zsh/zprof
 
   # generic interactive shell configuration
   . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/interactive"
@@ -106,13 +106,15 @@
     # git-completion plugin
     fpath=($fpath "${XDG_DATA_HOME:-$HOME/.local/share}/git-completion/zsh")
 
-    # precmd_functions
+    # vcs_info git prompt
     autoload -Uz "vcs_info"
-    precmd_functions+=("set_prompt_rprompt" "vcs_info" "set_window_title")
+    zstyle ':vcs_info:*' enable git
     zstyle ":vcs_info:git:*" "formats" "$bg[white]$fg[black]  %b "
-  else 
-    precmd_functions+=("set_prompt_rprompt" "set_window_title")
+
+    precmd_functions+=("vcs_info")
   fi
+
+  precmd_functions+=("set_prompt_rprompt" "set_window_title" prompt)
 
   # set PS1 prompt
   () {
