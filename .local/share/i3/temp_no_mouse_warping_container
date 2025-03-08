@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+wm="${WAYLAND_DISPLAY:+"sway"}"
+wm="${wm:-"i3"}"
+
+case "$wm" in
+  "sway")
+    swaymsg "mouse_warping none; ${*}; mouse_warping container"
+  ;;
+  *)
+    i3-msg "$*"
+  ;;
+esac
