@@ -85,7 +85,7 @@
   zstyle ':chpwd:*' "recent-dirs-file" "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/chpwd-recent-dirs"
 
   # enable colors
-  autoload -U "colors" && colors
+  autoload -Uz "colors" && colors
 
   # fn: set RPROMPT prompt
   set_prompt_rprompt() {
@@ -141,9 +141,15 @@ $prompt_symbol"
 
   # basic auto/tab complete
   setopt "GLOB_COMPLETE" "LIST_PACKED" "LIST_ROWS_FIRST" "LIST_TYPES"
-  autoload -U "compinit"
-  # compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${ZSH_VERSION}"
-  compinit -d "${ZDOTDIR:-$HOME}/.zcompdump"
+
+  autoload -Uz "compinit"
+
+  if [ -f "${ZDOTDIR:-$HOME}/.zcompdump" ] && [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C stat -c '%Y' "${ZDOTDIR:-$HOME}/.zcompdump")"))" -gt "86400" ]; then
+    compinit
+  else
+    compinit -C
+  fi
+
   zstyle ':completion:*' "completer" "_expand_alias" "_complete" "_ignored"
   zstyle ':completion:*' "matcher-list" '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
   zstyle ":completion:*" "menu" "select"
@@ -169,7 +175,7 @@ $prompt_symbol"
   bindkey '^[^M' self-insert-unmeta
 
   # cycle through history based on entered prefix
-  autoload -U "history-search-end"
+  autoload -Uz "history-search-end"
   zle -N "history-beginning-search-backward-end" "history-search-end"
   zle -N "history-beginning-search-forward-end" "history-search-end"
   bindkey "^[[A" "history-beginning-search-backward-end"
