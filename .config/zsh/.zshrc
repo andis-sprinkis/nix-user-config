@@ -70,6 +70,8 @@
     if [ "${TMOUT:-""}" != "0" ]; then
       TMOUT="5400"
     fi
+
+    timer="$(print -P %D{%s%3.})"
   }
 
   # history file length in lines
@@ -94,7 +96,27 @@
       tmout_status="TMOUT0 ";
     fi
 
-    RPROMPT="${tmout_status}(\$?) %D{%K:%M:%S}"
+    local timeprompt=""	
+    if [ "${timer:-""}" ]; then
+      local  now="$(print -P %D{%s%3.})"
+      local d_ms="$((now - timer))"
+      local  d_s="$((d_ms / 1000))"
+      local   ms="$((d_ms % 1000))"
+      local    s="$((d_s % 60))"
+      local    m="$(((d_s / 60) % 60))"
+      local    h="$((d_s / 3600))"
+
+        if ((h > 0)); then timeprompt="${h}h${m}m${s}s"
+      elif ((m > 0)); then timeprompt="${m}m${s}.$(printf $((ms / 100)))s" # 1m12.3s
+      elif ((s > 9)); then timeprompt="${s}.$(printf %02d $((ms / 10)))s"  # 12.34s
+      elif ((s > 0)); then timeprompt="${s}.$(printf %03d $ms)s"            # 1.234s
+      else                 timeprompt="${ms}ms"
+      fi
+
+      unset timer
+    fi
+
+    RPROMPT="${tmout_status}%D{%K:%M:%S}${timeprompt:+" $timeprompt"} (\$?)"
   }
 
   # use homebrew site-functions
