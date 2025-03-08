@@ -145,11 +145,12 @@ $prompt_symbol"
   autoload -Uz "compinit"
 
   if uname | grep -q "Darwin"; then
-    if [ ! -f "${ZDOTDIR:-$HOME}/.zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C stat -f '%m' "${ZDOTDIR:-$HOME}/.zcompdump")"))" -gt "86400" ]; then
-      compinit
-    else
-      compinit -C
-    fi
+    # if [ ! -f "${ZDOTDIR:-$HOME}/.zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C stat -f '%m' "${ZDOTDIR:-$HOME}/.zcompdump")"))" -gt "86400" ]; then
+    #   compinit
+    # else
+    #   compinit -C
+    # fi
+    compinit
   else
     if [ ! -f "${ZDOTDIR:-$HOME}/.zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C stat -c '%Y' "${ZDOTDIR:-$HOME}/.zcompdump")"))" -gt "86400" ]; then
       compinit
