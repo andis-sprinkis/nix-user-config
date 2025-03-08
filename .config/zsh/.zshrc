@@ -147,7 +147,7 @@ $prompt_symbol"
   local zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
 
   case "$(uname)" in
-    "Darwin") 
+    "Darwin")
       if [ ! -f "$zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C /usr/bin/stat -f '%m' "$zcompdump")"))" -gt "86400" ]; then
         compinit
       else
@@ -162,6 +162,14 @@ $prompt_symbol"
       fi
     ;;
   esac
+
+  # Execute code in the background to not affect the current session
+  {
+    # Compile zcompdump, if modified, to increase startup speed.
+    if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
+      zcompile "$zcompdump"
+    fi
+  } &!
 
   zstyle ':completion:*' "completer" "_expand_alias" "_complete" "_ignored"
   zstyle ':completion:*' "matcher-list" '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
