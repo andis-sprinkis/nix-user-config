@@ -144,10 +144,25 @@ $prompt_symbol"
 
   autoload -Uz "compinit"
 
-  if [ -f "${ZDOTDIR:-$HOME}/.zcompdump" ] && [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C stat -c '%Y' "${ZDOTDIR:-$HOME}/.zcompdump")"))" -gt "86400" ]; then
-    compinit
+
+  if uname | grep -q "Darwin"; then
+    local mod_time_fmt="-f %m"
   else
-    compinit -C
+    local mod_time_fmt="-c %Y"
+  fi
+
+  if uname | grep -q "Darwin"; then
+    if [ ! -f "${ZDOTDIR:-$HOME}/.zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C stat -f '%m' "${ZDOTDIR:-$HOME}/.zcompdump")"))" -gt "86400" ]; then
+      compinit
+    else
+      compinit -C
+    fi
+  else
+    if [ ! -f "${ZDOTDIR:-$HOME}/.zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C stat -c '%Y' "${ZDOTDIR:-$HOME}/.zcompdump")"))" -gt "86400" ]; then
+      compinit
+    else
+      compinit -C
+    fi
   fi
 
   zstyle ':completion:*' "completer" "_expand_alias" "_complete" "_ignored"
