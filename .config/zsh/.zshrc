@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 () {
-  zmodload zsh/zprof
+  # zmodload zsh/zprof
 
   # generic interactive shell configuration
   . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/interactive"
