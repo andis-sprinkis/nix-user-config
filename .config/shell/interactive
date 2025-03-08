@@ -59,7 +59,7 @@ TMOUT="5400"
 
 # configure bat
 is_exec_bat=""
-if is_exec "bat"; then 
+if is_exec "bat"; then
   is_exec_bat="1"
   export BAT_THEME="Visual Studio Dark+"
   export BAT_STYLE="plain,numbers,header-filename"
