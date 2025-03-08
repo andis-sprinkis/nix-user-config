@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 
 () {
+  zmodload zsh/zprof
+
   # generic interactive shell configuration
   . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/interactive"
 
@@ -138,7 +140,8 @@ $prompt_symbol"
   # basic auto/tab complete
   setopt "GLOB_COMPLETE" "LIST_PACKED" "LIST_ROWS_FIRST" "LIST_TYPES"
   autoload -U "compinit"
-  compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${ZSH_VERSION}"
+  # compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${ZSH_VERSION}"
+  compinit -d "${ZDOTDIR:-$HOME}/.zcompdump"
   zstyle ':completion:*' "completer" "_expand_alias" "_complete" "_ignored"
   zstyle ':completion:*' "matcher-list" '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
   zstyle ":completion:*" "menu" "select"
