@@ -221,8 +221,8 @@ bar {
     binding_mode       $color5 $color5 $color0
   }
 
-  bindsym button4 workspace prev_on_output
-  bindsym button5 workspace next_on_output
+  bindsym button4 mouse_warping none; workspace prev_on_output; mouse_warping container
+  bindsym button5 mouse_warping none; workspace next_on_output; mouse_warping container
 
   bindsym button1 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_empty_workspace
   bindsym button2 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_empty_workspace
