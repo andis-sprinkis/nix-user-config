@@ -116,7 +116,7 @@
       unset timer
     fi
 
-    RPROMPT="%F{8}${tmout_status}${timeprompt} %D{%K:%M:%S} (\$?)"
+    RPROMPT="%F{8}${tmout_status}${timeprompt} %D{%K:%M:%S}%{$reset_color%} \$?"
   }
 
   # use homebrew site-functions
