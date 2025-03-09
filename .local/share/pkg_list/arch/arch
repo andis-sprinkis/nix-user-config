@@ -125,6 +125,8 @@ qalculate-gtk
 qbittorrent
 qpwgraph
 qrencode
+qt5-wayland
+qt6-wayland
 r
 reflector
 remmina
