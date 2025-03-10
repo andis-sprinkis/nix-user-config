@@ -166,6 +166,8 @@ $prompt_symbol"
   # basic auto/tab complete
   setopt "GLOB_COMPLETE" "LIST_PACKED" "LIST_ROWS_FIRST" "LIST_TYPES"
 
+  zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==02=01}:${(s.:.)LS_COLORS}")'
+
   autoload -Uz "compinit"
 
   local zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
