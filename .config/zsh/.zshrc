@@ -274,9 +274,6 @@ $prompt_symbol"
     bindkey "^k" "fzf_search_history"
   fi
 
-  # configure pyenv
-  export PYENV_SHELL="zsh"
-
   if [ -f "${BREW_PREFIX:+"${BREW_PREFIX}/opt/pyenv/completions/pyenv.zsh"}" ]; then
     . "/opt/homebrew/opt/pyenv/completions/pyenv.zsh"
   fi
