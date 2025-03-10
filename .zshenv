@@ -8,7 +8,9 @@
   is_exec() { [ "$(command -v "$1")" ]; }
 
   # configure pyenv
-  if is_exec "pyenv"; then
-    eval "$(pyenv init - zsh)"
-  fi
+  # if is_exec "pyenv"; then
+  #   eval "$(pyenv init - zsh)"
+  # fi
+
+  export PYENV_SHELL="zsh"
 }
