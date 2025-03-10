@@ -169,7 +169,7 @@ $prompt_symbol"
 
   autoload -Uz "compinit"
 
-  local zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+  local zcompdump="${ZDOTDIR:-"$HOME"}/.zcompdump"
 
   case "$(uname)" in
     "Darwin")
