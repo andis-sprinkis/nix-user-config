@@ -116,7 +116,7 @@
       unset timer
     fi
 
-    RPROMPT="%F{8}${tmout_status}${timeprompt}%D{%K:%M:%S}%(?. (%?%). %F{1}(%?%))%{$reset_color%}"
+    RPROMPT="%F{8}${tmout_status}${timeprompt}%D{%K:%M:%S}%(?. (%?%). %F{1}(%?%))%f"
   }
 
   ZLE_RPROMPT_INDENT="0"
@@ -140,7 +140,7 @@
 
   precmd_functions+=("set_window_title" "set_rprompt")
 
-  # set PS1 prompt
+  # set PROMPT (PS1) prompt
   () {
     if [ "$USER" = "root" ]; then
       local role_params=("magenta" "#")
@@ -159,11 +159,11 @@
     local cwd_path="%{$bg[white]$fg[black]%} %/ %{$reset_color%}"
     local prompt_symbol="%{$fg[$role_params[1]]%}$role_params[2]%{$reset_color%} "
 
-    PS1="$userhost$ssh_status$vcs_info$cwd_path
+    PROMPT="$userhost$ssh_status$vcs_info$cwd_path
 $prompt_symbol"
   }
 
-  # basic auto/tab complete
+  # auto/tab completion
   setopt "GLOB_COMPLETE" "LIST_PACKED" "LIST_ROWS_FIRST" "LIST_TYPES"
 
   autoload -Uz "compinit"
@@ -187,25 +187,20 @@ $prompt_symbol"
     ;;
   esac
 
-  # Execute code in the background to not affect the current session
   {
-    # Compile zcompdump, if modified, to increase startup speed.
+    # compile zcompdump, if modified, to increase startup speed.
     if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
       zcompile "$zcompdump"
     fi
-  } &!
+  } &! # execute code in the background to not affect the current session
 
-  # zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==02=01}:${(s.:.)LS_COLORS}")'
-  zstyle -e ':completion:*:default' "list-colors" 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==34=34}:${(s.:.)LS_COLORS}")';
-  zstyle ':completion:*' "completer" "_expand_alias" "_complete" "_ignored"
-  zstyle ':completion:*' "matcher-list" '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-  zstyle ':completion:*' "menu" "select"
-  zstyle ':completion:::::default' "menu" "yes" "select"
+  zstyle -e ':completion:*:default' 'list-colors' 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==34=34}:${(s.:.)LS_COLORS}")';
+  zstyle ':completion:*' 'completer' '_expand_alias' '_complete' '_ignored'
+  zstyle ':completion:*' 'matcher-list' '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+  zstyle ':completion:*' 'menu' 'select'
+  zstyle ':completion:::::default' 'menu' 'yes' 'select'
   zmodload "zsh/complist"
-  _comp_options+=("globdots") # Include hidden files.
-
-  # background pseudo-terminal mod. for applications that use it (e.g. nvim cmp-zsh)
-  zmodload "zsh/zpty"
+  _comp_options+=("globdots") # include hidden files
 
   # use vim keys in tab complete menu
   bindkey -M "menuselect" "h" "vi-backward-char"
@@ -240,6 +235,9 @@ $prompt_symbol"
   zle -N "edit-command-line"
   bindkey "^e" "edit-command-line"
   bindkey -a "^e" "edit-command-line"
+
+  # background pseudo-terminal mod. for applications that use it (e.g. nvim cmp-zsh)
+  zmodload "zsh/zpty"
 
   # configure tldr
   # if [ -f "${HOME}/.local/bin/tldr" ]; then
