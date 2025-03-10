@@ -17,23 +17,13 @@
   # fn: cursor shape for different vi modes
   case "$TERM" in
     "linux")
-      print_cur_block() {
-        # printf "\x1b\x5b?6;$((8+4+2+1));$((37+0+8+4+2+1))\x63"
-        printf "\x1b\x5b?6;15;52\x63"
-      }
-
-      print_cur_beam() {
-        printf "\x1b\x5b?2\x63"
-      }
+      # cur_block="\x1b\x5b?6;$((8+4+2+1));$((37+0+8+4+2+1))\x63"
+      cur_block="\x1b\x5b?6;15;52\x63"
+      cur_beam="\x1b\x5b?2\x63"
     ;;
     *)
-      print_cur_block() {
-        printf "\033[1 q"
-      }
-
-      print_cur_beam() {
-        printf "\033[5 q"
-      }
+      cur_block="\033[1 q"
+      cur_beam="\033[5 q"
     ;;
   esac
 
@@ -41,17 +31,17 @@
   zle-keymap-select() {
     case "$KEYMAP" in
       "vicmd")
-        print_cur_block
+        printf "$cur_block"
       ;;
       "viins"|"main")
-        print_cur_beam
+        printf "$cur_beam"
       ;;
     esac
   }
 
   zle-line-init() {
     if zle -K "viins"; then
-      print_cur_beam
+      printf "$cur_beam"
     fi
   }
 
@@ -72,7 +62,7 @@
       TMOUT="5400"
     fi
 
-    timer="$(print -P %D{%s%3.})"
+    timer="$(print -P "%D{%s%3.}")"
   }
 
   # history file length in lines
