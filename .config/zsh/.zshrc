@@ -166,8 +166,6 @@ $prompt_symbol"
   # basic auto/tab complete
   setopt "GLOB_COMPLETE" "LIST_PACKED" "LIST_ROWS_FIRST" "LIST_TYPES"
 
-  zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==02=01}:${(s.:.)LS_COLORS}")'
-
   autoload -Uz "compinit"
 
   local zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
@@ -197,10 +195,12 @@ $prompt_symbol"
     fi
   } &!
 
+  # zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==02=01}:${(s.:.)LS_COLORS}")'
+  zstyle -e ':completion:*:default' "list-colors" 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==34=34}:${(s.:.)LS_COLORS}")';
   zstyle ':completion:*' "completer" "_expand_alias" "_complete" "_ignored"
   zstyle ':completion:*' "matcher-list" '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-  zstyle ":completion:*" "menu" "select"
-  zstyle ':completion:::::default' menu yes select
+  zstyle ':completion:*' "menu" "select"
+  zstyle ':completion:::::default' "menu" "yes" "select"
   zmodload "zsh/complist"
   _comp_options+=("globdots") # Include hidden files.
 
