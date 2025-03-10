@@ -205,7 +205,7 @@ $prompt_symbol"
   bindkey -v
 
   # use alt-enter to enter a new line in insert mode
-  bindkey '^[^M' self-insert-unmeta
+  bindkey '^[^M' "self-insert-unmeta"
 
   # cycle through history based on entered prefix
   autoload -Uz "history-search-end"
