@@ -119,6 +119,8 @@
     RPROMPT="%F{8}${tmout_status}${timeprompt}%D{%K:%M:%S}%(?. (%?%). %F{1}(%?%))"
   }
 
+  ZLE_RPROMPT_INDENT="0"
+
   # use homebrew site-functions
   if [ "${BREW_PREFIX:-""}" ] && [ -f "${BREW_PREFIX}/bin/brew" ]; then
     fpath[1,0]="${BREW_PREFIX}/share/zsh/site-functions"
