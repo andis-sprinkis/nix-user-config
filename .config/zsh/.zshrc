@@ -17,22 +17,22 @@
   # fn: cursor shape for different vi modes
   case "$TERM" in
     "linux")
-      echo_cur_block() {
+      print_cur_block() {
         # printf "\x1b\x5b?6;$((8+4+2+1));$((37+0+8+4+2+1))\x63"
         printf "\x1b\x5b?6;15;52\x63"
       }
 
-      echo_cur_beam() {
+      print_cur_beam() {
         printf "\x1b\x5b?2\x63"
       }
     ;;
     *)
-      echo_cur_block() {
-        echo -ne "\033[1 q"
+      print_cur_block() {
+        printf "\033[1 q"
       }
 
-      echo_cur_beam() {
-        echo -ne "\033[5 q"
+      print_cur_beam() {
+        printf "\033[5 q"
       }
     ;;
   esac
@@ -41,17 +41,17 @@
   zle-keymap-select() {
     case "$KEYMAP" in
       "vicmd")
-        echo_cur_block
+        print_cur_block
       ;;
       "viins"|"main")
-        echo_cur_beam
+        print_cur_beam
       ;;
     esac
   }
 
   zle-line-init() {
     if zle -K "viins"; then
-      echo_cur_beam
+      print_cur_beam
     fi
   }
 
