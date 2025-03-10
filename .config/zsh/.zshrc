@@ -266,7 +266,7 @@ $prompt_symbol"
     # search history with fzf
 
     fzf_search_history() {
-      BUFFER=$(fc -l -n "1" | uniq | fzf --no-preview --tac --query "$LBUFFER")
+      BUFFER="$(fc -l -n "1" | uniq | fzf --no-preview --tac --query "$LBUFFER")"
       CURSOR="$#BUFFER"
       zle "reset-prompt"
     }
