@@ -154,7 +154,6 @@ c = skip_file
 Shift+s = slideshow
 s = animation
 f = fullscreen
-Shift+f = exec swaymsg "fullscreen toggle global"
 Return = mode
 
 Left = step_left 10
@@ -230,7 +229,6 @@ n = page_down
 
 c = skip_file
 f = fullscreen
-Shift+f = exec swaymsg "fullscreen toggle global"
 Return = mode
 a = antialiasing
 Shift+r = reload
