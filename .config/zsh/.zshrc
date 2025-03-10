@@ -90,7 +90,7 @@
   autoload -Uz "colors" && colors
 
   # fn: set RPROMPT prompt
-  set_prompt_rprompt() {
+  set_rprompt() {
     local tmout_status=""
     if [ "${TMOUT:-""}" = "0" ]; then 
       tmout_status="TMOUT0 ";
@@ -116,7 +116,7 @@
       unset timer
     fi
 
-    RPROMPT="%F{8}${tmout_status}${timeprompt}%D{%K:%M:%S}%(?. (%?%). %F{1}(%?%))"
+    RPROMPT="%F{8}${tmout_status}${timeprompt}%D{%K:%M:%S}%(?. (%?%). %F{1}(%?%))%{$reset_color%}"
   }
 
   ZLE_RPROMPT_INDENT="0"
@@ -138,7 +138,7 @@
     precmd_functions+=("vcs_info")
   fi
 
-  precmd_functions+=("set_prompt_rprompt" "set_window_title" prompt)
+  precmd_functions+=("set_window_title" "set_rprompt")
 
   # set PS1 prompt
   () {
@@ -249,8 +249,7 @@ $prompt_symbol"
     local fzf_completion
     for fzf_completion in \
       "/usr/share/fzf/completion.zsh" \
-      "${BREW_PREFIX:+"${BREW_PREFIX}/opt/fzf/shell/completion.zsh"}" \
-      "${HOME}/.fzf/shell/completion.zsh"
+      "${BREW_PREFIX:+"${BREW_PREFIX}/opt/fzf/shell/completion.zsh"}"
     do
       if [ -f "$fzf_completion" ]; then
         . "$fzf_completion"
