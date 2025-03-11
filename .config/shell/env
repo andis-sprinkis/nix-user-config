@@ -165,6 +165,9 @@ export HOMEBREW_NO_EMOJI="1"
 # configure zsh
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 
+# configure Apple Terminal
+export SHELL_SESSIONS_DISABLE="1"
+
 # configure WSL
 if [ -f "/proc/version" ] && grep -q "microsoft" "/proc/version"; then
   xdg_runtime_dir="$HOME/.local/state/xdg_runtime"
