@@ -169,7 +169,7 @@ export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 export SHELL_SESSIONS_DISABLE="1"
 
 # configure WSL
-if [ -f "/proc/version" ] && grep -q "microsoft" "/proc/version"; then
+if grep -q "microsoft" "/proc/version" 2>/dev/null; then
   xdg_runtime_dir="$HOME/.local/state/xdg_runtime"
 
   if [ ! -d "$xdg_runtime_dir" ]; then
