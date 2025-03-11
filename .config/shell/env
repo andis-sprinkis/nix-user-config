@@ -141,7 +141,7 @@ export KERAS_HOME="${XDG_STATE_HOME:-$HOME/.local/state}/keras"
 # configure less
 export LESS="--LINE-NUMBERS --LONG-PROMPT --RAW-CONTROL-CHARS --clear-screen --HILITE-UNREAD --incsearch --ignore-case --jump-target=.5\$ --line-num-width=5\$ --mouse --status-column --tabs=2\$ --tilde --use-color --wheel-lines=3\$ --wordwrap --color=P-\$ --color=NK\$ --color=RK\$ --color=E-\$"
 export LESSHISTFILE="-"
-export LESSOPEN="|${XDG_DATA_HOME:-$HOME/.local/share}/less/filter %s"
+export LESSOPEN="|previewer %s"
 
 # configure sqlite
 export SQLITE_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}/sqlite/history"
