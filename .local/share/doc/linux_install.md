@@ -309,7 +309,7 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
        visudo
        ```
     1. Add or uncomment:
-        ```
+        ```sudoers
         %wheel ALL=(ALL:ALL) ALL
         ```
 1. Create user mount directories.
