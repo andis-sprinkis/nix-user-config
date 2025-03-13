@@ -504,9 +504,9 @@ LVM on LUKS.
     blkid --match-tag UUID -o value /dev/mapper/nvme1n1_luks0_volgrp0-data
     ```
 1. Add the logical volume partition entry to file `/etc/fstab`:
-    ```
+    ```fstab
     # /dev/mapper/nvme1n1_luks0_volgrp0-data
-    UUID=<Logical volume partition UUID>  /mnt/nvme1 ext4 rw,relatime 0 0
+    UUID=<Logical volume partition UUID>  /mnt/nvme1 ext4 rw,relatime 0 2
     ```
 1. Re-mount `/etc/fstab` file specified devices.
     ```sh
