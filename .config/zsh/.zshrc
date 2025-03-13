@@ -31,17 +31,17 @@
   zle-keymap-select() {
     case "$KEYMAP" in
       "vicmd")
-        printf "$cur_block"
+        echo -n "$cur_block"
       ;;
       "viins"|"main")
-        printf "$cur_beam"
+        echo -n "$cur_beam"
       ;;
     esac
   }
 
   zle-line-init() {
     if zle -K "viins"; then
-      printf "$cur_beam"
+      echo -n "$cur_beam"
     fi
   }
 
