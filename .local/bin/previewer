@@ -365,7 +365,7 @@ ${tables}
     print_mime
     print_stat
   ;;
-  application/octet-stream|application/vnd.microsoft.portable-executable|application/x-dosexec)
+  application/octet-stream|application/vnd.microsoft.portable-executable|application/x-dosexec*)
     print_mime
     print_strings
 
