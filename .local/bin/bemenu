@@ -30,7 +30,7 @@ exec "/usr/bin/bemenu" \
   --ignorecase      \
   --border          "6px" \
   --width-factor    "0.8" \
-  --margin          "100px" \
+  --margin          "128px" \
   --center          \
   --wrap            \
   --fixed-height    \
