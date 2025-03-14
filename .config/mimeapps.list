@@ -429,6 +429,7 @@ video/vnd.rn-realvideo=video.desktop
 video/webm=video.desktop
 video/x-avi=video.desktop
 video/x-flc=video.desktop
+video/x-fli=video.desktop
 video/x-flic=video.desktop
 video/x-flv=video.desktop
 video/x-m4v=video.desktop
