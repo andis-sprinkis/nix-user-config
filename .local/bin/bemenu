@@ -28,7 +28,7 @@ exec "/usr/bin/bemenu" \
   --list            "$GUI_MENU_LINE_COUNT" \
   -p                "" \
   --ignorecase      \
-  --border          "5px" \
+  --border          "6px" \
   --width-factor    "0.8" \
   --margin          "100px" \
   --center          \
