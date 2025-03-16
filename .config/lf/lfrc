@@ -54,8 +54,8 @@ cmd open-with-menu-desktop ${{
   echo "$fx" | open_with_menu_desktop 1> "/dev/null" 2> "/dev/null" & disown
 }}
 
-cmd to-previewer ${{
-  previewer "$f" | $PAGER
+cmd to-pager ${{
+  $PAGER "$f"
 }}
 
 cmd apack !{{
@@ -216,7 +216,7 @@ cmd q ${{
 }}
 
 map <c-z> $ kill -STOP $PPID
-map <enter> to-previewer
+map <enter> to-pager
 map <esc> reload
 map <m-6> updir
 map <m-7> open

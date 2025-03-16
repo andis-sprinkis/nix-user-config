@@ -4,5 +4,6 @@
 
 #command
 a toggle-option ^PS
+o shell nohup $OPENER % 1> "/dev/null" 2> "/dev/null" & disown\n
 
 #env
