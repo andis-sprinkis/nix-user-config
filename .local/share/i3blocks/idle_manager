@@ -69,6 +69,6 @@ Idle mgr. off"
   ;;
   "partial")
     echo "Idle-manager off (partial)
-Idle mgr. off (partial)"
+Idle-mgr. off (partial)"
   ;;
 esac
