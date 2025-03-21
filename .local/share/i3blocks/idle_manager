@@ -10,32 +10,32 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
     }
   }
 
-  _idle_manager_lock() {
-    echo "Idle lock
+  idle_manager_lock() {
+    echo "Lock
 Lock"
     idle_manager "lock" 1> "/dev/null" 2> "/dev/null" & disown
     exit "0"
   }
 
-  _idle_manager_start() {
-    echo "Starting the idle manager...
-Starting idle mgr."
+  idle_manager_start() {
+    echo "Starting idle-manager...
+Starting idle-mgr."
     idle_manager "start" 1> "/dev/null" 2> "/dev/null" & disown
     reload
     exit "0"
   }
 
-  _idle_manager_stop() {
-    echo "Stopping the idle manager...
-Stopping idle mgr."
+  idle_manager_stop() {
+    echo "Stopping idle-manager...
+Stopping idle-mgr."
     idle_manager "stop" 1> "/dev/null" 2> "/dev/null" & disown
     reload
     exit "0"
   }
 
-  _idle_manager_reload() {
-    echo "Stopping the idle manager...
-Stopping idle mgr."
+  idle_manager_reload() {
+    echo "Stopping idle-manager...
+Stopping idle-mgr."
     idle_manager "reload" 1> "/dev/null" 2> "/dev/null" & disown
     reload
     exit "0"
@@ -44,15 +44,15 @@ Stopping idle mgr."
   case "$BLOCK_BUTTON" in
     "1")
       case "$status" in
-        "started") _idle_manager_lock ;;
-        "stopped") _idle_manager_start ;;
-        "partial") _idle_manager_reload ;;
+        "started") idle_manager_lock ;;
+        "stopped") idle_manager_start ;;
+        "partial") idle_manager_reload ;;
       esac
     ;;
     "3")
       case "$status" in
-        "started"|"partial") _idle_manager_stop ;;
-        "stopped") _idle_manager_start ;;
+        "started"|"partial") idle_manager_stop ;;
+        "stopped") idle_manager_start ;;
       esac
     ;;
   esac
@@ -60,15 +60,15 @@ fi
 
 case "$status" in
   "started")
-    echo "Idle lock
+    echo "Lock
 Lock"
   ;;
   "stopped")
-    echo "Idle manager off
+    echo "Idle-manager off
 Idle mgr. off"
   ;;
   "partial")
-    echo "Idle manager off (partial)
+    echo "Idle-manager off (partial)
 Idle mgr. off (partial)"
   ;;
 esac
