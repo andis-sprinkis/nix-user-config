@@ -15,8 +15,11 @@ is_exec() {
   command -v "$1" 1>/dev/null 2>/dev/null
 }
 
-print_util_not_found() {
-  echo "$(basename "$0"): '${1}' utility not found."
+find_util() {
+  if ! is_exec "$1"; then
+    echo "$(basename "$0"): '${1}' utility not found."
+    return "1"
+  fi
 }
 
 thumb_cache_create() {
@@ -64,25 +67,19 @@ print_hardlink() {
 }
 
 print_strings() {
-  if ! is_exec "strings"; then
-    print_util_not_found "strings"
+  if find_util "strings"; then
+    strings "$FPATH"
   fi
-
-  strings "$FPATH"
 }
 
 print_mediainfo() {
-  if ! is_exec "mediainfo"; then
-    print_util_not_found "mediainfo"
-    return
+  if find_util "mediainfo"; then
+    mediainfo "$FPATH" | head -n -2 | sed -e 's/ \+: /: /g' -e '/^General$/d'
   fi
-
-  mediainfo "$FPATH" | head -n -2 | sed -e 's/ \+: /: /g' -e '/^General$/d'
 }
 
 print_chafa() {
-  if ! is_exec "chafa"; then
-    print_util_not_found "chafa"
+  if ! find_util "chafa"; then
     return
   fi
 
@@ -102,21 +99,15 @@ print_chafa() {
 }
 
 print_als() {
-  if ! is_exec "als"; then
-    print_util_not_found "als"
-    return
+  if find_util "als"; then
+    als --format="${1}" -- "$FPATH"
   fi
-
-  als --format="${1}" -- "$FPATH"
 }
 
 print_bat() {
-  if ! is_exec "bat"; then
-    print_util_not_found "bat"
-    return
+  if find_util "bat"; then
+    bat --color=always --style=plain -- "$FPATH"
   fi
-
-  bat --color=always --style=plain -- "$FPATH"
 }
 
 print_mime() {
@@ -146,9 +137,7 @@ case "$MIME" in
     thumb_cache_create
 
     if [ ! -f "${FPATH_THUMB}.jpg" ]; then
-      if ! is_exec "pdftoppm"; then
-        print_util_not_found "pdftoppm"
-      else
+      if find_util "pdftoppm"; then
         pdftoppm -jpeg -jpegopt quality=50 -f "1" -singlefile "$1" "$FPATH_THUMB"
       fi
     fi
@@ -157,17 +146,12 @@ case "$MIME" in
 
     echo
 
-    if ! is_exec "pdfinfo"; then
-      print_util_not_found "pdfinfo"
-    else
+    if find_util "pdfinfo"; then
       pdfinfo "$FPATH"
-
       echo
     fi
 
-    if ! is_exec "pdftotext"; then
-      print_util_not_found "pdftotext"
-    else
+    if find_util "pdftotext"; then
       pdftotext -l "2" -nopgbrk -q -- "$FPATH" -
     fi
   ;;
@@ -177,11 +161,7 @@ case "$MIME" in
     thumb_cache_create
 
     if [ ! -f "${FPATH_THUMB}.jpg" ]; then
-      if ! is_exec "ddjvu"; then
-        print_util_not_found "ddjvu"
-      elif ! is_exec "magick"; then
-        print_util_not_found "magick"
-      else
+      if find_util "ddjvu" && find_util "magick"; then
         ddjvu -format=ppm -page=1 "$1" | magick "-" "${FPATH_THUMB}.jpg"
       fi
     fi
@@ -255,9 +235,7 @@ case "$MIME" in
   "application/x-7z-compressed")
     print_mime
 
-    if ! is_exec "als"; then
-      print_util_not_found "als"
-    else
+    if find_util "als"; then
       # Passing an empty password to avoid a lock-up.
       set +e; als --format=7z --format-option=-p="" -- "$FPATH"; set -e
     fi
@@ -281,9 +259,7 @@ case "$MIME" in
     thumb_cache_create
 
     if [ ! -f "${FPATH_THUMB}.jpg" ]; then
-      if ! is_exec "ffmpegthumbnailer"; then
-        print_util_not_found "ffmpegthumbnailer"
-      else
+      if find_util "ffmpegthumbnailer"; then
         ffmpegthumbnailer -i "$1" -o "${FPATH_THUMB}.jpg" -s "0" -q "5"
       fi
     fi
@@ -297,9 +273,7 @@ case "$MIME" in
   *opendocument*)
     print_mime
 
-    if ! is_exec "odt2txt"; then
-      print_util_not_found "odt2txt"
-    else
+    if find_util "odt2txt"; then
       odt2txt "$FPATH"
     fi
 
@@ -314,9 +288,7 @@ case "$MIME" in
 
     echo
 
-    if ! is_exec "mpg123-id3dump"; then
-      print_util_not_found "mpg123-id3dump"
-    else
+    if find_util "mpg123-id3dump"; then
       mpg123-id3dump -- "$FPATH"
     fi
   ;;
@@ -328,9 +300,7 @@ case "$MIME" in
   application/vnd.sqlite*)
     print_mime
 
-    if ! is_exec "sqlite3"; then
-      print_util_not_found "sqlite3"
-    else
+    if find_util "sqlite3"; then
       tables="$(set +e; sqlite3 "$FPATH" '.tables'; set -e)"
 
       if [ "${tables:-""}" ]; then
@@ -345,9 +315,7 @@ ${tables}
   application/x-executable|application/x-pie-executable|application/x-object)
     print_mime
 
-    if ! is_exec "readelf"; then
-      print_util_not_found "readelf"
-    else
+    if find_util "readelf"; then
       readelf -a "$FPATH"
     fi
   ;;
@@ -369,9 +337,7 @@ ${tables}
     print_mime
     print_strings
 
-    if ! is_exec "hexdump"; then
-      print_util_not_found "hexdump"
-    else
+    if find_util "hexdump"; then
       bytes="1048576"
 
       echo "
@@ -394,9 +360,7 @@ First ${bytes} bytes or less:"
   application/x-iso9660-image)
     print_mime
 
-    if ! is_exec "iso-info"; then
-      print_util_not_found "iso-info"
-    else
+    if find_util "iso-info"; then
       iso-info --no-header -U "$FPATH"
       echo
       iso-info --no-header -l "$FPATH"
@@ -405,9 +369,7 @@ First ${bytes} bytes or less:"
   text/x-ssh-public-key|application/x-pem-file)
     print_mime_newlines
 
-    if ! is_exec "ssh-keygen"; then
-      print_util_not_found "ssh-keygen"
-    else
+    if find_util "ssh-keygen"; then
       ssh-keygen -lv -f "$FPATH"
     fi
 
