@@ -11,12 +11,8 @@ W_CHR="${2:-""}"
 H_CHR="${3:-""}"
 FPATH_THUMB=""
 
-is_exec() {
-  command -v "$1" 1>/dev/null 2>/dev/null
-}
-
 find_util() {
-  if ! is_exec "$1"; then
+  if ! command -v "$1" 1>/dev/null 2>/dev/null; then
     echo "$(basename "$0"): '${1}' utility not found."
     return "1"
   fi
