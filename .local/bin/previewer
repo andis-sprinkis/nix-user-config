@@ -22,10 +22,16 @@ thumb_cache_create() {
   dir_cache_thumb="${XDG_CACHE_HOME:-$HOME/.cache}/previewer/thumbnails"
 
   if [ ! -d "$dir_cache_thumb" ]; then
-    mkdir -p "$dir_cache_thumb"
+    if mkdir -p "$dir_cache_thumb"; then
+      FPATH_THUMB="${dir_cache_thumb}/$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$FPATH" | sha256sum | cut -d" " -f1)"
+      return "0"
+    fi
+  else
+    FPATH_THUMB="${dir_cache_thumb}/$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$FPATH" | sha256sum | cut -d" " -f1)"
+    return "0"
   fi
 
-  FPATH_THUMB="${dir_cache_thumb}/$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$FPATH" | sha256sum | cut -d" " -f1)"
+  return "1"
 }
 
 print_stat() {
@@ -65,44 +71,52 @@ print_hardlink() {
 print_strings() {
   if find_util "strings"; then
     strings "$FPATH"
+  else
+    return "1"
   fi
 }
 
 print_mediainfo() {
   if find_util "mediainfo"; then
     mediainfo "$FPATH" | head -n -2 | sed -e 's/ \+: /: /g' -e '/^General$/d'
+  else
+    return "1"
   fi
 }
 
 print_chafa() {
-  if ! find_util "chafa"; then
-    return
-  fi
+  if find_util "chafa"; then
+    lines="$(tput lines)"
+    columns="$(tput cols)"
 
-  lines="$(tput lines)"
-  columns="$(tput cols)"
-
-  if [ -f "$1" ]; then
-    chafa \
-      --format "symbols" \
-      --font-ratio "1/2" \
-      --animate "off" \
-      --polite "on" \
-      --work "1" \
-      -s "${W_CHR:-"$columns"}x${H_CHR:-"$lines"}" \
-      "$1"
+    if [ -f "$1" ]; then
+      chafa \
+        --format "symbols" \
+        --font-ratio "1/2" \
+        --animate "off" \
+        --polite "on" \
+        --work "1" \
+        -s "${W_CHR:-"$columns"}x${H_CHR:-"$lines"}" \
+        "$1"
+    fi
+  else
+    return "1"
   fi
 }
 
 print_als() {
   if find_util "als"; then
     als --format="${1}" -- "$FPATH"
+  else
+    return "1"
   fi
 }
 
 print_bat() {
   if find_util "bat"; then
     bat --color=always --style=plain -- "$FPATH"
+  else
+    return "1"
   fi
 }
 
@@ -116,8 +130,7 @@ print_mime() {
 
 print_mime_newlines() {
   if [ -r "$FPATH" ]; then
-    newlines="$(wc -l "$FPATH" | cut -d" " -f1)"
-    echo "$MIME" "(${newlines} lines, ${BRIEF})"
+    echo "$MIME" "($(wc -l "$FPATH" | cut -d" " -f1) lines, ${BRIEF})"
   else
     echo "$MIME"
   fi
@@ -130,21 +143,24 @@ case "$MIME" in
   application/eps|application/pdf|application/postscript|application/x-eps|image/x-eps)
     print_mime_newlines
 
-    thumb_cache_create
-
-    if [ ! -f "${FPATH_THUMB}.jpg" ]; then
-      if find_util "pdftoppm"; then
-        pdftoppm -jpeg -jpegopt quality=50 -f "1" -singlefile "$1" "$FPATH_THUMB"
+    if thumb_cache_create; then
+      if [ ! -f "${FPATH_THUMB}.jpg" ]; then
+        if find_util "pdftoppm"; then
+          if pdftoppm -jpeg -jpegopt quality=50 -f "1" -singlefile "$1" "$FPATH_THUMB"; then
+            print_chafa "${FPATH_THUMB}.jpg"
+            echo
+          fi
+        fi
+      else
+        print_chafa "${FPATH_THUMB}.jpg"
+        echo
       fi
     fi
 
-    print_chafa "${FPATH_THUMB}.jpg"
-
-    echo
-
     if find_util "pdfinfo"; then
-      pdfinfo "$FPATH"
-      echo
+      if pdfinfo "$FPATH"; then
+        echo
+      fi
     fi
 
     if find_util "pdftotext"; then
@@ -154,15 +170,17 @@ case "$MIME" in
   image/vnd.djvu*)
     print_mime_newlines
 
-    thumb_cache_create
-
-    if [ ! -f "${FPATH_THUMB}.jpg" ]; then
-      if find_util "ddjvu" && find_util "magick"; then
-        ddjvu -format=ppm -page=1 "$1" | magick "-" "${FPATH_THUMB}.jpg"
+    if thumb_cache_create; then
+      if [ ! -f "${FPATH_THUMB}.jpg" ]; then
+        if find_util "ddjvu" && find_util "magick"; then
+          if ddjvu -format=ppm -page=1 "$1" | magick "-" "${FPATH_THUMB}.jpg"; then
+            print_chafa "${FPATH_THUMB}.jpg"
+          fi
+        fi
+      else
+        print_chafa "${FPATH_THUMB}.jpg"
       fi
     fi
-
-    print_chafa "${FPATH_THUMB}.jpg"
   ;;
   application/zip|application/epub+zip|application/java-archive|*openxmlformats-officedocument*)
     print_mime
@@ -243,26 +261,30 @@ case "$MIME" in
   image/*)
     print_mime
 
-    print_chafa "$FPATH"
-
-    echo
+    if print_chafa "$FPATH"; then
+      echo
+    fi
 
     print_mediainfo
   ;;
   video/*|application/x-ogm-video)
     print_mime
 
-    thumb_cache_create
-
-    if [ ! -f "${FPATH_THUMB}.jpg" ]; then
-      if find_util "ffmpegthumbnailer"; then
-        ffmpegthumbnailer -i "$1" -o "${FPATH_THUMB}.jpg" -s "0" -q "5"
+    if thumb_cache_create; then
+      if [ ! -f "${FPATH_THUMB}.jpg" ]; then
+        if find_util "ffmpegthumbnailer"; then
+          if ffmpegthumbnailer -i "$1" -o "${FPATH_THUMB}.jpg" -s "0" -q "5"; then
+            if print_chafa "${FPATH_THUMB}.jpg"; then
+              echo
+            fi
+          fi
+        fi
+      else
+        if print_chafa "${FPATH_THUMB}.jpg"; then
+          echo
+        fi
       fi
     fi
-
-    print_chafa "${FPATH_THUMB}.jpg"
-
-    echo
 
     print_mediainfo
   ;;
@@ -271,18 +293,17 @@ case "$MIME" in
 
     if find_util "odt2txt"; then
       odt2txt "$FPATH"
+      echo
     fi
-
-    echo
 
     print_als "zip"
   ;;
   audio/mpeg)
     print_mime
 
-    print_mediainfo
-
-    echo
+    if print_mediainfo; then
+      echo
+    fi
 
     if find_util "mpg123-id3dump"; then
       mpg123-id3dump -- "$FPATH"
@@ -345,8 +366,11 @@ First ${bytes} bytes or less:"
   ;;
   application/vnd.debian.binary-package|application/x-rpm)
     print_mime
-    als -- "$FPATH"
-    echo
+
+    if als -- "$FPATH"; then
+      echo
+    fi
+
     print_strings
   ;;
   application/x-bittorrent|application/x-lz4+json)
