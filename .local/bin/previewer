@@ -36,12 +36,11 @@ thumb_cache_create() {
 
 print_stat() {
   if [ -L "$FPATH_INPUT" ] ; then
+    stat "$FPATH_INPUT"
+
     if [ -e "$FPATH" ]; then
-      stat "$FPATH_INPUT"
       echo
       stat "$FPATH"
-    else
-      stat "$FPATH_INPUT"
     fi
   else
     stat "$FPATH"
