@@ -110,7 +110,7 @@ show = no
 # Timeout to hide info (seconds, 0 to always show)
 info_timeout = 5
 # Timeout to hide status message (seconds)
-status_timeout = 3
+status_timeout = 2
 
 # Display scheme for viewer mode (position = content)
 [info.viewer]
