@@ -7,12 +7,12 @@ exec "/usr/bin/bemenu" \
   --tb              "$GUI_COLOR_BACKGROUND" \
   --tf              "$GUI_COLOR_FOREGROUND" \
   --fb              "$GUI_COLOR_BACKGROUND" \
-  --ff              "$GUI_COLOR_FOREGROUND" \
+  --ff              "$GUI_COLOR_6" \
   --cb              "$GUI_COLOR_BACKGROUND" \
   --cf              "$GUI_COLOR_FOREGROUND" \
   --nb              "$GUI_COLOR_BACKGROUND" \
   --nf              "$GUI_COLOR_FOREGROUND" \
-  --hb              "$GUI_COLOR_FOREGROUND" \
+  --hb              "$GUI_COLOR_6" \
   --hf              "$GUI_COLOR_BACKGROUND" \
   --fbb             "$GUI_COLOR_BACKGROUND" \
   --fbf             "$GUI_COLOR_3" \
