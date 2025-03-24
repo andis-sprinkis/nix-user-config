@@ -60,7 +60,15 @@ print_symlink() {
 }
 
 print_hardlink() {
-  links_count="$(stat -c '%h' -- "$FPATH")"
+  case "$(uname)" in
+    "Darwin")
+      links_count="$(stat -c '%l' -- "$FPATH")"
+    ;;
+    *)
+      links_count="$(stat -c '%h' -- "$FPATH")"
+    ;;
+  esac
+ 
 
   if [ "$links_count" -gt "1" ]; then
     echo "${links_count} hard links"
