@@ -60,15 +60,11 @@ print_symlink() {
 }
 
 print_hardlink() {
-  case "$(uname)" in
-    "Darwin")
-      links_count="$(/usr/bin/stat -f '%l' "$FPATH")"
-    ;;
-    *)
-      links_count="$(stat -c '%h' -- "$FPATH")"
-    ;;
-  esac
- 
+  if stat --version 2> "/dev/null" | grep -q "GNU"; then
+    links_count="$(stat -c '%h' -- "$FPATH")"
+  else
+    links_count="$(stat -f '%l' -- "$FPATH")"
+  fi
 
   if [ "$links_count" -gt "1" ]; then
     echo "${links_count} hard links"
