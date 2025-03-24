@@ -21,8 +21,6 @@ find_util() {
 thumb_cache_create() {
   dir_cache_thumb="${XDG_CACHE_HOME:-$HOME/.cache}/previewer/thumbnails"
 
-  # TODO: BSD stat support
-
   if [ ! -d "$dir_cache_thumb" ]; then
     if mkdir -p "$dir_cache_thumb"; then
       FPATH_THUMB="${dir_cache_thumb}/$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$FPATH" | sha256sum | cut -d" " -f1)"
@@ -62,11 +60,7 @@ print_symlink() {
 }
 
 print_hardlink() {
-  if stat --version 2> "/dev/null" | grep -q "GNU"; then
-    links_count="$(stat -c '%h' -- "$FPATH")"
-  else
-    links_count="$(stat -f '%l' -- "$FPATH")"
-  fi
+  links_count="$(stat -c '%h' -- "$FPATH")"
 
   if [ "$links_count" -gt "1" ]; then
     echo "${links_count} hard links"
