@@ -62,7 +62,7 @@ print_symlink() {
 print_hardlink() {
   case "$(uname)" in
     "Darwin")
-      links_count="$(stat -f '%l' "$FPATH")"
+      links_count="$(/usr/bin/stat -f '%l' "$FPATH")"
     ;;
     *)
       links_count="$(stat -c '%h' -- "$FPATH")"
