@@ -257,6 +257,15 @@ case "$MIME" in
     # Archive types that 'als' recognizes, but cannot list.
     print_mime
   ;;
+  image/svg+xml)
+    print_mime_newlines
+
+    if print_chafa "$FPATH"; then
+      echo
+    fi
+
+    print_bat
+  ;;
   image/*)
     print_mime
 
@@ -393,6 +402,19 @@ First ${bytes} bytes or less:"
     fi
 
     print_bat
+  ;;
+  text/html)
+    print_mime_newlines
+
+    if [ "${FPATH##*.}" = "svg" ]; then
+      if print_chafa "$FPATH"; then
+        echo
+      fi
+    fi
+
+    if [ -r "$FPATH" ]; then
+      print_bat
+    fi
   ;;
   *)
     print_mime_newlines
