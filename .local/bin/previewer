@@ -347,6 +347,14 @@ ${tables}
   inode/directory)
     print_mime
 
+    if find_util "mountpoint"; then
+      if mountpoint -q -- "$FPATH"; then
+        echo "Mount point"
+      fi
+    fi
+
+    echo
+
     # shellcheck disable=SC2010
     if ls --version 2> "/dev/null" | grep -q "GNU"; then
       ls -lahAFNX --color=always --group-directories-first --time-style=long-iso "$FPATH"
