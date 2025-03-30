@@ -1,0 +1,1 @@
+-- nvim -u $HOME/.config/nvim_test/init.lua
