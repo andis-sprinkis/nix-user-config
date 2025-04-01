@@ -206,7 +206,7 @@ cmd follow-symlink %{{
 }}
 
 cmd follow-search ${{
-  fpath="$(fzf)"
+  fpath="$(set +e; fzf; set -e)"
 
   if [ "$fpath" ]; then
     lf -remote "send ${id} select \"${fpath}\""
