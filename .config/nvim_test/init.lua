@@ -1,1 +1,1 @@
--- nvim -u $HOME/.config/nvim_test/init.lua
+-- NVIM_APPNAME=nvim_test nvim
