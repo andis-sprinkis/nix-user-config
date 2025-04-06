@@ -171,25 +171,23 @@ cmd ratios &{{
     if [ "$r" = "$lf_ratios" ]; then
       case "$1" in
         "+")
-          if [ "$i" -gt "1" ]; then
-            r_new="$(echo "$ratios" | cut -d" " -f "$((i - "1"))")"
-          else
-            r_new="$r_densest"
-          fi
+          r_new="$(echo "$ratios" | cut -d" " -f "$((i + "1"))")"
         ;;
         "-")
-          r_new="$(echo "$ratios" | cut -d" " -f "$((i + "1"))")"
-          r_new="${r_new:-"${r_sparsest}"}"
+          if [ "$i" -gt "1" ]; then
+            r_new="$(echo "$ratios" | cut -d" " -f "$((i - "1"))")"
+          fi
         ;;
         *)
           exit "1"
         ;;
       esac
 
-      r_new="${r_new:-"${r_sparsest}"}"
+      if [ -z "$r_new" ]; then
+        exit "0"
+      fi
 
       lf -remote "send ${id} set ratios ${r_new}"
-      # lf -remote "send ${id} reload"
 
       exit "0"
     fi
