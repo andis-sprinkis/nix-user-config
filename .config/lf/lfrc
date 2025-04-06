@@ -13,7 +13,7 @@ set shellopts '-eu'
 set tabstop 2
 set wrapscroll
 
-cmd open ${{
+cmd open &{{
   IFS="
 "
   mime="$(file --mime-type --brief "$(readlink -f "$f")")"
@@ -50,7 +50,7 @@ cmd open-with ${{
   for f in $fx; do nohup "$*" "$f" 0</dev/null 1>/dev/null 2>/dev/null & done
 }}
 
-cmd open-with-menu-desktop ${{
+cmd open-with-menu-desktop &{{
   echo "$fx" | open_with_menu_desktop 1> "/dev/null" 2> "/dev/null" & disown
 }}
 
@@ -103,7 +103,7 @@ ${f}
   done
 }}
 
-cmd mkdir %{{
+cmd mkdir &{{
   IFS=" "
   mkdir -pv -- "$*"
   lf -remote "send ${id} select \"${*}\""
@@ -145,7 +145,7 @@ cmd on-cd &{{
 }}
 on-cd
 
-cmd on-redraw %{{
+cmd on-redraw &{{
   call() { exec lf -remote "send ${id} set ratios ${1}"; }
 
   if [ "$lf_width" -le "35"  ]; then call "100:1";    fi
@@ -157,7 +157,7 @@ cmd on-redraw %{{
 
 cmd on-init on-redraw
 
-cmd ratios ${{
+cmd ratios &{{
   IFS_="$IFS"
   r_sparsest="100:1" rs_middle="1:2 2:4:4 1:3:5:5" r_densest="1:2:4:6:8"
   ratios="${r_sparsest} ${rs_middle} ${r_densest}"
@@ -188,8 +188,8 @@ cmd ratios ${{
 
       r_new="${r_new:-"${r_sparsest}"}"
 
-      lf -remote "send ${id} set ratios ${r_new}; reload"
-      lf -remote "send ${id} echo ${r_new}"
+      lf -remote "send ${id} set ratios ${r_new}"
+      # lf -remote "send ${id} reload"
 
       exit "0"
     fi
@@ -200,7 +200,7 @@ cmd ratios ${{
   exit "2"
 }}
 
-cmd follow-symlink %{{
+cmd follow-symlink &{{
   lf -remote "send ${id} select '$(readlink "$f")'"
 }}
 
@@ -212,7 +212,7 @@ cmd follow-search ${{
   fi
 }}
 
-cmd q ${{
+cmd q &{{
   lf -remote "send ${id} quit"
 }}
 
