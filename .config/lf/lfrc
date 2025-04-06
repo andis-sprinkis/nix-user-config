@@ -36,7 +36,7 @@ cmd open ${{
     ;;
   esac
 
-  if [ "$(command -v "xdg-mime")" ] && [ -z "$(xdg-mime query default $mime)" ]; then
+  if [ "$(command -v "xdg-mime")" ] && [ -z "$(xdg-mime query default "$mime")" ]; then
     exec lf -remote "send ${id} push :open-with<space>"
   fi
 
