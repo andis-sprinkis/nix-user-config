@@ -291,7 +291,7 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     ```
 1. Set hostname.
     ```sh
-    echo "arch" > /etc/hostname
+    echo "pc0" > /etc/hostname
     ```
 1. Set root user password.
     ```sh
