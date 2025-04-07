@@ -157,7 +157,7 @@ cmd on-redraw &{{
 
 cmd on-init on-redraw
 
-cmd ratios &{{
+cmd ratios %{{
   IFS_="$IFS"
   r_sparsest="100:1" rs_middle="1:2 2:4:4 1:3:5:5" r_densest="1:2:4:6:8"
   ratios="${r_sparsest} ${rs_middle} ${r_densest}"
@@ -184,12 +184,14 @@ cmd ratios &{{
       esac
 
       if [ -z "$r_new" ]; then
-        exit "0"
+        echo " Columns limit (${1})"
+
+        sleep "0.4"
+
+        exec lf -remote "send ${id} reload"
       fi
 
-      lf -remote "send ${id} set ratios ${r_new}"
-
-      exit "0"
+      exec lf -remote "send ${id} set ratios ${r_new}"
     fi
 
     i="$((i + 1))"
