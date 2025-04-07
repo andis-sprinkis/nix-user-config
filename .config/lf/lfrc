@@ -171,11 +171,11 @@ cmd ratios &{{
     if [ "$r" = "$lf_ratios" ]; then
       case "$1" in
         "+")
-          r_new="$(echo "$ratios" | cut -d" " -f "$((i + "1"))")"
+          r_new="$(echo "$ratios" | cut -d" " -f "$((i + 1))")"
         ;;
         "-")
           if [ "$i" -gt "1" ]; then
-            r_new="$(echo "$ratios" | cut -d" " -f "$((i - "1"))")"
+            r_new="$(echo "$ratios" | cut -d" " -f "$((i - 1))")"
           fi
         ;;
         *)
