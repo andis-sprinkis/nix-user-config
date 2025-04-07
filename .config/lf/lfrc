@@ -184,7 +184,7 @@ cmd ratios %{{
       esac
 
       if [ -z "$r_new" ]; then
-        printf " \x1b[0;31mColumns limit! (%s)\x1b[0m " "${1}"
+        printf " \x1b[0;31mColumns limit! (%s)\x1b[0m " "$1"
 
         sleep "0.45"
 
