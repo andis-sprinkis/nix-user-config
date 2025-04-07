@@ -184,9 +184,9 @@ cmd ratios %{{
       esac
 
       if [ -z "$r_new" ]; then
-        echo " Columns limit (${1})"
+        printf " \x1b[0;31mColumns limit! (%s)\x1b[0m " "${1}"
 
-        sleep "0.4"
+        sleep "0.45"
 
         exec lf -remote "send ${id} reload"
       fi
