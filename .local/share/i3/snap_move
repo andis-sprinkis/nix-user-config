@@ -67,6 +67,8 @@ win_deco_rect_height="$(  echo "$win" | sed "15q;d")"
 # win_geometry_width="$(    echo "$win" | sed "18q;d")"
 # win_geometry_height="$(   echo "$win" | sed "19q;d")"
 
+# TODO: all the output, workspace and window properties can be probably precomputed faster in jq queries
+
 # Window moving properties
 
 move_step_x="$((ws_rect_width / 6))"

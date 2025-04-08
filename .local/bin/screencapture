@@ -1,0 +1,76 @@
+#!/usr/bin/env sh
+set -eu
+
+msg_usage="$(basename "$0") usage: no arguments OR [--output|--window|--area|--stop] OR [--help|-h]"
+
+case "${1:-""}" in
+  --help|-h)
+    echo "$msg_usage"
+    exit
+  ;;
+esac
+
+path_dir="${HOME}/scr"
+path_out="${path_dir}/$(date "+%s").mp4"
+
+if [ "${WAYLAND_DISPLAY:-""}" ]; then
+  # i3blocks module that checks if wf-recorder is running
+
+  if [ "${1:-""}" = "--stop" ]; then
+    set +e
+    pkill -SIGINT -f "wf-recorder"
+    pkill -SIGINT -f "slurp"
+    set -e
+
+    # send signal to i3blocks
+
+    exit "0"
+  fi
+
+  if [ "$(pidof "wf-recorder")" ] || [ "$(pidof "slurp")" ]; then
+    exit "3"
+  fi
+
+  # wf-recorder:
+  # --audio=${DEFAULT_SINK}.monitor
+  # -c libx264rgb
+  # rotation_filter="-F transpose=1"
+
+  case "${1:-""}" in
+    "")
+    ;;
+    --output)
+      coord="$(slurp -p)"
+
+      # map instead
+      outputs="$(swaymsg -rt get_outputs | \jq -r '.[] | [.name,.rect.x,.rect.x + .rect.width,.rect.y,.rect.y + .rect.height,.transform,.scale]')"
+
+      echo "$coord"
+      echo "$outputs"
+
+      # get current output
+      # pass coords to wf-recorder
+      # account for rotation, scale
+
+      output_name=""
+    ;;
+    --window)
+    ;;
+    --area)
+    ;;
+    *)
+      echo "$msg_usage" 1>&2
+      exit "1"
+    ;;
+  esac
+
+  # send signal to i3blocks
+fi
+
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+  # TODO
+  echo "Not implemented in X11" 1>&2
+  exit "5"
+fi
+
+exit "2"

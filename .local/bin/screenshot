@@ -11,7 +11,7 @@ case "${1:-""}" in
 esac
 
 path_dir="${HOME}/scr"
-path_img="${path_dir}/$(date "+%s").png"
+path_out="${path_dir}/$(date "+%s").png"
 
 mkdir -p "$path_dir"
 
@@ -22,16 +22,16 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
 
   case "${1:-""}" in
     "")
-      grim "$path_img"
+      grim "$path_out"
     ;;
     --output)
-      grim -o "$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')" "$path_img"
+      grim -o "$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')" "$path_out"
     ;;
     --window)
-      grim -g "$(swaymsg -t get_tree | jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$path_img"
+      grim -g "$(swaymsg -t get_tree | jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$path_out"
     ;;
     --area)
-      dulcepan -f "png" -o "$path_img"
+      dulcepan -f "png" -o "$path_out"
     ;;
     *)
       echo "$msg_usage" 1>&2
@@ -39,24 +39,24 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
     ;;
   esac
 
-  printf '%s' "$path_img" | wl-copy
+  printf '%s' "$path_out" | wl-copy
   exit "0"
 fi
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   case "${1:-""}" in
     "")
-      maim -u "$path_img"
+      maim -u "$path_out"
     ;;
     --output)
       exit "4"
       # TODO
     ;;
     --window)
-      maim -u --window "$(xdotool getactivewindow)" "$path_img"
+      maim -u --window "$(xdotool getactivewindow)" "$path_out"
     ;;
     --area)
-      maim -u --select "$path_img"
+      maim -u --select "$path_out"
     ;;
     *)
       echo "$msg_usage" 1>&2
@@ -64,7 +64,7 @@ if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
     ;;
   esac
 
-  printf '%s' "$path_img" | xclip -sel "clipboard"
+  printf '%s' "$path_out" | xclip -sel "clipboard"
   exit "0"
 fi
 
