@@ -13,7 +13,7 @@ set shellopts '-eu'
 set tabstop 2
 set wrapscroll
 
-cmd open &{{
+cmd open ${{
   IFS="
 "
   mime="$(file --mime-type --brief "$(readlink -f "$f")")"
