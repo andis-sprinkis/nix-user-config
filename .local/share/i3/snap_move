@@ -28,7 +28,7 @@ ws="$(
 
 ws_rect_x="$(              echo "$ws" | sed  "1q;d")"
 ws_rect_y="$(              echo "$ws" | sed  "2q;d")"
-ws_rect_width="$(          echo "$ws" | sed  "3q;d")" 
+ws_rect_width="$(          echo "$ws" | sed  "3q;d")"
 ws_rect_height="$(         echo "$ws" | sed  "4q;d")"
 ws_output="$(              echo "$ws" | sed  "5q;d")"
 
