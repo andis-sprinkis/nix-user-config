@@ -10,6 +10,6 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
 fi
 
 if [ "$(pidof "wf-recorder")" ]; then
-  echo "Recording screen
-  Recording screen"
+  echo "🔴 Recording screen
+🔴 Recording scr."
 fi
