@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+set -eu
+
+if [ "${BLOCK_BUTTON:-""}" ]; then
+  case "$BLOCK_BUTTON" in
+    "1"|"3")
+      screenrecord --stop
+    ;;
+  esac
+fi
+
+if [ "$(pidof "wf-recorder")" ]; then
+  echo "Recording screen
+  Recording screen"
+fi
