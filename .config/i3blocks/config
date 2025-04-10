@@ -4,8 +4,8 @@
 command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/date
 interval=15
 
-[time_utc]
-command=TZ= ${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/time
+[time_bst]
+command=TZ=Europe/London ${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/time
 interval=15
 
 [time_local]
