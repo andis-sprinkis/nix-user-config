@@ -111,7 +111,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
 fi
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-  echo "Not implemented in X11" 1>&2
+  echo "Not implemented for X11" 1>&2
   exit "5"
 fi
 
