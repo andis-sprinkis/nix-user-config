@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -eu
 
-msg_usage="$(basename "$0") usage: no arguments (same as --area) OR [--output|--window|--area|--stop] OR [--help|-h]"
+msg_usage="$(basename "$0") usage: no arguments (same as --area) OR [--all|--output|--window|--area|--stop] OR [--help|-h]"
 
 case "${1:-""}" in
   --help|-h)
@@ -93,15 +93,23 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
   }
 
   case "${1:-""}" in
+    --all)
+      echo "Not implemented (Wayland): ${1}" 1>&2
+      exit "5"
+    ;;
     --output)
       record "output"
     ;;
     --window)
-      echo "Not implemented: ${1}" 1>&2
+      echo "Not implemented (Wayland): ${1}" 1>&2
       exit "5"
     ;;
     ""|--area)
       record "area"
+    ;;
+    -h|--help)
+      echo "$msg_usage"
+      exit "0"
     ;;
     *)
       echo "$msg_usage" 1>&2
@@ -111,8 +119,20 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
 fi
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-  echo "Not implemented for X11" 1>&2
-  exit "5"
+  case "${1:-""}" in
+    ""|--all|--output|--window|--area|--stop)
+      echo "Not implemented (X11): ${1:-""}" 1>&2
+      exit "5"
+    ;;
+    -h|--help)
+      echo "$msg_usage"
+      exit "0"
+    ;;
+    *)
+      echo "$msg_usage" 1>&2
+      exit "1"
+    ;;
+  esac
 fi
 
 exit "2"
