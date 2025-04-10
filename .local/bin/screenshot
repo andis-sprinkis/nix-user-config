@@ -76,4 +76,17 @@ if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   exit "0"
 fi
 
-exit "2"
+case "${1:-""}" in
+  -h|--help)
+    echo "$msg_usage"
+    exit "0"
+  ;;
+  ""|--all|--output|--window|--area|--stop)
+    echo "Must be ran under X11 or Wayland." 1>&2
+    exit "2"
+  ;;
+  *)
+    echo "$msg_usage" 1>&2
+    exit "1"
+  ;;
+esac
