@@ -86,6 +86,10 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
     wf-recorder --codec=libx264rgb "$rec_transpose" --geometry="$rec_geometry" --file="$path_out"
 
     pkill "-SIGRTMIN+7" "i3blocks" 1> "/dev/null" 2> "/dev/null" & disown
+
+    printf '%s' "$path_out" | wl-copy
+
+    exit
   }
 
   case "${1:-""}" in
