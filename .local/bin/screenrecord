@@ -32,8 +32,6 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
   fi
 
   record() {
-    # --audio=${DEFAULT_SINK}.monitor
-
     ptr_coord=""
 
     case "$1" in
