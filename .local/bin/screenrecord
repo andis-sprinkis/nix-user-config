@@ -33,87 +33,77 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
     exit "3"
   fi
 
-  # --audio=${DEFAULT_SINK}.monitor
+  record() {
+    # --audio=${DEFAULT_SINK}.monitor
+
+    ptr_coord=""
+
+    case "$1" in
+      "area")
+        ptr_coord="$(set +e; slurp; set -e)"
+      ;;
+      "output")
+        ptr_coord="$(set +e; slurp -p; set -e)"
+      ;;
+    esac
+
+    if [ -z "$ptr_coord" ]; then
+      exit "0"
+    fi
+
+    ptr_coord_x="${ptr_coord%,*}"
+    ptr_coord_y="${ptr_coord#*,}"
+    ptr_coord_y="${ptr_coord_y% *}"
+
+    output="$(swaymsg -rt get_outputs | jq -r ".[] | select((${ptr_coord_x} >= .rect.x) and (${ptr_coord_x} <= .rect.x + .rect.width) and (${ptr_coord_y} >= .rect.y) and (${ptr_coord_y} <= .rect.y + .rect.height))")"
+
+    output_transform="$(echo "$output" | jq -r ".transform")"
+
+    rec_transpose=""
+
+    case "$output_transform" in
+      "180")
+        rec_transpose="-F transpose=1"
+      ;;
+      "90")
+        rec_transpose="-F transpose=2"
+      ;;
+    esac
+
+    rec_geometry=""
+
+    case "$1" in
+      "area")
+        rec_geometry="$ptr_coord"
+      ;;
+      "output")
+        rec_geometry="$(echo "$output" | jq -r "[([.rect.x, .rect.y] | join(\",\")),([.rect.width,.rect.height] | join(\"x\"))] | join(\" \")")"
+      ;;
+    esac
+
+    if [ "$(pidof "i3blocks")" ]; then
+      (sleep "0.5"; pkill "-SIGRTMIN+7" "i3blocks") 1> "/dev/null" 2> "/dev/null" & disown
+    fi
+
+    wf-recorder --codec=libx264rgb "$rec_transpose" --geometry="$rec_geometry" --file="$path_out"
+
+    pkill "-SIGRTMIN+7" "i3blocks" 1> "/dev/null" 2> "/dev/null" & disown
+  }
 
   case "${1:-""}" in
     --output)
-      ptr_coord="$(set +e; slurp -p; set -e)"
-
-      if [ -z "$ptr_coord" ]; then
-        exit "0"
-      fi
-
-      ptr_coord_x="${ptr_coord%,*}"
-      ptr_coord_y="${ptr_coord#*,}"
-      ptr_coord_y="${ptr_coord_y% *}"
-
-      output="$(swaymsg -rt get_outputs | jq -r ".[] | select((${ptr_coord_x} >= .rect.x) and (${ptr_coord_x} <= .rect.x + .rect.width) and (${ptr_coord_y} >= .rect.y) and (${ptr_coord_y} <= .rect.y + .rect.height))")"
-
-      output_transform="$(echo "$output" | jq -r ".transform")"
-
-      rec_transpose=""
-
-      case "$output_transform" in
-        "180")
-          rec_transpose="-F transpose=1"
-        ;;
-        "90")
-          rec_transpose="-F transpose=2"
-        ;;
-      esac
-
-      rec_geometry="$(echo "$output" | jq -r "[([.rect.x, .rect.y] | join(\",\")),([.rect.width,.rect.height] | join(\"x\"))] | join(\" \")")"
-
-      if [ "$(pidof "i3blocks")" ]; then
-        (sleep "0.5"; pkill "-SIGRTMIN+7" "i3blocks") 1> "/dev/null" 2> "/dev/null" & disown
-      fi
-
-      wf-recorder --codec=libx264rgb "$rec_transpose" --geometry="$rec_geometry" --file="$path_out"
+      record "output"
     ;;
     --window)
     ;;
     --area)
-      ptr_coord="$(set +e; slurp; set -e)"
-
-      if [ -z "$ptr_coord" ]; then
-        exit "0"
-      fi
-
-      ptr_coord_x="${ptr_coord%,*}"
-      ptr_coord_y="${ptr_coord#*,}"
-      ptr_coord_y="${ptr_coord_y% *}"
-
-      output="$(swaymsg -rt get_outputs | jq -r ".[] | select((${ptr_coord_x} >= .rect.x) and (${ptr_coord_x} <= .rect.x + .rect.width) and (${ptr_coord_y} >= .rect.y) and (${ptr_coord_y} <= .rect.y + .rect.height))")"
-
-      output_transform="$(echo "$output" | jq -r ".transform")"
-
-      rec_transpose=""
-      rec_geometry=""
-
-      case "$output_transform" in
-        "180")
-          rec_transpose="-F transpose=1"
-        ;;
-        "90")
-          rec_transpose="-F transpose=2"
-        ;;
-      esac
-
-      rec_geometry="$ptr_coord"
-
-      if [ "$(pidof "i3blocks")" ]; then
-        (sleep "0.5"; pkill "-SIGRTMIN+7" "i3blocks") 1> "/dev/null" 2> "/dev/null" & disown
-      fi
-
-      wf-recorder --codec=libx264rgb "$rec_transpose" --geometry="$rec_geometry" --file="$path_out"
+      record "area"
     ;;
     *)
       echo "$msg_usage" 1>&2
       exit "1"
     ;;
   esac
-
-  pkill "-SIGRTMIN+7" "i3blocks" 1> "/dev/null" 2> "/dev/null" & disown
 fi
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
