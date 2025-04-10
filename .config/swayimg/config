@@ -98,7 +98,7 @@ color = #ffffffff
 # Shadow color (RGBA)
 shadow = #00000000
 # Background color (RGBA)
-background = #000000bb
+background = #000000cc
 
 ################################################################################
 # Image meta info scheme (format, size, EXIF, etc)
