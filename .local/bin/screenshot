@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -eu
 
-msg_usage="$(basename "$0") usage: no arguments OR [--output|--window|--area] OR [--help|-h]"
+msg_usage="$(basename "$0") usage: no arguments (same as --all) OR [--all|--output|--window|--area] OR [--help|-h]"
 
 case "${1:-""}" in
   --help|-h)
@@ -21,7 +21,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
   fi
 
   case "${1:-""}" in
-    "")
+    ""|--all)
       grim "$path_out"
     ;;
     --output)
@@ -45,12 +45,12 @@ fi
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   case "${1:-""}" in
-    "")
+    ""|--all)
       maim -u "$path_out"
     ;;
     --output)
+      echo "Not implemented: ${1}" 1>&2
       exit "4"
-      # TODO
     ;;
     --window)
       maim -u --window "$(xdotool getactivewindow)" "$path_out"

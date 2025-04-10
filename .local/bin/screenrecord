@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -eu
 
-msg_usage="$(basename "$0") usage: no arguments OR [--output|--window|--area|--stop] OR [--help|-h]"
+msg_usage="$(basename "$0") usage: no arguments (same as --area) OR [--output|--window|--area|--stop] OR [--help|-h]"
 
 case "${1:-""}" in
   --help|-h)
@@ -14,8 +14,6 @@ path_dir="${HOME}/scr"
 path_out="${path_dir}/$(date "+%s").mp4"
 
 if [ "${WAYLAND_DISPLAY:-""}" ]; then
-  # i3blocks module that checks if wf-recorder is running
-
   if [ "${1:-""}" = "--stop" ]; then
     set +e
     pkill -SIGINT -f "wf-recorder"
@@ -95,8 +93,10 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       record "output"
     ;;
     --window)
+      echo "Not implemented: ${1}" 1>&2
+      exit "5"
     ;;
-    --area)
+    ""|--area)
       record "area"
     ;;
     *)
@@ -107,7 +107,6 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
 fi
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-  # TODO
   echo "Not implemented in X11" 1>&2
   exit "5"
 fi
