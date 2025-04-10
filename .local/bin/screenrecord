@@ -83,7 +83,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       (sleep "0.5"; pkill "-SIGRTMIN+7" "i3blocks") 1> "/dev/null" 2> "/dev/null" & disown
     fi
 
-    wf-recorder --codec=libx264rgb "$rec_transpose" --geometry="$rec_geometry" --file="$path_out"
+    wf-recorder --audio --codec=libx264rgb "$rec_transpose" --geometry="$rec_geometry" --file="$path_out"
 
     pkill "-SIGRTMIN+7" "i3blocks" 1> "/dev/null" 2> "/dev/null" & disown
 
