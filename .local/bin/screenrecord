@@ -66,6 +66,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
         ".[] | select((${ptr_coord_x} >= .rect.x) and (${ptr_coord_x} <= .rect.x + .rect.width) and (${ptr_coord_y} >= .rect.y) and (${ptr_coord_y} <= .rect.y + .rect.height))"
     )"
 
+    output_name="$(echo "$output" | jq -r ".name")"
     output_transform="$(echo "$output" | jq -r ".transform")"
 
     rec_transpose=""
@@ -79,22 +80,16 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       ;;
     esac
 
-    rec_geometry=""
+    i3blocks_signal "wait"
 
     case "$1" in
       "area")
-        rec_geometry="$ptr_coord"
+        wf-recorder --audio --codec=libx264rgb "$rec_transpose" --geometry="$ptr_coord" --file="$path_out"
       ;;
       "output")
-        rec_geometry="$(echo "$output" | jq -r \
-          "[([.rect.x, .rect.y] | join(\",\")),([.rect.width,.rect.height] | join(\"x\"))] | join(\" \")"
-        )"
+        wf-recorder --audio --codec=libx264rgb "$rec_transpose" --output="$output_name" --file="$path_out"
       ;;
     esac
-
-    i3blocks_signal "wait"
-
-    wf-recorder --audio --codec=libx264rgb "$rec_transpose" --geometry="$rec_geometry" --file="$path_out"
 
     i3blocks_signal
 
