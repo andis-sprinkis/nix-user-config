@@ -13,6 +13,12 @@ esac
 path_dir="${HOME}/scr"
 path_out="${path_dir}/$(date "+%s").mp4"
 
+i3blocks_signal() {
+  if [ "$(pidof "i3blocks")" ]; then
+    (sleep "0.5"; pkill "-SIGRTMIN+7" "i3blocks") 1> "/dev/null" 2> "/dev/null" & disown
+  fi
+}
+
 if [ "${WAYLAND_DISPLAY:-""}" ]; then
   if [ "${1:-""}" = "--stop" ]; then
     set +e
@@ -20,9 +26,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
     pkill -SIGINT -f "slurp"
     set -e
 
-    if [ "$(pidof "i3blocks")" ]; then
-      (sleep "0.5"; pkill "-SIGRTMIN+7" "i3blocks") 1> "/dev/null" 2> "/dev/null" & disown
-    fi
+    i3blocks_signal
 
     exit "0"
   fi
@@ -51,7 +55,10 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
     ptr_coord_y="${ptr_coord#*,}"
     ptr_coord_y="${ptr_coord_y% *}"
 
-    output="$(swaymsg -rt get_outputs | jq -r ".[] | select((${ptr_coord_x} >= .rect.x) and (${ptr_coord_x} <= .rect.x + .rect.width) and (${ptr_coord_y} >= .rect.y) and (${ptr_coord_y} <= .rect.y + .rect.height))")"
+    output="$(
+      swaymsg -rt get_outputs | jq -r \
+        ".[] | select((${ptr_coord_x} >= .rect.x) and (${ptr_coord_x} <= .rect.x + .rect.width) and (${ptr_coord_y} >= .rect.y) and (${ptr_coord_y} <= .rect.y + .rect.height))"
+    )"
 
     output_transform="$(echo "$output" | jq -r ".transform")"
 
@@ -73,13 +80,13 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
         rec_geometry="$ptr_coord"
       ;;
       "output")
-        rec_geometry="$(echo "$output" | jq -r "[([.rect.x, .rect.y] | join(\",\")),([.rect.width,.rect.height] | join(\"x\"))] | join(\" \")")"
+        rec_geometry="$(echo "$output" | jq -r \
+          "[([.rect.x, .rect.y] | join(\",\")),([.rect.width,.rect.height] | join(\"x\"))] | join(\" \")"
+        )"
       ;;
     esac
 
-    if [ "$(pidof "i3blocks")" ]; then
-      (sleep "0.5"; pkill "-SIGRTMIN+7" "i3blocks") 1> "/dev/null" 2> "/dev/null" & disown
-    fi
+    i3blocks_signal
 
     wf-recorder --audio --codec=libx264rgb "$rec_transpose" --geometry="$rec_geometry" --file="$path_out"
 
