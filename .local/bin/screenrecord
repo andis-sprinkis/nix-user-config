@@ -99,8 +99,6 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
     i3blocks_signal
 
     printf '%s' "$path_out" | wl-copy
-
-    exit
   }
 
   case "${1:-""}" in
@@ -110,6 +108,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
     ;;
     --output)
       record "output"
+      exit
     ;;
     --window)
       echo "Not implemented (Wayland): ${1}" 1>&2
@@ -117,6 +116,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
     ;;
     ""|--area)
       record "area"
+      exit
     ;;
     -h|--help)
       echo "$msg_usage"
