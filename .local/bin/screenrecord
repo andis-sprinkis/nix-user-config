@@ -15,7 +15,13 @@ path_out="${path_dir}/$(date "+%s").mp4"
 
 i3blocks_signal() {
   if [ "$(pidof "i3blocks")" ]; then
-    (sleep "0.5"; pkill "-SIGRTMIN+7" "i3blocks") 1> "/dev/null" 2> "/dev/null" & disown
+    (
+      if [ "${1:-""}" = "wait" ]; then
+        sleep "0.5"
+      fi
+
+      pkill "-SIGRTMIN+7" "i3blocks"
+    ) 1> "/dev/null" 2> "/dev/null" & disown
   fi
 }
 
@@ -26,7 +32,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
     pkill -SIGINT -f "slurp"
     set -e
 
-    i3blocks_signal
+    i3blocks_signal "wait"
 
     exit "0"
   fi
@@ -86,11 +92,11 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       ;;
     esac
 
-    i3blocks_signal
+    i3blocks_signal "wait"
 
     wf-recorder --audio --codec=libx264rgb "$rec_transpose" --geometry="$rec_geometry" --file="$path_out"
 
-    pkill "-SIGRTMIN+7" "i3blocks" 1> "/dev/null" 2> "/dev/null" & disown
+    i3blocks_signal
 
     printf '%s' "$path_out" | wl-copy
 
