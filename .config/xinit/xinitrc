@@ -31,6 +31,10 @@ fi
 
 VBoxClient-all &
 
+# Notification-daemon
+
+dunst &
+
 # Polkit authentication agent
 
 [ -z "$(pidof "polkit-gnome-authentication-agent-1")" ] && /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &

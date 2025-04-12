@@ -248,7 +248,7 @@
 
     # dmenu path.
     # dmenu = /usr/bin/dmenu -p dunst:
-    dmenu = bemenu -p dunst:
+    dmenu = menu_desktop -p dunst:
 
     # Browser for opening urls in context menu.
     browser = /usr/bin/xdg-open
@@ -323,6 +323,8 @@
     mouse_middle_click = do_action, close_current
     mouse_right_click = close_all
 
+
+[global]
 
     # Defines color of the frame around the notification window.
     frame_color = "#aaaaaa"
