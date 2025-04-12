@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.206.0
+@version      0.207.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
@@ -295,6 +295,7 @@ domain("tensorflow.org"),
 domain("thesaurus.com"),
 domain("tiger-algebra.com"),
 domain("timeanddate.com"),
+domain("trac.ffmpeg.org"),
 domain("translate.google.com"),
 domain("typst.app"),
 domain("ubuntu.com"),
