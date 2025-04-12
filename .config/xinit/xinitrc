@@ -32,8 +32,9 @@ fi
 VBoxClient-all &
 
 # Notification-daemon
-
-dunst &
+if [ -z "$(pidof dunst)" ]; then
+  dunst &
+fi
 
 # Polkit authentication agent
 
@@ -64,9 +65,9 @@ hsetroot -solid "$(xrdb -get rootBackground)" &
 # Starting or reloading X11 display compositor
 
 pid_picom="$(pidof picom)"
-if [ "$pid_picom" ]; then 
+if [ "$pid_picom" ]; then
   kill -USR1 "$pid_picom" &
-else 
+else
   picom -b --config "/dev/null" &
 fi
 
@@ -74,7 +75,7 @@ fi
 
 idle_manager "start" &
 
-# Running EeasyEffects audio effects interface
+# EeasyEffects audio effects interface
 
 if [ -z "$(pidof easyeffects)" ]; then
   easyeffects --gapplication-service &

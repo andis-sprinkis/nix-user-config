@@ -29,8 +29,9 @@ idle_manager "start" &
 VBoxClient-all &
 
 # Notification-daemon
-
-dunst &
+if [ -z "$(pidof dunst)" ]; then
+  dunst &
+fi
 
 # Polkit authentication agent
 
@@ -38,7 +39,7 @@ if [ -z "$(pidof "polkit-gnome-authentication-agent-1")" ]; then
   /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 fi
 
-# Running EeasyEffects audio effects interface
+# EeasyEffects audio effects interface
 
 if [ -z "$(pidof easyeffects)" ]; then
   easyeffects --gapplication-service &
