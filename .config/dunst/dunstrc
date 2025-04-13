@@ -324,12 +324,8 @@
 
 
 [global]
-
-    # Defines color of the frame around the notification window.
     frame_color = "#808080"
 
-    # Define a color for the separator.
-    # possible values are:
     #  * auto: dunst tries to find a color fitting to the background;
     #  * foreground: use the same color as the foreground;
     #  * frame: use the same color as the frame;
@@ -340,17 +336,17 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#1f1f1fcc"
+    background = "#1f1f1fd0"
     foreground = "#d4d4d4"
     frame_color = "#808080"
 
 [urgency_normal]
-    background = "#1f1f1fcc"
+    background = "#1f1f1fd0"
     foreground = "#d4d4d4"
     frame_color = "#608b4e"
 
 [urgency_critical]
-    background = "#1f1f1fcc"
+    background = "#1f1f1fd0"
     foreground = "#d4d4d4"
     frame_color = "#f44747"
 
