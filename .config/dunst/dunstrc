@@ -26,7 +26,7 @@
     # dynamic width from 0 to 300
     # width = (0, 300)
     # constant width of 300
-    width = 380
+    width = 480
 
     # The height of a single notification, excluding the frame.
     # dynamic height from 0 to 300
@@ -39,7 +39,7 @@
     origin = bottom-right
 
     # Offset from the origin
-    offset = (0,0)
+    offset = (8,8)
 
     # Maximum number of notification (0 means no limit)
     notification_limit = 20
@@ -273,7 +273,7 @@
 
 
 [global]
-    frame_color = "#808080"
+    frame_color = "#808080d8"
 
     #  * auto: dunst tries to find a color fitting to the background;
     #  * foreground: use the same color as the foreground;
@@ -283,21 +283,19 @@
 
 
 [urgency_low]
-    # IMPORTANT: colors have to be defined in quotation marks.
-    # Otherwise the "#" and following would be interpreted as a comment.
     background = "#1f1f1fd0"
     foreground = "#d4d4d4"
-    frame_color = "#808080"
+    frame_color = "#808080d8"
 
 [urgency_normal]
     background = "#1f1f1fd0"
     foreground = "#d4d4d4"
-    frame_color = "#608b4e"
+    frame_color = "#608b4ed8"
 
 [urgency_critical]
     background = "#1f1f1fd0"
     foreground = "#d4d4d4"
-    frame_color = "#f44747"
+    frame_color = "#f44747d8"
 
 [urgency_low]
     timeout = 7
