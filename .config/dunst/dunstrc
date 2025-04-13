@@ -340,7 +340,7 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#1f1f1f"
+    background = "#1f1f1fcc"
     foreground = "#d4d4d4"
     frame_color = "#808080"
 
@@ -350,7 +350,7 @@
     frame_color = "#608b4e"
 
 [urgency_critical]
-    background = "#1f1f1f"
+    background = "#1f1f1fcc"
     foreground = "#d4d4d4"
     frame_color = "#f44747"
 
