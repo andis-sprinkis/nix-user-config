@@ -41,9 +41,6 @@
     # Offset from the origin
     offset = (0,0)
 
-    # Scale factor. It is auto-detected if value is 0.
-    scale = 0
-
     # Maximum number of notification (0 means no limit)
     notification_limit = 20
 
@@ -191,12 +188,6 @@
     # Specify where to make an ellipsis in long lines.
     # Possible values are "start", "middle" and "end".
     ellipsize = middle
-
-    # Ignore newlines '\n' in notifications.
-    ignore_newline = no
-
-    # Stack together notifications with the same content
-    stack_duplicates = true
 
     # Hide the count of stacked notifications with the same content
     hide_duplicate_count = false
