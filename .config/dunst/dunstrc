@@ -33,16 +33,12 @@
     height = (0, 300)
     # constant height of 300
     # height = 300
-    # NOTE: Dunst from version 1.11 and older don't support dynamic height
-    #       and the given value is treated as the maximum height
 
     # Position the notification in the top right corner
     # origin = top-right
     origin = bottom-right
 
     # Offset from the origin
-    # NOTE: Dunst from version 1.11 and older use this alternative notation
-    # offset = 10x50
     offset = (0,0)
 
     # Scale factor. It is auto-detected if value is 0.
@@ -209,30 +205,7 @@
     show_indicators = yes
 
     ### Icons ###
-
-    # Recursive icon lookup. You can set a single theme, instead of having to
-    # define all lookup paths.
-    enable_recursive_icon_lookup = true
-
-    # Set icon theme (only used for recursive icon lookup)
-    icon_theme = Adwaita
-    # You can also set multiple icon themes, with the leftmost one being used first.
-    # icon_theme = "Adwaita, breeze"
-
-    # Align icons left/right/top/off
-    # icon_position = left
     icon_position = off
-
-    # Scale small icons up to this size, set to 0 to disable. Helpful
-    # for e.g. small files or high-dpi screens. In case of conflict,
-    # max_icon_size takes precedence over this.
-    min_icon_size = 32
-
-    # Scale larger icons down to this size, set to 0 to disable
-    max_icon_size = 128
-
-    # Paths to default icons (only necessary when not using recursive icon lookup)
-    icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
 
     ### History ###
 
@@ -287,21 +260,6 @@
     # Uncomment this if you want to let notifications appear under fullscreen
     # applications (default: overlay)
     # layer = top
-
-    # Set this to true to use X11 output on Wayland.
-    force_xwayland = false
-
-    ### Legacy
-
-    # Use the Xinerama extension instead of RandR for multi-monitor support.
-    # This setting is provided for compatibility with older nVidia drivers that
-    # do not support RandR and using it on systems that support RandR is highly
-    # discouraged.
-    #
-    # By enabling this setting dunst will not be able to detect when a monitor
-    # is connected or disconnected which might break follow mode if the screen
-    # layout changes.
-    force_xinerama = false
 
     ### mouse
 
