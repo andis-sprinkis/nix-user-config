@@ -1,12 +1,13 @@
 #!/usr/bin/env sh
+set -eu
 
 unset NSXIV_OPTS
 
-if [ -z "$1" ]; then
+if [ -z "${1:-""}" ]; then
   exit "2"
 fi
 
-case "$1" in
+case "${1:-""}" in
   "e")
     while read file; do file_manager_desktop "$file" & done
   ;;
