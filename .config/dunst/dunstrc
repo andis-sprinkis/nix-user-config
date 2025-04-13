@@ -1,23 +1,6 @@
 # vim: ft=cfg
-# See dunst(5) for all configuration options
 
 [global]
-    ### Display ###
-
-    # Which monitor should the notifications be displayed on.
-    monitor = 0
-
-    # Display notification on focused monitor.  Possible modes are:
-    #   mouse: follow mouse pointer
-    #   keyboard: follow window with keyboard focus
-    #   none: don't follow anything
-    #
-    # "keyboard" needs a window manager that exports the
-    # _NET_ACTIVE_WINDOW property.
-    # This should be the case for almost all modern window managers.
-    #
-    # If this option is set to mouse or keyboard, the monitor option
-    # will be ignored.
     follow = mouse
 
     ### Geometry ###
@@ -70,13 +53,6 @@
     # is set to 0 this option will be ignored.
     progress_bar_corners = all
 
-    # Corner radius for the icon image.
-    icon_corner_radius = 0
-
-    # Define which corners to round when drawing the icon image. If icon_corner_radius
-    # is set to 0 this option will be ignored.
-    icon_corners = all
-
     # Show how many messages are currently hidden (because of
     # notification_limit).
     indicate_hidden = yes
@@ -86,17 +62,9 @@
     # present (e.g. xcompmgr, compiz, etc.). (X11 only)
     transparency = 0
 
-    # Draw a line of "separator_height" pixel height between two
-    # notifications.
-    # Set to 0 to disable.
-    # If gap_size is greater than 0, this setting will be ignored.
     separator_height = 2
-
-    # Padding between text and separator.
-    padding = 12
-
-    # Horizontal padding.
-    horizontal_padding = 16
+    padding = 14
+    horizontal_padding = 18
 
     # Defines width in pixels of frame around the notification window.
     frame_width = 2
@@ -168,14 +136,6 @@
     # format = "<b>%s</b>\n%b"
     format = "<b>%a</b>\n%s\n%b"
 
-    # Alignment of message text.
-    # Possible values are "left", "center" and "right".
-    alignment = left
-
-    # Vertical alignment of message text and icon.
-    # Possible values are "top", "center" and "bottom".
-    vertical_alignment = center
-
     # Show age of message if message is older than show_age_threshold
     # seconds.
     # Set to -1 to disable.
@@ -206,7 +166,6 @@
     ### Misc/Advanced ###
 
     # dmenu path.
-    # dmenu = /usr/bin/dmenu -p dunst:
     dmenu = menu_desktop -p dunst:
 
     # Browser for opening urls in context menu.
