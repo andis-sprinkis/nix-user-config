@@ -1,15 +1,12 @@
 # vim: ft=cfg
 
 [global]
-
   follow = mouse
 
   ### Geometry ###
 
   # The width of the window, excluding the frame.
-  # dynamic width from 0 to 300
-  # width = (0, 300)
-  # constant width of 300
+  # dynamic width from 0 to 300 - width = (0, 300)
   width = 480
 
   # The height of a single notification, excluding the frame.
@@ -58,22 +55,10 @@
   # notification_limit).
   indicate_hidden = yes
 
-  # The transparency of the window.  Range: [0; 100].
-  # This option will only work if a compositing window manager is
-  # present (e.g. xcompmgr, compiz, etc.). (X11 only)
-  transparency = 0
-
   separator_height = 2
   padding = 14
   horizontal_padding = 18
-
-  # Defines width in pixels of frame around the notification window.
   frame_width = 2
-
-  # Size of gap to display between notifications - requires a compositor.
-  # If value is greater than 0, separator_height will be ignored and a border
-  # of size frame_width will be drawn around each notification instead.
-  # Click events on gaps do not currently propagate to applications below.
   gap_size = 0
 
   # Sort type.
@@ -89,7 +74,7 @@
   # Set to 0 to disable.
   # A client can set the 'transient' hint to bypass this. See the rules
   # section for how to disable this if necessary
-  # idle_threshold = 120
+  idle_threshold = 120
 
   ### Text ###
 
