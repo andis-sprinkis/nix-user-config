@@ -135,8 +135,8 @@ user_pref("media.videocontrols.picture-in-picture.video-toggle.always-show", tru
 user_pref("media.videocontrols.picture-in-picture.video-toggle.has-used", true);
 user_pref("middlemouse.contentLoadURL", false);
 user_pref("middlemouse.paste", false);
-user_pref("mousewheel.default.delta_multiplier_y", 325);
-user_pref("mousewheel.min_line_scroll_amount", 9);
+user_pref("mousewheel.default.delta_multiplier_y", 500);
+user_pref("mousewheel.min_line_scroll_amount", 5);
 user_pref("mousewheel.with_control.action", 3);
 user_pref("mousewheel.with_meta.action", 3);
 user_pref("network.IDN_show_punycode", true);
