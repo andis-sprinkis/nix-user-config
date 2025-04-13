@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 set -eu
 
-msg_usage="$(basename "$0") usage: no arguments (same as --area) OR [--all|--output|--window|--area|--stop] OR [--help|-h]"
+script="$(basename "$0")"
+msg_usage="${script} usage: no arguments (same as --area) OR [--all|--output|--window|--area|--stop] OR [--help|-h]"
 
 case "${1:-""}" in
   --help|-h)
@@ -92,6 +93,10 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
     esac
 
     i3blocks_signal
+
+    if [ "$(notify-send "Recording saved." "${path_out}" --app-name="${script}" --action="LOCATE=Locate" --wait)" ]; then
+      file_manager_desktop "$path_out"
+    fi
 
     printf '%s' "$path_out" | wl-copy
   }
