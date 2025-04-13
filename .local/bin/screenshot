@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 set -eu
 
-msg_usage="$(basename "$0") usage: no arguments (same as --all) OR [--all|--output|--window|--area] OR [--help|-h]"
+script="$(basename "$0")"
+msg_usage="${script} usage: no arguments (same as --all) OR [--all|--output|--window|--area] OR [--help|-h]"
 
 case "${1:-""}" in
   --help|-h)
@@ -14,6 +15,12 @@ path_dir="${HOME}/scr"
 path_out="${path_dir}/$(date "+%s").png"
 
 mkdir -p "$path_dir"
+
+notify_saved() {
+  if [ "$(notify-send "Screenshot saved." "${path_out}" --app-name="${script}" --action="LOCATE=Locate" --wait)" ]; then
+    file_manager_desktop "$path_out"
+  fi
+}
 
 if [ "${WAYLAND_DISPLAY:-""}" ]; then
   if [ "$(pidof "grim")" ] || [ "$(pidof "dulcepan")" ]; then
@@ -44,6 +51,9 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
   esac
 
   printf '%s' "$path_out" | wl-copy
+
+  notify_saved
+
   exit "0"
 fi
 
@@ -73,6 +83,9 @@ if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   esac
 
   printf '%s' "$path_out" | xclip -sel "clipboard"
+
+  notify_saved
+
   exit "0"
 fi
 

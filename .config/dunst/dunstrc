@@ -1,7 +1,7 @@
 # vim: ft=cfg
 
 [global]
-  follow = mouse
+  follow = keyboard
 
   ### Geometry ###
 

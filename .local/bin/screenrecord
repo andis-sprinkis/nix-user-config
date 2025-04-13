@@ -26,6 +26,12 @@ i3blocks_signal() {
   fi
 }
 
+notify_saved() {
+  if [ "$(notify-send "Screen-recording saved." "${path_out}" --app-name="${script}" --action="LOCATE=Locate" --wait)" ]; then
+    file_manager_desktop "$path_out"
+  fi
+}
+
 if [ "${WAYLAND_DISPLAY:-""}" ]; then
   if [ "${1:-""}" = "--stop" ]; then
     set +e
@@ -94,9 +100,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
 
     i3blocks_signal
 
-    if [ "$(notify-send "Recording saved." "${path_out}" --app-name="${script}" --action="LOCATE=Locate" --wait)" ]; then
-      file_manager_desktop "$path_out"
-    fi
+    notify_saved
 
     printf '%s' "$path_out" | wl-copy
   }
