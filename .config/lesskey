@@ -9,4 +9,4 @@ O shell open_with_menu_desktop ""%"" 1> /dev/null 2> /dev/null & disown \n
 x shell file_manager_desktop ""%"" 1> /dev/null 2> /dev/null & disown \n
 
 #env
-LESS = --LINE-NUMBERS --LONG-PROMPT --RAW-CONTROL-CHARS --clear-screen --HILITE-UNREAD --incsearch --ignore-case --jump-target=.5\$ --line-num-width=5\$ --mouse --status-column --tabs=2\$ --tilde --use-color --wheel-lines=3\$ --wordwrap --color=P-\$ --color=NK\$ --color=RK\$ --color=E-\$
+LESS = --LINE-NUMBERS --LONG-PROMPT --RAW-CONTROL-CHARS --clear-screen --HILITE-UNREAD --incsearch --ignore-case --jump-target=.5\$ --line-num-width=5\$ --mouse --status-column --tabs=2\$ --tilde --use-color --wheel-lines=6\$ --wordwrap --color=P-\$ --color=NK\$ --color=RK\$ --color=E-\$
