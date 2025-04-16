@@ -138,10 +138,6 @@ export JUPYTER_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/jupyter"
 # configure keras
 export KERAS_HOME="${XDG_STATE_HOME:-$HOME/.local/state}/keras"
 
-# configure less
-export LESSHISTFILE="-"
-export LESSOPEN="|previewer %s"
-
 # configure sqlite
 export SQLITE_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}/sqlite/history"
 
