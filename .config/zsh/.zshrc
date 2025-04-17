@@ -107,7 +107,7 @@
       unset timer
     fi
 
-    RPROMPT="%F{8}${tmout_status}${timeprompt}%D{%K:%M:%S}%(?. (%?%). %F{1}(%?%))%f"
+    RPROMPT="%F{8}%(1j.[%j] .)${tmout_status}${timeprompt}%D{%K:%M:%S}%(?. (%?%). %F{1}(%?%))%f"
   }
 
   ZLE_RPROMPT_INDENT="0"
