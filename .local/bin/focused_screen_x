@@ -1,48 +1,52 @@
-#!/usr/bin/perl
-# Returns identifier of X screen output where the mouse cursor is in.
-# Credit: from a StackOverflow anwser by user 'cas' - https://unix.stackexchange.com/a/677884
-# License: CC BY-SA 4.0 - https://creativecommons.org/licenses/by-sa/4.0/
+#!/usr/bin/env sh
+# Inspired by a StackOverflow anwser by user 'cas' - https://unix.stackexchange.com/a/677884
+set -eu
+IFS_="$IFS"
 
-use strict;
+mouseloc="$(xdotool getmouselocation)"
 
-my %M;    # hash to hold keys from 'xdotool getmouselocation --shell'
-my $pipe; # file handle for the pipes we're going to open
+m_x="${mouseloc##x:}"
+m_x="${m_x%% *}"
 
-# get the current cursor location into $M{X} and $M{Y}
-open($pipe, "-|", qw(xdotool getmouselocation --shell)) ||
-    die "couldn't open pipe from xdotool: $!\n";
+m_y="${mouseloc##*y:}"
+m_y="${m_y%% *}"
 
-while(<$pipe>) {
-  chomp;
-  my($key, $val) = split /=/;
-  $M{$key} = $val;
-};
-close($pipe);
+outputs="$(set +e; xrandr | grep " connected "; set -e)"
 
-# compare mouse location to monitor co-ordinates
-open($pipe, "-|", "xrandr") ||
-    die "couldn't open pipe from xrandr: $!\n";
+# Coordinates are on the fourth field on the primary display or on the third field on the non-primary displays:
+# DP-2 connected 1440x2560+2880+0 right (normal left inverted right x axis y axis) 530mm x 300mm
+# DP-1 connected primary 1440x2560+1440+0 right (normal left inverted right x axis y axis) 530mm x 300mm
 
-while(<$pipe>) {
-  my ($display, $width, $height, $x_offset, $y_offset);
+IFS="
+"
+for o in $outputs; do
+  IFS="$IFS_"
 
-  next unless m/ connected /;
-  my @F = split;
-  $display = $F[0];
+  o_name="${o%%" "*}"
 
-  # co-ordinates are on fourth field (F[3]) on the primary display
-  # or on third field (F[2]) on non-primary displays. Perl arrays
-  # start from zero, not one (same as in bash). 
-  if ($F[2] eq "primary") {
-    ($width, $height, $x_offset, $y_offset) = split /[x+]/, $F[3];
-  } else {
-    ($width, $height, $x_offset, $y_offset) = split /[x+]/, $F[2];
-  };
+  o_coords="${o##*" connected "}"
+  o_coords="${o_coords##"primary "}"
+  o_coords="${o_coords%%" "*}"
 
-  if ($M{X} >= $x_offset && $M{X} <= $width + $x_offset && 
-      $M{Y} >= $y_offset && $M{Y} <= $height + $y_offset) {
-    print "$display\n";
-    last;
-  };
-};
-close($pipe);
+  o_width="${o_coords%%"x"*}"
+
+  o_height="${o_coords##*"x"}"
+  o_height="${o_height%%"+"*}"
+
+  o_x_offset="${o_coords##"${o_width}x${o_height}+"}"
+  o_x_offset="${o_x_offset%%"+"*}"
+
+  o_y_offset="${o_coords##"${o_width}x${o_height}+${o_x_offset}+"}"
+
+  if   [ "$m_x" -ge "$o_x_offset" ] \
+    && [ "$m_x" -le "$((o_width + o_x_offset))" ] \
+    && [ "$m_y" -ge "$o_y_offset" ] \
+    && [ "$m_y" -le "$((o_height + o_y_offset))" ]
+  then
+    echo "$o_name"
+    exit "0"
+  fi
+done
+IFS="$IFS_"
+
+exit "1"
