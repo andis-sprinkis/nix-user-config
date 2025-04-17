@@ -3,7 +3,7 @@
 set -eu
 IFS_="$IFS"
 
-mouseloc="$(xdotool getmouselocation)"
+mouseloc="$(xdotool "getmouselocation")"
 
 m_x="${mouseloc##x:}"
 m_x="${m_x%% *}"
@@ -43,8 +43,7 @@ for o in $outputs; do
     && [ "$m_y" -ge "$o_y_offset" ] \
     && [ "$m_y" -le "$((o_height + o_y_offset))" ]
   then
-    echo "$o_name"
-    exit "0"
+    exec echo "$o_name"
   fi
 done
 IFS="$IFS_"
