@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 set -eu
+IFS_="$IFS"
 
 script="$(basename "$0")"
 msg_usage="${script} usage: no arguments (same as --all) OR [--all|--output|--window|--area] OR [--help|-h]"
@@ -63,11 +64,53 @@ if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
       maim -u "$path_out"
     ;;
     --output)
-      echo "Not implemented (X11): ${1:-""}" 1>&2
-      exit "4"
+      mouseloc="$(xdotool "getmouselocation")"
+
+      m_x="${mouseloc##x:}"
+      m_x="${m_x%% *}"
+
+      m_y="${mouseloc##*y:}"
+      m_y="${m_y%% *}"
+
+      outputs="$(set +e; xrandr | grep " connected "; set -e)"
+
+      o_coords=""
+
+      IFS="
+"
+      for o in $outputs; do
+        IFS="$IFS_"
+
+        # o_name="${o%%" "*}"
+
+        o_coords="${o##*" connected "}"
+        o_coords="${o_coords##"primary "}"
+        o_coords="${o_coords%%" "*}"
+
+        o_width="${o_coords%%"x"*}"
+
+        o_height="${o_coords##*"x"}"
+        o_height="${o_height%%"+"*}"
+
+        o_x_offset="${o_coords##"${o_width}x${o_height}+"}"
+        o_x_offset="${o_x_offset%%"+"*}"
+
+        o_y_offset="${o_coords##"${o_width}x${o_height}+${o_x_offset}+"}"
+
+        if   [ "$m_x" -ge "$o_x_offset" ] \
+          && [ "$m_x" -le "$((o_width + o_x_offset))" ] \
+          && [ "$m_y" -ge "$o_y_offset" ] \
+          && [ "$m_y" -le "$((o_height + o_y_offset))" ]
+        then
+          break
+        fi
+      done
+      IFS="$IFS_"
+
+      maim -u -g "$o_coords" "$path_out"
     ;;
     --window)
-      maim -u --window "$(xdotool getactivewindow)" "$path_out"
+      maim -u --window "$(xdotool "getactivewindow")" "$path_out"
     ;;
     --area)
       maim -u --select "$path_out"
