@@ -11,6 +11,7 @@ open_with_cmd() {
     IFS="$IFS_"
     $cmd "$f" 1> "/dev/null" 2> "/dev/null" & disown 
   done
+  IFS="$IFS_"
 
   exit "0"
 }
@@ -24,6 +25,7 @@ open_with_cmd_terminal() {
     $TERMINAL -e "$SHELL" -c "$cmd \"${f}\"
 echo \"(\$?) Press any key to exit\"; read" 1> "/dev/null" 2> "/dev/null" & disown
   done
+  IFS="$IFS_"
 
   exit "0"
 }
