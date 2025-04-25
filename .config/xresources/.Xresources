@@ -34,7 +34,7 @@ xterm*faceName: font_family_term
 xterm*faceSize: font_size
 xterm*cursorBlink: never
 
-Xcursor.size: 42
+Xcursor.size: 56
 
 XScreenSaver.timeout: 0:02:00
 XScreenSaver.cycle: 0:00:00
