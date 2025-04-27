@@ -23,8 +23,8 @@
   }
 
   #tabbrowser-tabs .tabbrowser-tab {
-    --tab-label-mask-size: 0.5em !important;
-    padding: 0 !important;
+    --tab-label-mask-size: 0.45em !important;
+    padding: 0 1px !important;
   }
 
   #tabbrowser-tabs .tabbrowser-tab:not(:focus-within, :hover) .tab-close-button {
