@@ -4,6 +4,10 @@
     --toolbarbutton-outer-padding: 2px !important;
   }
 
+  toolbar .toolbaritem-combined-buttons {
+    margin-inline: 0 !important;
+  }
+
   #urlbar-container {
     --urlbar-container-height: 30px !important;
   }
@@ -16,6 +20,11 @@
     & > :is(toolbarbutton, toolbaritem):first-child {
       padding-inline-start: 5px !important;
     }
+  }
+
+  #tabbrowser-tabs .tabbrowser-tab {
+    --tab-label-mask-size: 0.5em !important;
+    padding: 0 !important;
   }
 
   #tabbrowser-tabs .tabbrowser-tab:not(:focus-within, :hover) .tab-close-button {
