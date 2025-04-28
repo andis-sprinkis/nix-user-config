@@ -38,6 +38,7 @@ local M = {
     { key = 'Paste',    mods = 'NONE',       action = act.PasteFrom 'Clipboard' },
     { key = 'v',        mods = 'SHIFT|CTRL', action = act.PasteFrom 'Clipboard' },
     { key = '_',        mods = 'CTRL',       action = act.DecreaseFontSize },
+    -- { key = 'y',        mods = 'CMD',        action = wezterm.action.SpawnCommandInNewWindow },
   },
   mouse_bindings = {
     {
