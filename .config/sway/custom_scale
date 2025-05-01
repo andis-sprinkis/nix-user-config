@@ -3,6 +3,9 @@
 # SWAYSCALE_EXEC="ddd" SWAYSCALE_SCALE="2" SWAYSCALE_FONT_SIZE="6.75" sway -c "${XDG_CONFIG_HOME:-$HOME/.config}/sway/custom_scale"
 # See https://github.com/andis-sprinkis/swayscale
 
+for_window [class="Ddd" instance="^.*._popup"] floating enable
+seat seat0 xcursor_theme default 56
+
 gaps inner                    0
 gaps outer                    0
 smart_borders                 on
