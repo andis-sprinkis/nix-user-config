@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+set -eu
+
+swayscale "1" "/usr/bin/ddd" "$@"
