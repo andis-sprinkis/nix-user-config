@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 set -eu
-# ddd crashes with modern *.font directive format values defined in xrdb so we launch it on a seperate Xwayland $DISPLAY in a separate Sway instance instead
+# ddd crashes on startup with modern *.font directive format values defined in xrdb so we launch it on a seperate Xwayland $DISPLAY in a separate Sway instance instead.
 
 exec swayscale "1" "/usr/bin/ddd" "$@"
