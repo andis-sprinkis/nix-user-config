@@ -21,14 +21,15 @@ map <PageDown> scroll full-down
 map <PageUp> scroll full-up
 map = zoom in
 map C exec "zathura -P \"$PAGE\" -- \"$FILE\""
+map e exec "file_manager_desktop \"$FILE\""
+map p exec "pager_desktop \"$FILE\""
 map D scroll half-down
 map J zoom out
 map K zoom in
-map R rotate
 map U scroll half-up
 map b toggle_statusbar
 map d scroll full-down
 map g goto top
 map i recolor
-map r reload
+map R rotate
 map u scroll full-up

@@ -189,6 +189,7 @@ q = exit
 
 r = exec swayimg --config=general.mode=gallery "%" 1> "/dev/null" 2> "/dev/null" & disown
 e = exec file_manager_desktop "%" 1> "/dev/null" 2> "/dev/null" & disown
+p = exec pager_desktop "%" 1> "/dev/null" 2> "/dev/null" & disown
 
 # Mouse related
 ScrollLeft = step_right 5
@@ -245,3 +246,4 @@ ScrollDown = step_down
 
 r = exec swayimg --config=general.mode=gallery "%" 1> "/dev/null" 2> "/dev/null" & disown
 e = exec file_manager_desktop "%" 1> "/dev/null" 2> "/dev/null" & disown
+p = exec pager_desktop "%" 1> "/dev/null" 2> "/dev/null" & disown
