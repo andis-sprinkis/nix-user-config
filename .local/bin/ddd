@@ -1,10 +1,5 @@
 #!/usr/bin/env sh
 set -eu
+# ddd crashes with modern *.font directive format values defined in xrdb so we launch it on a seperate Xwayland $DISPLAY in a separate Sway instance instead
 
-if [ "${WAYLAND_DISPLAY:-""}" ]; then
-  exec swayscale "1" "/usr/bin/ddd" "$@"
-fi
-
-if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-  exec "/usr/bin/ddd" "$@"
-fi
+exec swayscale "1" "/usr/bin/ddd" "$@"
