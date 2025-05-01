@@ -1,4 +1,10 @@
 #!/usr/bin/env sh
 set -eu
 
-swayscale "1" "/usr/bin/ddd" "$@"
+if [ "${WAYLAND_DISPLAY:-""}" ]; then
+  exec swayscale "1" "/usr/bin/ddd" "$@"
+fi
+
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+  exec "/usr/bin/ddd" "$@"
+fi

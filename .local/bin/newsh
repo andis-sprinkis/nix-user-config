@@ -5,7 +5,7 @@ if [ -z "${1:-""}" ]; then
   exit "1"
 fi
 
-fpath="${1}"
+fpath="$1"
 
 if [ -e "$fpath" ]; then
   exit "2"
@@ -49,11 +49,11 @@ dircmd() {
   printf 'cd "%s"; ls "%s"' "$dirpath" "$fname"
 }
 
-if [ "$WAYLAND_DISPLAY" ] && [ "$(command -v "wl-copy")" ]; then
+if [ "${WAYLAND_DISPLAY:-""}" ] && [ "$(command -v "wl-copy")" ]; then
   dircmd | wl-copy
 fi
 
-if [ "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ] && [ "$(command -v "xclip")" ]; then
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && [ "$(command -v "xclip")" ]; then
   dircmd | xclip -sel "clipboard"
 fi
 
