@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=Data Display Debugger (scaled)
+Comment=Graphical debugger frontend
+Comment[fr]=Interface graphique pour débogueur
+Exec=swayscale 1 ddd
+Terminal=false
+Type=Application
+Icon=ddd
+Categories=Development;
