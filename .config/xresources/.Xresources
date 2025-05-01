@@ -1,9 +1,9 @@
 #include "xresources.d/theme/vscode_dark"
 
-#define font_family_term monospace
-#define font_family_gui sans-serif
-#define font_size 12
-#define font_style medium
+#define FONT_FAMILY_TERM monospace
+#define FONT_FAMILY_GUI sans-serif
+#define FONT_SIZE 12
+#define FONT_STYLE medium
 
 ! Xft/DPI in xrdb is the font resolution in DPI (dots/inch).
 ! The corresponding xsettingsd value is 1024*DPI.
@@ -28,10 +28,10 @@ Xft.dpi: 108
 Xft.rgba: rgb
 Xft.lcdfilter: lcddefault
 
-*.font: font_family_gui:style=font_style:size=font_size
+*.font: FONT_FAMILY_GUI:style=FONT_STYLE:size=FONT_SIZE
 
-xterm*faceName: font_family_term
-xterm*faceSize: font_size
+xterm*faceName: FONT_FAMILY_TERM
+xterm*faceSize: FONT_SIZE
 xterm*cursorBlink: never
 
 Xcursor.size: 56
