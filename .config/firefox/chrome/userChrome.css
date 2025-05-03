@@ -52,4 +52,13 @@
   #tabbrowser-tabs #tabbrowser-arrowscrollbox .tab-label-container {
     height: 2.5em !important;
   }
+
+  #sidebar-header {
+    padding: 4px 8px !important;
+    border-bottom: none !important;
+  }
+
+  #sidebar-search-container {
+    padding: 4px 8px !important;
+  }
 }
