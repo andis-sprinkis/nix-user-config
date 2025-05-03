@@ -6,14 +6,15 @@ set font "sans-serif regular 12"
 set guioptions ""
 set recolor true
 set recolor-keephue true
-set selection-notification false
+set scroll-full-overlap 0.15
+set scroll-step 128
 set selection-clipboard clipboard
+set selection-notification false
 set show-hidden true
+set show-signature-information true
 set statusbar-basename true
 set window-title-basename true
 set window-title-page true
-set scroll-full-overlap 0.15
-set show-signature-information true
 
 map + zoom default
 map - zoom out
