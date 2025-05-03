@@ -142,7 +142,7 @@ user_pref("media.videocontrols.picture-in-picture.video-toggle.has-used", true);
 user_pref("middlemouse.contentLoadURL", false);
 user_pref("middlemouse.paste", false);
 user_pref("mousewheel.default.delta_multiplier_x", 600);
-user_pref("mousewheel.default.delta_multiplier_y", 1200);
+user_pref("mousewheel.default.delta_multiplier_y", 900);
 user_pref("mousewheel.min_line_scroll_amount", 1);
 user_pref("mousewheel.with_control.action", 3);
 user_pref("mousewheel.with_meta.action", 3);
