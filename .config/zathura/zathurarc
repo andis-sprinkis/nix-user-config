@@ -31,5 +31,5 @@ map b toggle_statusbar
 map d scroll full-down
 map g goto top
 map i recolor
-map R rotate
+map R reload
 map u scroll full-up
