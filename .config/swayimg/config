@@ -192,8 +192,8 @@ e = exec file_manager_desktop "%" 1> "/dev/null" 2> "/dev/null" & disown
 Shift+p = exec pager_desktop "%" 1> "/dev/null" 2> "/dev/null" & disown
 
 # Mouse related
-ScrollLeft = step_right 5
-ScrollRight = step_left 5
+ScrollLeft = step_left 5
+ScrollRight = step_right 5
 ScrollUp = step_up 5
 ScrollDown = step_down 5
 Ctrl+ScrollUp = zoom +10
@@ -239,8 +239,8 @@ Shift+Delete = exec ""
 Escape = exit
 q = exit
 # Mouse related
-ScrollLeft = step_right
-ScrollRight = step_left
+ScrollLeft = step_left
+ScrollRight = step_right
 ScrollUp = step_up
 ScrollDown = step_down
 
