@@ -1,3 +1,4 @@
+# vi: ft=zathurarc
 # vscode light zathura colorscheme
 
 set default-bg                  "#ffffff"
