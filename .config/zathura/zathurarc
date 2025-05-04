@@ -15,6 +15,7 @@ set show-signature-information true
 set statusbar-basename true
 set window-title-basename true
 set window-title-page true
+set zoom-step 5
 
 map + zoom default
 map - zoom out
