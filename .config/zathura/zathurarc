@@ -31,7 +31,4 @@ map K zoom in
 map U scroll half-up
 map b toggle_statusbar
 map d scroll full-down
-map g goto top
-map i recolor
-map R reload
 map u scroll full-up
