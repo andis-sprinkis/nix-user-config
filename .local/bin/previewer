@@ -389,7 +389,7 @@ First ${bytes} bytes or less:"
 
     print_strings
   ;;
-  application/x-bittorrent|application/x-lz4+json)
+  application/x-bittorrent|application/x-lz4+json|application/x-mobipocket-ebook)
     print_mime
     print_strings
   ;;
