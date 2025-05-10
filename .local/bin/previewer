@@ -349,7 +349,11 @@ ${tables}
 
     if find_util "mountpoint"; then
       if mountpoint -q -- "$FPATH"; then
-        echo "Mount point"
+        dev="$(set +e; grep " ${FPATH} " "/proc/mounts" | cut -d" " -f1; set -e)"
+
+        if [ "$dev" ]; then
+          echo "Mount point for ${dev}"
+        fi
       fi
     fi
 
