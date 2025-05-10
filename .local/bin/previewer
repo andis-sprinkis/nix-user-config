@@ -347,24 +347,32 @@ ${tables}
   inode/directory)
     print_mime
 
-    if find_util "mountpoint"; then
-      if mountpoint -q -- "$FPATH"; then
-        dev="$(set +e; grep " ${FPATH} " "/proc/mounts" | cut -d" " -f1; set -e)"
+    if [ -r "$FPATH" ]; then
+      if find_util "mountpoint"; then
+        if mountpoint -q -- "$FPATH"; then
+          dev="$(set +e; grep " ${FPATH} " "/proc/mounts" | cut -d" " -f1; set -e)"
 
-        if [ "$dev" ]; then
-          echo "Mount point for ${dev}"
+          if [ "$dev" ]; then
+            printf "\x1b[0;1m%s\x1b[0m\n%s\n" "Mount point of:" "${dev}"
+          fi
         fi
       fi
+
+      echo
+
+      # shellcheck disable=SC2010
+      if ls --version 2> "/dev/null" | grep -q "GNU"; then
+        ls -lahAFNX --color=always --group-directories-first --time-style=long-iso "$FPATH"
+      else
+        ls -la "$FPATH"
+      fi
+    else
+      echo
+      echo "Read permission denied."
     fi
 
     echo
-
-    # shellcheck disable=SC2010
-    if ls --version 2> "/dev/null" | grep -q "GNU"; then
-      ls -lahAFNX --color=always --group-directories-first --time-style=long-iso "$FPATH"
-    else
-      ls -la "$FPATH"
-    fi
+    print_stat
   ;;
   inode/*)
     print_mime
