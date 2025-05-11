@@ -50,12 +50,12 @@ print_stat() {
 print_symlink() {
   if [ -L "$FPATH_INPUT" ]; then
     if [ ! -e "$FPATH" ]; then
-      printf "\x1b[0;31;1m%s\x1b[0m\n%s\n\n" "Broken symbolic link:" "${FPATH}"
+      printf "\x1b[0;31;1m%s\x1b[0m\n%s\n\n" "Broken symbolic link:" "$FPATH"
       print_stat
       exit
     fi
 
-    printf "\x1b[0;1m%s\x1b[0m\n%s\n\n" "Symbolic link:" "${FPATH}"
+    printf "\x1b[0;1m%s\x1b[0m\n%s\n\n" "Symbolic link:" "$FPATH"
   fi
 }
 
@@ -105,7 +105,7 @@ print_chafa() {
 
 print_als() {
   if find_util "als"; then
-    als --format="${1}" -- "$FPATH"
+    als --format="$1" -- "$FPATH"
   else
     return "1"
   fi

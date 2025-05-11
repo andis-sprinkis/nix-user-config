@@ -33,7 +33,7 @@
 
   # Set the progress bar height. This includes the frame, so make sure
   # it's at least twice as big as the frame width.
-  progress_bar_height = 10
+  progress_bar_height = 8
 
   # Set the frame width of the progress bar
   progress_bar_frame_width = 1
@@ -42,7 +42,7 @@
   progress_bar_min_width = 150
 
   # Set the maximum width for the progress bar
-  progress_bar_max_width = 300
+  progress_bar_max_width = 446
 
   # Corner radius for the progress bar. 0 disables rounded corners.
   progress_bar_corner_radius = 0
@@ -50,6 +50,8 @@
   # Define which corners to round when drawing the progress bar. If progress_bar_corner_radius
   # is set to 0 this option will be ignored.
   progress_bar_corners = all
+
+  progress_bar_horizontal_alignment = center
 
   # Show how many messages are currently hidden (because of
   # notification_limit).
@@ -366,13 +368,40 @@
   background = "#1f1f1fd0"
   foreground = "#d4d4d4"
   frame_color = "#808080d8"
+  highlight = "#808080d8"
 
 [urgency_normal]
   background = "#1f1f1fd0"
   foreground = "#d4d4d4"
   frame_color = "#608b4ed8"
+  highlight = "#608b4ed8"
 
 [urgency_critical]
   background = "#1f1f1fd0"
   foreground = "#d4d4d4"
   frame_color = "#f44747d8"
+  highlight = "#f44747d8"
+
+### vscode light colors ###
+
+# [global]
+#   frame_color = "#808080d8"
+#   separator_color = frame
+#
+# [urgency_low]
+#   background = "#ffffffd0"
+#   foreground = "#000000"
+#   frame_color = "#808080d8"
+#   highlight = "#808080d8"
+#
+# [urgency_normal]
+#   background = "#ffffffd0"
+#   foreground = "#000000"
+#   frame_color = "#008000d8"
+#   highlight = "#008000d8"
+#
+# [urgency_critical]
+#   background = "#ffffffd0"
+#   foreground = "#000000"
+#   frame_color = "#c72e0fd8"
+#   highlight = "#c72e0fd8"
