@@ -59,7 +59,23 @@ if (wezterm.target_triple == 'aarch64-apple-darwin' or wezterm.target_triple == 
   --   {
   --     key = 'Enter',
   --     mods = 'CMD',
-  --     action = wezterm.action.SpawnCommandInNewWindow,
+  --     action = act.SpawnCommandInNewWindow,
+  --   }
+  -- )
+  -- table.insert(
+  --   M.keys,
+  --   {
+  --     key = 'v',
+  --     mods = 'SHIFT|CMD',
+  --     action = act.PasteFrom 'Clipboard',
+  --   }
+  -- )
+  -- table.insert(
+  --   M.keys,
+  --   {
+  --     key = 'c',
+  --     mods = 'SHIFT|CMD',
+  --     action = act.CopyFrom 'Clipboard',
   --   }
   -- )
   table.insert(
