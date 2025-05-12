@@ -57,7 +57,7 @@ if (wezterm.target_triple == 'aarch64-apple-darwin' or wezterm.target_triple == 
   -- table.insert(
   --   M.keys,
   --   {
-  --     key = 'y',
+  --     key = 'Enter',
   --     mods = 'CMD',
   --     action = wezterm.action.SpawnCommandInNewWindow,
   --   }
