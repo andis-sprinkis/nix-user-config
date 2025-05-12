@@ -9,7 +9,7 @@ local M = {
   font_size = cfg_local_status and cfg_local['font_size'] or (os.getenv("WAYLAND_DISPLAY") and 13.5 or 12),
   font = wezterm.font_with_fallback({
     { family = 'Cascadia Code PL', harfbuzz_features = harfbuzz_features },
-    { family = 'monospace', harfbuzz_features = harfbuzz_features },
+    { family = 'monospace',        harfbuzz_features = harfbuzz_features },
   }),
   adjust_window_size_when_changing_font_size = false,
   color_scheme = 'vscode-dark',
@@ -38,7 +38,6 @@ local M = {
     { key = 'Paste',    mods = 'NONE',       action = act.PasteFrom 'Clipboard' },
     { key = 'v',        mods = 'SHIFT|CTRL', action = act.PasteFrom 'Clipboard' },
     { key = '_',        mods = 'CTRL',       action = act.DecreaseFontSize },
-    -- { key = 'y',        mods = 'CMD',        action = wezterm.action.SpawnCommandInNewWindow },
   },
   mouse_bindings = {
     {
@@ -55,6 +54,14 @@ local M = {
 }
 
 if (wezterm.target_triple == 'aarch64-apple-darwin' or wezterm.target_triple == 'x86_64-apple-darwin') then
+  -- table.insert(
+  --   M.keys,
+  --   {
+  --     key = 'y',
+  --     mods = 'CMD',
+  --     action = wezterm.action.SpawnCommandInNewWindow,
+  --   }
+  -- )
   table.insert(
     M.mouse_bindings,
     {
