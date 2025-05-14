@@ -54,9 +54,9 @@ local M = {
 }
 
 if (wezterm.target_triple == 'aarch64-apple-darwin' or wezterm.target_triple == 'x86_64-apple-darwin') then
-  -- table.insert(M.keys, { key = 'Enter', mods = 'CMD',       action = act.SpawnCommandInNewWindow })
-  -- table.insert(M.keys, { key = 'v',     mods = 'SHIFT|CMD', action = act.PasteFrom 'Clipboard' })
-  -- table.insert(M.keys, { key = 'c',     mods = 'SHIFT|CMD', action = act.CopyFrom 'Clipboard' })
+  table.insert(M.keys, { key = 'Enter', mods = 'CMD',       action = act.SpawnCommandInNewWindow })
+  table.insert(M.keys, { key = 'v',     mods = 'SHIFT|CMD', action = act.PasteFrom 'Clipboard' })
+  table.insert(M.keys, { key = 'c',     mods = 'SHIFT|CMD', action = act.CopyTo 'Clipboard' })
 
   table.insert(
     M.mouse_bindings,
