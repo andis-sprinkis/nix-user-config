@@ -54,15 +54,13 @@ if [ "$#" -eq "0" ]; then
     fi
   done
 else
-  args_count="$#"
-  while [ "$args_count" -gt "0" ]; do
+  while [ "$#" -gt "0" ]; do
     if [ "$1" ]; then
       file_list="${file_list:+"$file_list"
 }${1}"
     fi
 
     shift
-    args_count="$((args_count - "1"))"
   done
 fi
 
