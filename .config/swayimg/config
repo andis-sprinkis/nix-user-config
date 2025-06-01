@@ -84,6 +84,8 @@ loop = no
 recursive = no
 # Open all files in the directory of the specified file (yes/no)
 all = yes
+# Enable file system monitoring for adding new images to the list (yes/no)
+fsmon = yes
 
 ################################################################################
 # Font configuration
