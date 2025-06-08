@@ -62,7 +62,7 @@ pstore = yes
 # Fill the entire tile with thumbnail (yes/no)
 fill = no
 # Anti-aliasing mode for thumbnails (none/box/bilinear/bicubic/mks13)
-antialiasing = none
+antialiasing = bilinear
 # Background color of the window (RGBA)
 window = #000000ff
 # Background color of the tile (RGBA)
