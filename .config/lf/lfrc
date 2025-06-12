@@ -141,12 +141,7 @@ cmd reopen-lf-desktop ${{
   nohup $TERMINAL -e "$SHELL" -c "lf -command select \"$f\"" 0</dev/null 1>/dev/null 2>/dev/null &
 }}
 
-cmd on-cd &{{
-  printf "\033]0;${PWD}\007" > /dev/tty
-}}
-on-cd
-
-cmd on-redraw &{{
+cmd set-ratios &{{
   call() { exec lf -remote "send ${id} set ratios ${1}"; }
 
   if [ "$lf_width" -le "35"  ]; then call "100:1";    fi
@@ -156,9 +151,74 @@ cmd on-redraw &{{
                                      call "1:2:4:7:8"
 }}
 
-cmd on-init on-redraw
+set user_quitaftersec 5400
+set user_quittimestamp ""
+set user_quittimerpid ""
 
-cmd ratios %{{
+cmd quit-if-tmout &{{
+  if [ "${lf_user_quittimestamp:-""}" ] && [ "$lf_user_quittimestamp" -le "$(date "+%s")" ] && [ "$lf_mode" = "normal" ]; then
+    exec lf -remote "send ${id} quit"
+  fi
+
+  (
+    sleep "$lf_user_quitaftersec"
+    lf -remote "send ${id} quit-if-tmout"
+  ) 1> "/dev/null" 2> "/dev/null" & disown
+}}
+
+cmd inc-quit-tmout &{{
+  if [ "${lf_user_quittimerpid:-""}" ]; then
+    set +e; kill -9 "$lf_user_quittimerpid"; set -e
+  fi
+
+  lf -remote "send ${id} set user_quittimestamp $(($(date "+%s") + lf_user_quitaftersec))"
+
+  (
+    sleep "$lf_user_quitaftersec"
+    lf -remote "send ${id} quit-if-tmout"
+  ) 1> "/dev/null" 2> "/dev/null" & disown
+}}
+
+cmd on-init &{{
+  lf -remote "send ${id} on-redraw"
+  lf -remote "send ${id} inc-quit-tmout"
+  lf -remote "send ${id} set-ratios"
+  printf "\033]0;${PWD}\007" > /dev/tty
+}}
+
+cmd on-select &{{
+  lf -remote "send ${id} inc-quit-tmout"
+}}
+
+cmd pre-cd &{{
+  lf -remote "send ${id} inc-quit-tmout"
+}}
+
+cmd on-cd &{{
+  printf "\033]0;${PWD}\007" > /dev/tty
+
+  lf -remote "send ${id} inc-quit-tmout"
+}}
+
+cmd on-focus-gained &{{
+  lf -remote "send ${id} inc-quit-tmout"
+}}
+
+cmd on-focus-lost &{{
+  lf -remote "send ${id} inc-quit-tmout"
+}}
+
+cmd on-quit &{{
+  if [ "${lf_user_quittimerpid:-""}" ]; then
+    kill -9 "$lf_user_quittimerpid"
+  fi
+}}
+
+cmd on-redraw &{{
+  lf -remote "send ${id} set-ratios"
+}}
+
+cmd inc-dec-ratios %{{
   IFS_="$IFS"
   ratios="100:1 1:2 2:4:4 1:3:5:5 1:2:4:6:8"
   r_new=""
@@ -223,9 +283,9 @@ map <m-6> updir
 map <m-7> open
 map <m-left> updir
 map <m-right> open
-map + ratios +
-map = ratios +
-map - ratios -
+map + inc-dec-ratios +
+map = inc-dec-ratios +
+map - inc-dec-ratios -
 map O open-with-menu-desktop
 map W reopen-lf-desktop
 map P push :paste-to-file<space>
