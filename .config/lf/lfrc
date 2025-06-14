@@ -151,7 +151,7 @@ cmd set-ratios &{{
                                      call "1:2:4:7:8"
 }}
 
-set user_quitseconds "90"
+set user_quitseconds "600"
 set user_quittimerpid ""
 set user_quittimercallerpid ""
 
