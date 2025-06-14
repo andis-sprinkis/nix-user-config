@@ -12,7 +12,7 @@ sleeper() {
   trap '# echo "Timer reset (${reset_sig})"
   elapsed="$((-tick))"' "$reset_sig"
 
-  echo "${elapsed} / $target"
+  # echo "${elapsed} / $target"
 
   while [ "$elapsed" -lt "$target" ]; do
     sleep "$tick" &
@@ -46,7 +46,7 @@ lf -remote "send ${id} set user_quittimerpid ${!}"
 
 trap 'kill -9 "$sleeper_pid"' INT TERM QUIT
 
-trap 'echo "
-Exiting timer..."' EXIT
+# trap 'echo "
+# Exiting timer..."' EXIT
 
 wait "$!"
