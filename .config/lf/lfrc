@@ -151,72 +151,30 @@ cmd set-ratios &{{
                                      call "1:2:4:7:8"
 }}
 
-set user_quitaftersec 5400
-set user_quittimestamp ""
-set user_quittimerpid ""
-
-cmd quit-if-tmout &{{
-  if [ "${lf_user_quittimestamp:-""}" ] && [ "$lf_user_quittimestamp" -le "$(date "+%s")" ] && [ "$lf_mode" = "normal" ]; then
-    exec lf -remote "send ${id} quit"
-  fi
-
-  (
-    lf -remote "send ${id} set user_quittimerpid ${$}"
-    sleep "$lf_user_quitaftersec"
-    lf -remote "send ${id} quit-if-tmout"
-  ) 1> "/dev/null" 2> "/dev/null" & disown
-}}
-
-cmd inc-quit-tmout &{{
-  if [ "${lf_user_quittimerpid:-""}" ]; then
-    set +e; kill -9 "$lf_user_quittimerpid"; set -e
-  fi
-
-  lf -remote "send ${id} set user_quittimestamp $(($(date "+%s") + lf_user_quitaftersec))"
-
-  (
-    lf -remote "send ${id} set user_quittimerpid ${$}"
-    sleep "$lf_user_quitaftersec"
-    lf -remote "send ${id} quit-if-tmout"
-  ) 1> "/dev/null" 2> "/dev/null" & disown
-
-  # save $! pid and send signal to the same process ?
-}}
-
 cmd on-init &{{
   lf -remote "send ${id} on-redraw"
-  # lf -remote "send ${id} inc-quit-tmout"
   lf -remote "send ${id} set-ratios"
   printf "\033]0;${PWD}\007" > /dev/tty
 }}
 
-cmd on-select &{{
-  # lf -remote "send ${id} inc-quit-tmout"
-}}
+# cmd on-select &{{
+# }}
 
-cmd pre-cd &{{
-  # lf -remote "send ${id} inc-quit-tmout"
-}}
+# cmd pre-cd &{{
+# }}
 
 cmd on-cd &{{
   printf "\033]0;${PWD}\007" > /dev/tty
-
-  # lf -remote "send ${id} inc-quit-tmout"
 }}
 
-cmd on-focus-gained &{{
-  # lf -remote "send ${id} inc-quit-tmout"
-}}
+# cmd on-focus-gained &{{
+# }}
 
-cmd on-focus-lost &{{
-  # lf -remote "send ${id} inc-quit-tmout"
-}}
+# cmd on-focus-lost &{{
+# }}
 
-cmd on-quit &{{
-  # if [ "${lf_user_quittimerpid:-""}" ]; then
-  #   kill -9 "$lf_user_quittimerpid"
-  # fi
-}}
+# cmd on-quit &{{
+# }}
 
 cmd on-redraw &{{
   lf -remote "send ${id} set-ratios"
