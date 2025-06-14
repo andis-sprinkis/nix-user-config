@@ -151,30 +151,45 @@ cmd set-ratios &{{
                                      call "1:2:4:7:8"
 }}
 
+set user_quitseconds "90"
+set user_quittimerpid ""
+set user_quittimercallerpid ""
+
 cmd on-init &{{
   lf -remote "send ${id} on-redraw"
   lf -remote "send ${id} set-ratios"
   printf "\033]0;${PWD}\007" > /dev/tty
+
+  "${XDG_DATA_HOME:-$HOME/.local/share}/lf/quit_timer" 1> "/dev/null" 2> "/dev/null" & disown
 }}
 
-# cmd on-select &{{
-# }}
+cmd on-select &{{
+  kill -USR1 "$lf_user_quittimerpid"
+}}
 
-# cmd pre-cd &{{
-# }}
+cmd pre-cd &{{
+  kill -USR1 "$lf_user_quittimerpid"
+}}
 
 cmd on-cd &{{
   printf "\033]0;${PWD}\007" > /dev/tty
+  kill -USR1 "$lf_user_quittimerpid"
 }}
 
-# cmd on-focus-gained &{{
-# }}
+cmd on-focus-gained &{{
+  kill -USR1 "$lf_user_quittimerpid"
+}}
 
-# cmd on-focus-lost &{{
-# }}
+cmd on-focus-lost &{{
+  kill -USR1 "$lf_user_quittimerpid"
+}}
 
-# cmd on-quit &{{
-# }}
+cmd on-quit &{{
+  set +e
+  kill -9 "$lf_user_quittimercallerpid"
+  kill -9 "$lf_user_quittimerpid"
+  set -e
+}}
 
 cmd on-redraw &{{
   lf -remote "send ${id} set-ratios"
