@@ -1,0 +1,52 @@
+#!/usr/bin/env sh
+
+lf -remote "send ${id} set user_quittimercallerpid ${$}"
+
+tick="1"
+target="$lf_user_quitseconds"
+reset_sig="USR1"
+
+sleeper() {
+  elapsed="0"
+
+  trap '# echo "Timer reset (${reset_sig})"
+  elapsed="$((-tick))"' "$reset_sig"
+
+  echo "${elapsed} / $target"
+
+  while [ "$elapsed" -lt "$target" ]; do
+    sleep "$tick" &
+    wait "$!"
+    elapsed="$((elapsed + tick))"
+    # echo "${elapsed} / $target"
+  done
+
+  lf -remote "send ${id} quit"
+}
+
+sleeper &
+
+sleeper_pid="$!"
+
+lf -remote "send ${id} set user_quittimerpid ${!}"
+
+# echo "Timer started.
+# "
+# echo "Timer PID: ${!}
+# Reset signal: ${reset_sig}
+#
+# Tick: ${tick}
+# Target: ${target}
+#
+# Reset command:
+# kill -${reset_sig} ${!}
+#
+# Caller PID: ${$}
+# "
+
+trap 'kill -9 "$sleeper_pid"' INT TERM QUIT
+
+trap 'echo "
+Exiting timer..."' EXIT
+
+wait "$!"
