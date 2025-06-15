@@ -160,8 +160,8 @@ set user_quittimerpid ""
 set user_quittimercallerpid ""
 
 cmd on-init &{{
-  lf -remote "send ${id} on-redraw"
   lf -remote "send ${id} set-ratios"
+  lf -remote "send ${id} on-redraw"
   lf -remote "send ${id} tty-write \"\033]0;${PWD}\007\""
 
   "${XDG_DATA_HOME:-$HOME/.local/share}/lf/quittimer" 1> "/dev/null" 2> "/dev/null" & disown
