@@ -12,16 +12,57 @@ sleeper() {
   trap '# echo "Timer reset (${reset_sig})"
   elapsed="$((-tick))"' "$reset_sig"
 
-  # echo "${elapsed} / $target"
+  # echo "${elapsed} / ${target}"
 
-  while [ "$elapsed" -lt "$target" ]; do
-    sleep "$tick" &
-    wait "$!"
-    elapsed="$((elapsed + tick))"
-    # echo "${elapsed} / $target"
+  while true; do
+    while [ "$elapsed" -lt "$target" ]; do
+      sleep "$tick" &
+      wait "$!"
+      elapsed="$((elapsed + tick))"
+      # echo "${elapsed} / ${target}"
+    done
+
+    # Try to quit.
+    result="$(lf -remote "send ${id} quit")"
+    status="$?"
+
+    # Non-zero exit code. Probably cannot cannot find the socket. Assume the server has quit.
+    if [ "$status" != "0" ]; then
+      exit
+    fi
+
+    # 'listen: send: no such client id is connected' - client has quit.
+    if [ "$result" = "listen: send: no such client id is connected" ]; then
+      exit
+    fi
+
+    # Give client 1s to quit
+    sleep "1"
+
+    # Check if the client is still running.
+    result="$(lf -remote "send ${id}")"
+    status="$?"
+
+    # Non-zero exit code. Probably cannot cannot find the socket. Assume the server has quit.
+    if [ "$status" != "0" ]; then
+      exit
+    fi
+
+    # 'listen: send: no such client id is connected' - client has quit.
+    if [ "$result" = "listen: send: no such client id is connected" ]; then
+      exit
+    fi
+
+    # Client hasn't quit. File operation like 'quit: copy operation in progress'? Reset the timer.
+    # (No stdout for -remote)
+    if [ "$result" = "" ]; then
+      elapsed="0"
+      continue
+    fi
+
+    # Something went wrong
+    exit "5"
   done
-
-  lf -remote "send ${id} quit"
 }
 
 sleeper &
