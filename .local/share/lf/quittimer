@@ -1,5 +1,17 @@
 #!/usr/bin/env sh
-lf -remote "send ${id} set user_quittimercallerpid ${$}"
+
+lf_send() {
+  result="$(lf -remote "send ${id} ${1:-""}")"
+  status="$?"
+
+  if [ "$status" != "0" ] || [ "$result" = "listen: send: no such client id is connected" ]; then
+    exit
+  fi
+
+  echo "$result"
+}
+
+lf_send "set user_quittimercallerpid ${$}"
 
 tick="1"
 target="${lf_user_quittimersec:-"1800"}"
@@ -8,89 +20,41 @@ reset_sig="USR1"
 sleeper() {
   elapsed="0"
 
-  trap '# echo "Timer reset (${reset_sig})"
-  elapsed="$((-tick))"' "$reset_sig"
-
-  # echo "${elapsed} / ${target}"
+  trap 'elapsed="$((-tick))"' "$reset_sig"
 
   while true; do
     while [ "$elapsed" -lt "$target" ]; do
       sleep "$tick" &
       wait "$!"
       elapsed="$((elapsed + tick))"
-      # echo "${elapsed} / ${target}"
     done
 
     # Try to quit.
     # Reset the timer if the lf mode is not 'normal' or the timer has been explicitly unset after on-init.
-    result="$(lf -remote "send ${id} &if [ \"\$lf_user_quittimer\" = \"1\" ] && [ \"\$lf_user_quittimersec\" ] && [ \"\$lf_user_quittimersec\" -gt \"0\" ] && [ \"\$lf_mode\" = \"normal\" ]; then lf -remote \"send \${id} quit\"; else kill -${reset_sig} \"\${lf_user_quittimerpid}\"; fi")"
-
-    status="$?"
-
-    # Non-zero exit code. Probably cannot cannot find the socket. Assume the server has quit.
-    if [ "$status" != "0" ]; then
-      exit
-    fi
-
-    # 'listen: send: no such client id is connected' - client has quit.
-    if [ "$result" = "listen: send: no such client id is connected" ]; then
-      exit
-    fi
+    lf_send "&if [ \"\$lf_user_quittimer\" = \"1\" ] && [ \"\$lf_user_quittimersec\" ] && [ \"\$lf_user_quittimersec\" -gt \"0\" ] && [ \"\$lf_mode\" = \"normal\" ]; then lf -remote \"send \${id} quit\"; else kill -${reset_sig} \"\${lf_user_quittimerpid}\"; fi"
 
     # Give client 1s to quit or reset the timer
     sleep "1"
 
-    # Check if the client is still running.
-    result="$(lf -remote "send ${id}")"
-    status="$?"
+    if [ -z "$(lf_send)" ]; then
+      # No stdout for -remote - the client hasn't quit.
+      # An active file operation ('quit: copy operation in progress') or client is in non-'normal' mode.
+      # Reset the timer.
 
-    # Non-zero exit code. Probably cannot cannot find the socket. Assume the server has quit.
-    if [ "$status" != "0" ]; then
-      exit
-    fi
-
-    # 'listen: send: no such client id is connected' - client has quit.
-    if [ "$result" = "listen: send: no such client id is connected" ]; then
-      exit
-    fi
-
-    # Client hasn't quit.
-    # File operation like 'quit: copy operation in progress' or non-'normal' mode.
-    # Reset the timer.
-    # (No stdout for -remote)
-    if [ -z "$result" ]; then
       elapsed="0"
       continue
     fi
 
-    # Something went wrong
+    # Something went wrong.
     exit "5"
   done
 }
 
 sleeper &
-
 sleeper_pid="$!"
 
-lf -remote "send ${id} set user_quittimerpid ${!}"
-
-# echo "Timer started.
-# "
-# echo "Timer PID: ${!}
-# Reset signal: ${reset_sig}
-#
-# Tick: ${tick}
-# Target: ${target}
-#
-# Reset command:
-# kill -${reset_sig} ${!}
-#
-# Caller PID: ${$}
-# "
+lf_send "set user_quittimerpid ${!}"
 
 trap 'kill -9 "$sleeper_pid"' INT TERM QUIT
-
-# trap 'echo "
-# Exiting timer..."' EXIT
 
 wait "$!"
