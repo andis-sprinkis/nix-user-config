@@ -15,6 +15,10 @@ set tabstop 2
 set wrapscroll
 
 cmd open ${{
+  set +e
+  kill -USR1 "$lf_user_quittimerpid"
+  set -e
+
   IFS="
 "
   mime="$(file --mime-type --brief "$(readlink -f "$f")")"
@@ -151,14 +155,14 @@ cmd set-ratios &{{
                                      call "1:2:4:7:8"
 }}
 
-set user_quittimer "5" # Can be set and unset during the client runtime
+set user_quittimer "1800" # Can be set and unset during the client runtime
 set user_quittimerpid ""
 set user_quittimercallerpid ""
 
 cmd on-init &{{
   lf -remote "send ${id} on-redraw"
   lf -remote "send ${id} set-ratios"
-  printf "\033]0;${PWD}\007" > /dev/tty
+  lf -remote "send ${id} tty-write \"\033]0;${PWD}\007\""
 
   "${XDG_DATA_HOME:-$HOME/.local/share}/lf/quittimer" 1> "/dev/null" 2> "/dev/null" & disown
 }}
@@ -172,17 +176,17 @@ cmd pre-cd &{{
 }}
 
 cmd on-cd &{{
-  printf "\033]0;${PWD}\007" > /dev/tty
-  kill -USR1 "$lf_user_quittimerpid"
+  lf -remote "send ${id} tty-write \"\033]0;${PWD}\007\""
+  # kill -USR1 "$lf_user_quittimerpid"
 }}
 
-cmd on-focus-gained &{{
-  kill -USR1 "$lf_user_quittimerpid"
-}}
+# cmd on-focus-gained &{{
+#   kill -USR1 "$lf_user_quittimerpid"
+# }}
 
-cmd on-focus-lost &{{
-  kill -USR1 "$lf_user_quittimerpid"
-}}
+# cmd on-focus-lost &{{
+#   kill -USR1 "$lf_user_quittimerpid"
+# }}
 
 cmd on-quit &{{
   set +e
