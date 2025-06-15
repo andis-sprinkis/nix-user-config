@@ -1,9 +1,12 @@
 #!/usr/bin/env sh
+if [ -z "${lf_user_quittimer:-""}" ] || [ "${lf_user_quittimer:-""}" -le "0" ]; then
+  exit 1
+fi
 
 lf -remote "send ${id} set user_quittimercallerpid ${$}"
 
 tick="1"
-target="$lf_user_quitseconds"
+target="$lf_user_quittimer"
 reset_sig="USR1"
 
 sleeper() {
@@ -22,8 +25,9 @@ sleeper() {
       # echo "${elapsed} / ${target}"
     done
 
-    # Try to quit if mode is 'normal'. Or reset the timer if the mode is not 'normal'.
-    result="$(lf -remote "send ${id} &if [ \"\$lf_mode\" = \"normal\" ]; then lf -remote \"send \${id} quit\"; else kill -${reset_sig} \"\${lf_user_quittimerpid}\"; fi")"
+    # Try to quit.
+    # Reset the timer if the lf mode is not 'normal' or the timer has been explicitly unset after on-init.
+    result="$(lf -remote "send ${id} &if [ \"\$lf_user_quittimer\" ] && [ \"\$lf_user_quittimer\" -gt \"0\" ] && [ \"\$lf_mode\" = \"normal\" ]; then lf -remote \"send \${id} quit\"; else kill -${reset_sig} \"\${lf_user_quittimerpid}\"; fi")"
 
     status="$?"
 

@@ -151,7 +151,7 @@ cmd set-ratios &{{
                                      call "1:2:4:7:8"
 }}
 
-set user_quitseconds "600"
+set user_quittimer "5" # Can be set and unset during the client runtime
 set user_quittimerpid ""
 set user_quittimercallerpid ""
 
@@ -160,7 +160,7 @@ cmd on-init &{{
   lf -remote "send ${id} set-ratios"
   printf "\033]0;${PWD}\007" > /dev/tty
 
-  "${XDG_DATA_HOME:-$HOME/.local/share}/lf/quit_timer" 1> "/dev/null" 2> "/dev/null" & disown
+  "${XDG_DATA_HOME:-$HOME/.local/share}/lf/quittimer" 1> "/dev/null" 2> "/dev/null" & disown
 }}
 
 cmd on-select &{{
