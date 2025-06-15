@@ -1,12 +1,8 @@
 #!/usr/bin/env sh
-if [ -z "${lf_user_quittimer:-""}" ] || [ "${lf_user_quittimer:-""}" -le "0" ]; then
-  exit 1
-fi
-
 lf -remote "send ${id} set user_quittimercallerpid ${$}"
 
 tick="1"
-target="$lf_user_quittimer"
+target="${lf_user_quittimersec:-"1800"}"
 reset_sig="USR1"
 
 sleeper() {
@@ -27,7 +23,7 @@ sleeper() {
 
     # Try to quit.
     # Reset the timer if the lf mode is not 'normal' or the timer has been explicitly unset after on-init.
-    result="$(lf -remote "send ${id} &if [ \"\$lf_user_quittimer\" ] && [ \"\$lf_user_quittimer\" -gt \"0\" ] && [ \"\$lf_mode\" = \"normal\" ]; then lf -remote \"send \${id} quit\"; else kill -${reset_sig} \"\${lf_user_quittimerpid}\"; fi")"
+    result="$(lf -remote "send ${id} &if [ \"\$lf_user_quittimer\" = \"1\" ] && [ \"\$lf_user_quittimersec\" ] && [ \"\$lf_user_quittimersec\" -gt \"0\" ] && [ \"\$lf_mode\" = \"normal\" ]; then lf -remote \"send \${id} quit\"; else kill -${reset_sig} \"\${lf_user_quittimerpid}\"; fi")"
 
     status="$?"
 
@@ -62,7 +58,7 @@ sleeper() {
     # File operation like 'quit: copy operation in progress' or non-'normal' mode.
     # Reset the timer.
     # (No stdout for -remote)
-    if [ "$result" = "" ]; then
+    if [ -z "$result" ]; then
       elapsed="0"
       continue
     fi
