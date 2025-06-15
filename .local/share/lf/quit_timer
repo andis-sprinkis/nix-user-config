@@ -22,8 +22,9 @@ sleeper() {
       # echo "${elapsed} / ${target}"
     done
 
-    # Try to quit.
-    result="$(lf -remote "send ${id} quit")"
+    # Try to quit if mode is 'normal'. Or reset the timer if the mode is not 'normal'.
+    result="$(lf -remote "send ${id} &if [ \"\$lf_mode\" = \"normal\" ]; then lf -remote \"send \${id} quit\"; else kill -${reset_sig} \"\${lf_user_quittimerpid}\"; fi")"
+
     status="$?"
 
     # Non-zero exit code. Probably cannot cannot find the socket. Assume the server has quit.
@@ -36,7 +37,7 @@ sleeper() {
       exit
     fi
 
-    # Give client 1s to quit
+    # Give client 1s to quit or reset the timer
     sleep "1"
 
     # Check if the client is still running.
@@ -53,7 +54,9 @@ sleeper() {
       exit
     fi
 
-    # Client hasn't quit. File operation like 'quit: copy operation in progress'? Reset the timer.
+    # Client hasn't quit.
+    # File operation like 'quit: copy operation in progress' or non-'normal' mode.
+    # Reset the timer.
     # (No stdout for -remote)
     if [ "$result" = "" ]; then
       elapsed="0"
