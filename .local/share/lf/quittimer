@@ -17,7 +17,7 @@ tick="1"
 target="${lf_user_quittimersec:-"1800"}"
 reset_sig="USR1"
 
-sleeper() {
+(
   elapsed="0"
 
   trap 'elapsed="$((-tick))"' "$reset_sig"
@@ -48,9 +48,8 @@ sleeper() {
     # Something went wrong.
     exit "5"
   done
-}
+) &
 
-sleeper &
 sleeper_pid="$!"
 
 lf_send "set user_quittimerpid ${!}"
