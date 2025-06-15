@@ -165,7 +165,7 @@ cmd on-init &{{
   lf -remote "send ${id} on-redraw"
   lf -remote "send ${id} tty-write \"\033]0;${PWD}\007\""
 
-  "${XDG_DATA_HOME:-$HOME/.local/share}/lf/quittimer" 1> "/dev/null" 2> "/dev/null" & disown
+  "${XDG_DATA_HOME:-"$HOME/.local/share"}/lf/quittimer" 1> "/dev/null" 2> "/dev/null" & disown
 }}
 
 cmd on-select &{{
@@ -178,16 +178,7 @@ cmd pre-cd &{{
 
 cmd on-cd &{{
   lf -remote "send ${id} tty-write \"\033]0;${PWD}\007\""
-  # kill -USR1 "$lf_user_quittimerpid"
 }}
-
-# cmd on-focus-gained &{{
-#   kill -USR1 "$lf_user_quittimerpid"
-# }}
-
-# cmd on-focus-lost &{{
-#   kill -USR1 "$lf_user_quittimerpid"
-# }}
 
 cmd on-quit &{{
   set +e
