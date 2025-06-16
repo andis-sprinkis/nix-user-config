@@ -156,7 +156,7 @@ cmd set-ratios &{{
 }}
 
 set user_quittimer "1" # 0 - pause, 1 - active. Can be changed during client session.
-set user_quittimersec "1800" # Default - 1800
+set user_quittimersec "2400" # Default - 1800
 set user_quittimerpid ""
 set user_quittimercallerpid ""
 
