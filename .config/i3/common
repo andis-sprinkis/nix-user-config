@@ -118,8 +118,8 @@ bindsym --whole-window $mod+Mod1+button9 exec --no-startup-id ${XDG_DATA_HOME:-$
 bindsym Hyper_L exec --no-startup-id $applications_menu
 
 bindsym Print            exec screenshot --area
-bindsym $mod+Print       exec screenshot --window
-bindsym $mod+Shift+Print exec screenshot --output
+bindsym $mod+Print       exec screenshot --window-focused
+bindsym $mod+Shift+Print exec screenshot --output-focused
 bindsym $mod+Ctrl+Print  exec screenshot
 
 bindsym $mod+b exec --no-startup-id bmark_desktop

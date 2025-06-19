@@ -55,7 +55,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       "area")
         ptr_coord="$(set +e; slurp; set -e)"
       ;;
-      "output")
+      "output-focused")
         ptr_coord="$(set +e; slurp -p; set -e)"
       ;;
     esac
@@ -93,7 +93,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       "area")
         wf-recorder --audio --codec=libx264rgb "$rec_transpose" --geometry="$ptr_coord" --file="$path_out"
       ;;
-      "output")
+      "output-focused")
         wf-recorder --audio --codec=libx264rgb "$rec_transpose" --output="$output_name" --file="$path_out"
       ;;
     esac
@@ -107,15 +107,23 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
 
   case "${1:-""}" in
     --all)
-      echo "Not implemented (Wayland): ${1}" 1>&2
+      echo "Not implemented (Wayland): ${1:-""}" 1>&2
       exit "5"
     ;;
     --output)
-      record "output"
+      echo "Not implemented (Wayland): ${1:-""}" 1>&2
+      exit "5"
+    ;;
+    --output-focused)
+      record "output-focused"
       exit
     ;;
     --window)
-      echo "Not implemented (Wayland): ${1}" 1>&2
+      echo "Not implemented (Wayland): ${1:-""}" 1>&2
+      exit "5"
+    ;;
+    --window-focused)
+      echo "Not implemented (Wayland): ${1:-""}" 1>&2
       exit "5"
     ;;
     ""|--area)
@@ -135,7 +143,7 @@ fi
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   case "${1:-""}" in
-    ""|--all|--output|--window|--area|--stop)
+    ""|--all|--output|--output-focused|--window|--window-focused|--area|--stop)
       echo "Not implemented (X11): ${1:-""}" 1>&2
       exit "5"
     ;;

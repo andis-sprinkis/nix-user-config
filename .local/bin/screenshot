@@ -33,9 +33,17 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       grim "$path_out"
     ;;
     --output)
+      echo "Not implemented (Wayland): ${1:-""}" 1>&2
+      exit "5"
+    ;;
+    --output-focused)
       grim -o "$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')" "$path_out"
     ;;
     --window)
+      echo "Not implemented (Wayland): ${1:-""}" 1>&2
+      exit "5"
+    ;;
+    --window-focused)
       grim -g "$(swaymsg -t get_tree | jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$path_out"
     ;;
     --area)
@@ -64,6 +72,10 @@ if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
       maim -u "$path_out"
     ;;
     --output)
+      echo "Not implemented (X11): ${1:-""}" 1>&2
+      exit "5"
+    ;;
+    --output-focused)
       mouseloc="$(xdotool "getmouselocation")"
 
       m_x="${mouseloc##x:}"
@@ -110,6 +122,10 @@ if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
       maim -u -g "$o_coords" "$path_out"
     ;;
     --window)
+      echo "Not implemented (X11): ${1:-""}" 1>&2
+      exit "5"
+    ;;
+    --window-focused)
       maim -u --window "$(xdotool "getactivewindow")" "$path_out"
     ;;
     --area)
