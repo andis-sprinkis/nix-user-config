@@ -55,13 +55,13 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       "area")
         ptr_coord="$(set +e; slurp; set -e)"
       ;;
-      "output-focused")
+      "output")
         ptr_coord="$(set +e; slurp -p; set -e)"
       ;;
       "window")
         ptr_coord="$(set +e; swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?).rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp; set -e)"
       ;;
-      window-focused)
+      "window-focused")
         ptr_coord="$(set +e; swaymsg -t get_tree | jq -j '.. | select(.type? and .focused?).rect | "\(.x),\(.y) \(.width)x\(.height)"'; set -e)"
       ;;
     esac
@@ -76,7 +76,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
 
     output="$(
       swaymsg -rt get_outputs | jq -r \
-        ".[] | select((${ptr_coord_x} >= .rect.x) and (${ptr_coord_x} <= .rect.x + .rect.width) and (${ptr_coord_y} >= .rect.y) and (${ptr_coord_y} <= .rect.y + .rect.height))"
+        ".[] | select((${ptr_coord_x} >= .rect.x) and (${ptr_coord_x} < .rect.x + .rect.width) and (${ptr_coord_y} >= .rect.y) and (${ptr_coord_y} < .rect.y + .rect.height))"
     )"
 
     output_name="$(echo "$output" | jq -r ".name")"
@@ -93,13 +93,16 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       ;;
     esac
 
-    i3blocks_signal "wait"
+    echo "$rec_transpose"
 
     case "$1" in
-      "area"|"window"|"window-focused")
+      "area")
         wf-recorder --audio --codec=libx264rgb "$rec_transpose" --geometry="$ptr_coord" --file="$path_out"
       ;;
-      "output-focused")
+      "window"|"window-focused")
+        wf-recorder --audio --codec=libx264rgb "$rec_transpose" --geometry="$ptr_coord" --file="$path_out"
+      ;;
+      "output")
         wf-recorder --audio --codec=libx264rgb "$rec_transpose" --output="$output_name" --file="$path_out"
       ;;
     esac
@@ -117,12 +120,12 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       exit "5"
     ;;
     --output)
-      echo "Not implemented (Wayland): ${1:-""}" 1>&2
-      exit "5"
+      record "output"
+      exit
     ;;
     --output-focused)
-      record "output-focused"
-      exit
+      echo "Not implemented (Wayland): ${1:-""}" 1>&2
+      exit "5"
     ;;
     --window)
       record "window"
