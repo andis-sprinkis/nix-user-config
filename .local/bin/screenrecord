@@ -93,7 +93,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       ;;
     esac
 
-    echo "$rec_transpose"
+    (sleep "1" && i3blocks_signal) &
 
     case "$1" in
       "area")
@@ -106,8 +106,6 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
         wf-recorder --audio --codec=libx264rgb "$rec_transpose" --output="$output_name" --file="$path_out"
       ;;
     esac
-
-    i3blocks_signal
 
     notify_saved 1> "/dev/null" 2> "/dev/null" & disown
 
