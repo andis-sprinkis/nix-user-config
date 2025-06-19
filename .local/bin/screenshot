@@ -40,11 +40,10 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       grim -o "$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')" "$path_out"
     ;;
     --window)
-      echo "Not implemented (Wayland): ${1:-""}" 1>&2
-      exit "5"
+      grim -g "$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?).rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)" "$path_out"
     ;;
     --window-focused)
-      grim -g "$(swaymsg -t get_tree | jq -j '.. | select(.type?) | select(.focused).rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$path_out"
+      grim -g "$(swaymsg -t get_tree | jq -j '.. | select(.type? and .focused?).rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$path_out"
     ;;
     --area)
       dulcepan -f "png" -o "$path_out"
@@ -61,7 +60,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
 
   printf '%s' "$path_out" | wl-copy
 
-  notify_saved
+  notify_saved 1> "/dev/null" 2> "/dev/null" & disown
 
   exit "0"
 fi
@@ -143,7 +142,7 @@ if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
 
   printf '%s' "$path_out" | xclip -sel "clipboard"
 
-  notify_saved
+  notify_saved 1> "/dev/null" 2> "/dev/null" & disown
 
   exit "0"
 fi

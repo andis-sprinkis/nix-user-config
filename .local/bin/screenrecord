@@ -58,6 +58,12 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       "output-focused")
         ptr_coord="$(set +e; slurp -p; set -e)"
       ;;
+      "window")
+        ptr_coord="$(set +e; swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?).rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp; set -e)"
+      ;;
+      window-focused)
+        ptr_coord="$(set +e; swaymsg -t get_tree | jq -j '.. | select(.type? and .focused?).rect | "\(.x),\(.y) \(.width)x\(.height)"'; set -e)"
+      ;;
     esac
 
     if [ -z "$ptr_coord" ]; then
@@ -90,7 +96,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
     i3blocks_signal "wait"
 
     case "$1" in
-      "area")
+      "area"|"window"|"window-focused")
         wf-recorder --audio --codec=libx264rgb "$rec_transpose" --geometry="$ptr_coord" --file="$path_out"
       ;;
       "output-focused")
@@ -100,7 +106,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
 
     i3blocks_signal
 
-    notify_saved
+    notify_saved 1> "/dev/null" 2> "/dev/null" & disown
 
     printf '%s' "$path_out" | wl-copy
   }
@@ -119,12 +125,12 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       exit
     ;;
     --window)
-      echo "Not implemented (Wayland): ${1:-""}" 1>&2
-      exit "5"
+      record "window"
+      exit
     ;;
     --window-focused)
-      echo "Not implemented (Wayland): ${1:-""}" 1>&2
-      exit "5"
+      record "window-focused"
+      exit
     ;;
     ""|--area)
       record "area"
