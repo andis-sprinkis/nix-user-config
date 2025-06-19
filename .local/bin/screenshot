@@ -152,7 +152,7 @@ case "${1:-""}" in
     echo "$msg_usage"
     exit "0"
   ;;
-  ""|--all|--output|--window|--area|--stop)
+  ""|--all|--output|--output-focused|--window|--window-focused|--area|--stop)
     echo "Must be ran under X11 or Wayland." 1>&2
     exit "2"
   ;;
