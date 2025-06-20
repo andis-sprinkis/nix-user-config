@@ -2,7 +2,7 @@
 set -eu
 
 script="$(basename "$0")"
-msg_usage="${script} usage: no arguments (same as --area) OR [--all|--output|--output-focused|--window|--window-focused|--workspace|--workspace-focused|--area|--stop] OR [--help|-h]"
+msg_usage="${script} usage: no arguments (same as area) OR [all|output|output_focused|window|window_focused|workspace|workspace_focused|area|stop] OR [--help|-h]"
 
 case "${1:-""}" in
   "--help"|"-h")
@@ -38,7 +38,7 @@ not_implemented() {
 }
 
 if [ "${WAYLAND_DISPLAY:-""}" ]; then
-  if [ "${1:-""}" = "--stop" ]; then
+  if [ "${1:-""}" = "stop" ]; then
     set +e
     pkill -SIGINT -f "wf-recorder"
     pkill -SIGINT -f "slurp"
@@ -66,7 +66,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       "window")
         ptr_coord="$(set +e; swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?).rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp; set -e)"
       ;;
-      "window-focused")
+      "window_focused")
         ptr_coord="$(set +e; swaymsg -t get_tree | jq -j '.. | select(.type? and .focused?).rect | "\(.x),\(.y) \(.width)x\(.height)"'; set -e)"
       ;;
     esac
@@ -101,7 +101,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
     (sleep "1" && i3blocks_signal) &
 
     case "$1" in
-      "area"|"window"|"window-focused")
+      "area"|"window"|"window_focused")
         wf-recorder --audio --codec=libx264rgb "$rec_transpose" --geometry="$ptr_coord" --file="$path_out"
       ;;
       "output")
@@ -115,31 +115,31 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
   }
 
   case "${1:-""}" in
-    "--all")
+    "all")
       not_implemented "Wayland" "${1:-""}"
     ;;
-    "--output")
+    "output")
       record "output"
       exit
     ;;
-    "--output-focused")
+    "output_focused")
       not_implemented "Wayland" "${1:-""}"
     ;;
-    "--workspace")
+    "workspace")
       not_implemented "Wayland" "${1:-""}"
     ;;
-    "--workspace-focused")
+    "workspace_focused")
       not_implemented "Wayland" "${1:-""}"
     ;;
-    "--window")
+    "window")
       record "window"
       exit
     ;;
-    "--window-focused")
-      record "window-focused"
+    "window_focused")
+      record "window_focused"
       exit
     ;;
-    ""|"--area")
+    ""|"area")
       record "area"
       exit
     ;;
@@ -156,7 +156,7 @@ fi
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   case "${1:-""}" in
-    ""|"--all"|"--output"|"--output-focused"|"--workspace"|"--workspace-focused"|"--window"|"--window-focused"|"--area"|"--stop")
+    ""|"all"|"output"|"output_focused"|"workspace"|"workspace_focused"|"window"|"window_focused"|"area"|"stop")
       not_implemented "X11" "${1:-""}"
     ;;
     "-h"|"--help")
@@ -175,7 +175,7 @@ case "${1:-""}" in
     echo "$msg_usage"
     exit "0"
   ;;
-  ""|"--all"|"--output"|"--output-focused"|"--workspace"|"--workspace-focused"|"--window"|"--window-focused"|"--area"|"--stop")
+  ""|"all"|"output"|"output_focused"|"workspace"|"workspace_focused"|"window"|"window_focused"|"area"|"stop")
     echo "Must be ran under X11 or Wayland." 1>&2
     exit "2"
   ;;

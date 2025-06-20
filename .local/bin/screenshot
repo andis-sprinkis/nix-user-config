@@ -3,10 +3,10 @@ set -eu
 IFS_="$IFS"
 
 script="$(basename "$0")"
-msg_usage="${script} usage: no arguments (same as --all) OR [--all|--output|--output-focused|--window|--window-focused|--area] OR [--help|-h]"
+msg_usage="${script} usage: no arguments (same as all) OR [all|output|output_focused|window|window_focused|area] OR [--help|-h]"
 
 case "${1:-""}" in
-  --help|-h)
+  "--help"|"-h")
     echo "$msg_usage"
     exit
   ;;
@@ -34,28 +34,28 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
   fi
 
   case "${1:-""}" in
-    ""|"--all")
+    ""|"all")
       grim "$path_out"
     ;;
-    "--output")
+    "output")
       grim -g "$(swaymsg -t "get_outputs" | jq -r '.. | select(.active?).rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)" "$path_out"
     ;;
-    "--output-focused")
+    "output_focused")
       grim -o "$(swaymsg -t "get_outputs" | jq -r '.. | select(.focused?) | .name')" "$path_out"
     ;;
-    "--workspace")
+    "workspace")
       grim -g "$(swaymsg -t "get_workspaces" | jq -r '.. | select(.visible? and .type == "workspace").rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)" "$path_out"
     ;;
-    "--workspace-focused")
+    "workspace_focused")
       grim -g "$(swaymsg -t "get_workspaces" | jq -r '.. | select(.focused? and .type == "workspace").rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$path_out"
     ;;
-    "--window")
+    "window")
       grim -g "$(swaymsg -t "get_tree" | jq -r '.. | select(.pid? and .visible?).rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)" "$path_out"
     ;;
-    "--window-focused")
+    "window_focused")
       grim -g "$(swaymsg -t "get_tree" | jq -j '.. | select(.type? and .focused?).rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$path_out"
     ;;
-    "--area")
+    "area")
       dulcepan -f "png" -o "$path_out"
     ;;
     "-h"|"--help")
@@ -77,13 +77,13 @@ fi
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   case "${1:-""}" in
-    ""|"--all")
+    ""|"all")
       maim -u "$path_out"
     ;;
-    "--output")
+    "output")
       not_implemented "X11" "${1:-""}"
     ;;
-    "--output-focused")
+    "output_focused")
       mouseloc="$(xdotool "getmouselocation")"
 
       m_x="${mouseloc##x:}"
@@ -129,19 +129,19 @@ if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
 
       maim -u -g "$o_coords" "$path_out"
     ;;
-    "--workspace")
+    "workspace")
       not_implemented "X11" "${1:-""}"
     ;;
-    "--workspace-focused")
+    "workspace_focused")
       not_implemented "X11" "${1:-""}"
     ;;
-    "--window")
+    "window")
       not_implemented "X11" "${1:-""}"
     ;;
-    "--window-focused")
+    "window_focused")
       maim -u --window "$(xdotool "getactivewindow")" "$path_out"
     ;;
-    "--area")
+    "area")
       maim -u --select "$path_out"
     ;;
     "-h"|"--help")
@@ -166,7 +166,7 @@ case "${1:-""}" in
     echo "$msg_usage"
     exit "0"
   ;;
-  ""|"--all"|"--output"|"--output-focused"|"--workspace"|"--workspace-focused"|"--window"|"--window-focused"|"--area"|"--stop")
+  ""|"all"|"output"|"output_focused"|"workspace"|"workspace_focused"|"window"|"window_focused"|"area"|"stop")
     echo "Must be ran under X11 or Wayland." 1>&2
     exit "2"
   ;;
