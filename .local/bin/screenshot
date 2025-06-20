@@ -38,22 +38,22 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       grim "$path_out"
     ;;
     "--output")
-      grim -g "$(swaymsg -t "get_outputs" | jq -r '.[] | select(.active).rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)" "$path_out"
+      grim -g "$(swaymsg -t "get_outputs" | jq -r '.. | select(.active?).rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)" "$path_out"
     ;;
     "--output-focused")
-      grim -o "$(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name')" "$path_out"
+      grim -o "$(swaymsg -t "get_outputs" | jq -r '.. | select(.focused?) | .name')" "$path_out"
     ;;
     "--workspace")
-      not_implemented "Wayland" "${1:-""}"
+      grim -g "$(swaymsg -t "get_workspaces" | jq -r '.. | select(.visible? and .type == "workspace").rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)" "$path_out"
     ;;
     "--workspace-focused")
-      not_implemented "Wayland" "${1:-""}"
+      grim -g "$(swaymsg -t "get_workspaces" | jq -r '.. | select(.focused? and .type == "workspace").rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$path_out"
     ;;
     "--window")
-      grim -g "$(swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?).rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)" "$path_out"
+      grim -g "$(swaymsg -t "get_tree" | jq -r '.. | select(.pid? and .visible?).rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp)" "$path_out"
     ;;
     "--window-focused")
-      grim -g "$(swaymsg -t get_tree | jq -j '.. | select(.type? and .focused?).rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$path_out"
+      grim -g "$(swaymsg -t "get_tree" | jq -j '.. | select(.type? and .focused?).rect | "\(.x),\(.y) \(.width)x\(.height)"')" "$path_out"
     ;;
     "--area")
       dulcepan -f "png" -o "$path_out"

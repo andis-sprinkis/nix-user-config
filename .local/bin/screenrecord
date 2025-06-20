@@ -61,7 +61,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
         ptr_coord="$(set +e; slurp; set -e)"
       ;;
       "output")
-        ptr_coord="$(set +e; swaymsg -t "get_outputs" | jq -r '.[] | select(.active).rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp; set -e)"
+        ptr_coord="$(set +e; swaymsg -t "get_outputs" | jq -r '.. | select(.active?).rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp; set -e)"
       ;;
       "window")
         ptr_coord="$(set +e; swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?).rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp; set -e)"
