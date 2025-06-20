@@ -2,7 +2,7 @@
 set -eu
 
 script="$(basename "$0")"
-msg_usage="${script} usage: no arguments (same as --area) OR [--all|--output|--output-focused|--window|--window-focused|--area|--stop] OR [--help|-h]"
+msg_usage="${script} usage: no arguments (same as --area) OR [--all|--output|--output-focused|--window|--window-focused|--workspace|--workspace-focused|--area|--stop] OR [--help|-h]"
 
 case "${1:-""}" in
   "--help"|"-h")
