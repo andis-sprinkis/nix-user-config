@@ -30,12 +30,8 @@ window = #000000ff
 transparency = #00000000
 # Default image scale (optimal/width/height/fit/fill/real/keep)
 scale = fit
-# Keep absolute zoom across images (yes/no)
-keep_zoom = no
 # Initial image position
 position = center
-# Fix position of the image on the window surface (yes/no)
-fixed = yes
 # Anti-aliasing mode (none/box/bilinear/bicubic/mks13)
 antialiasing = mks13
 # Run slideshow at startup (yes/no)
