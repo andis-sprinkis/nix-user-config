@@ -60,7 +60,7 @@ cmd open-with ${{
 }}
 
 cmd open-with-menu-desktop &{{
-  nohup (echo "$fx" | open_with_menu_desktop) 0</dev/null 1>/dev/null 2>/dev/null & disown
+  (trap "" HUP; echo "$fx" | open_with_menu_desktop) 0</dev/null 1>/dev/null 2>/dev/null & disown
 }}
 
 cmd to-pager ${{
