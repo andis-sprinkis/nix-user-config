@@ -45,18 +45,22 @@ cmd open ${{
     exec lf -remote "send ${id} push :open-with<space>"
   fi
 
-  for f in $fx; do nohup $OPENER "$f" 0</dev/null 1>/dev/null 2>/dev/null & done
+  for f in $fx; do
+    nohup $OPENER "$f" 0</dev/null 1>/dev/null 2>/dev/null & disown
+  done
 }}
 
 cmd open-with ${{
   IFS="
 "
 
-  for f in $fx; do nohup "$*" "$f" 0</dev/null 1>/dev/null 2>/dev/null & done
+  for f in $fx; do
+    nohup "$*" "$f" 0</dev/null 1>/dev/null 2>/dev/null & disown
+  done
 }}
 
 cmd open-with-menu-desktop &{{
-  echo "$fx" | open_with_menu_desktop 1> "/dev/null" 2> "/dev/null" & disown
+  nohup (echo "$fx" | open_with_menu_desktop) 0</dev/null 1>/dev/null 2>/dev/null & disown
 }}
 
 cmd to-pager ${{
@@ -142,7 +146,7 @@ cmd paste-to-file ${{
 }}
 
 cmd reopen-lf-desktop ${{
-  nohup $TERMINAL -e "$SHELL" -c "lf -command select \"$f\"" 0</dev/null 1>/dev/null 2>/dev/null &
+  nohup $TERMINAL -e "$SHELL" -c "lf -command select \"$f\"" 0</dev/null 1>/dev/null 2>/dev/null & disown
 }}
 
 cmd set-ratios &{{
