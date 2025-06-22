@@ -9,7 +9,7 @@ open_with_cmd() {
 "
   for f in $file_list; do
     IFS="$IFS_"
-    $cmd "$f" 1> "/dev/null" 2> "/dev/null" & disown 
+    $cmd "$f" 1> "/dev/null" 2> "/dev/null" & disown
   done
   IFS="$IFS_"
 
