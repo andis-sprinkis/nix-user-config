@@ -9,15 +9,19 @@ fi
 
 case "${1:-""}" in
   "e")
-    while read file; do file_manager_desktop "$file" & done
+    while read file; do
+      nohup file_manager_desktop "$file" 0</dev/null 1>/dev/null 2>/dev/null & disown
+    done
   ;;
   "r")
-    while read file; do NSXIV_OPTS="-t" nsxiv-rifle "$file" & done
+    while read file; do
+      NSXIV_OPTS="-t" nohup nsxiv-rifle "$file" 0</dev/null 1>/dev/null 2>/dev/null & disown
+    done
   ;;
   "o")
     files="$(while read file; do echo "${files:+
 }${file}"; done)"
-    echo "$files" | open_with_menu_desktop
+    (trap "" "HUP"; echo "$files" | open_with_menu_desktop) 0</dev/null 1>/dev/null 2>/dev/null & disown
   ;;
   "Y")
     files="$(while read file; do echo "${files:+
@@ -49,7 +53,7 @@ case "${1:-""}" in
     exit "1"
   ;;
   "h")
-    $TERMINAL -e "$SHELL" -c "$PAGER ${XDG_CONFIG_HOME:-$HOME/.config}/nsxiv/exec/key-handler" 1> "/dev/null" 2> "/dev/null" & disown
+    nohup "$TERMINAL" -e "$SHELL" -c "$PAGER ${XDG_CONFIG_HOME:-$HOME/.config}/nsxiv/exec/key-handler" 0</dev/null 1>/dev/null 2>/dev/null & disown
   ;;
   *)
     exit "2";

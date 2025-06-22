@@ -4,10 +4,10 @@
 
 #command
 a toggle-option ^PS
-o shell nohup $OPENER ""%"" 0</dev/null 1>/dev/null 2>/dev/null & \n
-O shell nohup open_with_menu_desktop ""%"" 0</dev/null 1>/dev/null 2>/dev/null & \n
-x shell nohup file_manager_desktop ""%"" 0</dev/null 1>/dev/null 2>/dev/null & \n
-r shell nohup pager_desktop ""%"" 0</dev/null 1>/dev/null 2>/dev/null & \n
+o shell nohup $OPENER ""%"" 0</dev/null 1>/dev/null 2>/dev/null & disown \n
+O shell nohup open_with_menu_desktop ""%"" 0</dev/null 1>/dev/null 2>/dev/null & disown \n
+x shell nohup file_manager_desktop ""%"" 0</dev/null 1>/dev/null 2>/dev/null & disown \n
+r shell nohup pager_desktop ""%"" 0</dev/null 1>/dev/null 2>/dev/null & disown \n
 
 #env
 LESS = --LINE-NUMBERS --LONG-PROMPT --RAW-CONTROL-CHARS --clear-screen --HILITE-UNREAD --incsearch --ignore-case --jump-target=.5\$ --line-num-width=5\$ --mouse --status-column --tabs=2\$ --tilde --use-color --wheel-lines=6\$ --wordwrap --color=P-\$ --color=NK\$ --color=RK\$ --color=E-\$

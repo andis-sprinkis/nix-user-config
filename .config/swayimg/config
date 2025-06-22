@@ -193,9 +193,10 @@ Shift+Delete = exec ""
 Escape = exit
 q = exit
 
-r = exec nohup swayimg --config=general.mode=gallery "%" 0</dev/null 1>/dev/null 2>/dev/null &
-e = exec nohup file_manager_desktop "%" 0</dev/null 1>/dev/null 2>/dev/null &
-Shift+p = exec nohup pager_desktop "%" 0</dev/null 1>/dev/null 2>/dev/null &
+r = exec nohup swayimg --config=general.mode=gallery "%" 0</dev/null 1>/dev/null 2>/dev/null & disown
+e = exec nohup file_manager_desktop "%" 0</dev/null 1>/dev/null 2>/dev/null & disown
+Shift+p = exec nohup pager_desktop "%" 0</dev/null 1>/dev/null 2>/dev/null & disown
+Shift+o = exec nohup open_with_menu_desktop "%" 0</dev/null 1>/dev/null 2>/dev/null & disown
 
 # Mouse related
 ScrollLeft = step_left 5
@@ -250,6 +251,7 @@ ScrollRight = step_right
 ScrollUp = step_up
 ScrollDown = step_down
 
-r = exec nohup swayimg --config=general.mode=gallery "%" 0</dev/null 1>/dev/null 2>/dev/null &
-e = exec nohup file_manager_desktop "%" 0</dev/null 1>/dev/null 2>/dev/null &
-Shift+p = exec nohup pager_desktop "%" 0</dev/null 1>/dev/null 2>/dev/null &
+r = exec nohup swayimg --config=general.mode=gallery "%" 0</dev/null 1>/dev/null 2>/dev/null & disown
+e = exec nohup file_manager_desktop "%" 0</dev/null 1>/dev/null 2>/dev/null & disown
+Shift+p = exec nohup pager_desktop "%" 0</dev/null 1>/dev/null 2>/dev/null & disown
+Shift+o = exec nohup open_with_menu_desktop "%" 0</dev/null 1>/dev/null 2>/dev/null & disown
