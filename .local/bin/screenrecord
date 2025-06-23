@@ -27,7 +27,7 @@ i3blocks_signal() {
 }
 
 notify_saved() {
-  if [ "$(notify-send "Screen-recording saved." "${path_out}" --app-name="${script}" --action="LOCATE=Locate" --wait)" ]; then
+  if [ "$(notify-send "Screen recording saved." "${path_out}" --app-name="${script}" --action="LOCATE=Locate" --wait)" ]; then
     file_manager_desktop "$path_out"
   fi
 }
@@ -117,10 +117,16 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
 
     case "$1" in
       "output")
-        wf-recorder --audio --codec=libx264rgb "$rec_transpose" --output="$output_name" --file="$path_out"
+        if ! wf-recorder --audio --codec=libx264rgb "$rec_transpose" --output="$output_name" --file="$path_out"; then
+          notify-send "Screen recording failed." --app-name="${script}" --urgency="critical" 1>/dev/null 2>/dev/null & disown
+          exit
+        fi
       ;;
       *)
-        wf-recorder --audio --codec=libx264rgb "$rec_transpose" --geometry="$ptr_coord" --file="$path_out"
+        if ! wf-recorder --audio --codec=libx264rgb "$rec_transpose" --geometry="$ptr_coord" --file="$path_out"; then
+          notify-send "Screen recording failed." --app-name="${script}" --urgency="critical" 1>/dev/null 2>/dev/null & disown
+          exit
+        fi
       ;;
     esac
 
