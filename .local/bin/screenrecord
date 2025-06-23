@@ -2,7 +2,7 @@
 set -eu
 
 script="$(basename "$0")"
-msg_usage="${script} usage: no arguments (same as area) OR [all|output|output_focused|window|window_focused|workspace|workspace_focused|area|stop] OR [--help|-h]"
+msg_usage="${script} usage: no arguments (same as area) OR [all|area|output|output_focused|window|window_focused|workspace|workspace_focused|stop] OR [--help|-h]"
 
 case "${1:-""}" in
   "--help"|"-h")
@@ -55,19 +55,29 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
 
   record() {
     ptr_coord=""
+    jq_rect_map='"\(.x),\(.y) \(.width)x\(.height)"'
 
     case "$1" in
       "area")
         ptr_coord="$(set +e; slurp; set -e)"
       ;;
       "output")
-        ptr_coord="$(set +e; swaymsg -t "get_outputs" | jq -r '.. | select(.active?).rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp; set -e)"
+        ptr_coord="$(set +e; swaymsg -t "get_outputs" | jq -r ".. | select(.active?).rect | ${jq_rect_map}" | slurp; set -e)"
+      ;;
+      "output_focused")
+        ptr_coord="$(set +e; swaymsg -t "get_outputs" | jq -r ".. | select(.focused?).rect | ${jq_rect_map}"; set -e)"
       ;;
       "window")
-        ptr_coord="$(set +e; swaymsg -t get_tree | jq -r '.. | select(.pid? and .visible?).rect | "\(.x),\(.y) \(.width)x\(.height)"' | slurp; set -e)"
+        ptr_coord="$(set +e; swaymsg -t "get_tree" | jq -r ".. | select(.pid? and .visible?).rect | ${jq_rect_map}" | slurp; set -e)"
       ;;
       "window_focused")
-        ptr_coord="$(set +e; swaymsg -t get_tree | jq -j '.. | select(.type? and .focused?).rect | "\(.x),\(.y) \(.width)x\(.height)"'; set -e)"
+        ptr_coord="$(set +e; swaymsg -t "get_tree" | jq -r ".. | select(.type? and .focused?).rect | ${jq_rect_map}"; set -e)"
+      ;;
+      "workspace")
+        ptr_coord="$(set +e; swaymsg -t "get_workspaces" | jq -r ".. | select(.visible? and .type == \"workspace\").rect | ${jq_rect_map}" | slurp; set -e)"
+      ;;
+      "workspace_focused")
+        ptr_coord="$(set +e; swaymsg -t "get_workspaces" | jq -r ".. | select(.focused? and .type == \"workspace\").rect | ${jq_rect_map}"; set -e)"
       ;;
     esac
 
@@ -101,11 +111,11 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
     (sleep "1" && i3blocks_signal) &
 
     case "$1" in
-      "area"|"window"|"window_focused")
-        wf-recorder --audio --codec=libx264rgb "$rec_transpose" --geometry="$ptr_coord" --file="$path_out"
-      ;;
       "output")
         wf-recorder --audio --codec=libx264rgb "$rec_transpose" --output="$output_name" --file="$path_out"
+      ;;
+      *)
+        wf-recorder --audio --codec=libx264rgb "$rec_transpose" --geometry="$ptr_coord" --file="$path_out"
       ;;
     esac
 
@@ -118,18 +128,16 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
     "all")
       not_implemented "Wayland" "${1:-""}"
     ;;
+    ""|"area")
+      record "area"
+      exit
+    ;;
     "output")
       record "output"
       exit
     ;;
     "output_focused")
-      not_implemented "Wayland" "${1:-""}"
-    ;;
-    "workspace")
-      not_implemented "Wayland" "${1:-""}"
-    ;;
-    "workspace_focused")
-      not_implemented "Wayland" "${1:-""}"
+      record "output_focused"
     ;;
     "window")
       record "window"
@@ -139,9 +147,11 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       record "window_focused"
       exit
     ;;
-    ""|"area")
-      record "area"
-      exit
+    "workspace")
+      record "workspace"
+    ;;
+    "workspace_focused")
+      record "workspace_focused"
     ;;
     "-h"|"--help")
       echo "$msg_usage"
