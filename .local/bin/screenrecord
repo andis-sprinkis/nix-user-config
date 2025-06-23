@@ -22,7 +22,7 @@ i3blocks_signal() {
       fi
 
       pkill "-SIGRTMIN+7" "i3blocks"
-    ) 1> "/dev/null" 2> "/dev/null" & disown
+    ) 1>/dev/null 2>/dev/null & disown
   fi
 }
 
@@ -33,7 +33,12 @@ notify_saved() {
 }
 
 not_implemented() {
-  echo "Not implemented (${1:-""}): ${2:-""}" 1>&2
+  msg="Not implemented (${1:-""}): ${2:-""}"
+
+  echo "$msg" 1>&2
+
+  notify-send "$msg" --app-name="${script}" --urgency="critical" 1>/dev/null 2>/dev/null & disown
+
   exit "5"
 }
 
@@ -119,7 +124,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       ;;
     esac
 
-    notify_saved 1> "/dev/null" 2> "/dev/null" & disown
+    notify_saved 1>/dev/null 2>/dev/null & disown
 
     printf '%s' "$path_out" | wl-copy
   }
