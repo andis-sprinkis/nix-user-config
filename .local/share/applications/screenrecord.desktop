@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
 Name=Record screen
-Exec=screenrecord output
+Exec=screenrecord_menu_desktop
 Categories=Utility;Video;

@@ -3,7 +3,7 @@ set -eu
 IFS_="$IFS"
 
 script="$(basename "$0")"
-msg_usage="${script} usage: no arguments (same as all) OR [all|area|output|output_focused|window|window_focused|workspace|workspace_focused|stop] OR [--help|-h]"
+msg_usage="${script} usage: no arguments (same as all) OR [all|area|output|output_focused|window|window_focused|workspace|workspace_focused] OR [--help|-h]"
 
 case "${1:-""}" in
   "--help"|"-h")

@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+set -eu
+
+lines="All screens
+Focused screen
+Focused window
+Focused workspace
+Select area...
+Select screen...
+Select window...
+Select workspace..."
+
+options="all
+output_focused
+window_focused
+workspace_focused
+area
+output
+window
+workspace"
+
+sel_line="$(printf "%s\n" "$lines" | menu_desktop -p "Record screen:")"
+sel_idx="$(echo "$lines" | grep --line-number -x "$sel_line" | cut -f"1" -d":")"
+sel_option="$(echo "$options" | sed "${sel_idx}q;d")"
+
+screenrecord "$sel_option"
