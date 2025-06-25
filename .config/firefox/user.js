@@ -49,6 +49,7 @@ user_pref("browser.ping-centre.telemetry", false);
 user_pref("browser.places.speculativeConnect.enabled", false);
 user_pref("browser.preferences.experimental", false);
 user_pref("browser.preferences.moreFromMozilla", false);
+user_pref("browser.profiles.enabled", true);
 user_pref("browser.promo.cookiebanners.enabled", false);
 user_pref("browser.promo.focus.enabled", false);
 user_pref("browser.promo.pin.enabled", false);
