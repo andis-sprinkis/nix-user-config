@@ -108,7 +108,7 @@ user_pref("browser.urlbar.suggest.yelp", false);
 user_pref("browser.urlbar.trending.featureGate", false);
 user_pref("browser.urlbar.trimHttps", false);
 user_pref("browser.urlbar.trimURLs", false);
-user_pref("browser.urlbar.unitConversion.enabled", true);
+user_pref("browser.urlbar.unitConversion.enabled", false);
 user_pref("browser.urlbar.update2.engineAliasRefresh", true);
 user_pref("browser.urlbar.weather.featureGate", false);
 user_pref("browser.urlbar.yelp.featureGate", false);
