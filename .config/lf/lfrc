@@ -15,9 +15,7 @@ set tabstop 2
 set wrapscroll
 
 cmd open ${{
-  set +e
-  kill -USR1 "$lf_user_quittimerpid"
-  set -e
+  set +e; kill -USR1 "$lf_user_quittimerpid"; set -e
 
   IFS="
 "
