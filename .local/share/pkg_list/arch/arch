@@ -108,6 +108,7 @@ p7zip
 pacman
 patch
 pcsc-tools
+perl-image-exiftool
 picom
 pipewire
 pipewire-alsa

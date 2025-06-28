@@ -83,6 +83,14 @@ print_mediainfo() {
   fi
 }
 
+print_exiftool() {
+  if find_util "exiftool"; then
+    exiftool "$FPATH" | sed -e 's/ \+: /: /g'
+  else
+    return "1"
+  fi
+}
+
 print_chafa() {
   if find_util "chafa"; then
     lines="$(tput lines)"
@@ -273,7 +281,7 @@ case "$MIME" in
       echo
     fi
 
-    print_mediainfo
+    print_exiftool
   ;;
   video/*|application/x-ogm-video)
     print_mime
