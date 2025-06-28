@@ -163,6 +163,8 @@ set user_quittimerpid ""
 set user_quittimercallerpid ""
 
 cmd set-rulerfmt &{{
+  rulerfmt="%a| %p| \033[7;31m %m \033[0m| \033[7;33m %c \033[0m| \033[7;35m %s \033[0m| \033[7;34m %f \033[0m| %i/%t"
+
   mnt_str=""
 
   if [ -d "$f" ] && mountpoint -q -- "$f" 1>/dev/null 2>/dev/null; then
@@ -173,9 +175,11 @@ cmd set-rulerfmt &{{
     fi
   fi
 
-  fmt="${mnt_str}%a| %p| \033[7;31m %m \033[0m| \033[7;33m %c \033[0m| \033[7;35m %s \033[0m| \033[7;34m %f \033[0m| %i/%t"
+  rulerfmt_updated="${mnt_str}${rulerfmt}"
 
-  lf -remote "send ${id} set rulerfmt \"${fmt}\""
+  if [ "${lf_rulerfmt:-""}" != "$rulerfmt_updated" ]; then
+    lf -remote "send ${id} set rulerfmt \"${rulerfmt_updated}\""
+  fi
 }}
 
 cmd on-init &{{
