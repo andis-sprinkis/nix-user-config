@@ -149,7 +149,9 @@ swayidle
 swaylock
 systemd
 tcl
-tesserect-data-eng
+tesseract
+tesseract-data-eng
+tesseract-data-lav
 texinfo
 tk
 tmux
