@@ -29,14 +29,14 @@ cmd open ${{
     ;;
     text/rtf)
     ;;
+    text/*|application/xml|application/*json*|application/xhtml*|application/javascript|application/x-httpd-php|application/x-wine-extension-ini|application/x-subrip|application/x-awk|inode/x-empty)
+      exec $PAGER $fx
+    ;;
     application/gzip|application/java-archive|application/vnd.debian.binary-package|application/vnd.ms-cab-compressed|application/vnd.rar|application/x-7z-compressed|application/x-7z-compressed|application/x-ace|application/x-alz|application/x-archive|application/x-arj|application/x-bzip1|application/x-bzip1-compressed-tar|application/x-bzip2|application/x-bzip2-compressed-tar|application/x-compress|application/x-compressed-tar|application/x-cpio|application/x-lha|application/x-lrzip|application/x-lzip|application/x-lzip-compressed-tar|application/x-lzma-compressed-tar|application/x-lzma|application/x-lzop|application/x-rpm|application/x-tar|application/x-tarz|application/x-tzo|application/x-xz|application/x-xz-compressed-tar|application/zip)
       # Archive types that 'als' recognizes.
       exec $PAGER $fx
     ;;
     application/x-iso9660-image)
-      exec $PAGER $fx
-    ;;
-    text/*|application/xml|application/*json*|application/xhtml*|application/javascript|application/x-httpd-php|application/x-wine-extension-ini|application/x-subrip|application/x-awk|inode/x-empty)
       exec $PAGER $fx
     ;;
   esac
@@ -164,7 +164,24 @@ set user_quittimersec "2400" # Default - 1800
 set user_quittimerpid ""
 set user_quittimercallerpid ""
 
+cmd set-rulerfmt &{{
+  mnt_str=""
+
+  if [ -d "$f" ] && mountpoint -q -- "$f" 1>/dev/null 2>/dev/null; then
+    dev="$(set +e; grep " ${f} " "/proc/mounts" | cut -d" " -f1; set -e)"
+
+    if [ "$dev" ]; then
+      mnt_str="\033[0;34m${dev}\033[0m| "
+    fi
+  fi
+
+  fmt="${mnt_str}%a| %p| \033[7;31m %m \033[0m| \033[7;33m %c \033[0m| \033[7;35m %s \033[0m| \033[7;34m %f \033[0m| %i/%t"
+
+  lf -remote "send ${id} set rulerfmt \"${fmt}\""
+}}
+
 cmd on-init &{{
+  lf -remote "send ${id} set-rulerfmt"
   lf -remote "send ${id} set-ratios"
   lf -remote "send ${id} on-redraw"
   lf -remote "send ${id} tty-write \"\033]0;${PWD}\007\""
@@ -173,6 +190,8 @@ cmd on-init &{{
 }}
 
 cmd on-select &{{
+  lf -remote "send ${id} set-rulerfmt"
+
   kill -USR1 "$lf_user_quittimerpid"
 }}
 

@@ -21,7 +21,7 @@ find_util() {
 thumb_cache_create() {
   dir_cache_thumb="${XDG_CACHE_HOME:-"${HOME}/.cache"}/previewer/thumbnails"
 
-  hash="$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$FPATH" | md5sum)"
+  hash="$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$FPATH" | sha1sum)"
   hash="${hash%%"  -"}"
 
   FPATH_THUMB="${dir_cache_thumb}/${hash}"
