@@ -30,6 +30,15 @@ set -eu
 #   exit \"1\"
 # fi
 #
+# if [ \"\${1:-\"\"}\" ]; then
+#   echo \"\$1\"
+# fi
+#
+# while read -r l; do
+#   echo \"\$l\"
+#   continue
+# done
+#
 # IFS=\" \"
 # for i in \$items; do
 #   IFS=\"\$IFS_\"
