@@ -18,7 +18,7 @@ user_pref("browser.discovery.enabled", false);
 user_pref("browser.download.alwaysOpenPanel", false);
 user_pref("browser.download.always_ask_before_handling_new_types", false);
 user_pref("browser.download.autohideButton", true);
-user_pref("browser.download.folderList", 1);
+user_pref("browser.download.folderList", 2);
 user_pref("browser.download.manager.addToRecentDocs", false);
 user_pref("browser.fixup.alternate.enabled", false);
 user_pref("browser.formfill.enable", false);
