@@ -80,7 +80,7 @@ print_strings() {
 
 print_mediainfo() {
   if find_util "mediainfo"; then
-    mediainfo "$FPATH" | head -n -2 | sed -e 's/ \+: /: /g' -e '/^General$/d'
+    mediainfo "$FPATH" | head -n -2 | sed -e 's/ *: /: /g' -e '/^General$/d'
   else
     return "1"
   fi
