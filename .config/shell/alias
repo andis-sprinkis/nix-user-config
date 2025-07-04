@@ -11,6 +11,7 @@ alias \
   apack="apack --explain" \
   aunpack="aunpack --subdir --explain" \
   bc="bc -ql" \
+  beeper_toggle="upscmd \"\$(upsc -L | head | cut -d\":\" -f1)\" \"beeper.toggle\"" \
   cl="clear" \
   cal="calcurse" \
   calc="qalc -c" \
