@@ -14,7 +14,7 @@ DESCRIPTION
     Shows disk utilization.
 
     -f
-        Shows utilization for all devices (including 'tmpfs', 'efivarf', 'run', 'dev').
+        Shows utilization for all devices (including all of the 'tmpfs', 'efivarf', 'run', 'dev').
 
     -h
         Prints this message.
