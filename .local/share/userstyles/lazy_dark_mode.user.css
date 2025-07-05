@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.222.0
+@version      0.223.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
@@ -21,6 +21,7 @@ domain("zsh.sourceforge.io") {
     html,
     img,
     video,
+    frame,
     iframe,
     object {
       filter: invert();
@@ -50,6 +51,7 @@ domain("wiktionary.org") {
     html,
     img:not([src*="/math/"]),
     video,
+    frame,
     iframe,
     object {
       filter: invert();
@@ -72,6 +74,7 @@ domain("wiktionary.org") {
     html,
     img,
     video,
+    frame,
     iframe,
     object {
       filter: invert();
@@ -86,6 +89,7 @@ regexp("https://web\\.archive\\.org/(?!web).*") {
     html,
     img,
     video,
+    frame,
     iframe,
     object {
       filter: invert();
@@ -317,6 +321,7 @@ url-prefix("https://www.w3.org/WAI/")
     html,
     img,
     video,
+    frame,
     iframe,
     object {
       filter: invert();
