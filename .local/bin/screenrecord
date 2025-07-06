@@ -2,7 +2,7 @@
 set -eu
 
 script="$(basename "$0")"
-msg_usage="${script} usage: no arguments (same as area) OR [\"\"|all|area|output|output_focused|window|window_focused|workspace|workspace_focused|stop] [COUNTDOWN] OR [--help|-h]"
+msg_usage="${script} usage: no arguments (same as area) OR [\"\"|all|area|output|output_focused|window|window_focused|workspace|workspace_focused|stop] [DELAY] OR [--help|-h]"
 
 path_dir="${HOME}/scr"
 path_out="${path_dir}/$(date "+%s").mp4"
