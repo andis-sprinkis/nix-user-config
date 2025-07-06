@@ -269,6 +269,23 @@ $prompt_symbol"
     . "/opt/homebrew/opt/pyenv/completions/pyenv.zsh"
   fi
 
+  # configure zsh-system-clipboard
+  if [ "$(uname)" = "Linux" ]; then
+    if [ "$(id -u)" -ge "1000" ]; then
+      if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+        export ZSH_SYSTEM_CLIPBOARD_METHOD="xcc"
+      elif [ "${WAYLAND_DISPLAY:-""}" ]; then
+        export ZSH_SYSTEM_CLIPBOARD_METHOD="wlc"
+      elif [ "${TMUX:-""}" ]; then
+        export ZSH_SYSTEM_CLIPBOARD_METHOD="tmux"
+      fi
+    else
+      if [ "${TMUX:-""}" ]; then
+        export ZSH_SYSTEM_CLIPBOARD_METHOD="tmux"
+      fi
+    fi
+  fi
+
   # source local zsh plugins
   . "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
   . "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"

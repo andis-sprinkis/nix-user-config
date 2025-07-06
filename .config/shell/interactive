@@ -27,23 +27,6 @@ if [ "$WT_SESSION" ]; then
   export COLORTERM="truecolor"
 fi
 
-# configure zsh-system-clipboard
-if [ "$(uname)" = "Linux" ]; then
-  if [ "$(id -u)" -ge "1000" ]; then
-    if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-      export ZSH_SYSTEM_CLIPBOARD_METHOD="xcc"
-    elif [ "${WAYLAND_DISPLAY:-""}" ]; then
-      export ZSH_SYSTEM_CLIPBOARD_METHOD="wlc"
-    elif [ "${TMUX:-""}" ]; then
-      export ZSH_SYSTEM_CLIPBOARD_METHOD="tmux"
-    fi
-  else
-    if [ "${TMUX:-""}" ]; then
-      export ZSH_SYSTEM_CLIPBOARD_METHOD="tmux"
-    fi
-  fi
-fi
-
 # launch tmux
 if
   is_exec "tmux" && [ -z "${TMUX:-""}" ] && [ "$TERM" != "linux" ]
