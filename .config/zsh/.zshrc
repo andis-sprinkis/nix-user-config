@@ -270,9 +270,7 @@ $prompt_symbol"
   fi
 
   # configure zsh-system-clipboard
-  if [ "${TMUX:-""}" ]; then
-    export ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true"
-  fi
+  unset ZSH_SYSTEM_CLIPBOARD_METHOD
 
   if [ "$(uname)" = "Linux" ]; then
     if [ "$(id -u)" -ge "1000" ]; then
@@ -288,9 +286,22 @@ $prompt_symbol"
         export ZSH_SYSTEM_CLIPBOARD_METHOD="tmux"
       fi
     fi
+
+    if [ "${ZSH_SYSTEM_CLIPBOARD_METHOD:-""}" ]; then
+      if [ "${TMUX:-""}" ]; then
+        export ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true"
+      fi
+
+      . "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
+    fi
+  else
+    if [ "${TMUX:-""}" ]; then
+      export ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true"
+    fi
+
+    . "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
   fi
 
   # source local zsh plugins
-  . "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
   . "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 }
