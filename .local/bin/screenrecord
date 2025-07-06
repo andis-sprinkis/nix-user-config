@@ -2,27 +2,19 @@
 set -eu
 
 script="$(basename "$0")"
-msg_usage="${script} usage: no arguments (same as area) OR [all|area|output|output_focused|window|window_focused|workspace|workspace_focused|stop] OR [--help|-h]"
-
-case "${1:-""}" in
-  "--help"|"-h")
-    echo "$msg_usage"
-    exit
-  ;;
-esac
+msg_usage="${script} usage: no arguments (same as area) OR [\"\"|all|area|output|output_focused|window|window_focused|workspace|workspace_focused|stop] [COUNTDOWN] OR [--help|-h]"
 
 path_dir="${HOME}/scr"
 path_out="${path_dir}/$(date "+%s").mp4"
 
-i3blocks_signal() {
-  if [ "$(pidof "i3blocks")" ]; then
-    (
-      if [ "${1:-""}" = "wait" ]; then
-        sleep "0.5"
-      fi
+capture_mode="${1:-"area"}"
+countdown="${2:-""}"
 
-      pkill "-SIGRTMIN+7" "i3blocks"
-    ) 1>/dev/null 2>/dev/null & disown
+i3blocks_signal() {
+  if [ "${1:-""}" = "wait" ]; then sleep "1"; fi
+
+  if [ "$(pidof "i3blocks")" ]; then
+    pkill "-SIGRTMIN+7" "i3blocks" 1>/dev/null 2>/dev/null & disown
   fi
 }
 
@@ -42,14 +34,28 @@ not_implemented() {
   exit "5"
 }
 
+countdown() {
+  time="$countdown"
+
+  echo "$time"
+
+  while [ "$time" -gt "0" ]; do
+    time="$((time - 1))"
+
+    sleep "1"
+
+    echo "$time"
+  done
+}
+
 if [ "${WAYLAND_DISPLAY:-""}" ]; then
-  if [ "${1:-""}" = "stop" ]; then
+  if [ "${capture_mode:-""}" = "stop" ]; then
     set +e
     pkill -SIGINT -f "wf-recorder"
     pkill -SIGINT -f "slurp"
     set -e
 
-    i3blocks_signal "wait"
+    i3blocks_signal 1>/dev/null 2>/dev/null & disown
 
     exit "0"
   fi
@@ -62,7 +68,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
     ptr_coord=""
     jq_rect_map='"\(.x),\(.y) \(.width)x\(.height)"'
 
-    case "$1" in
+    case "$capture_mode" in
       "area")
         ptr_coord="$(set +e; slurp; set -e)"
       ;;
@@ -113,9 +119,13 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       ;;
     esac
 
-    (sleep "1" && i3blocks_signal) &
+    if [ "$countdown" ]; then
+      countdown "$countdown"
+    fi
 
-    case "$1" in
+    i3blocks_signal "wait" 1>/dev/null 2>/dev/null & disown
+
+    case "$capture_mode" in
       "output")
         if ! wf-recorder --audio --codec=libx264rgb "$rec_transpose" --output="$output_name" --file="$path_out"; then
           notify-send "Screen recording failed." --app-name="${script}" --urgency="critical" 1>/dev/null 2>/dev/null & disown
@@ -130,39 +140,20 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       ;;
     esac
 
+    i3blocks_signal 1>/dev/null 2>/dev/null & disown
+
     notify_saved 1>/dev/null 2>/dev/null & disown
 
     printf '%s' "$path_out" | wl-copy
   }
 
-  case "${1:-""}" in
+  case "$capture_mode" in
     "all")
       not_implemented "Wayland" "${1:-""}"
     ;;
-    ""|"area")
-      record "area"
+    "area"|"output"|"output_focused"|"window"|"window_focused"|"workspace"|"workspace_focused")
+      record
       exit
-    ;;
-    "output")
-      record "output"
-      exit
-    ;;
-    "output_focused")
-      record "output_focused"
-    ;;
-    "window")
-      record "window"
-      exit
-    ;;
-    "window_focused")
-      record "window_focused"
-      exit
-    ;;
-    "workspace")
-      record "workspace"
-    ;;
-    "workspace_focused")
-      record "workspace_focused"
     ;;
     "-h"|"--help")
       echo "$msg_usage"
