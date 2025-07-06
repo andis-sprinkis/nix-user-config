@@ -161,8 +161,8 @@ $prompt_symbol"
 
   local zcompdump="${ZDOTDIR:-"$HOME"}/.zcompdump"
 
-  case "$(uname)" in
-    "Darwin")
+  case "$OSTYPE" in
+    "darwin"*)
       if [ ! -f "$zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C /usr/bin/stat -f '%m' "$zcompdump")"))" -gt "86400" ]; then
         compinit
       else
@@ -272,35 +272,38 @@ $prompt_symbol"
   # configure zsh-system-clipboard
   unset ZSH_SYSTEM_CLIPBOARD_METHOD
 
-  if [ "$(uname)" = "Linux" ]; then
-    if [ "$(id -u)" -ge "1000" ]; then
-      if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-        export ZSH_SYSTEM_CLIPBOARD_METHOD="xcc"
-      elif [ "${WAYLAND_DISPLAY:-""}" ]; then
-        export ZSH_SYSTEM_CLIPBOARD_METHOD="wlc"
-      elif [ "${TMUX:-""}" ]; then
-        export ZSH_SYSTEM_CLIPBOARD_METHOD="tmux"
+  case "$OSTYPE" in
+    "linux"*)
+      if [ "$(id -u)" -ge "1000" ]; then
+        if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+          export ZSH_SYSTEM_CLIPBOARD_METHOD="xcc"
+        elif [ "${WAYLAND_DISPLAY:-""}" ]; then
+          export ZSH_SYSTEM_CLIPBOARD_METHOD="wlc"
+        elif [ "${TMUX:-""}" ]; then
+          export ZSH_SYSTEM_CLIPBOARD_METHOD="tmux"
+        fi
+      else
+        if [ "${TMUX:-""}" ]; then
+          export ZSH_SYSTEM_CLIPBOARD_METHOD="tmux"
+        fi
       fi
-    else
-      if [ "${TMUX:-""}" ]; then
-        export ZSH_SYSTEM_CLIPBOARD_METHOD="tmux"
-      fi
-    fi
 
-    if [ "${ZSH_SYSTEM_CLIPBOARD_METHOD:-""}" ]; then
+      if [ "${ZSH_SYSTEM_CLIPBOARD_METHOD:-""}" ]; then
+        if [ "${TMUX:-""}" ]; then
+          export ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true"
+        fi
+
+        . "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
+      fi
+    ;;
+    *)
       if [ "${TMUX:-""}" ]; then
         export ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true"
       fi
 
       . "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
-    fi
-  else
-    if [ "${TMUX:-""}" ]; then
-      export ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true"
-    fi
-
-    . "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
-  fi
+    ;;
+  esac
 
   # source local zsh plugins
   . "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
