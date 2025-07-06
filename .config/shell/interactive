@@ -34,11 +34,11 @@ if [ "$(uname)" = "Linux" ]; then
       export ZSH_SYSTEM_CLIPBOARD_METHOD="xcc"
     elif [ "${WAYLAND_DISPLAY:-""}" ]; then
       export ZSH_SYSTEM_CLIPBOARD_METHOD="wlc"
-    elif "${TMUX:-""}"; then
+    elif [ "${TMUX:-""}" ]; then
       export ZSH_SYSTEM_CLIPBOARD_METHOD="tmux"
     fi
   else
-    if "${TMUX:-""}"; then
+    if [ "${TMUX:-""}" ]; then
       export ZSH_SYSTEM_CLIPBOARD_METHOD="tmux"
     fi
   fi
