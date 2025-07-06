@@ -43,6 +43,7 @@ sel_option="$(echo "$options" | sed "${sel_idx}q;d")"
 case "$sel_option" in
   "set_delay")
     options_delay="0
+3
 5
 10
 15
