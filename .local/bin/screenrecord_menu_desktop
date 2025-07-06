@@ -2,7 +2,7 @@
 set -eu
 
 delay_current=""
-path_state="$HOME/.local/state/screenrecord_menu_desktop"
+path_state="${XDG_STATE_HOME-"${HOME}/.local/state"}/screenrecord_menu_desktop"
 path_state_delay="${path_state}/delay"
 delay_current_str=""
 
