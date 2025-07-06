@@ -46,7 +46,6 @@
   }
 
   # expand alias in insert mode
-
   expand_alias() {
     zle "_expand_alias"
     zle "self-insert"
