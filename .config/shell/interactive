@@ -61,10 +61,6 @@ if is_exec "bat"; then
 fi
 
 
-if [ "${DISPLAY:-""}" ] && [ "$(id -u)" -lt "1000" ]; then
-  unset DISPLAY
-fi
-
 # configure fzf
 if is_exec "fzf"; then
   export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-""}--tabstop=2 --cycle --layout=reverse${is_exec_bat:+" --preview 'bat --color=always {}'"}"
@@ -94,6 +90,11 @@ pyenv() {
     ;;
   esac
 }
+
+# configure X11
+if [ "${DISPLAY:-""}" ] && [ "$(id -u)" -lt "1000" ]; then
+  unset DISPLAY
+fi
 
 # configure gpg
 tty="$(tty)"
