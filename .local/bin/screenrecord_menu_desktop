@@ -1,6 +1,21 @@
 #!/usr/bin/env sh
 set -eu
 
+delay_current=""
+path_state="$HOME/.local/state/screenrecord_menu_desktop"
+path_state_delay="${path_state}/delay"
+delay_current_str=""
+
+if [ -f "$path_state_delay" ]; then
+  delay_current="$(head < "$path_state_delay")"
+
+  if [ "$delay_current" != "0" ]; then
+    delay_current_str="${delay_current:+" (${delay_current}s)"}"
+  fi
+else
+  mkdir -p "$path_state"
+fi
+
 lines="All screens
 Focused screen
 Focused window
@@ -8,7 +23,8 @@ Focused workspace
 Select area...
 Select screen...
 Select window...
-Select workspace..."
+Select workspace...
+Set delay${delay_current_str}"
 
 options="all
 output_focused
@@ -17,10 +33,33 @@ workspace_focused
 area
 output
 window
-workspace"
+workspace
+set_delay"
 
 sel_line="$(printf "%s\n" "$lines" | menu_desktop -p "Record screen:")"
 sel_idx="$(echo "$lines" | grep --line-number -x "$sel_line" | cut -f"1" -d":")"
 sel_option="$(echo "$options" | sed "${sel_idx}q;d")"
 
-screenrecord "$sel_option"
+case "$sel_option" in
+  "set_delay")
+    options_delay="0
+5
+10
+15
+30
+45
+60"
+
+    sel_line="$(set +e; printf "%s\n" "$options_delay" | menu_desktop -p "Set delay in seconds${delay_current_str}:"; set -e)"
+
+    if [ "$sel_line" ]; then
+      echo "$sel_line" > "$path_state_delay"
+    fi
+
+    exec screenrecord_menu_desktop
+  ;;
+  *)
+    screenrecord "$sel_option" "$delay_current"
+  ;;
+esac
+

@@ -8,7 +8,7 @@ path_dir="${HOME}/scr"
 path_out="${path_dir}/$(date "+%s").mp4"
 
 capture_mode="${1:-"area"}"
-countdown="${2:-""}"
+delay="${2:-"0"}"
 
 i3blocks_signal() {
   if [ "${1:-""}" = "wait" ]; then sleep "1"; fi
@@ -27,7 +27,7 @@ notify_saved() {
 not_implemented() {
   msg="Not implemented (${1:-""}): ${2:-""}"
 
-  echo "$msg" 1>&2
+  echo "${script}: $msg" 1>&2
 
   notify-send "$msg" --app-name="${script}" --urgency="critical" 1>/dev/null 2>/dev/null & disown
 
@@ -35,7 +35,11 @@ not_implemented() {
 }
 
 countdown() {
-  time="$countdown"
+  if [ "$delay" = "0" ]; then
+    return
+  fi
+
+  time="$delay"
 
   echo "$time"
 
@@ -93,7 +97,11 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
     esac
 
     if [ -z "$ptr_coord" ]; then
-      exit "0"
+      notify-send "No screen area selected." --app-name="${script}" --urgency="critical" 1>/dev/null 2>/dev/null & disown
+
+      echo "${script}: No screen area selected." 1>&2
+
+      exit "2"
     fi
 
     ptr_coord_x="${ptr_coord%,*}"
@@ -119,9 +127,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       ;;
     esac
 
-    if [ "$countdown" ]; then
-      countdown "$countdown"
-    fi
+    countdown
 
     i3blocks_signal "wait" 1>/dev/null 2>/dev/null & disown
 
@@ -129,13 +135,19 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       "output")
         if ! wf-recorder --audio --codec=libx264rgb "$rec_transpose" --output="$output_name" --file="$path_out"; then
           notify-send "Screen recording failed." --app-name="${script}" --urgency="critical" 1>/dev/null 2>/dev/null & disown
-          exit
+
+          echo "${script}: Screen recording failed." 1>&2
+
+          exit "2"
         fi
       ;;
       *)
         if ! wf-recorder --audio --codec=libx264rgb "$rec_transpose" --geometry="$ptr_coord" --file="$path_out"; then
           notify-send "Screen recording failed." --app-name="${script}" --urgency="critical" 1>/dev/null 2>/dev/null & disown
-          exit
+
+          echo "${script}: Screen recording failed." 1>&2
+
+          exit "2"
         fi
       ;;
     esac
@@ -143,6 +155,8 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
     i3blocks_signal 1>/dev/null 2>/dev/null & disown
 
     notify_saved 1>/dev/null 2>/dev/null & disown
+
+    echo "${script}: Screen recording saved at ${path_out}"
 
     printf '%s' "$path_out" | wl-copy
   }
