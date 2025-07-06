@@ -31,7 +31,7 @@ fi
 if
   is_exec "tmux" && [ -z "${TMUX:-""}" ] && [ "$TERM" != "linux" ] && [ "$(id -u)" -ge "1000" ]
 then
-  ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true" exec tmux
+  exec tmux
 fi
 
 # set window title

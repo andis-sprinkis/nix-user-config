@@ -270,6 +270,10 @@ $prompt_symbol"
   fi
 
   # configure zsh-system-clipboard
+  if [ "${TMUX:-""}" ]; then
+    export ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true"
+  end
+
   if [ "$(uname)" = "Linux" ]; then
     if [ "$(id -u)" -ge "1000" ]; then
       if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
