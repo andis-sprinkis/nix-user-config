@@ -20,10 +20,34 @@ delay="${2:-"0"}"
 
 mkdir -p "$path_dir"
 
-notify_saved() {
-  if [ "$(notify-send "Screenshot saved." "${path_out}" --app-name="${script}" --action="LOCATE=Locate" --wait)" ]; then
-    file_manager_desktop "$path_out"
+saved() {
+  (
+    if [ "$(notify-send "Screenshot saved." "$path_out" --app-name="$script" --action="LOCATE=Locate" --wait)" ]; then
+      file_manager_desktop "$path_out"
+    fi
+  ) 1>/dev/null 2>/dev/null & disown
+
+  echo "${script}: Screenshot saved at ${path_out}"
+
+  if [ "${WAYLAND_DISPLAY:-""}" ]; then
+    printf '%s' "$path_out" | wl-copy
   fi
+
+  if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+    printf '%s' "$path_out" | xclip -sel "clipboard"
+  fi
+
+  exit
+}
+
+failed() {
+  i3blocks_signal 1>/dev/null 2>/dev/null & disown
+
+  notify-send "Taking screenshot failed." --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
+
+  echo "${script}: Taking screenshot failed." 1>&2
+
+  exit "2"
 }
 
 not_implemented() {
@@ -31,7 +55,7 @@ not_implemented() {
 
   echo "$msg" 1>&2
 
-  notify-send "$msg" --app-name="${script}" --urgency="critical" 1>/dev/null 2>/dev/null & disown
+  notify-send "$msg" --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
 
   exit "5"
 }
@@ -60,46 +84,46 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
     exit "3"
   fi
 
+  ptr_coord=""
   jq_rect_map='"\(.x),\(.y) \(.width)x\(.height)"'
 
   case "${capture_mode:-""}" in
     "all")
       countdown
-      grim "$path_out"
+
+      if ! grim "$path_out"; then
+        failed
+      fi
+
+      saved
+
     ;;
     "area")
       countdown
-      dulcepan -f "png" -o "$path_out"
+
+      if ! dulcepan -f "png" -o "$path_out"; then
+        failed
+      fi
+
+      saved
     ;;
     "output")
-      ptr_coord="$(swaymsg -t "get_outputs" | jq -r ".. | select(.active?).rect | ${jq_rect_map}" | slurp)"
-      countdown
-      grim -g "$ptr_coord" "$path_out"
+      ptr_coord="$(set +e; swaymsg -t "get_outputs" | jq -r ".. | select(.active?).rect | ${jq_rect_map}" | slurp; set -e)"
     ;;
     "output_focused")
-      output="$(swaymsg -t "get_outputs" | jq -r ".. | select(.focused?) | .name")"
-      countdown
-      grim -o "$output" "$path_out"
+      ptr_coord="$(set +e; swaymsg -t "get_outputs" | jq -r ".. | select(.focused?).rect | ${jq_rect_map}"; set -e)"
     ;;
     "window")
-      ptr_coord="$(swaymsg -t "get_tree" | jq -r ".. | select(.pid? and .visible?).rect | ${jq_rect_map}" | slurp)"
-      countdown
-      grim -g "$ptr_coord" "$path_out"
+      ptr_coord="$(set +e; swaymsg -t "get_tree" | jq -r ".. | select(.pid? and .visible?).rect | ${jq_rect_map}" | slurp; set -e)"
     ;;
     "window_focused")
-      ptr_coord="$(swaymsg -t "get_tree" | jq -j ".. | select(.type? and .focused?).rect | ${jq_rect_map}")"
-      countdown
-      grim -g "$ptr_coord" "$path_out"
+      ptr_coord="$(set +e; swaymsg -t "get_tree" | jq -j ".. | select(.type? and .focused?).rect | ${jq_rect_map}"; set -e)"
     ;;
     "workspace")
-      ptr_coord="$(swaymsg -t "get_workspaces" | jq -r ".. | select(.visible? and .type == \"workspace\").rect | ${jq_rect_map}" | slurp)"
-      countdown
-      grim -g "$ptr_coord" "$path_out"
+      ptr_coord="$(set +e; swaymsg -t "get_workspaces" | jq -r ".. | select(.visible? and .type == \"workspace\").rect | ${jq_rect_map}" | slurp; set -e)"
     ;;
     "workspace_focused")
-      ptr_coord="$(swaymsg -t "get_workspaces" | jq -r ".. | select(.focused? and .type == \"workspace\").rect | ${jq_rect_map}")"
-      countdown
-      grim -g "$ptr_coord" "$path_out"
+      ptr_coord="$(set +e; swaymsg -t "get_workspaces" | jq -r ".. | select(.focused? and .type == \"workspace\").rect | ${jq_rect_map}"; set -e)"
     ;;
     *)
       echo "$msg_usage" 1>&2
@@ -107,20 +131,34 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
     ;;
   esac
 
-  printf '%s' "$path_out" | wl-copy
+  if [ -z "$ptr_coord" ]; then
+    notify-send "No screen area selected." --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
 
-  notify_saved 1>/dev/null 2>/dev/null & disown
+    echo "${script}: No screen area selected." 1>&2
 
-  exit "0"
+    exit "2"
+  fi
+
+  countdown
+
+  if ! grim -g "$ptr_coord" "$path_out"; then
+    failed
+  fi
+
+  saved
 fi
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   case "${capture_mode:-""}" in
     "all")
-      maim -d "$delay" -u "$path_out"
+      if ! maim -d "$delay" -u "$path_out"; then
+        failed
+      fi
     ;;
     "area")
-      maim -d "$delay" -u --select "$path_out"
+      if ! maim -d "$delay" -u --select "$path_out"; then
+        failed
+      fi
     ;;
     "output")
       not_implemented "X11" "${1:-""}"
@@ -169,15 +207,17 @@ if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
       done
       IFS="$IFS_"
 
-      maim -d "$delay" -u -g "$o_coords" "$path_out"
+      if ! maim -d "$delay" -u -g "$o_coords" "$path_out"; then
+        failed
+      fi
     ;;
     "window")
       not_implemented "X11" "${1:-""}"
     ;;
     "window_focused")
-      win="$(xdotool "getactivewindow")"
-
-      maim -d "$delay" -u --window "$win" "$path_out"
+      if ! maim -d "$delay" -u --window "$(xdotool "getactivewindow")" "$path_out"; then
+        failed
+      fi
     ;;
     "workspace")
       not_implemented "X11" "${1:-""}"
@@ -191,11 +231,7 @@ if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
     ;;
   esac
 
-  printf '%s' "$path_out" | xclip -sel "clipboard"
-
-  notify_saved 1>/dev/null 2>/dev/null & disown
-
-  exit "0"
+  saved
 fi
 
 case "${1:-""}" in

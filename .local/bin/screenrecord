@@ -29,18 +29,28 @@ saved() {
   i3blocks_signal 1>/dev/null 2>/dev/null & disown
 
   (
-    if [ "$(notify-send "Screen recording saved." "${path_out}" --app-name="${script}" --action="LOCATE=Locate" --wait)" ]; then
+    if [ "$(notify-send "Screen recording saved." "$path_out" --app-name="$script" --action="LOCATE=Locate" --wait)" ]; then
       file_manager_desktop "$path_out"
     fi
   ) 1>/dev/null 2>/dev/null & disown
 
   echo "${script}: Screen recording saved at ${path_out}"
+
+  if [ "${WAYLAND_DISPLAY:-""}" ]; then
+    printf '%s' "$path_out" | wl-copy
+  fi
+
+  if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+    printf '%s' "$path_out" | xclip -sel "clipboard"
+  fi
+
+  exit
 }
 
 failed() {
   i3blocks_signal 1>/dev/null 2>/dev/null & disown
 
-  notify-send "Screen recording failed." --app-name="${script}" --urgency="critical" 1>/dev/null 2>/dev/null & disown
+  notify-send "Screen recording failed." --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
 
   echo "${script}: Screen recording failed." 1>&2
 
@@ -52,7 +62,7 @@ not_implemented() {
 
   echo "${script}: $msg" 1>&2
 
-  notify-send "$msg" --app-name="${script}" --urgency="critical" 1>/dev/null 2>/dev/null & disown
+  notify-send "$msg" --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
 
   exit "5"
 }
@@ -125,7 +135,7 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       esac
 
       if [ -z "$ptr_coord" ]; then
-        notify-send "No screen area selected." --app-name="${script}" --urgency="critical" 1>/dev/null 2>/dev/null & disown
+        notify-send "No screen area selected." --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
 
         echo "${script}: No screen area selected." 1>&2
 
@@ -171,10 +181,6 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
       esac
 
       saved
-
-      printf '%s' "$path_out" | wl-copy
-
-      exit
     ;;
     "-h"|"--help")
       echo "$msg_usage"
