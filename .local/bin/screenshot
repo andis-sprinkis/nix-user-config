@@ -3,7 +3,7 @@ set -eu
 IFS_="$IFS"
 
 script="$(basename "$0")"
-msg_usage="${script} usage: no arguments (same as all) OR [all|area|output|output_focused|window|window_focused|workspace|workspace_focused] OR [--help|-h]"
+msg_usage="${script} usage: no arguments (same as all) OR \"\"|all|area|output|output_focused|window|window_focused|workspace|workspace_focused [DELAY] OR [--help|-h]"
 
 case "${1:-""}" in
   "--help"|"-h")
@@ -14,6 +14,9 @@ esac
 
 path_dir="${HOME}/scr"
 path_out="${path_dir}/$(date "+%s").png"
+
+capture_mode="${1:-"all"}"
+delay="${2:-"0"}"
 
 mkdir -p "$path_dir"
 
@@ -33,6 +36,25 @@ not_implemented() {
   exit "5"
 }
 
+
+countdown() {
+  if [ "$delay" = "0" ]; then
+    return
+  fi
+
+  time="$delay"
+
+  echo "$time"
+
+  while [ "$time" -gt "0" ]; do
+    time="$((time - 1))"
+
+    sleep "1"
+
+    echo "$time"
+  done
+}
+
 if [ "${WAYLAND_DISPLAY:-""}" ]; then
   if [ "$(pidof "grim")" ] || [ "$(pidof "dulcepan")" ]; then
     exit "3"
@@ -40,34 +62,44 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
 
   jq_rect_map='"\(.x),\(.y) \(.width)x\(.height)"'
 
-  case "${1:-""}" in
-    ""|"all")
+  case "${capture_mode:-""}" in
+    "all")
+      countdown
       grim "$path_out"
     ;;
     "area")
+      countdown
       dulcepan -f "png" -o "$path_out"
     ;;
     "output")
-      grim -g "$(swaymsg -t "get_outputs" | jq -r ".. | select(.active?).rect | ${jq_rect_map}" | slurp)" "$path_out"
+      ptr_coord="$(swaymsg -t "get_outputs" | jq -r ".. | select(.active?).rect | ${jq_rect_map}" | slurp)"
+      countdown
+      grim -g "$ptr_coord" "$path_out"
     ;;
     "output_focused")
-      grim -o "$(swaymsg -t "get_outputs" | jq -r ".. | select(.focused?) | .name")" "$path_out"
+      output="$(swaymsg -t "get_outputs" | jq -r ".. | select(.focused?) | .name")"
+      countdown
+      grim -o "$output" "$path_out"
     ;;
     "window")
-      grim -g "$(swaymsg -t "get_tree" | jq -r ".. | select(.pid? and .visible?).rect | ${jq_rect_map}" | slurp)" "$path_out"
+      ptr_coord="$(swaymsg -t "get_tree" | jq -r ".. | select(.pid? and .visible?).rect | ${jq_rect_map}" | slurp)"
+      countdown
+      grim -g "$ptr_coord" "$path_out"
     ;;
     "window_focused")
-      grim -g "$(swaymsg -t "get_tree" | jq -j ".. | select(.type? and .focused?).rect | ${jq_rect_map}")" "$path_out"
+      ptr_coord="$(swaymsg -t "get_tree" | jq -j ".. | select(.type? and .focused?).rect | ${jq_rect_map}")"
+      countdown
+      grim -g "$ptr_coord" "$path_out"
     ;;
     "workspace")
-      grim -g "$(swaymsg -t "get_workspaces" | jq -r ".. | select(.visible? and .type == \"workspace\").rect | ${jq_rect_map}" | slurp)" "$path_out"
+      ptr_coord="$(swaymsg -t "get_workspaces" | jq -r ".. | select(.visible? and .type == \"workspace\").rect | ${jq_rect_map}" | slurp)"
+      countdown
+      grim -g "$ptr_coord" "$path_out"
     ;;
     "workspace_focused")
-      grim -g "$(swaymsg -t "get_workspaces" | jq -r ".. | select(.focused? and .type == \"workspace\").rect | ${jq_rect_map}")" "$path_out"
-    ;;
-    "-h"|"--help")
-      echo "$msg_usage"
-      exit "0"
+      ptr_coord="$(swaymsg -t "get_workspaces" | jq -r ".. | select(.focused? and .type == \"workspace\").rect | ${jq_rect_map}")"
+      countdown
+      grim -g "$ptr_coord" "$path_out"
     ;;
     *)
       echo "$msg_usage" 1>&2
@@ -83,12 +115,12 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then
 fi
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-  case "${1:-""}" in
-    ""|"all")
-      maim -u "$path_out"
+  case "${capture_mode:-""}" in
+    "all")
+      maim -d "$delay" -u "$path_out"
     ;;
     "area")
-      maim -u --select "$path_out"
+      maim -d "$delay" -u --select "$path_out"
     ;;
     "output")
       not_implemented "X11" "${1:-""}"
@@ -137,23 +169,21 @@ if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
       done
       IFS="$IFS_"
 
-      maim -u -g "$o_coords" "$path_out"
+      maim -d "$delay" -u -g "$o_coords" "$path_out"
     ;;
     "window")
       not_implemented "X11" "${1:-""}"
     ;;
     "window_focused")
-      maim -u --window "$(xdotool "getactivewindow")" "$path_out"
+      win="$(xdotool "getactivewindow")"
+
+      maim -d "$delay" -u --window "$win" "$path_out"
     ;;
     "workspace")
       not_implemented "X11" "${1:-""}"
     ;;
     "workspace_focused")
       not_implemented "X11" "${1:-""}"
-    ;;
-    "-h"|"--help")
-      echo "$msg_usage"
-      exit "0"
     ;;
     *)
       echo "$msg_usage" 1>&2
@@ -169,10 +199,6 @@ if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
 fi
 
 case "${1:-""}" in
-  "-h"|"--help")
-    echo "$msg_usage"
-    exit "0"
-  ;;
   ""|"all"|"output"|"output_focused"|"window"|"window_focused"|"workspace"|"workspace_focused"|"area"|"stop")
     echo "Must be ran under X11 or Wayland." 1>&2
     exit "2"

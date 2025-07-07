@@ -36,7 +36,7 @@ window
 workspace
 set_delay"
 
-sel_line="$(printf "%s\n" "$lines" | menu_desktop -p "Record screen:")"
+sel_line="$(printf "%s\n" "$lines" | menu_desktop -p "Record screen${delay_current_str}:")"
 sel_idx="$(echo "$lines" | grep --line-number -x "$sel_line" | cut -f"1" -d":")"
 sel_option="$(echo "$options" | sed "${sel_idx}q;d")"
 

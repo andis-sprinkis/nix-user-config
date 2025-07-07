@@ -2,7 +2,14 @@
 set -eu
 
 script="$(basename "$0")"
-msg_usage="${script} usage: no arguments (same as area) OR [\"\"|all|area|output|output_focused|window|window_focused|workspace|workspace_focused|stop] [DELAY] OR [--help|-h]"
+msg_usage="${script} usage: no arguments (same as area) OR \"\"|all|area|output|output_focused|window|window_focused|workspace|workspace_focused [DELAY] OR stop OR [--help|-h]"
+
+case "${1:-""}" in
+  "--help"|"-h")
+    echo "$msg_usage"
+    exit
+  ;;
+esac
 
 path_dir="${HOME}/scr"
 path_out="${path_dir}/$(date "+%s").mp4"
@@ -51,8 +58,6 @@ not_implemented() {
 }
 
 countdown() {
-  i3blocks_signal "wait" 1>/dev/null 2>/dev/null & disown
-
   if [ "$delay" = "0" ]; then
     return
   fi
@@ -68,6 +73,8 @@ countdown() {
 
     echo "$time"
   done
+
+  i3blocks_signal "wait" 1>/dev/null 2>/dev/null & disown
 }
 
 if [ "${WAYLAND_DISPLAY:-""}" ]; then
