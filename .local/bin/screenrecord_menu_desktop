@@ -16,25 +16,25 @@ else
   mkdir -p "$path_state"
 fi
 
-lines="All screens
-Focused screen
-Focused window
-Focused workspace
-Select area...
-Select screen...
-Select window...
-Select workspace...
-Set delay${delay_current_str}"
+lines="Set delay${delay_current_str}
+All screens
+Current screen
+Current window
+Current workspace
+Select area
+Select screen
+Select window
+Select workspace"
 
-options="all
+options="set_delay
+all
 output_focused
 window_focused
 workspace_focused
 area
 output
 window
-workspace
-set_delay"
+workspace"
 
 sel_line="$(printf "%s\n" "$lines" | menu_desktop -p "Record screen${delay_current_str}:")"
 sel_idx="$(echo "$lines" | grep --line-number -x "$sel_line" | cut -f"1" -d":")"
