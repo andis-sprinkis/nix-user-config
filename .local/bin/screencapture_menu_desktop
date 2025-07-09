@@ -1,0 +1,81 @@
+#!/usr/bin/env sh
+set -eu
+
+delay_current=""
+path_state="${XDG_STATE_HOME-"${HOME}/.local/state"}/screencapture_menu_desktop"
+path_state_delay="${path_state}/delay"
+delay_current_str=""
+
+if [ -f "$path_state_delay" ]; then
+  delay_current="$(head < "$path_state_delay")"
+
+  if [ "$delay_current" != "0" ]; then
+    delay_current_str="${delay_current:+" (${delay_current}s)"}"
+  fi
+else
+  mkdir -p "$path_state"
+fi
+
+lines="Set delay${delay_current_str}
+Picture: all screens
+Picture: current screen
+Picture: current window
+Picture: current workspace
+Picture: select area...
+Picture: select screen...
+Picture: select window...
+Picture: select workspace...
+Video: all screens
+Video: current screen
+Video: current window
+Video: current workspace
+Video: select area...
+Video: select screen...
+Video: select window...
+Video: select workspace..."
+
+options="set_delay
+picture_all
+picture_output_focused
+picture_window_focused
+picture_workspace_focused
+picture_area
+picture_output
+picture_window
+picture_workspace
+video_all
+video_output_focused
+video_window_focused
+video_workspace_focused
+video_area
+video_output
+video_window
+video_workspace"
+
+sel_line="$(printf "%s\n" "$lines" | menu_desktop -p "Screen capture${delay_current_str}:")"
+sel_idx="$(echo "$lines" | grep --line-number -x "$sel_line" | cut -f"1" -d":")"
+sel_option="$(echo "$options" | sed "${sel_idx}q;d")"
+
+case "$sel_option" in
+  "set_delay")
+    options_delay="0
+3
+5
+10
+15
+30
+45
+60"
+
+    sel_line="$(set +e; printf "%s\n" "$options_delay" | menu_desktop -p "Set delay in seconds${delay_current_str}:"; set -e)"
+
+    if [ "$sel_line" ]; then
+      echo "$sel_line" > "$path_state_delay"
+    fi
+
+    exec screencapture_menu_desktop
+  ;;
+  *)
+    screencapture "$sel_option" "$delay_current"
+  ;;
+esac
