@@ -1,0 +1,398 @@
+#!/usr/bin/env sh
+set -eu
+
+script="$(basename "$0")"
+msg_usage="${script} options:
+picture|video all|area|output|output_focused|window|window_focused|workspace|workspace_focused [DELAY]
+<no options>|picture  same as 'picture area'
+video                 same as 'video area'
+video stop            stop recording video
+--help|-h             print this message"
+
+case "${1:-""}" in
+  "--help"|"-h")
+    echo "$msg_usage"
+    exit
+  ;;
+esac
+
+path_dir="${HOME}/scr"
+
+capture_format="${1:-"picture"}"
+capture_mode="${2:-"all"}"
+delay="${3:-"0"}"
+
+display_server=""
+
+if [ "${WAYLAND_DISPLAY:-""}" ]; then
+  display_server="wayland"
+fi
+
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+  display_server="x11"
+fi
+
+i3blocks_signal() {
+  if [ "${1:-""}" = "wait" ]; then sleep "1"; fi
+
+  if [ "$(pidof "i3blocks")" ]; then
+    pkill "-SIGRTMIN+7" "i3blocks"
+  fi
+}
+
+saved() {
+  i3blocks_signal 1>/dev/null 2>/dev/null & disown
+
+  (
+    if [ "$(notify-send "Screen capture (${capture_format}) saved." "$path_out" --app-name="$script" --action="LOCATE=Locate" --wait)" ]; then
+      file_manager_desktop "$path_out"
+    fi
+  ) 1>/dev/null 2>/dev/null & disown
+
+  echo "${script}: Screen capture (${capture_format}) saved at ${path_out}"
+
+  case "$display_server" in
+    "wayland")
+      printf '%s' "$path_out" | wl-copy
+    ;;
+    "x11")
+      printf '%s' "$path_out" | xclip -sel "clipboard"
+    ;;
+  esac
+
+  exit
+}
+
+failed() {
+  i3blocks_signal 1>/dev/null 2>/dev/null & disown
+
+  notify-send "Screen capture (${capture_format}) failed." --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
+  echo "${script}: Screen capture (${capture_format}) failed." 1>&2
+
+  exit "2"
+}
+
+not_implemented() {
+  msg="Not implemented (${display_server}): ${capture_mode} ${capture_mode}"
+
+  notify-send "$msg" --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
+  echo "${script}: $msg" 1>&2
+
+  exit "5"
+}
+
+no_display_server() {
+  echo "Must be ran under X11 or Wayland." 1>&2
+
+  exit "2"
+}
+
+no_area_selected() {
+  notify-send "No screen area selected." --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
+  echo "${script}: No screen area selected." 1>&2
+
+  exit "2"
+}
+
+countdown() {
+  while [ "$delay" -gt "0" ]; do
+    delay="$((delay - 1))"
+
+    sleep "1"
+
+    echo "$delay"
+  done
+
+  i3blocks_signal "wait" 1>/dev/null 2>/dev/null & disown
+}
+
+ptr_coord=""
+jq_rect_map='"\(.x),\(.y) \(.width)x\(.height)"'
+
+case "$capture_format" in
+  "video")
+    path_out="${path_dir}/$(date "+%s").mp4"
+
+    case "$capture_mode" in
+      "stop")
+        case "$display_server" in
+          "wayland")
+            set +e
+            pkill -SIGINT -f "wf-recorder"
+            pkill -SIGINT -f "slurp"
+            set -e
+
+            i3blocks_signal 1>/dev/null 2>/dev/null & disown
+
+            exit "0"
+          ;;
+          "x11")
+            not_implemented
+          ;;
+          *)
+            no_display_server
+          ;;
+        esac
+      ;;
+      "all"|"area"|"output"|"output_focused"|"window"|"window_focused"|"workspace"|"workspace_focused")
+        case "$display_server" in
+          "wayland")
+            if [ "$(pidof "wf-recorder")" ] || [ "$(pidof "slurp")" ]; then
+              exit "3"
+            fi
+
+            case "$capture_mode" in
+              "all")
+                not_implemented
+              ;;
+              "area")
+                ptr_coord="$(set +e; slurp; set -e)"
+              ;;
+              "output")
+                ptr_coord="$(set +e; swaymsg -t "get_outputs" | jq -r ".. | select(.active?).rect | ${jq_rect_map}" | slurp; set -e)"
+              ;;
+              "output_focused")
+                ptr_coord="$(set +e; swaymsg -t "get_outputs" | jq -r ".. | select(.focused?).rect | ${jq_rect_map}"; set -e)"
+              ;;
+              "window")
+                ptr_coord="$(set +e; swaymsg -t "get_tree" | jq -r ".. | select(.pid? and .visible?).rect | ${jq_rect_map}" | slurp; set -e)"
+              ;;
+              "window_focused")
+                ptr_coord="$(set +e; swaymsg -t "get_tree" | jq -r ".. | select(.type? and .focused?).rect | ${jq_rect_map}"; set -e)"
+              ;;
+              "workspace")
+                ptr_coord="$(set +e; swaymsg -t "get_workspaces" | jq -r ".. | select(.visible? and .type == \"workspace\").rect | ${jq_rect_map}" | slurp; set -e)"
+              ;;
+              "workspace_focused")
+                ptr_coord="$(set +e; swaymsg -t "get_workspaces" | jq -r ".. | select(.focused? and .type == \"workspace\").rect | ${jq_rect_map}"; set -e)"
+              ;;
+            esac
+
+            if [ -z "$ptr_coord" ]; then
+              no_area_selected
+            fi
+
+            ptr_coord_x="${ptr_coord%,*}"
+            ptr_coord_y="${ptr_coord#*,}"
+            ptr_coord_y="${ptr_coord_y% *}"
+
+            output="$(
+              swaymsg -rt get_outputs | jq -r \
+                ".[] | select((${ptr_coord_x} >= .rect.x) and (${ptr_coord_x} < .rect.x + .rect.width) and (${ptr_coord_y} >= .rect.y) and (${ptr_coord_y} < .rect.y + .rect.height))"
+            )"
+
+            output_name="$(echo "$output" | jq -r ".name")"
+            output_transform="$(echo "$output" | jq -r ".transform")"
+
+            rec_transpose=""
+
+            case "$output_transform" in
+              "180")
+                rec_transpose="-F transpose=1"
+              ;;
+              "90")
+                rec_transpose="-F transpose=2"
+              ;;
+            esac
+
+            countdown
+
+            case "$capture_mode" in
+              "output")
+                if ! wf-recorder --audio --codec=libx264rgb "$rec_transpose" --output="$output_name" --file="$path_out"; then
+                  failed
+                fi
+              ;;
+              *)
+                if ! wf-recorder --audio --codec=libx264rgb "$rec_transpose" --output="$output_name" --geometry="$ptr_coord" --file="$path_out"; then
+                  failed
+                fi
+              ;;
+            esac
+
+            saved
+          ;;
+          "x11")
+            not_implemented
+          ;;
+          *)
+            no_display_server
+          ;;
+        esac
+      ;;
+      "-h"|"--help")
+        echo "$msg_usage"
+        exit "0"
+      ;;
+      *)
+        echo "$msg_usage" 1>&2
+        exit "1"
+      ;;
+    esac
+  ;;
+  "picture")
+    path_out="${path_dir}/$(date "+%s").png"
+
+    case "$display_server" in
+      "wayland")
+        if [ "$(pidof "grim")" ] || [ "$(pidof "dulcepan")" ]; then
+          exit "3"
+        fi
+
+        case "$capture_mode" in
+          "all")
+            countdown
+
+            if ! grim "$path_out"; then
+              failed
+            fi
+
+            saved
+
+          ;;
+          "area")
+            countdown
+
+            if ! dulcepan -f "png" -o "$path_out"; then
+              failed
+            fi
+
+            saved
+          ;;
+          "output")
+            ptr_coord="$(set +e; swaymsg -t "get_outputs" | jq -r ".. | select(.active?).rect | ${jq_rect_map}" | slurp; set -e)"
+          ;;
+          "output_focused")
+            ptr_coord="$(set +e; swaymsg -t "get_outputs" | jq -r ".. | select(.focused?).rect | ${jq_rect_map}"; set -e)"
+          ;;
+          "window")
+            ptr_coord="$(set +e; swaymsg -t "get_tree" | jq -r ".. | select(.pid? and .visible?).rect | ${jq_rect_map}" | slurp; set -e)"
+          ;;
+          "window_focused")
+            ptr_coord="$(set +e; swaymsg -t "get_tree" | jq -j ".. | select(.type? and .focused?).rect | ${jq_rect_map}"; set -e)"
+          ;;
+          "workspace")
+            ptr_coord="$(set +e; swaymsg -t "get_workspaces" | jq -r ".. | select(.visible? and .type == \"workspace\").rect | ${jq_rect_map}" | slurp; set -e)"
+          ;;
+          "workspace_focused")
+            ptr_coord="$(set +e; swaymsg -t "get_workspaces" | jq -r ".. | select(.focused? and .type == \"workspace\").rect | ${jq_rect_map}"; set -e)"
+          ;;
+          *)
+            echo "$msg_usage" 1>&2
+            exit "1"
+          ;;
+        esac
+
+        if [ -z "$ptr_coord" ]; then
+          no_area_selected
+        fi
+
+        countdown
+
+        if ! grim -g "$ptr_coord" "$path_out"; then
+          failed
+        fi
+
+        saved
+      ;;
+      "x11")
+        case "${capture_mode:-""}" in
+          "all")
+            if ! maim -d "$delay" -u "$path_out"; then
+              failed
+            fi
+
+            saved
+          ;;
+          "area")
+            if ! maim -d "$delay" -u --select "$path_out"; then
+              failed
+            fi
+
+            saved
+          ;;
+          "output")
+            not_implemented
+          ;;
+          "output_focused")
+            mouseloc="$(xdotool "getmouselocation")"
+
+            m_x="${mouseloc##x:}"
+            m_x="${m_x%% *}"
+
+            m_y="${mouseloc##*y:}"
+            m_y="${m_y%% *}"
+
+            outputs="$(set +e; xrandr | grep " connected "; set -e)"
+
+            o_coords=""
+
+            IFS="
+  "
+            for o in $outputs; do
+              IFS="$IFS_"
+
+              # o_name="${o%%" "*}"
+
+              o_coords="${o##*" connected "}"
+              o_coords="${o_coords##"primary "}"
+              o_coords="${o_coords%%" "*}"
+
+              o_width="${o_coords%%"x"*}"
+
+              o_height="${o_coords##*"x"}"
+              o_height="${o_height%%"+"*}"
+
+              o_x_offset="${o_coords##"${o_width}x${o_height}+"}"
+              o_x_offset="${o_x_offset%%"+"*}"
+
+              o_y_offset="${o_coords##"${o_width}x${o_height}+${o_x_offset}+"}"
+
+              if   [ "$m_x" -ge "$o_x_offset" ] \
+                && [ "$m_x" -le "$((o_width + o_x_offset))" ] \
+                && [ "$m_y" -ge "$o_y_offset" ] \
+                && [ "$m_y" -le "$((o_height + o_y_offset))" ]
+              then
+                break
+              fi
+            done
+            IFS="$IFS_"
+
+            if ! maim -d "$delay" -u -g "$o_coords" "$path_out"; then
+              failed
+            fi
+
+            saved
+          ;;
+          "window")
+            not_implemented
+          ;;
+          "window_focused")
+            if ! maim -d "$delay" -u --window "$(xdotool "getactivewindow")" "$path_out"; then
+              failed
+            fi
+
+            saved
+          ;;
+          "workspace")
+            not_implemented
+          ;;
+          "workspace_focused")
+            not_implemented
+          ;;
+          *)
+            echo "$msg_usage" 1>&2
+            exit "1"
+          ;;
+        esac
+      ;;
+      *)
+        no_display_server
+      ;;
+    esac
+  ;;
+  *)
+    echo "$msg_usage" 1>&2
+    exit "1"
+  ;;
+esac

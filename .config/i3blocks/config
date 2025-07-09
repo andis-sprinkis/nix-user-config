@@ -1,7 +1,7 @@
 # vi: ft=ini
 
-[screenrecord]
-command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/screenrecord
+[screencapture]
+command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/screencapture
 interval=30
 signal=7
 

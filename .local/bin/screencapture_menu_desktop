@@ -35,28 +35,28 @@ Video: select window...
 Video: select workspace..."
 
 options="set_delay
-picture_all
-picture_output_focused
-picture_window_focused
-picture_workspace_focused
-picture_area
-picture_output
-picture_window
-picture_workspace
-video_all
-video_output_focused
-video_window_focused
-video_workspace_focused
-video_area
-video_output
-video_window
-video_workspace"
+picture all
+picture output_focused
+picture window_focused
+picture workspace_focused
+picture area
+picture output
+picture window
+picture workspace
+video all
+video output_focused
+video window_focused
+video workspace_focused
+video area
+video output
+video window
+video workspace"
 
 sel_line="$(printf "%s\n" "$lines" | menu_desktop -p "Screen capture${delay_current_str}:")"
 sel_idx="$(echo "$lines" | grep --line-number -x "$sel_line" | cut -f"1" -d":")"
-sel_option="$(echo "$options" | sed "${sel_idx}q;d")"
+sel_options="$(echo "$options" | sed "${sel_idx}q;d")"
 
-case "$sel_option" in
+case "$sel_options" in
   "set_delay")
     options_delay="0
 3
@@ -76,6 +76,6 @@ case "$sel_option" in
     exec screencapture_menu_desktop
   ;;
   *)
-    screencapture "$sel_option" "$delay_current"
+    screencapture $sel_options "$delay_current"
   ;;
 esac
