@@ -9,11 +9,6 @@
   # inactivity timeout
   TMOUT="1600"
 
-  # fn: detect if given command is executable
-  is_exec() {
-    command -v "$1" 1>/dev/null 2>/dev/null
-  }
-
   # fn: cursor shape for different vi modes
   case "$TERM" in
     "linux")
@@ -115,8 +110,8 @@
   if [ "${BREW_PREFIX:-""}" ] && [ -f "${BREW_PREFIX}/bin/brew" ]; then
     fpath[1,0]="${BREW_PREFIX}/share/zsh/site-functions"
   fi
-
-  if is_exec "git"; then
+ 
+  if command -v "git" 1>/dev/null 2>/dev/null; then
     # git-completion plugin
     fpath=($fpath "${XDG_DATA_HOME:-$HOME/.local/share}/git-completion/zsh")
 
@@ -235,7 +230,7 @@ $prompt_symbol"
   # fi
 
   # configure fzf
-  if is_exec "fzf"; then
+  if command -v "fzf" 1>/dev/null 2>/dev/null; then
     local fzf_completion
     for fzf_completion in \
       "/usr/share/fzf/completion.zsh" \

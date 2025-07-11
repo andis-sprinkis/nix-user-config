@@ -1,10 +1,5 @@
 #!/usr/bin/env sh
 
-# fn: detect if given command is executable
-is_exec() {
-  command -v "$1" 1>/dev/null 2>/dev/null
-}
-
 # default macOS homebrew dir. path
 if [ -d "/opt/homebrew" ]; then
   export BREW_PREFIX="/opt/homebrew"
@@ -68,7 +63,7 @@ export PAGER="less"
 # set TERMINAL
 export TERMINAL="terminal"
 
-if is_exec "nvim"; then
+if command -v "nvim" 1>/dev/null 2>/dev/null; then
   # configure nvim as EDITOR, MANPAGER
   export EDITOR="nvim"
   export MANWIDTH="999"
@@ -76,7 +71,7 @@ if is_exec "nvim"; then
 else
   # or set a different avail. EDITOR
   for editor in "vim" "vi" "nano"; do
-    is_exec "$editor" && export EDITOR="$editor" && break
+    command -v "$editor" 1>/dev/null 2>/dev/null && export EDITOR="$editor" && break
   done
 fi
 
@@ -90,7 +85,7 @@ export FZF_DEFAULT_OPTS=\
 "--color=fg:${GUI_COLOR_FOREGROUND:-""},fg+:${GUI_COLOR_FOREGROUND:-""},bg:${GUI_COLOR_BACKGROUND:-""},bg+:${GUI_COLOR_BACKGROUND:-""},hl:${GUI_COLOR_A:-""},hl+:${GUI_COLOR_D:-""},info:${GUI_COLOR_D:-""},marker:${GUI_COLOR_D:-""},prompt:${GUI_COLOR_D:-""},spinner:${GUI_COLOR_D:-""},pointer:${GUI_COLOR_D:-""},header:${GUI_COLOR_A:-""},border:${GUI_COLOR_8:-""},label:${GUI_COLOR_D:-""},query:${GUI_COLOR_FOREGROUND:-""} "
 
 # configure makepkg
-if is_exec "nproc"; then
+if command -v "nproc" 1>/dev/null 2>/dev/null; then
   proc_units_no="$(nproc)"
 
   if [ "$proc_units_no" ]; then

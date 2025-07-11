@@ -1,8 +1,4 @@
 #!/usr/bin/env sh
-# fn: detect if given command is executable
-is_exec() {
-  command -v "$1" 1>/dev/null 2>/dev/null
-}
 
 # 'git' alias must precede the 'g*', 'g_*' aliases
 # 'dotgit' alias must precede the 'dg*', 'dg_*' aliases
@@ -104,7 +100,7 @@ alias \
   wget="wget --hsts-file=\"\${XDG_DATA_HOME:-\$HOME/.local/share}/wget-hsts\""
 
 # 'yay' alias must precede the 'pac_*' aliases
-if is_exec "yay"; then
+if command -v "yay" 1>/dev/null 2>/dev/null; then
   alias \
     pacman="yay --color=always" \
     yay="yay --color=always" \

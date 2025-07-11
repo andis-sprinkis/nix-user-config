@@ -1,10 +1,5 @@
 #!/usr/bin/env sh
 
-# fn: detect if given command is executable
-is_exec() {
-  command -v "$1" 1>/dev/null 2>/dev/null
-}
-
 # fn: set terminal emulator window title
 set_window_title() { printf "\033]0;%s\007" "$PWD"; }
 
@@ -29,10 +24,10 @@ fi
 
 # launch tmux
 if
-  is_exec "tmux" && [ -z "${TMUX:-""}" ] && [ "$TERM" != "linux" ]
+  command -v "tmux" 1>/dev/null 2>/dev/null && [ -z "${TMUX:-""}" ] && [ "$TERM" != "linux" ]
 then
-  case "$(uname)" in
-    "Darwin")
+  case "${OSTYPE:-"$(uname)"}" in
+    [Dd]"arwin"*)
       if [ "$(id -u)" -ge "501" ]; then
         exec tmux
       fi
@@ -65,7 +60,7 @@ TMOUT="5400"
 
 # configure bat
 is_exec_bat=""
-if is_exec "bat"; then
+if command -v "bat" 1>/dev/null 2>/dev/null; then
   is_exec_bat="1"
   export BAT_THEME="Visual Studio Dark+"
   export BAT_STYLE="plain,numbers,header-filename"
@@ -73,13 +68,13 @@ fi
 
 
 # configure fzf
-if is_exec "fzf"; then
+if command -v "fzf" 1>/dev/null 2>/dev/null; then
   export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-""}--tabstop=2 --cycle --layout=reverse${is_exec_bat:+" --preview 'bat --color=always {}'"}"
 fi
 
 # configure pyenv
 
-# if is_exec "pyenv"; then
+# if command -v "pyenv" 1>/dev/null 2>/dev/null; then
 #   eval "$(pyenv init - zsh)"
 # fi
 
