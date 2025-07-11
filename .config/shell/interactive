@@ -31,7 +31,18 @@ fi
 if
   is_exec "tmux" && [ -z "${TMUX:-""}" ] && [ "$TERM" != "linux" ]
 then
-  exec tmux
+  case "$OSTYPE" in
+    "darwin"*)
+      if [ "$(id -u)" -ge "501" ]; then
+        exec tmux
+      fi
+    ;;
+    *)
+      if [ "$(id -u)" -ge "1000" ]; then
+        exec tmux
+      fi
+   ;;
+  esac
 fi
 
 # set window title
