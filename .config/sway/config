@@ -8,6 +8,11 @@ input type:keyboard {
   repeat_rate 55
 }
 
+input type:pointer {
+  accel_profile flat
+  pointer_accel 0.0
+}
+
 bindgesture swipe:right workspace next
 bindgesture swipe:left  workspace prev
 
