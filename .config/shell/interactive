@@ -31,8 +31,8 @@ fi
 if
   is_exec "tmux" && [ -z "${TMUX:-""}" ] && [ "$TERM" != "linux" ]
 then
-  case "$OSTYPE" in
-    "darwin"*)
+  case "$(uname)" in
+    "Darwin")
       if [ "$(id -u)" -ge "501" ]; then
         exec tmux
       fi
@@ -41,7 +41,7 @@ then
       if [ "$(id -u)" -ge "1000" ]; then
         exec tmux
       fi
-   ;;
+    ;;
   esac
 fi
 
