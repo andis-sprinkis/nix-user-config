@@ -16,8 +16,7 @@ else
   mkdir -p "$path_state"
 fi
 
-lines="Set delay${delay_current_str}
-Picture: all screens
+lines="Picture: all screens
 Picture: current screen
 Picture: current window
 Picture: current workspace
@@ -32,10 +31,10 @@ Video: current workspace
 Video: select area...
 Video: select screen...
 Video: select window...
-Video: select workspace..."
+Video: select workspace...
+Set delay${delay_current_str}"
 
-options="set_delay
-picture all
+options="picture all
 picture output_focused
 picture window_focused
 picture workspace_focused
@@ -50,7 +49,8 @@ video workspace_focused
 video area
 video output
 video window
-video workspace"
+video workspace
+set_delay"
 
 sel_line="$(printf "%s\n" "$lines" | menu_desktop -p "Screen capture${delay_current_str}:")"
 sel_idx="$(echo "$lines" | grep --line-number -x "$sel_line" | cut -f"1" -d":")"
