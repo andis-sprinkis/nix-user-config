@@ -11,6 +11,8 @@ mode = viewer
 position = 0,0
 # Window size (fullscreen/parent/image, or absolute size, e.g. 800,600)
 size = image
+# Sway/Hyprland only: create floating window above the currently focused one
+overlay = no
 # Use window decoration (yes/no)
 decoration = yes
 # Action performed by SIGUSR1 signal (same format as for key bindings)
@@ -156,7 +158,7 @@ c = skip_file
 Shift+s = slideshow
 s = animation
 f = fullscreen
-Return = mode
+Return = mode gallery
 
 Left = step_left 10
 Right = step_right 10
