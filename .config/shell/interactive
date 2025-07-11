@@ -29,7 +29,7 @@ fi
 
 # launch tmux
 if
-  is_exec "tmux" && [ -z "${TMUX:-""}" ] && [ "$TERM" != "linux" ] && [ "$(id -u)" -ge "1000" ]
+  is_exec "tmux" && [ -z "${TMUX:-""}" ] && [ "$TERM" != "linux" ]
 then
   exec tmux
 fi
