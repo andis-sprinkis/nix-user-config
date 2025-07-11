@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 set -eu
+IFS_="$IFS"
 
 script="$(basename "$0")"
 msg_usage="${script} options:
@@ -328,7 +329,7 @@ case "$capture_format" in
             o_coords=""
 
             IFS="
-  "
+"
             for o in $outputs; do
               IFS="$IFS_"
 
