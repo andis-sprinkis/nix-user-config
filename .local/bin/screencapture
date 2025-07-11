@@ -20,7 +20,7 @@ esac
 path_dir="${HOME}/scr"
 
 capture_format="${1:-"picture"}"
-capture_mode="${2:-"all"}"
+capture_mode="${2:-"area"}"
 delay="${3:-"0"}"
 
 display_server=""
