@@ -31,7 +31,7 @@ window = #000000ff
 # Background for transparent images (grid/RGBA)
 transparency = #00000000
 # Default image scale (optimal/width/height/fit/fill/real/keep)
-scale = fit
+scale = keep
 # Initial image position
 position = center
 # Anti-aliasing mode (none/box/bilinear/bicubic/mks13)
