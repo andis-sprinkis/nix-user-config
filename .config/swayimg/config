@@ -10,7 +10,7 @@ mode = viewer
 # Window position (parent or absolute coordinates, e.g. 100,200)
 position = 0,0
 # Window size (fullscreen/parent/image, or absolute size, e.g. 800,600)
-size = image
+size = parent
 # Sway/Hyprland only: create floating window above the currently focused one
 overlay = no
 # Use window decoration (yes/no)
