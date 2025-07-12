@@ -36,14 +36,29 @@ scale = fit
 position = center
 # Anti-aliasing mode (none/box/bilinear/bicubic/mks13)
 antialiasing = mks13
-# Run slideshow at startup (yes/no)
-slideshow = no
-# Slideshow image display time (seconds)
-slideshow_time = 3
+# Loop image list: jump to first image when end of list is reached (yes/no)
+loop = no
 # Number of previously viewed images to store in cache
 history = 3
 # Number of preloaded images (read ahead)
 preload = 3
+
+################################################################################
+# Slideshow mode configuration
+################################################################################
+[slideshow]
+# Slideshow image display time (seconds)
+time = 3
+# Window background color (auto/extend/mirror/RGBA)
+window = auto
+# Background for transparent images (grid/RGBA)
+transparency = #000000ff
+# Default image scale (optimal/width/height/fit/fill/real)
+scale = fit
+# Initial image position on the window (center/top/bottom/free/...)
+position = center
+# Anti-aliasing mode (none/box/bilinear/bicubic/mks13)
+antialiasing = mks13
 
 ################################################################################
 # Gallery mode configuration
@@ -80,8 +95,6 @@ shadow = #00000000
 order = alpha
 # Reverse order (yes/no)
 reverse = no
-# Looping list of images (yes/no)
-loop = no
 # Read directories recursively (yes/no)
 recursive = no
 # Open all files in the directory of the specified file (yes/no)
@@ -109,7 +122,6 @@ background = #000000cc
 ################################################################################
 [info]
 # Show on startup (yes/no)
-# show = yes
 show = no
 # Timeout to hide info (seconds, 0 to always show)
 info_timeout = 5
@@ -122,6 +134,13 @@ top_left = +name,+format,+filesize,+imagesize,+exif
 top_right = index
 bottom_left = scale,frame
 bottom_right = status
+
+# Display scheme for slideshow mode (position = content)
+[info.slideshow]
+top_left = none
+top_right = none
+bottom_left = none
+bottom_right = dir,status
 
 # Display scheme for gallery mode (position = content)
 [info.gallery]
@@ -207,6 +226,9 @@ Shift+ScrollUp = prev_file
 Shift+ScrollDown = next_file
 Alt+ScrollUp = prev_frame
 Alt+ScrollDown = next_frame
+MouseLeft = drag
+MouseSide = prev_file
+MouseExtra = next_file
 
 ################################################################################
 # Gallery mode key binding configuration: key = action [parameters]
@@ -248,6 +270,9 @@ ScrollLeft = step_left
 ScrollRight = step_right
 ScrollUp = step_up
 ScrollDown = step_down
+Ctrl+ScrollUp = thumb +20
+Ctrl+ScrollDown = thumb -20
+MouseLeft = mode viewer
 
 r = exec nohup swayimg --config=general.mode=gallery "%" 0</dev/null 1>/dev/null 2>/dev/null & disown
 e = exec nohup file_manager_desktop "%" 0</dev/null 1>/dev/null 2>/dev/null & disown
