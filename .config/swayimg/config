@@ -26,13 +26,13 @@ app_id = swayimg
 # Viewer mode configuration
 ################################################################################
 [viewer]
-# Window background color (RGBA)
+# Window background color (auto/extend/mirror/RGBA)
 window = #000000ff
 # Background for transparent images (grid/RGBA)
 transparency = #00000000
 # Default image scale (optimal/width/height/fit/fill/real/keep)
 scale = keep
-# Initial image position
+# Initial image position on the window (center/top/bottom/free/...)
 position = center
 # Anti-aliasing mode (none/box/bilinear/bicubic/mks13)
 antialiasing = mks13
@@ -65,7 +65,7 @@ antialiasing = mks13
 ################################################################################
 [gallery]
 # Size of the thumbnail (pixels)
-size = 160
+size = 152
 # Max number of thumbnails in memory cache, 0 for unlimited
 cache = 0
 # Load not only visible but also adjacent thumbnails
