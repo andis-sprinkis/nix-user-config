@@ -35,7 +35,7 @@
     display: none !important;
   }
 
-  #tabbrowser-tabs .tabbrowser-tab:not([pinned="true"])[label="New Tab"] .tab-content .tab-icon-stack {
+  #tabbrowser-tabs .tabbrowser-tab:not([pinned="true"]) .tab-content .tab-icon-stack {
     display: none !important;
   }
 
