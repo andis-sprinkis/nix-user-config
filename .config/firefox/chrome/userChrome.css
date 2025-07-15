@@ -4,6 +4,10 @@
     --toolbarbutton-outer-padding: 2px !important;
   }
 
+  :root[lwt-newtab-brighttext] {
+    --newtab-background-color: var(--color-gray-90);
+  }
+
   toolbar .toolbaritem-combined-buttons {
     margin-inline: 0 !important;
   }
