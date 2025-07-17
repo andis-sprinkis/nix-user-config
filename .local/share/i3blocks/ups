@@ -36,24 +36,24 @@ for device in $ups_devices; do
 
   if [ "$charge" ]; then
     if [ "$charge" -gt "25" ]; then
-      status_charge=", ${charge}%"
+      status_charge="${charge}%"
     else
-      status_charge=", ⚠️ ${charge}%"
+      status_charge="⚠️ ${charge}%"
     fi
   fi
 
   case "$status" in
     "OL")
-      echo "UPS${status_charge}
-UPS${status_charge}"
+      echo "UPS${status_charge:+" ${status_charge}"}
+UPS${status_charge:+" ${status_charge}"}"
     ;;
     "")
       echo "UPS disconnected
 UPS discon."
     ;;
     *)
-      echo "UPS ${status}${status_charge}
-UPS ${status}${status_charge}"
+      echo "UPS ${status}${status_charge:+", ${status_charge}"}
+UPS ${status}${status_charge:+", ${status_charge}"}"
     ;;
   esac
 done
