@@ -53,6 +53,10 @@ command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/idle_manager
 interval=5
 signal=2
 
+[ups]
+command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/ups
+interval=10
+
 [battery]
 command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/battery
 interval=10
