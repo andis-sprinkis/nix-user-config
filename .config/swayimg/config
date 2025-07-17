@@ -227,9 +227,9 @@ Alt+ScrollUp = prev_frame
 Alt+ScrollDown = next_frame
 MouseSide = prev_file
 MouseExtra = next_file
-MouseLeft = prev_file
+MouseLeft = next_file
 MouseMiddle = drag
-MouseRight = next_file
+MouseRight = prev_file
 
 ################################################################################
 # Gallery mode key binding configuration: key = action [parameters]
