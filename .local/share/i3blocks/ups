@@ -32,6 +32,8 @@ for device in $ups_devices; do
   status="$(set +e; upsc "$name" "ups.status" 2>&1; set -e)"
   charge="$(set +e; upsc "$name" "battery.charge" 2>&1; set -e)"
 
+  status_charge=""
+
   if [ "$charge" ]; then
     if [ "$charge" -gt 25 ]; then
       status_charge=", ${charge}%"
