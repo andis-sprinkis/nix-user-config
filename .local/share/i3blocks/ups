@@ -1,0 +1,66 @@
+#!/usr/bin/env sh
+set -eu
+IFS_="$IFS"
+
+ups_devices="$(upsc -L)"
+
+if [ -z "$ups_devices" ]; then
+  exit "0"
+fi
+
+# if [ "${BLOCK_BUTTON:-""}" ]; then
+#   case "$BLOCK_BUTTON" in
+#     "1"|"3")
+#       cmd="echo \"\033]0;UPS information\007\"; upsc -L | ${PAGER}"
+#       $TERMINAL -e "$SHELL" -c "$cmd" 1> "/dev/null" 2> "/dev/null" & disown
+#     ;;
+#     "4")
+#     ;;
+#     "5")
+#     ;;
+#   esac
+# fi
+
+info="$(
+IFS="
+"
+
+for device in $ups_devices; do
+  IFS="$IFS_"
+
+  name="${device%%:*}"
+  status="$(set +e; upsc "$name" "ups.status" 2>&1; set -e)"
+  charge="$(set +e; upsc "$name" "battery.charge" 2>&1; set -e)"
+
+  if [ "$charge" ]; then
+    if [ "$charge" -gt 25 ]; then
+      status_charge=", ${charge}%"
+    else
+      status_charge=", ⚠️ ${charge}%"
+    fi
+  fi
+
+  case "$status" in
+    "OL")
+      echo "UPS${status_charge}
+UPS${status_charge}"
+    ;;
+    "")
+      echo "UPS disconnected
+UPS discon."
+    ;;
+    *)
+      echo "UPS ${status}${status_charge}
+UPS ${status}${status_charge}"
+    ;;
+  esac
+done
+
+IFS="$IFS_"
+)"
+
+cols="$(echo "$ups_devices" | wc -l)"
+
+if [ "$info" ]; then
+  echo "$info" | pr -"$cols" -t -s' '
+fi

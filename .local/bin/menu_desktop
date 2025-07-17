@@ -6,7 +6,7 @@ cmd="${cmd:-"${DISPLAY:+"bemenu"}"}"
 
 if [ "$cmd" ]; then
   set +e
-  killall -u "$(whoami)" "$cmd"
+  killall -u "$(whoami)" "$cmd" 2>&1
   set -e
 
   exec "$cmd" "$@"
