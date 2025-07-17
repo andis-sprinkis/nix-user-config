@@ -2,7 +2,7 @@
 set -eu
 IFS_="$IFS"
 
-ups_devices="$(upsc -L)"
+ups_devices="$(upsc -L 2> "/dev/null")"
 
 if [ -z "$ups_devices" ]; then
   exit "0"
@@ -29,13 +29,13 @@ for device in $ups_devices; do
   IFS="$IFS_"
 
   name="${device%%:*}"
-  status="$(set +e; upsc "$name" "ups.status" 2>&1; set -e)"
-  charge="$(set +e; upsc "$name" "battery.charge" 2>&1; set -e)"
+  status="$(set +e; upsc "$name" "ups.status" 2> "/dev/null"; set -e)"
+  charge="$(set +e; upsc "$name" "battery.charge" 2> "/dev/null"; set -e)"
 
   status_charge=""
 
   if [ "$charge" ]; then
-    if [ "$charge" -gt 25 ]; then
+    if [ "$charge" -gt "25" ]; then
       status_charge=", ${charge}%"
     else
       status_charge=", ⚠️ ${charge}%"

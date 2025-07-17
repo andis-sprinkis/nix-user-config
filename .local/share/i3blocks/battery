@@ -2,7 +2,7 @@
 set -eu
 IFS_="$IFS"
 
-batteries="$(find "/sys/class/power_supply/" -name "BAT*")"
+batteries="$(find "/sys/class/power_supply/" -name "BAT*" 2> "/dev/null")"
 
 if [ "${BLOCK_BUTTON:-""}" ]; then
   case "$BLOCK_BUTTON" in
@@ -29,8 +29,8 @@ IFS="
 for battery in $batteries; do
   IFS="$IFS_"
 
-  capacity="$(cat "${battery}/capacity" 2>&1)"
-  status="$(cat "${battery}/status" 2>&1)"
+  capacity="$(cat "${battery}/capacity" 2> "/dev/null")"
+  status="$(cat "${battery}/status" 2> "/dev/null")"
 
   case "$status" in
     "Full")
@@ -38,7 +38,7 @@ for battery in $batteries; do
 Bat. full"
     ;;
     "Discharging")
-      if [ "$capacity" -gt 25 ]; then
+      if [ "$capacity" -gt "25" ]; then
         echo "Battery discharging, ${capacity}%
 Bat. discharging, ${capacity}%"
       else
