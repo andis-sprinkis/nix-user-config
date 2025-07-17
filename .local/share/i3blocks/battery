@@ -19,6 +19,10 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
   esac
 fi
 
+if [ -z "$batteries" ]; then
+  exit "0"
+fi
+
 info="$(
 IFS="
 "
