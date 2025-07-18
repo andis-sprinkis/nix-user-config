@@ -232,7 +232,7 @@ cmd on-load &{{
       dev="$(set +e; grep " ${file} " "/proc/mounts" | cut -d" " -f1; set -e)"
 
       if [ "$dev" ]; then
-        cmds="${cmds}addcustominfo \"${file}\" \"\033[2;3;33mmnt\033[0m\"; "
+        cmds="${cmds}addcustominfo \"${file}\" \"\033[2;3;33m%\033[0m\"; "
       fi
     fi
   done
