@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+set -eu
+script="$(basename "$0")"
+
+cleanup() {
+  set +e
+  rm -rf "$tmpdir"
+  set -e
+}
+
+if [ -z "${1:-""}" ]; then
+  echo "${script}: Requires an argument." 2>&1
+  exit "1"
+fi
+
+trap 'cleanup' INT TERM HUP QUIT
+
+tmpdir="$(mktemp -d)"
+tmp_img="${tmpdir}/process.png"
+
+if magick "$1" -scale "200%" "$tmp_img"; then
+  set +e
+  tesseract -l "eng+lav" "$tmp_img" "stdout" "txt"
+  set -e
+fi
+
+cleanup
