@@ -229,11 +229,7 @@ cmd on-load &{{
 
   for file in "$@"; do
     if [ -d "$file" ] && mountpoint -q -- "$file" 1>/dev/null 2>/dev/null; then
-      dev="$(set +e; grep " ${file} " "/proc/mounts" | cut -d" " -f1; set -e)"
-
-      if [ "$dev" ]; then
-        cmds="${cmds}addcustominfo \"${file}\" \"%\"; "
-      fi
+      cmds="${cmds}addcustominfo \"${file}\" \"%\"; "
     fi
   done
 
