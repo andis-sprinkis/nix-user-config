@@ -175,7 +175,7 @@ cmd set-rulerfmt &{{
     dev="$(set +e; grep " ${f} " "/proc/mounts" | cut -d" " -f1; set -e)"
 
     if [ "$dev" ]; then
-      mnt_str="\033[0;34m${dev}\033[0m| "
+      mnt_str="\033[0;7;90m${dev}\033[0m| "
     fi
   fi
 
@@ -229,7 +229,7 @@ cmd on-load &{{
 
   for file in "$@"; do
     if [ -d "$file" ] && mountpoint -q -- "$file" 1>/dev/null 2>/dev/null; then
-      cmds="${cmds}addcustominfo \"${file}\" \"%\"; "
+      cmds="${cmds}addcustominfo \"${file}\" \"\033[90m%\033[0m\"; "
     fi
   done
 
