@@ -18,7 +18,7 @@ for device in $ups_devices; do
   printf '\x1b[0;7;m %s \x1b[0;m\n\n' "$device"
   status="$(set +e; upsc "$name"; set -e)"
   if [ "$status" ]; then
-    echo "$status" | column -t -s": " -l 2
+    echo "$status" | column -t -s": " -l "2"
     echo
   fi
   upscmd -l "$name"
