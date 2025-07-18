@@ -5,7 +5,7 @@ IFS_="$IFS"
 ups_devices="$(upsc -L 2> "/dev/null")"
 
 if [ -z "$ups_devices" ]; then
-  echo "No UPS devices." 2>&1
+  echo "No UPS devices configured." 2>&1
   exit "1"
 fi
 
