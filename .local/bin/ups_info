@@ -15,13 +15,15 @@ for device in $ups_devices; do
   IFS="$IFS_"
   name="${device%%:*}"
 
-  printf '\x1b[0;7;m %s \x1b[0;m\n' "$device"
-  echo
-  set +e; upsc "$name"; set -e
-  echo
+  printf '\x1b[0;7;m %s \x1b[0;m\n\n' "$device"
+  status="$(set +e; upsc "$name"; set -e)"
+  if [ "$status" ]; then
+    echo "$status" | column -t -s": " -l 2
+    echo
+  fi
   upscmd -l "$name"
   echo
-  echo "Usage: upscmd [-u <username>] [-p <password>] [-w] [-t <timeout>] <ups> <command> [<value>]"
+  echo "Usage: upscmd [-u <username>] [-p <password>] [-w] [-t <timeout>] ${name} <command> [<value>]"
   echo
 done
 IFS="$IFS_"
