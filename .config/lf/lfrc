@@ -175,7 +175,7 @@ cmd set-rulerfmt &{{
     dev="$(set +e; grep " ${f} " "/proc/mounts" | cut -d" " -f1; set -e)"
 
     if [ "$dev" ]; then
-      mnt_str="\033[0;90m${dev}\033[0m| "
+      mnt_str="\033[0;33m${dev}\033[0m| "
     fi
   fi
 
@@ -232,7 +232,7 @@ cmd on-load &{{
       dev="$(set +e; grep " ${file} " "/proc/mounts" | cut -d" " -f1; set -e)"
 
       if [ "$dev" ]; then
-        cmds="${cmds}addcustominfo \"${file}\" \"\033[2;3;90mmnt\033[0m\"; "
+        cmds="${cmds}addcustominfo \"${file}\" \"\033[2;3;33mmnt\033[0m\"; "
       fi
     fi
   done
