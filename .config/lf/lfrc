@@ -284,16 +284,16 @@ map <m-right> open
 map + inc-dec-ratios +
 map = inc-dec-ratios +
 map - inc-dec-ratios -
-map O open-with-menu-desktop
+map <c-o> open-with-menu-desktop
 map W reopen-lf-desktop
 map P push :paste-to-file<space>
 map R delete
-map V vidir
+map I vidir
 map X aunpack
 map Y copy-path
 map ` !true
 map b mark-load
 map gl follow-symlink
 map gs follow-search
-map o push :open-with<space>
+nmap o push :open-with<space>
 map t
