@@ -1,0 +1,27 @@
+#!/usr/bin/env sh
+set -eu
+IFS_="$IFS"
+
+ups_devices="$(upsc -L 2> "/dev/null")"
+
+if [ -z "$ups_devices" ]; then
+  echo "No UPS devices." 2>&1
+  exit "1"
+fi
+
+IFS="
+"
+for device in $ups_devices; do
+  IFS="$IFS_"
+  name="${device%%:*}"
+
+  printf '\x1b[0;7;m %s \x1b[0;m\n' "$device"
+  echo
+  upsc "$name"
+  echo
+  upscmd -l "$name"
+  echo
+  echo "Usage: upscmd [-u <username>] [-p <password>] [-w] [-t <timeout>] <ups> <command> [<value>]"
+  echo
+done
+IFS="$IFS_"
