@@ -17,7 +17,7 @@ for device in $ups_devices; do
 
   printf '\x1b[0;7;m %s \x1b[0;m\n' "$device"
   echo
-  upsc "$name"
+  set +e; upsc "$name"; set -e
   echo
   upscmd -l "$name"
   echo
