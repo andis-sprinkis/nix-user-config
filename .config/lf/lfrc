@@ -175,7 +175,7 @@ cmd set-rulerfmt &{{
     dev="$(set +e; grep " ${f} " "/proc/mounts" | cut -d" " -f1; set -e)"
 
     if [ "$dev" ]; then
-      mnt_str="\033[0;7;90m${dev}\033[0m| "
+      mnt_str="\033[0;90m${dev}\033[0m| "
     fi
   fi
 
