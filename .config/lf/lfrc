@@ -5,6 +5,8 @@ set incfilter
 set incsearch
 set mouse
 set numberfmt "\033[90m"
+# set number
+# set relativenumber
 set period 1
 set previewer previewer
 set promptfmt "\033[32;1m%u@%h\033[0m \033[34;1m%d\033[0m\033[1m%f\033[0m"
@@ -13,6 +15,7 @@ set shellopts '-eu'
 set sortby name
 set tabstop 2
 set wrapscroll
+set info "custom"
 
 cmd open ${{
   set +e; kill -USR1 "$lf_user_quittimerpid"; set -e
@@ -166,16 +169,21 @@ cmd set-rulerfmt &{{
   rulerfmt="%a| %p| \033[7;31m %m \033[0m| \033[7;33m %c \033[0m| \033[7;35m %s \033[0m| \033[7;34m %f \033[0m| %i/%t"
 
   mnt_str=""
+  mode_str=""
 
   if [ -d "$f" ] && mountpoint -q -- "$f" 1>/dev/null 2>/dev/null; then
     dev="$(set +e; grep " ${f} " "/proc/mounts" | cut -d" " -f1; set -e)"
 
     if [ "$dev" ]; then
-      mnt_str="\033[0;34m${dev}\033[0m| "
+      mnt_str="\033[0;90m${dev}\033[0m| "
     fi
   fi
 
-  rulerfmt_updated="${mnt_str}${rulerfmt}"
+  if [ "$lf_mode" != "normal" ]; then
+    mode_str="${lf_mode} |"
+  fi
+
+  rulerfmt_updated="${mode_str}${mnt_str}${rulerfmt}"
 
   if [ "${lf_rulerfmt:-""}" != "$rulerfmt_updated" ]; then
     lf -remote "send ${id} set rulerfmt \"${rulerfmt_updated}\""
@@ -214,6 +222,24 @@ cmd on-quit &{{
 
 cmd on-redraw &{{
   lf -remote "send ${id} set-ratios"
+}}
+
+cmd on-load &{{
+  cmds=""
+
+  for file in "$@"; do
+    if [ -d "$file" ] && mountpoint -q -- "$file" 1>/dev/null 2>/dev/null; then
+      dev="$(set +e; grep " ${file} " "/proc/mounts" | cut -d" " -f1; set -e)"
+
+      if [ "$dev" ]; then
+        cmds="${cmds}addcustominfo \"${file}\" \"\033[2;3;90mmnt\033[0m\"; "
+      fi
+    fi
+  done
+
+  if [ "$cmds" ]; then
+    lf -remote "send ${id} :$cmds"
+  fi
 }}
 
 cmd inc-dec-ratios %{{
@@ -274,26 +300,26 @@ cmd q &{{
   lf -remote "send ${id} quit"
 }}
 
+map <a-+> inc-dec-ratios +
+map <a--> inc-dec-ratios -
+map <a-=> inc-dec-ratios +
 map <c-z> $ kill -STOP $PPID
-map <enter> to-pager
-map <esc> reload
 map <m-6> updir
 map <m-7> open
 map <m-left> updir
 map <m-right> open
-map + inc-dec-ratios +
-map = inc-dec-ratios +
-map - inc-dec-ratios -
-map <c-o> open-with-menu-desktop
-map W reopen-lf-desktop
-map P push :paste-to-file<space>
-map R delete
-map I vidir
-map X aunpack
-map Y copy-path
 map ` !true
-map b mark-load
-map gl follow-symlink
-map gs follow-search
-nmap o push :open-with<space>
 map t
+nmap <c-o> open-with-menu-desktop
+nmap <enter> to-pager
+nmap <esc> reload
+nmap I vidir
+nmap P push :paste-to-file<space>
+nmap R delete
+nmap W reopen-lf-desktop
+nmap X aunpack
+nmap Y copy-path
+nmap b mark-load
+nmap gl follow-symlink
+nmap gs follow-search
+nmap o push :open-with<space>
