@@ -20,6 +20,8 @@ set info "custom"
 cmd open ${{
   set +e; kill -USR1 "$lf_user_quittimerpid"; set -e
 
+  files="${fv:-"$fx"}"
+
   IFS="
 "
   mime="$(file --mime-type --brief "$(readlink -f "$f")")"
@@ -31,14 +33,14 @@ cmd open ${{
     text/rtf)
     ;;
     text/*|application/xml|application/*json*|application/xhtml*|application/javascript|application/x-httpd-php|application/x-wine-extension-ini|application/x-subrip|application/x-awk|inode/x-empty)
-      exec $PAGER $fx
+      exec $PAGER $files
     ;;
     application/gzip|application/java-archive|application/vnd.debian.binary-package|application/vnd.ms-cab-compressed|application/vnd.rar|application/x-7z-compressed|application/x-7z-compressed|application/x-ace|application/x-alz|application/x-archive|application/x-arj|application/x-bzip1|application/x-bzip1-compressed-tar|application/x-bzip2|application/x-bzip2-compressed-tar|application/x-compress|application/x-compressed-tar|application/x-cpio|application/x-lha|application/x-lrzip|application/x-lzip|application/x-lzip-compressed-tar|application/x-lzma-compressed-tar|application/x-lzma|application/x-lzop|application/x-rpm|application/x-tar|application/x-tarz|application/x-tzo|application/x-xz|application/x-xz-compressed-tar|application/zip)
       # Archive types that 'als' recognizes.
-      exec $PAGER $fx
+      exec $PAGER $files
     ;;
     application/x-iso9660-image)
-      exec $PAGER $fx
+      exec $PAGER $files
     ;;
   esac
 
@@ -46,7 +48,7 @@ cmd open ${{
     exec lf -remote "send ${id} push :open-with<space>"
   fi
 
-  for f in $fx; do
+  for f in $files; do
     nohup $OPENER "$f" 0</dev/null 1>/dev/null 2>/dev/null & disown
   done
 }}
@@ -54,18 +56,26 @@ cmd open ${{
 cmd open-with ${{
   IFS="
 "
+  files="${fv:-"$fx"}"
 
-  for f in $fx; do
+  for f in $files; do
     nohup "$*" "$f" 0</dev/null 1>/dev/null 2>/dev/null & disown
   done
 }}
 
 cmd open-with-menu-desktop &{{
-  (trap "" "HUP"; echo "$fx" | open_with_menu_desktop) 0</dev/null 1>/dev/null 2>/dev/null & disown
+  files="${fv:-"$fx"}"
+
+  (trap "" "HUP"; echo "$files" | open_with_menu_desktop) 0</dev/null 1>/dev/null 2>/dev/null & disown
 }}
 
 cmd to-pager ${{
-  $PAGER "$f"
+  IFS="
+"
+
+  files="${fv:-"$fx"}"
+
+  $PAGER $files
 }}
 
 cmd apack !{{
@@ -79,11 +89,13 @@ cmd apack !{{
 
   IFS_="$IFS"
 
+  files="${fv:-"$fx"}"
+
   fy=""
 
   IFS="
 "
-  for f in $fx; do
+  for f in $files; do
     IFS="$IFS_"
 
     fy="${fy}${fy:+
@@ -97,13 +109,15 @@ cmd apack !{{
 }}
 
 cmd aunpack !{{
+  files="${fv:-"$fx"}"
+
   IFS="
 "
 
   echo "Selected to extract:
-$fx"
+$files"
 
-  for f in $fx; do 
+  for f in $files; do 
     echo "
 ---
 
@@ -124,18 +138,20 @@ cmd vidir ${{
 }}
 
 cmd copy-path ${{
+  files="${fv:-"$fx"}"
+
   if [ "${WAYLAND_DISPLAY:-""}" ] && [ "$(command -v "wl-copy")" ]; then
-    printf '%s' "$fx" | wl-copy
+    printf '%s' "$files" | wl-copy
     exit
   fi
 
   if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && [ "$(command -v "xclip")" ]; then
-    printf '%s' "$fx" | xclip -sel "clipboard"
+    printf '%s' "$files" | xclip -sel "clipboard"
     exit
   fi
 
   if [ "$(command -v "pbcopy")" ]; then
-    printf '%s' "$fx" | pbcopy;
+    printf '%s' "$files" | pbcopy;
     exit
   fi
 
@@ -269,7 +285,7 @@ cmd inc-dec-ratios %{{
 
       printf " \x1b[0;31mColumns limit! (%s)\x1b[0m " "$1"
 
-      sleep "0.45"
+      sleep "1"
 
       exec lf -remote "send ${id} reload"
     fi
@@ -299,23 +315,26 @@ cmd q &{{
 map <a-+> inc-dec-ratios +
 map <a--> inc-dec-ratios -
 map <a-=> inc-dec-ratios +
+map <c-o> open-with-menu-desktop
 map <c-z> $ kill -STOP $PPID
+map <enter> to-pager
 map <m-6> updir
 map <m-7> open
 map <m-left> updir
 map <m-right> open
+map I vidir
+map W reopen-lf-desktop
+map X aunpack
+map Y copy-path
 map ` !true
+map b mark-load
+map o push :open-with<space>
 map t
-nmap <c-o> open-with-menu-desktop
-nmap <enter> to-pager
 nmap <esc> reload
-nmap I vidir
 nmap P push :paste-to-file<space>
 nmap R delete
-nmap W reopen-lf-desktop
-nmap X aunpack
-nmap Y copy-path
-nmap b mark-load
 nmap gl follow-symlink
 nmap gs follow-search
-nmap o push :open-with<space>
+vmap y :visual-accept; copy
+vmap d :visual-accept; cut
+vmap U visual-unselect
