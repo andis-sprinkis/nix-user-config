@@ -163,7 +163,6 @@ user_pref("middlemouse.contentLoadURL", false);
 user_pref("middlemouse.paste", false);
 user_pref("mousewheel.acceleration.factor", 10);
 user_pref("mousewheel.acceleration.start", 3);
-user_pref("mousewheel.autodir.enabled", true);
 user_pref("mousewheel.default.delta_multiplier_x", 407);
 user_pref("mousewheel.default.delta_multiplier_y", 407);
 user_pref("mousewheel.min_line_scroll_amount", 2);
