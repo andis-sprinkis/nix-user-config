@@ -16,17 +16,18 @@ for device in $ups_devices; do
   name="${device%%:*}"
 
   printf '\x1b[0;1;7m %s \x1b[0m\n\n' "$device"
+
   status="$(set +e; upsc "$name"; set -e)"
+
   if [ "$status" ]; then
     echo "$status" | column -t -s": " -l "2"
     echo
   fi
 
   cmds="$(set +e; upscmd -l "$name"; set -e)"
-  cmds_list="$(echo "$cmds" | tail "+3")"
 
-  if [ "$cmds_list" ]; then
-    echo "$cmds_list" | sed -e "s/^\(.*.\) - \(.*.\)$/\x1b[0;1mupscmd ${name} \1\x1b[0m\n    \2\n/g"
+  if [ "$cmds" ]; then
+    echo "$cmds" | tail "+3" | sed -e "s/^\(.*.\) - \(.*.\)$/\x1b[0;1mupscmd ${name} \1\x1b[0m\n    \2\n/g"
 
     echo "Usage:
     upscmd [-u <username>] [-p <password>] [-w] [-t <timeout>] ${name} <command> [<value>]
