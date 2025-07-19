@@ -139,6 +139,8 @@ bindsym XF86AudioMicMute     exec --no-startup-id sound "toggle" "input"
 
 bindsym --whole-window $mod+button4 exec --no-startup-id sound "+"
 bindsym --whole-window $mod+button5 exec --no-startup-id sound "-"
+bindsym --whole-window $mod+button7 exec --no-startup-id sound "+"
+bindsym --whole-window $mod+button6 exec --no-startup-id sound "-"
 bindsym --whole-window $mod+button2 exec --no-startup-id sound "toggle"
 
 bindsym XF86MonBrightnessUp   exec --no-startup-id brightnessctl -q set +3%
