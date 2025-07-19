@@ -28,10 +28,9 @@ for device in $ups_devices; do
   if [ "$cmds_list" ]; then
     echo "$cmds_list" | tail +3 | sed -e "s/^\(.*.\) - \(.*.\)$/\x1b[0;1mupscmd ${name} \1\x1b[0m\n    \2\n/g"
 
-    echo \
-  "Usage:
-      upscmd [-u <username>] [-p <password>] [-w] [-t <timeout>] ${name} <command> [<value>]
-      upscmd ${name} <command> [<value>]"
+    echo "Usage:
+    upscmd [-u <username>] [-p <password>] [-w] [-t <timeout>] ${name} <command> [<value>]
+    upscmd ${name} <command> [<value>]"
     echo
   fi
 
