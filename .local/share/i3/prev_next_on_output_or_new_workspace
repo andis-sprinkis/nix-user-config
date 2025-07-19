@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+set -eu
+
+wm="${WAYLAND_DISPLAY:+"sway"}"
+wm="${wm:-"i3"}"
+
+case "$wm" in
+  "sway")
+    wm_cmd="swaymsg"
+  ;;
+  "i3")
+    wm_cmd="i3-msg"
+  ;;
+esac
+
+output_name="$($wm_cmd -t get_outputs | jq -r '.[] | select(.focused == true).name')"
+output_ws_count="$($wm_cmd -t get_workspaces | jq -r "[.[] | select(.output == \"${output_name}\")] | length")"
+
+if [ "$output_ws_count" -gt "1" ]; then
+  exec $wm_cmd "workspace" "${1}_on_output"
+fi
+
+exec "${XDG_DATA_HOME:-"$HOME/.local/share"}/i3/new_workspace"

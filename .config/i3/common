@@ -99,13 +99,13 @@ bindsym $mod+Shift+0 move container to workspace number $ws10; workspace number 
 
 bindsym $mod+a       exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/focus_output_or_workspace_on_output left
 bindsym $mod+s       exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/focus_output_or_workspace_on_output right
-bindsym $mod+Shift+a workspace prev_on_output
-bindsym $mod+Shift+s workspace next_on_output
+bindsym $mod+Shift+a exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/prev_next_on_output_or_new_workspace prev
+bindsym $mod+Shift+s exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/prev_next_on_output_or_new_workspace next
 
 bindsym --whole-window button8      exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/focus_output_or_workspace_on_output left
 bindsym --whole-window button9      exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/focus_output_or_workspace_on_output right
-bindsym --whole-window $mod+button8 workspace prev_on_output
-bindsym --whole-window $mod+button9 workspace next_on_output
+bindsym --whole-window $mod+button8 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/prev_next_on_output_or_new_workspace prev
+bindsym --whole-window $mod+button9 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/prev_next_on_output_or_new_workspace next
 
 bindsym $mod+c workspace back_and_forth
 bindsym $mod+Shift+c move container to workspace back_and_forth; workspace back_and_forth
@@ -146,9 +146,9 @@ bindsym --whole-window $mod+button2 exec --no-startup-id sound "toggle"
 bindsym XF86MonBrightnessUp   exec --no-startup-id brightnessctl -q set +3%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl -q set 3%-
 
-bindsym $mod+n       exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_empty_workspace
-bindsym $mod+Shift+n exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/move_to_new_empty_workspace
-bindsym $mod+Mod1+n  exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_empty_workspace_on_all_outputs
+bindsym $mod+n       exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_workspace
+bindsym $mod+Shift+n exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/move_to_new_workspace
+bindsym $mod+Mod1+n  exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_workspace_on_all_outputs
 
 bindsym $mod+w exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/menu_move_to_workspace
 
@@ -223,8 +223,8 @@ bar {
   bindsym button4 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/temp_no_mouse_warping_container workspace prev_on_output
   bindsym button5 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/temp_no_mouse_warping_container workspace next_on_output
 
-  bindsym button1 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_empty_workspace
-  bindsym button2 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_empty_workspace
+  bindsym button1 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_workspace
+  bindsym button2 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_workspace
   bindsym button3 exec --no-startup-id $applications_menu
 }
 
