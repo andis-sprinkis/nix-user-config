@@ -20,10 +20,10 @@ cmd open ${{
 
   files="${fv:-"$fx"}"
 
+  mime="$(file --mime-type --brief "$(readlink -f "$(echo "$files" | head -n1)")")"
+
   IFS="
 "
-  mime="$(file --mime-type --brief "$(readlink -f "$f")")"
-
   case $mime in
     application/octet-stream)
       exec lf -remote "send ${id} push :open-with<space>"
