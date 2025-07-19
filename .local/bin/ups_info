@@ -33,6 +33,5 @@ for device in $ups_devices; do
     upscmd ${name} <command> [<value>]"
     echo
   fi
-
 done
 IFS="$IFS_"
