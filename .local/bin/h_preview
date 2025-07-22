@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+set -eu
+
+line="$1"
+
+case "$(echo "$line" | cut -d":" -f1)" in
+  "man")
+    cmd="$(echo "$line" | cut -d" " -f2)"
+    section="$(echo "$line" | cut -d" " -f3 | sed -e "s/(//g" -e "s/)//g")"
+
+    man "$section" "$cmd"
+  ;;
+  "info")
+    manual="$(echo "$line" | sed -e 's/info: "\(.*.\)" -- .*/\1/g')"
+    indice="$(echo "$line" | sed -e 's/info: ".*." -- \(.*\)/\1/g')"
+
+    info "$manual" -- "$indice"
+  ;;
+  "tldr")
+    tldr "$(echo "$line" | cut -d" " -f2)"
+  ;;
+  *)
+    exit "1"
+  ;;
+esac

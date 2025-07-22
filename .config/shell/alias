@@ -52,7 +52,6 @@ alias \
   gps="git push" \
   gs="git status" \
   gt="git checkout" \
-  h="tldr" \
   hosts="sudo \$EDITOR /etc/hosts" \
   htop="htop -t -s PERCENT_CPU --highlight-changes=10" \
   inxi="inxi -c7 -F -xxx -y 120 --indent 15 --indents 4" \

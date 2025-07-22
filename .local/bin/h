@@ -1,0 +1,31 @@
+#!/usr/bin/env sh
+set -eu
+
+selection="$(
+  (
+    man -k ''  | sed -e 's/^/man: /g'
+    info -k '' | sed -e 's/^/info: /g'
+    tldr -l    | sed -e 's/^/tldr: /g'
+  ) | fzf -e --preview='h_preview {}'
+)"
+
+case "$(echo "$selection" | cut -d":" -f1)" in
+  "man")
+    cmd="$(echo "$selection" | cut -d" " -f2)"
+    section="$(echo "$selection" | cut -d" " -f3 | sed -e "s/(//g" -e "s/)//g")"
+
+    man "$section" "$cmd"
+  ;;
+  "info")
+    manual="$(echo "$selection" | sed -e 's/info: "\(.*.\)" -- .*/\1/g')"
+    indice="$(echo "$selection" | sed -e 's/info: ".*." -- \(.*\)/\1/g')"
+
+    info "$manual" -- "$indice"
+  ;;
+  "tldr")
+    tldr "$(echo "$selection" | cut -d" " -f2)"
+  ;;
+  *)
+    exit "1"
+  ;;
+esac
