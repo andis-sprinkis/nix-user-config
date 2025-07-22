@@ -11,8 +11,16 @@ if [ -d "/opt/homebrew" ]; then
     export HOMEBREW_CELLAR="${BREW_PREFIX}/Cellar"
     export HOMEBREW_REPOSITORY="${BREW_PREFIX}/Homebrew"
 
-    export MANPATH="${BREW_PREFIX}/opt/share/man${MANPATH:+":${MANPATH}"}"
-    export INFOPATH="${BREW_PREFIX}/opt/share/info${INFOPATH:+":${INFOPATH}"}"
+    if [ "${MANPATH:-""}" ]; then
+      export MANPATH=":${MANPATH#:}"
+    fi
+
+    if [ "${INFOPATH:-""}" ]; then
+      export INFOPATH=":${INFOPATH#:}"
+    fi
+
+    export MANPATH="${BREW_PREFIX}/opt/share/man${MANPATH:-""}"
+    export INFOPATH="${BREW_PREFIX}/opt/share/info${INFOPATH:-""}"
 
     PATH="${BREW_PREFIX}/bin:${BREW_PREFIX}/sbin:${PATH}"
 
