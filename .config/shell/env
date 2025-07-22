@@ -24,8 +24,8 @@ if [ -d "/opt/homebrew" ]; then
       export HAS_BREW_GNUBIN="1"
 
       # use the GNU utils on macOS
-      export MANPATH="${BREW_PREFIX}/opt/coreutils/libexec/gnuman:${MANPATH}"
       PATH="${BREW_PREFIX}/opt/coreutils/libexec/gnubin:${PATH}"
+      export MANPATH="${BREW_PREFIX}/opt/coreutils/share/man:${MANPATH}"
     fi
   fi
 fi
