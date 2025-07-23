@@ -333,11 +333,11 @@ case "$MIME" in
     if thumb_cache_create; then
       if [ ! -f "${FPATH_THUMB}.jpg" ]; then
         if find_util "exiftool"; then
-          if exiftool -binary -picture "$1" > "${FPATH_THUMB}.jpg" && [ -s "${FPATH_THUMB}.jpg" ]; then
+          if exiftool -q -binary -picture -W "${FPATH_THUMB}.jpg" "$1"; then
             if print_chafa "${FPATH_THUMB}.jpg"; then
               echo
             fi
-          elif exiftool -binary -coverart "$1" > "${FPATH_THUMB}.jpg" && [ -s "${FPATH_THUMB}.jpg" ]; then
+          elif exiftool -q -binary -coverart -W "${FPATH_THUMB}.jpg" "$1"; then
             if print_chafa "${FPATH_THUMB}.jpg"; then
               echo
             fi
