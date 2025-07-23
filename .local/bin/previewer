@@ -100,6 +100,10 @@ print_chafa() {
     columns="$(tput cols)"
 
     if [ -f "$1" ]; then
+    if [ ! -s "$1" ]; then
+      return "2"
+    fi
+
       chafa \
         --format "symbols" \
         --font-ratio "1/2" \
@@ -157,13 +161,15 @@ case "$MIME" in
       if [ ! -f "${FPATH_THUMB}.jpg" ]; then
         if find_util "pdftoppm"; then
           if pdftoppm -jpeg -jpegopt quality=50 -f "1" -singlefile "$1" "$FPATH_THUMB"; then
-            print_chafa "${FPATH_THUMB}.jpg"
-            echo
+            if print_chafa "${FPATH_THUMB}.jpg"; then
+              echo
+            fi
           fi
         fi
       else
-        print_chafa "${FPATH_THUMB}.jpg"
-        echo
+        if print_chafa "${FPATH_THUMB}.jpg"; then
+          echo
+        fi
       fi
     fi
 
@@ -184,11 +190,15 @@ case "$MIME" in
       if [ ! -f "${FPATH_THUMB}.jpg" ]; then
         if find_util "ddjvu" && find_util "magick"; then
           if ddjvu -format=ppm -page=1 "$1" | magick "-" "${FPATH_THUMB}.jpg"; then
-            print_chafa "${FPATH_THUMB}.jpg"
+            if print_chafa "${FPATH_THUMB}.jpg"; then
+              echo
+            fi
           fi
         fi
       else
-        print_chafa "${FPATH_THUMB}.jpg"
+        if print_chafa "${FPATH_THUMB}.jpg"; then
+          echo
+        fi
       fi
     fi
   ;;
@@ -317,21 +327,36 @@ case "$MIME" in
 
     print_als "zip"
   ;;
-  audio/mpeg)
+  audio/*|application/mxf|application/ogg|application/sdp|application/smil|application/streamingmedia|application/vnd.apple.mpegurl|application/vnd.ms-asf|application/vnd.rn-realmedia-vbr|application/vnd.rn-realmedia|application/x-cue|application/x-extension-m4a|application/x-extension-mp4|application/x-matroska|application/x-mpegurl|application/x-ogg|application/x-ogm-audio|application/x-ogm|application/x-shorten|application/x-smil|application/x-streamingmedia)
     print_mime
+
+    if thumb_cache_create; then
+      if [ ! -f "${FPATH_THUMB}.jpg" ]; then
+        if find_util "exiftool"; then
+          if exiftool -binary -picture "$1" > "${FPATH_THUMB}.jpg" && [ -s "${FPATH_THUMB}.jpg" ]; then
+            if print_chafa "${FPATH_THUMB}.jpg"; then
+              echo
+            fi
+          elif exiftool -binary -coverart "$1" > "${FPATH_THUMB}.jpg" && [ -s "${FPATH_THUMB}.jpg" ]; then
+            if print_chafa "${FPATH_THUMB}.jpg"; then
+              echo
+            fi
+          fi
+        fi
+      else
+        if print_chafa "${FPATH_THUMB}.jpg"; then
+          echo
+        fi
+      fi
+    fi
 
     if print_mediainfo; then
       echo
     fi
 
-    if find_util "mpg123-id3dump"; then
+    if [ "$MIME" = "audio/mpeg" ] && find_util "mpg123-id3dump"; then
       mpg123-id3dump -- "$FPATH"
     fi
-  ;;
-  audio/*|application/mxf|application/ogg|application/sdp|application/smil|application/streamingmedia|application/vnd.apple.mpegurl|application/vnd.ms-asf|application/vnd.rn-realmedia-vbr|application/vnd.rn-realmedia|application/x-cue|application/x-extension-m4a|application/x-extension-mp4|application/x-matroska|application/x-mpegurl|application/x-ogg|application/x-ogm-audio|application/x-ogm|application/x-shorten|application/x-smil|application/x-streamingmedia)
-    print_mime
-
-    print_mediainfo
   ;;
   application/vnd.sqlite*)
     print_mime
