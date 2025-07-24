@@ -127,7 +127,7 @@ if \grep --version 2> "/dev/null" | \grep -q "GNU"; then
 fi
 
 if \diff --version 2> "/dev/null" | \grep -q "GNU"; then
-  alias diff="diff --color=always" 
+  alias diff="diff --color=always"
 fi
 
 if \hexdump --version 2> "/dev/null" | \grep -q "util-linux"; then
