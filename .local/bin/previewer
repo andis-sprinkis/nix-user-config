@@ -100,9 +100,9 @@ print_chafa() {
     columns="$(tput cols)"
 
     if [ -f "$1" ]; then
-    if [ ! -s "$1" ]; then
-      return "2"
-    fi
+      if [ ! -s "$1" ]; then
+        return "2"
+      fi
 
       chafa \
         --format "symbols" \
