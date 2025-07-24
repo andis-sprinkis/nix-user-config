@@ -1,8 +1,6 @@
 #!/usr/bin/env sh
 set -eu
 
-path_usage_log="${XDG_CACHE_HOME:-"${HOME}/.cache"}/j4-dmenu-desktop/log"
-
 dir_appimage="${APPIMAGE_DATA_HOME:-"${HOME}/.local/opt/appimage"}"
 cmd_inc_appimage=""
 
@@ -18,5 +16,5 @@ exec j4-dmenu-desktop \
   --skip-i3-exec-check \
   --term="$TERMINAL" \
   --dmenu="$cmd_applications_menu" \
-  --usage-log="$path_usage_log" \
+  --usage-log="${XDG_CACHE_HOME:-"${HOME}/.cache"}/j4-dmenu-desktop/log" \
   2> "/dev/null"
