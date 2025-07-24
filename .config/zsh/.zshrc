@@ -221,9 +221,6 @@ $prompt_symbol"
   bindkey "^e" "edit-command-line"
   bindkey -a "^e" "edit-command-line"
 
-  # background pseudo-terminal mod. for applications that use it (e.g. nvim cmp-zsh)
-  zmodload "zsh/zpty"
-
   # configure tldr
   # if [ -f "${HOME}/.local/bin/tldr" ]; then
   #   compctl -k "($(tldr 2>/dev/null --list))" "tldr"
