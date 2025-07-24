@@ -99,7 +99,7 @@ alias \
   wget="wget --hsts-file=\"\${XDG_DATA_HOME:-\$HOME/.local/share}/wget-hsts\""
 
 # 'yay' alias must precede the 'pac_*' aliases
-if command -v "yay" 1>/dev/null 2>/dev/null; then
+if command -v "yay" 1> "/dev/null" 2> "/dev/null"; then
   alias \
     pacman="yay --color=always" \
     yay="yay --color=always" \
