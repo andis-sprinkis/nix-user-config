@@ -17,12 +17,13 @@ filename_tar="${filename}_${timestamp}.tar.gz"
 filename_7z="${filename}_${timestamp}.tar.gz.7z"
 
 dir_tmp=$(mktemp -d)
-path_tar="$dir_tmp/${filename_tar}"
+
+path_tar="${dir_tmp}/${filename_tar}"
 path_7z="./${filename_7z}"
 
 tar -czvf "$path_tar" "$1"
 
-echo "Set password for $filename_7z"
+echo "Set password for ${filename_7z}"
 confirm_pw_input
 
 7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on -mhe=on -p"$PW_INPUT" "$path_7z" "$path_tar"
