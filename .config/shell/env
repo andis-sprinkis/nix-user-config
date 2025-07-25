@@ -153,6 +153,9 @@ export HOMEBREW_NO_UPDATE_REPORT_NEW="1"
 # configure zsh
 export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
 
+# configure OpenSSL
+export RANDFILE="${XDG_CACHE_HOME:-$HOME/.cache}/openssl/.rnd"
+
 # configure Apple Terminal
 export SHELL_SESSIONS_DISABLE="1"
 
