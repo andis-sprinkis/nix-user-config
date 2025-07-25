@@ -428,6 +428,10 @@ First ${bytes} bytes or less:"
       hexdump -C -n "$bytes" "$FPATH"
     fi
   ;;
+  font/*|application/x-font-*|application/vnd.ms-opentype)
+    print_mime
+    print_exiftool
+  ;;
   application/vnd.debian.binary-package|application/x-rpm)
     print_mime
 
