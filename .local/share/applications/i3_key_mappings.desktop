@@ -2,4 +2,4 @@
 Type=Application
 Name=i3 key mappings
 Exec=i3_key_mappings_desktop i3
-Categories=Utility;System;
+Categories=Utility;System;Documentation;

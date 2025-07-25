@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Font viewer
+Exec=/usr/lib/font-manager/font-viewer %u
+Categories=Graphics;2DGraphics;VectorGraphics;Viewer;
