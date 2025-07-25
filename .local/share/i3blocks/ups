@@ -47,7 +47,7 @@ UPS${status_charge:+" ${status_charge}"}"
 UPS discon."
     ;;
     *)
-      echo "UPS ${status}${status_charge:+", ${status_charge}"}
+      echo "UPS: ${status}${status_charge:+", ${status_charge}"}
 UPS ${status}${status_charge:+", ${status_charge}"}"
     ;;
   esac
