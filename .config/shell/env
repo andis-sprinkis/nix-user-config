@@ -40,15 +40,12 @@ PATH="$HOME/.local/bin:$PATH"
 export APPIMAGE_DATA_HOME="$HOME/.local/opt/appimage"
 PATH="$APPIMAGE_DATA_HOME:$PATH"
 
-# set language
-if [ -z "${LANG:-""}" ]; then
-  export LANG='en_US.UTF-8'
-fi
-
 # set locale
 if [ -f "/etc/profile.d/locale.sh" ]; then
   unset LANG
   . "/etc/profile.d/locale.sh"
+else
+  export LANG="${LANG:-"en_US.UTF-8"}"
 fi
 
 # set OPENER
