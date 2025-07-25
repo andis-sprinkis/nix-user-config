@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -e
+set -eu
 # Create an encrypted 7z archive containing a tar archive for preserving file system attributes.
 # $1 - path to a file or a directory to archive
 
@@ -10,11 +10,11 @@ if [ -z "${1:-""}" ]; then
   exit "1"
 fi
 
-filename=$(basename "$1")
-timestamp=$(date +%s)
+filename="$(basename "$1")"
+timestamp="$(date +%s)"
 
 filename_tar="${filename}_${timestamp}.tar.gz"
-filename_7z="${filename}_${timestamp}.7z"
+filename_7z="${filename}_${timestamp}.tar.gz.7z"
 
 dir_tmp=$(mktemp -d)
 path_tar="$dir_tmp/${filename_tar}"
