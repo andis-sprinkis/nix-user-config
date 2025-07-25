@@ -42,6 +42,14 @@ x-scheme-handler/https=web.desktop
 application/x-bittorrent=torrent.desktop
 x-scheme-handler/magnet=torrent.desktop
 
+font/ttf=com.github.FontManager.FontViewer.desktop
+font/ttc=com.github.FontManager.FontViewer.desktop
+font/otf=com.github.FontManager.FontViewer.desktop
+font/sfnt=com.github.FontManager.FontViewer.desktop
+application/x-font-ttf=com.github.FontManager.FontViewer.desktop
+application/x-font-otf=com.github.FontManager.FontViewer.desktop
+application/vnd.ms-opentype=com.github.FontManager.FontViewer.desktop
+
 application/atom+xml=pager.desktop
 application/ecmascript=pager.desktop
 application/geo+json=pager.desktop
