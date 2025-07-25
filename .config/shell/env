@@ -109,9 +109,6 @@ export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/readline/inputrc"
 # configure GNU screen
 export SCREENRC="${XDG_CONFIG_HOME:-$HOME/.config}/screen/screenrc"
 
-# configure node
-export NODE_REPL_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}/node/repl_history"
-
 # configure python
 export PYTHONSTARTUP="${XDG_CONFIG_HOME:-$HOME/.config}/python/pythonrc.py"
 
@@ -172,3 +169,17 @@ if grep -q "microsoft" "/proc/version" 2>/dev/null; then
     export XDG_RUNTIME_DIR="$xdg_runtime_dir"
   fi
 fi
+
+# configure node
+export NODE_REPL_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}/node/repl_history"
+
+# configure npm
+export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/npm/npmrc"
+export NPM_CONFIG_INIT_MODULE="${XDG_CONFIG_HOME:-$HOME/.config}/npm/npm-init.js"
+export NPM_CONFIG_CACHE="${XDG_CACHE_HOME:-$HOME/.cache}/npm"
+
+case "${OSTYPE:-"$(uname)"}" in
+  [lL]"inux"*)
+    export NPM_CONFIG_TMP="${XDG_RUNTIME_DIR}/npm"
+  ;;
+esac
