@@ -17,12 +17,15 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
   esac
 fi
 
-info="$(
+i="0"
+
 IFS="
 "
 
 for name in $ups_devices; do
   IFS="$IFS_"
+
+  i="$((i+1))"
 
   status="$(set +e; upsc "$name" "ups.status" 2> "/dev/null"; set -e)"
   charge="$(set +e; upsc "$name" "battery.charge" 2> "/dev/null"; set -e)"
@@ -39,25 +42,22 @@ for name in $ups_devices; do
 
   case "$status" in
     "OL")
-      echo "UPS${status_charge:+" ${status_charge}"}
+      info="UPS${status_charge:+" ${status_charge}"}
 UPS${status_charge:+" ${status_charge}"}"
     ;;
     "")
-      echo "UPS disconnected
+      info="UPS disconnected
 UPS discon."
     ;;
     *)
-      echo "UPS: ${status}${status_charge:+", ${status_charge}"}
+      info="UPS: ${status}${status_charge:+", ${status_charge}"}
 UPS ${status}${status_charge:+", ${status_charge}"}"
     ;;
   esac
 done
 
 IFS="$IFS_"
-)"
-
-cols="$(echo "$ups_devices" | wc -l)"
 
 if [ "$info" ]; then
-  echo "$info" | pr -"$cols" -t -s' '
+  echo "$info" | pr -"$i" -t -s' '
 fi
