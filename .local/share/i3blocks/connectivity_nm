@@ -20,9 +20,9 @@ Net. connected (portal)"
 label_limited="Network connected (limited)
 Net. connected (limited)"
 label_unknown="Network connectivity unknown
-Net. conn. unknown"
+Net. conn.k. unknown"
 label_other="Network connectivity status: ${connectivity}
-Net. conn. status: ${connectivity}"
+Net. conn.k. status: ${connectivity}"
 
 if [ "${BLOCK_BUTTON:-""}" ]; then
   reload() {
