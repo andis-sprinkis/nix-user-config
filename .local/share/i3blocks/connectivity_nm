@@ -7,23 +7,6 @@ if [ -z "$connectivity" ]; then
   exit "0"
 fi
 
-label_disabling="Disabling connectivity...
-Disabling conn.k."
-label_enabling="Enabling connectivity...
-Enabling conn.k."
-label_full="Network connected
-Net. connected"
-label_none="Network disconnected
-Net. disconnected"
-label_portal="Network connected (portal)
-Net. connected (portal)"
-label_limited="Network connected (limited)
-Net. connected (limited)"
-label_unknown="Network connectivity unknown
-Net. conn.k. unknown"
-label_other="Network connectivity status: ${connectivity}
-Net. conn.k. status: ${connectivity}"
-
 if [ "${BLOCK_BUTTON:-""}" ]; then
   reload() {
     if [ "${signal-""}" ]; then
@@ -41,23 +24,43 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
         "full"|"portal"|"limited") 
           nmcli networking off 1> "/dev/null" 2> "/dev/null" & disown
           reload
-          exec echo "$label_disabling"
+          exec echo "Disabling connectivity...
+Disabling conn.k."
         ;;
         *)
           nmcli networking on 1> "/dev/null" 2> "/dev/null" & disown
           reload "2"
-          exec echo "$label_enabling"
+          exec echo "Enabling connectivity...
+Enabling conn.k."
         ;;
       esac
     ;;
-  esac 
+  esac
 fi
 
 case "$connectivity" in
-  "full") echo "$label_full";;
-  "none") echo "$label_none";;
-  "portal") echo "$label_portal";;
-  "limited") echo "$label_limited";;
-  "unknown") echo "$label_unknown";;
-  *) echo "$label_other";;
+  "full")
+    echo "Network connected
+Net. connected"
+  ;;
+  "none")
+    echo "Network disconnected
+Net. disconnected"
+  ;;
+  "limited")
+    echo "Network connected (limited)
+Net. connected (limited)"
+  ;;
+  "unknown")
+    echo "Network connectivity unknown
+Net. conn.k. unknown"
+  ;;
+  "portal")
+    echo "Network connected (portal)
+Net. connected (portal)"
+  ;;
+  *)
+    echo "Network connectivity status: ${connectivity}
+Net. conn.k. status: ${connectivity}"
+  ;;
 esac
