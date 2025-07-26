@@ -16,8 +16,7 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
 
   case "$BLOCK_BUTTON" in
     "1")
-      cmd="sleep \"0.5\"; nmtui"
-      $TERMINAL -e "$SHELL" -c "$cmd" 1> "/dev/null" 2> "/dev/null" & disown
+      $TERMINAL -e "$SHELL" -c "sleep \"0.5\"; nmtui" 1> "/dev/null" 2> "/dev/null" & disown
     ;;
     "3")
       case "$connectivity" in
