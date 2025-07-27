@@ -4,9 +4,9 @@ set -eu
 # Shows menu that lists bookmarks of URIs or file paths to be opened via xdg-open.
 #
 # Bookmarks file entry format:
-# '# Bookmark title  ~  Bookmark URI or file path  ~  Hostname (to restrict the bookmark entry visibility)'
+# '> Bookmark title  ~  Bookmark URI or file path  ~  Hostname (to restrict the bookmark entry visibility)'
 #
-# Lines that don't begin with '# ' are ignored.
+# Lines that don't begin with '> ' are ignored.
 
 bmark_file_dir="${XDG_DATA_HOME:-$HOME/.local/share}/bmark_desktop"
 bmark_file="${bmark_file_dir}/marks"
@@ -20,7 +20,7 @@ if [ ! -r "$bmark_file" ]; then
   exit "9"
 fi
 
-bmark_file_lines="$(set +e; grep "^# " < "$bmark_file"; set -e)"
+bmark_file_lines="$(set +e; grep "^> " < "$bmark_file"; set -e)"
 
 hostname="$(uname -n)"
 
@@ -42,9 +42,9 @@ bmark_lines="$(
   IFS="$IFS_"
 )"
 
-line_edit_bmarks="Edit bookmarks..."
+line_edit_bmarks="Edit bookmarks"
 
-menu_lines="${bmark_lines:+$(echo "$bmark_lines" | sed -e 's/^# //g' -e "s/  \~  ${hostname}$//g")
+menu_lines="${bmark_lines:+$(echo "$bmark_lines" | sed -e 's/^> //g' -e "s/  \~  ${hostname}$//g")
 }$line_edit_bmarks"
 
 sel_txt="$(printf "%s\n" "$menu_lines" | menu_desktop -p "Bookmark:")"
