@@ -24,23 +24,24 @@ bmark_file_lines="$(set +e; grep "^> " < "$bmark_file"; set -e)"
 
 hostname="$(uname -n)"
 
-bmark_lines="$(
-  IFS_="$IFS"
-  IFS="
+bmark_lines=""
+
+IFS_="$IFS"
+IFS="
 "
-  for line in $bmark_file_lines ; do
-    IFS="$IFS_"
-
-    bmark_hostname="$(printf "%s\n" "$line" | awk -F"  ~  " '{ print $3 }')"
-
-    if [ "$bmark_hostname" ] && [ ! "$bmark_hostname" = "$hostname" ]; then
-      continue
-    fi
-
-    echo "$line"
-  done
+for line in $bmark_file_lines ; do
   IFS="$IFS_"
-)"
+
+  bmark_hostname="$(printf "%s\n" "$line" | awk -F"  ~  " '{ print $3 }')"
+
+  if [ "$bmark_hostname" ] && [ ! "$bmark_hostname" = "$hostname" ]; then
+    continue
+  fi
+
+  bmark_lines="${bmark_lines}${bmark_lines:+
+}${line}"
+done
+IFS="$IFS_"
 
 line_edit_bmarks="Edit bookmarks"
 
@@ -50,7 +51,7 @@ menu_lines="${bmark_lines:+$(echo "$bmark_lines" | sed -e 's/^> //g' -e "s/  \~ 
 sel_txt="$(printf "%s\n" "$menu_lines" | menu_desktop -p "Bookmark:")"
 
 if [ -z "$sel_txt" ]; then
-  exit "8"
+  exit "7"
 fi
 
 if [ -z "${sel_txt#"$line_edit_bmarks"}" ]; then
@@ -58,8 +59,7 @@ if [ -z "${sel_txt#"$line_edit_bmarks"}" ]; then
 fi
 
 sel_idx="$(printf "%s\n" "$menu_lines" | grep --line-number -x "$sel_txt" | cut -d ":" -f 1)"
-sel_bmark_line="$(echo "$bmark_lines" | sed "${sel_idx}q;d")"
-sel_uri="$(echo "$sel_bmark_line" | awk -F"  ~  " '{ print $2 }')"
+sel_uri="$(echo "$bmark_lines" | sed "${sel_idx}q;d" | awk -F"  ~  " '{ print $2 }')"
 
 if [ -z "$sel_uri" ]; then
   exit "8"
