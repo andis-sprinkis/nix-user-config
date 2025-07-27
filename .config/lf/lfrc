@@ -101,9 +101,9 @@ cmd apack !{{
   done
   IFS="$IFS_"
 
-  echo "$fy"
+  printf 'Selected to archive:\n%s\n\n' "$fy"
 
-  printf "%s" "$fy" | apack --explain "$@"
+  printf "%s\n" "$fy" | apack --explain "$@"
 }}
 
 cmd aunpack !{{
@@ -112,8 +112,7 @@ cmd aunpack !{{
   IFS="
 "
 
-  echo "Selected to extract:
-$files"
+  printf 'Selected to extract:\n%s\n' "$files"
 
   for f in $files; do 
     echo "
@@ -155,6 +154,31 @@ cmd copy-path ${{
 
 cmd paste-to-file ${{
   paste_to_file "${PWD}/${*}"
+}}
+
+cmd qr_receive ${{
+  clear
+  qrcp receive
+}}
+
+cmd qr_send ${{
+  IFS_="$IFS"
+
+  files="${fv:-"$fx"}"
+
+  echo
+  clear
+  printf 'Selected to send:\n%s\n\n' "$files"
+
+  IFS="
+"
+  for f in $files; do
+    IFS="$IFS_"
+    set -- "$@" "$f"
+  done
+  IFS="$IFS_"
+
+  qrcp send "$@"
 }}
 
 cmd reopen-lf-desktop ${{
