@@ -138,18 +138,15 @@ cmd vidir ${{
 cmd copy-path ${{
   files="${fv:-"$fx"}"
 
-  if [ "${WAYLAND_DISPLAY:-""}" ] && [ "$(command -v "wl-copy")" ]; then
-    printf '%s' "$files" | wl-copy
+  if [ "${WAYLAND_DISPLAY:-""}" ] && printf '%s' "$files" | wl-copy; then
     exit
   fi
 
-  if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && [ "$(command -v "xclip")" ]; then
-    printf '%s' "$files" | xclip -sel "clipboard"
+  if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && printf '%s' "$files" | xclip -sel "clipboard"; then
     exit
   fi
 
-  if [ "$(command -v "pbcopy")" ]; then
-    printf '%s' "$files" | pbcopy;
+  if printf '%s' "$files" | pbcopy; then
     exit
   fi
 
