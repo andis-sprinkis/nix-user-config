@@ -31,27 +31,33 @@ for name in $ups_devices; do
   charge="$(set +e; upsc "$name" "battery.charge" 2> "/dev/null"; set -e)"
 
   status_charge=""
+  status_charge_short=""
 
   if [ "$charge" ]; then
-    if [ "$charge" -gt "25" ]; then
+    if [ "$charge" -gt "98" ]; then
+      status_charge="battery full"
+      status_charge_short="bat. full"
+    elif [ "$charge" -gt "25" ]; then
       status_charge="${charge}%"
+      status_charge_short="${charge}%"
     else
       status_charge="⚠️ ${charge}%"
+      status_charge_short="⚠️ ${charge}%"
     fi
   fi
 
   case "$status" in
     "OL")
       info="UPS${status_charge:+" ${status_charge}"}
-UPS${status_charge:+" ${status_charge}"}"
+UPS${status_charge_short:+" ${status_charge_short}"}"
     ;;
     "")
       info="UPS disconnected
-UPS discon."
+UPS disconn."
     ;;
     *)
       info="UPS: ${status}${status_charge:+", ${status_charge}"}
-UPS ${status}${status_charge:+", ${status_charge}"}"
+UPS ${status}${status_charge_short:+", ${status_charge_short}"}"
     ;;
   esac
 done
