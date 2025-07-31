@@ -42,13 +42,15 @@ x-scheme-handler/https=web.desktop
 application/x-bittorrent=torrent.desktop
 x-scheme-handler/magnet=torrent.desktop
 
-font/ttf=font.desktop
-font/ttc=font.desktop
+application/vnd.ms-opentype=font.desktop
+application/x-font-otf=font.desktop
+application/x-font-ttf=font.desktop
 font/otf=font.desktop
 font/sfnt=font.desktop
-application/x-font-ttf=font.desktop
-application/x-font-otf=font.desktop
-application/vnd.ms-opentype=font.desktop
+font/ttc=font.desktop
+font/ttf=font.desktop
+font/woff2=font.desktop
+font/woff=font.desktop
 
 application/atom+xml=pager.desktop
 application/ecmascript=pager.desktop
