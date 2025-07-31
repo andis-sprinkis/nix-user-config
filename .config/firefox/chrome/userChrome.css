@@ -17,12 +17,12 @@
   }
 
   #PanelUI-menu-button {
-    padding-inline-end: 5px !important;
+    padding-inline-end: 4px !important;
   }
 
   #nav-bar-customization-target {
     & > :is(toolbarbutton, toolbaritem):first-child {
-      padding-inline-start: 5px !important;
+      padding-inline-start: 4px !important;
     }
   }
 
