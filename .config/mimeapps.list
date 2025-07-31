@@ -418,6 +418,7 @@ application/x-ogm-video=video.desktop
 video/3gp=video.desktop
 video/3gpp2=video.desktop
 video/3gpp=video.desktop
+video/MP2T=video.desktop
 video/avi=video.desktop
 video/divx=video.desktop
 video/dv=video.desktop
