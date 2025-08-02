@@ -43,6 +43,8 @@ data="$(LC_ALL=C df --output="target,pcent,used,avail,size,source" \
   | sort)"
 
 # TODO: use SIZE to specify bytes instead of kB as the base unit
+b_kb="1024"  b_mb="1048576" b_gb="1073741824" b_tb="1099511627776" b_pb="1125899906842624" b_eb=""
+
 kb_mb="1024" kb_gb="1048576" kb_tb="1073741824" kb_pb="1099511627776" kb_eb="1125899906842624"
 
 human() {
