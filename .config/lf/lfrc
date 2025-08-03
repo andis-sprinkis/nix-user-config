@@ -260,7 +260,7 @@ cmd on-load &{{
   cmds=""
 
   for file in "$@"; do
-    if [ -d "$file" ] && mountpoint -q -- "$file" 1>/dev/null 2>/dev/null; then
+    if [ -d "$file" ] && mountpoint -q -- "$file" 1> "/dev/null" 2> "/dev/null"; then
       cmds="${cmds}addcustominfo \"${file}\" \"\033[90m%\033[0m\"; "
     fi
   done
