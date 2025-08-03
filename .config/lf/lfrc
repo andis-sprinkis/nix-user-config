@@ -16,7 +16,7 @@ set wrapscroll
 set info "custom"
 
 cmd open ${{
-  set +e; kill -USR1 "$lf_user_quittimerpid"; set -e
+  set +e; : > "/tmp/${USER}_lf_heartbeat/${id}" 2> "/dev/null"; set -e
 
   files="${fv:-"$fx"}"
 
@@ -195,11 +195,6 @@ cmd set-ratios &{{
                                      call "1:2:4:7:8"
 }}
 
-set user_quittimer "1" # 0 - pause, 1 - active. Can be changed during client session.
-set user_quittimersec "2400" # Default - 1800
-set user_quittimerpid ""
-set user_quittimercallerpid ""
-
 cmd set-rulerfmt &{{
   rulerfmt="%a| %p| \033[7;31m %m \033[0m| \033[7;33m %c \033[0m| \033[7;35m %s \033[0m| \033[7;34m %f \033[0m| %i/%t"
 
@@ -225,23 +220,26 @@ cmd set-rulerfmt &{{
   fi
 }}
 
+set user_quittimer "1" # 0 - pause, 1 - active. Can be changed during client session.
+set user_quittimersec "1200" # Default - 1800
+
 cmd on-init &{{
+  "${XDG_DATA_HOME:-"$HOME/.local/share"}/lf/quittimer2" 1> "/dev/null" 2> "/dev/null" & disown
+
   lf -remote "send ${id} set-rulerfmt"
   lf -remote "send ${id} set-ratios"
   lf -remote "send ${id} tty-write \"\033]0;${PWD}\007\""
   lf -remote "send ${id} reload"
-
-  "${XDG_DATA_HOME:-"$HOME/.local/share"}/lf/quittimer" 1> "/dev/null" 2> "/dev/null" & disown
 }}
 
 cmd on-select &{{
   lf -remote "send ${id} set-rulerfmt"
 
-  kill -USR1 "$lf_user_quittimerpid"
+  set +e; : > "/tmp/${USER}_lf_heartbeat/${id}" 2> "/dev/null"; set -e
 }}
 
 cmd pre-cd &{{
-  kill -USR1 "$lf_user_quittimerpid"
+  set +e; : > "/tmp/${USER}_lf_heartbeat/${id}" 2> "/dev/null"; set -e
 }}
 
 cmd on-cd &{{
@@ -249,9 +247,8 @@ cmd on-cd &{{
 }}
 
 cmd on-quit &{{
-  set +e
-  kill -9 "$lf_user_quittimercallerpid"
-  kill -9 "$lf_user_quittimerpid"
+  set +e;
+  rm "/tmp/${USER}_lf_heartbeat/${id}" 2> "/dev/null"
   set -e
 }}
 
