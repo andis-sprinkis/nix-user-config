@@ -34,7 +34,7 @@ lf_send() {
 
 while true; do
   if ! lf_send 2> "/dev/null"; then
-    #  The server not running
+    # The server not running
     exit
   fi
 
