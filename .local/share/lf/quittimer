@@ -1,59 +1,81 @@
 #!/usr/bin/env sh
+set -eu
+
+dir_heartbeat="/tmp/${USER}_lf_heartbeat"
+file_timerpid="/tmp/${USER}_lf_timerpid"
+
+mkdir -p "$dir_heartbeat"
+: > "${dir_heartbeat}/${id}"
+
+timerpid="$(set +e; cat "$file_timerpid" 2> "/dev/null"; set -e)"
+
+if [ "$timerpid" ] && kill -0 "$timerpid" 2> "/dev/null"; then
+  exit
+else
+  echo "${$}" > "$file_timerpid"
+fi
+
+timer_quit_sec="${lf_user_quittimersec:-"1800"}"
+timer_sleep_sec="$((timer_quit_sec / 4))"
+timer_sleep_sec_min="10"
+
+if [ "$timer_sleep_sec" -lt "$timer_sleep_sec_min" ]; then
+  timer_sleep_sec="$timer_sleep_sec_min"
+fi
 
 lf_send() {
-  result="$(lf -remote "send ${id} ${1:-""}")"
-  status="$?"
+  result="$(set +e; lf -remote "send ${1:-""} ${2:-""}"; set -e)"
+  status="${?}"
 
   if [ "$status" != "0" ] || [ "$result" = "listen: send: no such client id is connected" ]; then
+    return "1"
+  fi
+}
+
+while true; do
+  if ! lf_send 2> "/dev/null"; then
+    #  The server not running
     exit
   fi
 
-  echo "$result"
-}
+  time_now="$(date +%s)"
 
-lf_send "set user_quittimercallerpid ${$}"
-
-tick="1"
-target="${lf_user_quittimersec:-"1800"}"
-reset_sig="USR1"
-
-(
-  elapsed="0"
-
-  trap 'elapsed="$((-tick))"' "$reset_sig"
-
-  while true; do
-    while [ "$elapsed" -lt "$target" ]; do
-      sleep "$tick" &
-      wait "$!"
-      elapsed="$((elapsed + tick))"
-    done
-
-    # Try to quit.
-    # Reset the timer if the lf mode is not 'normal' or the timer has been explicitly unset after on-init.
-    lf_send "&if [ \"\$lf_user_quittimer\" = \"1\" ] && [ \"\$lf_user_quittimersec\" ] && [ \"\$lf_user_quittimersec\" -gt \"0\" ] && [ \"\$lf_mode\" = \"normal\" ]; then lf -remote \"send \${id} quit\"; else kill -${reset_sig} \"\${lf_user_quittimerpid}\"; fi"
-
-    # Give client 1s to quit or reset the timer
-    sleep "1"
-
-    if [ -z "$(lf_send)" ]; then
-      # No stdout for -remote - the client hasn't quit.
-      # An active file operation ('quit: copy operation in progress') or client is in non-'normal' mode.
-      # Reset the timer.
-
-      elapsed="0"
+  for lfid_file in "${dir_heartbeat}/"*; do
+    if [ ! -f "$lfid_file" ]; then
       continue
     fi
 
-    # Something went wrong.
-    exit "5"
+    case "${OSTYPE:-"$(uname)"}" in
+      [dD]"arwin"*)
+        mod_time="$(stat -f "%m" "$lfid_file")"
+      ;;
+      *)
+        mod_time="$(stat -c "%Y" "$lfid_file")"
+      ;;
+    esac
+
+    if [ "$((time_now - mod_time))" -gt "$timer_quit_sec" ]; then
+      lfid="$(basename "$lfid_file")"
+
+      # Try to quit
+      if ! lf_send "$lfid" "&if [ \"\$lf_user_quittimer\" = \"1\" ] && [ \"\$lf_user_quittimersec\" ] && [ \"\$lf_mode\" = \"normal\" ]; then lf -remote \"send \${id} quit\"; else \: > \"/tmp/\${USER}_lf_heartbeat/\${id}\"; fi"; then
+        # The client doesn't exist
+        set +e; rm "$lfid_file" 2> "/dev/null"; set -e
+        continue
+      fi
+
+      # Give client 1s to quit
+      sleep "1"
+
+      if ! lf_send "$lfid"; then
+        # The client doesn't exist
+        set +e; rm "$lfid_file" 2> "/dev/null"; set -e
+      fi
+
+      # No error code - the client hasn't quit.
+      # An active file operation ('quit: copy operation in progress') or the client is in non-'normal' mode.
+    fi
   done
-) &
 
-sleeper_pid="$!"
-
-lf_send "set user_quittimerpid ${!}"
-
-trap 'kill -9 "$sleeper_pid"' INT TERM QUIT
-
-wait "$!"
+  sleep "$timer_sleep_sec"
+done

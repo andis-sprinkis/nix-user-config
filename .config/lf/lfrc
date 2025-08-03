@@ -224,7 +224,7 @@ set user_quittimer "1" # 0 - pause, 1 - active. Can be changed during client ses
 set user_quittimersec "1200" # Default - 1800
 
 cmd on-init &{{
-  "${XDG_DATA_HOME:-"$HOME/.local/share"}/lf/quittimer2" 1> "/dev/null" 2> "/dev/null" & disown
+  "${XDG_DATA_HOME:-"$HOME/.local/share"}/lf/quittimer" 1> "/dev/null" 2> "/dev/null" & disown
 
   lf -remote "send ${id} set-rulerfmt"
   lf -remote "send ${id} set-ratios"
