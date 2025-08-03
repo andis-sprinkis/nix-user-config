@@ -25,7 +25,7 @@ fi
 
 lf_send() {
   result="$(set +e; lf -remote "send ${1:-""} ${2:-""}"; set -e)"
-  status="$?"
+  status="${?}"
 
   if [ "$status" != "0" ] || [ "$result" = "listen: send: no such client id is connected" ]; then
     return "1"
