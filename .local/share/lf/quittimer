@@ -71,9 +71,6 @@ while true; do
         # The client doesn't exist
         set +e; rm "$lfid_file" 2> "/dev/null"; set -e
       fi
-
-      # No error code - the client hasn't quit.
-      # An active file operation ('quit: copy operation in progress') or the client is in non-'normal' mode.
     fi
   done
 
