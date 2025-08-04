@@ -209,6 +209,10 @@ cmd set-rulerfmt &{{
     fi
   fi
 
+  if [ "$lf_user_quittimer" = "0" ]; then
+    mode_str="notimer |"
+  fi
+
   if [ "$lf_mode" != "normal" ]; then
     mode_str="${lf_mode} |"
   fi
