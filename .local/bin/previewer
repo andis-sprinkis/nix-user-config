@@ -26,11 +26,7 @@ thumb_cache_create() {
 
   FPATH_THUMB="${dir_cache_thumb}/${hash}"
 
-  if [ -d "$dir_cache_thumb" ]; then
-    return "0"
-  fi
-
-  if mkdir -p "$dir_cache_thumb"; then
+  if [ -d "$dir_cache_thumb" ] || mkdir -p "$dir_cache_thumb"; then
     return "0"
   fi
 
