@@ -175,6 +175,12 @@ case "$MIME" in
       fi
     fi
 
+    if find_util "pdfsig"; then
+      if pdfsig "$FPATH"; then
+        echo
+      fi
+    fi
+
     if find_util "pdftotext"; then
       pdftotext -l "2" -nopgbrk -q -- "$FPATH" -
     fi
