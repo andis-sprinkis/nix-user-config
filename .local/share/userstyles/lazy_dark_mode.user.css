@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.234.0
+@version      0.235.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
@@ -97,6 +97,20 @@ regexp("https://web\\.archive\\.org/(?!web).*") {
   }
 }
 
+@-moz-document domain("aliexpress.com") {
+  @media (prefers-color-scheme: dark) {
+    .order-item-content-img,
+    html,
+    img,
+    video,
+    frame,
+    iframe,
+    object {
+      filter: invert();
+    }
+  }
+}
+
 @-moz-document domain("1188.lv"),
 domain("220.lv"),
 domain("abbreviations.com"),
@@ -106,7 +120,6 @@ domain("addons.mozilla.org"),
 domain("adobe.com"),
 domain("airbnb.com"),
 domain("ajprodukti.lv"),
-domain("aliexpress.com"),
 domain("amazon.co.uk"),
 domain("amazon.com"),
 domain("amazon.de"),
