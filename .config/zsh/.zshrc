@@ -22,6 +22,11 @@
     ;;
   esac
 
+  # fn: set terminal emulator window title
+  set_window_title() {
+    printf "\033]0;%s\007" "$PWD"
+  }
+
   # fn: zle widgets
   zle-keymap-select() {
     case "$KEYMAP" in
@@ -81,7 +86,7 @@
       tmout_status="TMOUT0 ";
     fi
 
-    local timeprompt=""	
+    local timeprompt=""
     if [ "${timer:-""}" ]; then
       local  now="$(print -P "%D{%s%3.}")"
       local d_ms="$((now - timer))"

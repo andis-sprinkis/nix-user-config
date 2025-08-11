@@ -1,8 +1,5 @@
 #!/usr/bin/env sh
 
-# fn: set terminal emulator window title
-set_window_title() { printf "\033]0;%s\007" "$PWD"; }
-
 # lfcd
 lfcd() { cd "$(command lf -print-last-dir "$@")" || return; }
 
@@ -42,7 +39,7 @@ then
 fi
 
 # set window title
-set_window_title
+printf "\033]0;%s\007" "$PWD"
 
 # disable ctrl-s to freeze terminal
 stty "stop" "undef"
