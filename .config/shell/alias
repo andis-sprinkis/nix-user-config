@@ -3,6 +3,7 @@
 # 'git' alias must precede the 'g*', 'g_*' aliases
 # 'dotgit' alias must precede the 'dg*', 'dg_*' aliases
 # 'htop' alias must precede the 't' alias
+# 'yay' alias must precede the 'pac_*' aliases
 alias \
   apack="apack --explain" \
   aunpack="aunpack --subdir --explain" \
@@ -68,6 +69,20 @@ alias \
   ncdu="ncdu --color dark -x" \
   nethogs="sudo nethogs -l" \
   p="python3 -q" \
+  pacman="yay --color=always" \
+  yay="yay --color=always" \
+  pac_ls_installed="yay -Q" \
+  pac_ls_installed_explicit="yay -Qe" \
+  pac_ls_installed_in_sync_db="yay -Qn" \
+  pac_ls_installed_not_in_sync_db="yay -Qm" \
+  pac_pkg_db_info="yay -Si" \
+  pac_pkg_installed_info="yay -Qi" \
+  pac_pkg_installed_info_files="yay -Qlk" \
+  pac_search_db="yay -Ss" \
+  pac_search_installed="yay -Qs" \
+  pac_stats="yay -P --stats" \
+  pac_upgrade="yay" \
+  pac_upgrade_db="yay -Sy" \
   pkg="\$EDITOR \"\${XDG_DATA_HOME:-\$HOME/.local/share}/pkg_list/\"" \
   ports="sudo ss -tunlp" \
   py="python3 -q" \
@@ -98,41 +113,22 @@ alias \
   viff="nvim -d" \
   wget="wget --hsts-file=\"\${XDG_DATA_HOME:-\$HOME/.local/share}/wget-hsts\""
 
-# 'yay' alias must precede the 'pac_*' aliases
-if command -v "yay" 1> "/dev/null" 2> "/dev/null"; then
-  alias \
-    pacman="yay --color=always" \
-    yay="yay --color=always" \
-    pac_ls_installed="yay -Q" \
-    pac_ls_installed_explicit="yay -Qe" \
-    pac_ls_installed_in_sync_db="yay -Qn" \
-    pac_ls_installed_not_in_sync_db="yay -Qm" \
-    pac_pkg_db_info="yay -Si" \
-    pac_pkg_installed_info="yay -Qi" \
-    pac_pkg_installed_info_files="yay -Qlk" \
-    pac_search_db="yay -Ss" \
-    pac_search_installed="yay -Qs" \
-    pac_stats="yay -P --stats" \
-    pac_upgrade="yay" \
-    pac_upgrade_db="yay -Sy"
-fi
+case "${OSTYPE:-"$(uname)"}" in
+  [lL]"inux"*)
+      alias \
+        ls="ls -xhAFNX --color=always --group-directories-first --time-style=long-iso" \
+        grep="grep --color=always" \
+        diff="diff --color=always" \
+        hexdump="hexdump --color=always --canonical"
+    ;;
+  *)
+    if [ "$HAS_BREW_GNUBIN" ]; then
+      alias \
+        ls="ls -xhAFNX --color=always --group-directories-first --time-style=long-iso" \
+        grep="grep --color=always" \
+        diff="diff --color=always"
+    fi
 
-# shellcheck disable=SC2010
-if \ls --version 2> "/dev/null" | \grep -q "GNU"; then
-  alias ls="ls -xhAFNX --color=always --group-directories-first --time-style=long-iso"
-fi
-
-if \grep --version 2> "/dev/null" | \grep -q "GNU"; then
-  alias grep="grep --color=always"
-fi
-
-if \diff --version 2> "/dev/null" | \grep -q "GNU"; then
-  alias diff="diff --color=always"
-fi
-
-if \hexdump --version 2> "/dev/null" | \grep -q "util-linux"; then
-  alias hexdump="hexdump --color=always --canonical"
-else
-  alias hexdump="hexdump -C"
-fi
-
+    alias hexdump="hexdump -C"
+  ;;
+esac
