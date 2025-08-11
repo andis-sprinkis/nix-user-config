@@ -113,6 +113,7 @@ alias \
   viff="nvim -d" \
   wget="wget --hsts-file=\"\${XDG_DATA_HOME:-\$HOME/.local/share}/wget-hsts\""
 
+# shellcheck disable=SC3028
 case "${OSTYPE:-"$(uname)"}" in
   [lL]"inux"*)
       alias \
