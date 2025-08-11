@@ -26,14 +26,15 @@ fi
 if
   command -v "tmux" 1>/dev/null 2>/dev/null && [ -z "${TMUX:-""}" ] && [ "$TERM" != "linux" ]
 then
+  # shellcheck disable=SC3028
   case "${OSTYPE:-"$(uname)"}" in
     [Dd]"arwin"*)
-      if [ "$(id -u)" -ge "501" ]; then
+      if [ "${UID:-"$(id -u)"}" -ge "501" ]; then
         exec tmux
       fi
     ;;
     *)
-      if [ "$(id -u)" -ge "1000" ]; then
+      if [ "${UID:-"$(id -u)"}" -ge "1000" ]; then
         exec tmux
       fi
     ;;

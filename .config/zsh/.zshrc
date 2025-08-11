@@ -83,7 +83,7 @@
 
     local timeprompt=""	
     if [ "${timer:-""}" ]; then
-      local  now="$(print -P %D{%s%3.})"
+      local  now="$(print -P "%D{%s%3.}")"
       local d_ms="$((now - timer))"
       local  d_s="$((d_ms / 1000))"
       local   ms="$((d_ms % 1000))"
@@ -265,7 +265,7 @@ $prompt_symbol"
 
   case "$OSTYPE" in
     "linux"*)
-      if [ "$(id -u)" -ge "1000" ]; then
+      if [ "$UID" -ge "1000" ]; then
         if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
           export ZSH_SYSTEM_CLIPBOARD_METHOD="xcc"
         elif [ "${WAYLAND_DISPLAY:-""}" ]; then
