@@ -1,3 +1,4 @@
+#!/usr/bin/env sh
 
 # default macOS homebrew dir. path
 if [ -d "/opt/homebrew" ]; then
