@@ -8,7 +8,7 @@
 # Mode at startup (viewer/gallery)
 mode = viewer
 # Window position (parent or absolute coordinates, e.g. 100,200)
-position = 0,0
+position = auto
 # Window size (fullscreen/parent/image, or absolute size, e.g. 800,600)
 size = parent
 # Sway/Hyprland only: create floating window above the currently focused one
