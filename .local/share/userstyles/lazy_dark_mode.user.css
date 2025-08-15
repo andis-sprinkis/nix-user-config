@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.236.0
+@version      0.237.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
@@ -277,6 +277,7 @@ domain("pycqa.org"),
 domain("pypi.org"),
 domain("python.readthedocs.io"),
 domain("qbittorrent.org"),
+domain("qt.io"),
 domain("refspecs.linuxfoundation.org"),
 domain("rfc-editor.org"),
 domain("riga.lv"),
