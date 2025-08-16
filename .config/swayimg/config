@@ -130,24 +130,24 @@ status_timeout = 2
 
 # Display scheme for viewer mode (position = content)
 [info.viewer]
-top_left = +name,+format,+filesize,+imagesize,+exif
-top_right = index
-bottom_left = scale,frame
+top_left = +name,+index,+path,+filesize,+format,+imagesize,+frame,+exif
+top_right = none
+bottom_left = none
 bottom_right = status
 
 # Display scheme for slideshow mode (position = content)
 [info.slideshow]
-top_left = none
+top_left = +name,+index,+path,+filesize,+format,+imagesize,+frame,+exif
 top_right = none
 bottom_left = none
-bottom_right = dir,status
+bottom_right = status
 
 # Display scheme for gallery mode (position = content)
 [info.gallery]
-top_left = none
+top_left = +name,+index,+path,+filesize,+format,+imagesize,+frame,+exif
 top_right = none
 bottom_left = none
-bottom_right = name,status
+bottom_right = status
 
 ################################################################################
 # Viewer mode key binding configuration: key = action [parameters]
@@ -265,6 +265,7 @@ i = info
 Shift+Delete = exec ""
 Escape = exit
 q = exit
+
 # Mouse related
 ScrollLeft = step_left
 ScrollRight = step_right
