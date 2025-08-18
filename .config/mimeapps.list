@@ -2,6 +2,7 @@
 
 inode/directory=file.desktop
 x-scheme-handler/file=file.desktop
+application/octet-stream=file.desktop
 
 application/gzip=file.desktop
 application/java-archive=file.desktop
