@@ -5,10 +5,13 @@ dir_heartbeat="/tmp/${USER}_lf_heartbeat"
 file_timerpid="/tmp/${USER}_lf_timerpid"
 
 mkdir -p "$dir_heartbeat"
+
+# shellcheck disable=SC2154
 : > "${dir_heartbeat}/${id}"
 
 timerpid="$(set +e; cat "$file_timerpid" 2> "/dev/null"; set -e)"
 
+: > "${dir_heartbeat}/${id}"
 if [ "$timerpid" ] && kill -0 "$timerpid" 2> "/dev/null"; then
   exit
 else
@@ -47,6 +50,7 @@ while true; do
       continue
     fi
 
+    # shellcheck disable=SC3028
     case "${OSTYPE:-"$(uname)"}" in
       [dD]"arwin"*)
         mod_time="$(/usr/bin/stat -f "%m" "$lfid_file")"
