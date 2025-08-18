@@ -24,8 +24,10 @@ if [ "$timer_sleep_sec" -lt "$timer_sleep_sec_min" ]; then
 fi
 
 lf_send() {
-  result="$(set +e; lf -remote "send ${1:-""} ${2:-""}"; set -e)"
+  set +e
+  result="$(lf -remote "send ${1:-""} ${2:-""}")"
   status="${?}"
+  set -e
 
   if [ "$status" != "0" ] || [ "$result" = "listen: send: no such client id is connected" ]; then
     return "1"
@@ -64,7 +66,7 @@ while true; do
         continue
       fi
 
-      # Give client 1s to quit
+      # Give the client 1s to quit
       sleep "1"
 
       if ! lf_send "$lfid"; then
