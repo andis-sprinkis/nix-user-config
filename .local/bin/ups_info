@@ -22,6 +22,9 @@ for device in $ups_devices; do
   if [ "$status" ]; then
     echo "$status" | column -t -s": " -l "2"
     echo
+  else
+    echo "UPS device status unavailable."
+    echo
   fi
 
   cmds="$(set +e; upscmd -l "$name"; set -e)"
