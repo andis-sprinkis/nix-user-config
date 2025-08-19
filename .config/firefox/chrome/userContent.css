@@ -1,4 +1,5 @@
-@-moz-document url-prefix("about:home"), url-prefix("about:newtab"), url-prefix("about:blank") {
+@-moz-document url-prefix("about:home")
+{
   menu.personalizeButtonWrapper {
     display: none !important;
   }

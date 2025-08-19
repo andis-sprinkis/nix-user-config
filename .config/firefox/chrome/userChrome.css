@@ -65,7 +65,10 @@
   #sidebar-search-container {
     padding: 4px 8px !important;
   }
+}
 
+@-moz-document url-prefix("about:home")
+{
   menu.personalizeButtonWrapper {
     display: none !important;
   }
