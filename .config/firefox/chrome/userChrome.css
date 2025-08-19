@@ -67,7 +67,7 @@
   }
 }
 
-@-moz-document url-prefix("about:home")
+@-moz-document url-prefix("about:home"), url-prefix("about:newtab"), url-prefix("about:blank")
 {
   menu.personalizeButtonWrapper {
     display: none !important;
