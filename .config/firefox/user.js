@@ -30,6 +30,8 @@ user_pref("browser.messaging-system.whatsNewPanel.enabled", false);
 user_pref("browser.ml.chat.enabled", false);
 user_pref("browser.ml.chat.sidebar", false);
 user_pref("browser.ml.enable", false);
+user_pref("browser.ml.linkPreview.enabled", false);
+user_pref("browser.ml.linkPreview.optin", false);
 user_pref("browser.newtabpage.activity-stream.asrouter.useRemoteL10n", false);
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons", false);
 user_pref("browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features", false);

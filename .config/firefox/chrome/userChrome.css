@@ -65,4 +65,8 @@
   #sidebar-search-container {
     padding: 4px 8px !important;
   }
+
+  menu.personalizeButtonWrapper {
+    display: none !important;
+  }
 }
