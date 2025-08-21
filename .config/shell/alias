@@ -59,6 +59,8 @@ alias \
   ip="ip --color=always" \
   jq="jq -C" \
   l="lf" \
+  le="exec lf" \
+  lfe="exec lf" \
   lsl="ls -l" \
   mime="file --mime-type --brief" \
   mkdir="mkdir -pv" \
