@@ -41,6 +41,7 @@ user_pref("browser.newtabpage.activity-stream.discoverystream.merino-provider.en
 user_pref("browser.newtabpage.activity-stream.enabled", false);
 user_pref("browser.newtabpage.activity-stream.feeds.telemetry", false);
 user_pref("browser.newtabpage.activity-stream.feeds.topsites", false);
+user_pref("browser.newtabpage.activity-stream.newtabWallpapers.enabled", false)
 user_pref("browser.newtabpage.activity-stream.showRecentSaves", false);
 user_pref("browser.newtabpage.activity-stream.showSearch", false);
 user_pref("browser.newtabpage.activity-stream.showSponsored", false);
