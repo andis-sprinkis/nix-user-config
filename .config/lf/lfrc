@@ -35,6 +35,7 @@ cmd open-with              $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/o
 cmd open-with-menu-desktop & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/open-with-menu-desktop"
 cmd paste-to-file          $ paste_to_file "${PWD}/${*}"
 cmd q                      quit
+cmd Q                      quit
 cmd qr-receive             $ clear; qrcp receive
 cmd qr-send                $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/qr-send"
 cmd reopen-lf-desktop      & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/reopen-lf-desktop"
