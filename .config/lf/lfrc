@@ -1,69 +1,68 @@
-set cursorparentfmt "\033[4m"
-set dupfilefmt "%b.~%n~%e"
-set hidden!
+set cursorparentfmt        "\033[4m"
+set dupfilefmt             "%b.~%n~%e"
+set hidden                 true
 set incfilter
 set incsearch
 set mouse
-set numberfmt "\033[90m"
-set period 1
-set previewer previewer
-set promptfmt "\033[32;1m%u@%h\033[0m \033[34;1m%d\033[0m\033[1m%f\033[0m"
-set scrolloff 12
-set shellopts '-eu'
-set sortby name
-set tabstop 2
+set numberfmt              "\033[90m"
+set period                 1
+set previewer              previewer
+set promptfmt              "\033[32;1m%u@%h\033[0m \033[34;1m%d\033[0m\033[1m%f\033[0m"
+set scrolloff              12
+set shellopts              -eu
+set sortby                 name
+set tabstop                2
 set wrapscroll
-set info "custom"
-set user_quittimer "1" # 0 - pause, 1 - active. Can be changed during client session.
-set user_quittimersec "1200" # Default - 1800
+set info                   custom
+set user_quittimer         true
+set user_quittimersec      1200
 
-cmd on-cd & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/on-cd"
-cmd on-init & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/on-init"
-cmd on-load & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/on-load" "$@"
-cmd on-quit & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/on-quit"
-cmd on-redraw & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/on-redraw"
-cmd on-select & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/on-select"
-cmd open $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/open"
-cmd pre-cd & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/pre-cd"
-
-cmd apack ! exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/apack" "$@"
-cmd aunpack ! exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/aunpack"
-cmd copy-path $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/copy-path"
-cmd follow-search $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/follow-search"
-cmd follow-symlink & lf -remote "send ${id} select '$(readlink "$f")'"
-cmd mkdir & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/mkdir" "$@"
-cmd open-with $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/open-with" "$@"
+cmd on-cd                  & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/on-cd"
+cmd on-init                & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/on-init"
+cmd on-load                & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/on-load" "$@"
+cmd on-quit                & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/on-quit"
+cmd on-redraw              & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/on-redraw"
+cmd on-select              & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/on-select"
+cmd open                   $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/open"
+cmd pre-cd                 & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/pre-cd"
+cmd apack                  ! exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/apack" "$@"
+cmd aunpack                ! exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/aunpack"
+cmd copy-path              $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/copy-path"
+cmd follow-search          $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/follow-search"
+cmd follow-symlink         & lf -remote "send ${id} select '$(readlink "$f")'"
+cmd mkdir                  & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/mkdir" "$@"
+cmd open-with              $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/open-with" "$@"
 cmd open-with-menu-desktop & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/open-with-menu-desktop"
-cmd paste-to-file $ paste_to_file "${PWD}/${*}"
-cmd q & lf -remote "send ${id} quit"
-cmd qr-receive $ clear; qrcp receive
-cmd qr-send $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/qr-send"
-cmd reopen-lf-desktop & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/reopen-lf-desktop"
-cmd set-ratios & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/set-ratios"
-cmd set-rulerfmt & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/set-rulerfmt"
-cmd to-pager $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/to-pager"
-cmd vidir $ vidir "$PWD"
+cmd paste-to-file          $ paste_to_file "${PWD}/${*}"
+cmd q                      quit
+cmd qr-receive             $ clear; qrcp receive
+cmd qr-send                $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/qr-send"
+cmd reopen-lf-desktop      & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/reopen-lf-desktop"
+cmd set-ratios             & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/set-ratios"
+cmd set-rulerfmt           & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/set-rulerfmt"
+cmd to-pager               $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/to-pager"
+cmd vidir                  $ vidir "$PWD"
 
-map <c-o> open-with-menu-desktop
-map <c-z> $ kill -STOP $PPID
-map <enter> to-pager
-map <m-6> updir
-map <m-7> open
-map <m-left> updir
-map <m-right> open
-map I vidir
-map W reopen-lf-desktop
-map X aunpack
-map Y copy-path
-map ` !true
-map b mark-load
-map o push :open-with<space>
-map t
-nmap <esc> reload
-nmap P push :paste-to-file<space>
-nmap R delete
-nmap gl follow-symlink
-nmap gs follow-search
-vmap y :visual-accept; copy
-vmap d :visual-accept; cut
-vmap U visual-unselect
+map  <c-o>                 open-with-menu-desktop
+map  <c-z>                 $ kill -STOP $PPID
+map  <enter>               to-pager
+map  <m-6>                 updir
+map  <m-7>                 open
+map  <m-left>              updir
+map  <m-right>             open
+map  I                     vidir
+map  W                     reopen-lf-desktop
+map  X                     aunpack
+map  Y                     copy-path
+map  `                     !true
+map  b                     mark-load
+map  o                     push :open-with<space>
+map  t
+nmap <esc>                 reload
+nmap P                     push :paste-to-file<space>
+nmap R                     delete
+nmap gl                    follow-symlink
+nmap gs                    follow-search
+vmap y                     :visual-accept; copy
+vmap d                     :visual-accept; cut
+vmap U                     visual-unselect
