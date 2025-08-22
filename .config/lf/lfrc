@@ -55,7 +55,7 @@ map  I                     vidir
 map  W                     reopen-lf-desktop
 map  X                     aunpack
 map  Y                     copy-path
-map  `                     !true
+map  `                     ! true
 map  b                     mark-load
 map  o                     push :open-with<space>
 map  t
