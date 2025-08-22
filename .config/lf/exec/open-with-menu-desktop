@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+set -eu
+
+files="${fv:-"$fx"}"
+
+(trap "" "HUP"; echo "$files" | open_with_menu_desktop) 0</dev/null 1>/dev/null 2>/dev/null & disown

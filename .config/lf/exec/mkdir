@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+set -eu
+
+IFS=" "
+mkdir -pv -- "$*"
+lf -remote "send ${id} select \"${*}\""

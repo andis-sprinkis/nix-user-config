@@ -1,0 +1,30 @@
+#!/usr/bin/env sh
+set -eu
+
+if [ -z "${1:-""}" ]; then
+  exit "1"
+fi
+
+if [ -e "${1:-""}" ]; then
+  exit "2"
+fi
+
+IFS_="$IFS"
+
+files="${fv:-"$fx"}"
+
+fy=""
+
+IFS="
+"
+for f in $files; do
+  IFS="$IFS_"
+
+  fy="${fy}${fy:+
+}$(basename "$f")"
+done
+IFS="$IFS_"
+
+printf 'Selected to archive:\n%s\n\n' "$fy"
+
+printf "%s\n" "$fy" | apack --explain "$@"

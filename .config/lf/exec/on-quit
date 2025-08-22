@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+set -eu
+
+set +e;
+rm "/tmp/${USER}_lf_heartbeat/${id}" 2> "/dev/null"
+set -e

@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+set -eu
+
+cmds=""
+
+for file in "$@"; do
+  if [ -d "$file" ] && mountpoint -q -- "$file" 1> "/dev/null" 2> "/dev/null"; then
+    cmds="${cmds}addcustominfo \"${file}\" \"\033[90m%\033[0m\"; "
+  fi
+done
+
+if [ "$cmds" ]; then
+  lf -remote "send ${id} :$cmds"
+fi

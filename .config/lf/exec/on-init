@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+set -eu
+
+"${XDG_DATA_HOME:-"$HOME/.local/share"}/lf/quittimer" 1> "/dev/null" 2> "/dev/null" & disown
+
+lf -remote "send ${id} set-rulerfmt"
+lf -remote "send ${id} set-ratios"
+lf -remote "send ${id} tty-write \"\033]0;${PWD}\007\""
+lf -remote "send ${id} reload"

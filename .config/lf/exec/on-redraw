@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+set -eu
+
+lf -remote "send ${id} set-ratios"

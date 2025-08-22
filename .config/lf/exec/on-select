@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+set -eu
+
+lf -remote "send ${id} set-rulerfmt"
+
+set +e
+: > "/tmp/${USER}_lf_heartbeat/${id}" 2> "/dev/null"
+set -e

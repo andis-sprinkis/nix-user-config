@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+set -eu
+
+files="${fv:-"$fx"}"
+
+if [ "${WAYLAND_DISPLAY:-""}" ] && printf '%s' "$files" | wl-copy; then
+  exit
+fi
+
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && printf '%s' "$files" | xclip -sel "clipboard"; then
+  exit
+fi
+
+if printf '%s' "$files" | pbcopy; then
+  exit
+fi
+
+exit "1"

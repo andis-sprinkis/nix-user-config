@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+set -eu
+
+IFS_="$IFS"
+
+files="${fv:-"$fx"}"
+
+echo
+clear
+printf 'Selected to send:\n%s\n\n' "$files"
+
+IFS="
+"
+for f in $files; do
+  IFS="$IFS_"
+  set -- "$@" "$f"
+done
+IFS="$IFS_"
+
+qrcp send "$@"

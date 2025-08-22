@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+set -eu
+
+fpath="$(set +e; fzf; set -e)"
+
+if [ "$fpath" ]; then
+  lf -remote "send ${id} select \"${fpath}\""
+fi
