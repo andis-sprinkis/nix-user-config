@@ -45,7 +45,7 @@ cmd to-pager               $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/t
 cmd vidir                  $ vidir "$PWD"
 
 map  <c-o>                 open-with-menu-desktop
-map  <c-z>                 $ kill -STOP $PPID
+map  <c-z>                 $ kill -STOP "$PPID"
 map  <enter>               to-pager
 map  <m-6>                 updir
 map  <m-7>                 open
