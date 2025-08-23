@@ -14,7 +14,7 @@ if [ -d "$f" ] && mountpoint -q -- "$f" 1>/dev/null 2>/dev/null; then
   fi
 fi
 
-if [ "$lf_user_quittimer" = "0" ]; then
+if [ "$lf_user_quittimer" != "true" ]; then
   mode_str="notimer |"
 fi
 
