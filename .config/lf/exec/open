@@ -56,4 +56,4 @@ if [ "$(command -v "xdg-mime")" ] && [ -z "$(xdg-mime query default "$mime")" ];
   open_with
 fi
 
-in_opener
+in_opener 0</dev/null 1>/dev/null 2>/dev/null & disown
