@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 set -eu
 
-lf -remote "send ${id} tty-write \"\033]0;${PWD}\007\""
+"${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/_set-title"

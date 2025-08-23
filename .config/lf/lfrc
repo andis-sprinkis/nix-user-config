@@ -29,18 +29,16 @@ cmd apack                  ! exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/a
 cmd aunpack                ! exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/aunpack"
 cmd copy-path              $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/copy-path"
 cmd follow-search          $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/follow-search"
-cmd follow-symlink         & lf -remote "send ${id} select '$(readlink "$f")'"
+cmd follow-symlink         & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/follow-symlink"
 cmd mkdir                  & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/mkdir" "$@"
 cmd open-with              $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/open-with" "$@"
 cmd open-with-menu-desktop & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/open-with-menu-desktop"
-cmd paste-to-file          $ paste_to_file "${PWD}/${*}"
+cmd paste-to-file          $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/paste-to-file" "$@"
 cmd q                      quit
 cmd Q                      quit
-cmd qr-receive             $ clear; qrcp receive
+cmd qr-receive             $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/qr-receive"
 cmd qr-send                $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/qr-send"
 cmd reopen-lf-desktop      & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/reopen-lf-desktop"
-cmd set-ratios             & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/set-ratios"
-cmd set-rulerfmt           & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/set-rulerfmt"
 cmd to-pager               $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/to-pager"
 cmd vidir                  $ vidir "$PWD"
 

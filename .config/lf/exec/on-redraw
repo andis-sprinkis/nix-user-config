@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 set -eu
 
-lf -remote "send ${id} set-ratios"
+"${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/_set-ratios"

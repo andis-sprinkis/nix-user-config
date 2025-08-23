@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+set -eu
+
+if [ "$lf_width" -le "40"  ]; then exec lf -remote "send ${id} set ratios 100:1";    fi
+if [ "$lf_width" -le "80"  ]; then exec lf -remote "send ${id} set ratios 3:4";      fi
+if [ "$lf_width" -le "120" ]; then exec lf -remote "send ${id} set ratios 2:4:4";    fi
+if [ "$lf_width" -le "160" ]; then exec lf -remote "send ${id} set ratios 1:3:5:5";  fi
+                                   exec lf -remote "send ${id} set ratios 1:2:4:7:8"
