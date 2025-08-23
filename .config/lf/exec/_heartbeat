@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+set +e
+: > "/tmp/${USER}_lf_heartbeat/${id}" 0</dev/null 2>/dev/null & disown
+set -e
+
+exit "0"

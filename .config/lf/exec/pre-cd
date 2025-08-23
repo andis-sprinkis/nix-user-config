@@ -1,6 +1,4 @@
 #!/usr/bin/env sh
 set -eu
 
-set +e
-: > "/tmp/${USER}_lf_heartbeat/${id}" 2> "/dev/null"
-set -e
+"${XDG_CONFIG_HOME:-"${HOME}/.config"}/lf/exec/_heartbeat" 0</dev/null 1>/dev/null 2>/dev/null & disown

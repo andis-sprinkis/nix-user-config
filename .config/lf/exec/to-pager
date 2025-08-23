@@ -1,9 +1,15 @@
 #!/usr/bin/env sh
 set -eu
-
-IFS="
-"
+IFS_="$IFS"
 
 files="${fv:-"$fx"}"
 
-$PAGER $files
+IFS="
+"
+for file in $files; do
+  IFS="$IFS_"
+  set -- "$@" "$file"
+done
+IFS="$IFS_"
+
+$PAGER "$@"
