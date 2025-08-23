@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 set -eu
 
-"${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/_set-title"
+"${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/_set-title" 0</dev/null 1>/dev/null 2>/dev/null & disown

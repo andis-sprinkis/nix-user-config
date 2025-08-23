@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 set -eu
 
-"${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/_set-ratios"
+"${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/_set-ratios" 0</dev/null 1>/dev/null 2>/dev/null & disown

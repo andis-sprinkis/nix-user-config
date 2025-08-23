@@ -2,4 +2,4 @@
 set -eu
 
 "${XDG_CONFIG_HOME:-"${HOME}/.config"}/lf/exec/_heartbeat" 0</dev/null 1>/dev/null 2>/dev/null & disown
-"${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/_set-rulerfmt"
+"${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/_set-rulerfmt" 0</dev/null 1>/dev/null 2>/dev/null & disown
