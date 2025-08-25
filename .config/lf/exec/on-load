@@ -10,5 +10,5 @@ for file in "$@"; do
 done
 
 if [ "$cmds" ]; then
-  lf -remote "send ${id} :$cmds" 0</dev/null 1>/dev/null 2>/dev/null & disown
+  lf -remote "send ${id} :${cmds}" 0</dev/null 1>/dev/null 2>/dev/null & disown
 fi
