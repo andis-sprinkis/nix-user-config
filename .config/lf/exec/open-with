@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 set -eu
-IFS="$IFS_"
+IFS_="$IFS"
 
 files="${fv:-"$fx"}"
 
