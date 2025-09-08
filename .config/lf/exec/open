@@ -5,8 +5,8 @@ IFS_="$IFS"
 "${XDG_CONFIG_HOME:-"${HOME}/.config"}/lf/exec/_heartbeat" 0</dev/null 1>/dev/null 2>/dev/null & disown
 
 files="${fv:-"$fx"}"
-
-mime="$(file --mime-type --brief "$(readlink -f "$(echo "$files" | head -n1)")")"
+first_file="$(echo "$files" | head -n1)"
+mime="$(file --mime-type --brief "$first_file")"
 
 in_pager() {
   IFS="
@@ -45,6 +45,11 @@ case $mime in
   ;;
   # Archive types that 'als' recognizes.
   application/gzip|application/java-archive|application/vnd.debian.binary-package|application/vnd.ms-cab-compressed|application/vnd.rar|application/x-7z-compressed|application/x-ace|application/x-alz|application/x-archive|application/x-arj|application/x-bzip1|application/x-bzip1-compressed-tar|application/x-bzip2|application/x-bzip2-compressed-tar|application/x-compress|application/x-compressed-tar|application/x-cpio|application/x-lha|application/x-lrzip|application/x-lzip|application/x-lzip-compressed-tar|application/x-lzma-compressed-tar|application/x-lzma|application/x-lzop|application/x-rpm|application/x-tar|application/x-tarz|application/x-tzo|application/x-xz|application/x-xz-compressed-tar|application/zip)
+    if [ "${f##*.}" = "edoc" ]; then
+      (trap "" "HUP"; PATH=${PATH}:/usr/bin:/usr/lib/eparakstitajs3/bin /usr/bin/eparakstitajs3 "$f") 0</dev/null 1>/dev/null 2>/dev/null & disown
+      exit
+    fi
+
     in_pager
   ;;
   application/x-iso9660-image)
