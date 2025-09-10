@@ -6,7 +6,7 @@ IFS_="$IFS"
 
 files="${fv:-"$fx"}"
 first_file="$(echo "$files" | head -n1)"
-mime="$(file --mime-type --brief "$first_file")"
+mime="$(file --mime-type --brief "$(readlink -f "$first_file")")"
 
 in_pager() {
   IFS="
