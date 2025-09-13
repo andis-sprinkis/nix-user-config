@@ -1,11 +1,22 @@
 $include /etc/inputrc
 
+set colored-completion-prefix on
+set colored-stats on
+set completion-ignore-case on
+set completion-map-case on
+set print-completions-horizontally on
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+set visible-stats on
 set editing-mode vi
 
 $if mode=vi
+  set show-mode-in-prompt on
+  set vi-ins-mode-string \1\e[6 q\2
+  set vi-cmd-mode-string \1\e[2 q\2
 
-set show-mode-in-prompt on
-set vi-ins-mode-string \1\e[6 q\2
-set vi-cmd-mode-string \1\e[2 q\2
-
+  # https://github.com/Qalculate/libqalculate/issues/832
+  $if qalc
+    set show-mode-in-prompt off
+  $endif
 $endif
