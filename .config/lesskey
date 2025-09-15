@@ -9,6 +9,7 @@ O pshell $nohup open_with_menu_desktop ""%g"" 0</dev/null 1>/dev/null 2>/dev/nu
 x pshell $nohup file_manager_desktop ""%g"" 0</dev/null 1>/dev/null 2>/dev/null & disown \n
 r pshell $nohup pager_desktop ""%g"" 0</dev/null 1>/dev/null 2>/dev/null & disown \n
 v pshell $EDITOR ""%g"" \n
+` pshell read \n
 
 #env
 LESS = --LINE-NUMBERS --LONG-PROMPT --RAW-CONTROL-CHARS --clear-screen --HILITE-UNREAD --incsearch --ignore-case --jump-target=.5\$ --line-num-width=5\$ --mouse --status-column --tabs=2\$ --tilde --use-color --wheel-lines=6\$ --wordwrap --color=P-\$ --color=NK\$ --color=RK\$ --color=E-\$
