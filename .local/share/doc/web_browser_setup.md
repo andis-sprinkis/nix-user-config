@@ -44,6 +44,7 @@
 1.  https://addons.mozilla.org/en-US/firefox/addon/react-context-devtool/
 1.  https://addons.mozilla.org/en-US/firefox/addon/react-devtools/
 1.  https://addons.mozilla.org/en-US/firefox/addon/reduxdevtools/
+1.  https://addons.mozilla.org/en-US/firefox/addon/scroll-zoom/
 1.  https://addons.mozilla.org/en-US/firefox/addon/search_by_image/
 1.  https://addons.mozilla.org/en-US/firefox/addon/select-link-text/
 1.  https://addons.mozilla.org/en-US/firefox/addon/sponsorblock/
@@ -71,6 +72,7 @@
 1.  https://chrome.google.com/webstore/detail/react-context-devtool/oddhnidmicpefilikhgeagedibnefkcf
 1.  https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi
 1.  https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd
+1.  https://chrome.google.com/webstore/detail/scroll-zoom/ccfomhdaagemnbhbpminjoggkbglmcgb
 1.  https://chrome.google.com/webstore/detail/search-by-image/cnojnbdhbhnkbcieeekonklommdnndci
 1.  https://chrome.google.com/webstore/detail/sponsorblock-for-youtube/mnjggcdmjocbbbhaepdhchncahnbgone
 1.  https://chrome.google.com/webstore/detail/stop-autoplay-next-for-yo/bhnhbmjfaanopkalgkjoiemhekdnhanh
