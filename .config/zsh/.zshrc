@@ -82,7 +82,7 @@
   # fn: set RPROMPT prompt
   set_rprompt() {
     local tmout_status=""
-    if [ "${TMOUT:-""}" = "0" ]; then 
+    if [ "${TMOUT:-""}" = "0" ]; then
       tmout_status="TMOUT0 ";
     fi
 
