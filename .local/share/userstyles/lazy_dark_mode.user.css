@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.240.0
+@version      0.241.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
@@ -350,6 +350,7 @@ domain("www.redhat.com"),
 domain("xkpasswd.net"),
 domain("xn--kalendrs-m7a.lv"),
 domain("yr.no"),
+regexp("https://(?!forum\\.)mikrotik\\.com.*"),
 url-prefix("https://www.w3.org/WAI/")
 {
   @media (prefers-color-scheme: dark) {
