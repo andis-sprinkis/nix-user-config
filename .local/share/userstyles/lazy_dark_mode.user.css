@@ -83,7 +83,8 @@ domain("wiktionary.org") {
 }
 
 @-moz-document url-prefix("https://archive.org/"),
-regexp("https://web\\.archive\\.org/(?!web).*") {
+regexp("https://web\\.archive\\.org/(?!web).*")
+{
   @media (prefers-color-scheme: dark) {
     canvas,
     html,
