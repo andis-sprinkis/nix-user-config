@@ -351,7 +351,8 @@ domain("www.redhat.com"),
 domain("xkpasswd.net"),
 domain("xn--kalendrs-m7a.lv"),
 domain("yr.no"),
-regexp("https://(?!forum\\.)mikrotik\\.com.*"),
+url-prefix("https://darbs.mikrotik.com/"),
+url-prefix("https://mikrotik.com/"),
 url-prefix("https://www.w3.org/WAI/")
 {
   @media (prefers-color-scheme: dark) {
