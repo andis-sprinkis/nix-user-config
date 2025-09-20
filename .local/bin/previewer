@@ -204,6 +204,16 @@ case "$MIME" in
       fi
     fi
   ;;
+  application/vnd.openxmlformats-officedocument.wordprocessingml.document)
+    print_mime
+
+    if find_util "docx2txt"; then
+      docx2txt "$FPATH" -
+      echo
+    fi
+
+    print_als "zip"
+  ;;
   application/zip|application/epub+zip|application/java-archive|*openxmlformats-officedocument*)
     print_mime
     print_als "zip"

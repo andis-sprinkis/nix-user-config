@@ -34,6 +34,7 @@ dash
 dmenu
 docker
 docker-compose
+docx2txt
 dos2unix
 dosfstools
 dunst
