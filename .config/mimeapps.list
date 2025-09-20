@@ -10,7 +10,6 @@ application/vnd.debian.binary-package=file.desktop
 application/vnd.ms-cab-compressed=file.desktop
 application/vnd.rar=file.desktop
 application/x-7z-compressed=file.desktop
-application/x-7z-compressed=file.desktop
 application/x-ace=file.desktop
 application/x-alz=file.desktop
 application/x-archive=file.desktop
