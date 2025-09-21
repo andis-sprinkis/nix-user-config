@@ -31,6 +31,7 @@ cmd copy-path              $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/c
 cmd follow-search          $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/follow-search"
 cmd follow-symlink         & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/follow-symlink"
 cmd mkdir                  & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/mkdir" "$@"
+cmd ncdu                   $ ncdu --color dark -x "$@"
 cmd open-with              $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/open-with" "$@"
 cmd open-with-menu-desktop & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/open-with-menu-desktop"
 cmd paste-to-file          $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/paste-to-file" "$@"
