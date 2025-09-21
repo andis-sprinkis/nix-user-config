@@ -22,6 +22,7 @@ alias \
   date_iso8601_utc_underscore="TZ=\"\" date -u +\"%Y_%m_%dT%H_%M_%SZ\"" \
   dmesg="sudo dmesg -HL" \
   d="\$EDITOR \"\${XDG_DATA_HOME:-\$HOME/.local/share}\"" \
+  diff="diff --color=always" \
   doc="\$EDITOR \"\${XDG_DATA_HOME:-\$HOME/.local/share}/doc/\"" \
   dotgit="dotgit -c color.ui=always" \
   dg="dotgit" \
@@ -51,6 +52,7 @@ alias \
   gl="git log" \
   gpl="git pull" \
   gps="git push" \
+  grep="grep --color=always" \
   gs="git status" \
   gt="git checkout" \
   hosts="sudo \$EDITOR /etc/hosts" \
@@ -115,23 +117,24 @@ alias \
   viff="nvim -d" \
   wget="wget --hsts-file=\"\${XDG_DATA_HOME:-\$HOME/.local/share}/wget-hsts\""
 
+alias_gnu_ls="ls -xhAFNX --color=always --group-directories-first --time-style=long-iso"
+
 # shellcheck disable=SC3028
 case "${OSTYPE:-"$(uname)"}" in
   [lL]"inux"*)
-      alias \
-        ls="ls -xhAFNX --color=always --group-directories-first --time-style=long-iso" \
-        grep="grep --color=always" \
-        diff="diff --color=always" \
-        hexdump="hexdump --color=always --canonical"
-    ;;
+    # shellcheck disable=SC2139
+    alias \
+      ls="$alias_gnu_ls" \
+      hexdump="hexdump --color=always --canonical"
+  ;;
   *)
-    if [ "$HAS_BREW_GNUBIN" ]; then
-      alias \
-        ls="ls -xhAFNX --color=always --group-directories-first --time-style=long-iso" \
-        grep="grep --color=always" \
-        diff="diff --color=always"
-    fi
-
     alias hexdump="hexdump -C"
+
+    if [ "$HAS_BREW_GNUBIN" ]; then
+      # shellcheck disable=SC2139
+      alias ls="$alias_gnu_ls"
+    else
+      alias ls="ls -xhAF --color=always"
+    fi
   ;;
 esac
