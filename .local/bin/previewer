@@ -59,10 +59,12 @@ print_symlink() {
 }
 
 print_hardlink() {
-  links_count="$(stat -c '%h' -- "$FPATH")"
+  if [ -e "$FPATH" ]; then
+    links_count="$(stat -c '%h' -- "$FPATH")"
 
-  if [ "$links_count" -gt "1" ]; then
-    echo "${links_count} hard links"
+    if [ "$links_count" -gt "1" ]; then
+      echo "${links_count} hard links"
+    fi
   fi
 }
 
@@ -148,6 +150,11 @@ print_mime_newlines() {
 
 print_symlink
 print_hardlink
+
+if [ ! -e "$FPATH" ]; then
+  echo "The target file does not exist."
+  exit
+fi
 
 case "$MIME" in
   application/eps|application/pdf|application/postscript|application/x-eps|image/x-eps)
