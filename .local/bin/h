@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 set -eu
 
-selection="$(
+line="$(
   (
     man -k ''  | sed -e 's/^/ man: /g'
     info -k '' | sed -e 's/^/info: /g'
@@ -9,21 +9,26 @@ selection="$(
   ) | fzf -e --preview='h_preview {}' -q "${1:-""}"
 )"
 
-case "$(echo "$selection" | cut -d":" -f1)" in
+case "$(echo "$line" | cut -d":" -f1)" in
   " man")
-    cmd="$(echo "$selection" | cut -d" " -f3)"
-    section="$(echo "$selection" | cut -d" " -f4 | sed -e "s/(//g" -e "s/)//g")"
+    cmd="$(echo "$line" | cut -d" " -f3)"
+    section="$(echo "$line" | cut -d" " -f4 | sed -e "s/(//g" -e "s/)//g")"
 
+    echo "man \"${section}\" \"${cmd}\""
     man "$section" "$cmd"
   ;;
   "info")
-    manual="$(echo "$selection" | sed -e 's/info: "\(.*.\)" -- .*/\1/g')"
-    indice="$(echo "$selection" | sed -e 's/info: ".*." -- \(.*\)/\1/g')"
+    manual="$(echo "$line" | sed -e 's/info: "\(.*.\)" -- .*/\1/g')"
+    indice="$(echo "$line" | sed -e 's/info: ".*." -- \(.*\)/\1/g')"
 
+    echo "info \"${manual}\" -- \"${indice}\""
     info "$manual" -- "$indice"
   ;;
   "tldr")
-    tldr "$(echo "$selection" | cut -d" " -f2)"
+    page="$(echo "$line" | cut -d" " -f2)"
+
+    echo "tldr \"${page}\""
+    tldr "$page"
   ;;
   *)
     exit "1"
