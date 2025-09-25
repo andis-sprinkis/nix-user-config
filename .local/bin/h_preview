@@ -5,8 +5,8 @@ line="$1"
 
 case "$(echo "$line" | cut -d":" -f1)" in
   " man")
-    cmd="$(echo "$line" | cut -d" " -f2)"
-    section="$(echo "$line" | cut -d" " -f3 | sed -e "s/(//g" -e "s/)//g")"
+    cmd="$(echo "$line" | cut -d" " -f3)"
+    section="$(echo "$line" | cut -d" " -f4 | sed -e "s/(//g" -e "s/)//g")"
 
     man "$section" "$cmd" | bat --color="always" -p -l "Manpage"
   ;;
