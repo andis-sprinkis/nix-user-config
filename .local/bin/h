@@ -11,8 +11,8 @@ selection="$(
 
 case "$(echo "$selection" | cut -d":" -f1)" in
   " man")
-    cmd="$(echo "$selection" | cut -d" " -f2)"
-    section="$(echo "$selection" | cut -d" " -f3 | sed -e "s/(//g" -e "s/)//g")"
+    cmd="$(echo "$selection" | cut -d" " -f3)"
+    section="$(echo "$selection" | cut -d" " -f4 | sed -e "s/(//g" -e "s/)//g")"
 
     man "$section" "$cmd"
   ;;
