@@ -9,6 +9,8 @@ for file in "$@"; do
   fi
 done
 
+# shellcheck disable=SC3044
 if [ "$cmds" ]; then
+  # shellcheck disable=SC2154
   lf -remote "send ${id} :${cmds}" 0</dev/null 1>/dev/null 2>/dev/null & disown
 fi

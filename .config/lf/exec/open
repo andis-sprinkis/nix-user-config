@@ -31,6 +31,7 @@ in_opener() {
 }
 
 open_with() {
+  # shellcheck disable=SC2154
   exec lf -remote "send ${id} push :open-with<space>"
 }
 

@@ -2,16 +2,18 @@
 set -eu
 
 dir_heartbeat="/tmp/${USER}_lf_heartbeat"
+# shellcheck disable=SC2154
+file_heartbeat="${dir_heartbeat}/${id}"
 file_timerpid="/tmp/${USER}_lf_timerpid"
 
 mkdir -p "$dir_heartbeat"
 
-# shellcheck disable=SC2154
-: > "${dir_heartbeat}/${id}"
+: > "$file_heartbeat"
 
 timerpid="$(set +e; cat "$file_timerpid" 2> "/dev/null"; set -e)"
 
-: > "${dir_heartbeat}/${id}"
+: > "$file_heartbeat"
+
 if [ "$timerpid" ] && kill -0 "$timerpid" 2> "/dev/null"; then
   exit
 else
