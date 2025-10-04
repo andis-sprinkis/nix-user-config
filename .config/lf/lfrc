@@ -46,8 +46,6 @@ cmd vidir                  $ vidir "$PWD"
 map  <c-o>                 open-with-menu-desktop
 map  <c-z>                 $ kill -STOP "$PPID"
 map  <enter>               to-pager
-map  <m-6>                 updir
-map  <m-7>                 open
 map  <m-left>              updir
 map  <m-right>             open
 map  I                     vidir
