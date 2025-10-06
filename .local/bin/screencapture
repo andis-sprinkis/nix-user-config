@@ -13,7 +13,7 @@ FORMAT picture|video
 MODE   all|area|output|output_focused|window|window_focused|workspace|workspace_focused
 DELAY  <integer seconds>
 
-${script} picture area window   capture picture of the selected window after 5s
+${script} picture window 5      capture picture of the selected window after 5s
 ${script} <no options>|picture  same as '${script} picture area'
 ${script} video                 same as '${script} video area'
 ${script} video stop            stop recording video
