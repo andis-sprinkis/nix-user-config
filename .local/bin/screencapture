@@ -5,7 +5,8 @@ NL="
 "
 
 script="$(basename "$0")"
-msg_usage="${script} [FORMAT] [MODE] [DELAY|stop] | --help|-h
+msg_usage="${script} [FORMAT] [MODE] [DELAY|stop]
+${script} --help|-h
 
 options:
 FORMAT picture|video
