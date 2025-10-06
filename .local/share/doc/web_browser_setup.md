@@ -58,7 +58,7 @@
 1.  https://addons.mozilla.org/en-US/firefox/addon/webpage-extractor/
 1.  https://addons.mozilla.org/en-US/firefox/addon/youtube-recommended-videos/
 
-### Google Chrome
+### Google Chrome / Chromium
 
 1.  https://chrome.google.com/webstore/detail/clearurls/lckanjgmijmafbedllaakclkaicjfmnk (Manifest v2)
 1.  https://chrome.google.com/webstore/detail/copy-as-markdown/fkeaekngjflipcockcnpobkpbbfbhmdn
