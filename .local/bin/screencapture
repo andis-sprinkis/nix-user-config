@@ -66,6 +66,15 @@ saved() {
   exit
 }
 
+canceled() {
+  i3blocks_signal 1>/dev/null 2>/dev/null & disown
+
+  notify-send "Screen capture (${capture_format}) canceled." --app-name="$script" --urgency="low" 1>/dev/null 2>/dev/null & disown
+  echo "${script}: Screen capture (${capture_format}) canceled." 1>&2
+
+  exit "0"
+}
+
 failed() {
   i3blocks_signal 1>/dev/null 2>/dev/null & disown
 
@@ -149,22 +158,22 @@ case "$capture_format" in
                 not_implemented
               ;;
               "area")
-                ptr_coord="$(set +e; slurp; set -e)"
+                ptr_coord="$(set +e; slurp 2>&1; set -e)"
               ;;
               "output")
-                ptr_coord="$(set +e; swaymsg -t "get_outputs" | jq -r ".. | select(.active?).rect | ${jq_rect_map}" | slurp; set -e)"
+                ptr_coord="$(set +e; swaymsg -t "get_outputs" | jq -r ".. | select(.active?).rect | ${jq_rect_map}" | slurp 2>&1; set -e)"
               ;;
               "output_focused")
                 ptr_coord="$(set +e; swaymsg -t "get_outputs" | jq -r ".. | select(.focused?).rect | ${jq_rect_map}"; set -e)"
               ;;
               "window")
-                ptr_coord="$(set +e; swaymsg -t "get_tree" | jq -r ".. | select(.pid? and .visible?).rect | ${jq_rect_map}" | slurp; set -e)"
+                ptr_coord="$(set +e; swaymsg -t "get_tree" | jq -r ".. | select(.pid? and .visible?).rect | ${jq_rect_map}" | slurp 2>&1; set -e)"
               ;;
               "window_focused")
                 ptr_coord="$(set +e; swaymsg -t "get_tree" | jq -r ".. | select(.type? and .focused?).rect | ${jq_rect_map}"; set -e)"
               ;;
               "workspace")
-                ptr_coord="$(set +e; swaymsg -t "get_workspaces" | jq -r ".. | select(.visible? and .type == \"workspace\").rect | ${jq_rect_map}" | slurp; set -e)"
+                ptr_coord="$(set +e; swaymsg -t "get_workspaces" | jq -r ".. | select(.visible? and .type == \"workspace\").rect | ${jq_rect_map}" | slurp 2>&1; set -e)"
               ;;
               "workspace_focused")
                 ptr_coord="$(set +e; swaymsg -t "get_workspaces" | jq -r ".. | select(.focused? and .type == \"workspace\").rect | ${jq_rect_map}"; set -e)"
@@ -173,6 +182,10 @@ case "$capture_format" in
 
             if [ -z "$ptr_coord" ]; then
               no_area_selected
+            fi
+
+            if [ "$ptr_coord" = "selection cancelled" ]; then
+              canceled
             fi
 
             ptr_coord_x="${ptr_coord%,*}"
@@ -256,26 +269,35 @@ case "$capture_format" in
           "area")
             countdown
 
-            if ! dulcepan -f "png" -o "$path_out"; then
+            set +e
+            dulcepan_stderr="$(dulcepan -f "png" -o "$path_out" 2>&1)"
+            dulcepan_exit="$?"
+            set -e
+
+            if [ "$dulcepan_exit" != "0" ]; then
+              if [ -z "$dulcepan_stderr" ]; then
+                canceled
+              fi
+
               failed
             fi
 
             saved
           ;;
           "output")
-            ptr_coord="$(set +e; swaymsg -t "get_outputs" | jq -r ".. | select(.active?).rect | ${jq_rect_map}" | slurp; set -e)"
+            ptr_coord="$(set +e; swaymsg -t "get_outputs" | jq -r ".. | select(.active?).rect | ${jq_rect_map}" | slurp 2>&1; set -e)"
           ;;
           "output_focused")
             ptr_coord="$(set +e; swaymsg -t "get_outputs" | jq -r ".. | select(.focused?).rect | ${jq_rect_map}"; set -e)"
           ;;
           "window")
-            ptr_coord="$(set +e; swaymsg -t "get_tree" | jq -r ".. | select(.pid? and .visible?).rect | ${jq_rect_map}" | slurp; set -e)"
+            ptr_coord="$(set +e; swaymsg -t "get_tree" | jq -r ".. | select(.pid? and .visible?).rect | ${jq_rect_map}" | slurp 2>&1; set -e)"
           ;;
           "window_focused")
             ptr_coord="$(set +e; swaymsg -t "get_tree" | jq -j ".. | select(.type? and .focused?).rect | ${jq_rect_map}"; set -e)"
           ;;
           "workspace")
-            ptr_coord="$(set +e; swaymsg -t "get_workspaces" | jq -r ".. | select(.visible? and .type == \"workspace\").rect | ${jq_rect_map}" | slurp; set -e)"
+            ptr_coord="$(set +e; swaymsg -t "get_workspaces" | jq -r ".. | select(.visible? and .type == \"workspace\").rect | ${jq_rect_map}" | slurp 2>&1; set -e)"
           ;;
           "workspace_focused")
             ptr_coord="$(set +e; swaymsg -t "get_workspaces" | jq -r ".. | select(.focused? and .type == \"workspace\").rect | ${jq_rect_map}"; set -e)"
@@ -288,6 +310,10 @@ case "$capture_format" in
 
         if [ -z "$ptr_coord" ]; then
           no_area_selected
+        fi
+
+        if [ "$ptr_coord" = "selection cancelled" ]; then
+          canceled
         fi
 
         countdown
