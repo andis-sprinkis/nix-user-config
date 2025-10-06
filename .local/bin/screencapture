@@ -5,12 +5,18 @@ NL="
 "
 
 script="$(basename "$0")"
-msg_usage="${script} options:
-picture|video all|area|output|output_focused|window|window_focused|workspace|workspace_focused [DELAY]
-<no options>|picture  same as 'picture area'
-video                 same as 'video area'
-video stop            stop recording video
---help|-h             print this message"
+msg_usage="${script} [FORMAT] [MODE] [DELAY|stop] | --help|-h
+
+options:
+FORMAT picture|video
+MODE   all|area|output|output_focused|window|window_focused|workspace|workspace_focused
+DELAY  <integer seconds>
+
+${script} picture area window   capture picture of the selected window after 5s
+${script} <no options>|picture  same as '${script} picture area'
+${script} video                 same as '${script} video area'
+${script} video stop            stop recording video
+${script} --help|-h             print this message"
 
 case "${1:-""}" in
   "--help"|"-h")
