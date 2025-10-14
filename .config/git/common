@@ -27,6 +27,9 @@
 [url "ssh://git@gitlab.com/"]
   pushInsteadOf = https://gitlab.com/
 
+[url "ssh://git@ssh.dev.azure.com/"]
+  pushInsteadOf = https://dev.azure.com/
+
 [core]
   ignorecase = false
 
