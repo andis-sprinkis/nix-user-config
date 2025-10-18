@@ -76,10 +76,10 @@ saved() {
 canceled() {
   i3blocks_signal 1>/dev/null 2>/dev/null & disown
 
-  notify-send "Screen capture (${capture_format}) canceled." --app-name="$script" --urgency="low" 1>/dev/null 2>/dev/null & disown
+  # notify-send "Screen capture (${capture_format}) canceled." --app-name="$script" --urgency="low" 1>/dev/null 2>/dev/null & disown
   echo "${script}: Screen capture (${capture_format}) canceled." 1>&2
 
-  exit "0"
+  exit "6"
 }
 
 failed() {
@@ -195,43 +195,11 @@ case "$capture_format" in
               canceled
             fi
 
-            ptr_coord_x="${ptr_coord%,*}"
-            ptr_coord_y="${ptr_coord#*,}"
-            ptr_coord_y="${ptr_coord_y% *}"
-
-            output="$(
-              swaymsg -rt get_outputs | jq -r \
-                ".[] | select((${ptr_coord_x} >= .rect.x) and (${ptr_coord_x} < .rect.x + .rect.width) and (${ptr_coord_y} >= .rect.y) and (${ptr_coord_y} < .rect.y + .rect.height))"
-            )"
-
-            output_name="$(echo "$output" | jq -r ".name")"
-            output_transform="$(echo "$output" | jq -r ".transform")"
-
-            rec_transpose=""
-
-            case "$output_transform" in
-              "180")
-                rec_transpose="-F transpose=1"
-              ;;
-              "90")
-                rec_transpose="-F transpose=2"
-              ;;
-            esac
-
             countdown
 
-            case "$capture_mode" in
-              "output")
-                if ! wf-recorder --audio --codec=libx264rgb "$rec_transpose" --output="$output_name" --file="$path_out"; then
-                  failed
-                fi
-              ;;
-              *)
-                if ! wf-recorder --audio --codec=libx264rgb "$rec_transpose" --output="$output_name" --geometry="$ptr_coord" --file="$path_out"; then
-                  failed
-                fi
-              ;;
-            esac
+            if ! wf-recorder --audio --codec=libx264rgb --geometry="$ptr_coord" --file="$path_out"; then
+              failed
+            fi
 
             saved
           ;;
