@@ -41,7 +41,7 @@ user_pref("browser.newtabpage.activity-stream.discoverystream.merino-provider.en
 user_pref("browser.newtabpage.activity-stream.enabled", false);
 user_pref("browser.newtabpage.activity-stream.feeds.telemetry", false);
 user_pref("browser.newtabpage.activity-stream.feeds.topsites", false);
-user_pref("browser.newtabpage.activity-stream.newtabWallpapers.enabled", false)
+user_pref("browser.newtabpage.activity-stream.newtabWallpapers.enabled", false);
 user_pref("browser.newtabpage.activity-stream.showRecentSaves", false);
 user_pref("browser.newtabpage.activity-stream.showSearch", false);
 user_pref("browser.newtabpage.activity-stream.showSponsored", false);
@@ -74,6 +74,8 @@ user_pref("browser.tabs.crashReporting.sendReport", false);
 user_pref("browser.tabs.firefox-view", false);
 user_pref("browser.tabs.firefox-view-next", false);
 user_pref("browser.tabs.groups.smart.enabled", false);
+user_pref("browser.tabs.groups.smart.enabled", false);
+user_pref("browser.tabs.groups.smart.userEnabled", false);
 user_pref("browser.tabs.hoverPreview.enabled", true);
 user_pref("browser.tabs.hoverPreview.showThumbnails", true);
 user_pref("browser.tabs.loadBookmarksInBackground", true);
@@ -136,6 +138,7 @@ user_pref("extensions.getAddons.cache.enabled", false);
 user_pref("extensions.getAddons.showPane", false);
 user_pref("extensions.htmlaboutaddons.discover.enabled", false);
 user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
+user_pref("extensions.ml.enabled", false);
 user_pref("extensions.pocket.enabled", false);
 user_pref("extensions.screenshots.disabled", true);
 user_pref("extensions.webcompat-reporter.enabled", false);

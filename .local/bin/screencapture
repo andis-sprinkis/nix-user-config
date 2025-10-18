@@ -422,9 +422,10 @@ case "$capture_format" in
             saved
           ;;
           "window")
-            # prompt to use pointer coordinates to select the window ?
+            # see i3_get_win_criteria
+            # window_id="$(xwininfo -int | sed -nre "s/^xwininfo: Window id: (${match_int}) .*$/\1/p")"
             #
-            # if ! maim -d "$delay" -u -i "..." "$path_out"; then
+            # if ! maim -d "$delay" -u --window "..." "$path_out"; then
             #   failed
             # fi
             #
@@ -441,6 +442,7 @@ case "$capture_format" in
           ;;
           "workspace")
             # prompt to use pointer coordinates to select the workspace ?
+            # query i3 for the focused workspace geometry ?
             #
             # if ! maim -d "$delay" -u -g "..." "$path_out"; then
             #   failed
@@ -451,6 +453,7 @@ case "$capture_format" in
             not_implemented
           ;;
           "workspace_focused")
+            # xdotool get_desktop_for_window ?
             # query i3 for the focused workspace geometry ?
             #
             # if ! maim -d "$delay" -u -g "..." "$path_out"; then
