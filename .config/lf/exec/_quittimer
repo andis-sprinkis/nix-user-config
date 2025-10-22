@@ -39,6 +39,16 @@ lf_send() {
   fi
 }
 
+# shellcheck disable=SC3028
+case "${OSTYPE:-"$(uname)"}" in
+  [dD]"arwin"*)
+    stat_cmd="/usr/bin/stat -f %m"
+  ;;
+  *)
+    stat_cmd="stat -c %Y"
+  ;;
+esac
+
 while true; do
   if ! lf_send 2> "/dev/null"; then
     # The server is not running
@@ -52,15 +62,7 @@ while true; do
       continue
     fi
 
-    # shellcheck disable=SC3028
-    case "${OSTYPE:-"$(uname)"}" in
-      [dD]"arwin"*)
-        mod_time="$(/usr/bin/stat -f "%m" "$lfid_file")"
-      ;;
-      *)
-        mod_time="$(stat -c "%Y" "$lfid_file")"
-      ;;
-    esac
+    mod_time="$($stat_cmd "$lfid_file")"
 
     if [ "$((time_now - mod_time))" -gt "$timer_quit_sec" ]; then
       lfid="$(basename "$lfid_file")"
