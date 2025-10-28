@@ -24,6 +24,6 @@ fi
 
 rulerfmt_updated="${mode_str}${mnt_str}${rulerfmt}"
 
-if [ "${lf_rulerfmt:-""}" != "$rulerfmt_updated" ]; then
+if [ "$lf_rulerfmt" != "$rulerfmt_updated" ]; then
   lf -remote "send ${id} set rulerfmt \"${rulerfmt_updated}\""
 fi
