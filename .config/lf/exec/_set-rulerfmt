@@ -6,6 +6,7 @@ rulerfmt="%a| %p| \033[7;31m %m \033[0m| \033[7;33m %c \033[0m| \033[7;35m %s \0
 mnt_str=""
 mode_str=""
 
+# shellcheck disable=SC2154
 if [ -d "$f" ] && mountpoint -q -- "$f" 1>/dev/null 2>/dev/null; then
   dev="$(set +e; grep " ${f} " "/proc/mounts" | cut -d" " -f1; set -e)"
 
@@ -14,16 +15,19 @@ if [ -d "$f" ] && mountpoint -q -- "$f" 1>/dev/null 2>/dev/null; then
   fi
 fi
 
+# shellcheck disable=SC2154
 if [ "$lf_user_quittimer" != "true" ]; then
   mode_str="notimer |"
 fi
 
+# shellcheck disable=SC2154
 if [ "$lf_mode" != "normal" ]; then
   mode_str="${lf_mode} |"
 fi
 
 rulerfmt_updated="${mode_str}${mnt_str}${rulerfmt}"
 
+# shellcheck disable=SC2154
 if [ "$lf_rulerfmt" != "$rulerfmt_updated" ]; then
   lf -remote "send ${id} set rulerfmt \"${rulerfmt_updated}\""
 fi
