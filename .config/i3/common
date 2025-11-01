@@ -53,6 +53,9 @@ bindsym $mod+Shift+f     fullscreen toggle
 bindsym $mod+Shift+space floating toggle; move position center
 bindsym $mod+space       focus mode_toggle
 
+bindsym button2 floating toggle
+bindsym button3 floating toggle
+
 bindsym $mod+Escape exec --no-startup-id idle_manager lock
 
 bindsym $mod+d       layout toggle splitv splith
