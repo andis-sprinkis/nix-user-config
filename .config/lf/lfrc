@@ -3,6 +3,7 @@ set dupfilefmt             "%b.~%n~%e"
 set hidden                 true
 set incfilter
 set incsearch
+set menuheaderfmt          "\033[90m"
 set mouse
 set numberfmt              "\033[90m"
 set period                 1
