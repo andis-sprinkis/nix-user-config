@@ -57,6 +57,8 @@ map  b                     mark-load
 map  m
 map  o                     push :open-with<space>
 map  t
+cmap <tab>                 cmd-menu-complete
+cmap <backtab>             cmd-menu-complete-back
 nmap <esc>                 reload
 nmap P                     push :paste-to-file<space>
 nmap R                     delete
