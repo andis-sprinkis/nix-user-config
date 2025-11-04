@@ -186,10 +186,9 @@ $prompt_symbol"
 
   zstyle -e ':completion:*:default' 'list-colors' 'BASE_OF_PREFIX="${PREFIX##*/}" && reply=("${BASE_OF_PREFIX:+=(#b)($BASE_OF_PREFIX)(*)=0=1;35=0}:$LS_COLORS")'
   zstyle ':completion:*' 'completer' '_expand_alias' '_complete' '_approximate' '_ignored'
-  zstyle ':completion:*:*:*:*:descriptions' 'format' '%F{8}%d:%f'
   zstyle ':completion:*' 'matcher-list' '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-  zstyle ':completion:*' 'menu' 'select'
-  zstyle ':completion:::::default' 'menu' 'yes' 'select'
+  zstyle ':completion:*' 'menu' 'yes' 'select'
+  zstyle ':completion:*:descriptions' 'format' '%F{8}%d:%f'
   zmodload "zsh/complist"
   _comp_options+=("globdots") # include hidden files
 
