@@ -55,6 +55,7 @@ map  Y                     copy-path
 map  `                     ! true
 map  b                     mark-load
 map  m
+map  \"
 map  o                     push :open-with<space>
 map  t
 cmap <tab>                 cmd-menu-complete
