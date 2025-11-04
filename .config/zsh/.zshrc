@@ -184,8 +184,9 @@ $prompt_symbol"
     fi
   } &! # execute code in the background to not affect the current session
 
-  zstyle -e ':completion:*:default' 'list-colors' 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==35}:${(s.:.)LS_COLORS}")';
-  zstyle ':completion:*' 'completer' '_expand_alias' '_complete' '_ignored'
+  zstyle -e ':completion:*:default' 'list-colors' 'BASE_OF_PREFIX="${PREFIX##*/}" && reply=("${BASE_OF_PREFIX:+=(#b)($BASE_OF_PREFIX)(*)=0=1;35=0}:$LS_COLORS")'
+  zstyle ':completion:*' 'completer' '_expand_alias' '_complete' '_approximate' '_ignored'
+  zstyle ':completion:*:*:*:*:descriptions' 'format' '%F{8}%d:%f'
   zstyle ':completion:*' 'matcher-list' '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
   zstyle ':completion:*' 'menu' 'select'
   zstyle ':completion:::::default' 'menu' 'yes' 'select'
