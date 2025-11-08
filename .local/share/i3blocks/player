@@ -16,6 +16,9 @@ case "$(set +e; playerctl status 2> "/dev/null"; set -e)" in
            playerctl pause 1> "/dev/null" 2> "/dev/null" & disown
            message="$msg_paused"
         ;;
+        "2")
+          "${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_workspace" 1> "/dev/null" 2> "/dev/null" & disown
+        ;;
         "3")
            playerctl stop 1> "/dev/null" 2> "/dev/null" & disown
            message="$msg_stopped"

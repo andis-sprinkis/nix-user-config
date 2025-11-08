@@ -41,6 +41,9 @@ ${rsds_mounts}\" | ${PAGER}"
       # shellcheck disable=SC3044
       $TERMINAL -e "$SHELL" -c "$cmd" 1> "/dev/null" 2> "/dev/null" & disown
     ;;
+    "2")
+      "${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_workspace" 1> "/dev/null" 2> "/dev/null" & disown
+    ;;
     "4")
       "${XDG_DATA_HOME:-$HOME/.local/share}/i3/temp_no_mouse_warping_container" "workspace" "prev_on_output" 1> "/dev/null" 2> "/dev/null" & disown
     ;;
