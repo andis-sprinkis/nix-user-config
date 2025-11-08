@@ -230,24 +230,11 @@ $prompt_symbol"
 
   # configure fzf
   if command -v "fzf" 1>/dev/null 2>/dev/null; then
-    local fzf_completion
-    for fzf_completion in \
-      "/usr/share/fzf/completion.zsh" \
-      "${BREW_PREFIX:+"${BREW_PREFIX}/opt/fzf/shell/completion.zsh"}"
-    do
-      if [ -f "$fzf_completion" ]; then
-        . "$fzf_completion"
-        break
-      fi
-    done
-
     # cd with fzf
-
     bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
     bindkey -M vicmd -s '^f' 'i^ucd "$(dirname "$(fzf)")"\n'
 
     # search history with fzf
-
     fzf_search_history() {
       BUFFER="$(fc -l -n "1" | uniq | fzf --no-preview --tac --query "$LBUFFER")"
       CURSOR="$#BUFFER"
@@ -258,8 +245,10 @@ $prompt_symbol"
     bindkey "^k" "fzf_search_history"
   fi
 
-  if [ -f "${BREW_PREFIX:+"${BREW_PREFIX}/opt/pyenv/completions/pyenv.zsh"}" ]; then
-    . "/opt/homebrew/opt/pyenv/completions/pyenv.zsh"
+  # completion plugins on macos
+  if [ "${BREW_PREFIX:-""}" ]; then
+    . "${BREW_PREFIX}/opt/fzf/shell/completion.zsh" 2> /dev/null
+    . "${BREW_PREFIX}/opt/pyenv/completions/pyenv.zsh" 2> /dev/null
   fi
 
   # configure zsh-system-clipboard
