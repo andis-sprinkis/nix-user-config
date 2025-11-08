@@ -58,15 +58,11 @@ TMOUT="5400"
 . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/alias"
 
 # configure bat
-if command -v "bat" 1>/dev/null 2>/dev/null; then
-  export BAT_THEME="Visual Studio Dark+"
-  export BAT_STYLE="plain,numbers,header-filename"
-fi
+export BAT_THEME="Visual Studio Dark+"
+export BAT_STYLE="plain,numbers,header-filename"
 
 # configure fzf
-if command -v "fzf" 1>/dev/null 2>/dev/null; then
-  export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-""}--tabstop=2 --cycle --layout=reverse --preview-border=none --preview='previewer {}'"
-fi
+export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-""}--tabstop=2 --cycle --layout=reverse --preview-border=none --preview='previewer {}'"
 
 # configure pyenv
 
