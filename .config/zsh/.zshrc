@@ -22,11 +22,6 @@
     ;;
   esac
 
-  # fn: set terminal emulator window title
-  set_window_title() {
-    printf "\033]0;%s\007" "$PWD"
-  }
-
   # fn: zle widgets
   zle-keymap-select() {
     case "$KEYMAP" in
@@ -81,6 +76,9 @@
 
   # fn: set RPROMPT prompt
   set_rprompt() {
+    # set window title
+    printf "\033]0;%s\007" "$PWD"
+
     local tmout_status=""
     if [ "${TMOUT:-""}" = "0" ]; then
       tmout_status="TMOUT0 ";
@@ -128,7 +126,7 @@
     precmd_functions+=("vcs_info")
   fi
 
-  precmd_functions+=("set_window_title" "set_rprompt")
+  precmd_functions+=("set_rprompt")
 
   # set PROMPT (PS1) prompt
   if [ "$USER" = "root" ]; then
