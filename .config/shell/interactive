@@ -15,9 +15,9 @@ if [ "${BREW_PREFIX:-""}" ] && [ -f "${BREW_PREFIX}/bin/brew" ]; then
 fi
 
 # configure windows terminal
-if [ "$WT_SESSION" ]; then
-  export COLORTERM="truecolor"
-fi
+# if [ "$WT_SESSION" ]; then
+#   export COLORTERM="truecolor"
+# fi
 
 # launch tmux
 if
