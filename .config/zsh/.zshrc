@@ -74,8 +74,6 @@
   # enable colors
   autoload -Uz "colors" && colors
 
-  ZLE_RPROMPT_INDENT="0"
-
   # use homebrew site-functions
   if [ "${BREW_PREFIX:-""}" ] && [ -f "${BREW_PREFIX}/bin/brew" ]; then
     fpath[1,0]="${BREW_PREFIX}/share/zsh/site-functions"
@@ -88,6 +86,8 @@
   autoload -Uz "vcs_info"
   zstyle ':vcs_info:*' enable git
   zstyle ":vcs_info:git:*" "formats" "$bg[white]$fg[black]  %b "
+
+  ZLE_RPROMPT_INDENT="0"
 
   precmd() {
     # set window title
@@ -132,9 +132,8 @@
 
   local userhost="%{$bg[$role_params[1]] $fg[black]%}%n@%M %{$reset_color%}"
 
-  local ssh_status
   if [ "${SSH_CONNECTION:-""}" ] || [ "${SSH_CLIENT:-""}" ] || [ "${SSH_TTY:-""}" ]; then
-    ssh_status="%{$bg[blue]$fg[black]%} SSH %{$reset_color%}";
+    local ssh_status="%{$bg[blue]$fg[black]%} SSH %{$reset_color%}";
   fi
 
   local vcs_info="\$vcs_info_msg_0_%{$reset_color%}"
