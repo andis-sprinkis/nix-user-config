@@ -74,8 +74,22 @@
   # enable colors
   autoload -Uz "colors" && colors
 
-  # fn: set RPROMPT prompt
-  set_rprompt() {
+  ZLE_RPROMPT_INDENT="0"
+
+  # use homebrew site-functions
+  if [ "${BREW_PREFIX:-""}" ] && [ -f "${BREW_PREFIX}/bin/brew" ]; then
+    fpath[1,0]="${BREW_PREFIX}/share/zsh/site-functions"
+  fi
+ 
+  # git-completion plugin
+  fpath=($fpath "${XDG_DATA_HOME:-$HOME/.local/share}/git-completion/zsh")
+
+  # vcs_info git prompt
+  autoload -Uz "vcs_info"
+  zstyle ':vcs_info:*' enable git
+  zstyle ":vcs_info:git:*" "formats" "$bg[white]$fg[black]  %b "
+
+  precmd() {
     # set window title
     printf "\033]0;%s\007" "$PWD"
 
@@ -84,6 +98,7 @@
       tmout_status="TMOUT0 ";
     fi
 
+    # set RPROMPT prompt
     local timeprompt=""
     if [ "${timer:-""}" ]; then
       local  now="$(print -P "%D{%s%3.}")"
@@ -105,28 +120,8 @@
     fi
 
     RPROMPT="%F{8}${tmout_status}${timeprompt}%D{%K:%M:%S}%(?.. %F{1}(%?%))%f%F{3}%(1j. [%j].)"
+    vcs_info
   }
-
-  ZLE_RPROMPT_INDENT="0"
-
-  # use homebrew site-functions
-  if [ "${BREW_PREFIX:-""}" ] && [ -f "${BREW_PREFIX}/bin/brew" ]; then
-    fpath[1,0]="${BREW_PREFIX}/share/zsh/site-functions"
-  fi
- 
-  if command -v "git" 1>/dev/null 2>/dev/null; then
-    # git-completion plugin
-    fpath=($fpath "${XDG_DATA_HOME:-$HOME/.local/share}/git-completion/zsh")
-
-    # vcs_info git prompt
-    autoload -Uz "vcs_info"
-    zstyle ':vcs_info:*' enable git
-    zstyle ":vcs_info:git:*" "formats" "$bg[white]$fg[black]  %b "
-
-    precmd_functions+=("vcs_info")
-  fi
-
-  precmd_functions+=("set_rprompt")
 
   # set PROMPT (PS1) prompt
   if [ "$USER" = "root" ]; then
