@@ -1,6 +1,17 @@
 #!/usr/bin/env sh
 set -eu
 
+if [ "${BLOCK_BUTTON:-""}" ]; then
+  case "$BLOCK_BUTTON" in
+    "4")
+      "${XDG_DATA_HOME:-$HOME/.local/share}/i3/temp_no_mouse_warping_container" "workspace" "prev_on_output" 1> "/dev/null" 2> "/dev/null" & disown
+    ;;
+    "5")
+      "${XDG_DATA_HOME:-$HOME/.local/share}/i3/temp_no_mouse_warping_container" "workspace" "next_on_output" 1> "/dev/null" 2> "/dev/null" & disown
+    ;;
+  esac
+fi
+
 if ! rfkill -rn -o "TYPE" | grep -xq "bluetooth"; then
   exit "0"
 fi
