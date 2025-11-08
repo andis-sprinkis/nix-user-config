@@ -65,10 +65,9 @@ if command -v "bat" 1>/dev/null 2>/dev/null; then
   export BAT_STYLE="plain,numbers,header-filename"
 fi
 
-
 # configure fzf
 if command -v "fzf" 1>/dev/null 2>/dev/null; then
-  export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-""}--tabstop=2 --cycle --layout=reverse --preview-border=none${is_exec_bat:+" --preview 'bat --color=always {}'"}"
+  export FZF_DEFAULT_OPTS="--tabstop=2 --cycle --layout=reverse --preview-border=none${is_exec_bat:+" --preview 'bat --color=always {}'"}"
 fi
 
 # configure pyenv
