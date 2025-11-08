@@ -56,7 +56,7 @@
       TMOUT="5400"
     fi
 
-    timer="$(print -P "%D{%s%3.}")"
+    timethen="$(print -P "%D{%s%3.}")"
   }
 
   # history file length in lines
@@ -90,6 +90,8 @@
   ZLE_RPROMPT_INDENT="0"
 
   precmd() {
+    local timenow="${timethen:+"$(print -P "%D{%s%3.}")"}"
+
     # set window title
     printf "\033]0;%s\007" "$PWD"
 
@@ -99,27 +101,25 @@
     fi
 
     # set RPROMPT prompt
-    local timeprompt=""
-    if [ "${timer:-""}" ]; then
-      local  now="$(print -P "%D{%s%3.}")"
-      local d_ms="$((now - timer))"
+    if [ "${timethen:-""}" ]; then
+      local d_ms="$((timenow - timethen))"
       local  d_s="$((d_ms / 1000))"
       local   ms="$((d_ms % 1000))"
       local    s="$((d_s % 60))"
       local    m="$(((d_s / 60) % 60))"
       local    h="$((d_s / 3600))"
 
-        if ((h > 0)); then timeprompt="${h}h ${m}m ${s}s "                     # 1h 1m 1s
-      elif ((m > 0)); then timeprompt="${m}m ${s}.$(printf "$((ms / 100))")s " # 1m 12.3s
-      elif ((s > 9)); then timeprompt="${s}.$(printf "%02d" "$((ms / 10))")s " # 12.34s
-      elif ((s > 0)); then timeprompt="${s}.$(printf "%03d" "$ms")s "          # 1.234s
-      else                 timeprompt="${ms}ms "                               # 1ms
+        if ((h > 0)); then elapsedtime="${h}h ${m}m ${s}s"                     # 1h 1m 1s
+      elif ((m > 0)); then elapsedtime="${m}m ${s}.$(printf "$((ms / 100))")s" # 1m 12.3s
+      elif ((s > 9)); then elapsedtime="${s}.$(printf "%02d" "$((ms / 10))")s" # 12.34s
+      elif ((s > 0)); then elapsedtime="${s}.$(printf "%03d" "$ms")s"          # 1.234s
+      else                 elapsedtime="${ms}ms"                               # 1ms
       fi
 
-      unset timer
+      unset timethen
     fi
 
-    RPROMPT="%F{8}${tmout_status}${timeprompt}%D{%K:%M:%S}%(?.. %F{1}(%?%))%f%F{3}%(1j. [%j].)"
+    RPROMPT="%F{8}${tmout_status}${elapsedtime}%(?.. %F{1}(%?%))%f%F{3}%(1j. [%j].)"
     vcs_info
   }
 
@@ -185,7 +185,7 @@ $prompt_symbol"
   zstyle ':completion:*' 'completer' '_expand_alias' '_complete' '_approximate' '_ignored'
   zstyle ':completion:*' 'matcher-list' '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
   zstyle ':completion:*' 'menu' 'yes' 'select'
-  zstyle ':completion:*:descriptions' 'format' '%F{8}%d:%f'
+  zstyle ':completion:*:descriptions' 'format' '%F{8}-- %d --%f'
   zmodload "zsh/complist"
   _comp_options+=("globdots") # include hidden files
 
