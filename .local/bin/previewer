@@ -132,6 +132,18 @@ print_bat() {
   fi
 }
 
+print_hexdump() {
+  if find_util "hexdump"; then
+    bytes="1048576"
+
+    echo "
+
+First ${bytes} bytes or less:"
+
+    hexdump -C -n "$bytes" "$FPATH"
+  fi
+}
+
 print_mime() {
   if [ -r "$FPATH" ]; then
     echo "$MIME" "(${BRIEF})"
@@ -392,7 +404,7 @@ ${tables}
 
     print_strings
   ;;
-  application/x-executable|application/x-pie-executable|application/x-object)
+  application/x-executable|application/x-pie-executable|application/x-object|application/x-sharedlib)
     print_mime
 
     if find_util "readelf"; then
@@ -433,19 +445,18 @@ ${tables}
     print_mime
     print_stat
   ;;
-  application/octet-stream|application/vnd.microsoft.portable-executable|application/x-dosexec*|application/x-ole-storage)
+  application/octet-stream)
+    print_mime
+    # TODO: re-try by file extension
+    print_strings
+    print_hexdump
+    echo
+    print_stat
+  ;;
+  application/vnd.microsoft.portable-executable|application/x-dosexec*|application/x-ole-storage)
     print_mime
     print_strings
-
-    if find_util "hexdump"; then
-      bytes="1048576"
-
-      echo "
-
-First ${bytes} bytes or less:"
-
-      hexdump -C -n "$bytes" "$FPATH"
-    fi
+    print_hexdump
   ;;
   font/*|application/x-font-*|application/vnd.ms-opentype)
     print_mime
@@ -499,7 +510,12 @@ First ${bytes} bytes or less:"
     print_mime_newlines
 
     if [ -r "$FPATH" ]; then
-      print_bat
+      if ! print_bat; then
+        print_strings
+        print_hexdump
+        echo
+        print_stat
+      fi
     fi
   ;;
 esac

@@ -1,21 +1,26 @@
 set cursorparentfmt        "\033[4m"
 set dupfilefmt             "%b.~%n~%e"
-set hidden                 true
+set hidden                 "true"
 set incfilter
 set incsearch
+set infotimefmtnew         "2006-01-02 15:04:05"
+set infotimefmtold         "2006-01-02 15:04:05"
+set menuheaderfmt          "\033[90m"
 set mouse
 set numberfmt              "\033[90m"
-set period                 1
-set previewer              previewer
+set period                 "1"
+set previewer              "previewer"
 set promptfmt              "\033[32;1m%u@%h\033[0m \033[34;1m%d\033[0m\033[1m%f\033[0m"
-set scrolloff              12
-set shellopts              -eu
-set sortby                 name
-set tabstop                2
+set scrolloff              "12"
+set shellopts              "-eu"
+set sortby                 "name"
+set statfmt                "\033[36m%p\033[0m| %u| %g| %S| %t| > %l"
+set tabstop                "2"
+set timefmt                "Mon 2006-01-02 15:04:05" 
 set wrapscroll
-set info                   custom
-set user_quittimer         true
-set user_quittimersec      1200
+set info                   "custom"
+set user_quittimer         "true"
+set user_quittimersec      "1200"
 
 cmd on-cd                  & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/on-cd"
 cmd on-init                & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/on-init"
