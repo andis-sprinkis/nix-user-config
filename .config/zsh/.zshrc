@@ -157,11 +157,14 @@ $prompt_symbol"
   autoload -Uz "compinit"
 
   local zcompdump="${ZDOTDIR:-"$HOME"}/.zcompdump"
+  local zcompdump_age_max_s="172800"
+  # 24h = 86400s
+  #  1h =  3600s
 
   case "$OSTYPE" in
     "darwin"*)
       if
-        [ ! -f "$zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C /usr/bin/stat -f '%m' "$zcompdump")"))" -gt "86400" ]
+        [ ! -f "$zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C /usr/bin/stat -f '%m' "$zcompdump")"))" -gt "$zcompdump_age_max_s" ]
       then
         compinit
       else
@@ -170,7 +173,7 @@ $prompt_symbol"
     ;;
     *)
       if
-        [ ! -f "$zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C stat -c '%Y' "$zcompdump")"))" -gt "86400" ]
+        [ ! -f "$zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C stat -c '%Y' "$zcompdump")"))" -gt "$zcompdump_age_max_s" ]
       then
         compinit
       else
