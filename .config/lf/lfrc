@@ -16,7 +16,7 @@ set shellopts              "-eu"
 set sortby                 "name"
 set statfmt                "\033[36m%p\033[0m| %u| %g| %S| %t| > %l"
 set tabstop                "2"
-set timefmt                "Mon 2006-01-02 15:04:05" 
+set timefmt                "Mon 2006-01-02 15:04:05"
 set wrapscroll
 set info                   "custom"
 set user_quittimer         "true"
