@@ -58,16 +58,14 @@ TMOUT="5400"
 . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/alias"
 
 # configure bat
-is_exec_bat=""
 if command -v "bat" 1>/dev/null 2>/dev/null; then
-  is_exec_bat="1"
   export BAT_THEME="Visual Studio Dark+"
   export BAT_STYLE="plain,numbers,header-filename"
 fi
 
 # configure fzf
 if command -v "fzf" 1>/dev/null 2>/dev/null; then
-  export FZF_DEFAULT_OPTS="--tabstop=2 --cycle --layout=reverse --preview-border=none${is_exec_bat:+" --preview 'previwer {}'"}"
+  export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-""}--tabstop=2 --cycle --layout=reverse --preview-border=none --preview='previewer {}'"
 fi
 
 # configure pyenv
