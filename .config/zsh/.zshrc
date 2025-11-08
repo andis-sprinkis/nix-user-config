@@ -301,7 +301,6 @@ $prompt_symbol"
     ;;
   esac
 
-  # source local zsh plugins
   . "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 }
 
