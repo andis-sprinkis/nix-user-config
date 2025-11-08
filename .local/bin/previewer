@@ -126,7 +126,7 @@ print_als() {
 
 print_bat() {
   if find_util "bat"; then
-    bat --color=always --style=plain -- "$FPATH"
+    bat --color=always --italic-text=always --style=plain -- "$FPATH"
   else
     return "1"
   fi
