@@ -131,27 +131,25 @@
   precmd_functions+=("set_window_title" "set_rprompt")
 
   # set PROMPT (PS1) prompt
-  () {
-    if [ "$USER" = "root" ]; then
-      local role_params=("magenta" "#")
-    else
-      local role_params=("cyan" "$")
-    fi
+  if [ "$USER" = "root" ]; then
+    local role_params=("magenta" "#")
+  else
+    local role_params=("cyan" "$")
+  fi
 
-    local userhost="%{$bg[$role_params[1]] $fg[black]%}%n@%M %{$reset_color%}"
+  local userhost="%{$bg[$role_params[1]] $fg[black]%}%n@%M %{$reset_color%}"
 
-    local ssh_status
-    if [ "${SSH_CONNECTION:-""}" ] || [ "${SSH_CLIENT:-""}" ] || [ "${SSH_TTY:-""}" ]; then
-      ssh_status="%{$bg[blue]$fg[black]%} SSH %{$reset_color%}";
-    fi
+  local ssh_status
+  if [ "${SSH_CONNECTION:-""}" ] || [ "${SSH_CLIENT:-""}" ] || [ "${SSH_TTY:-""}" ]; then
+    ssh_status="%{$bg[blue]$fg[black]%} SSH %{$reset_color%}";
+  fi
 
-    local vcs_info="\$vcs_info_msg_0_%{$reset_color%}"
-    local cwd_path="%{$bg[white]$fg[black]%} %/ %{$reset_color%}"
-    local prompt_symbol="%{$fg[$role_params[1]]%}$role_params[2]%{$reset_color%} "
+  local vcs_info="\$vcs_info_msg_0_%{$reset_color%}"
+  local cwd_path="%{$bg[white]$fg[black]%} %/ %{$reset_color%}"
+  local prompt_symbol="%{$fg[$role_params[1]]%}$role_params[2]%{$reset_color%} "
 
-    PROMPT="$userhost$ssh_status$vcs_info$cwd_path
+  PROMPT="$userhost$ssh_status$vcs_info$cwd_path
 $prompt_symbol"
-  }
 
   # auto/tab completion
   setopt "GLOB_COMPLETE" "LIST_PACKED" "LIST_ROWS_FIRST" "LIST_TYPES"
@@ -162,14 +160,18 @@ $prompt_symbol"
 
   case "$OSTYPE" in
     "darwin"*)
-      if [ ! -f "$zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C /usr/bin/stat -f '%m' "$zcompdump")"))" -gt "86400" ]; then
+      if
+        [ ! -f "$zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C /usr/bin/stat -f '%m' "$zcompdump")"))" -gt "86400" ]
+      then
         compinit
       else
         compinit -C
       fi
     ;;
     *)
-      if [ ! -f "$zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C stat -c '%Y' "$zcompdump")"))" -gt "86400" ]; then
+      if
+        [ ! -f "$zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C stat -c '%Y' "$zcompdump")"))" -gt "86400" ]
+      then
         compinit
       else
         compinit -C
