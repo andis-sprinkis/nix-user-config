@@ -58,8 +58,7 @@ TMOUT="5400"
 . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/alias"
 
 # configure bat
-export BAT_THEME="Visual Studio Dark+"
-export BAT_STYLE="plain,numbers,header-filename"
+export BAT_STYLE="plain"
 
 # configure fzf
 export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-""}--tabstop=2 --cycle --layout=reverse --preview-border=none --preview='previewer {}'"
