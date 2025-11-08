@@ -64,7 +64,6 @@ export BAT_STYLE="plain"
 export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS:-""}--tabstop=2 --cycle --layout=reverse --preview-border=none --preview='previewer {}'"
 
 # configure pyenv
-
 # if command -v "pyenv" 1>/dev/null 2>/dev/null; then
 #   eval "$(pyenv init - zsh)"
 # fi
