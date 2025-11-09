@@ -1,13 +1,8 @@
 #!/usr/bin/env sh
 
 () {
-  # zmodload zsh/zprof
-
   # generic interactive shell configuration
   . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/interactive"
-
-  # inactivity timeout
-  TMOUT="1600"
 
   # fn: cursor shape for different vi modes
   case "$TERM" in
@@ -46,9 +41,6 @@
     zle "self-insert"
   }
 
-  zle -N "expand_alias"
-  bindkey -M main " " "expand_alias"
-
   # fn: preexec
   preexec() {
     # increase inactivity timeout
@@ -59,6 +51,12 @@
     timethen="$(print -P "%D{%s%3.}")"
   }
 
+  # keytimeout
+  export KEYTIMEOUT="1"
+
+  # inactivity timeout
+  TMOUT="1600"
+
   # history file length in lines
   export SAVEHIST="500"
 
@@ -66,21 +64,13 @@
   setopt "SHARE_HISTORY" "APPEND_HISTORY" "HIST_EXPIRE_DUPS_FIRST" "AUTOCD" "PROMPT_SUBST" "INTERACTIVE_COMMENTS"
   disable "r"
 
+  # enable colors
+  autoload -Uz "colors" && colors
+
   # remember last dir
   autoload -Uz "chpwd_recent_dirs" "cdr" "add-zsh-hook"
   add-zsh-hook "chpwd" "chpwd_recent_dirs"
   zstyle ':chpwd:*' "recent-dirs-file" "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/chpwd-recent-dirs"
-
-  # enable colors
-  autoload -Uz "colors" && colors
-
-  # use homebrew site-functions
-  if [ "${BREW_PREFIX:-""}" ] && [ -f "${BREW_PREFIX}/bin/brew" ]; then
-    fpath[1,0]="${BREW_PREFIX}/share/zsh/site-functions"
-  fi
- 
-  # git-completion plugin
-  fpath=($fpath "${XDG_DATA_HOME:-$HOME/.local/share}/git-completion/zsh")
 
   # vcs_info git prompt
   autoload -Uz "vcs_info"
@@ -211,9 +201,6 @@ $prompt_symbol"
   bindkey "^[[A" "history-beginning-search-backward-end"
   bindkey "^[[B" "history-beginning-search-forward-end"
 
-  # keytimeout
-  export KEYTIMEOUT="1"
-
   # set zle widgets
   zle -N "zle-keymap-select"
   zle -N "zle-line-init"
@@ -244,12 +231,6 @@ $prompt_symbol"
 
     zle -N "fzf_search_history"
     bindkey "^k" "fzf_search_history"
-  fi
-
-  # completion plugins on macos
-  if [ "${BREW_PREFIX:-""}" ]; then
-    . "${BREW_PREFIX}/opt/fzf/shell/completion.zsh" 2> /dev/null
-    . "${BREW_PREFIX}/opt/pyenv/completions/pyenv.zsh" 2> /dev/null
   fi
 
   # configure zsh-system-clipboard
@@ -287,6 +268,20 @@ $prompt_symbol"
       . "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
     ;;
   esac
+
+  # use homebrew site-functions
+  if [ "${BREW_PREFIX:-""}" ] && [ -f "${BREW_PREFIX}/bin/brew" ]; then
+    fpath[1,0]="${BREW_PREFIX}/share/zsh/site-functions"
+  fi
+
+  # completion plugins on macos
+  if [ "${BREW_PREFIX:-""}" ]; then
+    . "${BREW_PREFIX}/opt/fzf/shell/completion.zsh" 2> /dev/null
+    . "${BREW_PREFIX}/opt/pyenv/completions/pyenv.zsh" 2> /dev/null
+  fi
+
+  # git-completion plugin
+  fpath=($fpath "${XDG_DATA_HOME:-$HOME/.local/share}/git-completion/zsh")
 
   . "${XDG_DATA_HOME:-$HOME/.local/share}/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 }
