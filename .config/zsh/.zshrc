@@ -131,8 +131,8 @@
   local cwd_path="%{$bg[white]$fg[black]%} %/ %{$reset_color%}"
   local prompt_symbol="%{$fg[$role_params[1]]%}$role_params[2]%{$reset_color%} "
 
-  PROMPT="$userhost$ssh_status$vcs_info$cwd_path
-$prompt_symbol"
+  PROMPT="${userhost}${ssh_status}${vcs_info}${cwd_path}
+${prompt_symbol}"
 
   # auto/tab completion
   setopt "GLOB_COMPLETE" "LIST_PACKED" "LIST_ROWS_FIRST" "LIST_TYPES"
