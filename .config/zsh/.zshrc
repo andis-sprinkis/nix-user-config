@@ -120,6 +120,7 @@
     fi
 
     RPROMPT="%F{8}${tmout_status}${elapsedtime}%D{%T}%(?.. %F{1}(%?%))%f%F{3}%(1j. [%j].)"
+
     vcs_info
   }
 
