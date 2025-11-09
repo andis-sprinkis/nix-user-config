@@ -109,17 +109,17 @@
       local    m="$(((d_s / 60) % 60))"
       local    h="$((d_s / 3600))"
 
-        if ((h > 0)); then elapsedtime="${h}h ${m}m ${s}s"                     # 1h 1m 1s
-      elif ((m > 0)); then elapsedtime="${m}m ${s}.$(printf "$((ms / 100))")s" # 1m 12.3s
-      elif ((s > 9)); then elapsedtime="${s}.$(printf "%02d" "$((ms / 10))")s" # 12.34s
-      elif ((s > 0)); then elapsedtime="${s}.$(printf "%03d" "$ms")s"          # 1.234s
-      else                 elapsedtime="${ms}ms"                               # 1ms
+        if ((h > 0)); then elapsedtime="${h}h ${m}m ${s}s "                     # 1h 1m 1s
+      elif ((m > 0)); then elapsedtime="${m}m ${s}.$(printf "$((ms / 100))")s " # 1m 12.3s
+      elif ((s > 9)); then elapsedtime="${s}.$(printf "%02d" "$((ms / 10))")s " # 12.34s
+      elif ((s > 0)); then elapsedtime="${s}.$(printf "%03d" "$ms")s "          # 1.234s
+      else                 elapsedtime="${ms}ms "                               # 1ms
       fi
 
       unset timethen
     fi
 
-    RPROMPT="%F{8}${tmout_status}${elapsedtime}%(?.. %F{1}(%?%))%f%F{3}%(1j. [%j].)"
+    RPROMPT="%F{8}${tmout_status}${elapsedtime}%D{%T}%(?.. %F{1}(%?%))%f%F{3}%(1j. [%j].)"
     vcs_info
   }
 
