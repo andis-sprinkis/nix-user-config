@@ -15,6 +15,7 @@ M.font = wezterm.font_with_fallback({
 M.adjust_window_size_when_changing_font_size = false
 M.color_scheme = 'vscode-dark'
 M.cursor_blink_rate = 0
+M.force_reverse_video_cursor = true
 M.disable_default_key_bindings = true
 M.enable_tab_bar = false
 M.freetype_load_target = 'Light'
