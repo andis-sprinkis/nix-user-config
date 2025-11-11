@@ -217,21 +217,19 @@ ${prompt_symbol}"
   # fi
 
   # configure fzf
-  if command -v "fzf" 1>/dev/null 2>/dev/null; then
-    # cd with fzf
-    bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
-    bindkey -M vicmd -s '^f' 'i^ucd "$(dirname "$(fzf)")"\n'
+  ## cd with fzf
+  bindkey -s '^f' '^ucd "$(dirname "$(fzf)")"\n'
+  bindkey -M vicmd -s '^f' 'i^ucd "$(dirname "$(fzf)")"\n'
 
-    # search history with fzf
-    fzf_search_history() {
-      BUFFER="$(fc -l -n "1" | uniq | fzf --no-preview --tac --query "$LBUFFER")"
-      CURSOR="$#BUFFER"
-      zle "reset-prompt"
-    }
+  ## search history with fzf
+  fzf_search_history() {
+    BUFFER="$(fc -l -n "1" | uniq | fzf --no-preview --tac --query "$LBUFFER")"
+    CURSOR="$#BUFFER"
+    zle "reset-prompt"
+  }
 
-    zle -N "fzf_search_history"
-    bindkey "^k" "fzf_search_history"
-  fi
+  zle -N "fzf_search_history"
+  bindkey "^k" "fzf_search_history"
 
   # configure zsh-system-clipboard
   unset ZSH_SYSTEM_CLIPBOARD_METHOD
