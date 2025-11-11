@@ -20,18 +20,16 @@ fi
 # fi
 
 # launch tmux
-if
-  command -v "tmux" 1>/dev/null 2>/dev/null && [ -z "${TMUX:-""}" ] && [ "$TERM" != "linux" ]
-then
+if [ -z "${TMUX:-""}" ] && [ "$TERM" != "linux" ]; then
   # shellcheck disable=SC3028
   case "${OSTYPE:-"$(uname)"}" in
     [Dd]"arwin"*)
-      if [ "${UID:-"$(id -u)"}" -ge "501" ]; then
+      if [ "${UID:-"$(id -u)"}" -ge "501" ] && command -v "tmux" 1>/dev/null 2>/dev/null; then
         exec tmux
       fi
     ;;
     *)
-      if [ "${UID:-"$(id -u)"}" -ge "1000" ]; then
+      if [ "${UID:-"$(id -u)"}" -ge "1000" ] && command -v "tmux" 1>/dev/null 2>/dev/null; then
         exec tmux
       fi
     ;;
