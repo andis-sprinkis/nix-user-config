@@ -29,11 +29,15 @@
     esac
   }
 
+  zle -N "zle-keymap-select"
+
   zle-line-init() {
     if zle -K "viins"; then
       echo -n "$cur_beam"
     fi
   }
+
+  zle -N "zle-line-init"
 
   # expand alias in insert mode
   expand_alias() {
@@ -200,10 +204,6 @@ ${prompt_symbol}"
   zle -N "history-beginning-search-forward-end" "history-search-end"
   bindkey "^[[A" "history-beginning-search-backward-end"
   bindkey "^[[B" "history-beginning-search-forward-end"
-
-  # set zle widgets
-  zle -N "zle-keymap-select"
-  zle -N "zle-line-init"
 
   # edit line in editor
   autoload "edit-command-line"
