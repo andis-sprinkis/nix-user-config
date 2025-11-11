@@ -267,13 +267,11 @@ ${prompt_symbol}"
     ;;
   esac
 
-  # use homebrew site-functions
-  if [ "${BREW_PREFIX:-""}" ] && [ -f "${BREW_PREFIX}/bin/brew" ]; then
-    fpath[1,0]="${BREW_PREFIX}/share/zsh/site-functions"
-  fi
-
-  # completion plugins on macos
   if [ "${BREW_PREFIX:-""}" ]; then
+    # use homebrew site-functions
+    fpath[1,0]="${BREW_PREFIX}/share/zsh/site-functions"
+
+    # completion plugins on macos
     . "${BREW_PREFIX}/opt/fzf/shell/completion.zsh" 2> /dev/null
     . "${BREW_PREFIX}/opt/pyenv/completions/pyenv.zsh" 2> /dev/null
   fi
