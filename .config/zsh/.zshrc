@@ -69,7 +69,8 @@
   disable "r"
 
   # enable colors
-  autoload -Uz "colors" && colors
+  autoload -Uz "colors"
+  colors
 
   # remember last dir
   autoload -Uz "chpwd_recent_dirs" "cdr" "add-zsh-hook"
