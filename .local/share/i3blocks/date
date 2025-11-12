@@ -19,4 +19,4 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
 fi
 
 date "+%A — %-d. %B
-%a, %-d. %b." | sed -e 's/./\u&/' -e 's/ //g'
+%A, %-d. %b." | sed -e 's/./\u&/' -e 's/ //g'

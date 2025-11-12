@@ -2,11 +2,11 @@
 set -eu
 
 msg_paused="Media paused
-Paused"
+Media paused"
 msg_playing="Media playing
-Playing"
+Media playing"
 msg_stopped="Media stopped
-Stopped"
+Media stopped"
 
 case "$(set +e; playerctl status 2> "/dev/null"; set -e)" in
   "Playing")

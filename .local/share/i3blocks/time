@@ -20,3 +20,4 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
 fi
 
 date "+%-H:%M %Z"
+date "+%-H:%M %Z"
