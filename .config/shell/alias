@@ -7,7 +7,6 @@
 alias \
   ....="cd ../.." \
   ......="cd ../../.." \
-  --="cd -" \
   apack="apack --explain" \
   aunpack="aunpack --subdir --explain" \
   bc="bc -ql" \
