@@ -5,9 +5,9 @@
 # 'htop' alias must precede the 't' alias
 # 'yay' alias must precede the 'pac_*' aliases
 alias \
-  ....='cd ../..' \
-  ......='cd ../../..' \
-  --='cd -' \
+  ....="cd ../.." \
+  ......="cd ../../.." \
+  --="cd -" \
   apack="apack --explain" \
   aunpack="aunpack --subdir --explain" \
   bc="bc -ql" \
