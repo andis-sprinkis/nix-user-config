@@ -107,7 +107,7 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     ```
 1.  Update Arch official package repository mirrors.
     ```sh
-    reflector --country Latvia,Lithuania,Estonia,Finland,Sweden,Poland --protocol https --latest 10 --save /etc/pacman.d/mirrorlist
+    reflector --country Latvia,Lithuania,Estonia,Finland,Sweden,Poland --sort country --protocol https --latest 30 --save /etc/pacman.d/mirrorlist
     ```
 1.  Install base packages.
     ```sh
