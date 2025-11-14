@@ -1,35 +1,35 @@
 include colors/vscode_dark
 
-set adjust-open "width"
-set continuous-hist-save true
-set font "sans-serif regular 12"
-set guioptions ""
-set recolor true
-set recolor-keephue true
-set scroll-full-overlap 0.15
-set scroll-hstep 8
-set scroll-step 128
-set selection-clipboard clipboard
-set selection-notification false
-set show-hidden true
+set adjust-open                "width"
+set continuous-hist-save       true
+set font                       "sans-serif regular 12"
+set guioptions                 ""
+set recolor                    true
+set recolor-keephue            true
+set scroll-full-overlap        0.15
+set scroll-hstep               8
+set scroll-step                128
+set selection-clipboard        clipboard
+set selection-notification     false
+set show-hidden                true
 set show-signature-information true
-set statusbar-basename true
-set window-title-basename true
-set window-title-page true
-set zoom-step 5
+set statusbar-basename         true
+set window-title-basename      true
+set window-title-page          true
+set zoom-step                  5
 
-map + zoom default
-map - zoom out
-map <PageDown> scroll full-down
-map <PageUp> scroll full-up
-map = zoom in
-map C exec "zathura -P \"$PAGE\" -- \"$FILE\""
-map e exec "file_manager_desktop \"$FILE\""
-map p exec "pager_desktop \"$FILE\""
-map D scroll half-down
-map J zoom out
-map K zoom in
-map U scroll half-up
-map b toggle_statusbar
-map d scroll full-down
-map u scroll full-up
+map +                          zoom default
+map -                          zoom out
+map <PageDown>                 scroll full-down
+map <PageUp>                   scroll full-up
+map =                          zoom in
+map C                          exec "zathura -P \"$PAGE\" -- \"$FILE\""
+map e                          exec "file_manager_desktop \"$FILE\""
+map p                          exec "pager_desktop \"$FILE\""
+map D                          scroll half-down
+map J                          zoom out
+map K                          zoom in
+map U                          scroll half-up
+map b                          toggle_statusbar
+map d                          scroll full-down
+map u                          scroll full-up
