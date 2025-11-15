@@ -14,7 +14,7 @@ set promptfmt              "\033[32;1m%u@%h\033[0m \033[34;1m%d\033[0m\033[1m%f\
 set scrolloff              "12"
 set shellopts              "-eu"
 set sortby                 "name"
-set statfmt                "\033[36m%p\033[0m| %u| %g| %S| %t| > %l"
+set statfmt                "\033[36m%p\033[0m| %u| %g| %S| %t| \033[36m-> %l\033[0m"
 set tabstop                "2"
 set timefmt                "Mon 2006-01-02 15:04:05"
 set wrapscroll
