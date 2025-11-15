@@ -10,7 +10,7 @@ set mouse
 set numberfmt              "\033[90m"
 set period                 "1"
 set previewer              "previewer"
-set promptfmt              "%d\033[1m%f\033[0m %S%u@%h"
+set promptfmt              "%u@%h %d\033[1m%f\033[0m"
 set scrolloff              "12"
 set shellopts              "-eu"
 set sortby                 "name"
@@ -20,7 +20,7 @@ set timefmt                "Mon 2006-01-02 15:04:05"
 set wrapscroll
 set info                   "custom"
 set user_quittimer         "true"
-set user_quittimersec      "1200"
+set user_quittimersec      "1800"
 
 cmd on-cd                  & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/on-cd"
 cmd on-init                & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/on-init"
