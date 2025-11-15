@@ -119,7 +119,7 @@ alias \
   viff="nvim -d" \
   wget="wget --hsts-file=\"\${XDG_DATA_HOME:-\$HOME/.local/share}/wget-hsts\""
 
-alias_gnu_ls="ls -xhAFNX --color=always --group-directories-first --time-style=long-iso"
+alias_gnu_ls="LC_COLLATE=C ls -xhAFN --color=always --group-directories-first --time-style=long-iso"
 
 # shellcheck disable=SC3028
 case "${OSTYPE:-"$(uname)"}" in
