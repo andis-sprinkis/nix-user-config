@@ -33,5 +33,5 @@ const urlGmaps = `https://www.google.com/maps?t=k&q=loc:${lat}+${lon}`;
 
 mapLinkElement.parentElement.insertAdjacentHTML(
   "afterend",
-  ` <span class="td15">[<a href="${urlGmaps}" class="ads_opt_link_map" target="blank" rel="noreferrer">Google Maps</a>]</span>`,
+  ` <span class="td15">[<a href="${urlGmaps}" class="ads_opt_link_map" target="blank" rel="noreferrer noopener">Google Maps</a>]</span>`,
 );
