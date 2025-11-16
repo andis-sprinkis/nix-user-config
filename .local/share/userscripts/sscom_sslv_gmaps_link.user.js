@@ -7,7 +7,7 @@
 // @run-at      document-end
 // @version     0.4.0
 // @author      Andis Spriņķis
-// @description Display location services links of Google Maps, Apple Maps, OpenStreetMap, BalticMaps in the ss.com, ss.lv listings.
+// @description Display the location services links of Google Maps, Apple Maps, OpenStreetMap, BalticMaps in the ss.com, ss.lv listings.
 // @downloadURL https://raw.githubusercontent.com/andis-sprinkis/nix-user-config/refs/heads/master/.local/share/userscripts/sscom_sslv_gmaps_link.user.js
 // @updateURL   https://raw.githubusercontent.com/andis-sprinkis/nix-user-config/refs/heads/master/.local/share/userscripts/sscom_sslv_gmaps_link.user.js
 // ==/UserScript==
