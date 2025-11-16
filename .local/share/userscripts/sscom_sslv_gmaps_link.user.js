@@ -7,7 +7,9 @@
 // @run-at      document-end
 // @version     0.2.0
 // @author      Andis Spriņķis
-// @description Display the Google Maps location link in the ss.com, ss.lv listings
+// @downloadURL https://raw.githubusercontent.com/andis-sprinkis/nix-user-config/refs/heads/master/.local/share/userscripts/sscom_sslv_gmaps_link.user.js
+// @updateURL   https://raw.githubusercontent.com/andis-sprinkis/nix-user-config/refs/heads/master/.local/share/userscripts/sscom_sslv_gmaps_link.user.js
+// @description Display the Google Maps location link in the ss.com, ss.lv listings.
 // ==/UserScript==
 
 (() => {
