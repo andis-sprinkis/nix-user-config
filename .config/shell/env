@@ -36,8 +36,13 @@ export XDG_STATE_HOME="$HOME/.local/state"
 PATH="$HOME/.local/bin:$PATH"
 
 # set user AppImages location
-export APPIMAGE_DATA_HOME="$HOME/.local/opt/appimage"
-PATH="$APPIMAGE_DATA_HOME:$PATH"
+# shellcheck disable=SC3028
+case "${OSTYPE:-"$(uname)"}" in
+  [lL]"inux"*)
+    export APPIMAGE_DATA_HOME="$HOME/.local/opt/appimage"
+    PATH="$APPIMAGE_DATA_HOME:$PATH"
+  ;;
+esac
 
 # set locale
 if [ -f "/etc/profile.d/locale.sh" ]; then
