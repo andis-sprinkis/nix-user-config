@@ -1,11 +1,11 @@
 // ==UserScript==
-// @name        ss.com, ss.lv maps service links
+// @name        ss.com, ss.lv maps links
 // @namespace   https://sprinkis.com
 // @match       https://www.ss.com/*
 // @match       https://www.ss.lv/*
 // @grant       none
 // @run-at      document-end
-// @version     0.5.0
+// @version     0.6.0
 // @author      Andis Spriņķis
 // @description Display the location services links of Google Maps, Apple Maps, OpenStreetMap, BalticMaps and the geo URI in the ss.com, ss.lv listings.
 // @downloadURL https://raw.githubusercontent.com/andis-sprinkis/nix-user-config/refs/heads/master/.local/share/userscripts/sscom_sslv_gmaps_link.user.js
