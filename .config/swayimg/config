@@ -123,6 +123,8 @@ background = #000000cc
 [info]
 # Show on startup (yes/no)
 show = no
+# Text padding from window edges
+padding = 24
 # Timeout to hide info (seconds, 0 to always show)
 info_timeout = 5
 # Timeout to hide status message (seconds)
@@ -204,7 +206,9 @@ m = flip_vertical
 Shift+m = flip_horizontal
 a = antialiasing
 Shift+r = reload
-i = info
+; i = info viewer
+i = info viewer
+Shift+i = info off
 Shift+Delete = exec ""
 Escape = exit
 q = exit
@@ -219,8 +223,8 @@ ScrollLeft = step_left 10
 ScrollRight = step_right 10
 ScrollUp = step_up 14
 ScrollDown = step_down 14
-Ctrl+ScrollUp = zoom +17
-Ctrl+ScrollDown = zoom -17
+Ctrl+ScrollUp = zoom +17 mouse
+Ctrl+ScrollDown = zoom -17 mouse
 Shift+ScrollUp = prev_file
 Shift+ScrollDown = next_file
 Alt+ScrollUp = prev_frame
@@ -261,7 +265,8 @@ f = fullscreen
 Return = mode
 a = antialiasing
 Shift+r = reload
-i = info
+i = info gallery
+Shift+i = info off
 Shift+Delete = exec ""
 Escape = exit
 q = exit
