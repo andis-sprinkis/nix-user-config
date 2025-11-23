@@ -186,7 +186,7 @@ if [ -z "$FPATH" ]; then
   exit "0"
 fi
 
-if [ -r "$FPATH" ]; then
+if [ ! -r "$FPATH" ]; then
   print_mime
 
   echo "No read permission."
