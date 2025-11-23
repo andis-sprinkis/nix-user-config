@@ -1,16 +1,6 @@
 #!/usr/bin/env sh
 set -eu
 
-FPATH_INPUT="$1"
-FPATH="$(set +e; readlink -f "$FPATH_INPUT"; set -e)"
-
-MIME="$(file --mime-type --brief "$FPATH")"
-BRIEF="$(file --brief "$FPATH")"
-
-W_CHR="${2:-""}"
-H_CHR="${3:-""}"
-FPATH_THUMB=""
-
 find_util() {
   if ! command -v "$1" 1>/dev/null 2>/dev/null; then
     echo "$(basename "$0"): '${1}' utility not found."
@@ -34,7 +24,12 @@ thumb_cache_create() {
 }
 
 print_stat() {
-  if [ -L "$FPATH_INPUT" ] ; then
+  if [ ! -r "$FPATH_INPUT" ]; then
+    echo "Read permission denied."
+    return "0"
+  fi
+
+  if [ -L "$FPATH_INPUT" ]; then
     stat "$FPATH_INPUT"
 
     if [ -e "$FPATH" ]; then
@@ -47,19 +42,27 @@ print_stat() {
 }
 
 print_symlink() {
-  if [ -L "$FPATH_INPUT" ]; then
-    if [ ! -e "$FPATH" ]; then
-      printf "\x1b[0;31;1m%s\x1b[0m\n%s\n\n" "Broken or inaccessible symbolic link to:" "$FPATH"
-      print_stat
-      exit
-    fi
-
-    printf "\x1b[0;1m%s\x1b[0m\n%s\n\n" "Symbolic link to:" "$FPATH"
+  if [ ! -L "$FPATH_INPUT" ]; then
+    exit
   fi
+
+  if [ -z "$FPATH" ]; then
+    printf "\x1b[0;31;1m%s\x1b[0m\n\n" "Broken or inaccessible symbolic link."
+    print_stat
+    exit
+  fi
+
+  if [ ! -e "$FPATH" ]; then
+    printf "\x1b[0;31;1m%s\x1b[0m\n%s\n\n" "Broken or inaccessible symbolic link to:" "$FPATH"
+    print_stat
+    exit
+  fi
+
+  printf "\x1b[0;1m%s\x1b[0m\n%s\n\n" "Symbolic link to:" "$FPATH"
 }
 
 print_hardlink() {
-  if [ -e "$FPATH" ]; then
+  if [ "$FPATH" ] && [ -e "$FPATH" ]; then
     links_count="$(stat -c '%h' -- "$FPATH")"
 
     if [ "$links_count" -gt "1" ]; then
@@ -160,12 +163,31 @@ print_mime_newlines() {
   fi
 }
 
+FPATH_INPUT="$1"
+FPATH="$(set +e; readlink -f "$FPATH_INPUT"; set -e)"
+MIME="$(file --mime-type --brief "$FPATH")"
+
+if [ ! -r "$FPATH_INPUT" ]; then
+  if [ "$MIME" ]; then
+    echo "$MIME"
+  fi
+
+  echo "No read permission."
+
+  exit "0"
+fi
+
+BRIEF="$(file --brief "$FPATH")"
+
+W_CHR="${2:-""}"
+H_CHR="${3:-""}"
+FPATH_THUMB=""
+
 print_symlink
 print_hardlink
 
-if [ ! -e "$FPATH" ]; then
-  echo "The target file does not exist."
-  exit
+if [ -z "$FPATH" ]; then
+  exit "0"
 fi
 
 case "$MIME" in
