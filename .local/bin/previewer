@@ -1,6 +1,14 @@
 #!/usr/bin/env sh
 set -eu
 
+FPATH_INPUT="$1"
+FPATH="$(set +e; readlink -f "$FPATH_INPUT"; set -e)"
+MIME="$(file --mime-type --brief "$FPATH")"
+BRIEF="$(file --brief "$FPATH")"
+W_CHR="${2:-""}"
+H_CHR="${3:-""}"
+FPATH_THUMB=""
+
 find_util() {
   if ! command -v "$1" 1>/dev/null 2>/dev/null; then
     echo "$(basename "$0"): '${1}' utility not found."
@@ -24,11 +32,6 @@ thumb_cache_create() {
 }
 
 print_stat() {
-  if [ ! -r "$FPATH_INPUT" ]; then
-    echo "Read permission denied."
-    return "0"
-  fi
-
   if [ -L "$FPATH_INPUT" ]; then
     stat "$FPATH_INPUT"
 
@@ -43,7 +46,7 @@ print_stat() {
 
 print_symlink() {
   if [ ! -L "$FPATH_INPUT" ]; then
-    exit
+    return "0"
   fi
 
   if [ -z "$FPATH" ]; then
@@ -163,25 +166,16 @@ print_mime_newlines() {
   fi
 }
 
-FPATH_INPUT="$1"
-FPATH="$(set +e; readlink -f "$FPATH_INPUT"; set -e)"
-MIME="$(file --mime-type --brief "$FPATH")"
-
 if [ ! -r "$FPATH_INPUT" ]; then
-  if [ "$MIME" ]; then
-    echo "$MIME"
-  fi
+  print_mime
 
   echo "No read permission."
+  echo
+
+  print_stat 2> /dev/null
 
   exit "0"
 fi
-
-BRIEF="$(file --brief "$FPATH")"
-
-W_CHR="${2:-""}"
-H_CHR="${3:-""}"
-FPATH_THUMB=""
 
 print_symlink
 print_hardlink
