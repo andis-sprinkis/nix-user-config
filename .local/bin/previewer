@@ -151,16 +151,12 @@ First ${bytes} bytes or less:"
 }
 
 print_mime() {
-  if [ "$BRIEF" ]; then
-    echo "$MIME" "(${BRIEF})"
-  else
-    echo "$MIME"
-  fi
+  echo "$MIME${BRIEF:+" (${BRIEF})"}"
 }
 
 print_mime_newlines() {
   if [ -r "$FPATH" ]; then
-    echo "$MIME" "($(wc -l "$FPATH" | cut -d" " -f1) lines, ${BRIEF})"
+    echo "$MIME" "($(wc -l "$FPATH" | cut -d" " -f1) lines${BRIEF:+", ${BRIEF}"})"
   else
     echo "$MIME"
   fi
