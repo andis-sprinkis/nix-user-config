@@ -421,6 +421,8 @@ ${tables}
 
           if [ "$dev" ]; then
             printf "\x1b[0;1m%s\x1b[0m\n%s\n" "Mount point of:" "${dev}"
+            echo
+            df -h "$dev"
           fi
         fi
       fi
