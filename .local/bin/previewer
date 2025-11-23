@@ -151,7 +151,7 @@ First ${bytes} bytes or less:"
 }
 
 print_mime() {
-  if [ -r "$FPATH" ]; then
+  if [ "$BRIEF" ]; then
     echo "$MIME" "(${BRIEF})"
   else
     echo "$MIME"
