@@ -151,7 +151,13 @@ First ${bytes} bytes or less:"
 }
 
 print_mime() {
-  echo "$MIME${BRIEF:+" (${BRIEF})"}"
+  if [ "$MIME" ]; then
+    if [ "$BRIEF" ] && [ "$MIME" != "$BRIEF" ]; then
+      echo "$MIME (${BRIEF})"
+    else
+      echo "$MIME"
+    fi
+  fi
 }
 
 print_mime_newlines() {
@@ -177,6 +183,17 @@ print_symlink
 print_hardlink
 
 if [ -z "$FPATH" ]; then
+  exit "0"
+fi
+
+if [ -r "$FPATH" ]; then
+  print_mime
+
+  echo "No read permission."
+  echo
+
+  set +e; print_stat 2> "/dev/null"; set -e;
+
   exit "0"
 fi
 
