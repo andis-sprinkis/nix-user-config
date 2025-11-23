@@ -172,7 +172,7 @@ if [ ! -r "$FPATH_INPUT" ]; then
   echo "No read permission."
   echo
 
-  print_stat 2> /dev/null
+  print_stat 2> "/dev/null"
 
   exit "0"
 fi
