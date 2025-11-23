@@ -460,6 +460,12 @@ ${tables}
     print_strings
     print_hexdump
   ;;
+  application/x-coredump)
+    print_mime
+    print_hexdump
+    echo
+    print_stat
+  ;;
   font/*|application/x-font-*|application/vnd.ms-opentype)
     print_mime
     print_exiftool
