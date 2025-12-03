@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.257.0
+@version      0.258.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
@@ -303,6 +303,7 @@ domain("secure-hotel-booking.com"),
 domain("serverfault.com"),
 domain("shellcheck.net"),
 domain("signin.aws"),
+domain("signrequest.com"),
 domain("slashdot.org"),
 domain("sourceware.org"),
 domain("sportland.lv"),
