@@ -74,6 +74,7 @@ alias \
   n="\$EDITOR \$HOME/note/" \
   ncdu="ncdu --color dark -x" \
   nethogs="sudo nethogs -l" \
+  nmtui="nmcli device wifi rescan; nmtui" \
   p="python3 -q" \
   pacman="yay --color=always" \
   yay="yay --color=always" \
