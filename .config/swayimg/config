@@ -175,7 +175,7 @@ Shift+d = prev_dir
 d = next_dir
 Shift+o = prev_frame
 o = next_frame
-c = skip_file
+Shift+c = skip_file
 Shift+s = slideshow
 s = animation
 f = fullscreen
@@ -260,7 +260,7 @@ Next = page_down
 p = page_up
 n = page_down
 
-c = skip_file
+Shift+c = skip_file
 f = fullscreen
 Return = mode
 a = antialiasing
