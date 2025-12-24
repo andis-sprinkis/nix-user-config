@@ -476,13 +476,6 @@ ${tables}
     print_mime
     print_stat
   ;;
-  application/x-linux-kernel)
-    print_mime
-
-    if [ "$BRIEF" ]; then
-      echo "$BRIEF" | tr ',' '\n' | sed 's/^ //g'
-    fi
-  ;;
   application/octet-stream)
     print_mime
     # TODO: re-try by file extension
@@ -501,6 +494,13 @@ ${tables}
     print_hexdump
     echo
     print_stat
+  ;;
+  application/x-linux-kernel)
+    print_mime
+
+    if [ "$BRIEF" ]; then
+      echo "$BRIEF" | tr ',' '\n' | sed 's/^ //g'
+    fi
   ;;
   font/*|application/x-font-*|application/vnd.ms-opentype)
     print_mime
