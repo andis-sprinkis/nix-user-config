@@ -472,7 +472,7 @@ ${tables}
     echo
     print_stat
   ;;
-  inode/*)
+  inode/*|application/x-linux-kernel)
     print_mime
     print_stat
   ;;
@@ -484,7 +484,7 @@ ${tables}
     echo
     print_stat
   ;;
-  application/vnd.microsoft.portable-executable|application/x-dosexec*|application/x-ole-storage|application/x-linux-kernel)
+  application/vnd.microsoft.portable-executable|application/x-dosexec*|application/x-ole-storage)
     print_mime
     print_strings
     print_hexdump
