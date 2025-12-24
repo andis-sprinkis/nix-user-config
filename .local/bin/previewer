@@ -472,9 +472,16 @@ ${tables}
     echo
     print_stat
   ;;
-  inode/*|application/x-linux-kernel)
+  inode/*)
     print_mime
     print_stat
+  ;;
+  application/x-linux-kernel)
+    print_mime
+
+    if [ "$BRIEF" ]; then
+      echo "$BRIEF" | tr ',' '\n' | sed 's/^ //g'
+    fi
   ;;
   application/octet-stream)
     print_mime
