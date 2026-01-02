@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
 for web_browser in "firefox" "chromium" "chrome" "epiphany"; do
-  if [ "$(command -v "$web_browser")" ]; then
-    exec $web_browser "$@"
+  if command -v "$web_browser" 1> "/dev/null" 2> "/dev/null"; then
+    exec "$web_browser" "$@"
   fi
 done
 
