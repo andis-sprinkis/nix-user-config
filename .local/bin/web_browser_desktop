@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+set -eu
 
 for web_browser in "firefox" "chromium" "chrome" "epiphany"; do
   if command -v "$web_browser" 1> "/dev/null" 2> "/dev/null"; then
