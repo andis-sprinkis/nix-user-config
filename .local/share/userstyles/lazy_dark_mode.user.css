@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.263.0
+@version      0.264.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
@@ -164,7 +164,6 @@ domain("cmake.org"),
 domain("contentful.com"),
 domain("cpan.org"),
 domain("cppreference.com"),
-domain("csdd.lv"),
 domain("csp.gov.lv"),
 domain("cspell.org"),
 domain("ctan.org"),
@@ -486,6 +485,8 @@ domain("zm.gov.lv"),
 url-prefix("https://archlinux.org/"),
 url-prefix("https://aur.archlinux.org/"),
 url-prefix("https://bbs.archlinux.org/"),
+url-prefix("https://csdd.lv/"),
+url-prefix("https://e.csdd.lv/"),
 url-prefix("https://darbs.mikrotik.com/"),
 url-prefix("https://mikrotik.com/"),
 url-prefix("https://www.w3.org/WAI/")
