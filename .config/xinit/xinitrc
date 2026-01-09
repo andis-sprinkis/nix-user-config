@@ -32,13 +32,15 @@ fi
 VBoxClient-all &
 
 # Notification-daemon
-if [ -z "$(pidof dunst)" ]; then
+if ! pidof "dunst" 1>/dev/null; then
   dunst &
 fi
 
 # Polkit authentication agent
 
-[ -z "$(pidof "polkit-gnome-authentication-agent-1")" ] && /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+if ! pidof "polkit-gnome-authentication-agent-1" 1>/dev/null; then
+  /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+fi
 
 # Disabling the console bell beep in X11
 
@@ -54,17 +56,17 @@ xkbcomp -w 4 -I"${XDG_CONFIG_HOME:-$HOME/.config}/xkb" "${XDG_CONFIG_HOME:-$HOME
 
 # Running unclutter to automatically hide the mouse pointer
 
-if [ -z "$(pidof unclutter)" ]; then
+if ! pidof "unclutter" 1>/dev/null; then
   unclutter --timeout 1 --start-hidden &
 fi
 
 # Setting the X11 root window background
 
-hsetroot -solid "$(xrdb -get rootBackground)" &
+hsetroot -solid "$(xrdb -get "rootBackground")" &
 
 # Starting or reloading X11 display compositor
 
-pid_picom="$(pidof picom)"
+pid_picom="$(pidof "picom")"
 if [ "$pid_picom" ]; then
   kill -USR1 "$pid_picom" &
 else
@@ -77,14 +79,14 @@ idle_manager "start" &
 
 # EeasyEffects audio effects interface
 
-if [ -z "$(pidof easyeffects)" ]; then
+if ! pidof "easyeffects" 1>/dev/null; then
   easyeffects --gapplication-service &
 fi
 
 # Starting or reloading i3 window manager
 
-if [ "$(pidof i3)" ]; then 
-  i3-msg restart
+if ! pidof "i3" 1>/dev/null; then 
+  i3-msg "restart"
 else
   exec i3
 fi
