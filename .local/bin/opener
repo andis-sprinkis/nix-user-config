@@ -1,12 +1,14 @@
 #!/usr/bin/env sh
 set -eu
 
-# shellcheck disable=SC3028
-case "${OSTYPE:-"$(uname)"}" in
-  [dD]"arwin"*)
-    exec open "$@"
-  ;;
-  *)
-    exec xdg-open "$@"
-  ;;
-esac
+# # shellcheck disable=SC3028
+# case "${OSTYPE:-"$(uname)"}" in
+#   [dD]"arwin"*)
+#     exec open "$@"
+#   ;;
+#   *)
+#     exec xdg-open "$@"
+#   ;;
+# esac
+
+exec xdg-open "$@"
