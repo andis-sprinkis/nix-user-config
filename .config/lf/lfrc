@@ -39,6 +39,7 @@ cmd mkdir                  & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/m
 cmd ncdu                   $ ncdu --color dark -x "$@"
 cmd open-with              $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/open-with" "$@"
 cmd open-with-menu-desktop & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/open-with-menu-desktop"
+cmd open-with-opener       $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/open-with-opener"
 cmd paste-to-file          $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/paste-to-file" "$@"
 cmd q                      quit
 cmd Q                      quit
@@ -62,6 +63,7 @@ map  b                     mark-load
 map  m
 map  \"
 map  o                     push :open-with<space>
+map  O                     open-with-opener
 map  t
 cmap <tab>                 cmd-menu-complete
 cmap <backtab>             cmd-menu-complete-back
