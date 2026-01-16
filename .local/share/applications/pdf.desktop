@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
 Name=PDF reader
-Exec=zathura -- %f
+Exec=pdf_viewer_desktop %f
 Categories=Office;Viewer;

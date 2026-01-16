@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+# shellcheck disable=SC3028
+case "${OSTYPE:-"$(uname)"}" in
+  [dD]"arwin"*)
+    open -a "Preview" "$@"
+  ;;
+  *)
+    zathura -- "$@"
+  ;;
+esac
+
+exit "1"
