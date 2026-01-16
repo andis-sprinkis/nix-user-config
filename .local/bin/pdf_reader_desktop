@@ -3,17 +3,10 @@
 # shellcheck disable=SC3028
 case "${OSTYPE:-"$(uname)"}" in
   [dD]"arwin"*)
-    open -a "Preview" "$@"
+    exec open -a "Preview" "$@"
   ;;
   *)
-    if [ "${WAYLAND_DISPLAY:-""}" ]; then
-      exec swayimg "$@"
-    fi
-
-
-    if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-      exec nsxiv-rifle -- "$@"
-    fi
+    exec zathura -- "$@"
   ;;
 esac
 
