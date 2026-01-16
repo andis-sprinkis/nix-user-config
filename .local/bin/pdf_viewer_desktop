@@ -3,10 +3,10 @@
 # shellcheck disable=SC3028
 case "${OSTYPE:-"$(uname)"}" in
   [dD]"arwin"*)
-    open -a "Preview" "$@"
+    exec open -a "Preview" "$@"
   ;;
   *)
-    zathura -- "$@"
+    exec zathura -- "$@"
   ;;
 esac
 
