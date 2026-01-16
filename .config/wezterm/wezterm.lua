@@ -15,6 +15,8 @@ M.font = wezterm.font_with_fallback({
 M.adjust_window_size_when_changing_font_size = false
 M.color_scheme = 'vscode-dark'
 M.cursor_blink_rate = 0
+M.cursor_blink_ease_in = 'Constant'
+M.cursor_blink_ease_out = 'Constant'
 M.force_reverse_video_cursor = true
 M.disable_default_key_bindings = true
 M.enable_tab_bar = false
@@ -25,6 +27,12 @@ M.initial_cols = 120
 M.initial_rows = 30
 M.animation_fps = 1
 M.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
+-- Requires nightly
+-- M.window_decorations = "TITLE | RESIZE | MACOS_USE_BACKGROUND_COLOR_AS_TITLEBAR_COLOR"
+-- https://wezterm.org/config/lua/config/window_decorations.html
+-- Requires nightly
+-- M.window_content_alignment = { horizontal = 'Center', vertical = 'Top' }
+-- https://wezterm.org/config/lua/config/window_content_alignment.html
 M.keys = {
   { key = ')',        mods = 'CTRL',       action = act.ResetFontSize },
   { key = '+',        mods = 'CTRL',       action = act.IncreaseFontSize },
