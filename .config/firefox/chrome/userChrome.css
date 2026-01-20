@@ -65,14 +65,9 @@
   #sidebar-search-container {
     padding: 4px 8px !important;
   }
-
-  #tracking-protection-icon-container {
-    fill: var(--icon-color) !important;
-  }
 }
 
-@-moz-document url-prefix("about:home"), url-prefix("about:newtab"), url-prefix("about:blank")
-{
+@-moz-document url-prefix("about:home"), url-prefix("about:newtab"), url-prefix("about:blank") {
   menu.personalizeButtonWrapper {
     display: none !important;
   }
