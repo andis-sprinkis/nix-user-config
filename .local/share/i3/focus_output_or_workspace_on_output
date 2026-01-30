@@ -18,7 +18,7 @@ case "$wm" in
   ;;
 esac
 
-outputs_count="$($wm_cmd -t get_outputs | jq '[.[] | select(.active == true)] | length')"
+outputs_count="$($wm_cmd -t get_outputs | jq -r '[.[] | select(.active == true)] | length')"
 
 case "$1" in
   "left")
