@@ -34,9 +34,9 @@ domain("zsh.sourceforge.io") {
 }
 
 @-moz-document domain("mediawiki.org"),
-domain("wikipedia.org"),
 domain("wikibooks.org"),
 domain("wikidata.org"),
+domain("wikifunctions.org"),
 domain("wikimedia.org"),
 domain("wikinews.org"),
 domain("wikipedia.org"),
