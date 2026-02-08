@@ -3,11 +3,6 @@
 # generic login shell configuration
 . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/login"
 
-# fn: detect if given command is executable
-is_exec() {
-  command -v "$1" 1>/dev/null 2>/dev/null
-}
-
 # configure pyenv
 
 # if is_exec "pyenv"; then
