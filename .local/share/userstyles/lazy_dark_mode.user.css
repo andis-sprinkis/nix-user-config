@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.273.0
+@version      0.274.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
@@ -153,6 +153,7 @@ domain("bing.com"),
 domain("booking.com"),
 domain("boot.ritakafija.lv"),
 domain("browserleaks.com"),
+domain("browserstack.com"),
 domain("busybox.net"),
 domain("bvkb.gov.lv"),
 domain("c-faq.com"),
