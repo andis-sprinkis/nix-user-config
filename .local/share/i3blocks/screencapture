@@ -18,7 +18,7 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
   esac
 fi
 
-if [ "$(pidof "wf-recorder")" ]; then
+if pidof "wf-recorder" 1> "/dev/null"; then
   echo "🔴 Recording screen
 🔴 Recording scr."
 fi
