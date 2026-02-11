@@ -46,6 +46,6 @@ case "$1" in
   ;;
 esac
 
-if [ "$(pidof "i3blocks")" ]; then
+if pidof "i3blocks" 1> /dev/null; then
   pkill "-SIGRTMIN+3" "i3blocks" 1> "/dev/null" 2> "/dev/null" & disown
 fi
