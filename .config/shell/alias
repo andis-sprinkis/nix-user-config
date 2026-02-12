@@ -33,6 +33,7 @@ alias \
   dgc="dotgit commit -a" \
   dgca="dotgit commit --amend" \
   dgcan="dotgit commit --amend --no-edit" \
+  dgch="dotgit checkout" \
   dgcm="dotgit commit -a -m" \
   dgd="dotgit diff" \
   dgl="dotgit log" \
@@ -49,6 +50,7 @@ alias \
   gc="git commit" \
   gca="git commit --amend" \
   gcan="git commit --amend --no-edit" \
+  gch="git checkout" \
   gcm="git commit -m" \
   gd="git diff" \
   gl="git log" \
