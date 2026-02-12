@@ -36,6 +36,7 @@ alias \
   dgcm="dotgit commit -a -m" \
   dgd="dotgit diff" \
   dgl="dotgit log" \
+  dgm="dotgit merge" \
   dgpl="dotgit pull" \
   dgps="dotgit push" \
   dgs="dotgit status" \
@@ -52,6 +53,7 @@ alias \
   gcm="git commit -m" \
   gd="git diff" \
   gl="git log" \
+  gm="git merge" \
   gpl="git pull" \
   gps="git push" \
   grep="grep --color=always" \
