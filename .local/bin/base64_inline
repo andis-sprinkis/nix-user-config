@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+set -eu
+
+if [ "${1:-""}" ]; then
+  printf '%s' "$1" | base64 -w0
+  exit
+fi
+
+text=""
+
+while read -r l; do
+  text="${text:+"$text"
+}${l}"
+done
+
+printf '%s' "$text" | base64 -w0
