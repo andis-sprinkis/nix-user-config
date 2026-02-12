@@ -13,4 +13,6 @@ while read -r l; do
 }${l}"
 done
 
-printf '%s' "$text" | base64 -w0
+if [ "$text" ]; then
+  printf '%s' "$text" | base64 -w0
+fi
