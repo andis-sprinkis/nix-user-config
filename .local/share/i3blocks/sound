@@ -16,13 +16,13 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
     ;;
     "4")
       if ! pidof -q "wpctl"; then
-        wpctl "set-volume" "@DEFAULT_SINK@" "${STEP:-"1"}%+"
+        wpctl "set-volume" "@DEFAULT_SINK@" "1%+"
         sound_notify "@DEFAULT_SINK@" 1> "/dev/null" 2> "/dev/null" & disown
       fi
     ;;
     "5")
       if ! pidof -q "wpctl"; then
-        wpctl "set-volume" "@DEFAULT_SINK@" "${STEP:-"1"}%-"
+        wpctl "set-volume" "@DEFAULT_SINK@" "1%-"
         sound_notify "@DEFAULT_SINK@" 1> "/dev/null" 2> "/dev/null" & disown
       fi
     ;;
