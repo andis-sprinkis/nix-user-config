@@ -32,13 +32,13 @@ fi
 VBoxClient-all &
 
 # Notification-daemon
-if ! pidof "dunst" 1>/dev/null; then
+if ! pidof -q "dunst"; then
   dunst &
 fi
 
 # Polkit authentication agent
 
-if ! pidof "polkit-gnome-authentication-agent-1" 1>/dev/null; then
+if ! pidof -q "polkit-gnome-authentication-agent-1"; then
   /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 fi
 
@@ -56,7 +56,7 @@ xkbcomp -w 4 -I"${XDG_CONFIG_HOME:-$HOME/.config}/xkb" "${XDG_CONFIG_HOME:-$HOME
 
 # Running unclutter to automatically hide the mouse pointer
 
-if ! pidof "unclutter" 1>/dev/null; then
+if ! pidof -q "unclutter"; then
   unclutter --timeout 1 --start-hidden &
 fi
 
@@ -79,13 +79,13 @@ idle_manager "start" &
 
 # EeasyEffects audio effects interface
 
-if ! pidof "easyeffects" 1>/dev/null; then
+if ! pidof -q "easyeffects"; then
   easyeffects --gapplication-service &
 fi
 
 # Starting or reloading i3 window manager
 
-if ! pidof "i3" 1>/dev/null; then 
+if ! pidof -q "i3"; then 
   i3-msg "restart"
 else
   exec i3

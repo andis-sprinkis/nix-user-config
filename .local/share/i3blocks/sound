@@ -3,7 +3,6 @@ set -eu
 
 SUFFIX="${SUFFIX:-""}"
 STEP="${STEP:-"1"}"
-reload=""
 
 if [ "${BLOCK_BUTTON:-""}" ]; then
   case $BLOCK_BUTTON in
@@ -14,13 +13,21 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
       "${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_workspace" 1> "/dev/null" 2> "/dev/null" & disown
     ;;
     "3")
-      wpctl "set-mute" "@DEFAULT_SINK@" "toggle"; reload="1"
+      if ! pidof -q "wpctl"; then
+        wpctl "set-mute" "@DEFAULT_SINK@" "toggle"
+      fi
     ;;
     "4")
-      wpctl "set-volume" "@DEFAULT_SINK@" "${STEP}%+"; reload="1"
+      if ! pidof -q "wpctl"; then
+        wpctl "set-volume" "@DEFAULT_SINK@" "${STEP}%+"
+        sound_notify "@DEFAULT_SINK@" 1> "/dev/null" 2> "/dev/null" & disown
+      fi
     ;;
     "5")
-      wpctl "set-volume" "@DEFAULT_SINK@" "${STEP}%-"; reload="1"
+      if ! pidof -q "wpctl"; then
+        wpctl "set-volume" "@DEFAULT_SINK@" "${STEP}%-"
+        sound_notify "@DEFAULT_SINK@" 1> "/dev/null" 2> "/dev/null" & disown
+      fi
     ;;
   esac
 fi
@@ -28,15 +35,16 @@ fi
 status="$(wpctl "get-volume" "@DEFAULT_SINK@")"
 
 if [ "$status" ]; then
-  volume="$(echo "$status" | cut -d' ' -f2)"
-  muted="$(echo "$status" | cut -d' ' -f3)"
-  volume_formatted="$(LC_ALL=C printf '%.0f%%' "$(echo "100 * ${volume}" | bc)")"
-  echo "Volume ${volume_formatted}${muted:+, MUTE}${SUFFIX}
-Vol. ${volume_formatted}${muted:+, MUTE}${SUFFIX}"
-fi
+  vol_float="${status##Volume: }"
+  vol_float="${vol_float%% *}"
+  vol_int="$(echo "100 * ${vol_float}" | bc)"
+  vol_int="${vol_int%%.*}"
+  vol_int="${vol_int:-"0"}"
+  muted="${status##Volume: * }"
+  muted="${muted##Volume: *}"
 
-if [ "$reload" ] && [ "${signal:-""}" ]; then
-  exec pkill "-SIGRTMIN+${signal}" "i3blocks"
+  echo "Volume ${vol_int}%${muted:+, MUTE}${SUFFIX}
+Vol. ${vol_int}%${muted:+, MUTE}${SUFFIX}"
 fi
 
 exit "0"
