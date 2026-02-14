@@ -1,10 +1,6 @@
 #!/usr/bin/env sh
 set -eu
 
-if pidof -q "notify-send"; then
-  exit
-fi
-
 status="$(wpctl "get-volume" "$1")"
 
 if [ -z "$status" ]; then
@@ -19,10 +15,9 @@ muted="${muted##Volume: *}"
 
 if ! pidof -q "notify-send"; then
   notify-send \
-    -a "Sound volume" \
+    -a "Sound volume (${1})" \
     -t "1150" \
     -h "string:x-canonical-private-synchronous:volume" \
     -h "int:value:${vol_int}" \
-"${1}
-${vol_int}%${muted:+, MUTED}"
+    "${vol_int}%${muted:+, MUTED}"
 fi
