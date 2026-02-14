@@ -40,8 +40,10 @@ if [ "$status" ]; then
 
   SUFFIX="${SUFFIX:-""}"
 
-  echo "Volume ${vol_int}%${muted:+, MUTE}${SUFFIX}
-Vol. ${vol_int}%${muted:+, MUTE}${SUFFIX}"
+  message="${vol_int}%${muted:+, MUTE}${SUFFIX}"
+
+  echo "Volume ${message}
+Vol. ${message}"
 fi
 
 exit "0"
