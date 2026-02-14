@@ -20,9 +20,9 @@ muted="${muted##Volume: *}"
 if ! pidof -q "notify-send"; then
   notify-send \
     -a "Sound volume" \
-    -t "1100" \
+    -t "1150" \
     -h "string:x-canonical-private-synchronous:volume" \
     -h "int:value:${vol_int}" \
-    "${vol_int}%${muted:+, MUTED}
-(${1})"
+"${1}
+${vol_int}%${muted:+, MUTED}"
 fi
