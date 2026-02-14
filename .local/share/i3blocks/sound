@@ -37,9 +37,7 @@ status="$(wpctl "get-volume" "@DEFAULT_SINK@")"
 if [ "$status" ]; then
   vol_float="${status##Volume: }"
   vol_float="${vol_float%% *}"
-  vol_int="$(echo "100 * ${vol_float}" | bc)"
-  vol_int="${vol_int%%.*}"
-  vol_int="${vol_int:-"0"}"
+  vol_int="$(awk "BEGIN{print 100 * ${vol_float}}")"
   muted="${status##Volume: * }"
   muted="${muted##Volume: *}"
 

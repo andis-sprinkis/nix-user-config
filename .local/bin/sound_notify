@@ -13,9 +13,7 @@ fi
 
 vol_float="${status##Volume: }"
 vol_float="${vol_float%% *}"
-vol_int="$(echo "100 * ${vol_float}" | bc)"
-vol_int="${vol_int%%.*}"
-vol_int="${vol_int:-"0"}"
+vol_int="$(awk "BEGIN{print 100*${vol_float}}")"
 muted="${status##Volume: * }"
 muted="${muted##Volume: *}"
 
@@ -23,9 +21,9 @@ if ! pidof -q "notify-send"; then
   notify-send \
     -a "Sound volume" \
     -u "low" \
-    -t "1200" \
+    -t "1100" \
     -h "string:x-canonical-private-synchronous:volume" \
     -h "int:value:${vol_int}" \
     "${vol_int}%${muted:+, MUTED}
-Device: ${1}"
+(${1})"
 fi
