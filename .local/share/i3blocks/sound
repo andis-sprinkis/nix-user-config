@@ -1,11 +1,8 @@
 #!/usr/bin/env sh
 set -eu
 
-SUFFIX="${SUFFIX:-""}"
-STEP="${STEP:-"1"}"
-
 if [ "${BLOCK_BUTTON:-""}" ]; then
-  case $BLOCK_BUTTON in
+  case "$BLOCK_BUTTON" in
     "1")
       easyeffects 1> "/dev/null" 2> "/dev/null" & disown
     ;;
@@ -19,13 +16,13 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
     ;;
     "4")
       if ! pidof -q "wpctl"; then
-        wpctl "set-volume" "@DEFAULT_SINK@" "${STEP}%+"
+        wpctl "set-volume" "@DEFAULT_SINK@" "${STEP:-"1"}%+"
         sound_notify "@DEFAULT_SINK@" 1> "/dev/null" 2> "/dev/null" & disown
       fi
     ;;
     "5")
       if ! pidof -q "wpctl"; then
-        wpctl "set-volume" "@DEFAULT_SINK@" "${STEP}%-"
+        wpctl "set-volume" "@DEFAULT_SINK@" "${STEP:-"1"}%-"
         sound_notify "@DEFAULT_SINK@" 1> "/dev/null" 2> "/dev/null" & disown
       fi
     ;;
@@ -40,6 +37,8 @@ if [ "$status" ]; then
   vol_int="$(awk "BEGIN{print 100 * ${vol_float}}")"
   muted="${status##Volume: * }"
   muted="${muted##Volume: *}"
+
+  SUFFIX="${SUFFIX:-""}"
 
   echo "Volume ${vol_int}%${muted:+, MUTE}${SUFFIX}
 Vol. ${vol_int}%${muted:+, MUTE}${SUFFIX}"
