@@ -18,7 +18,7 @@ if ! pidof -q "notify-send"; then
     -a "Sound volume (${1})" \
     -u "low" \
     -t "1150" \
-    -h "string:x-canonical-private-synchronous:volume" \
+    -h "string:x-canonical-private-synchronous:sound" \
     -h "int:value:${vol_int}" \
     "${vol_int}%${muted:+, MUTED}"
 fi
