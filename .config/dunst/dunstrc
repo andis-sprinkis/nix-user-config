@@ -1,4 +1,4 @@
-# vim: ft=cfg
+# vi: ft=cfg
 
 [global]
   follow = keyboard
@@ -17,7 +17,7 @@
 
   # Position the notification in the top right corner
   # origin = top-right
-  origin = bottom-right
+  origin = top-right
 
   # Offset from the origin
   offset = (8,8)
@@ -33,16 +33,16 @@
 
   # Set the progress bar height. This includes the frame, so make sure
   # it's at least twice as big as the frame width.
-  progress_bar_height = 8
+  progress_bar_height = 18
 
   # Set the frame width of the progress bar
-  progress_bar_frame_width = 1
+  progress_bar_frame_width = 0
 
   # Set the minimum width for the progress bar
   progress_bar_min_width = 150
 
   # Set the maximum width for the progress bar
-  progress_bar_max_width = 446
+  progress_bar_max_width = 448
 
   # Corner radius for the progress bar. 0 disables rounded corners.
   progress_bar_corner_radius = 0
@@ -60,7 +60,7 @@
   separator_height = 2
   padding = 14
   horizontal_padding = 18
-  frame_width = 2
+  frame_width = 1
   gap_size = 0
 
   # Sort type.
