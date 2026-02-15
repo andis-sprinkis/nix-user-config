@@ -1,0 +1,50 @@
+#!/usr/bin/env sh
+set -eu
+IFS_="$IFS"
+NL="
+"
+# dir="$(cd -P -- "$(dirname -- "$0")" && pwd -P)"
+# script="$(basename "$0")"
+#
+# if [ -z "${1:-""}" ]; then
+#   echo "${script}: Requires an argument." 2>&1
+#   exit "1"
+# fi
+#
+# if [ "${1:-""}" ]; then
+#   echo "$1"
+# fi
+#
+# while read -r l; do
+#   echo "$l"
+#   continue
+# done
+#
+# IFS=" "
+# for i in $items; do
+#   IFS="$IFS_"
+#
+#   command ...
+# done
+# IFS="$IFS_"
+
+
+ts_now=$(date +%s)
+seconds_uptime=$(date +%s -d"@$(cut -d' ' -f1 "/proc/uptime")")
+on_since="$((ts_now - seconds_uptime))"
+
+notifications_json="$(dunstctl history | jq \
+".data | .[] |
+  map({
+    id: .id.data,
+    timestamp_iso8601: (${on_since} + ((.timestamp.data / 1000000) | floor)) | todateiso8601,
+    timestamp_unix: (${on_since} + ((.timestamp.data / 1000000) | floor)),
+    urgency: .urgency.data,
+    appname: .appname.data,
+    summary: .summary.data,
+    data: .body.data,
+    urls: .urls.data
+  })
+")"
+
+echo "$notifications_json"
