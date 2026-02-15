@@ -28,8 +28,7 @@ NL="
 # done
 # IFS="$IFS_"
 
-
-ts_now=$(date +%s)
+ts_now="$(date +%s)"
 seconds_uptime=$(date +%s -d"@$(cut -d' ' -f1 "/proc/uptime")")
 on_since="$((ts_now - seconds_uptime))"
 
