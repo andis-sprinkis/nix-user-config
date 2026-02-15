@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 set -eu
 
+if pidof -q "notify-send"; then
+  exit
+fi
+
 status="$(wpctl "get-volume" "$1")"
 
 if [ -z "$status" ]; then

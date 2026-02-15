@@ -34,10 +34,10 @@ case "$1" in
     wpctl "set-mute" "$device" "0"
   ;;
   "-")
-    wpctl "set-volume" "$device" "3%-"
+    wpctl "set-volume" "$device" "2%-"
   ;;
   "+")
-    wpctl "set-volume" "$device" "3%+"
+    wpctl "set-volume" "$device" "2%+"
   ;;
   *"%-")
     wpctl "set-volume" "$device" "${1%%"%-"}%-"

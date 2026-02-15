@@ -359,7 +359,7 @@
 #
 
 [sound]
- appname = Sound volume *
+ appname = Sound volume*
  history_ignore = yes
 
 ### vscode dark colors ###
