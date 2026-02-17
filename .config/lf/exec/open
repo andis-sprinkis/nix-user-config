@@ -42,7 +42,7 @@ case $mime in
   ;;
   text/rtf)
   ;;
-  text/*|application/xml|application/*json*|application/xhtml*|application/javascript|application/x-httpd-php|application/x-wine-extension-ini|application/x-mswinurl|application/x-subrip|application/x-awk|inode/x-empty)
+  text/*|application/xml|application/*json*|application/xhtml*|application/javascript|application/x-httpd-php|application/x-wine-extension-ini|application/x-mswinurl|application/x-subrip|application/x-awk|application/x-pem-file|inode/x-empty)
     in_pager
   ;;
   # Archive types that 'als' recognizes.
