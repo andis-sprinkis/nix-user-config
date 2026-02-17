@@ -21,6 +21,7 @@ application/x-bzip2=file.desktop
 application/x-compress=file.desktop
 application/x-compressed-tar=file.desktop
 application/x-cpio=file.desktop
+application/x-iso9660-image=file.desktop
 application/x-lha=file.desktop
 application/x-lrzip=file.desktop
 application/x-lzip-compressed-tar=file.desktop
