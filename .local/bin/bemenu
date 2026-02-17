@@ -29,7 +29,7 @@ exec "/usr/bin/bemenu" \
   -p                "" \
   --ignorecase      \
   --border          "6px" \
-  --width-factor    "0.6" \
+  --width-factor    "0.6125" \
   --margin          "128px" \
   --center          \
   --wrap            \
