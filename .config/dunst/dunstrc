@@ -369,19 +369,19 @@
   separator_color = frame
 
 [urgency_low]
-  background = "#1f1f1fd0"
+  background = "#1f1f1fd8"
   foreground = "#d4d4d4"
   frame_color = "#808080d8"
   highlight = "#808080d8"
 
 [urgency_normal]
-  background = "#1f1f1fd0"
+  background = "#1f1f1fd8"
   foreground = "#d4d4d4"
   frame_color = "#608b4ed8"
   highlight = "#608b4ed8"
 
 [urgency_critical]
-  background = "#1f1f1fd0"
+  background = "#1f1f1fd8"
   foreground = "#d4d4d4"
   frame_color = "#f44747d8"
   highlight = "#f44747d8"
@@ -393,19 +393,19 @@
 #   separator_color = frame
 #
 # [urgency_low]
-#   background = "#ffffffd0"
+#   background = "#ffffffd8"
 #   foreground = "#000000"
 #   frame_color = "#808080d8"
 #   highlight = "#808080d8"
 #
 # [urgency_normal]
-#   background = "#ffffffd0"
+#   background = "#ffffffd8"
 #   foreground = "#000000"
 #   frame_color = "#008000d8"
 #   highlight = "#008000d8"
 #
 # [urgency_critical]
-#   background = "#ffffffd0"
+#   background = "#ffffffd8"
 #   foreground = "#000000"
 #   frame_color = "#c72e0fd8"
 #   highlight = "#c72e0fd8"
