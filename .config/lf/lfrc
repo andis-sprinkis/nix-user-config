@@ -6,6 +6,7 @@ set incsearch
 set infotimefmtnew         "2006-01-02 15:04:05"
 set infotimefmtold         "2006-01-02 15:04:05"
 set menuheaderfmt          "\033[90m"
+set mergeindicators        "true"
 set mouse
 set numberfmt              "\033[90m"
 set period                 "1"
