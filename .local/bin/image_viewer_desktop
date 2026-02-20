@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+
+# shellcheck disable=SC3028
+case "${OSTYPE:-"$(uname)"}" in
+  [dD]"arwin"*)
+    open -a "Preview" "$@"
+  ;;
+  *)
+    if [ "${WAYLAND_DISPLAY:-""}" ]; then
+      exec swayimg "$@"
+    fi
+
+
+    if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+      exec nsxiv-rifle -- "$@"
+    fi
+  ;;
+esac
+
+exit "1"
