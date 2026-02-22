@@ -9,6 +9,8 @@ W_CHR="${2:-""}"
 H_CHR="${3:-""}"
 FPATH_THUMB=""
 
+trap "exit" "PIPE"
+
 find_util() {
   if ! command -v "$1" 1>/dev/null 2>/dev/null; then
     echo "$(basename "$0"): '${1}' utility not found."

@@ -10,6 +10,7 @@ set mergeindicators        "true"
 set mouse
 set numberfmt              "\033[90m"
 set period                 "1"
+set preload                "true"
 set previewer              "previewer"
 set promptfmt              "%u@%h %d\033[1m%f\033[0m"
 set scrolloff              "12"
