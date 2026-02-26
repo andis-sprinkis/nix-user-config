@@ -21,7 +21,7 @@ status() {
   fi
 
   if [ "${WAYLAND_DISPLAY:-""}" ]; then
-    if [ -z "$(pidof "swayidle")" ]; then
+    if ! pidof -q "swayidle"; then
       echo "stopped"
       return "0"
     fi
@@ -37,7 +37,7 @@ start() {
   if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
     ## Starting or reloading xscreensaver
 
-    if [ "$(pidof "xscreensaver")" ]; then
+    if pidof -q "xscreensaver"; then
       xscreensaver-command --restart 1> "/dev/null" 2> "/dev/null" & disown
     else
       xscreensaver --no-splash 1> "/dev/null" 2> "/dev/null" & disown
@@ -45,7 +45,7 @@ start() {
 
     ## Starting xss-lock
 
-    if [ -z "$(pidof "xss-lock")" ]; then
+    if ! pidof -q "xss-lock"; then
       xss-lock --ignore-sleep -- xscreensaver-command -lock 1> "/dev/null" 2> "/dev/null" & disown
     fi
 
@@ -53,7 +53,7 @@ start() {
   fi
 
   if [ "${WAYLAND_DISPLAY:-""}" ]; then
-    if [ "$(pidof "swayidle")" ]; then
+    if pidof -q "swayidle"; then
       set +e
       killall -u "$(whoami)" "swayidle"
       set -e
