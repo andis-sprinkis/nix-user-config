@@ -74,14 +74,7 @@ case "$sel_options" in
     sel_line="$(set +e; printf "%s\n" "$options_delay" | menu_desktop -p "Set delay in seconds${delay_current_str}:"; set -e)"
 
     if [ "$sel_line" ]; then
-      case "$sel_line" in
-        *[!0-9]*)
-          exit "2"
-        ;;
-        *)
-          echo "$sel_line" > "$path_state_delay"
-        ;;
-      esac
+      echo "$sel_line" > "$path_state_delay"
     fi
 
     exec screencapture_menu_desktop
