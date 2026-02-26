@@ -157,23 +157,8 @@ lock() {
 }
 
 case "$1" in
-  "status")
-    status
-  ;;
-  "start")
-    start 
-  ;;
-  "stop")
-    stop
-  ;;
-  "reload")
-    reload
-  ;;
-  "lock")
-    lock
-  ;;
-  "toggle")
-    toggle
+  "status"|"start"|"stop"|"reload"|"lock"|"toggle")
+    "$1"
   ;;
   *)
     exit "2"
