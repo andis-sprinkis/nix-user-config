@@ -6,7 +6,7 @@ status() {
     pidof_xscreensaver="$(pidof "xscreensaver")"
     pidof_xsslock="$(pidof "xss-lock")"
 
-    if [ -z "$pidof_xscreensaver" ] && [ -z "$pidof_xscreensaver" ]; then
+    if [ -z "$pidof_xscreensaver" ] && [ -z "$pidof_xsslock" ]; then
       echo "stopped"
       return "0"
     fi
