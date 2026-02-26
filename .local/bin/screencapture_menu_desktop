@@ -53,7 +53,13 @@ video workspace
 set_delay"
 
 sel_line="$(printf "%s\n" "$lines" | menu_desktop -p "Screen capture${delay_current_str}:")"
+
 sel_idx="$(echo "$lines" | grep -n -x "$sel_line" | cut -f"1" -d":")"
+
+if [ -z "$sel_idx" ]; then
+  exit "1"
+fi
+
 sel_options="$(echo "$options" | sed "${sel_idx}q;d")"
 
 case "$sel_options" in
@@ -68,7 +74,14 @@ case "$sel_options" in
     sel_line="$(set +e; printf "%s\n" "$options_delay" | menu_desktop -p "Set delay in seconds${delay_current_str}:"; set -e)"
 
     if [ "$sel_line" ]; then
-      echo "$sel_line" > "$path_state_delay"
+      case "$sel_line" in
+        *[!0-9]*)
+          exit "2"
+        ;;
+        *)
+          echo "$sel_line" > "$path_state_delay"
+        ;;
+      esac
     fi
 
     exec screencapture_menu_desktop
