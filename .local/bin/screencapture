@@ -45,7 +45,7 @@ fi
 i3blocks_signal() {
   if [ "${1:-""}" = "wait" ]; then sleep "1"; fi
 
-  if [ "$(pidof "i3blocks")" ]; then
+  if pidof -q "i3blocks"; then
     pkill "-SIGRTMIN+7" "i3blocks"
   fi
 }
@@ -87,6 +87,15 @@ failed() {
 
   notify-send "Screen capture (${capture_format}) failed." --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
   echo "${script}: Screen capture (${capture_format}) failed." 1>&2
+
+  exit "2"
+}
+
+failed_no_audio() {
+  i3blocks_signal 1>/dev/null 2>/dev/null & disown
+
+  notify-send "Screen capture (${capture_format}) failed. Cannot get the default audio device." --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
+  echo "${script}: Screen capture (${capture_format}) failed. Cannot get the default audio device." 1>&2
 
   exit "2"
 }
@@ -198,7 +207,7 @@ case "$capture_format" in
       "all"|"area"|"output"|"output_focused"|"window"|"window_focused"|"workspace"|"workspace_focused")
         case "$display_server" in
           "wayland")
-            if [ "$(pidof "wf-recorder")" ] || [ "$(pidof "slurp")" ]; then
+            if pidof -q "wf-recorder" || pidof -q "slurp"; then
               exit "3"
             fi
 
@@ -237,9 +246,17 @@ case "$capture_format" in
               canceled
             fi
 
+            set +e;
+            audio_dev="$(pactl get-default-sink)"
+            set -e;
+
+            if [ -z "$audio_dev" ]; then
+              failed_no_audio
+            fi
+
             countdown
 
-            if ! wf-recorder --audio --codec=libx264rgb --geometry="$ptr_coord" --file="$path_out"; then
+            if ! wf-recorder --audio="${audio_dev}.monitor" --codec="libx264rgb" --geometry="$ptr_coord" --file="$path_out"; then
               failed
             fi
 
@@ -268,7 +285,7 @@ case "$capture_format" in
 
     case "$display_server" in
       "wayland")
-        if [ "$(pidof "grim")" ] || [ "$(pidof "dulcepan")" ]; then
+        if pidof -q "grim" || pidof -q "dulcepan"; then
           exit "3"
         fi
 
