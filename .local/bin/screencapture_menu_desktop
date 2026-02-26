@@ -20,18 +20,18 @@ lines="Picture: all screens
 Picture: current screen
 Picture: current window
 Picture: current workspace
-Picture: select area...
-Picture: select screen...
-Picture: select window...
-Picture: select workspace...
+Picture: area selection...
+Picture: screen selection...
+Picture: window selection...
+Picture: workspace selection...
 Video: all screens
 Video: current screen
 Video: current window
 Video: current workspace
-Video: select area...
-Video: select screen...
-Video: select window...
-Video: select workspace...
+Video: area selection...
+Video: screen selection...
+Video: window selection...
+Video: workspace selection...
 Delay${delay_current_str}"
 
 options="picture all
@@ -52,7 +52,7 @@ video window
 video workspace
 set_delay"
 
-sel_line="$(printf "%s\n" "$lines" | menu_desktop -p "Screen capture${delay_current_str}:")"
+sel_line="$(printf "%s\n" "$lines" | menu_desktop -p "Capture${delay_current_str}:")"
 
 sel_idx="$(echo "$lines" | grep -n -x "$sel_line" | cut -f"1" -d":")"
 
@@ -71,13 +71,21 @@ case "$sel_options" in
 15
 30"
 
-    sel_line="$(set +e; printf "%s\n" "$options_delay" | menu_desktop -p "Set delay in seconds${delay_current_str}:"; set -e)"
+    sel_line="$(
+      set +e
+      printf "%s\n" "$options_delay" | menu_desktop -p "Delay in seconds${delay_current_str}:"
+      set -e
+    )"
 
-    if [ "$sel_line" ]; then
-      echo "$sel_line" > "$path_state_delay"
-    fi
-
-    exec screencapture_menu_desktop
+    case "$sel_line" in
+      ''|*[!0123456789]*)
+        exec screencapture_menu_desktop
+      ;;
+      *)
+        echo "$sel_line" > "$path_state_delay"
+        exec screencapture_menu_desktop
+      ;;
+    esac
   ;;
   *)
     screencapture $sel_options "$delay_current"
