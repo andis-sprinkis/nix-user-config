@@ -32,7 +32,7 @@ Video: select area...
 Video: select screen...
 Video: select window...
 Video: select workspace...
-Set delay${delay_current_str}"
+Delay${delay_current_str}"
 
 options="picture all
 picture output_focused
@@ -63,9 +63,7 @@ case "$sel_options" in
 5
 10
 15
-30
-45
-60"
+30"
 
     sel_line="$(set +e; printf "%s\n" "$options_delay" | menu_desktop -p "Set delay in seconds${delay_current_str}:"; set -e)"
 
