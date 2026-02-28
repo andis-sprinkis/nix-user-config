@@ -23,5 +23,3 @@ if systemctl is-active --quiet smb; then
 
   echo "SMB on"
 fi
-
-exit "0"

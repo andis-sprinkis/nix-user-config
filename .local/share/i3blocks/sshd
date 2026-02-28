@@ -23,5 +23,3 @@ if systemctl is-active --quiet sshd; then
 
   exec echo "SSHD on"
 fi
-
-exit "0"
