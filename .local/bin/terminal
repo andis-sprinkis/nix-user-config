@@ -1,8 +1,21 @@
 #!/usr/bin/env sh
 
-[ "$(command -v "wezterm")" ] && exec wezterm "$@"
-[ "$(command -v "kitty")" ] && exec kitty --single-instance "$@"
-[ "$(command -v "st")" ] && exec st "$@"
-[ "$(command -v "xterm")" ] && exec xterm "$@"
+# shellcheck disable=SC3028
+case "${OSTYPE:-"$(uname)"}" in
+  [lL]"inux"*)
+    if [ "${WAYLAND_DISPLAY:-""}" ]; then
+      exec foot "$@"
+    fi
 
-exit "1"
+    if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+      exec wezterm "$@"
+    fi
+
+    exit "1"
+  ;;
+  *)
+    exec wezterm "$@"
+  ;;
+esac
+
+exit "2"
