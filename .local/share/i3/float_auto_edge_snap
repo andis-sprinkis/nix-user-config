@@ -32,23 +32,15 @@ win_height() {
 }
 
 win_width() {
-  c_win_width="$win_rect_width"
-
-  echo "$c_win_width"
+  echo "$win_rect_width"
 }
 
 win_edge_left() {
-  c_win_rect_x="$win_rect_x"
-
-  echo "$c_win_rect_x"
+  echo "$win_rect_x"
 }
 
 win_edge_right() {
-  c_win_edge_right="$((
-    $(win_edge_left) + $(win_width)
-  ))"
-
-  echo "$c_win_edge_right"
+  echo "$(( $(win_edge_left) + $(win_width) ))"
 }
 
 win_edge_top() {
@@ -67,232 +59,96 @@ win_edge_top() {
 }
 
 win_edge_bottom() {
-  c_win_edge_bottom="$((
-    $(win_edge_top) + $(win_height)
-  ))"
-
-  echo "$c_win_edge_bottom"
+  echo "$(( $(win_edge_top) + $(win_height) ))"
 }
 
 # Output properties
 
 out_height() {
-  c_out_height="$out_rect_height"
-
-  echo "$c_out_height"
+  echo "$out_rect_height"
 }
 
 out_width() {
-  c_out_width="$out_rect_width"
-
-  echo "$c_out_width"
+  echo "$out_rect_width"
 }
 
 out_edge_left() {
-  c_out_edge_left="$out_rect_x"
-
-  echo "$c_out_edge_left"
+  echo "$out_rect_x"
 }
 
 out_edge_right() {
-  c_out_edge_right="$((
-    $(out_edge_left) + $(out_width)
-  ))"
-
-  echo "$c_out_edge_right"
+  echo "$(( $(out_edge_left) + $(out_width) ))"
 }
 
 out_edge_top() {
-  c_out_edge_top="$out_rect_y"
-
-  echo "$c_out_edge_top"
+  echo "$out_rect_y"
 }
 
 out_edge_bottom() {
-  c_out_edge_bottom="$((
-    $(out_edge_top) + $(out_height)
-  ))"
-
-  echo "$c_out_edge_bottom"
+  echo "$(( $(out_edge_top) + $(out_height) ))"
 }
 
 # Workspace properties
 
 ws_height() {
-  c_ws_height="$ws_rect_height"
-
-  echo "$c_ws_height"
+  echo "$ws_rect_height"
 }
 
 ws_width() {
-  c_ws_width="$ws_rect_width"
-
-  echo "$c_ws_width"
+  echo "$ws_rect_width"
 }
 
 ws_edge_left() {
-  c_ws_edge_left="$ws_rect_x"
-
-  echo "$c_ws_edge_left"
+  echo "$ws_rect_x"
 }
 
 ws_edge_right() {
-  c_ws_edge_right="$((
-    $(ws_edge_left) + $(ws_width)
-  ))"
-
-  echo "$c_ws_edge_right"
+  echo "$(($(ws_edge_left) + $(ws_width)))"
 }
 
 ws_edge_top() {
-  c_ws_edge_top="$ws_rect_y"
-
-  echo "$c_ws_edge_top"
+  echo "$ws_rect_y"
 }
 
 ws_edge_bottom() {
-  c_ws_edge_bottom="$((
-    $(ws_edge_top) + $(ws_height)
-  ))"
-
-  echo "$c_ws_edge_bottom"
+  echo "$(($(ws_edge_top) + $(ws_height)))"
 }
 
-## Window snapping vs. step moving workspace edge boundaries
+## Workspace edge snap threshold boundaries
 
 ws_edge_thres_left_in() {
-  c_ws_edge_thres_left_in="$(($(ws_edge_left) + ws_edge_thres_x))"
-
-  echo "$c_ws_edge_thres_left_in"
+  echo "$(($(ws_edge_left) + ws_edge_thres_x))"
 }
 
 ws_edge_thres_right_in() {
-  c_ws_edge_thres_right_in="$(($(ws_edge_right) - ws_edge_thres_x))"
-
-  echo "$c_ws_edge_thres_right_in"
+  echo "$(($(ws_edge_right) - ws_edge_thres_x))"
 }
 
 ws_edge_thres_top_in() {
-  c_ws_edge_thres_top_in="$(( $(ws_edge_top) + ws_edge_thres_y))"
-
-  echo "$c_ws_edge_thres_top_in"
+  echo "$(($(ws_edge_top) + ws_edge_thres_y))"
 }
 
 ws_edge_thres_bottom_in() {
-  c_ws_edge_thres_bottom_in="$(( $(ws_edge_bottom) - ws_edge_thres_y))"
-
-  echo "$c_ws_edge_thres_bottom_in"
+  echo "$(($(ws_edge_bottom) - ws_edge_thres_y))"
 }
 
-# Window single X and Y coordinate translations
-
-win_x_snaps_left() {
-  ws_edge_left
+ws_edge_thres_left_out() {
+  echo "$(($(ws_edge_left) - ws_edge_thres_x))"
 }
 
-win_x_snaps_right() {
-  echo "$(($(ws_edge_right) - $(win_width)))"
+ws_edge_thres_right_out() {
+  echo "$(($(ws_edge_right) + ws_edge_thres_x))"
 }
 
-win_y_snaps_top() {
-  ws_edge_top
+ws_edge_thres_top_out() {
+  echo "$(( $(ws_edge_top) - ws_edge_thres_y))"
 }
 
-win_y_snaps_bottom() {
-  echo "$(($(ws_edge_bottom) - $(win_height)))"
+ws_edge_thres_bottom_out() {
+  echo "$(( $(ws_edge_bottom) + ws_edge_thres_y))"
 }
 
-win_x_stays() {
-  win_edge_left
-}
-
-win_y_stays() {
-  win_edge_top
-}
-
-win_x_snaps_out_right() {
-  out_edge_right
-}
-
-win_x_snaps_out_left() {
-  echo "$(($(out_edge_left) - $(win_width)))"
-}
-
-win_y_snaps_out_top() {
-  echo "$(($(out_edge_top) - $(win_height)))"
-}
-
-win_y_snaps_out_bottom() {
-  out_edge_bottom
-}
-
-win_x_moves_left() {
-  echo "$(($(win_edge_left) - move_step_x))"
-}
-
-win_x_moves_right() {
-  echo "$(($(win_edge_left) + move_step_x))"
-}
-
-win_y_moves_up() {
-  echo "$(($(win_edge_top) - move_step_y))"
-}
-
-win_y_moves_down() {
-  echo "$(($(win_edge_top) + move_step_y))"
-}
-
-# Window manager edge snap actions
-
-win_snaps_top() {
-  $wm_cmd -q "move absolute position $(win_x_stays) $(win_y_snaps_top)"
-}
-
-win_snaps_bottom() {
-  $wm_cmd -q "move absolute position $(win_x_stays) $(win_y_snaps_bottom)"
-}
-
-win_snaps_left() {
-  $wm_cmd -q "move absolute position $(win_x_snaps_left) $(win_y_stays)"
-}
-
-win_snaps_right() {
-  $wm_cmd -q "move absolute position $(win_x_snaps_right) $(win_y_stays)"
-}
-
-win_snaps_out_top() {
-  $wm_cmd -q "move absolute position $(win_x_stays) $(win_y_snaps_out_top)"
-}
-
-win_snaps_out_bottom() {
-  $wm_cmd -q "move absolute position $(win_x_stays) $(win_y_snaps_out_bottom)"
-}
-
-win_snaps_out_left() {
-  $wm_cmd -q "move absolute position $(win_x_snaps_out_left) $(win_y_stays)"
-}
-
-win_snaps_out_right() {
-  $wm_cmd -q "move absolute position $(win_x_snaps_out_right) $(win_y_stays)"
-}
-
-# Window moving actions
-
-win_moves_down() {
-  $wm_cmd -q "move absolute position $(win_x_stays) $(win_y_moves_down)"
-}
-
-win_moves_up() {
-  $wm_cmd -q "move absolute position $(win_x_stays) $(win_y_moves_up)"
-}
-
-win_moves_left() {
-  $wm_cmd -q "move absolute position $(win_x_moves_left) $(win_y_stays)"
-}
-
-win_moves_right() {
-  $wm_cmd -q "move absolute position $(win_x_moves_right) $(win_y_stays)"
-}
+# Is floating
 
 is_floating_sway() {
   if [ "$win_type" != "floating_con" ]; then
@@ -339,173 +195,117 @@ is_floating_i3() {
 # BS out AO == BS < AO
 # BS out BO == BS >= BO
 
-# A() == AS = AZ
-# B() == AS = BZ - BS - AS
-# N() == AS = AS
+# A == AS = AZ
+# B == AS = BZ - BS - AS
+# N == AS = AS
 
 # ------------------------------------------------
 
-# AS on AZ ; N()
-# BS on BZ ; N()
+# AS on AZ ; N
+# BS on BZ ; N
 
-# AS in S ; BS in S ; N()
-# AS in S ; BS out BO ; N()
-# AS in S ; BS in BI ; B()
-# AS in S ; BS in BO ; B()
+# AS in S ; BS in S ; N
+# AS in S ; BS out BO ; N
+# AS in S ; BS in BI ; B
+# AS in S ; BS in BO ; B
 
-# AS in BO ; BS out BO ; N()
-# AS in BO ; BS in BO ; B()
+# AS in BO ; BS out BO ; N
+# AS in BO ; BS in BO ; B
 
-# AS out BO ; BS out BO ; N()
+# AS out BO ; BS out BO ; N
 
-# AS out AO ; BS in AI ; N()
-# AS out AO ; BS in AO ; N()
-# AS out AO ; BS in S ; N()
-# AS out AO ; BS out AO ; N()
-# AS out AO ; BS out BO ; N()
-# AS out AO ; BS in BI ; B()
-# AS out AO ; BS in BO ; B()
+# AS out AO ; BS in AI ; N
+# AS out AO ; BS in AO ; N
+# AS out AO ; BS in S ; N
+# AS out AO ; BS out AO ; N
+# AS out AO ; BS out BO ; N
+# AS out AO ; BS in BI ; B
+# AS out AO ; BS in BO ; B
 
-# AS in AI ; BS in BI ; AS - AZ <= BZ - BS ? A() : B()
-# AS in AI ; BS in BO ; AS - AZ <= BS - BZ ? A() : B()
+# AS in AI ; BS in BI ; AS - AZ <= BZ - BS ? A : B
+# AS in AI ; BS in BO ; AS - AZ <= BS - BZ ? A : B
 # AS in AI ; BS in AI ; A
 # AS in AI ; BS in S ; A
 # AS in AI ; BS out BO ; A
 
-# AS in AO ; BS in BI ; AS - AZ <= BZ - BS ? A() : B()
-# AS in AO ; BS in BO ; AS - AZ <= BS - BZ ? A() : B()
-# AS in AO ; BS in AI ; A()
-# AS in AO ; BS in S ; A()
-# AS in AO ; BS out BO ; A()
-# AS in AO ; BS in AO ; A()
+# AS in AO ; BS in BI ; AS - AZ <= BZ - BS ? A : B
+# AS in AO ; BS in BO ; AS - AZ <= BS - BZ ? A : B
+# AS in AO ; BS in AI ; A
+# AS in AO ; BS in S ; A
+# AS in AO ; BS out BO ; A
+# AS in AO ; BS in AO ; A
 
-# AS in BI ; BS out BO ; N()
-# AS in BI ; BS in BI ; B()
-# AS in BI ; BS in BO ; B()
+# AS in BI ; BS out BO ; N
+# AS in BI ; BS in BI ; B
+# AS in BI ; BS in BO ; B
+
+AS_on_AZ() { test "$AS" = "$AZ"; }
+BS_on_BZ() { test "$BS" = "$BZ"; }
+AS_in_AI() { test "$AS" -ge "$AZ" && test "$AS" -lt "$AI"; }
+AS_in_AO() { test "$AS" -ge "$AO" && test "$AS" -lt "$AZ"; }
+AS_in_BI() { test "$AS" -ge "$BI" && test "$AS" -lt "$BZ"; }
+AS_in_BO() { test "$AS" -ge "$BZ" && test "$AS" -lt "$BO"; }
+AS_in_S() { test "$AS" -ge "$AI" && test "$AS" -lt "$BI"; }
+AS_out_AO() { test "$AS" -lt "$AO"; }
+AS_out_BO() { test "$AS" -ge "$BO"; }
+BS_in_AI() { test "$BS" -ge "$AZ" && test "$BS" -lt "$AI"; }
+BS_in_AO() { test "$BS" -ge "$AO" && test "$BS" -lt "$AZ"; }
+BS_in_BI() { test "$BS" -lt "$BZ" && test "$BS" -ge "$BI"; }
+BS_in_BO() { test "$BS" -lt "$BO" && test "$BS" -ge "$BZ"; }
+BS_in_S() { test "$BS" -ge "$AI" && test "$BS" -lt "$BI"; }
+BS_out_AO() { test "$BS" -lt "$AO"; }
+BS_out_BO() { test "$BS" -ge "$BO"; }
+A() { echo "$AZ"; }
+B() { echo "$((BZ - BS - AS))"; }
+N() { echo "$AS"; }
 
 a_or_b() {
   AS="$1" BS="$2" AZ="$3" BZ="$4" AI="$5" BI="$6" AO="$7" BO="$8"
 
-  # "$AS" on "$AZ" or "$BS" on "$BZ"
-  if [ "$AS" = "$AZ" ] || [ "$BS" = "$BZ" ]; then
-    # N
-    echo "$AS"; return
+  if AS_on_AZ || BS_on_BZ; then N; return; fi
+
+  if AS_in_S; then
+    if BS_in_S || BS_out_BO; then N; return; fi
+    if BS_in_BI || BS_in_BO; then B; return; fi
   fi
 
-  # "$AS" in S
-  if [ "$AS" -ge "$AI" ] && [ "$AS" -lt "$BI" ]; then
-    # "$BS" in S
-    if [ "$BS" -ge "$AI" ] && [ "$BS" -lt "$BI" ]; then
-      # N
-      echo "$AS"; return
-    fi
-
-    # "$BS" out "$BO"
-    if [ "$BS" -ge "$BO" ]; then
-      # N
-      echo "$AS"; return
-    fi
-
-    # "$BS" in "$BI"
-    if [ "$BS" -lt "$BZ" ] && [ "$BS" -ge "$BI" ]; then
-      # B
-      echo "$((BZ - BS - AS))"; return
-    fi
-
-    # "$BS" in "$BO"
-    if [ "$BS" -lt "$BO" ] && [ "$BS" -ge "$BZ" ]; then
-      # B
-      echo "$((BZ - BS - AS))"; return
-    fi
+  if AS_in_BO; then
+    if BS_out_BO; then N; return; fi
+    if BS_in_BO; then B; return; fi
   fi
 
+  if AS_out_BO && BS_out_BO; then N; return; fi
 
-  # ----
+  if AS_out_AO; then
+    if BS_in_AI || BS_in_AO || BS_in_S || BS_out_AO || BS_out_BO; then N; return; fi
+    if BS_in_BI || BS_in_BO; then B; return; fi
+  fi
 
-  # # "$AS" on "$AZ"
-  # if [ "$AS" = "$AZ" ]; then
-  #   echo
-  # fi
-  #
-  # # "$BS" on "$BZ"
-  # if [ "$BS" = "$BZ" ]; then
-  #   echo
-  # fi
-  #
-  # # "$AS" in "$AI"
-  # if [ "$AS" -ge "$AZ" ] && [ "$AS" -lt "$AI" ]; then
-  #   echo
-  # fi
-  #
-  # # "$AS" in "$AO"
-  # if [ "$AS" -ge "$AO" ] && [ "$AS" -lt "$AZ" ]; then
-  #   echo
-  # fi
-  #
-  # # "$AS" in "$BI"
-  # if [ "$AS" -ge "$BI" ] && [ "$AS" -lt "$BZ" ]; then
-  #   echo
-  # fi
-  #
-  # # "$AS" in "$BO"
-  # if [ "$AS" -ge "$BZ" ] && [ "$AS" -lt "$BO" ]; then
-  #   echo
-  # fi
-  #
-  # # "$AS" in S
-  # if [ "$AS" -ge "$AI" ] && [ "$AS" -lt "$BI" ]; then
-  #   echo
-  # fi
-  #
-  # # "$AS" out "$AO"
-  # if [ "$AS" -lt "$AO" ]; then
-  #   echo
-  # fi
-  #
-  # # "$AS" out "$BO"
-  # if [ "$AS" -ge "$BO" ]; then
-  #   echo
-  # fi
-  #
-  # # "$BS" in "$AI"
-  # if [ "$BS" -ge "$AZ" ] && [ "$BS" -lt "$AI" ]; then
-  #   echo
-  # fi
-  #
-  # # "$BS" in "$AO"
-  # if [ "$BS" -ge "$AO" ] && [ "$BS" -lt "$AZ" ]; then
-  #   echo
-  # fi
-  #
-  # # "$BS" in "$BI"
-  # if [ "$BS" -lt "$BZ" ] && [ "$BS" -ge "$BI" ]; then
-  #   echo
-  # fi
-  #
-  # # "$BS" in "$BO"
-  # if [ "$BS" -lt "$BO" ] && [ "$BS" -ge "$BZ" ]; then
-  #   echo
-  # fi
-  #
-  # # "$BS" in S
-  # if [ "$BS" -ge "$AI" ] && [ "$BS" -lt "$BI" ]; then
-  #   echo
-  # fi
-  #
-  # # "$BS" out "$AO"
-  # if [ "$BS" -lt "$AO" ]; then
-  #   echo
-  # fi
-  #
-  # # "$BS" out "$BO"
-  # if [ "$BS" -ge "$BO" ]; then
-  #   echo
-  # fi
+  if AS_in_AI || AS_in_AO; then
+    if BS_in_BI; then
+      if [ "$((AS - AZ))" -le "$((BZ - BS))" ]; then A; return; else B; return; fi
+    fi
+
+    if BS_in_BO; then
+      if [ "$((AS - AZ))" -le "$((BS - BZ))" ]; then A; return; else B; return; fi
+    fi
+
+    if BS_in_AI || BS_in_S || BS_out_BO; then A; return; fi
+  fi
+
+  if AS_in_AO && BS_out_AO; then A; return; fi
+
+  if AS_in_BI; then
+    if BS_out_BO; then N; return; fi
+    if BS_in_BI || BS_in_BO; then B; return; fi
+  fi
 }
 
 snap() {
   # LEFT or RIGHT
-  a_or_b "$(win_edge_left)" "$(win_edge_right)" "$(ws_edge_left)" "$(ws_edge_right)"
+  a_or_b "$(win_edge_left)" "$(win_edge_right)" "$(ws_edge_left)" "$(ws_edge_right)" "$(ws_edge_thres_left_in)" "$(ws_edge_thres_right_in)" "$(ws_edge_thres_left_out)" "$(ws_edge_thres_right_out)"
+  # TOP or BOTTOM
+  a_or_b "$(win_edge_top)" "$(win_edge_bottom)" "$(ws_edge_top)" "$(ws_edge_bottom)" "$(ws_edge_thres_top_in)" "$(ws_edge_thres_bottom_in)" "$(ws_edge_thres_top_out)" "$(ws_edge_thres_bottom_out)"
 }
 
 while true; do
