@@ -100,8 +100,8 @@ is_win_floating_i3() {
 # AS in BI ; BS in BI ; B
 # AS in BI ; BS in BO ; B
 
-AS_on_AZ()  { test "$AS" = "$AZ"; }
-BS_on_BZ()  { test "$BS" = "$BZ"; }
+AS_on_AZ()  { test "$AS" -eq "$AZ"; }
+BS_on_BZ()  { test "$BS" -eq "$BZ"; }
 AS_in_AI()  { test "$AS" -ge "$AZ" && test "$AS" -lt "$AI"; }
 AS_in_AO()  { test "$AS" -ge "$AO" && test "$AS" -lt "$AZ"; }
 AS_in_BI()  { test "$AS" -ge "$BI" && test "$AS" -lt "$BZ"; }
