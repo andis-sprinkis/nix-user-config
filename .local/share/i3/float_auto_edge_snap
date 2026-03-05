@@ -160,36 +160,28 @@ ws_edge_bottom() {
 
 ## Window snapping vs. step moving workspace edge boundaries
 
-ws_edge_thres_left() {
-  c_ws_edge_thres_left="$((
-    $(ws_edge_left) + ws_edge_thres_x
-  ))"
+ws_edge_thres_left_in() {
+  c_ws_edge_thres_left_in="$(($(ws_edge_left) + ws_edge_thres_x))"
 
-  echo "$c_ws_edge_thres_left"
+  echo "$c_ws_edge_thres_left_in"
 }
 
-ws_edge_thres_right() {
-  c_ws_edge_thres_right="$((
-    $(ws_edge_right) - ws_edge_thres_x
-  ))"
+ws_edge_thres_right_in() {
+  c_ws_edge_thres_right_in="$(($(ws_edge_right) - ws_edge_thres_x))"
 
-  echo "$c_ws_edge_thres_right"
+  echo "$c_ws_edge_thres_right_in"
 }
 
-ws_edge_thres_top() {
-  c_ws_edge_thres_top="$((
-    $(ws_edge_top) + ws_edge_thres_y
-  ))"
+ws_edge_thres_top_in() {
+  c_ws_edge_thres_top_in="$(( $(ws_edge_top) + ws_edge_thres_y))"
 
-  echo "$c_ws_edge_thres_top"
+  echo "$c_ws_edge_thres_top_in"
 }
 
-ws_edge_thres_bottom() {
-  c_ws_edge_thres_bottom="$((
-    $(ws_edge_bottom) - ws_edge_thres_y
-  ))"
+ws_edge_thres_bottom_in() {
+  c_ws_edge_thres_bottom_in="$(( $(ws_edge_bottom) - ws_edge_thres_y))"
 
-  echo "$c_ws_edge_thres_bottom"
+  echo "$c_ws_edge_thres_bottom_in"
 }
 
 # Window single X and Y coordinate translations
@@ -335,6 +327,7 @@ is_floating_i3() {
 # AS in BI == AS >= BI && AS < BZ
 # AS in BO == AS >= BZ && AS < BO
 # AS in S == AS >= AI && AS < BI
+# AS on AZ == AS == AZ
 # AS out AO == AS < AO
 # AS out BO == AS >= BO
 # BS in AI == BS >= AZ && BS < AI
@@ -342,24 +335,28 @@ is_floating_i3() {
 # BS in BI == BS < BZ && BS >= BI
 # BS in BO == BS < BO && BS >= BZ
 # BS in S == BS >= AI && BS < BI
+# BS on BZ == BS == BZ
 # BS out AO == BS < AO
 # BS out BO == BS >= BO
 
 # A() == AS = AZ
-# B() == BS = BZ - BS - AS
+# B() == AS = BZ - BS - AS
 # N() == AS = AS
 
 # ------------------------------------------------
 
-# AS in BO ; BS out BO ; N()
-# AS in BO ; BS in BO ; B()
-
-# AS out BO ; BS out BO ; N()
+# AS on AZ ; N()
+# BS on BZ ; N()
 
 # AS in S ; BS in S ; N()
 # AS in S ; BS out BO ; N()
 # AS in S ; BS in BI ; B()
 # AS in S ; BS in BO ; B()
+
+# AS in BO ; BS out BO ; N()
+# AS in BO ; BS in BO ; B()
+
+# AS out BO ; BS out BO ; N()
 
 # AS out AO ; BS in AI ; N()
 # AS out AO ; BS in AO ; N()
@@ -368,9 +365,6 @@ is_floating_i3() {
 # AS out AO ; BS out BO ; N()
 # AS out AO ; BS in BI ; B()
 # AS out AO ; BS in BO ; B()
-
-# BS on BZ ; N()
-# AS on AZ ; N()
 
 # AS in AI ; BS in BI ; AS - AZ <= BZ - BS ? A() : B()
 # AS in AI ; BS in BO ; AS - AZ <= BS - BZ ? A() : B()
@@ -391,36 +385,127 @@ is_floating_i3() {
 
 a_or_b() {
   AS="$1" BS="$2" AZ="$3" BZ="$4" AI="$5" BI="$6" AO="$7" BO="$8"
+
+  # "$AS" on "$AZ" or "$BS" on "$BZ"
+  if [ "$AS" = "$AZ" ] || [ "$BS" = "$BZ" ]; then
+    # N
+    echo "$AS"; return
+  fi
+
+  # "$AS" in S
+  if [ "$AS" -ge "$AI" ] && [ "$AS" -lt "$BI" ]; then
+    # "$BS" in S
+    if [ "$BS" -ge "$AI" ] && [ "$BS" -lt "$BI" ]; then
+      # N
+      echo "$AS"; return
+    fi
+
+    # "$BS" out "$BO"
+    if [ "$BS" -ge "$BO" ]; then
+      # N
+      echo "$AS"; return
+    fi
+
+    # "$BS" in "$BI"
+    if [ "$BS" -lt "$BZ" ] && [ "$BS" -ge "$BI" ]; then
+      # B
+      echo "$((BZ - BS - AS))"; return
+    fi
+
+    # "$BS" in "$BO"
+    if [ "$BS" -lt "$BO" ] && [ "$BS" -ge "$BZ" ]; then
+      # B
+      echo "$((BZ - BS - AS))"; return
+    fi
+  fi
+
+
+  # ----
+
+  # # "$AS" on "$AZ"
+  # if [ "$AS" = "$AZ" ]; then
+  #   echo
+  # fi
+  #
+  # # "$BS" on "$BZ"
+  # if [ "$BS" = "$BZ" ]; then
+  #   echo
+  # fi
+  #
+  # # "$AS" in "$AI"
+  # if [ "$AS" -ge "$AZ" ] && [ "$AS" -lt "$AI" ]; then
+  #   echo
+  # fi
+  #
+  # # "$AS" in "$AO"
+  # if [ "$AS" -ge "$AO" ] && [ "$AS" -lt "$AZ" ]; then
+  #   echo
+  # fi
+  #
+  # # "$AS" in "$BI"
+  # if [ "$AS" -ge "$BI" ] && [ "$AS" -lt "$BZ" ]; then
+  #   echo
+  # fi
+  #
+  # # "$AS" in "$BO"
+  # if [ "$AS" -ge "$BZ" ] && [ "$AS" -lt "$BO" ]; then
+  #   echo
+  # fi
+  #
+  # # "$AS" in S
+  # if [ "$AS" -ge "$AI" ] && [ "$AS" -lt "$BI" ]; then
+  #   echo
+  # fi
+  #
+  # # "$AS" out "$AO"
+  # if [ "$AS" -lt "$AO" ]; then
+  #   echo
+  # fi
+  #
+  # # "$AS" out "$BO"
+  # if [ "$AS" -ge "$BO" ]; then
+  #   echo
+  # fi
+  #
+  # # "$BS" in "$AI"
+  # if [ "$BS" -ge "$AZ" ] && [ "$BS" -lt "$AI" ]; then
+  #   echo
+  # fi
+  #
+  # # "$BS" in "$AO"
+  # if [ "$BS" -ge "$AO" ] && [ "$BS" -lt "$AZ" ]; then
+  #   echo
+  # fi
+  #
+  # # "$BS" in "$BI"
+  # if [ "$BS" -lt "$BZ" ] && [ "$BS" -ge "$BI" ]; then
+  #   echo
+  # fi
+  #
+  # # "$BS" in "$BO"
+  # if [ "$BS" -lt "$BO" ] && [ "$BS" -ge "$BZ" ]; then
+  #   echo
+  # fi
+  #
+  # # "$BS" in S
+  # if [ "$BS" -ge "$AI" ] && [ "$BS" -lt "$BI" ]; then
+  #   echo
+  # fi
+  #
+  # # "$BS" out "$AO"
+  # if [ "$BS" -lt "$AO" ]; then
+  #   echo
+  # fi
+  #
+  # # "$BS" out "$BO"
+  # if [ "$BS" -ge "$BO" ]; then
+  #   echo
+  # fi
 }
 
 snap() {
-  if \
-    [ "$(win_edge_top)" -gt "$(ws_edge_top)" ] && \
-    [ "$(win_edge_top)" -le "$(ws_edge_thres_top)" ]
-  then
-    win_snaps_top
-  fi
-
-  if \
-    [ "$(win_edge_bottom)" -lt "$(ws_edge_bottom)" ] && \
-    [ "$(win_edge_bottom)" -gt "$(ws_edge_thres_bottom)" ]
-  then
-    win_snaps_bottom
-  fi
-
-  if \
-    [ "$(win_edge_left)" -gt "$(ws_edge_left)" ] && \
-    [ "$(win_edge_left)" -le "$(ws_edge_thres_left)" ]
-  then
-    win_snaps_left
-  fi
-
-  if \
-    [ "$(win_edge_right)" -lt "$(ws_edge_right)" ] && \
-    [ "$(win_edge_right)" -gt "$(ws_edge_thres_right)" ]
-  then
-    win_snaps_right
-  fi
+  # LEFT or RIGHT
+  a_or_b "$(win_edge_left)" "$(win_edge_right)" "$(ws_edge_left)" "$(ws_edge_right)"
 }
 
 while true; do

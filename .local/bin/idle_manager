@@ -60,11 +60,12 @@ start() {
     fi
 
     swayidle -w \
+      lock 'swaylock -u -f -c 000000' \
       timeout "100" "swaymsg 'output * power off'" \
         resume "swaymsg 'output * power on'" \
-      timeout "120" "swaylock -u -f -c 000000" \
+      timeout "120" "loginctl lock-session" \
         resume "swaymsg 'output * power on'" \
-      before-sleep "playerctl pause; swaylock -u -f -c 000000" \
+      before-sleep "playerctl pause; loginctl lock-session" \
       1> "/dev/null" 2> "/dev/null" & disown
 
     return "0"
@@ -151,7 +152,8 @@ lock() {
     exec xscreensaver-command -lock
   fi
 
-  exec killall -u "$(whoami)" -s "SIGUSR1" "swayidle"
+  # exec killall -u "$(whoami)" -s "SIGUSR1" "swayidle"
+  exec loginctl "lock-session"
 
   # [SIGUSR1 gets queued up when idle inhibitor is active · Issue #51 · swaywm/swayidle](https://github.com/swaywm/swayidle/issues/51)
 }
