@@ -7,141 +7,46 @@ case "$wm" in
   "sway")
     wm_cmd="swaymsg"
     is_win_floating_cmd="is_win_floating_sway"
+    win_height_cmd="win_height_sway"
+    win_edge_top_cmd="win_edge_top_sway"
   ;;
   "i3")
     wm_cmd="i3-msg"
     is_win_floating_cmd="is_win_floating_i3"
+    win_height_cmd="win_height_i3"
+    win_edge_top_cmd="win_edge_top_i3"
   ;;
 esac
 
 # Window properties
 
-win_height() {
-  c_win_height="$(
-    case "$wm" in
-      "sway")
-        echo "$((win_rect_height + win_deco_rect_height))"
-      ;;
-      "i3")
-        echo "$win_rect_height"
-      ;;
-    esac
-  )"
+win_height_sway() { echo "$((win_rect_height + win_deco_rect_height))"; }
+win_height_i3() { echo "$win_rect_height"; }
 
-  echo "$c_win_height"
-}
-
-win_width() {
-  echo "$win_rect_width"
-}
-
-win_edge_left() {
-  echo "$win_rect_x"
-}
-
-win_edge_right() {
-  echo "$(( $(win_edge_left) + $(win_width) ))"
-}
-
-win_edge_top() {
-  c_win_edge_top="$(
-    case "$wm" in
-      "sway")
-        echo "$((win_rect_y - win_deco_rect_height))"
-      ;;
-      "i3")
-        echo "$win_rect_y"
-      ;;
-    esac
-  )"
-
-  echo "$c_win_edge_top"
-}
-
-win_edge_bottom() {
-  echo "$(( $(win_edge_top) + $(win_height) ))"
-}
-
-# Output properties
-
-out_height() {
-  echo "$out_rect_height"
-}
-
-out_width() {
-  echo "$out_rect_width"
-}
-
-out_edge_left() {
-  echo "$out_rect_x"
-}
-
-out_edge_right() {
-  echo "$(( $(out_edge_left) + $(out_width) ))"
-}
-
-out_edge_top() {
-  echo "$out_rect_y"
-}
-
-out_edge_bottom() {
-  echo "$(( $(out_edge_top) + $(out_height) ))"
-}
+win_edge_top_sway() { echo "$((win_rect_y - win_deco_rect_height))"; }
+win_edge_top_i3() { echo "$win_rect_y"; }
 
 # Workspace properties
 
-ws_height() {
-  echo "$ws_rect_height"
-}
-
-ws_edge_right() {
-  echo "$((ws_rect_x + ws_rect_width))"
-}
-
-ws_edge_bottom() {
-  echo "$((ws_rect_y + $(ws_height)))"
-}
+ws_edge_right() { echo "$((ws_rect_x + ws_rect_width))"; }
+ws_edge_bottom() { echo "$((ws_rect_y + ws_rect_height))"; }
 
 ## Workspace edge snap threshold boundaries
 
-ws_edge_thres_left_in() {
-  echo "$((ws_rect_x + ws_edge_thres_x))"
-}
+ws_edge_thres_left_in() { echo "$((ws_rect_x + ws_edge_thres_x))"; }
+ws_edge_thres_right_in() { echo "$(($(ws_edge_right) - ws_edge_thres_x))"; }
+ws_edge_thres_top_in() { echo "$((ws_rect_y + ws_edge_thres_y))"; }
+ws_edge_thres_bottom_in() { echo "$(($(ws_edge_bottom) - ws_edge_thres_y))"; }
 
-ws_edge_thres_right_in() {
-  echo "$(($(ws_edge_right) - ws_edge_thres_x))"
-}
-
-ws_edge_thres_top_in() {
-  echo "$((ws_rect_y + ws_edge_thres_y))"
-}
-
-ws_edge_thres_bottom_in() {
-  echo "$(($(ws_edge_bottom) - ws_edge_thres_y))"
-}
-
-ws_edge_thres_left_out() {
-  echo "$((ws_rect_x - ws_edge_thres_x))"
-}
-
-ws_edge_thres_right_out() {
-  echo "$(($(ws_edge_right) + ws_edge_thres_x))"
-}
-
-ws_edge_thres_top_out() {
-  echo "$((ws_rect_y - ws_edge_thres_y))"
-}
-
-ws_edge_thres_bottom_out() {
-  echo "$(( $(ws_edge_bottom) + ws_edge_thres_y))"
-}
+ws_edge_thres_left_out() { echo "$((ws_rect_x - ws_edge_thres_x))"; }
+ws_edge_thres_right_out() { echo "$(($(ws_edge_right) + ws_edge_thres_x))"; }
+ws_edge_thres_top_out() { echo "$((ws_rect_y - ws_edge_thres_y))"; }
+ws_edge_thres_bottom_out() { echo "$(( $(ws_edge_bottom) + ws_edge_thres_y))"; }
 
 # Is floating
 
 is_win_floating_sway() {
-  if [ "$win_type" != "floating_con" ]; then
-    return "1"
-  fi
+  if [ "$win_type" != "floating_con" ]; then return "1"; fi
 }
 
 is_win_floating_i3() {
@@ -259,8 +164,8 @@ A_or_B() {
 }
 
 snap() {
-  h="$(A_or_B "$(win_edge_left)" "$(win_edge_right)" "$ws_rect_x" "$(ws_edge_right)" "$(ws_edge_thres_left_in)" "$(ws_edge_thres_right_in)" "$(ws_edge_thres_left_out)" "$(ws_edge_thres_right_out)")"
-  v="$(A_or_B "$(win_edge_top)" "$(win_edge_bottom)" "$ws_rect_y" "$(ws_edge_bottom)" "$(ws_edge_thres_top_in)" "$(ws_edge_thres_bottom_in)" "$(ws_edge_thres_top_out)" "$(ws_edge_thres_bottom_out)")"
+  h="$(A_or_B "$win_rect_x" "$((win_rect_x + win_rect_width))" "$ws_rect_x" "$(ws_edge_right)" "$(ws_edge_thres_left_in)" "$(ws_edge_thres_right_in)" "$(ws_edge_thres_left_out)" "$(ws_edge_thres_right_out)")"
+  v="$(A_or_B "$("$win_edge_top_cmd")" "$(( $("$win_edge_top_cmd") + $("$win_height_cmd")))" "$ws_rect_y" "$(ws_edge_bottom)" "$(ws_edge_thres_top_in)" "$(ws_edge_thres_bottom_in)" "$(ws_edge_thres_top_out)" "$(ws_edge_thres_bottom_out)")"
 
   $wm_cmd -q "move absolute position ${h} ${v}"
 }
@@ -268,24 +173,13 @@ snap() {
 while true; do
   ws="$(
     $wm_cmd -t "get_workspaces" | jq -r \
-    ".[] | select(.focused == true) | .rect.x, .rect.y, .rect.width, .rect.height, .output"
+    ".[] | select(.focused == true) | .rect.x, .rect.y, .rect.width, .rect.height"
   )"
 
   ws_rect_x="$(              echo "$ws" | sed  "1q;d")"
   ws_rect_y="$(              echo "$ws" | sed  "2q;d")"
   ws_rect_width="$(          echo "$ws" | sed  "3q;d")"
   ws_rect_height="$(         echo "$ws" | sed  "4q;d")"
-  ws_output="$(              echo "$ws" | sed  "5q;d")"
-
-  out_rect="$(
-    $wm_cmd -t "get_outputs"    | jq -r \
-    ".[] | select(.name == \"${ws_output}\").rect | .x, .y, .width, .height"
-  )"
-
-  out_rect_x="$(       echo "$out_rect" | sed  "1q;d")"
-  out_rect_y="$(       echo "$out_rect" | sed  "2q;d")"
-  out_rect_width="$(   echo "$out_rect" | sed  "3q;d")"
-  out_rect_height="$(  echo "$out_rect" | sed  "4q;d")"
 
   win="$(
     $wm_cmd -t "get_tree"       | jq -r \
@@ -301,8 +195,8 @@ while true; do
   win_rect_height="$(       echo "$win" | sed "7q;d")"
   win_deco_rect_height="$(  echo "$win" | sed "8q;d")"
 
-  ws_edge_thres_x="64"
-  ws_edge_thres_y="64"
+  ws_edge_thres_x="128"
+  ws_edge_thres_y="128"
 
   if [ "$win_fullscreen_mode" = "0" ] && "$is_win_floating_cmd"; then
     snap
