@@ -33,15 +33,14 @@ ws_edge_bottom() { echo "$((ws_rect_y + ws_rect_height))"; }
 
 ## Workspace edge snap threshold boundaries
 
-ws_edge_thres_left_in() { echo "$((ws_rect_x + ws_edge_thres_x))"; }
-ws_edge_thres_right_in() { echo "$(($(ws_edge_right) - ws_edge_thres_x))"; }
-ws_edge_thres_top_in() { echo "$((ws_rect_y + ws_edge_thres_y))"; }
-ws_edge_thres_bottom_in() { echo "$(($(ws_edge_bottom) - ws_edge_thres_y))"; }
-
-ws_edge_thres_left_out() { echo "$((ws_rect_x - ws_edge_thres_x))"; }
-ws_edge_thres_right_out() { echo "$(($(ws_edge_right) + ws_edge_thres_x))"; }
-ws_edge_thres_top_out() { echo "$((ws_rect_y - ws_edge_thres_y))"; }
-ws_edge_thres_bottom_out() { echo "$(($(ws_edge_bottom) + ws_edge_thres_y))"; }
+ws_thres_left_i() { echo "$((ws_rect_x + ws_thres_x))"; }
+ws_thres_right_i() { echo "$(($(ws_edge_right) - ws_thres_x))"; }
+ws_thres_top_i() { echo "$((ws_rect_y + ws_thres_y))"; }
+ws_thres_bottom_i() { echo "$(($(ws_edge_bottom) - ws_thres_y))"; }
+ws_thres_left_o() { echo "$((ws_rect_x - ws_thres_x))"; }
+ws_thres_right_o() { echo "$(($(ws_edge_right) + ws_thres_x))"; }
+ws_thres_top_o() { echo "$((ws_rect_y - ws_thres_y))"; }
+ws_thres_bottom_o() { echo "$(($(ws_edge_bottom) + ws_thres_y))"; }
 
 # Is floating
 
@@ -164,8 +163,8 @@ A_or_B() {
 }
 
 snap() {
-  h="$(A_or_B "$win_rect_x" "$((win_rect_x + win_rect_width))" "$ws_rect_x" "$(ws_edge_right)" "$(ws_edge_thres_left_in)" "$(ws_edge_thres_right_in)" "$(ws_edge_thres_left_out)" "$(ws_edge_thres_right_out)")"
-  v="$(A_or_B "$("$win_edge_top_cmd")" "$(( $("$win_edge_top_cmd") + $("$win_height_cmd")))" "$ws_rect_y" "$(ws_edge_bottom)" "$(ws_edge_thres_top_in)" "$(ws_edge_thres_bottom_in)" "$(ws_edge_thres_top_out)" "$(ws_edge_thres_bottom_out)")"
+  h="$(A_or_B "$win_rect_x" "$((win_rect_x + win_rect_width))" "$ws_rect_x" "$(ws_edge_right)" "$(ws_thres_left_i)" "$(ws_thres_right_i)" "$(ws_thres_left_o)" "$(ws_thres_right_o)")"
+  v="$(A_or_B "$("$win_edge_top_cmd")" "$(($("$win_edge_top_cmd") + $("$win_height_cmd")))" "$ws_rect_y" "$(ws_edge_bottom)" "$(ws_thres_top_i)" "$(ws_thres_bottom_i)" "$(ws_thres_top_o)" "$(ws_thres_bottom_o)")"
 
   $wm_cmd -q "move absolute position ${h} ${v}"
 }
@@ -195,12 +194,10 @@ while true; do
   win_rect_height="$(       echo "$win" | sed "7q;d")"
   win_deco_rect_height="$(  echo "$win" | sed "8q;d")"
 
-  ws_edge_thres_x="128"
-  ws_edge_thres_y="128"
+  ws_thres_x="128"
+  ws_thres_y="128"
 
-  if [ "$win_fullscreen_mode" = "0" ] && "$is_win_floating_cmd"; then
-    snap
-  fi
+  if [ "$win_fullscreen_mode" = "0" ] && "$is_win_floating_cmd"; then snap; fi
 
   sleep 1
 done
