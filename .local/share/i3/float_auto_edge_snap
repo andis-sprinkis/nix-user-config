@@ -41,7 +41,7 @@ ws_edge_thres_bottom_in() { echo "$(($(ws_edge_bottom) - ws_edge_thres_y))"; }
 ws_edge_thres_left_out() { echo "$((ws_rect_x - ws_edge_thres_x))"; }
 ws_edge_thres_right_out() { echo "$(($(ws_edge_right) + ws_edge_thres_x))"; }
 ws_edge_thres_top_out() { echo "$((ws_rect_y - ws_edge_thres_y))"; }
-ws_edge_thres_bottom_out() { echo "$(( $(ws_edge_bottom) + ws_edge_thres_y))"; }
+ws_edge_thres_bottom_out() { echo "$(($(ws_edge_bottom) + ws_edge_thres_y))"; }
 
 # Is floating
 
