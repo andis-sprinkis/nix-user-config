@@ -166,7 +166,6 @@ is_win_floating_i3() {
 
 # AS on AZ ; N
 # BS on BZ ; N
-
 # AS in S ; BS in S ; N
 # AS in S ; BS out BO ; N
 # AS in S ; BS in BI ; B
