@@ -6,11 +6,11 @@ wm="${wm:-"i3"}"
 case "$wm" in
   "sway")
     wm_cmd="swaymsg"
-    is_floating_cmd="is_floating_sway"
+    is_win_floating_cmd="is_win_floating_sway"
   ;;
   "i3")
     wm_cmd="i3-msg"
-    is_floating_cmd="is_floating_i3"
+    is_win_floating_cmd="is_win_floating_i3"
   ;;
 esac
 
@@ -94,30 +94,18 @@ ws_height() {
   echo "$ws_rect_height"
 }
 
-ws_width() {
-  echo "$ws_rect_width"
-}
-
-ws_edge_left() {
-  echo "$ws_rect_x"
-}
-
 ws_edge_right() {
-  echo "$(($(ws_edge_left) + $(ws_width)))"
-}
-
-ws_edge_top() {
-  echo "$ws_rect_y"
+  echo "$((ws_rect_x + ws_rect_width))"
 }
 
 ws_edge_bottom() {
-  echo "$(($(ws_edge_top) + $(ws_height)))"
+  echo "$((ws_rect_y + $(ws_height)))"
 }
 
 ## Workspace edge snap threshold boundaries
 
 ws_edge_thres_left_in() {
-  echo "$(($(ws_edge_left) + ws_edge_thres_x))"
+  echo "$((ws_rect_x + ws_edge_thres_x))"
 }
 
 ws_edge_thres_right_in() {
@@ -125,7 +113,7 @@ ws_edge_thres_right_in() {
 }
 
 ws_edge_thres_top_in() {
-  echo "$(($(ws_edge_top) + ws_edge_thres_y))"
+  echo "$((ws_rect_y + ws_edge_thres_y))"
 }
 
 ws_edge_thres_bottom_in() {
@@ -133,7 +121,7 @@ ws_edge_thres_bottom_in() {
 }
 
 ws_edge_thres_left_out() {
-  echo "$(($(ws_edge_left) - ws_edge_thres_x))"
+  echo "$((ws_rect_x - ws_edge_thres_x))"
 }
 
 ws_edge_thres_right_out() {
@@ -141,7 +129,7 @@ ws_edge_thres_right_out() {
 }
 
 ws_edge_thres_top_out() {
-  echo "$(( $(ws_edge_top) - ws_edge_thres_y))"
+  echo "$((ws_rect_y - ws_edge_thres_y))"
 }
 
 ws_edge_thres_bottom_out() {
@@ -150,21 +138,19 @@ ws_edge_thres_bottom_out() {
 
 # Is floating
 
-is_floating_sway() {
+is_win_floating_sway() {
   if [ "$win_type" != "floating_con" ]; then
     return "1"
   fi
 }
 
-is_floating_i3() {
+is_win_floating_i3() {
   case "$win_floating" in
     *"_off")
       return "1"
     ;;
   esac
 }
-
-# needs to issue 1 atomic command for x y
 
 # AS - pos window side A (top or left)
 # BS - pos window side B (bottom or right)
@@ -174,32 +160,9 @@ is_floating_i3() {
 # AI - pos workspace side A inner snap threshold
 # AO - pos workspace side B outer snap threshold
 # AI - pos workspace side B inner snap threshold
-# S - width workspace safe (AI to BI)
+# S  - width workspace safe (AI to BI)
 
 # AO - AZ - AI - S - BI - BZ - BO
-
-# AS in AI == AS >= AZ && AS < AI
-# AS in AO == AS >= AO && AS < AZ
-# AS in BI == AS >= BI && AS < BZ
-# AS in BO == AS >= BZ && AS < BO
-# AS in S == AS >= AI && AS < BI
-# AS on AZ == AS == AZ
-# AS out AO == AS < AO
-# AS out BO == AS >= BO
-# BS in AI == BS >= AZ && BS < AI
-# BS in AO == BS >= AO && BS < AZ
-# BS in BI == BS < BZ && BS >= BI
-# BS in BO == BS < BO && BS >= BZ
-# BS in S == BS >= AI && BS < BI
-# BS on BZ == BS == BZ
-# BS out AO == BS < AO
-# BS out BO == BS >= BO
-
-# A == AS = AZ
-# B == AS = BZ - BS - AS
-# N == AS = AS
-
-# ------------------------------------------------
 
 # AS on AZ ; N
 # BS on BZ ; N
@@ -208,12 +171,9 @@ is_floating_i3() {
 # AS in S ; BS out BO ; N
 # AS in S ; BS in BI ; B
 # AS in S ; BS in BO ; B
-
 # AS in BO ; BS out BO ; N
 # AS in BO ; BS in BO ; B
-
 # AS out BO ; BS out BO ; N
-
 # AS out AO ; BS in AI ; N
 # AS out AO ; BS in AO ; N
 # AS out AO ; BS in S ; N
@@ -221,42 +181,40 @@ is_floating_i3() {
 # AS out AO ; BS out BO ; N
 # AS out AO ; BS in BI ; B
 # AS out AO ; BS in BO ; B
-
 # AS in AI ; BS in BI ; AS - AZ <= BZ - BS ? A : B
 # AS in AI ; BS in BO ; AS - AZ <= BS - BZ ? A : B
 # AS in AI ; BS in AI ; A
 # AS in AI ; BS in S ; A
 # AS in AI ; BS out BO ; A
-
 # AS in AO ; BS in BI ; AS - AZ <= BZ - BS ? A : B
 # AS in AO ; BS in BO ; AS - AZ <= BS - BZ ? A : B
 # AS in AO ; BS in AI ; A
 # AS in AO ; BS in S ; A
 # AS in AO ; BS out BO ; A
 # AS in AO ; BS in AO ; A
-
 # AS in BI ; BS out BO ; N
 # AS in BI ; BS in BI ; B
 # AS in BI ; BS in BO ; B
 
-AS_on_AZ() { test "$AS" = "$AZ"; }
-BS_on_BZ() { test "$BS" = "$BZ"; }
-AS_in_AI() { test "$AS" -ge "$AZ" && test "$AS" -lt "$AI"; }
-AS_in_AO() { test "$AS" -ge "$AO" && test "$AS" -lt "$AZ"; }
-AS_in_BI() { test "$AS" -ge "$BI" && test "$AS" -lt "$BZ"; }
-AS_in_BO() { test "$AS" -ge "$BZ" && test "$AS" -lt "$BO"; }
-AS_in_S() { test "$AS" -ge "$AI" && test "$AS" -lt "$BI"; }
+AS_on_AZ()  { test "$AS" = "$AZ"; }
+BS_on_BZ()  { test "$BS" = "$BZ"; }
+AS_in_AI()  { test "$AS" -ge "$AZ" && test "$AS" -lt "$AI"; }
+AS_in_AO()  { test "$AS" -ge "$AO" && test "$AS" -lt "$AZ"; }
+AS_in_BI()  { test "$AS" -ge "$BI" && test "$AS" -lt "$BZ"; }
+AS_in_BO()  { test "$AS" -ge "$BZ" && test "$AS" -lt "$BO"; }
+AS_in_S()   { test "$AS" -ge "$AI" && test "$AS" -lt "$BI"; }
 AS_out_AO() { test "$AS" -lt "$AO"; }
 AS_out_BO() { test "$AS" -ge "$BO"; }
-BS_in_AI() { test "$BS" -ge "$AZ" && test "$BS" -lt "$AI"; }
-BS_in_AO() { test "$BS" -ge "$AO" && test "$BS" -lt "$AZ"; }
-BS_in_BI() { test "$BS" -lt "$BZ" && test "$BS" -ge "$BI"; }
-BS_in_BO() { test "$BS" -lt "$BO" && test "$BS" -ge "$BZ"; }
-BS_in_S() { test "$BS" -ge "$AI" && test "$BS" -lt "$BI"; }
+BS_in_AI()  { test "$BS" -ge "$AZ" && test "$BS" -lt "$AI"; }
+BS_in_AO()  { test "$BS" -ge "$AO" && test "$BS" -lt "$AZ"; }
+BS_in_BI()  { test "$BS" -lt "$BZ" && test "$BS" -ge "$BI"; }
+BS_in_BO()  { test "$BS" -lt "$BO" && test "$BS" -ge "$BZ"; }
+BS_in_S()   { test "$BS" -ge "$AI" && test "$BS" -lt "$BI"; }
 BS_out_AO() { test "$BS" -lt "$AO"; }
 BS_out_BO() { test "$BS" -ge "$BO"; }
+
 A() { echo "$AZ"; }
-B() { echo "$((BZ - BS - AS))"; }
+B() { echo "$((AS + BZ - BS))"; }
 N() { echo "$AS"; }
 
 a_or_b() {
@@ -302,10 +260,10 @@ a_or_b() {
 }
 
 snap() {
-  # LEFT or RIGHT
-  a_or_b "$(win_edge_left)" "$(win_edge_right)" "$(ws_edge_left)" "$(ws_edge_right)" "$(ws_edge_thres_left_in)" "$(ws_edge_thres_right_in)" "$(ws_edge_thres_left_out)" "$(ws_edge_thres_right_out)"
-  # TOP or BOTTOM
-  a_or_b "$(win_edge_top)" "$(win_edge_bottom)" "$(ws_edge_top)" "$(ws_edge_bottom)" "$(ws_edge_thres_top_in)" "$(ws_edge_thres_bottom_in)" "$(ws_edge_thres_top_out)" "$(ws_edge_thres_bottom_out)"
+  h="$(a_or_b "$(win_edge_left)" "$(win_edge_right)" "$ws_rect_x" "$(ws_edge_right)" "$(ws_edge_thres_left_in)" "$(ws_edge_thres_right_in)" "$(ws_edge_thres_left_out)" "$(ws_edge_thres_right_out)")"
+  v="$(a_or_b "$(win_edge_top)" "$(win_edge_bottom)" "$ws_rect_y" "$(ws_edge_bottom)" "$(ws_edge_thres_top_in)" "$(ws_edge_thres_bottom_in)" "$(ws_edge_thres_top_out)" "$(ws_edge_thres_bottom_out)")"
+
+  $wm_cmd -q "move absolute position ${h} ${v}"
 }
 
 while true; do
@@ -332,43 +290,24 @@ while true; do
 
   win="$(
     $wm_cmd -t "get_tree"       | jq -r \
-    ".. | select(.type?) | select(.focused == true) | .type, .floating, .fullscreen_mode, .rect.x, .rect.y, .rect.width, .rect.height, .window_rect.x, .window_rect.y, .window_rect.width, .window_rect.height, .deco_rect.x, .deco_rect.y, .deco_rect.width, .deco_rect.height, .geometry.x, .geometry.y, .geometry.width, .geometry.height"
+    ".. | select(.type?) | select(.focused == true) | .type, .floating, .fullscreen_mode, .rect.x, .rect.y, .rect.width, .rect.height, .deco_rect.height"
   )"
 
-  win_type="$(              echo "$win" | sed  "1q;d")"
-  win_floating="$(          echo "$win" | sed  "2q;d")" # i3
-  win_fullscreen_mode="$(   echo "$win" | sed  "3q;d")"
-  win_rect_x="$(            echo "$win" | sed  "4q;d")"
-  win_rect_y="$(            echo "$win" | sed  "5q;d")"
-  win_rect_width="$(        echo "$win" | sed  "6q;d")"
-  win_rect_height="$(       echo "$win" | sed  "7q;d")"
-  # win_window_rect_x="$(     echo "$win" | sed  "8q;d")"
-  # win_window_rect_y="$(     echo "$win" | sed  "9q;d")"
-  # win_window_rect_width="$( echo "$win" | sed "10q;d")"
-  # win_window_rect_height="$(echo "$win" | sed "11q;d")"
-  # win_deco_rect_x="$(       echo "$win" | sed "12q;d")"
-  # win_deco_rect_y="$(       echo "$win" | sed "13q;d")"
-  # win_deco_rect_width="$(   echo "$win" | sed "14q;d")"
-  win_deco_rect_height="$(  echo "$win" | sed "15q;d")"
-  # win_geometry_x="$(        echo "$win" | sed "16q;d")"
-  # win_geometry_y="$(        echo "$win" | sed "17q;d")"
-  # win_geometry_width="$(    echo "$win" | sed "18q;d")"
-  # win_geometry_height="$(   echo "$win" | sed "19q;d")"
+  win_type="$(              echo "$win" | sed "1q;d")"
+  win_floating="$(          echo "$win" | sed "2q;d")" # i3
+  win_fullscreen_mode="$(   echo "$win" | sed "3q;d")"
+  win_rect_x="$(            echo "$win" | sed "4q;d")"
+  win_rect_y="$(            echo "$win" | sed "5q;d")"
+  win_rect_width="$(        echo "$win" | sed "6q;d")"
+  win_rect_height="$(       echo "$win" | sed "7q;d")"
+  win_deco_rect_height="$(  echo "$win" | sed "8q;d")"
 
-  # TODO: all the output, workspace and window properties can be probably precomputed faster in jq queries
+  ws_edge_thres_x="64"
+  ws_edge_thres_y="64"
 
-  # Window moving properties
-
-  move_step_x="$((ws_rect_width / 20))"
-  move_step_y="$((ws_rect_height / 20))"
-  ws_edge_thres_x="$move_step_x"
-  ws_edge_thres_y="$move_step_y"
-
-  if [ "$win_fullscreen_mode" = "0" ] && "$is_floating_cmd"; then
+  if [ "$win_fullscreen_mode" = "0" ] && "$is_win_floating_cmd"; then
     snap
   fi
-
-  echo "$win_type"
 
   sleep 1
 done
