@@ -7,15 +7,16 @@ case "$wm" in
   "sway")
     wm_cmd="swaymsg"
 
-    win_height() { echo "$((win_rect_height + win_deco_rect_height))"; }
-    win_edge_top() { echo "$((win_rect_y - win_deco_rect_height))"; }
+    win_edge_top_jq=".rect.y - .deco_rect.height"
+    win_height_jq=".rect.height + .deco_rect.height"
+
     is_win_floating() { if [ "$win_type" != "floating_con" ]; then return "1"; fi; }
   ;;
   "i3")
     wm_cmd="i3-msg"
 
-    win_edge_top() { echo "$win_rect_y"; }
-    win_height() { echo "$win_rect_height"; }
+    win_edge_top_jq=".rect.y"
+    win_height_jq=".rect.height"
 
     is_win_floating() {
       case "$win_floating" in
@@ -110,36 +111,25 @@ A_or_B() {
 }
 
 while true; do
-  win="$(
-    $wm_cmd -t "get_tree" | jq -r \
-    ".. | select(.type?) | select(.focused) | .type, .floating, .fullscreen_mode, .rect.x, .rect.y, .rect.width, .rect.height, .deco_rect.height"
-  )"
+  win="$($wm_cmd -t "get_tree" | jq -r \
+    ".. | select(.type?) | select(.focused) |
+      .type,
+      .floating,
+      .fullscreen_mode,
+      .rect.x, .rect.x + .rect.width,
+      ${win_edge_top_jq}, ${win_edge_top_jq} + ${win_height_jq}")"
 
-  win_type="$(              echo "$win" | sed "1q;d")"
-  win_floating="$(          echo "$win" | sed "2q;d")" # i3
-  win_fullscreen_mode="$(   echo "$win" | sed "3q;d")"
+  win_type="$(echo "$win" | sed "1q;d")"
+  win_floating="$(echo "$win" | sed "2q;d")" # i3
 
-  if is_win_floating && [ "$win_fullscreen_mode" = "0" ]; then
-    ws="$(
-      $wm_cmd -t "get_workspaces" | jq -r \
-      ".[] | select(.focused) | .rect.x, .rect.y, .rect.width, .rect.height"
-    )"
-
-    ws_rect_x="$(           echo "$ws" | sed  "1q;d")"
-    ws_rect_y="$(           echo "$ws" | sed  "2q;d")"
-    ws_rect_width="$(       echo "$ws" | sed  "3q;d")"
-    ws_rect_height="$(      echo "$ws" | sed  "4q;d")"
-
-    win_rect_x="$(          echo "$win" | sed "4q;d")"
-    win_rect_y="$(          echo "$win" | sed "5q;d")"
-    win_rect_width="$(      echo "$win" | sed "6q;d")"
-    win_rect_height="$(     echo "$win" | sed "7q;d")"
-    win_deco_rect_height="$(echo "$win" | sed "8q;d")"
-
-    win_edge_top=$(win_edge_top)
+  if is_win_floating && [ "$(echo "$win" | sed "3q;d")" = "0" ]; then
+    ws="$($wm_cmd -t "get_workspaces" | jq -r \
+    ".[] | select(.focused) |
+      .rect.x, .rect.x + .rect.width, .rect.x + ${ws_thr_x}, .rect.x + .rect.width - ${ws_thr_x}, .rect.x - ${ws_thr_x}, .rect.x + .rect.width + ${ws_thr_x},
+      .rect.y, .rect.y + .rect.height, .rect.y + ${ws_thr_y}, .rect.y + .rect.height - ${ws_thr_y}, .rect.y - ${ws_thr_y}, .rect.y + .rect.height + ${ws_thr_y}")"
 
     $wm_cmd -q \
-      "move absolute position $(A_or_B "$win_rect_x" "$((win_rect_x + win_rect_width))" "$ws_rect_x" "$((ws_rect_x + ws_rect_width))" "$((ws_rect_x + ws_thr_x))" "$((ws_rect_x + ws_rect_width - ws_thr_x))" "$((ws_rect_x - ws_thr_x))" "$((ws_rect_x + ws_rect_width + ws_thr_x))") $(A_or_B "$win_edge_top" "$((win_edge_top + $(win_height)))" "$ws_rect_y" "$((ws_rect_y + ws_rect_height))" "$((ws_rect_y + ws_thr_y))" "$((ws_rect_y + ws_rect_height - ws_thr_y))" "$((ws_rect_y - ws_thr_y))" "$((ws_rect_y + ws_rect_height + ws_thr_y))")"
+      "move absolute position $(A_or_B $(echo "$win" | sed "4,5!d") $(echo "$ws" | sed "1,6!d")) $(A_or_B $(echo "$win" | sed "6,7!d") $(echo "$ws" | sed "7,12!d"))"
   fi
 
   sleep "1"
