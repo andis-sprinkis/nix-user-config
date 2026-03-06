@@ -90,20 +90,22 @@ A_or_B() {
   if AS_out_BO && BS_out_BO; then N; return; fi
 }
 
+win_jq=".. | select(.type?) | select(.focused) |
+  .type,
+  .floating,
+  .fullscreen_mode,
+  .rect.x, .rect.x + .rect.width,
+  ${win_edge_top_jq}, ${win_edge_top_jq} + ${win_height_jq}"
+
+ws_jq=".[] | select(.focused) |
+  .rect.x, .rect.x + .rect.width, .rect.x + ${ws_thr_x}, .rect.x + .rect.width - ${ws_thr_x}, .rect.x - ${ws_thr_x}, .rect.x + .rect.width + ${ws_thr_x},
+  .rect.y, .rect.y + .rect.height, .rect.y + ${ws_thr_y}, .rect.y + .rect.height - ${ws_thr_y}, .rect.y - ${ws_thr_y}, .rect.y + .rect.height + ${ws_thr_y}"
+
 while true; do
-  win="$($wm_cmd -r -t "get_tree" | jq -r \
-    ".. | select(.type?) | select(.focused) |
-      .type,
-      .floating,
-      .fullscreen_mode,
-      .rect.x, .rect.x + .rect.width,
-      ${win_edge_top_jq}, ${win_edge_top_jq} + ${win_height_jq}")"
+  win="$($wm_cmd -r -t "get_tree" | jq -r "$win_jq")"
 
   if is_win_floating && [ "$(echo "$win" | sed "3q;d")" = "0" ]; then
-    ws="$($wm_cmd -r -t "get_workspaces" | jq -r \
-    ".[] | select(.focused) |
-      .rect.x, .rect.x + .rect.width, .rect.x + ${ws_thr_x}, .rect.x + .rect.width - ${ws_thr_x}, .rect.x - ${ws_thr_x}, .rect.x + .rect.width + ${ws_thr_x},
-      .rect.y, .rect.y + .rect.height, .rect.y + ${ws_thr_y}, .rect.y + .rect.height - ${ws_thr_y}, .rect.y - ${ws_thr_y}, .rect.y + .rect.height + ${ws_thr_y}")"
+    ws="$($wm_cmd -r -t "get_workspaces" | jq -r "$ws_jq")"
 
     $wm_cmd -q \
       "move absolute position $(A_or_B $(echo "$win" | sed "4,5!d") $(echo "$ws" | sed "1,6!d")) $(A_or_B $(echo "$win" | sed "6,7!d") $(echo "$ws" | sed "7,12!d"))"
