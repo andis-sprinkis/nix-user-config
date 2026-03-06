@@ -37,48 +37,23 @@ esac
 ws_thr_x="128"
 ws_thr_y="128"
 
-# AS - pos window side A (top or left)
-# BS - pos window side B (bottom or right)
-# AZ - pos workspace side A (top or left)
-# BZ - pos workspace side B (bottom or right)
-# AO - pos workspace side A outer snap threshold
-# AI - pos workspace side A inner snap threshold
-# AO - pos workspace side B outer snap threshold
-# AI - pos workspace side B inner snap threshold
-# S  - width workspace safe (AI to BI)
-
-# AO - AZ - AI - S - BI - BZ - BO
-
-# AS on AZ ; N
-# BS on BZ ; N
-# AS in S ; BS in S ; N
-# AS in S ; BS out BO ; N
-# AS in S ; BS in BI ; B
-# AS in S ; BS in BO ; B
-# AS in BO ; BS out BO ; N
-# AS in BO ; BS in BO ; B
-# AS out BO ; BS out BO ; N
-# AS out AO ; BS in AI ; N
-# AS out AO ; BS in AO ; N
-# AS out AO ; BS in S ; N
-# AS out AO ; BS out AO ; N
-# AS out AO ; BS out BO ; N
-# AS out AO ; BS in BI ; B
-# AS out AO ; BS in BO ; B
-# AS in AI ; BS in BI ; AS - AZ <= BZ - BS ? A : B
-# AS in AI ; BS in BO ; AS - AZ <= BS - BZ ? A : B
-# AS in AI ; BS in AI ; A
-# AS in AI ; BS in S ; A
-# AS in AI ; BS out BO ; A
-# AS in AO ; BS in BI ; AS - AZ <= BZ - BS ? A : B
-# AS in AO ; BS in BO ; AS - AZ <= BS - BZ ? A : B
-# AS in AO ; BS in AI ; A
-# AS in AO ; BS in S ; A
-# AS in AO ; BS out BO ; A
-# AS in AO ; BS in AO ; A
-# AS in BI ; BS out BO ; N
-# AS in BI ; BS in BI ; B
-# AS in BI ; BS in BO ; B
+# Workspace:
+#
+#    AO AZ AI S BI BZ BO
+# AO +--+--+-----+--+--+
+# AZ +--+--+-----+--+--+
+# AI +--+--+-----+--+--+
+#  S |  |  |  S  |  |  |
+# BI +--+--+-----+--+--+
+# BZ +--+--+-----+--+--+
+# BO +--+--+-----+--+--+
+#
+# Window:
+#
+#    AS  BS
+# AS +----+
+#    |    |
+# BS +----+
 
 AS_on_AZ()  { [ "$AS" -eq "$AZ" ]; }
 BS_on_BZ()  { [ "$BS" -eq "$BZ" ]; }
@@ -131,8 +106,8 @@ A_or_B() {
   fi
 
   if AS_in_BI; then
-    if BS_out_BO; then N; return; fi
     if BS_in_BO || BS_in_BI; then B; return; fi
+    if BS_out_BO; then N; return; fi
   fi
 
   if AS_in_BO; then
