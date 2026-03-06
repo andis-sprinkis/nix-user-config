@@ -132,18 +132,6 @@ A_or_B() {
     if BS_in_BI || BS_in_BO; then B; return; fi
   fi
 
-  if AS_in_BO; then
-    if BS_out_BO; then N; return; fi
-    if BS_in_BO; then B; return; fi
-  fi
-
-  if AS_out_BO && BS_out_BO; then N; return; fi
-
-  if AS_out_AO; then
-    if BS_in_AI || BS_in_AO || BS_in_S || BS_out_AO || BS_out_BO; then N; return; fi
-    if BS_in_BI || BS_in_BO; then B; return; fi
-  fi
-
   if AS_in_AI || AS_in_AO; then
     if BS_in_BI; then
       if [ "$((AS - AZ))" -le "$((BZ - BS))" ]; then A; return; else B; return; fi
@@ -157,6 +145,18 @@ A_or_B() {
   fi
 
   if AS_in_AO && BS_out_AO; then A; return; fi
+
+  if AS_in_BO; then
+    if BS_out_BO; then N; return; fi
+    if BS_in_BO; then B; return; fi
+  fi
+
+  if AS_out_BO && BS_out_BO; then N; return; fi
+
+  if AS_out_AO; then
+    if BS_in_AI || BS_in_AO || BS_in_S || BS_out_AO || BS_out_BO; then N; return; fi
+    if BS_in_BI || BS_in_BO; then B; return; fi
+  fi
 
   if AS_in_BI; then
     if BS_out_BO; then N; return; fi
