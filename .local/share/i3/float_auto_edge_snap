@@ -6,7 +6,6 @@ wm="${wm:-"i3"}"
 case "$wm" in
   "sway")
     wm_cmd="swaymsg"
-
     win_edge_top_jq=".rect.y - .deco_rect.height"
     win_height_jq=".rect.height + .deco_rect.height"
 
@@ -14,7 +13,6 @@ case "$wm" in
   ;;
   "i3")
     wm_cmd="i3-msg"
-
     win_edge_top_jq=".rect.y"
     win_height_jq=".rect.height"
 
