@@ -9,7 +9,7 @@ case "$wm" in
     win_edge_top_jq=".rect.y - .deco_rect.height"
     win_height_jq=".rect.height + .deco_rect.height"
 
-    is_win_floating() { if [ "$win_type" != "floating_con" ]; then return "1"; fi; }
+    is_win_floating() { if [ "$(echo "$win" | sed "1q;d")" != "floating_con" ]; then return "1"; fi; }
   ;;
   "i3")
     wm_cmd="i3-msg"
@@ -17,7 +17,7 @@ case "$wm" in
     win_height_jq=".rect.height"
 
     is_win_floating() {
-      case "$win_floating" in
+      case "$(echo "$win" | sed "2q;d")" in
         *"_off") return "1" ;;
       esac
     }
@@ -91,7 +91,7 @@ A_or_B() {
 }
 
 while true; do
-  win="$($wm_cmd -t "get_tree" | jq -r \
+  win="$($wm_cmd -r -t "get_tree" | jq -r \
     ".. | select(.type?) | select(.focused) |
       .type,
       .floating,
@@ -99,11 +99,8 @@ while true; do
       .rect.x, .rect.x + .rect.width,
       ${win_edge_top_jq}, ${win_edge_top_jq} + ${win_height_jq}")"
 
-  win_type="$(echo "$win" | sed "1q;d")"
-  win_floating="$(echo "$win" | sed "2q;d")" # i3
-
   if is_win_floating && [ "$(echo "$win" | sed "3q;d")" = "0" ]; then
-    ws="$($wm_cmd -t "get_workspaces" | jq -r \
+    ws="$($wm_cmd -r -t "get_workspaces" | jq -r \
     ".[] | select(.focused) |
       .rect.x, .rect.x + .rect.width, .rect.x + ${ws_thr_x}, .rect.x + .rect.width - ${ws_thr_x}, .rect.x - ${ws_thr_x}, .rect.x + .rect.width + ${ws_thr_x},
       .rect.y, .rect.y + .rect.height, .rect.y + ${ws_thr_y}, .rect.y + .rect.height - ${ws_thr_y}, .rect.y - ${ws_thr_y}, .rect.y + .rect.height + ${ws_thr_y}")"
