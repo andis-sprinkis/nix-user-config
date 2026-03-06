@@ -3,15 +3,6 @@ set -eu
 wm="${WAYLAND_DISPLAY:+"sway"}"
 wm="${wm:-"i3"}"
 
-ws_thr_left_i() { echo "$((ws_rect_x + ws_thr_x))"; }
-ws_thr_right_i() { echo "$((ws_rect_x + ws_rect_width - ws_thr_x))"; }
-ws_thr_top_i() { echo "$((ws_rect_y + ws_thr_y))"; }
-ws_thr_bottom_i() { echo "$((ws_rect_y + ws_rect_height - ws_thr_y))"; }
-ws_thr_left_o() { echo "$((ws_rect_x - ws_thr_x))"; }
-ws_thr_right_o() { echo "$((ws_rect_x + ws_rect_width + ws_thr_x))"; }
-ws_thr_top_o() { echo "$((ws_rect_y - ws_thr_y))"; }
-ws_thr_bottom_o() { echo "$((ws_rect_y + ws_rect_height + ws_thr_y))"; }
-
 case "$wm" in
   "sway")
     wm_cmd="swaymsg"
@@ -148,7 +139,7 @@ while true; do
     win_edge_top=$(win_edge_top)
 
     $wm_cmd -q \
-      "move absolute position $(A_or_B "$win_rect_x" "$((win_rect_x + win_rect_width))" "$ws_rect_x" "$((ws_rect_x + ws_rect_width))" "$(ws_thr_left_i)" "$(ws_thr_right_i)" "$(ws_thr_left_o)" "$(ws_thr_right_o)") $(A_or_B "$win_edge_top" "$((win_edge_top + $(win_height)))" "$ws_rect_y" "$((ws_rect_y + ws_rect_height))" "$(ws_thr_top_i)" "$(ws_thr_bottom_i)" "$(ws_thr_top_o)" "$(ws_thr_bottom_o)")"
+      "move absolute position $(A_or_B "$win_rect_x" "$((win_rect_x + win_rect_width))" "$ws_rect_x" "$((ws_rect_x + ws_rect_width))" "$((ws_rect_x + ws_thr_x))" "$((ws_rect_x + ws_rect_width - ws_thr_x))" "$((ws_rect_x - ws_thr_x))" "$((ws_rect_x + ws_rect_width + ws_thr_x))") $(A_or_B "$win_edge_top" "$((win_edge_top + $(win_height)))" "$ws_rect_y" "$((ws_rect_y + ws_rect_height))" "$((ws_rect_y + ws_thr_y))" "$((ws_rect_y + ws_rect_height - ws_thr_y))" "$((ws_rect_y - ws_thr_y))" "$((ws_rect_y + ws_rect_height + ws_thr_y))")"
   fi
 
   sleep "1"
