@@ -17,27 +17,6 @@ else
   echo "$$" > "$file_daemonpid"
 fi
 
-case "$wm" in
-  "sway")
-    wm_cmd="swaymsg"
-    win_edge_top_jq=".rect.y - .deco_rect.height"
-    win_height_jq=".rect.height + .deco_rect.height"
-
-    is_win_floating() { if [ "$(echo "$win" | sed "1q;d")" != "floating_con" ]; then return "1"; fi; }
-  ;;
-  "i3")
-    wm_cmd="i3-msg"
-    win_edge_top_jq=".rect.y"
-    win_height_jq=".rect.height"
-
-    is_win_floating() {
-      case "$(echo "$win" | sed "2q;d")" in
-        *"_off") return "1" ;;
-      esac
-    }
-  ;;
-esac
-
 AS_on_AZ()  { [ "$AS" -eq "$AZ" ]; }
 BS_on_BZ()  { [ "$BS" -eq "$BZ" ]; }
 AS_in_AI()  { [ "$AS" -ge "$AZ" ] && [ "$AS" -lt "$AI" ]; }
@@ -93,6 +72,19 @@ ABN() {
     if AS_in_BI || AS_in_BO || AS_out_BO; then N; return; fi
   fi
 }
+
+case "$wm" in
+  "sway")
+    wm_cmd="swaymsg"
+    win_edge_top_jq=".rect.y - .deco_rect.height"
+    win_height_jq=".rect.height + .deco_rect.height"
+  ;;
+  "i3")
+    wm_cmd="i3-msg"
+    win_edge_top_jq=".rect.y"
+    win_height_jq=".rect.height"
+  ;;
+esac
 
 ws_thr_jq='((.rect.width + .rect.height) / 40 | floor)'
 
