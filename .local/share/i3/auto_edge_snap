@@ -13,9 +13,9 @@ pid="$(set +e; cat "$file_pid" 2> "/dev/null"; set -e)"
 
 if [ "$pid" ] && kill -0 "$pid" 2> "/dev/null"; then
   exit
-else
-  echo "$$" > "$file_pid"
 fi
+
+echo "$$" > "$file_pid"
 
 AS_on_AZ()  { [ "$AS" -eq "$AZ" ]; }
 BS_on_BZ()  { [ "$BS" -eq "$BZ" ]; }
