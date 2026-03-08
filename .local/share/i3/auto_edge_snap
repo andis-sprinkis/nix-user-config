@@ -94,27 +94,24 @@ ABN() {
   fi
 }
 
-win_jq=".. | select(.type?) | select(.focused) |
-  .type,
-  .floating,
-  .fullscreen_mode,
-  .rect.x, .rect.x + .rect.width,
-  ${win_edge_top_jq}, ${win_edge_top_jq} + ${win_height_jq}"
-
 ws_thr_jq='((.rect.width + .rect.height) / 40 | floor)'
 
-ws_jq=".[] | select(.focused) |
-  .rect.x, .rect.x + .rect.width, .rect.x + ${ws_thr_jq}, .rect.x + .rect.width - ${ws_thr_jq}, .rect.x - ${ws_thr_jq}, .rect.x + .rect.width + ${ws_thr_jq},
-  .rect.y, .rect.y + .rect.height, .rect.y + ${ws_thr_jq}, .rect.y + .rect.height - ${ws_thr_jq}, .rect.y - ${ws_thr_jq}, .rect.y + .rect.height + ${ws_thr_jq}"
+data_jq="
+.[] | select(.focused) |
+  if .floating_nodes | .[] | select(.focused) then
+    (.floating_nodes | .[] | select(.focused) | .rect.x, .rect.x + .rect.width),
+    .rect.x, .rect.x + .rect.width, .rect.x + ${ws_thr_jq}, .rect.x + .rect.width - ${ws_thr_jq}, .rect.x - ${ws_thr_jq}, .rect.x + .rect.width + ${ws_thr_jq},
+    (.floating_nodes | .[] | select(.focused) | ${win_edge_top_jq}, ${win_edge_top_jq} + ${win_height_jq}),
+    .rect.y, .rect.y + .rect.height, .rect.y + ${ws_thr_jq}, .rect.y + .rect.height - ${ws_thr_jq}, .rect.y - ${ws_thr_jq}, .rect.y + .rect.height + ${ws_thr_jq}
+  end
+"
 
 while true; do
-  win="$($wm_cmd -r -t "get_tree" | jq -r "$win_jq")"
+  data=$(swaymsg -r -t "get_workspaces" | jq -r "$data_jq")
 
-  if is_win_floating && [ "$(echo "$win" | sed "3q;d")" = "0" ]; then
-    ws="$($wm_cmd -r -t "get_workspaces" | jq -r "$ws_jq")"
-
+  if [ "$data" ]; then
     # shellcheck disable=SC2046
-    $wm_cmd -q "move absolute position $(ABN $(echo "$win" | sed "4,5!d") $(echo "$ws" | sed "1,6!d")) $(ABN $(echo "$win" | sed "6,7!d") $(echo "$ws" | sed "7,12!d"))"
+    $wm_cmd -q "move absolute position $(ABN $(echo "$data" | sed "1,8!d")) $(ABN $(echo "$data" | sed "9,16!d"))"
   fi
 
   sleep "1"
