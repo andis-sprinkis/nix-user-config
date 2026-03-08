@@ -121,6 +121,7 @@ snap() {
   fi
 }
 
+# shellcheck disable=SC3044
 while true; do
   snap 1> "/dev/null" 2> "/dev/null" & disown
   sleep "1"
