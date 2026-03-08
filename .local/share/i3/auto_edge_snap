@@ -99,7 +99,7 @@ data_jq="
 "
 
 while true; do
-  data=$(swaymsg -r -t "get_workspaces" | jq -r "$data_jq")
+  data="$(swaymsg -r -t "get_workspaces" | jq -r "$data_jq")"
 
   if [ "$data" ]; then
     # shellcheck disable=SC2046
