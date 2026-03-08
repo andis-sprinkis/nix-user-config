@@ -20,7 +20,7 @@ fi
 # fi
 
 # launch tmux
-if [ -z "${TMUX:-""}" ] && [ "$TERM" != "linux" ]; then
+if [ -z "$NO_TMUX" ] && [ -z "${TMUX:-""}" ] && [ "$TERM" != "linux" ]; then
   # shellcheck disable=SC3028
   case "${OSTYPE:-"$(uname)"}" in
     [Dd]"arwin"*)

@@ -10,8 +10,7 @@ case "${OSTYPE:-"$(uname)"}" in
       exec swayimg "$@"
     fi
 
-
-    if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+    if [ "${DISPLAY:-""}" ]; then
       exec nsxiv-rifle -- "$@"
     fi
   ;;
