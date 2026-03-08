@@ -1,5 +1,15 @@
 #!/usr/bin/env sh
 set -eu
+
+file_daemonpid="/tmp/${USER}_i3_auto_edge_snap_daemon_pid"
+daemonpid="$(set +e; cat "$file_daemonpid" 2> "/dev/null"; set -e)"
+
+if [ "$daemonpid" ] && kill -0 "$daemonpid" 2> "/dev/null"; then
+  exit
+else
+  echo "${$}" > "$file_daemonpid"
+fi
+
 wm="${WAYLAND_DISPLAY:+"sway"}"
 wm="${wm:-"i3"}"
 
@@ -101,15 +111,18 @@ ws_jq=".[] | select(.focused) |
   .rect.x, .rect.x + .rect.width, .rect.x + ${ws_thr_x}, .rect.x + .rect.width - ${ws_thr_x}, .rect.x - ${ws_thr_x}, .rect.x + .rect.width + ${ws_thr_x},
   .rect.y, .rect.y + .rect.height, .rect.y + ${ws_thr_y}, .rect.y + .rect.height - ${ws_thr_y}, .rect.y - ${ws_thr_y}, .rect.y + .rect.height + ${ws_thr_y}"
 
-while true; do
+snap() {
   win="$($wm_cmd -r -t "get_tree" | jq -r "$win_jq")"
 
   if is_win_floating && [ "$(echo "$win" | sed "3q;d")" = "0" ]; then
     ws="$($wm_cmd -r -t "get_workspaces" | jq -r "$ws_jq")"
 
-    $wm_cmd -q \
-      "move absolute position $(A_or_B $(echo "$win" | sed "4,5!d") $(echo "$ws" | sed "1,6!d")) $(A_or_B $(echo "$win" | sed "6,7!d") $(echo "$ws" | sed "7,12!d"))"
+    # shellcheck disable=SC2046
+    $wm_cmd -q "move absolute position $(A_or_B $(echo "$win" | sed "4,5!d") $(echo "$ws" | sed "1,6!d")) $(A_or_B $(echo "$win" | sed "6,7!d") $(echo "$ws" | sed "7,12!d"))"
   fi
+}
 
+while true; do
+  snap
   sleep "1"
 done
