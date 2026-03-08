@@ -103,7 +103,7 @@ while true; do
 
   if [ "$data" ]; then
     # shellcheck disable=SC2046
-    $wm_cmd -q "move absolute position $(ABN $(echo "$data" | sed "1,8!d")) $(ABN $(echo "$data" | sed "9,16!d"))"
+    $wm_cmd -q "move absolute position $(ABN $(echo "$data" | head -8)) $(ABN $(echo "$data" | tail -8))"
   fi
 
   sleep "1"
