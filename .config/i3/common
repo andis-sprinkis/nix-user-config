@@ -231,4 +231,7 @@ bar {
   bindsym button3 exec --no-startup-id $applications_menu
 }
 
+
 bindsym $mod+x bar mode toggle
+
+exec_always ${XDG_DATA_HOME:-$HOME/.local/share}/i3/auto_edge_snap

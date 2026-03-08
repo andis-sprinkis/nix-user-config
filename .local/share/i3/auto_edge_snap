@@ -4,6 +4,10 @@ set -eu
 wm="${WAYLAND_DISPLAY:+"sway"}"
 wm="${wm:-"i3"}"
 
+if ! pidof -q "$wm"; then
+  exit
+fi
+
 file_daemonpid="/tmp/${USER}_${wm}_auto_edge_snap_daemon_pid"
 daemonpid="$(set +e; cat "$file_daemonpid" 2> "/dev/null"; set -e)"
 
