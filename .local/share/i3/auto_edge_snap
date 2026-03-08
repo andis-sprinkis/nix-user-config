@@ -14,7 +14,7 @@ daemonpid="$(set +e; cat "$file_daemonpid" 2> "/dev/null"; set -e)"
 if [ "$daemonpid" ] && kill -0 "$daemonpid" 2> "/dev/null"; then
   exit
 else
-  echo "${$}" > "$file_daemonpid"
+  echo "$$" > "$file_daemonpid"
 fi
 
 case "$wm" in
