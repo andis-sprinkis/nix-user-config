@@ -8,13 +8,13 @@ if ! pidof -q "$wm"; then
   exit
 fi
 
-file_daemonpid="/tmp/${USER}_${wm}_auto_edge_snap_daemon_pid"
-daemonpid="$(set +e; cat "$file_daemonpid" 2> "/dev/null"; set -e)"
+file_pid="/tmp/${USER}_${wm}_auto_edge_snap_pid"
+pid="$(set +e; cat "$file_pid" 2> "/dev/null"; set -e)"
 
-if [ "$daemonpid" ] && kill -0 "$daemonpid" 2> "/dev/null"; then
+if [ "$pid" ] && kill -0 "$pid" 2> "/dev/null"; then
   exit
 else
-  echo "$$" > "$file_daemonpid"
+  echo "$$" > "$file_pid"
 fi
 
 AS_on_AZ()  { [ "$AS" -eq "$AZ" ]; }
