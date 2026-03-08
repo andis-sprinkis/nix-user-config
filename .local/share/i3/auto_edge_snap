@@ -59,7 +59,7 @@ A() { echo "$AZ"; }
 B() { echo "$((AS + BZ - BS))"; }
 N() { echo "$AS"; }
 
-A_or_B() {
+ABN() {
   AS="$1" BS="$2" AZ="$3" BZ="$4" AI="$5" BI="$6" AO="$7" BO="$8"
 
   if AS_on_AZ || BS_on_BZ; then N; return; fi
@@ -121,7 +121,7 @@ snap() {
     ws="$($wm_cmd -r -t "get_workspaces" | jq -r "$ws_jq")"
 
     # shellcheck disable=SC2046
-    $wm_cmd -q "move absolute position $(A_or_B $(echo "$win" | sed "4,5!d") $(echo "$ws" | sed "1,6!d")) $(A_or_B $(echo "$win" | sed "6,7!d") $(echo "$ws" | sed "7,12!d"))"
+    $wm_cmd -q "move absolute position $(ABN $(echo "$win" | sed "4,5!d") $(echo "$ws" | sed "1,6!d")) $(ABN $(echo "$win" | sed "6,7!d") $(echo "$ws" | sed "7,12!d"))"
   fi
 }
 
