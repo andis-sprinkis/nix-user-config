@@ -101,11 +101,11 @@ win_jq=".. | select(.type?) | select(.focused) |
   .rect.x, .rect.x + .rect.width,
   ${win_edge_top_jq}, ${win_edge_top_jq} + ${win_height_jq}"
 
-ws_thr='((.rect.width + .rect.height) / 40 | floor)'
+ws_thr_jq='((.rect.width + .rect.height) / 40 | floor)'
 
 ws_jq=".[] | select(.focused) |
-  .rect.x, .rect.x + .rect.width, .rect.x + ${ws_thr}, .rect.x + .rect.width - ${ws_thr}, .rect.x - ${ws_thr}, .rect.x + .rect.width + ${ws_thr},
-  .rect.y, .rect.y + .rect.height, .rect.y + ${ws_thr}, .rect.y + .rect.height - ${ws_thr}, .rect.y - ${ws_thr}, .rect.y + .rect.height + ${ws_thr}"
+  .rect.x, .rect.x + .rect.width, .rect.x + ${ws_thr_jq}, .rect.x + .rect.width - ${ws_thr_jq}, .rect.x - ${ws_thr_jq}, .rect.x + .rect.width + ${ws_thr_jq},
+  .rect.y, .rect.y + .rect.height, .rect.y + ${ws_thr_jq}, .rect.y + .rect.height - ${ws_thr_jq}, .rect.y - ${ws_thr_jq}, .rect.y + .rect.height + ${ws_thr_jq}"
 
 while true; do
   win="$($wm_cmd -r -t "get_tree" | jq -r "$win_jq")"
