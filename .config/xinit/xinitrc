@@ -90,3 +90,6 @@ if ! pidof -q "i3"; then
 else
   exec i3
 fi
+
+# i3/Sway auto edge snap
+"${XDG_DATA_HOME:-$HOME/.local/share}/i3/auto_edge_snap" &

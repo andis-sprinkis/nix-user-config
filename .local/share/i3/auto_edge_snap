@@ -123,6 +123,6 @@ snap() {
 }
 
 while true; do
-  snap
+  snap 1> "/dev/null" 2> "/dev/null" & disown
   sleep "1"
 done
