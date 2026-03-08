@@ -34,9 +34,6 @@ case "$wm" in
   ;;
 esac
 
-ws_thr_x="128"
-ws_thr_y="128"
-
 AS_on_AZ()  { [ "$AS" -eq "$AZ" ]; }
 BS_on_BZ()  { [ "$BS" -eq "$BZ" ]; }
 AS_in_AI()  { [ "$AS" -ge "$AZ" ] && [ "$AS" -lt "$AI" ]; }
@@ -106,6 +103,9 @@ win_jq=".. | select(.type?) | select(.focused) |
   .fullscreen_mode,
   .rect.x, .rect.x + .rect.width,
   ${win_edge_top_jq}, ${win_edge_top_jq} + ${win_height_jq}"
+
+ws_thr_x="(.rect.width / 20 | floor)"
+ws_thr_y="(.rect.height / 20 | floor)"
 
 ws_jq=".[] | select(.focused) |
   .rect.x, .rect.x + .rect.width, .rect.x + ${ws_thr_x}, .rect.x + .rect.width - ${ws_thr_x}, .rect.x - ${ws_thr_x}, .rect.x + .rect.width + ${ws_thr_x},
