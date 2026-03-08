@@ -70,7 +70,7 @@ ABN() {
   fi
 
   if AS_in_AI || AS_in_AO; then
-    if BS_in_S || BS_out_BO || BS_in_AI; then A; return; fi
+    if BS_in_S || BS_out_BO || BS_in_AI || (AS_in_AO && BS_in_AO); then A; return; fi
 
     if BS_in_BI; then
       if [ "$((AS - AZ))" -le "$((BZ - BS))" ]; then A; return; else B; return; fi
@@ -81,24 +81,17 @@ ABN() {
     fi
   fi
 
-  if AS_in_AO && BS_out_AO; then A; return; fi
-
-  if AS_out_AO; then
-    if BS_in_BI || BS_in_BO; then B; return; fi
-    if BS_in_S || BS_in_AI || BS_in_AO || BS_out_AO || BS_out_BO; then N; return; fi
-  fi
-
-  if AS_in_BI; then
+  if AS_out_AO || AS_in_BI || AS_in_BO; then
     if BS_in_BO || BS_in_BI; then B; return; fi
-    if BS_out_BO; then N; return; fi
+
+    if AS_out_AO; then
+      if BS_in_S || BS_in_AI || BS_in_AO || BS_out_AO || BS_out_BO; then N; return; fi
+    fi
   fi
 
-  if AS_in_BO; then
-    if BS_out_BO; then N; return; fi
-    if BS_in_BO; then B; return; fi
+  if BS_out_BO; then
+    if AS_in_BI || AS_in_BO || AS_out_BO; then N; return; fi
   fi
-
-  if AS_out_BO && BS_out_BO; then N; return; fi
 }
 
 win_jq=".. | select(.type?) | select(.focused) |
@@ -114,7 +107,7 @@ ws_jq=".[] | select(.focused) |
   .rect.x, .rect.x + .rect.width, .rect.x + ${ws_thr}, .rect.x + .rect.width - ${ws_thr}, .rect.x - ${ws_thr}, .rect.x + .rect.width + ${ws_thr},
   .rect.y, .rect.y + .rect.height, .rect.y + ${ws_thr}, .rect.y + .rect.height - ${ws_thr}, .rect.y - ${ws_thr}, .rect.y + .rect.height + ${ws_thr}"
 
-snap() {
+while true; do
   win="$($wm_cmd -r -t "get_tree" | jq -r "$win_jq")"
 
   if is_win_floating && [ "$(echo "$win" | sed "3q;d")" = "0" ]; then
@@ -123,10 +116,6 @@ snap() {
     # shellcheck disable=SC2046
     $wm_cmd -q "move absolute position $(ABN $(echo "$win" | sed "4,5!d") $(echo "$ws" | sed "1,6!d")) $(ABN $(echo "$win" | sed "6,7!d") $(echo "$ws" | sed "7,12!d"))"
   fi
-}
 
-# shellcheck disable=SC3044
-while true; do
-  snap 1> "/dev/null" 2> "/dev/null" & disown
   sleep "1"
 done
