@@ -104,8 +104,8 @@ win_jq=".. | select(.type?) | select(.focused) |
   .rect.x, .rect.x + .rect.width,
   ${win_edge_top_jq}, ${win_edge_top_jq} + ${win_height_jq}"
 
-ws_thr_x="(.rect.width / 20 | floor)"
-ws_thr_y="(.rect.height / 20 | floor)"
+ws_thr_x='((.rect.width + .rect.height) / 40 | floor)'
+ws_thr_y='((.rect.width + .rect.height) / 40 | floor)'
 
 ws_jq=".[] | select(.focused) |
   .rect.x, .rect.x + .rect.width, .rect.x + ${ws_thr_x}, .rect.x + .rect.width - ${ws_thr_x}, .rect.x - ${ws_thr_x}, .rect.x + .rect.width + ${ws_thr_x},
