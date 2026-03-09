@@ -29,11 +29,11 @@ ABN() {
 
   if IN "$AI" "$BI" "$AS"; then
     if IN "$AI" "$BI" "$BS" || OUT "$AO" "$BO" "$BS"; then echo "$N"; return; fi
-    if IN "$BI" "$BZ" "$BS" || IN "$BZ" "$BO" "$BS"; then echo "$B"; return; fi
+    if IN "$BI" "$BO" "$BS"; then echo "$B"; return; fi
   fi
 
   if IN "$AZ" "$AI" "$AS" || IN "$AO" "$AZ" "$AS"; then
-    if IN "$AI" "$BI" "$BS" || OUT "$AO" "$BO" "$BS" || IN "$AZ" "$AI" "$BS" || (IN "$AO" "$AZ" "$AS" && IN "$AO" "$AZ" "$BS"); then echo "$A"; return; fi
+    if IN "$AZ" "$BI" "$BS" || OUT "$AO" "$BO" "$BS" || (IN "$AO" "$AZ" "$AS" && IN "$AO" "$AZ" "$BS"); then echo "$A"; return; fi
 
     if IN "$BI" "$BZ" "$BS"; then
       if [ "$((AS - AZ))" -le "$((BZ - BS))" ]; then echo "$A"; return; else echo "$B"; return; fi
@@ -44,17 +44,15 @@ ABN() {
     fi
   fi
 
-  if OUT "$AO" "$BO" "$AS" || IN "$BI" "$BZ" "$AS" || IN "$BZ" "$BO" "$AS"; then
-    if IN "$BZ" "$BO" "$BS" || IN "$BI" "$BZ" "$BS"; then echo "$B"; return; fi
+  if OUT "$AO" "$BO" "$AS" || IN "$BI" "$BO" "$AS"; then
+    if IN "$BI" "$BO" "$BS"; then echo "$B"; return; fi
 
     if OUT "$AO" "$BO" "$AS"; then
-      if IN "$AI" "$BI" "$BS" || IN "$AZ" "$AI" "$BS" || IN "$AO" "$AZ" "$BS" || OUT "$AO" "$BO" "$BS"; then echo "$N"; return; fi
+      if IN "$AO" "$BI" "$BS" || OUT "$AO" "$BO" "$BS"; then echo "$N"; return; fi
     fi
   fi
 
-  if OUT "$AO" "$BO" "$BS"; then
-    if IN "$BI" "$BZ" "$AS" || IN "$BZ" "$BO" "$AS" || OUT "$AO" "$BO" "$AS"; then echo "$N"; return; fi
-  fi
+  if OUT "$AO" "$BO" "$BS" && IN "$BI" "$BO" "$AS"; then echo "$N"; return; fi
 }
 
 case "$wm" in
