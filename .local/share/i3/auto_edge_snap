@@ -31,16 +31,13 @@ ABN() {
     if IN "$BI" "$BO" "$BS"; then echo "$B"; return; fi
   fi
 
-  if IN "$AZ" "$AI" "$AS" || IN "$AO" "$AZ" "$AS"; then
-    if IN "$AZ" "$BI" "$BS" || ! IN "$AO" "$BO" "$BS" || (IN "$AO" "$AZ" "$AS" && IN "$AO" "$AZ" "$BS"); then echo "$A"; return; fi
+  if IN "$AO" "$AZ" "$AS" && IN "$AO" "$AZ" "$BS"; then echo "$A"; return; fi
 
-    if IN "$BI" "$BZ" "$BS"; then
-      if [ "$((AS - AZ))" -le "$((BZ - BS))" ]; then echo "$A"; return; else echo "$B"; return; fi
-    fi
+  if IN "$AO" "$AI" "$AS"; then
+    if IN "$AZ" "$BI" "$BS" || ! IN "$AO" "$BO" "$BS"; then echo "$A"; return; fi
 
-    if IN "$BZ" "$BO" "$BS"; then
-      if [ "$((AS - AZ))" -le "$((BS - BZ))" ]; then echo "$A"; return; else echo "$B"; return; fi
-    fi
+    if IN "$BI" "$BZ" "$BS"; then if [ "$((AS - AZ))" -le "$((BZ - BS))" ]; then echo "$A"; return; else echo "$B"; return; fi fi
+    if IN "$BZ" "$BO" "$BS"; then if [ "$((AS - AZ))" -le "$((BS - BZ))" ]; then echo "$A"; return; else echo "$B"; return; fi fi
   fi
 
   if ! IN "$AO" "$BO" "$AS" || IN "$BI" "$BO" "$AS"; then
