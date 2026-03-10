@@ -34,7 +34,7 @@ ABN() {
     if IN "$BZ" "$BO" "$BS"; then if [ "$((AS - AZ))" -le "$((BS - BZ))" ]; then echo "$AZ"; return; else echo "$((AS + BZ - BS))"; return; fi fi
   fi
 
-  if IN "$BI" "$BO" "$BS" && (IN "$AI" "$BI" "$AS" || ! IN "$AO" "$BI" "$AS"); then echo "$((AS + BZ - BS))"; return; fi
+  if (! IN "$AO" "$AI" "$AS" || IN "$AI" "$BI" "$AS") && IN "$BI" "$BO" "$BS"; then echo "$((AS + BZ - BS))"; return; fi
 
   if IN "$AI" "$BI" "$AS" && ! IN "$AO" "$AI" "$BS" && ! IN "$BI" "$BO" "$BS"; then echo "$AS"; return; fi
   if ! IN "$AO" "$BO" "$AS" && ! IN "$BI" "$BO" "$BS"; then echo "$AS"; return; fi
