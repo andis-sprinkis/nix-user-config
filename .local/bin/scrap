@@ -14,7 +14,7 @@ case "${1:-""}" in
     exec echo "$path_note"
   ;;
   "")
-    exec $EDITOR "$path_note"
+    exec $EDITOR -- "$path_note"
   ;;
   *)
     exit "1"
