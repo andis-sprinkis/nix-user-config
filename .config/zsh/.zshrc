@@ -144,31 +144,22 @@ ${prompt_symbol}"
 
   autoload -Uz "compinit"
 
-  local zcompdump="${ZDOTDIR:-"$HOME"}/.zcompdump"
-  local zcompdump_age_max_s="172800"
-  # 24h = 86400s
-  #  1h =  3600s
+  local statcmd=("stat" "-c" '%Y')
 
   case "$OSTYPE" in
     "darwin"*)
-      if
-        [ ! -f "$zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C /usr/bin/stat -f '%m' "$zcompdump")"))" -gt "$zcompdump_age_max_s" ]
-      then
-        compinit
-      else
-        compinit -C
-      fi
-    ;;
-    *)
-      if
-        [ ! -f "$zcompdump" ] || [ "$(("$(LOCALE=C date +'%s')" - "$(LOCALE=C stat -c '%Y' "$zcompdump")"))" -gt "$zcompdump_age_max_s" ]
-      then
-        compinit
-      else
-        compinit -C
-      fi
+      statcmd=("/usr/bin/stat" "-f" '%m')
     ;;
   esac
+
+  local zcompdump="${ZDOTDIR:-"$HOME"}/.zcompdump"
+  local zcompdump_age_max_s="172800" # 24h = 86400s, 1h =  3600s
+
+  if [ ! -f "$zcompdump" ] || [ "$(("$(LOCALE=C date '+%s')" - "$(LOCALE=C "${statcmd[@]}" "$zcompdump")"))" -gt "$zcompdump_age_max_s" ]; then
+    compinit
+  else
+    compinit -C
+  fi
 
   {
     # compile zcompdump, if modified, to increase startup speed.
