@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+set -eu
+
+dir_snippets="${HOME}/snippet"
+
+mkdir -p "$dir_snippets"
+cd "$dir_snippets"
+
+exec $EDITOR -- "${dir_snippets}/${1:-""}"
