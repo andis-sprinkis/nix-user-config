@@ -7,13 +7,13 @@ file_note="scrap_${timestamp}.md"
 path_note="${dir_notes}/${file_note}"
 
 mkdir -p "$dir_notes"
-cd "$dir_notes"
 
 case "${1:-""}" in
   "path")
     exec echo "$path_note"
   ;;
   "")
+    cd "$dir_notes"
     exec $EDITOR -- "$path_note"
   ;;
   *)

@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
+set -eu
 
 dir_notes="${HOME}/note"
+
+mkdir -p "$dir_notes"
+cd "$dir_notes"
 
 exec $EDITOR -- "${dir_notes}/${1:-""}"
