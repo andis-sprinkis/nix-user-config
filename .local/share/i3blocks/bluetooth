@@ -2,6 +2,7 @@
 set -eu
 
 if [ "${BLOCK_BUTTON:-""}" ]; then
+  # shellcheck disable=SC3044
   case "$BLOCK_BUTTON" in
     "2")
       "${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_workspace" 1> "/dev/null" 2> "/dev/null" & disown
@@ -33,11 +34,13 @@ fi
 
 if [ "${BLOCK_BUTTON:-""}" ]; then
   reload() {
+    # shellcheck disable=SC3044
     if [ "${signal-""}" ]; then
       (sleep "${1:-"0.5"}"; pkill "-SIGRTMIN+${signal}" "i3blocks") 1> "/dev/null" 2> "/dev/null" & disown
     fi
   }
 
+  # shellcheck disable=SC3044
   case "$BLOCK_BUTTON" in
     "1")
       blueman-manager 1> "/dev/null" 2> "/dev/null" & disown

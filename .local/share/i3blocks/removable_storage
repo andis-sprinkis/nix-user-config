@@ -33,12 +33,12 @@ if [ "$rsds_count" = "0" ]; then
 fi
 
 if [ "${BLOCK_BUTTON:-""}" ]; then
+  # shellcheck disable=SC3044
   case "$BLOCK_BUTTON" in
     "1"|"3")
       title="Removable storage devices"
       cmd="echo \"\033]0;${title}\007\"; echo \"${title}:
 ${rsds_mounts}\" | ${PAGER}"
-      # shellcheck disable=SC3044
       $TERMINAL -e "$SHELL" -c "$cmd" 1> "/dev/null" 2> "/dev/null" & disown
     ;;
     "2")

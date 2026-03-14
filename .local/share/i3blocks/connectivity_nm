@@ -8,12 +8,14 @@ if [ -z "$connectivity" ]; then
 fi
 
 if [ "${BLOCK_BUTTON:-""}" ]; then
+  # shellcheck disable=SC3044
   reload() {
     if [ "${signal-""}" ]; then
       (sleep "${1:-"0.5"}"; pkill "-SIGRTMIN+${signal}" "i3blocks") 1> "/dev/null" 2> "/dev/null" & disown
     fi
   }
 
+  # shellcheck disable=SC3044
   case "$BLOCK_BUTTON" in
     "1")
       $TERMINAL -e "$SHELL" -c "sleep \"0.5\"; set +e; nmcli device wifi rescan 2> /dev/null; set -e; nmtui" 1> "/dev/null" 2> "/dev/null" & disown

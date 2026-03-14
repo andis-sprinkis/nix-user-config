@@ -4,12 +4,14 @@ set -eu
 status="$(idle_manager "status")"
 
 if [ "${BLOCK_BUTTON:-""}" ]; then
+  # shellcheck disable=SC3044
   reload() {
     [ "$signal" ] && {
       (sleep "0.5"; pkill "-SIGRTMIN+${signal}" "i3blocks") 1> "/dev/null" 2> "/dev/null" & disown
     }
   }
 
+  # shellcheck disable=SC3044
   idle_manager_lock() {
     echo "Lock
 Lock"
@@ -17,6 +19,7 @@ Lock"
     exit "0"
   }
 
+  # shellcheck disable=SC3044
   idle_manager_start() {
     echo "Starting idle-manager...
 Starting idle-mgr."
@@ -25,6 +28,7 @@ Starting idle-mgr."
     exit "0"
   }
 
+  # shellcheck disable=SC3044
   idle_manager_stop() {
     echo "Stopping idle-manager...
 Stopping idle-mgr."
@@ -33,6 +37,7 @@ Stopping idle-mgr."
     exit "0"
   }
 
+  # shellcheck disable=SC3044
   idle_manager_reload() {
     echo "Stopping idle-manager...
 Stopping idle-mgr."
@@ -41,6 +46,7 @@ Stopping idle-mgr."
     exit "0"
   }
 
+# shellcheck disable=SC3044
   case "$BLOCK_BUTTON" in
     "1")
       case "$status" in

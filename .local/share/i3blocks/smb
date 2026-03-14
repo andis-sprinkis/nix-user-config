@@ -2,6 +2,7 @@
 set -eu
 
 if [ "${BLOCK_BUTTON:-""}" ]; then
+  # shellcheck disable=SC3044
   case "$BLOCK_BUTTON" in
     "2")
       "${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_workspace" 1> "/dev/null" 2> "/dev/null" & disown
@@ -16,6 +17,7 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
 fi
 
 if systemctl is-active --quiet smb; then
+  # shellcheck disable=SC3044
   if [ "${BLOCK_BUTTON:-""}" ] && [ "$BLOCK_BUTTON" = "3" ]; then
     cmd="echo \"\033]0;Stop SMB service\007\"; systemctl stop smb; read"
     $TERMINAL -e "$SHELL" -c "$cmd" 1> "/dev/null" 2> "/dev/null" & disown
