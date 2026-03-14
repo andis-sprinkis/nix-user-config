@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+set -eu
+
+timestamp="$(TZ="" date -u "+%Y_%m_%dT%H_%M_%SZ")"
+dir_notes="${HOME}/note"
+file_note="scrap_${timestamp}.md"
+path_note="${dir_notes}/${file_note}"
+
+mkdir -p "$dir_notes"
+cd "$dir_notes"
+
+case "${1:-""}" in
+  "path")
+    exec echo "$path_note"
+  ;;
+  "")
+    exec $EDITOR "$path_note"
+  ;;
+  *)
+    exit "1"
+  ;;
+esac
