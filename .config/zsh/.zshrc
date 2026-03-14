@@ -84,8 +84,14 @@
 
   ZLE_RPROMPT_INDENT="0"
 
+  local exittime=""
+
   precmd() {
     local timenow="${timethen:+"$(print -P "%D{%s%3.}")"}"
+
+    if [ "${timethen:-""}" ]; then
+      exittime="$(print -P "%D{%T}")"
+    fi
 
     # set window title
     printf "\033]0;%s\007" "$PWD"
@@ -114,7 +120,7 @@
       unset timethen
     fi
 
-    RPROMPT="%F{8}${tmout_status}${elapsedtime}%D{%T}%(?.. %F{1}(%?%))%f%F{3}%(1j. [%j].)"
+    RPROMPT="%F{8}${tmout_status}${elapsedtime}${exittime}%(?.. %F{1}(%?%))%f%F{3}%(1j. [%j].)"
 
     vcs_info
   }
