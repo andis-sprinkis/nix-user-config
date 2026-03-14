@@ -37,9 +37,9 @@ while getopts fh name; do
   esac
 done
 
-data="$(LC_ALL=C df --output="target,pcent,used,avail,size,source" \
-  | column -t -o";" | sed -e 's/\s*\;/\;/g' \
+data="$(LC_ALL="C" df --output="target,pcent,used,avail,size,source" \
   | tail -n "+2" \
+  | column -t -o";" | sed -e 's/\s*\;/\;/g' \
   | sort)"
 
 # TODO: use SIZE to specify bytes instead of kB as the base unit
@@ -133,7 +133,7 @@ for line in $data; do
 
   if [ "$opt_has_f" = "0" ]; then
     case "$val_p_dev" in
-      "tmpfs"|"efivarfs"|"dev")
+      "none"|"tmpfs"|"efivarfs"|"dev")
         continue
       ;;
       "run")
