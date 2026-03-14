@@ -73,7 +73,6 @@ alias \
   mount="sudo mount" \
   mv="mv -v" \
   myip="curl --silent \"https://ipinfo.io/\" | jq" \
-  n="\$EDITOR \$HOME/note/" \
   ncdu="ncdu --color dark -x" \
   nethogs="sudo nethogs -l" \
   nmtui="nmcli device wifi rescan; nmtui" \
