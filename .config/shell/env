@@ -139,6 +139,12 @@ export KERAS_HOME="${XDG_STATE_HOME:-$HOME/.local/state}/keras"
 # configure sqlite
 export SQLITE_HISTORY="${XDG_CACHE_HOME:-$HOME/.cache}/sqlite/history"
 
+# configure Android Studio
+export ANDROID_USER_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/android"
+
+# configure azure-cli
+export AZURE_CONFIG_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/azure"
+
 # configure go
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
 
