@@ -22,7 +22,7 @@ IN() { test "$((($3 - $1) * ($2 - $3)))" -gt "0"; }
 ABN() {
   AS="$1" BS="$2" AZ="$3" BZ="$4" AI="$5" BI="$6" AO="$7" BO="$8"
 
-  if [ "$AZ" -eq "$AS" ] || [ "$BZ" -eq "$BS" ]; then echo "$AS"; return; fi
+  if [ $(((AZ - AS) * (BZ - BS))) -eq "0" ]; then echo "$AS"; return; fi
 
   BN="10000000" # AN="-10000000"
 
