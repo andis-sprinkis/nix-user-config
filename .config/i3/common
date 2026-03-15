@@ -164,11 +164,6 @@ bindsym $mod+Mod1+$down  resize shrink height 56px
 bindsym $mod+Mod1+$up    resize grow   height 56px
 bindsym $mod+Mod1+$right resize grow   width  56px
 
-bindsym $mod+Mod1+Shift+$left  exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/snap_move left
-bindsym $mod+Mod1+Shift+$down  exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/snap_move down
-bindsym $mod+Mod1+Shift+$up    exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/snap_move up
-bindsym $mod+Mod1+Shift+$right exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/snap_move right
-
 set $color0         #1f1f1f
 set $color1         #f44747
 set $color2         #608b4e
@@ -230,7 +225,6 @@ bar {
   bindsym button2 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/new_workspace
   bindsym button3 exec --no-startup-id $applications_menu
 }
-
 
 bindsym $mod+x bar mode toggle
 
