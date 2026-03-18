@@ -214,6 +214,7 @@ Shift+d = prev_dir
 d = next_dir
 Shift+o = prev_frame
 o = next_frame
+c = exec ""
 Shift+c = skip_file
 Shift+s = mode slideshow
 s = animation
@@ -318,6 +319,7 @@ Next = page_down
 p = page_up
 n = page_down
 
+c = exec ""
 Shift+c = skip_file
 f = fullscreen
 Return = mode
