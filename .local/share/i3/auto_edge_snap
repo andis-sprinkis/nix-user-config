@@ -25,12 +25,10 @@ ABN() {
 
   if [ "$(((AZ - AS) * (BZ - BS)))" -eq "0" ]; then echo "$AS"; return; fi
 
-  BN="10000000" # AN="-10000000"
-
   if IN "$AO" "$AZ" "$AS" && IN "$AO" "$AZ" "$BS"; then echo "$AZ"; return; fi
 
   if IN "$AO" "$AI" "$AS"; then
-    if IN "$AZ" "$BI" "$BS" || IN "$BO" "$BN" "$BS"; then echo "$AZ"; return; fi
+    if IN "$AZ" "$BI" "$BS" || IN "$BO" "10000000" "$BS"; then echo "$AZ"; return; fi
     if IN "$BI" "$BO" "$BS"; then echo "$(((AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS) ? AZ : AS + BZ - BS))"; return; fi
   fi
 
