@@ -1,8 +1,4 @@
--- set order by file size for the image list
-swayimg.imagelist.set_order("size")
-
-swayimg.text.set_size(32)
-swayimg.text.set_foreground(0xffff0000)
+swayimg.text.set_size(12)
 
 -- set top left text block scheme for viewer mode
 swayimg.viewer.set_text("topleft", {
