@@ -1,9 +1,7 @@
 -- set order by file size for the image list
 swayimg.imagelist.set_order("size")
 
--- set font size
 swayimg.text.set_size(32)
--- set font color to fully opaque red color
 swayimg.text.set_foreground(0xffff0000)
 
 -- set top left text block scheme for viewer mode
