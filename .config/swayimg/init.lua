@@ -1,0 +1,48 @@
+-- set order by file size for the image list
+swayimg.imagelist.set_order("size")
+
+-- set font size
+swayimg.text.set_size(32)
+-- set font color to fully opaque red color
+swayimg.text.set_foreground(0xffff0000)
+
+-- set top left text block scheme for viewer mode
+swayimg.viewer.set_text("topleft", {
+  "File: {name}",
+  "Format: {format}",
+  "File size: {sizehr}",
+  "File time: {time}",
+  "EXIF date: {meta.Exif.Photo.DateTimeOriginal}",
+  "EXIF camera: {meta.Exif.Image.Model}"
+})
+
+-- bind the left arrow key to move the image to the left by 1/10 of the application window size
+swayimg.viewer.on_key("Left", function()
+  local wnd = swayimg.get_window_size()
+  local pos = swayimg.viewer.get_position()
+  swayimg.viewer.set_abs_position(math.floor(pos.x - wnd.width / 10), pos.y);
+end)
+
+-- bind mouse vertical scroll button with pressed Ctrl to zoom in the image at mouse pointer coordinates
+swayimg.viewer.on_mouse("Ctrl-ScrollUp", function()
+  local pos = swayimg.get_mouse_pos()
+  local scale = swayimg.viewer.get_scale()
+  scale = scale + scale / 10
+  swayimg.viewer.set_abs_scale(scale, pos.x, pos.y);
+end)
+
+-- set a custom window title in gallery mode
+swayimg.gallery.on_image_change(function()
+  local image = swayimg.gallery.get_image()
+  swayimg.set_title("Gallery: "..image.path)
+end)
+
+-- print paths to all marked files by pressing Ctrl-p in gallery mode
+swayimg.gallery.on_key("Ctrl-p", function()
+  local entries = swayimg.imagelist.get()
+  for _, entry in ipairs(entries) do
+    if entry.mark then
+        print(entry.path)
+    end
+  end
+end)
