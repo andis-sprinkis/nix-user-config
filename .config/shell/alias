@@ -119,7 +119,8 @@ alias \
   unlock_user="sudo faillock --reset --user" \
   tree="tree -CF" \
   viff="nvim -d" \
-  wget="wget --hsts-file=\"\${XDG_DATA_HOME:-\$HOME/.local/share}/wget-hsts\""
+  wget="wget --hsts-file=\"\${XDG_DATA_HOME:-\$HOME/.local/share}/wget-hsts\"" \
+  yt-dlp-date="yt-dlp -o \"%(release_date>%Y%m%d,upload_date>%Y%m%d|Unknown)s %(title)s.%(ext)s\""
 
 alias_gnu_ls="LC_COLLATE=C ls -xhAFN --color=always --group-directories-first --time-style=long-iso"
 
