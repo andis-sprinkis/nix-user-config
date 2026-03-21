@@ -1,4 +1,6 @@
-swayimg.text.set_size(12)
+swayimg.text.set_size(16)
+swayimg.enable_overlay(false)
+swayimg.imagelist.enable_adjacent(true)
 
 -- set top left text block scheme for viewer mode
 swayimg.viewer.set_text("topleft", {
