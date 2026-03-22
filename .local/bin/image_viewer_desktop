@@ -6,14 +6,14 @@ case "${OSTYPE:-"$(uname)"}" in
     open -a "Preview" "$@"
   ;;
   *)
-    exec nsxiv-rifle -- "$@"
+    exec nsxiv-rifle "$@"
 
     # if [ "${WAYLAND_DISPLAY:-""}" ]; then
     #   exec swayimg "$@"
     # fi
     #
     # if [ "${DISPLAY:-""}" ]; then
-    #   exec nsxiv-rifle -- "$@"
+    #   exec nsxiv-rifle "$@"
     # fi
   ;;
 esac
