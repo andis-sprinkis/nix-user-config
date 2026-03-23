@@ -70,7 +70,7 @@ while true; do
       # Try to quit
       if ! lf_send "$lfid" "&if [ \"\$lf_user_quittimer\" = \"true\" ] && [ \"\$lf_user_quittimersec\" ] && [ \"\$lf_mode\" = \"normal\" ]; then lf -remote \"send \${id} quit\"; else \: > \"/tmp/\${USER}_lf_heartbeat/\${id}\"; fi"; then
         # The client doesn't exist
-        set +e; rm "$lfid_file" 2> "/dev/null"; set -e
+        rm -f "$lfid_file"
         continue
       fi
 
@@ -79,7 +79,7 @@ while true; do
 
       if ! lf_send "$lfid"; then
         # The client doesn't exist
-        set +e; rm "$lfid_file" 2> "/dev/null"; set -e
+        rm -f "$lfid_file"
       fi
     fi
   done
