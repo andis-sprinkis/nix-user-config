@@ -85,16 +85,16 @@ print_strings() {
 }
 
 print_mediainfo() {
-  if find_util "mediainfo"; then
-    mediainfo "$FPATH" | head -n -2 | sed -e 's/ *: /: /g' -e '/^General$/d'
+  if find_util "mediainfo" && find_util "ansifilter"; then
+    mediainfo "$FPATH" | head -n -2 | sed -e 's/ *: /: /g' -e '/^General$/d' | ansifilter
   else
     return "1"
   fi
 }
 
 print_exiftool() {
-  if find_util "exiftool"; then
-    exiftool -s2 "$FPATH"
+  if find_util "exiftool" && find_util "ansifilter"; then
+    exiftool -s2 "$FPATH" | ansifilter
   else
     return "1"
   fi
@@ -133,8 +133,8 @@ print_als() {
 }
 
 print_bat() {
-  if find_util "bat"; then
-    bat --color=always --italic-text=always --style=plain -- "$FPATH"
+  if find_util "bat" && find_util "ansifilter"; then
+    ansifilter "$FPATH" | bat --color=always --italic-text=always --style=plain --
   else
     return "1"
   fi
@@ -231,8 +231,8 @@ case "$MIME" in
       fi
     fi
 
-    if find_util "pdftotext"; then
-      pdftotext -l "2" -nopgbrk -q -- "$FPATH" -
+    if find_util "pdftotext" && find_util "ansifilter"; then
+      pdftotext -l "2" -nopgbrk -q -- "$FPATH" - | ansifilter
     fi
   ;;
   image/vnd.djvu*)
@@ -258,7 +258,7 @@ case "$MIME" in
     print_mime
 
     if find_util "docx2txt"; then
-      docx2txt "$FPATH" -
+      docx2txt "$FPATH" - | ansifilter
       echo
     fi
 
@@ -382,8 +382,8 @@ case "$MIME" in
   *opendocument*)
     print_mime
 
-    if find_util "odt2txt"; then
-      odt2txt "$FPATH"
+    if find_util "odt2txt" && find_util "ansifilter"; then
+      odt2txt "$FPATH" | ansifilter
       echo
     fi
 
@@ -416,20 +416,20 @@ case "$MIME" in
       echo
     fi
 
-    if [ "$MIME" = "audio/mpeg" ] && find_util "mpg123-id3dump"; then
-      mpg123-id3dump -- "$FPATH"
+    if [ "$MIME" = "audio/mpeg" ] && find_util "mpg123-id3dump" && find_util "ansifilter"; then
+      mpg123-id3dump -- "$FPATH" | ansifilter
     fi
   ;;
   application/vnd.sqlite*)
     print_mime
 
-    if find_util "sqlite3"; then
+    if find_util "sqlite3" && find_util "ansifilter"; then
       tables="$(set +e; sqlite3 "$FPATH" '.tables'; set -e)"
 
       if [ "${tables:-""}" ]; then
         echo ".tables:
 ${tables}
-"
+" | ansifilter
       fi
     fi
 
