@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 set +e
+# shellcheck disable=SC2154
 : > "/tmp/${USER}_lf_heartbeat/${id}" 0</dev/null 2>/dev/null & disown
 set -e
 

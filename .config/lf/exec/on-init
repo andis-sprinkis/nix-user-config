@@ -1,9 +1,12 @@
 #!/usr/bin/env sh
+# shellcheck disable=SC3044
 set -eu
+
 
 "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/_quittimer" 0</dev/null 1>/dev/null 2>/dev/null & disown
 "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/_set-ratios" 0</dev/null 1>/dev/null 2>/dev/null & disown
 "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/_set-title" 0</dev/null 1>/dev/null 2>/dev/null & disown
 "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/_set-rulerfmt" 0</dev/null 1>/dev/null 2>/dev/null & disown
 
+# shellcheck disable=SC2154
 lf -remote "send ${id} reload" 0</dev/null 1>/dev/null 2>/dev/null & disown

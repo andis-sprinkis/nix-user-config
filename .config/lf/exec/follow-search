@@ -4,5 +4,6 @@ set -eu
 fpath="$(set +e; fzf; set -e)"
 
 if [ "$fpath" ]; then
+  # shellcheck disable=SC2154
   lf -remote "send ${id} select \"${fpath}\""
 fi
