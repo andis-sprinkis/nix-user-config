@@ -134,7 +134,7 @@ print_als() {
 
 print_bat() {
   if find_util "bat" && find_util "ansifilter"; then
-    ansifilter "$FPATH" | bat --color=always --italic-text=always --style=plain --
+    ansifilter "$FPATH" | bat --color=always --italic-text=always --style=plain --file-name "$FPATH"
   else
     return "1"
   fi
