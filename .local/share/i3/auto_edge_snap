@@ -4,7 +4,6 @@ set -eu
 wm="${WAYLAND_DISPLAY:+"sway"}"
 wm="${wm:-"i3"}"
 
-
 if ! pidof -q "$wm"; then
   exit
 fi
@@ -17,8 +16,6 @@ if [ "$pid" ] && kill -0 "$pid" 2> "/dev/null"; then
 fi
 
 echo "$$" > "$file_pid"
-
-IN() { return "$((($3 - $1) * ($2 - $3) > 0 ? 0 : 1))"; }
 
 case "$wm" in
   "sway")
@@ -44,6 +41,8 @@ data_jq="
     .rect.y, .rect.y + .rect.height, .rect.y + ${ws_thr_jq}, .rect.y + .rect.height - ${ws_thr_jq}, .rect.y - ${ws_thr_jq}, .rect.y + .rect.height + ${ws_thr_jq}
   end
 "
+
+IN() { return "$((($3 - $1) * ($2 - $3) > 0 ? 0 : 1))"; }
 
 while true; do
   data="$($wm_cmd -r -t "get_workspaces" | jq -r "$data_jq")"
