@@ -20,23 +20,54 @@ echo "$$" > "$file_pid"
 
 IN() { return "$((($3 - $1) * ($2 - $3) > 0 ? 0 : 1))"; }
 
-ABN() {
-  AS="$1" BS="$2" AZ="$3" BZ="$4" AI="$5" BI="$6" AO="$7" BO="$8"
+snap() {
+  H="" V=""
 
-  if [ "$(((AZ - AS) * (BZ - BS)))" -eq "0" ]; then echo "$AS"; return; fi
+  while [ -z "$H" ]; do
+    AS="$1" BS="$2" AZ="$3" BZ="$4" AI="$5" BI="$6" AO="$7" BO="$8"
 
-  if IN "$AO" "$AZ" "$AS" && IN "$AO" "$AZ" "$BS"; then echo "$AZ"; return; fi
+    if [ "$(((AZ - AS) * (BZ - BS)))" -eq "0" ]; then H="$AS"; continue; fi
 
-  if IN "$AO" "$AI" "$AS"; then
-    if IN "$AZ" "$BI" "$BS" || IN "$BO" "10000000" "$BS"; then echo "$AZ"; return; fi
-    if IN "$BI" "$BO" "$BS"; then echo "$(((AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS) ? AZ : AS + BZ - BS))"; return; fi
-  fi
+    if IN "$AO" "$AZ" "$AS" && IN "$AO" "$AZ" "$BS"; then H="$AZ"; continue; fi
 
-  if (! IN "$AO" "$AI" "$AS" || IN "$AI" "$BI" "$AS") && IN "$BI" "$BO" "$BS"; then echo "$((AS + BZ - BS))"; return; fi
+    if IN "$AO" "$AI" "$AS"; then
+      if IN "$AZ" "$BI" "$BS" || IN "$BO" "10000000" "$BS"; then H="$AZ"; continue; fi
+      if IN "$BI" "$BO" "$BS"; then H="$(((AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS) ? AZ : AS + BZ - BS))"; continue; fi
+    fi
 
-  if IN "$AI" "$BI" "$AS" && ! IN "$AO" "$AI" "$BS" && ! IN "$BI" "$BO" "$BS"; then echo "$AS"; return; fi
-  if ! IN "$AO" "$BO" "$AS" && ! IN "$BI" "$BO" "$BS"; then echo "$AS"; return; fi
-  if IN "$BI" "$BO" "$AS" && ! IN "$AO" "$BO" "$BS"; then echo "$AS"; return; fi
+    if (! IN "$AO" "$AI" "$AS" || IN "$AI" "$BI" "$AS") && IN "$BI" "$BO" "$BS"; then H="$((AS + BZ - BS))"; continue; fi
+
+    if IN "$AI" "$BI" "$AS" && ! IN "$AO" "$AI" "$BS" && ! IN "$BI" "$BO" "$BS"; then H="$AS"; continue; fi
+    if ! IN "$AO" "$BO" "$AS" && ! IN "$BI" "$BO" "$BS"; then H="$AS"; continue; fi
+    if IN "$BI" "$BO" "$AS" && ! IN "$AO" "$BO" "$BS"; then H="$AS"; continue; fi
+
+    return
+  done
+
+  while [ -z "$V" ]; do
+    AS="$9" BS="${10}" AZ="${11}" BZ="${12}" AI="${13}" BI="${14}" AO="${15}" BO="${16}"
+
+    if [ "$(((AZ - AS) * (BZ - BS)))" -eq "0" ]; then V="$AS"; continue; fi
+
+    if IN "$AO" "$AZ" "$AS" && IN "$AO" "$AZ" "$BS"; then V="$AZ"; continue; fi
+
+    if IN "$AO" "$AI" "$AS"; then
+      if IN "$AZ" "$BI" "$BS" || IN "$BO" "10000000" "$BS"; then V="$AZ"; continue; fi
+      if IN "$BI" "$BO" "$BS"; then V="$(((AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS) ? AZ : AS + BZ - BS))"; continue; fi
+    fi
+
+    if (! IN "$AO" "$AI" "$AS" || IN "$AI" "$BI" "$AS") && IN "$BI" "$BO" "$BS"; then V="$((AS + BZ - BS))"; continue; fi
+
+    if IN "$AI" "$BI" "$AS" && ! IN "$AO" "$AI" "$BS" && ! IN "$BI" "$BO" "$BS"; then V="$AS"; continue; fi
+    if ! IN "$AO" "$BO" "$AS" && ! IN "$BI" "$BO" "$BS"; then V="$AS"; continue; fi
+    if IN "$BI" "$BO" "$AS" && ! IN "$AO" "$BO" "$BS"; then V="$AS"; continue; fi
+
+    return
+  done
+
+  set +e # The focused window may not be floating anymore
+  $wm_cmd -q "move absolute position ${H} ${V}"
+  set -e
 }
 
 case "$wm" in
@@ -68,10 +99,8 @@ while true; do
   data="$($wm_cmd -r -t "get_workspaces" | jq -r "$data_jq")"
 
   if [ "$data" ]; then
-    set +e # The focused window may not be floating anymore
-    # shellcheck disable=SC2046
-    $wm_cmd -q "move absolute position $(ABN $(echo "$data" | head -8)) $(ABN $(echo "$data" | tail -8))"
-    set -e
+    # shellcheck disable=SC2086
+    snap $data
   fi
 
   sleep "1"
