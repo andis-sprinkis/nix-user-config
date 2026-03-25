@@ -56,52 +56,36 @@ while true; do
   # shellcheck disable=SC2086
   set -- $data
 
-  H="" V=""
+  for axis in "X" "Y"; do
+    case "$axis" in
+      "X")
+        AS="$1" BS="$2" AZ="$3" BZ="$4" AI="$5" BI="$6" AO="$7" BO="$8"
+      ;;
+      "Y")
+        AS="$9" BS="${10}" AZ="${11}" BZ="${12}" AI="${13}" BI="${14}" AO="${15}" BO="${16}"
+      ;;
+    esac
 
-  while [ -z "$H" ]; do
-    AS="$1" BS="$2" AZ="$3" BZ="$4" AI="$5" BI="$6" AO="$7" BO="$8"
+    if [ "$(((AZ - AS) * (BZ - BS)))" -eq "0" ]; then set -- "$@" "$AS"; continue; fi
 
-    if [ "$(((AZ - AS) * (BZ - BS)))" -eq "0" ]; then H="$AS"; continue; fi
-
-    if IN "$AO" "$AZ" "$AS" && IN "$AO" "$AZ" "$BS"; then H="$AZ"; continue; fi
+    if IN "$AO" "$AZ" "$AS" && IN "$AO" "$AZ" "$BS"; then set -- "$@" "$AZ"; continue; fi
 
     if IN "$AO" "$AI" "$AS"; then
-      if IN "$AZ" "$BI" "$BS" || IN "$BO" "10000000" "$BS"; then H="$AZ"; continue; fi
-      if IN "$BI" "$BO" "$BS"; then H="$(((AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS) ? AZ : AS + BZ - BS))"; continue; fi
+      if IN "$AZ" "$BI" "$BS" || IN "$BO" "10000000" "$BS"; then set -- "$@" "$AZ"; continue; fi
+      if IN "$BI" "$BO" "$BS"; then set -- "$@" "$(((AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS) ? AZ : AS + BZ - BS))"; continue; fi
     fi
 
-    if (! IN "$AO" "$AI" "$AS" || IN "$AI" "$BI" "$AS") && IN "$BI" "$BO" "$BS"; then H="$((AS + BZ - BS))"; continue; fi
+    if (! IN "$AO" "$AI" "$AS" || IN "$AI" "$BI" "$AS") && IN "$BI" "$BO" "$BS"; then set -- "$@" "$((AS + BZ - BS))"; continue; fi
 
-    if IN "$AI" "$BI" "$AS" && ! IN "$AO" "$AI" "$BS" && ! IN "$BI" "$BO" "$BS"; then H="$AS"; continue; fi
-    if ! IN "$AO" "$BO" "$AS" && ! IN "$BI" "$BO" "$BS"; then H="$AS"; continue; fi
-    if IN "$BI" "$BO" "$AS" && ! IN "$AO" "$BO" "$BS"; then H="$AS"; continue; fi
+    if IN "$AI" "$BI" "$AS" && ! IN "$AO" "$AI" "$BS" && ! IN "$BI" "$BO" "$BS"; then set -- "$@" "$AS"; continue; fi
+    if ! IN "$AO" "$BO" "$AS" && ! IN "$BI" "$BO" "$BS"; then set -- "$@" "$AS"; continue; fi
+    if IN "$BI" "$BO" "$AS" && ! IN "$AO" "$BO" "$BS"; then set -- "$@" "$AS"; continue; fi
 
     exit "2"
   done
 
-  while [ -z "$V" ]; do
-    AS="$9" BS="${10}" AZ="${11}" BZ="${12}" AI="${13}" BI="${14}" AO="${15}" BO="${16}"
-
-    if [ "$(((AZ - AS) * (BZ - BS)))" -eq "0" ]; then V="$AS"; continue; fi
-
-    if IN "$AO" "$AZ" "$AS" && IN "$AO" "$AZ" "$BS"; then V="$AZ"; continue; fi
-
-    if IN "$AO" "$AI" "$AS"; then
-      if IN "$AZ" "$BI" "$BS" || IN "$BO" "10000000" "$BS"; then V="$AZ"; continue; fi
-      if IN "$BI" "$BO" "$BS"; then V="$(((AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS) ? AZ : AS + BZ - BS))"; continue; fi
-    fi
-
-    if (! IN "$AO" "$AI" "$AS" || IN "$AI" "$BI" "$AS") && IN "$BI" "$BO" "$BS"; then V="$((AS + BZ - BS))"; continue; fi
-
-    if IN "$AI" "$BI" "$AS" && ! IN "$AO" "$AI" "$BS" && ! IN "$BI" "$BO" "$BS"; then V="$AS"; continue; fi
-    if ! IN "$AO" "$BO" "$AS" && ! IN "$BI" "$BO" "$BS"; then V="$AS"; continue; fi
-    if IN "$BI" "$BO" "$AS" && ! IN "$AO" "$BO" "$BS"; then V="$AS"; continue; fi
-
-    exit "3"
-  done
-
   set +e # The focused window may not be floating anymore
-  $wm_cmd -q "move absolute position ${H} ${V}"
+  $wm_cmd -q "move absolute position ${17} ${18}"
   set -e
 
   sleep "1"
