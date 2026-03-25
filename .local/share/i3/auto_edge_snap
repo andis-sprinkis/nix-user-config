@@ -76,7 +76,7 @@ while true; do
     if ! IN "$AO" "$BO" "$AS" && ! IN "$BI" "$BO" "$BS"; then H="$AS"; continue; fi
     if IN "$BI" "$BO" "$AS" && ! IN "$AO" "$BO" "$BS"; then H="$AS"; continue; fi
 
-    return
+    exit "2"
   done
 
   while [ -z "$V" ]; do
@@ -97,7 +97,7 @@ while true; do
     if ! IN "$AO" "$BO" "$AS" && ! IN "$BI" "$BO" "$BS"; then V="$AS"; continue; fi
     if IN "$BI" "$BO" "$AS" && ! IN "$AO" "$BO" "$BS"; then V="$AS"; continue; fi
 
-    return
+    exit "3"
   done
 
   set +e # The focused window may not be floating anymore
