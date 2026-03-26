@@ -228,6 +228,7 @@ user_pref("signon.autofillForms", false);
 user_pref("signon.firefoxRelay.feature", "disabled");
 user_pref("signon.formlessCapture.enabled", false);
 user_pref("signon.generation.enabled", false);
+user_pref("signon.management.page.breach-alerts.enabled", false);
 user_pref("toolkit.coverage.endpoint.base", "");
 user_pref("toolkit.coverage.opt-out", true);
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
