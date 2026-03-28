@@ -38,6 +38,10 @@ for_window {
   [app_id="mpv"] floating enable, sticky enable
 }
 
+set $tabs_new "wtype -M 'ctrl' -k 't' -m 'ctrl'"
+
+bindsym button2 exec swaymsg [app_id="firefox" con_id="__focused__"] exec $tabs_new || swaymsg [class="Chromium" instance="chromium" con_id="__focused__"] exec $tabs_new
+
 set $tabs_fw "wtype -M 'ctrl' -k 'tab' -m 'ctrl'"
 set $tabs_bw "wtype -M 'ctrl' -M 'shift' -k 'tab' -m 'ctrl' -m 'shift'"
 
@@ -51,7 +55,6 @@ bindsym --locked $mod+braceleft    exec --no-startup-id playerctl position 10-
 bindsym --locked $mod+braceright   exec --no-startup-id playerctl position 10+
 bindsym --locked $mod+bracketleft  exec --no-startup-id playerctl previous
 bindsym --locked $mod+bracketright exec --no-startup-id playerctl next
-
 
 bindsym --locked $mod+period exec --no-startup-id sound "+"
 bindsym --locked $mod+comma  exec --no-startup-id sound "-"
