@@ -125,8 +125,8 @@ print_chafa() {
 }
 
 print_als() {
-  if find_util "als"; then
-    als --format="$1" -- "$FPATH"
+  if find_util "als" && find_util "ansifilter"; then
+    als --format="$1" -- "$FPATH" | ansifilter
   else
     return "1"
   fi
@@ -219,14 +219,14 @@ case "$MIME" in
       fi
     fi
 
-    if find_util "pdfinfo"; then
-      if pdfinfo "$FPATH"; then
+    if find_util "pdfinfo" && find_util "ansifilter"; then
+      if pdfinfo "$FPATH" | ansifilter; then
         echo
       fi
     fi
 
-    if find_util "pdfsig"; then
-      if pdfsig "$FPATH"; then
+    if find_util "pdfsig" && find_util "ansifilter"; then
+      if pdfsig "$FPATH" | ansifilter; then
         echo
       fi
     fi
@@ -331,9 +331,9 @@ case "$MIME" in
   "application/x-7z-compressed")
     print_mime
 
-    if find_util "als"; then
+    if find_util "als" && find_util "ansifilter"; then
       # Passing an empty password to avoid a lock-up.
-      set +e; als --format=7z --format-option=-p="" -- "$FPATH"; set -e
+      set +e; als --format=7z --format-option=-p="" -- "$FPATH" | ansifilter; set -e
     fi
   ;;
   application/gzip|application/x-bzip1|application/x-bzip2|application/x-compress|application/x-lzma|application/x-lzop|application/x-lzip|application/x-xz|application/x-lrzip|application/x-alz)
@@ -511,8 +511,10 @@ ${tables}
   application/vnd.debian.binary-package|application/x-rpm)
     print_mime
 
-    if als -- "$FPATH"; then
-      echo
+    if find_util "als" && find_util "ansifilter"; then
+      if als -- "$FPATH" | ansifilter; then
+        echo
+      fi
     fi
 
     print_strings
@@ -525,9 +527,9 @@ ${tables}
     print_mime
 
     if find_util "iso-info"; then
-      iso-info --no-header -U "$FPATH"
+      iso-info --no-header -U "$FPATH" | ansifilter
       echo
-      iso-info --no-header -l "$FPATH"
+      iso-info --no-header -l "$FPATH" | ansifilter
     fi
   ;;
   text/x-ssh-public-key|application/x-pem-file)
