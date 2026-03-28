@@ -209,6 +209,7 @@ user_pref("network.prefetch-next", false);
 user_pref("network.protocol-handler.external.mailto", false);
 user_pref("network.trr.mode", 3);
 user_pref("network.trr.uri", "https://firefox.dns.nextdns.io/");
+user_pref("nglayout.initialpaint.delay", 0);
 user_pref("pdfjs.enableAltTextModelDownload", false);
 user_pref("pdfjs.enableGuessAltText", false);
 user_pref("pdfjs.enableScripting", false);
