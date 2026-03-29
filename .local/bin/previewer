@@ -54,13 +54,13 @@ print_symlink() {
   if [ -z "$FPATH" ]; then
     printf "\x1b[0;31;1m%s\x1b[0m\n\n" "Broken or inaccessible symbolic link."
     print_stat
-    exit
+    exit "0"
   fi
 
   if [ ! -e "$FPATH" ]; then
     printf "\x1b[0;31;1m%s\x1b[0m\n%s\n\n" "Broken or inaccessible symbolic link to:" "$FPATH"
     print_stat
-    exit
+    exit "0"
   fi
 
   printf "\x1b[0;1m%s\x1b[0m\n%s\n\n" "Symbolic link to:" "$FPATH"
@@ -85,16 +85,18 @@ print_strings() {
 }
 
 print_mediainfo() {
-  if find_util "mediainfo" && find_util "ansifilter"; then
-    mediainfo "$FPATH" | head -n -2 | sed -e 's/ *: /: /g' -e '/^General$/d' | ansifilter
+  if find_util "mediainfo"; then
+    out="$(set +e; mediainfo "$FPATH" | head -n -2 | sed -e 's/ *: /: /g' -e '/^General$/d'; set -e)"
+    if [ "$out" ]; then printf '%s\n' "$out" | ansifilter; fi
   else
     return "1"
   fi
 }
 
 print_exiftool() {
-  if find_util "exiftool" && find_util "ansifilter"; then
-    exiftool -s2 "$FPATH" | ansifilter
+  if find_util "exiftool"; then
+    out="$(set +e; exiftool -s2 "$FPATH"; set -e)"
+    if [ "$out" ]; then printf '%s\n' "$out" | ansifilter; fi
   else
     return "1"
   fi
@@ -102,13 +104,13 @@ print_exiftool() {
 
 print_chafa() {
   if find_util "chafa"; then
-    lines="$(tput lines)"
-    columns="$(tput cols)"
-
     if [ -f "$1" ]; then
       if [ ! -s "$1" ]; then
         return "2"
       fi
+
+      lines="$(tput lines)"
+      columns="$(tput cols)"
 
       chafa \
         --format "symbols" \
@@ -125,15 +127,16 @@ print_chafa() {
 }
 
 print_als() {
-  if find_util "als" && find_util "ansifilter"; then
-    als --format="$1" -- "$FPATH" | ansifilter
+  if find_util "als"; then
+    out="$(set +e; als --format="$1" -- "$FPATH"; set -e)"
+    if [ "$out" ]; then printf '%s\n' "$out" | ansifilter; fi
   else
     return "1"
   fi
 }
 
 print_bat() {
-  if find_util "bat" && find_util "ansifilter"; then
+  if find_util "bat"; then
     ansifilter "$FPATH" | bat --color=always --italic-text=always --style=plain --file-name "$FPATH"
   else
     return "1"
@@ -162,23 +165,28 @@ print_mime() {
   fi
 }
 
-print_mime_newlines() {
-  if [ -r "$FPATH" ]; then
-    echo "$MIME" "($(wc -l "$FPATH" | cut -d" " -f1) lines${BRIEF:+", ${BRIEF}"})"
-  else
-    echo "$MIME"
-  fi
+print_lines_count() {
+  lines_count="$(wc -l "$FPATH" | cut -d" " -f1)"
+
+  case "$lines_count" in
+    "1")
+      echo "1 line:"
+    ;;
+    "0")
+    ;;
+    *)
+      echo "${lines_count} lines:"
+    ;;
+  esac
 }
 
+if ! find_util "ansifilter"; then exit "0"; fi
+
+print_mime
+
 if [ ! -r "$FPATH_INPUT" ]; then
-  print_mime
-
-  echo "No read permission."
+  echo "Not readable."
   echo
-
-  set +e; print_stat 2> "/dev/null"; set -e;
-
-  exit "0"
 fi
 
 print_symlink
@@ -189,9 +197,7 @@ if [ -z "$FPATH" ]; then
 fi
 
 if [ ! -r "$FPATH" ]; then
-  print_mime
-
-  echo "No read permission."
+  echo "Not readable."
   echo
 
   set +e; print_stat 2> "/dev/null"; set -e;
@@ -201,8 +207,6 @@ fi
 
 case "$MIME" in
   application/eps|application/pdf|application/postscript|application/x-eps|image/x-eps)
-    print_mime_newlines
-
     if thumb_cache_create; then
       if [ ! -f "${FPATH_THUMB}.jpg" ]; then
         if find_util "pdftoppm"; then
@@ -219,25 +223,22 @@ case "$MIME" in
       fi
     fi
 
-    if find_util "pdfinfo" && find_util "ansifilter"; then
-      if pdfinfo "$FPATH" | ansifilter; then
-        echo
-      fi
+    if find_util "pdfinfo"; then
+      out="$(set +e; pdfinfo "$FPATH"; set -e)"
+      if [ "$out" ]; then printf '%s\n\n' "$out" | ansifilter; fi
     fi
 
-    if find_util "pdfsig" && find_util "ansifilter"; then
-      if pdfsig "$FPATH" | ansifilter; then
-        echo
-      fi
+    if find_util "pdfsig"; then
+      out="$(set +e; pdfsig "$FPATH"; set -e)"
+      if [ "$out" ]; then printf '%s\n\n' "$out" | ansifilter; fi
     fi
 
-    if find_util "pdftotext" && find_util "ansifilter"; then
-      pdftotext -l "2" -nopgbrk -q -- "$FPATH" - | ansifilter
+    if find_util "pdftotext"; then
+      out="$(set +e; pdftotext -l "2" -nopgbrk -q -- "$FPATH" -; set -e)"
+      if [ "$out" ]; then printf '%s' "$out" | ansifilter; fi
     fi
   ;;
   image/vnd.djvu*)
-    print_mime_newlines
-
     if thumb_cache_create; then
       if [ ! -f "${FPATH_THUMB}.jpg" ]; then
         if find_util "ddjvu" && find_util "magick"; then
@@ -255,103 +256,81 @@ case "$MIME" in
     fi
   ;;
   application/vnd.openxmlformats-officedocument.wordprocessingml.document)
-    print_mime
-
     if find_util "docx2txt"; then
-      docx2txt "$FPATH" - | ansifilter
-      echo
+      out="$(set +e; docx2txt "$FPATH" -; set -e)"
+      if [ "$out" ]; then printf '%s\n' "$out" | ansifilter; fi
     fi
 
     print_als "zip"
   ;;
   application/zip|application/epub+zip|application/java-archive|*openxmlformats-officedocument*)
-    print_mime
     print_als "zip"
   ;;
   "application/x-compressed-tar")
-    print_mime
     print_als "tar+gzip"
   ;;
   "application/x-bzip1-compressed-tar")
-    print_mime
     print_als "tar+bzip"
   ;;
   "application/x-bzip2-compressed-tar")
-    print_mime
     print_als "tar+bzip2"
   ;;
   "application/x-tarz")
-    print_mime
     print_als "tar+compress"
   ;;
   "application/x-tzo")
-    print_mime
     print_als "tar+lzop"
   ;;
   "application/x-lzip-compressed-tar"|"application/x-lzma-compressed-tar")
-    print_mime
     print_als "tar+lzip"
   ;;
   "application/x-xz-compressed-tar")
-    print_mime
     print_als "tar+xz"
   ;;
   "application/x-tar")
-    print_mime
     print_als "tar"
   ;;
   "application/vnd.rar")
-    print_mime
     print_als "rar"
   ;;
   "application/x-lha")
-    print_mime
     print_als "lha"
   ;;
   "application/x-ace")
-    print_mime
     print_als "ace"
   ;;
   "application/x-archive")
-    print_mime
     print_als "ar"
   ;;
   "application/x-arj")
-    print_mime
     print_als "arj"
   ;;
   "application/vnd.ms-cab-compressed")
-    print_mime
     print_als "cab"
   ;;
   "application/x-cpio")
-    print_mime
     print_als "cpio"
   ;;
   "application/x-7z-compressed")
-    print_mime
-
-    if find_util "als" && find_util "ansifilter"; then
+    if find_util "als"; then
       # Passing an empty password to avoid a lock-up.
-      set +e; als --format=7z --format-option=-p="" -- "$FPATH" | ansifilter; set -e
+      out="$(set +e; als --format=7z --format-option=-p="" -- "$FPATH"; set -e)"
+      if [ "$out" ]; then printf '%s' "$out" | ansifilter; fi
     fi
   ;;
   application/gzip|application/x-bzip1|application/x-bzip2|application/x-compress|application/x-lzma|application/x-lzop|application/x-lzip|application/x-xz|application/x-lrzip|application/x-alz)
     # Archive types that 'als' recognizes, but cannot list.
-    print_mime
+    print_stat
   ;;
   image/svg+xml)
-    print_mime_newlines
-
     if print_chafa "$FPATH"; then
       echo
     fi
 
+    print_lines_count
     print_bat
   ;;
   image/*)
-    print_mime
-
     if print_chafa "$FPATH"; then
       echo
     fi
@@ -359,8 +338,6 @@ case "$MIME" in
     print_exiftool
   ;;
   video/*|application/x-ogm-video)
-    print_mime
-
     if thumb_cache_create; then
       if [ ! -f "${FPATH_THUMB}.jpg" ]; then
         if find_util "ffmpegthumbnailer"; then
@@ -380,18 +357,14 @@ case "$MIME" in
     print_mediainfo
   ;;
   *opendocument*)
-    print_mime
-
-    if find_util "odt2txt" && find_util "ansifilter"; then
-      odt2txt "$FPATH" | ansifilter
-      echo
+    if find_util "odt2txt"; then
+      out="$(set +e; odt2txt "$FPATH"; set -e)"
+      if [ "$out" ]; then printf '%s\n' "$out" | ansifilter; fi
     fi
 
     print_als "zip"
   ;;
   audio/*|application/mxf|application/ogg|application/sdp|application/smil|application/streamingmedia|application/vnd.apple.mpegurl|application/vnd.ms-asf|application/vnd.rn-realmedia-vbr|application/vnd.rn-realmedia|application/x-cue|application/x-extension-m4a|application/x-extension-mp4|application/x-matroska|application/x-mpegurl|application/x-ogg|application/x-ogm-audio|application/x-ogm|application/x-shorten|application/x-smil|application/x-streamingmedia)
-    print_mime
-
     if thumb_cache_create; then
       if [ ! -f "${FPATH_THUMB}.jpg" ]; then
         if find_util "exiftool"; then
@@ -416,35 +389,26 @@ case "$MIME" in
       echo
     fi
 
-    if [ "$MIME" = "audio/mpeg" ] && find_util "mpg123-id3dump" && find_util "ansifilter"; then
-      mpg123-id3dump -- "$FPATH" | ansifilter
+    if [ "$MIME" = "audio/mpeg" ] && find_util "mpg123-id3dump"; then
+      out="$(set +e; mpg123-id3dump -- "$FPATH"; set -e)"
+      if [ "$out" ]; then printf '%s' "$out" | ansifilter; fi
     fi
   ;;
   application/vnd.sqlite*)
-    print_mime
-
-    if find_util "sqlite3" && find_util "ansifilter"; then
-      tables="$(set +e; sqlite3 "$FPATH" '.tables'; set -e)"
-
-      if [ "${tables:-""}" ]; then
-        echo ".tables:
-${tables}
-" | ansifilter
-      fi
+    if find_util "sqlite3"; then
+      out="$(set +e; sqlite3 "$FPATH" '.tables'; set -e)"
+      if [ "$out" ]; then printf '.tables:%s\n' "$out" | ansifilter; fi
     fi
 
     print_strings
   ;;
   application/x-executable|application/x-pie-executable|application/x-object|application/x-sharedlib)
-    print_mime
-
     if find_util "readelf"; then
-      readelf -a "$FPATH"
+      out="$(set +e; readelf -a "$FPATH"; set -e)"
+      if [ "$out" ]; then printf '%s' "$out" | ansifilter; fi
     fi
   ;;
   inode/directory)
-    print_mime
-
     if [ -r "$FPATH" ]; then
       if find_util "mountpoint"; then
         if mountpoint -q -- "$FPATH"; then
@@ -475,11 +439,9 @@ ${tables}
     print_stat
   ;;
   inode/*)
-    print_mime
     print_stat
   ;;
   application/octet-stream)
-    print_mime
     # TODO: re-try by file extension
     print_strings
     print_hexdump
@@ -487,83 +449,70 @@ ${tables}
     print_stat
   ;;
   application/vnd.microsoft.portable-executable|application/x-dosexec*|application/x-ole-storage)
-    print_mime
     print_strings
+    
+    echo "$(wc -l "$FPATH" | cut -d" " -f1) lines:"
     print_hexdump
   ;;
   application/x-coredump)
-    print_mime
     print_hexdump
     echo
     print_stat
   ;;
   application/x-linux-kernel)
-    print_mime
-
     if [ "$BRIEF" ]; then
       echo "$BRIEF" | tr ',' '\n' | sed 's/^ //g'
     fi
   ;;
   font/*|application/x-font-*|application/vnd.ms-opentype)
-    print_mime
     print_exiftool
   ;;
   application/vnd.debian.binary-package|application/x-rpm)
-    print_mime
-
-    if find_util "als" && find_util "ansifilter"; then
-      if als -- "$FPATH" | ansifilter; then
-        echo
-      fi
+    if find_util "als"; then
+      out="$(set +e; als -- "$FPATH"; set -e)"
+      if [ "$out" ]; then printf '%s\n' "$out" | ansifilter; fi
     fi
 
     print_strings
   ;;
   application/x-bittorrent|application/x-lz4+json|application/x-mobipocket-ebook)
-    print_mime
     print_strings
   ;;
   application/x-iso9660-image)
-    print_mime
-
     if find_util "iso-info"; then
-      iso-info --no-header -U "$FPATH" | ansifilter
-      echo
-      iso-info --no-header -l "$FPATH" | ansifilter
+      out="$(set +e; iso-info --no-header -U "$FPATH"; set -e)"
+      if [ "$out" ]; then printf '%s\n' "$out" | ansifilter; fi
+      out="$(set +e; iso-info --no-header -l "$FPATH"; set -e)"
+      if [ "$out" ]; then printf '%s' "$out" | ansifilter; fi
     fi
   ;;
   text/x-ssh-public-key|application/x-pem-file)
-    print_mime_newlines
-
     if find_util "ssh-keygen"; then
-      ssh-keygen -lv -f "$FPATH"
+      out="$(set +e; ssh-keygen -lv -f "$FPATH"; set -e)"
+      if [ "$out" ]; then printf '%s' "$out" | ansifilter; fi
     fi
 
+    print_lines_count
     print_bat
   ;;
   text/html)
-    print_mime_newlines
-
     if [ "${FPATH##*.}" = "svg" ]; then
       if print_chafa "$FPATH"; then
         echo
       fi
     fi
 
-    if [ -r "$FPATH" ]; then
-      print_bat
-    fi
+    print_lines_count
+    print_bat
   ;;
   *)
-    print_mime_newlines
+    print_lines_count
 
-    if [ -r "$FPATH" ]; then
-      if ! print_bat; then
-        print_strings
-        print_hexdump
-        echo
-        print_stat
-      fi
+    if ! print_bat; then
+      print_strings
+      print_hexdump
+      echo
+      print_stat
     fi
   ;;
 esac
