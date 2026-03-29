@@ -2,6 +2,7 @@ user_pref("app.normandy.api_url", "");
 user_pref("app.normandy.enabled", false);
 user_pref("app.shield.optoutstudies.enabled", false);
 user_pref("app.update.suppressPrompts", true);
+user_pref("apz.overscroll.damping", 1.05);
 user_pref("apz.overscroll.enabled", true);
 user_pref("apz.overscroll.max_velocity", 0.75);
 user_pref("apz.overscroll.spring_stiffness", 460);
