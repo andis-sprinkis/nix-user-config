@@ -3,6 +3,8 @@ user_pref("app.normandy.enabled", false);
 user_pref("app.shield.optoutstudies.enabled", false);
 user_pref("app.update.suppressPrompts", true);
 user_pref("apz.overscroll.enabled", true);
+user_pref("apz.overscroll.max_velocity", 0.75);
+user_pref("apz.overscroll.spring_stiffness", 460);
 user_pref("breakpad.reportURL", "");
 user_pref("browser.aboutConfig.showWarning", false);
 user_pref("browser.aboutwelcome.enabled", false);
