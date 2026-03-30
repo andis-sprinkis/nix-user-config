@@ -20,8 +20,8 @@ echo "$$" > "$file_pid"
 case "$wm" in
   "sway")
     wm_cmd="swaymsg"
-    win_edge_top_jq=".rect.y - .deco_rect.height"
-    win_height_jq=".rect.height + .deco_rect.height"
+    win_edge_top_jq=".rect.y-.deco_rect.height"
+    win_height_jq=".rect.height+.deco_rect.height"
   ;;
   "i3")
     wm_cmd="i3-msg"
@@ -30,17 +30,15 @@ case "$wm" in
   ;;
 esac
 
-ws_thr_jq='((.rect.width + .rect.height) / 40 | floor)'
+ws_thr_jq='((.rect.width+.rect.height)/40|floor)'
 
-data_jq="
-.[] | select(.focused) |
-  if .floating_nodes | .[] | select(.focused) then
-    (.floating_nodes | .[] | select(.focused) | .rect.x, .rect.x + .rect.width),
-    .rect.x, .rect.x + .rect.width, .rect.x + ${ws_thr_jq}, .rect.x + .rect.width - ${ws_thr_jq}, .rect.x - ${ws_thr_jq}, .rect.x + .rect.width + ${ws_thr_jq},
-    (.floating_nodes | .[] | select(.focused) | ${win_edge_top_jq}, ${win_edge_top_jq} + ${win_height_jq}),
-    .rect.y, .rect.y + .rect.height, .rect.y + ${ws_thr_jq}, .rect.y + .rect.height - ${ws_thr_jq}, .rect.y - ${ws_thr_jq}, .rect.y + .rect.height + ${ws_thr_jq}
-  end
-"
+data_jq=".[]|select(.focused)|
+if.floating_nodes|.[]|select(.focused)then
+(.floating_nodes|.[]|select(.focused)|.rect.x,.rect.x+.rect.width),
+.rect.x,.rect.x+.rect.width,.rect.x+${ws_thr_jq},.rect.x+.rect.width-${ws_thr_jq},.rect.x-${ws_thr_jq},.rect.x+.rect.width+${ws_thr_jq},
+(.floating_nodes|.[]|select(.focused)|${win_edge_top_jq},${win_edge_top_jq}+${win_height_jq}),
+.rect.y,.rect.y+.rect.height,.rect.y+${ws_thr_jq},.rect.y+.rect.height-${ws_thr_jq},.rect.y-${ws_thr_jq},.rect.y+.rect.height+${ws_thr_jq}
+end"
 
 IN() { return "$((($3 - $1) * ($2 - $3) > 0 ? 0 : 1))"; }
 
