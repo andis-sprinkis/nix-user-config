@@ -45,9 +45,18 @@ end"
 IN() { return "$((($3 - $1) * ($2 - $3) > 0 ? 0 : 1))"; }
 
 cache=""
+prev_workspaces=""
 
 while true; do
-  data="$($wm_cmd -r -t "get_workspaces" | jq -r "$data_jq")"
+  workspaces="$($wm_cmd -r -t "get_workspaces")"
+
+  if [ "$workspaces" = "$prev_workspaces" ]; then
+    sleep "1"
+    continue
+  fi
+
+  prev_workspaces="$workspaces"
+  data="$(echo "$workspaces" | jq -r "$data_jq")"
 
   if [ -z "$data" ]; then
     sleep "1"
