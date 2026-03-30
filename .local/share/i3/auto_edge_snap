@@ -96,11 +96,11 @@ while true; do
     exit "2"
   done
 
-  cache="${*}${NL}$(echo "$cache" | head)"
-
   set +e # The focused window may not be floating anymore
   $wm_cmd -q "move absolute position ${17} ${18}"
   set -e
+
+  cache="${*}${NL}$(echo "$cache" | head)"
 
   sleep "1"
 done
