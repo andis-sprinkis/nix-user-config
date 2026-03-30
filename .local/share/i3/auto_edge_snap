@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 set -eu
+NL="
+"
 
 wm="${WAYLAND_DISPLAY:+"sway"}"
 wm="${wm:-"i3"}"
@@ -42,6 +44,8 @@ end"
 
 IN() { return "$((($3 - $1) * ($2 - $3) > 0 ? 0 : 1))"; }
 
+cache=""
+
 while true; do
   data="$($wm_cmd -r -t "get_workspaces" | jq -r "$data_jq")"
 
@@ -52,6 +56,17 @@ while true; do
 
   # shellcheck disable=SC2086
   set -- $data
+
+  cache_hit="$(echo "$cache" | grep "^${*}" | head -1)"
+
+  if [ "$cache_hit" ]; then
+    set +e # The focused window may not be floating anymore
+    $wm_cmd -q "move absolute position $(echo "$cache_hit" | cut -f17-18 -d" ")"
+    set -e
+
+    sleep "1"
+    continue
+  fi
 
   for axis in "X" "Y"; do
     case "$axis" in
@@ -80,6 +95,8 @@ while true; do
 
     exit "2"
   done
+
+  cache="${*}${NL}$(echo "$cache" | head)"
 
   set +e # The focused window may not be floating anymore
   $wm_cmd -q "move absolute position ${17} ${18}"
