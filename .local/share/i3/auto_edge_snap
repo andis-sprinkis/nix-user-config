@@ -34,17 +34,17 @@ esac
 
 ws_thr_jq='((.rect.width+.rect.height)/40|floor)'
 
-data_jq=".[]|select(.focused)|
+metrics_jq=".[]|select(.focused)|
 if.floating_nodes|.[]|select(.focused)then
-(.floating_nodes|.[]|select(.focused)|.rect.x,.rect.x+.rect.width),
+[(.floating_nodes|.[]|select(.focused)|.rect.x,.rect.x+.rect.width),
 .rect.x,.rect.x+.rect.width,.rect.x+${ws_thr_jq},.rect.x+.rect.width-${ws_thr_jq},.rect.x-${ws_thr_jq},.rect.x+.rect.width+${ws_thr_jq},
 (.floating_nodes|.[]|select(.focused)|${win_edge_top_jq},${win_edge_top_jq}+${win_height_jq}),
-.rect.y,.rect.y+.rect.height,.rect.y+${ws_thr_jq},.rect.y+.rect.height-${ws_thr_jq},.rect.y-${ws_thr_jq},.rect.y+.rect.height+${ws_thr_jq}
+.rect.y,.rect.y+.rect.height,.rect.y+${ws_thr_jq},.rect.y+.rect.height-${ws_thr_jq},.rect.y-${ws_thr_jq},.rect.y+.rect.height+${ws_thr_jq}]|@sh
 end"
 
 IN() { return "$((($3 - $1) * ($2 - $3) > 0 ? 0 : 1))"; }
 
-cache=""
+metrics_cache=""
 prev_workspaces=""
 
 while true; do
@@ -56,17 +56,14 @@ while true; do
   fi
 
   prev_workspaces="$workspaces"
-  data="$(echo "$workspaces" | jq -r "$data_jq")"
+  metrics="$(echo "$workspaces" | jq -r "$metrics_jq")"
 
-  if [ -z "$data" ]; then
+  if [ -z "$metrics" ]; then
     sleep "1"
     continue
   fi
 
-  # shellcheck disable=SC2086
-  set -- $data
-
-  cache_hit="$(echo "$cache" | grep "^${*}" | head -1)"
+  cache_hit="$(echo "$metrics_cache" | grep "^${metrics}" | head -1)"
 
   if [ "$cache_hit" ]; then
     set +e # The focused window may not be floating anymore
@@ -76,6 +73,9 @@ while true; do
     sleep "1"
     continue
   fi
+
+  # shellcheck disable=SC2086
+  set -- $metrics
 
   for axis in "X" "Y"; do
     case "$axis" in
@@ -109,7 +109,7 @@ while true; do
   $wm_cmd -q "move absolute position ${17} ${18}"
   set -e
 
-  cache="${*}${NL}$(echo "$cache" | head)"
+  metrics_cache="${*}${NL}$(echo "$metrics_cache" | head -50)"
 
   sleep "1"
 done
