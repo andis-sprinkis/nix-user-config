@@ -102,6 +102,7 @@ while true; do
     if ! IN "$AO" "$BO" "$AS" && ! IN "$BI" "$BO" "$BS"; then set -- "$@" "$AS"; continue; fi
     if IN "$BI" "$BO" "$AS" && ! IN "$AO" "$BO" "$BS"; then set -- "$@" "$AS"; continue; fi
 
+    echo "Failure on: ${metrics}" >> "${XDG_CACHE_HOME:-$HOME/.cache}/auto_edge_snap.log"
     exit "2"
   done
 
