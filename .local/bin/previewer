@@ -450,8 +450,6 @@ case "$MIME" in
   ;;
   application/vnd.microsoft.portable-executable|application/x-dosexec*|application/x-ole-storage)
     print_strings
-    
-    echo "$(wc -l "$FPATH" | cut -d" " -f1) lines:"
     print_hexdump
   ;;
   application/x-coredump)
