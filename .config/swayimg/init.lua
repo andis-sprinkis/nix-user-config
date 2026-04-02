@@ -2,9 +2,9 @@ local S = swayimg
 local g = S.gallery
 local gk = g.on_key
 local imglist = S.imagelist
-local set_title = S.set_title
+local title = S.set_title
 local s = S.slideshow
-local text = S.text
+local txt = S.text
 local v = S.viewer
 local vk = v.on_key
 
@@ -12,8 +12,8 @@ S.enable_overlay(false)
 S.enable_decoration(true)
 S.set_dnd_button('MouseExtra')
 imglist.enable_adjacent(true)
-text.hide()
-text.set_size(16)
+txt.hide()
+txt.set_size(16)
 v.set_default_scale('optimal')
 
 --
@@ -22,7 +22,7 @@ g.on_image_change(
   function()
     local img = g.get_image()
 
-    set_title(img.path .. " [" .. img.index .. "/" .. imglist.size() .. "]")
+    title(img.path .. " [" .. img.index .. "/" .. imglist.size() .. "]")
   end
 )
 
@@ -30,7 +30,7 @@ v.on_image_change(
   function()
     local img = v.get_image()
 
-    set_title(img.path ..
+    title(img.path ..
       " " .. img.width .. "x" .. img.height .. " [" .. img.index .. "/" .. imglist.size() .. "]")
   end
 )
@@ -39,7 +39,7 @@ s.on_image_change(
   function()
     local img = s.get_image()
 
-    set_title(img.path ..
+    title(img.path ..
       " " .. img.width .. "x" .. img.height .. " [" .. img.index .. "/" .. imglist.size() .. "]")
   end
 )
