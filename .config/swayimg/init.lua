@@ -1,41 +1,75 @@
 local S = swayimg
-local gallery = S.gallery
-local imagelist = S.imagelist
+local g = S.gallery
+local gk = g.on_key
+local imglist = S.imagelist
 local set_title = S.set_title
-local slideshow = S.slideshow
+local s = S.slideshow
 local text = S.text
-local viewer = S.viewer
+local v = S.viewer
+local vk = v.on_key
 
 S.enable_overlay(false)
 S.enable_decoration(true)
 S.set_dnd_button('MouseExtra')
-imagelist.enable_adjacent(true)
+imglist.enable_adjacent(true)
 text.hide()
 text.set_size(16)
-viewer.set_default_scale('optimal')
+v.set_default_scale('optimal')
 
-gallery.on_image_change(
+--
+
+g.on_image_change(
   function()
-    local img = gallery.get_image()
+    local img = g.get_image()
 
-    set_title(img.path .. " [" .. img.index .. "/" .. imagelist.size() .. "]")
+    set_title(img.path .. " [" .. img.index .. "/" .. imglist.size() .. "]")
   end
 )
 
-viewer.on_image_change(
+v.on_image_change(
   function()
-    local img = viewer.get_image()
+    local img = v.get_image()
 
     set_title(img.path ..
-      " " .. img.width .. "x" .. img.height .. " [" .. img.index .. "/" .. imagelist.size() .. "]")
+      " " .. img.width .. "x" .. img.height .. " [" .. img.index .. "/" .. imglist.size() .. "]")
   end
 )
 
-slideshow.on_image_change(
+s.on_image_change(
   function()
-    local img = slideshow.get_image()
+    local img = s.get_image()
 
     set_title(img.path ..
-      " " .. img.width .. "x" .. img.height .. " [" .. img.index .. "/" .. imagelist.size() .. "]")
+      " " .. img.width .. "x" .. img.height .. " [" .. img.index .. "/" .. imglist.size() .. "]")
   end
 )
+
+--
+
+g.bind_reset()
+v.bind_reset()
+s.bind_reset()
+
+gk('Return', function () end)
+gk('h', function () end)
+gk('j', function () end)
+gk('k', function () end)
+gk('l', function () end)
+gk('n', function () end)
+gk('p', function () end)
+gk('g', function () end)
+gk('Shift+g', function () end)
+gk('Escape', function () end)
+gk('q', function () end)
+
+vk('Return', function () end)
+vk('h', function () end)
+vk('j', function () end)
+vk('k', function () end)
+vk('l', function () end)
+vk('n', function () end)
+vk('p', function () end)
+vk('g', function () end)
+vk('Shift+g', function () end)
+vk('Escape', function () end)
+vk('q', function () end)
