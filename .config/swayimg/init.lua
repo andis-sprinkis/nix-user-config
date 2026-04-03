@@ -67,6 +67,19 @@ g.bind_reset()
 v.bind_reset()
 s.bind_reset()
 
+bg(
+  'e',
+  function()
+    os.execute(
+      'nohup file_manager_desktop' ..
+      ' ' ..
+      '"' .. g.get_image().path .. '"' ..
+      ' ' ..
+      '0</dev/null 1>/dev/null 2>/dev/null & disown'
+    )
+  end
+)
+
 bg('Return', function() S.set_mode("viewer") end)
 bg('Space', function() S.set_mode("viewer") end)
 bg('Shift+space', function() S.set_mode("viewer") end)
@@ -116,7 +129,6 @@ end
 
 local function vzoomout()
   local scale = v.get_scale()
-  scale = scale - scale / 10
   v.set_abs_scale(scale - scale / 10);
   vtitle()
 end
@@ -169,6 +181,19 @@ bv('Escape', function() S.exit() end)
 bv('q', function() S.exit() end)
 bv('i', function() if txt.visible() then txt.hide() else txt.show() end end)
 
+bv(
+  'e',
+  function()
+    os.execute(
+      'nohup file_manager_desktop' ..
+      ' ' ..
+      '"' .. v.get_image().path .. '"' ..
+      ' ' ..
+      '0</dev/null 1>/dev/null 2>/dev/null & disown'
+    )
+  end
+)
+
 mv('MouseLeft', function()
   local mcoord = S.get_mouse_pos()
   local wsize = S.get_window_size()
@@ -186,16 +211,14 @@ mv('MouseRight', function() S.set_mode("gallery") end)
 local function mvzoomin()
   local mpos = S.get_mouse_pos()
   local scale = v.get_scale()
-  scale = scale + scale / 10
-  v.set_abs_scale(scale, mpos.x, mpos.y)
+  v.set_abs_scale(scale + scale / 10, mpos.x, mpos.y)
   vtitle()
 end
 
 local function mvzoomout()
   local mpos = S.get_mouse_pos()
   local scale = v.get_scale()
-  scale = scale - scale / 10
-  v.set_abs_scale(scale, mpos.x, mpos.y)
+  v.set_abs_scale(scale - scale / 10, mpos.x, mpos.y)
   vtitle()
 end
 
