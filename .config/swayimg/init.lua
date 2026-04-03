@@ -80,6 +80,17 @@ bg(
   end
 )
 
+local function gzoomin()
+  g.set_thumb_size(g.get_thumb_size() + 10);
+end
+
+local function gzoomout()
+  g.set_thumb_size(g.get_thumb_size() - 10);
+end
+
+bg('equal', gzoomin)
+bg('plus', gzoomin)
+bg('minus', gzoomout)
 bg('Return', function() S.set_mode("viewer") end)
 bg('Space', function() S.set_mode("viewer") end)
 bg('Shift+space', function() S.set_mode("viewer") end)
@@ -107,14 +118,6 @@ mg('ScrollRight', function() g.switch_image("pgdown") end)
 
 mg('MouseLeft', function() S.set_mode("viewer") end)
 mg('MouseRight', function() S.set_mode("viewer") end)
-
-local function gzoomin()
-  g.set_thumb_size(g.get_thumb_size() + 10);
-end
-
-local function gzoomout()
-  g.set_thumb_size(g.get_thumb_size() - 10);
-end
 
 mg("Ctrl-ScrollLeft", gzoomin)
 mg("Ctrl-ScrollRight", gzoomout)
