@@ -1,3 +1,4 @@
+// https://searchfox.org/firefox-main/source/browser/app/profile/firefox.js
 user_pref("app.normandy.api_url", "");
 user_pref("app.normandy.enabled", false);
 user_pref("app.shield.optoutstudies.enabled", false);
