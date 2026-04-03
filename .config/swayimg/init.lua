@@ -1,20 +1,20 @@
 local S = swayimg
 local g = S.gallery
-local gk = g.on_key
+local bg = g.on_key
 local imglist = S.imagelist
 local title = S.set_title
 local s = S.slideshow
 local txt = S.text
 local v = S.viewer
-local vk = v.on_key
+local bv = v.on_key
 
 S.enable_overlay(false)
 S.enable_decoration(true)
 S.set_dnd_button('MouseExtra')
+v.set_default_scale('fit')
 imglist.enable_adjacent(true)
 txt.hide()
 txt.set_size(16)
-v.set_default_scale('optimal')
 
 --
 
@@ -44,32 +44,38 @@ s.on_image_change(
   end
 )
 
+---
+
+S.on_window_resize(
+  function() if (S.get_mode() == 'viewer') then v.set_fix_scale("fit") end end
+)
+
 --
 
 g.bind_reset()
 v.bind_reset()
 s.bind_reset()
 
-gk('Return', function () end)
-gk('h', function () end)
-gk('j', function () end)
-gk('k', function () end)
-gk('l', function () end)
-gk('n', function () end)
-gk('p', function () end)
-gk('g', function () end)
-gk('Shift+g', function () end)
-gk('Escape', function () end)
-gk('q', function () end)
+bg('Return', function() S.set_mode("viewer") end)
+bg('h', function() g.switch_image("left") end)
+bg('j', function() g.switch_image("down") end)
+bg('k', function() g.switch_image("up") end)
+bg('l', function() g.switch_image("right") end)
+bg('n', function() g.switch_image("pgdown") end)
+bg('p', function() g.switch_image("pgup") end)
+bg('g', function() g.switch_image("first") end)
+bg('Shift+g', function() g.switch_image("last") end)
+bg('Escape', function() S.exit() end)
+bg('q', function() S.exit() end)
 
-vk('Return', function () end)
-vk('h', function () end)
-vk('j', function () end)
-vk('k', function () end)
-vk('l', function () end)
-vk('n', function () end)
-vk('p', function () end)
-vk('g', function () end)
-vk('Shift+g', function () end)
-vk('Escape', function () end)
-vk('q', function () end)
+bv('Return', function() S.set_mode("gallery") end)
+bv('h', function() end)
+bv('j', function() end)
+bv('k', function() end)
+bv('l', function() end)
+bv('n', function() v.switch_image("next") end)
+bv('p', function() v.switch_image("prev") end)
+bv('g', function() v.switch_image("first") end)
+bv('Shift+g', function() v.switch_image("last") end)
+bv('Escape', function() S.exit() end)
+bv('q', function() S.exit() end)
