@@ -111,27 +111,52 @@ mg("Ctrl-ScrollDown", gzoomout)
 local function vzoomin()
   local scale = v.get_scale()
   v.set_abs_scale(scale + scale / 10);
+  vtitle()
 end
 
 local function vzoomout()
   local scale = v.get_scale()
   scale = scale - scale / 10
   v.set_abs_scale(scale - scale / 10);
+  vtitle()
+end
+
+local function vpanl()
+  local wsize = S.get_window_size()
+  local icoord = v.get_position()
+  v.set_abs_position(math.floor(icoord.x + wsize.width / 10), icoord.y);
+end
+
+local function vpanr()
+  local wsize = S.get_window_size()
+  local icoord = v.get_position()
+  v.set_abs_position(math.floor(icoord.x - wsize.width / 10), icoord.y);
+end
+
+local function vpanu()
+  local wsize = S.get_window_size()
+  local icoord = v.get_position()
+  v.set_abs_position(icoord.x, math.floor(icoord.y + wsize.height / 10));
+end
+
+local function vpand()
+  local wsize = S.get_window_size()
+  local icoord = v.get_position()
+  v.set_abs_position(icoord.x, math.floor(icoord.y - wsize.height / 10));
 end
 
 bv('equal', vzoomin)
 bv('plus', vzoomin)
 bv('minus', vzoomout)
-
 bv('Return', function() S.set_mode("gallery") end)
-bv('h', function() end)
-bv('j', function() end)
-bv('k', function() end)
-bv('l', function() end)
-bv('Left', function() end)
-bv('Down', function() end)
-bv('Up', function() end)
-bv('Right', function() end)
+bv('h', vpanl)
+bv('j', vpand)
+bv('k', vpanu)
+bv('l', vpanr)
+bv("Left", vpanl)
+bv('Down', vpand)
+bv('Up', vpanu)
+bv('Right', vpanr)
 bv('n', function() v.switch_image("next") end)
 bv('p', function() v.switch_image("prev") end)
 bv('Space', function() v.switch_image("next") end)
@@ -162,14 +187,16 @@ local function mvzoomin()
   local mpos = S.get_mouse_pos()
   local scale = v.get_scale()
   scale = scale + scale / 10
-  v.set_abs_scale(scale, mpos.x, mpos.y);
+  v.set_abs_scale(scale, mpos.x, mpos.y)
+  vtitle()
 end
 
 local function mvzoomout()
   local mpos = S.get_mouse_pos()
   local scale = v.get_scale()
   scale = scale - scale / 10
-  v.set_abs_scale(scale, mpos.x, mpos.y);
+  v.set_abs_scale(scale, mpos.x, mpos.y)
+  vtitle()
 end
 
 mv("Ctrl-ScrollLeft", mvzoomin)
