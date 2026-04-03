@@ -1,20 +1,23 @@
 local S = swayimg
 local g = S.gallery
 local bg = g.on_key
+local mg = g.on_mouse
 local imglist = S.imagelist
 local title = S.set_title
 local s = S.slideshow
 local txt = S.text
 local v = S.viewer
 local bv = v.on_key
+local mv = v.on_mouse
 
-S.enable_overlay(false)
 S.enable_decoration(true)
+S.enable_overlay(false)
 S.set_dnd_button('MouseExtra')
-v.set_default_scale('fit')
 imglist.enable_adjacent(true)
 txt.hide()
 txt.set_size(16)
+v.enable_loop(false)
+v.set_default_scale('fit')
 
 --
 
@@ -69,6 +72,13 @@ bg('f', function() S.toggle_fullscreen() end)
 bg('Escape', function() S.exit() end)
 bg('q', function() S.exit() end)
 
+mg('ScrollUp', function() g.switch_image("pgup") end)
+mg('ScrollDown', function() g.switch_image("pgdown") end)
+mg('ScrollLeft', function() g.switch_image("pgup") end)
+mg('ScrollRight', function() g.switch_image("pgdown") end)
+
+mg('MouseLeft', function() S.set_mode("viewer") end)
+
 bv('Return', function() S.set_mode("gallery") end)
 bv('h', function() end)
 bv('j', function() end)
@@ -77,7 +87,22 @@ bv('l', function() end)
 bv('n', function() v.switch_image("next") end)
 bv('p', function() v.switch_image("prev") end)
 bv('g', function() v.switch_image("first") end)
+bv('Shift+r', function() v.reload() end)
 bv('Shift+g', function() v.switch_image("last") end)
 bv('f', function() S.toggle_fullscreen() end)
 bv('Escape', function() S.exit() end)
 bv('q', function() S.exit() end)
+
+mv('MouseLeft', function()
+  local mcoord = S.get_mouse_pos()
+  local wsize = S.get_window_size()
+
+  v.switch_image((mcoord.x <= (wsize.width / 2)) and 'prev' or 'next')
+end)
+
+mv('ScrollUp', function() v.switch_image("prev") end)
+mv('ScrollDown', function() v.switch_image("next") end)
+mv('ScrollLeft', function() v.switch_image("prev") end)
+mv('ScrollRight', function() v.switch_image("next") end)
+
+mv('MouseRight', function() S.set_mode("gallery") end)
