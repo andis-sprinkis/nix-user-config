@@ -19,7 +19,7 @@ g.set_aspect('fit')
 g.set_border_size(8)
 g.set_padding_size(16)
 g.set_selected_scale(1.4)
-g.set_thumb_size(180)
+g.set_thumb_size(128)
 imglist.enable_adjacent(true)
 txt.hide()
 txt.set_size(16)
@@ -95,6 +95,34 @@ mg('ScrollRight', function() g.switch_image("pgdown") end)
 mg('MouseLeft', function() S.set_mode("viewer") end)
 mg('MouseRight', function() S.set_mode("viewer") end)
 
+local function gzoomin()
+  g.set_thumb_size(g.get_thumb_size() + 10);
+end
+
+local function gzoomout()
+  g.set_thumb_size(g.get_thumb_size() - 10);
+end
+
+mg("Ctrl-ScrollLeft", gzoomin)
+mg("Ctrl-ScrollRight", gzoomout)
+mg("Ctrl-ScrollUp", gzoomin)
+mg("Ctrl-ScrollDown", gzoomout)
+
+local function vzoomin()
+  local scale = v.get_scale()
+  v.set_abs_scale(scale + scale / 10);
+end
+
+local function vzoomout()
+  local scale = v.get_scale()
+  scale = scale - scale / 10
+  v.set_abs_scale(scale - scale / 10);
+end
+
+bv('equal', vzoomin)
+bv('plus', vzoomin)
+bv('minus', vzoomout)
+
 bv('Return', function() S.set_mode("gallery") end)
 bv('h', function() end)
 bv('j', function() end)
@@ -129,3 +157,22 @@ mv('ScrollLeft', function() v.switch_image("prev") end)
 mv('ScrollRight', function() v.switch_image("next") end)
 
 mv('MouseRight', function() S.set_mode("gallery") end)
+
+local function mvzoomin()
+  local mpos = S.get_mouse_pos()
+  local scale = v.get_scale()
+  scale = scale + scale / 10
+  v.set_abs_scale(scale, mpos.x, mpos.y);
+end
+
+local function mvzoomout()
+  local mpos = S.get_mouse_pos()
+  local scale = v.get_scale()
+  scale = scale - scale / 10
+  v.set_abs_scale(scale, mpos.x, mpos.y);
+end
+
+mv("Ctrl-ScrollLeft", mvzoomin)
+mv("Ctrl-ScrollRight", mvzoomout)
+mv("Ctrl-ScrollUp", mvzoomin)
+mv("Ctrl-ScrollDown", mvzoomout)
