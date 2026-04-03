@@ -13,6 +13,7 @@ local mv = v.on_mouse
 S.enable_decoration(true)
 S.enable_overlay(false)
 S.set_dnd_button('MouseExtra')
+g.enable_pstore(true)
 imglist.enable_adjacent(true)
 txt.hide()
 txt.set_size(16)
@@ -21,34 +22,40 @@ v.set_default_scale('fit')
 
 --
 
-g.on_image_change(
-  function()
-    local img = g.get_image()
+local function vtitle()
+  local img = v.get_image()
 
-    title(img.path .. " [" .. img.index .. "/" .. imglist.size() .. "]")
-  end
-)
+  title(
+    img.path ..
+    " " ..
+    img.width .. "x" .. img.height ..
+    " " ..
+    math.floor(v.get_scale() * 100) .. "%" ..
+    " " ..
+    "[" .. img.index .. "/" .. imglist.size() .. "]"
+  )
+end
 
-v.on_image_change(
-  function()
-    local img = v.get_image()
+local function gtitle()
+  local img = g.get_image()
 
-    title(img.path ..
-      " " .. img.width .. "x" .. img.height .. " [" .. img.index .. "/" .. imglist.size() .. "]")
-  end
-)
+  title(
+    img.path ..
+    " " ..
+    "[" .. img.index .. "/" .. imglist.size() .. "]"
+  )
+end
 
-s.on_image_change(
-  function()
-    local img = s.get_image()
-
-    title(img.path ..
-      " " .. img.width .. "x" .. img.height .. " [" .. img.index .. "/" .. imglist.size() .. "]")
-  end
-)
+g.on_image_change(gtitle)
+v.on_image_change(vtitle)
 
 S.on_window_resize(
-  function() if (S.get_mode() == 'viewer') then v.set_fix_scale("fit") end end
+  function()
+    if (S.get_mode() == 'viewer') then
+      v.set_fix_scale("fit")
+      vtitle()
+    end
+  end
 )
 
 g.bind_reset()
@@ -71,6 +78,7 @@ bg('Shift+g', function() g.switch_image("last") end)
 bg('f', function() S.toggle_fullscreen() end)
 bg('Escape', function() S.exit() end)
 bg('q', function() S.exit() end)
+bg('i', function() if txt.visible() then txt.hide() else txt.show() end end)
 
 mg('ScrollUp', function() g.switch_image("pgup") end)
 mg('ScrollDown', function() g.switch_image("pgdown") end)
@@ -78,6 +86,7 @@ mg('ScrollLeft', function() g.switch_image("pgup") end)
 mg('ScrollRight', function() g.switch_image("pgdown") end)
 
 mg('MouseLeft', function() S.set_mode("viewer") end)
+mg('MouseRight', function() S.set_mode("viewer") end)
 
 bv('Return', function() S.set_mode("gallery") end)
 bv('h', function() end)
@@ -96,6 +105,7 @@ bv('Shift+g', function() v.switch_image("last") end)
 bv('f', function() S.toggle_fullscreen() end)
 bv('Escape', function() S.exit() end)
 bv('q', function() S.exit() end)
+bv('i', function() if txt.visible() then txt.hide() else txt.show() end end)
 
 mv('MouseLeft', function()
   local mcoord = S.get_mouse_pos()
