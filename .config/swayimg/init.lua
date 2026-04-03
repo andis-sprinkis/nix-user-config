@@ -47,13 +47,9 @@ s.on_image_change(
   end
 )
 
----
-
 S.on_window_resize(
   function() if (S.get_mode() == 'viewer') then v.set_fix_scale("fit") end end
 )
-
---
 
 g.bind_reset()
 v.bind_reset()
@@ -64,6 +60,10 @@ bg('h', function() g.switch_image("left") end)
 bg('j', function() g.switch_image("down") end)
 bg('k', function() g.switch_image("up") end)
 bg('l', function() g.switch_image("right") end)
+bg('Left', function() g.switch_image("left") end)
+bg('Down', function() g.switch_image("down") end)
+bg('Up', function() g.switch_image("up") end)
+bg('Right', function() g.switch_image("right") end)
 bg('n', function() g.switch_image("pgdown") end)
 bg('p', function() g.switch_image("pgup") end)
 bg('g', function() g.switch_image("first") end)
@@ -84,6 +84,10 @@ bv('h', function() end)
 bv('j', function() end)
 bv('k', function() end)
 bv('l', function() end)
+bv('Left', function() end)
+bv('Down', function() end)
+bv('Up', function() end)
+bv('Right', function() end)
 bv('n', function() v.switch_image("next") end)
 bv('p', function() v.switch_image("prev") end)
 bv('g', function() v.switch_image("first") end)
