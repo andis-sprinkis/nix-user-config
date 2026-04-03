@@ -14,25 +14,30 @@ S.enable_decoration(true)
 S.enable_overlay(false)
 S.set_dnd_button('MouseExtra')
 g.enable_pstore(true)
+g.limit_cache(2048)
+g.set_aspect('keep')
+g.set_border_size(8)
+g.set_padding_size(8)
+g.set_selected_scale(1.4)
+g.set_thumb_size(180)
 imglist.enable_adjacent(true)
 txt.hide()
 txt.set_size(16)
 v.enable_loop(false)
+v.limit_preload(3)
 v.set_default_scale('fit')
-
---
 
 local function vtitle()
   local img = v.get_image()
 
   title(
+    "[" .. img.index .. "/" .. imglist.size() .. "]" ..
+    " " ..
     img.path ..
     " " ..
-    img.width .. "x" .. img.height ..
+    "[" .. math.floor(v.get_scale() * 100) .. "%" .. "]" ..
     " " ..
-    math.floor(v.get_scale() * 100) .. "%" ..
-    " " ..
-    "[" .. img.index .. "/" .. imglist.size() .. "]"
+    "[" .. img.width .. "x" .. img.height .. "]"
   )
 end
 
@@ -40,9 +45,9 @@ local function gtitle()
   local img = g.get_image()
 
   title(
-    img.path ..
+    "[" .. img.index .. "/" .. imglist.size() .. "]" ..
     " " ..
-    "[" .. img.index .. "/" .. imglist.size() .. "]"
+    img.path
   )
 end
 
