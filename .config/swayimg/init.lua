@@ -54,11 +54,20 @@ end
 g.on_image_change(gtitle)
 v.on_image_change(vtitle)
 
+local function vzoomreset()
+  v.reset()
+  vtitle()
+end
+
+local function vzoomorig()
+  v.set_fix_scale("real")
+  vtitle()
+end
+
 S.on_window_resize(
   function()
     if (S.get_mode() == 'viewer') then
-      v.set_fix_scale("fit")
-      vtitle()
+      vzoomreset()
     end
   end
 )
@@ -172,6 +181,8 @@ bv("Left", vpanl)
 bv('Down', vpand)
 bv('Up', vpanu)
 bv('Right', vpanr)
+bv('0', vzoomreset)
+bv('Ctrl+0', vzoomorig)
 bv('n', function() v.switch_image("next") end)
 bv('p', function() v.switch_image("prev") end)
 bv('Space', function() v.switch_image("next") end)
