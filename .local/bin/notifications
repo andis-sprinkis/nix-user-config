@@ -34,9 +34,9 @@ on_since="$(($(date +%s) - seconds_uptime))"
 notifications_json="$(dunstctl history | jq \
 ".data | .[] |
   map({
-    id: .id.data,
+    # id: .id.data,
     timestamp_iso8601: (${on_since} + ((.timestamp.data / 1000000) | floor)) | todateiso8601,
-    timestamp_unix: (${on_since} + ((.timestamp.data / 1000000) | floor)),
+    # timestamp_unix: (${on_since} + ((.timestamp.data / 1000000) | floor)),
     urgency: .urgency.data,
     appname: .appname.data,
     summary: .summary.data,
