@@ -28,9 +28,8 @@ NL="
 # done
 # IFS="$IFS_"
 
-ts_now="$(date +%s)"
 seconds_uptime=$(date +%s -d"@$(cut -d' ' -f1 "/proc/uptime")")
-on_since="$((ts_now - seconds_uptime))"
+on_since="$(($(date +%s) - seconds_uptime))"
 
 notifications_json="$(dunstctl history | jq \
 ".data | .[] |
@@ -46,4 +45,4 @@ notifications_json="$(dunstctl history | jq \
   })
 ")"
 
-echo "$notifications_json"
+echo "$notifications_json" | jq
