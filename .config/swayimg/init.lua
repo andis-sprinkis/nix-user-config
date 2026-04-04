@@ -313,6 +313,22 @@ bv('Up', vpanu)
 bv('Right', vpanr)
 bv('0', vzoomreset)
 bv('Ctrl-0', vzoomorig)
+bv(
+  'bracketleft',
+  function()
+    v.rotate(270)
+    vzoomreset()
+  end
+)
+bv(
+  'bracketright',
+  function()
+    v.rotate(90)
+    vzoomreset()
+  end
+)
+bv('Shift-braceleft', v.flip_vertical)
+bv('Shift-braceright', v.flip_horizontal)
 bv('n', img_next)
 bv('p', img_prev)
 bv('r', reopen)
