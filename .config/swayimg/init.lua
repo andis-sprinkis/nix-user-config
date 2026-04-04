@@ -77,9 +77,14 @@ S.on_window_resize(
   end
 )
 
-g.bind_reset()
-v.bind_reset()
-s.bind_reset()
+local function mode_viewer()
+  S.set_mode('viewer')
+end
+
+local function mode_gallery()
+  S.set_mode('gallery')
+end
+
 
 local function file_manager_desktop()
   local mode = S.get_mode()
@@ -99,7 +104,6 @@ end
 
 local function reopen()
   local mode = S.get_mode()
-
   local imgpath
 
   if mode == "viewer" then imgpath = v.get_image().path end
@@ -108,7 +112,7 @@ local function reopen()
   if (imgpath == nil) then return end
 
   os.execute(
-    'nohup swayimg ' ..
+    'nohup swayimg --gallery ' ..
     '"' .. imgpath .. '"' ..
     ' 0</dev/null 1>/dev/null 2>/dev/null & disown'
   )
@@ -116,7 +120,6 @@ end
 
 local function open_with_menu_desktop()
   local mode = S.get_mode()
-
   local imgpath
 
   if mode == "viewer" then imgpath = v.get_image().path end
@@ -133,7 +136,6 @@ end
 
 local function pager_desktop()
   local mode = S.get_mode()
-
   local imgpath
 
   if mode == "viewer" then imgpath = v.get_image().path end
@@ -147,6 +149,10 @@ local function pager_desktop()
     ' 0</dev/null 1>/dev/null 2>/dev/null & disown'
   )
 end
+
+g.bind_reset()
+v.bind_reset()
+s.bind_reset()
 
 local function gzoomin()
   g.set_thumb_size(g.get_thumb_size() + 10)
@@ -166,9 +172,9 @@ bg('plus', gzoomin)
 bg('minus', gzoomout)
 bg('0', gzoomreset)
 bg('Ctrl-0', gzoomreset)
-bg('Return', function() S.set_mode('viewer') end)
-bg('Space', function() S.set_mode('viewer') end)
-bg('Shift-space', function() S.set_mode('viewer') end)
+bg('Return', mode_viewer)
+bg('Space', mode_viewer)
+bg('Shift-space', mode_viewer)
 bg('h', function() g.switch_image('left') end)
 bg('j', function() g.switch_image('down') end)
 bg('k', function() g.switch_image('up') end)
@@ -184,19 +190,19 @@ bg('Shift-o', open_with_menu_desktop)
 bv('Shift-p', pager_desktop)
 bg('g', function() g.switch_image('first') end)
 bg('Shift-g', function() g.switch_image('last') end)
-bg('f', function() S.toggle_fullscreen() end)
-bg('Escape', function() S.exit() end)
-bg('q', function() S.exit() end)
+bg('f', S.toggle_fullscreen)
+bg('Escape', S.exit)
+bg('q', S.exit)
 bg('i', function() if txt.visible() then txt.hide() else txt.show() end end)
 
 mg('ScrollUp', function() g.switch_image('pgup') end)
 mg('ScrollDown', function() g.switch_image('pgdown') end)
 mg('ScrollLeft', function() g.switch_image('pgup') end)
 mg('ScrollRight', function() g.switch_image('pgdown') end)
-mg('Ctrl-MouseLeft', function() S.set_mode('viewer') end)
-mg('Ctrl-MouseRight', function() S.set_mode('viewer') end)
-mg('MouseLeft', function() S.set_mode('viewer') end)
-mg('MouseMiddle', function() S.set_mode('viewer') end)
+mg('Ctrl-MouseLeft', mode_viewer)
+mg('Ctrl-MouseRight', mode_viewer)
+mg('MouseLeft', mode_viewer)
+mg('MouseMiddle', mode_viewer)
 mg('Ctrl-ScrollLeft', gzoomin)
 mg('Ctrl-ScrollRight', gzoomout)
 mg('Ctrl-ScrollUp', gzoomin)
@@ -210,7 +216,7 @@ mg('MouseRight-ScrollDown', gzoomout)
 mg('MouseRight-MouseMiddle', gzoomreset)
 mg('MouseRight-MouseMiddle-ScrollUp', nop)
 mg('MouseRight-MouseMiddle-ScrollDown', nop)
-mg('MouseRight-MouseLeft', function() S.set_mode('viewer') end)
+mg('MouseRight-MouseLeft', mode_viewer)
 mg('MouseMiddle-ScrollLeft', nop)
 mg('MouseMiddle-ScrollRight', nop)
 mg('MouseMiddle-ScrollUp', nop)
@@ -260,7 +266,7 @@ bv('e', file_manager_desktop)
 bv('equal', vzoomin)
 bv('plus', vzoomin)
 bv('minus', vzoomout)
-bv('Return', function() S.set_mode('gallery') end)
+bv('Return', mode_gallery)
 bv('h', vpanl)
 bv('j', vpand)
 bv('k', vpanu)
@@ -294,11 +300,11 @@ bv(
   end
 )
 bv('w', vzoomreset)
-bv('Shift-r', function() v.reload() end)
+bv('Shift-r', v.reload)
 bv('Shift-g', function() v.switch_image('last') end)
-bv('f', function() S.toggle_fullscreen() end)
-bv('Escape', function() S.exit() end)
-bv('q', function() S.exit() end)
+bv('f', S.toggle_fullscreen)
+bv('Escape', S.exit)
+bv('q', S.exit)
 bv('i', function() if txt.visible() then txt.hide() else txt.show() end end)
 
 local function mvzoomin()
@@ -332,7 +338,7 @@ mv('ScrollUp', function() v.switch_image('prev') end)
 mv('ScrollDown', function() v.switch_image('next') end)
 mv('ScrollLeft', function() v.switch_image('prev') end)
 mv('ScrollRight', function() v.switch_image('next') end)
-mv('MouseMiddle', function() S.set_mode('gallery') end)
+mv('MouseMiddle', mode_gallery)
 mv('Ctrl-ScrollLeft', mvzoomin)
 mv('Ctrl-ScrollRight', mvzoomout)
 mv('Ctrl-ScrollUp', mvzoomin)
