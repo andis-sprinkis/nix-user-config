@@ -30,6 +30,10 @@ v.limit_preload(3)
 v.set_default_scale('fit')
 v.set_drag_button('MouseRight')
 
+local nop = function()
+
+end
+
 local function vtitle()
   local img = v.get_image()
 
@@ -110,6 +114,40 @@ local function reopen()
   )
 end
 
+local function open_with_menu_desktop()
+  local mode = S.get_mode()
+
+  local imgpath
+
+  if mode == "viewer" then imgpath = v.get_image().path end
+  if mode == "gallery" then imgpath = g.get_image().path end
+
+  if (imgpath == nil) then return end
+
+  os.execute(
+    'nohup open_with_menu_desktop ' ..
+    '"' .. imgpath .. '"' ..
+    ' 0</dev/null 1>/dev/null 2>/dev/null & disown'
+  )
+end
+
+local function pager_desktop()
+  local mode = S.get_mode()
+
+  local imgpath
+
+  if mode == "viewer" then imgpath = v.get_image().path end
+  if mode == "gallery" then imgpath = g.get_image().path end
+
+  if (imgpath == nil) then return end
+
+  os.execute(
+    'nohup pager_desktop ' ..
+    '"' .. imgpath .. '"' ..
+    ' 0</dev/null 1>/dev/null 2>/dev/null & disown'
+  )
+end
+
 local function gzoomin()
   g.set_thumb_size(g.get_thumb_size() + 10)
 end
@@ -142,6 +180,8 @@ bg('Right', function() g.switch_image('right') end)
 bg('n', function() g.switch_image('pgdown') end)
 bg('p', function() g.switch_image('pgup') end)
 bg('r', reopen)
+bg('Shift+o', open_with_menu_desktop)
+bv('Shift+p', pager_desktop)
 bg('g', function() g.switch_image('first') end)
 bg('Shift+g', function() g.switch_image('last') end)
 bg('f', function() S.toggle_fullscreen() end)
@@ -162,21 +202,23 @@ mg('Ctrl-ScrollRight', gzoomout)
 mg('Ctrl-ScrollUp', gzoomin)
 mg('Ctrl-ScrollDown', gzoomout)
 mg('Ctrl-MouseMiddle', gzoomreset)
-mg('MouseRight', function() end)
+mg('MouseRight', nop)
 mg('MouseRight-ScrollLeft', gzoomin)
 mg('MouseRight-ScrollRight', gzoomout)
 mg('MouseRight-ScrollUp', gzoomin)
 mg('MouseRight-ScrollDown', gzoomout)
 mg('MouseRight-MouseMiddle', gzoomreset)
+mg('MouseRight+MouseMiddle+ScrollUp', nop)
+mg('MouseRight+MouseMiddle+ScrollDown', nop)
 mg('MouseRight-MouseLeft', function() S.set_mode('viewer') end)
-mg('MouseMiddle-ScrollLeft', function() end)
-mg('MouseMiddle-ScrollRight', function() end)
-mg('MouseMiddle-ScrollUp', function() end)
-mg('MouseMiddle-ScrollDown', function() end)
-mg('MouseLeft-ScrollLeft', function() end)
-mg('MouseLeft-ScrollRight', function() end)
-mg('MouseLeft-ScrollUp', function() end)
-mg('MouseLeft-ScrollDown', function() end)
+mg('MouseMiddle-ScrollLeft', nop)
+mg('MouseMiddle-ScrollRight', nop)
+mg('MouseMiddle-ScrollUp', nop)
+mg('MouseMiddle-ScrollDown', nop)
+mg('MouseLeft-ScrollLeft', nop)
+mg('MouseLeft-ScrollRight', nop)
+mg('MouseLeft-ScrollUp', nop)
+mg('MouseLeft-ScrollDown', nop)
 
 local function vzoomin()
   local scale = v.get_scale()
@@ -232,6 +274,8 @@ bv('Ctrl+0', vzoomorig)
 bv('n', function() v.switch_image('next') end)
 bv('p', function() v.switch_image('prev') end)
 bv('r', reopen)
+bv('Shift+o', open_with_menu_desktop)
+bv('Shift+p', pager_desktop)
 bv('Space', function() v.switch_image('next') end)
 bv('Shift+space', function() v.switch_image('prev') end)
 bv('g', function() v.switch_image('first') end)
@@ -271,14 +315,19 @@ local function mvzoomout()
   vtitle()
 end
 
-local function mvnextprev()
+local function mvprevnext()
   v.switch_image((S.get_mouse_pos().x <= (S.get_window_size().width / 2)) and 'prev' or 'next')
 end
 
-mv('MouseLeft', mvnextprev)
-mv('MouseRight-MouseLeft', mvnextprev)
-mv('Ctrl+MouseLeft', mvnextprev)
-mv('Ctrl+MouseRight', mvnextprev)
+local function mvnextprev()
+  v.switch_image((S.get_mouse_pos().x > (S.get_window_size().width / 2)) and 'prev' or 'next')
+end
+
+mv('MouseLeft', mvprevnext)
+mv('MouseRight+MouseLeft', mvnextprev)
+mv('Ctrl+MouseLeft', mvprevnext)
+mv('Ctrl+MouseRight+MouseLeft', mvnextprev)
+mv('Ctrl+MouseRight', nop)
 mv('ScrollUp', function() v.switch_image('prev') end)
 mv('ScrollDown', function() v.switch_image('next') end)
 mv('ScrollLeft', function() v.switch_image('prev') end)
@@ -289,17 +338,19 @@ mv('Ctrl-ScrollRight', mvzoomout)
 mv('Ctrl-ScrollUp', mvzoomin)
 mv('Ctrl-ScrollDown', mvzoomout)
 mv('Ctrl-MouseMiddle', vzoomreset)
-mv('MouseRight', function() end)
+mv('MouseRight', nop)
 mv('MouseRight-ScrollLeft', mvzoomin)
 mv('MouseRight-ScrollRight', mvzoomout)
 mv('MouseRight-ScrollUp', mvzoomin)
 mv('MouseRight-ScrollDown', mvzoomout)
 mv('MouseRight-MouseMiddle', vzoomreset)
-mv('MouseMiddle-ScrollLeft', function() end)
-mv('MouseMiddle-ScrollRight', function() end)
-mv('MouseMiddle-ScrollUp', function() end)
-mv('MouseMiddle-ScrollDown', function() end)
-mv('MouseLeft-ScrollLeft', function() end)
-mv('MouseLeft-ScrollRight', function() end)
-mv('MouseLeft-ScrollUp', function() end)
-mv('MouseLeft-ScrollDown', function() end)
+mv('MouseRight+MouseMiddle+ScrollUp', nop)
+mv('MouseRight+MouseMiddle+ScrollDown', nop)
+mv('MouseMiddle-ScrollLeft', nop)
+mv('MouseMiddle-ScrollRight', nop)
+mv('MouseMiddle-ScrollUp', nop)
+mv('MouseMiddle-ScrollDown', nop)
+mv('MouseLeft-ScrollLeft', nop)
+mv('MouseLeft-ScrollRight', nop)
+mv('MouseLeft-ScrollUp', nop)
+mv('MouseLeft-ScrollDown', nop)
