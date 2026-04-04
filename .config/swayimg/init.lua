@@ -30,9 +30,7 @@ v.limit_preload(3)
 v.set_default_scale('fit')
 v.set_drag_button('MouseRight')
 
-local nop = function()
-
-end
+local nop = function() end
 
 local function vtitle()
   local img = v.get_image()
