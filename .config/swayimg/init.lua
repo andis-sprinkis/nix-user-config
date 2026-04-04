@@ -10,6 +10,8 @@ local v = S.viewer
 local bv = v.on_key
 local mv = v.on_mouse
 
+local thumb_size_default = 128
+
 S.enable_decoration(true)
 S.enable_overlay(false)
 S.set_dnd_button('MouseExtra')
@@ -19,13 +21,14 @@ g.set_aspect('fit')
 g.set_border_size(8)
 g.set_padding_size(16)
 g.set_selected_scale(1.4)
-g.set_thumb_size(128)
+g.set_thumb_size(thumb_size_default)
 imglist.enable_adjacent(true)
 txt.hide()
 txt.set_size(16)
 v.enable_loop(false)
 v.limit_preload(3)
 v.set_default_scale('fit')
+v.set_drag_button('MouseRight')
 
 local function vtitle()
   local img = v.get_image()
@@ -97,6 +100,10 @@ local function gzoomout()
   g.set_thumb_size(g.get_thumb_size() - 10);
 end
 
+local function gzoomreset()
+ g.set_thumb_size(thumb_size_default);
+end
+
 bg('equal', gzoomin)
 bg('plus', gzoomin)
 bg('minus', gzoomout)
@@ -126,12 +133,19 @@ mg('ScrollLeft', function() g.switch_image("pgup") end)
 mg('ScrollRight', function() g.switch_image("pgdown") end)
 
 mg('MouseLeft', function() S.set_mode("viewer") end)
-mg('MouseRight', function() S.set_mode("viewer") end)
+mg('MouseMiddle', function() S.set_mode("viewer") end)
 
 mg("Ctrl-ScrollLeft", gzoomin)
 mg("Ctrl-ScrollRight", gzoomout)
 mg("Ctrl-ScrollUp", gzoomin)
 mg("Ctrl-ScrollDown", gzoomout)
+mg("Ctrl-MouseMiddle", gzoomreset)
+mg("MouseRight", function () end)
+mg("MouseRight-ScrollLeft", gzoomin)
+mg("MouseRight-ScrollRight", gzoomout)
+mg("MouseRight-ScrollUp", gzoomin)
+mg("MouseRight-ScrollDown", gzoomout)
+mg("MouseRight-MouseMiddle", gzoomreset)
 
 local function vzoomin()
   local scale = v.get_scale()
@@ -220,7 +234,7 @@ mv('ScrollDown', function() v.switch_image("next") end)
 mv('ScrollLeft', function() v.switch_image("prev") end)
 mv('ScrollRight', function() v.switch_image("next") end)
 
-mv('MouseRight', function() S.set_mode("gallery") end)
+mv('MouseMiddle', function() S.set_mode("gallery") end)
 
 local function mvzoomin()
   local mpos = S.get_mouse_pos()
@@ -240,3 +254,9 @@ mv("Ctrl-ScrollLeft", mvzoomin)
 mv("Ctrl-ScrollRight", mvzoomout)
 mv("Ctrl-ScrollUp", mvzoomin)
 mv("Ctrl-ScrollDown", mvzoomout)
+mv("MouseRight", function () end)
+mv("MouseRight-ScrollLeft", mvzoomin)
+mv("MouseRight-ScrollRight", mvzoomout)
+mv("MouseRight-ScrollUp", mvzoomin)
+mv("MouseRight-ScrollDown", mvzoomout)
+mv("MouseRight-MouseMiddle", vzoomreset)
