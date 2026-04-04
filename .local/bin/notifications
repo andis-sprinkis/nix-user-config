@@ -1,32 +1,5 @@
 #!/usr/bin/env sh
 set -eu
-IFS_="$IFS"
-NL="
-"
-# dir="$(cd -P -- "$(dirname -- "$0")" && pwd -P)"
-# script="$(basename "$0")"
-#
-# if [ -z "${1:-""}" ]; then
-#   echo "${script}: Requires an argument." 2>&1
-#   exit "1"
-# fi
-#
-# if [ "${1:-""}" ]; then
-#   echo "$1"
-# fi
-#
-# while read -r l; do
-#   echo "$l"
-#   continue
-# done
-#
-# IFS=" "
-# for i in $items; do
-#   IFS="$IFS_"
-#
-#   command ...
-# done
-# IFS="$IFS_"
 
 seconds_uptime=$(date +%s -d"@$(cut -d' ' -f1 "/proc/uptime")")
 on_since="$(($(date +%s) - seconds_uptime))"
