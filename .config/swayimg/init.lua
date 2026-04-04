@@ -24,7 +24,8 @@ g.set_selected_scale(1.4)
 g.set_thumb_size(thumb_size_default)
 imglist.enable_adjacent(true)
 txt.hide()
-txt.set_size(16)
+txt.set_size(18)
+txt.set_font('sans-serif')
 v.enable_loop(false)
 v.limit_preload(3)
 v.set_default_scale('fit')
@@ -56,8 +57,38 @@ local function gtitle()
   )
 end
 
-g.on_image_change(gtitle)
-v.on_image_change(vtitle)
+local vinitial = 1
+
+g.on_image_change(
+  function()
+    gtitle()
+    txt.set_status('')
+    vinitial = 0
+  end
+)
+
+v.on_image_change(
+  function()
+    vtitle()
+    txt.set_status('')
+
+    if (vinitial == 0) then
+      local idx = v.get_image().index
+
+      if (idx == 1) then
+        txt.set_status('First file')
+        return
+      end
+
+      if (idx == imglist.size()) then
+        txt.set_status('Last file')
+        return
+      end
+    end
+
+    vinitial = 0
+  end
+)
 
 local function vzoomreset()
   v.reset()
@@ -82,7 +113,6 @@ end
 local function mode_gallery()
   S.set_mode('gallery')
 end
-
 
 local function file_manager_desktop()
   local mode = S.get_mode()
@@ -260,6 +290,14 @@ local function vpand()
   v.set_abs_position(icoord.x, math.floor(icoord.y - wsize.height / 10))
 end
 
+local function img_next()
+  v.switch_image('next')
+end
+
+local function img_prev()
+  v.switch_image('prev')
+end
+
 bv('e', file_manager_desktop)
 bv('equal', vzoomin)
 bv('plus', vzoomin)
@@ -275,14 +313,15 @@ bv('Up', vpanu)
 bv('Right', vpanr)
 bv('0', vzoomreset)
 bv('Ctrl-0', vzoomorig)
-bv('n', function() v.switch_image('next') end)
-bv('p', function() v.switch_image('prev') end)
+bv('n', img_next)
+bv('p', img_prev)
 bv('r', reopen)
 bv('Shift-o', open_with_menu_desktop)
 bv('Shift-p', pager_desktop)
-bv('Space', function() v.switch_image('next') end)
-bv('Shift-space', function() v.switch_image('prev') end)
+bv('Space', img_next)
+bv('Shift-space', img_prev)
 bv('g', function() v.switch_image('first') end)
+bv('Shift-g', function() v.switch_image('last') end)
 bv(
   'Shift-w',
   function()
@@ -299,7 +338,6 @@ bv(
 )
 bv('w', vzoomreset)
 bv('Shift-r', v.reload)
-bv('Shift-g', function() v.switch_image('last') end)
 bv('f', S.toggle_fullscreen)
 bv('Escape', S.exit)
 bv('q', S.exit)
@@ -319,23 +357,15 @@ local function mvzoomout()
   vtitle()
 end
 
-local function mvprevnext()
-  v.switch_image((S.get_mouse_pos().x <= (S.get_window_size().width / 2)) and 'prev' or 'next')
-end
-
-local function mvnextprev()
-  v.switch_image((S.get_mouse_pos().x > (S.get_window_size().width / 2)) and 'prev' or 'next')
-end
-
-mv('MouseLeft', mvprevnext)
-mv('MouseRight-MouseLeft', mvnextprev)
-mv('Ctrl-MouseLeft', mvprevnext)
-mv('Ctrl-MouseRight-MouseLeft', mvnextprev)
+mv('MouseLeft', img_next)
+mv('MouseRight-MouseLeft', img_prev)
+mv('Ctrl-MouseLeft', img_next)
+mv('Ctrl-MouseRight-MouseLeft', img_prev)
 mv('Ctrl-MouseRight', nop)
-mv('ScrollUp', function() v.switch_image('prev') end)
-mv('ScrollDown', function() v.switch_image('next') end)
-mv('ScrollLeft', function() v.switch_image('prev') end)
-mv('ScrollRight', function() v.switch_image('next') end)
+mv('ScrollUp', img_prev)
+mv('ScrollDown', img_next)
+mv('ScrollLeft', img_prev)
+mv('ScrollRight', img_next)
 mv('MouseMiddle', mode_gallery)
 mv('Ctrl-ScrollLeft', mvzoomin)
 mv('Ctrl-ScrollRight', mvzoomout)
