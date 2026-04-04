@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 set -eu
+IFS_="$IFS"
+NL="
+"
 
 # Shows menu that lists bookmarks of URIs or file paths to be opened via xdg-open.
 #
@@ -26,11 +29,9 @@ hostname="$(uname -n)"
 
 bmark_lines=""
 
-IFS_="$IFS"
-IFS="
-"
+IFS="$NL"; set -f
 for line in $bmark_file_lines ; do
-  IFS="$IFS_"
+  IFS="$IFS_"; set +f
 
   bmark_hostname="$(printf "%s\n" "$line" | awk -F"  ~  " '{ print $3 }')"
 
@@ -41,7 +42,7 @@ for line in $bmark_file_lines ; do
   bmark_lines="${bmark_lines}${bmark_lines:+
 }${line}"
 done
-IFS="$IFS_"
+IFS="$IFS_"; set +f
 
 line_edit_bmarks="Edit bookmarks"
 
