@@ -69,9 +69,7 @@ end
 
 S.on_window_resize(
   function()
-    if (S.get_mode() == 'viewer') then
-      vzoomreset()
-    end
+    if (S.get_mode() == 'viewer') then vzoomreset() end
   end
 )
 
