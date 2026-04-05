@@ -63,11 +63,13 @@ while true; do
     continue
   fi
 
-  cache_hit="$(echo "$metrics_cache" | grep "^${metrics}" | head -1)"
+  set +e
+  cache_hit="$(echo "$metrics_cache" | grep "^${metrics} ")"
+  set -e
 
   if [ "$cache_hit" ]; then
     set +e # The focused window may not be floating anymore
-    $wm_cmd -q "move absolute position $(echo "$cache_hit" | cut -f17-18 -d" ")"
+    $wm_cmd -q "move absolute position $(echo "$cache_hit" | head -n 1 | cut -f17-18 -d" ")"
     set -e
 
     sleep "1"
