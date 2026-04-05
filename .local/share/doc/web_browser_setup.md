@@ -23,7 +23,6 @@
 
 1.  https://addons.mozilla.org/en-US/firefox/addon/accessibility-checker/
 1.  https://addons.mozilla.org/en-US/firefox/addon/add-brave-search/
-1.  https://addons.mozilla.org/en-US/firefox/addon/auto-close-tabs/
 1.  https://addons.mozilla.org/en-US/firefox/addon/clearurls/
 1.  https://addons.mozilla.org/en-US/firefox/addon/copy-as-markdown/
 1.  https://addons.mozilla.org/en-US/firefox/addon/ddg-lite-search-provider/
@@ -31,10 +30,8 @@
 1.  https://addons.mozilla.org/en-US/firefox/addon/favicon-detector/
 1.  https://addons.mozilla.org/en-US/firefox/addon/github-search/
 1.  https://addons.mozilla.org/en-US/firefox/addon/global-speed/
-1.  https://addons.mozilla.org/en-US/firefox/addon/hohser/
 1.  https://addons.mozilla.org/en-US/firefox/addon/istilldontcareaboutcookies/
 1.  https://addons.mozilla.org/en-US/firefox/addon/jump-to-anchor/
-1.  https://addons.mozilla.org/en-US/firefox/addon/libredirect/
 1.  https://addons.mozilla.org/en-US/firefox/addon/localcdn-fork-of-decentraleyes/
 1.  https://addons.mozilla.org/en-US/firefox/addon/mdn-search-provider/
 1.  https://addons.mozilla.org/en-US/firefox/addon/metager-searchengine/
@@ -64,7 +61,6 @@
 1.  https://chrome.google.com/webstore/detail/copy-as-markdown/fkeaekngjflipcockcnpobkpbbfbhmdn
 1.  https://chrome.google.com/webstore/detail/favicon-detector/jlfeffjhgmgblofcgpbgpkkhfniipejm
 1.  https://chrome.google.com/webstore/detail/global-speed/jpbjcnkcffbooppibceonlgknpkniiff
-1.  https://chrome.google.com/webstore/detail/highlight-or-hide-search/ilopipickdimglkalhckioobifbiinbk
 1.  https://chrome.google.com/webstore/detail/i-still-dont-care-about-c/edibdbjcniadpccecjdfdjjppcpchdlm
 1.  https://chrome.google.com/webstore/detail/ibm-equal-access-accessib/lkcagbfjnkomcinoddgooolagloogehp
 1.  https://chrome.google.com/webstore/detail/jump-to-anchor/fhbjjkmbahpmoegppmljagmakkeomlmb
@@ -76,7 +72,7 @@
 1.  https://chrome.google.com/webstore/detail/search-by-image/cnojnbdhbhnkbcieeekonklommdnndci
 1.  https://chrome.google.com/webstore/detail/sponsorblock-for-youtube/mnjggcdmjocbbbhaepdhchncahnbgone
 1.  https://chrome.google.com/webstore/detail/stop-autoplay-next-for-yo/bhnhbmjfaanopkalgkjoiemhekdnhanh
-1.  https://chrome.google.com/webstore/detail/stylus/clngdbkpkpeebahjckkjfobafhncgmne (manifest v2)
+1.  https://chrome.google.com/webstore/detail/stylus/clngdbkpkpeebahjckkjfobafhncgmne (Manifest v2)
 1.  https://chrome.google.com/webstore/detail/unhook-remove-youtube-rec/khncfooichmfjbepaaaebmommgaepoid
 1.  https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag
 1.  https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh

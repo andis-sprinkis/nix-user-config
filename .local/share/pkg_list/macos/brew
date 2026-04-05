@@ -39,6 +39,7 @@ ripgrep
 sd
 tmux
 tree
+tree-sitter-cli
 unzip
 volta
 wget
