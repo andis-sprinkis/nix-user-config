@@ -2,4 +2,4 @@
 set -eu
 
 # shellcheck disable=SC2154
-lf -remote "send ${id} tty-write \"\033]0;${f}\007\""
+lf -remote "send ${id} tty-write \"\033]0;${PWD}\007\""
