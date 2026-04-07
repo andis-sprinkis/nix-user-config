@@ -39,10 +39,13 @@ while getopts fh name; do
   esac
 done
 
-data="$(LC_ALL="C" df --output="target,pcent,used,avail,size,source" \
+data="$(
+  LC_ALL="C" df --output="target,pcent,used,avail,size,source" \
   | tail -n "+2" \
-  | column -t -o";" | sed -e 's/\s*\;/\;/g' \
-  | sort)"
+  | column -t -o";" \
+  | sed -e 's/\s*\;/\;/g' \
+  | sort
+)"
 
 # TODO: use SIZE to specify bytes instead of kB as the base unit
 b_kb="1024"  b_mb="1048576" b_gb="1073741824" b_tb="1099511627776" b_pb="1125899906842624" b_eb=""
