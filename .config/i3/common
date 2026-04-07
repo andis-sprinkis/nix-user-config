@@ -41,31 +41,31 @@ bindsym $mod+$down  focus down
 bindsym $mod+$up    focus up
 bindsym $mod+$right focus right
 
-bindsym $mod+Shift+$left  move left  56px
-bindsym $mod+Shift+$down  move down  56px
-bindsym $mod+Shift+$up    move up    56px
-bindsym $mod+Shift+$right move right 56px
+bindsym $mod+Shift+$left  move left  56px; focus
+bindsym $mod+Shift+$down  move down  56px; focus
+bindsym $mod+Shift+$up    move up    56px; focus
+bindsym $mod+Shift+$right move right 56px; focus
 
 bindsym $mod+o split h
 bindsym $mod+v split v
 
-bindsym $mod+Shift+f     fullscreen toggle
-bindsym $mod+Shift+space floating toggle; move position center
-bindsym $mod+space       focus mode_toggle
+bindsym $mod+Shift+f     fullscreen toggle; focus
+bindsym $mod+Shift+space floating toggle; move position center; focus
+bindsym $mod+space       focus mode_toggle; focus
 
-bindsym button3 floating toggle; move position cursor
+bindsym button3 floating toggle; move position cursor; focus
 
 bindsym $mod+Escape exec --no-startup-id idle_manager lock
 
-bindsym $mod+d       layout toggle splitv splith
+bindsym $mod+d       layout toggle splitv splith; focus
 
 bindsym $mod+z       focus parent
 bindsym $mod+Shift+z focus child
 
 bindsym $mod+t sticky toggle
 
-bindsym $mod+Shift+minus move scratchpad;
-bindsym $mod+minus       scratchpad show; move position center; sticky enable
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus       scratchpad show; move position center; sticky enable; focus
 
 set  $ws1  1
 set  $ws2  2
