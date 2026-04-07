@@ -42,7 +42,7 @@ if.floating_nodes|.[]|select(.focused)then
 .rect.y,.rect.y+.rect.height,.rect.y+${ws_thr_jq},.rect.y+.rect.height-${ws_thr_jq},.rect.y-${ws_thr_jq},.rect.y+.rect.height+${ws_thr_jq}]|@sh
 end"
 
-IN() { return "$((($3 - $1) * ($2 - $3) > 0 ? 0 : 1))"; }
+IN() { return "$((($3 - $1) * ($2 - $3) >= 0 ? 0 : 1))"; }
 
 metrics_cache=""
 prev_workspaces=""
@@ -104,7 +104,7 @@ while true; do
     if ! IN "$AO" "$BO" "$AS" && ! IN "$BI" "$BO" "$BS"; then set -- "$@" "$AS"; continue; fi
     if IN "$BI" "$BO" "$AS" && ! IN "$AO" "$BO" "$BS"; then set -- "$@" "$AS"; continue; fi
 
-    echo "Failure on: ${metrics}" >> "${XDG_CACHE_HOME:-$HOME/.cache}/auto_edge_snap.log"
+    echo "Failure on: ${*}" >> "${XDG_CACHE_HOME:-$HOME/.cache}/auto_edge_snap.log"
     exit "2"
   done
 
