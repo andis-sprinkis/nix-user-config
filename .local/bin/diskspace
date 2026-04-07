@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 set -eu
 IFS_="$IFS"
+NL="
+"
 
 script="$(basename "$0")"
 
@@ -123,8 +125,7 @@ sym_severity() {
   esac
 }
 
-IFS="
-"
+IFS="$NL"
 for line in $data; do
   IFS="$IFS_"
 
@@ -133,7 +134,7 @@ for line in $data; do
 
   if [ "$opt_has_f" = "0" ]; then
     case "$val_p_dev" in
-      "none"|"tmpfs"|"efivarfs"|"dev")
+      "none"|"tmpfs"|"efivarfs"|"dev"|*".appimage")
         continue
       ;;
       "run")
