@@ -14,9 +14,9 @@
     ```
 1. Install Homebrew packages.
     ```sh
-    [ -s ./brew_tap ] && brew tap $(cat ./brew_tap | paste -s -d ' ' -)
-    [ -s ./brew ] && brew install $(cat ./brew | paste -s -d ' ' -)
-    [ -s ./brew_cask ] && brew install --cask $(cat ./brew_cask | paste -s -d ' ' -)
+    [ -s "./brew_tap" ] && brew tap $(cat "./brew_tap" | paste -s -d ' ' -)
+    [ -s "./brew" ] && brew install $(cat "./brew" | paste -s -d ' ' -)
+    [ -s "./brew_cask" ] && brew install --cask $(cat "./brew_cask" | paste -s -d ' ' -)
     ```
 1. Install user general configuration.
     ```sh
@@ -66,7 +66,6 @@
     ```
 
 1. Increase the keyboard key repetition rate.
-
     1. ```sh
        defaults write -g ApplePressAndHoldEnabled -bool false
        defaults write -g InitialKeyRepeat -int 9
@@ -183,9 +182,7 @@ Steps for adding any newly listed packages from the user package lists to an alr
     cd $HOME/.local/share/pkg_list/macos
     ```
 1. Add the packages from the respective source lists.
-
     - Homebrew:
-
         - Upgrade existing packages.
             ```sh
             brew update
@@ -199,7 +196,6 @@ Steps for adding any newly listed packages from the user package lists to an alr
             ```
 
     - PyPI:
-
         - Upgrade existing packages.
             ```sh
             pipx upgrade-all
