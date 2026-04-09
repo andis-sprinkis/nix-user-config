@@ -306,7 +306,6 @@ case "$capture_format" in
             fi
 
             saved
-
           ;;
           "area")
             countdown
