@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Network connections
+Exec=network_manager_desktop
+Categories=Settings;HardwareSettings;
