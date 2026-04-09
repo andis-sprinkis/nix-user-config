@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 set -eu
+NL="
+"
 
 if [ "${BLOCK_BUTTON:-""}" ]; then
   # shellcheck disable=SC3044
@@ -20,6 +22,5 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
 fi
 
 if pidof -q "wf-recorder"; then
-  echo "🔴 Recording screen
-🔴 Recording scr."
+  echo "🔴 Recording screen${NL}🔴 Recording scr."
 fi

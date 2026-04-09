@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 set -eu
+NL="
+"
 
 if [ "${BLOCK_BUTTON:-""}" ]; then
   # shellcheck disable=SC3044
@@ -20,13 +22,11 @@ REPORT_WAYLAND="${REPORT_WAYLAND:-"0"}"
 REPORT_X11="${REPORT_X11:-"1"}"
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && [ "$REPORT_X11" = "1" ]; then
-  exec echo "On X11
-X11"
+  exec echo "On X11${NL}X11"
 fi
 
 if [ "${WAYLAND_DISPLAY:-""}" ] && [ "$REPORT_WAYLAND" = "1" ]; then
-  exec echo "On Wayland
-Wayland"
+  exec echo "On Wayland${NL}Wayland"
 fi
 
 exit "1"

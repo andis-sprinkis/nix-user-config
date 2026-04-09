@@ -1,12 +1,11 @@
 #!/usr/bin/env sh
 set -eu
+NL="
+"
 
-msg_paused="Media paused
-Media paused"
-msg_playing="Media playing
-Media playing"
-msg_stopped="Media stopped
-Media stopped"
+msg_paused="Media paused${NL}Media paused"
+msg_playing="Media playing${NL}Media playing"
+msg_stopped="Media stopped${NL}Media stopped"
 
 case "$(set +e; playerctl status 2> "/dev/null"; set -e)" in
   "Playing")
@@ -32,6 +31,7 @@ case "$(set +e; playerctl status 2> "/dev/null"; set -e)" in
         ;;
       esac
     fi
+
     message="${message:-"$msg_playing"}"
   ;;
   "Paused")
@@ -48,6 +48,7 @@ case "$(set +e; playerctl status 2> "/dev/null"; set -e)" in
         ;;
       esac
     fi
+
     message="${message:-"$msg_paused"}"
   ;;
   "Stopped")
@@ -60,6 +61,7 @@ case "$(set +e; playerctl status 2> "/dev/null"; set -e)" in
         ;;
       esac
     fi
+
     message="${message:-"$msg_stopped"}"
   ;;
   *)

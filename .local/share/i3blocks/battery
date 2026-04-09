@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 set -eu
 IFS_="$IFS"
+NL="
+"
 
 batteries="$(find "/sys/class/power_supply/" -name "BAT*" 2> "/dev/null")"
 
@@ -41,29 +43,23 @@ for battery in $batteries; do
 
   case "$status" in
     "Full")
-      info="Battery full
-Bat. full"
+      info="Battery full${NL}Bat. full"
     ;;
     "Discharging")
       if [ "$capacity" -gt "25" ]; then
-        info="Battery discharging, ${capacity}%
-Bat. discharging, ${capacity}%"
+        info="Battery discharging, ${capacity}%${NL}Bat. discharging, ${capacity}%"
       else
-        info="Battery discharging, ⚠️ ${capacity}%
-Bat. discharging, ⚠️ ${capacity}%"
+        info="Battery discharging, ⚠️ ${capacity}%${NL}Bat. discharging, ⚠️ ${capacity}%"
       fi
     ;;
     "Charging")
-      info="Battery charging, ${capacity}%
-Bat. charging, ${capacity}%"
+      info="Battery charging, ${capacity}%${NL}Bat. charging, ${capacity}%"
     ;;
     "Not charging")
-      info="Battery not charging, ⚠️ ${capacity}%
-Bat. not charging, ⚠️ ${capacity}%"
+      info="Battery not charging, ⚠️ ${capacity}%${NL}Bat. not charging, ⚠️ ${capacity}%"
     ;;
     *)
-      info="Battery state unknown, ⚠️ ${capacity}%
-Bat. state unknown, ⚠️ ${capacity}%"
+      info="Battery state unknown, ⚠️ ${capacity}%${NL}Bat. state unknown, ⚠️ ${capacity}%"
     ;;
   esac
 done

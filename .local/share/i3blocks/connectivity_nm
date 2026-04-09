@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 set -eu
+NL="
+"
 
 connectivity="$(nmcli networking connectivity)"
 
@@ -25,14 +27,12 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
         "full"|"portal"|"limited") 
           nmcli networking off 1> "/dev/null" 2> "/dev/null" & disown
           reload
-          exec echo "Disabling connectivity...
-Disabling conn.k."
+          exec echo "Disabling connectivity...${NL}Disabling conn.k."
         ;;
         *)
           nmcli networking on 1> "/dev/null" 2> "/dev/null" & disown
           reload "2"
-          exec echo "Enabling connectivity...
-Enabling conn.k."
+          exec echo "Enabling connectivity...${NL}Enabling conn.k."
         ;;
       esac
     ;;
@@ -50,27 +50,21 @@ fi
 
 case "$connectivity" in
   "full")
-    echo "Network connected
-Net. connected"
+    echo "Network connected${NL}Net. connected"
   ;;
   "none")
-    echo "Network disconnected
-Net. disconnected"
+    echo "Network disconnected${NL}Net. disconnected"
   ;;
   "limited")
-    echo "Network connected (limited)
-Net. connected (limited)"
+    echo "Network connected (limited)${NL}Net. connected (limited)"
   ;;
   "unknown")
-    echo "Network connectivity unknown
-Net. conn.k. unknown"
+    echo "Network connectivity unknown${NL}Net. conn.k. unknown"
   ;;
   "portal")
-    echo "Network connected (portal)
-Net. connected (portal)"
+    echo "Network connected (portal)${NL}Net. connected (portal)"
   ;;
   *)
-    echo "Network connectivity status: ${connectivity}
-Net. conn.k. status: ${connectivity}"
+    echo "Network connectivity status: ${connectivity}${NL}Net. conn.k. status: ${connectivity}"
   ;;
 esac

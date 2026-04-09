@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 set -eu
+NL="
+"
 
 if [ "${BLOCK_BUTTON:-""}" ]; then
   # shellcheck disable=SC3044
@@ -49,14 +51,12 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
       case "$controller_is_on" in
         "0")
           rfkill "unblock" "bluetooth" 1> "/dev/null" 2> "/dev/null" & disown
-          echo "Enabling Bluetooth...
-Enabling Bluet."
+          echo "Enabling Bluetooth...${NL}Enabling Bluet."
           reload "5"
         ;;
         "1")
           rfkill "block" "bluetooth" 1> "/dev/null" 2> "/dev/null" & disown
-          echo "Disabling Bluetooth...
-Disabling Bluet."
+          echo "Disabling Bluetooth...${NL}Disabling Bluet."
           reload
         ;;
       esac
@@ -68,21 +68,17 @@ case "$dev_count" in
   "0")
     case "$controller_is_on" in
       "0")
-        echo "Bluetooth off
-Bluet. off"
+        echo "Bluetooth off${NL}Bluet. off"
       ;;
       "1")
-        echo "Bluetooth on
-Bluet. on"
+        echo "Bluetooth on${NL}Bluet. on"
       ;;
     esac
   ;;
   "1")
-    echo "${dev_count} Bluetooth device
-${dev_count} Bluet. dev."
+    echo "${dev_count} Bluetooth device${NL}${dev_count} Bluet. dev."
   ;;
   *)
-    echo "${dev_count} Bluetooth devices
-${dev_count} Bluet. dev."
+    echo "${dev_count} Bluetooth devices${NL}${dev_count} Bluet. dev."
   ;;
 esac

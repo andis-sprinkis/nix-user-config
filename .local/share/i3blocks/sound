@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 set -eu
+NL="
+"
 
 if [ "${BLOCK_BUTTON:-""}" ]; then
   # shellcheck disable=SC3044
@@ -43,8 +45,7 @@ if [ "$status" ]; then
 
   message="${vol_int}%${muted:+, MUTE}${SUFFIX}"
 
-  echo "Volume ${message}
-Vol. ${message}"
+  echo "Volume ${message}${NL}Vol. ${message}"
 fi
 
 exit "0"

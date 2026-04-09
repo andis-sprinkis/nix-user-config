@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 set -eu
 IFS_="$IFS"
+NL="
+"
 
 if [ "${BLOCK_BUTTON:-""}" ]; then
   # shellcheck disable=SC3044
@@ -64,16 +66,13 @@ for name in $ups_devices; do
 
   case "$status" in
     "OL")
-      info="UPS${status_charge:+" ${status_charge}"}
-UPS${status_charge_short:+" ${status_charge_short}"}"
+      info="UPS${status_charge:+" ${status_charge}"}${NL}UPS${status_charge_short:+" ${status_charge_short}"}"
     ;;
     "")
-      info="UPS disconnected
-UPS disconn."
+      info="UPS disconnected${NL}UPS disconn."
     ;;
     *)
-      info="UPS: ${status}${status_charge:+", ${status_charge}"}
-UPS ${status}${status_charge_short:+", ${status_charge_short}"}"
+      info="UPS: ${status}${status_charge:+", ${status_charge}"}${NL}UPS ${status}${status_charge_short:+", ${status_charge_short}"}"
     ;;
   esac
 done
