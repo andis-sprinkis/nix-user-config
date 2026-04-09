@@ -50,6 +50,7 @@ i3blocks_signal() {
   fi
 }
 
+# shellcheck disable=SC3044
 saved() {
   i3blocks_signal 1>/dev/null 2>/dev/null & disown
 
@@ -73,6 +74,7 @@ saved() {
   exit
 }
 
+# shellcheck disable=SC3044
 canceled() {
   i3blocks_signal 1>/dev/null 2>/dev/null & disown
 
@@ -82,6 +84,7 @@ canceled() {
   exit "6"
 }
 
+# shellcheck disable=SC3044
 failed() {
   i3blocks_signal 1>/dev/null 2>/dev/null & disown
 
@@ -91,6 +94,7 @@ failed() {
   exit "2"
 }
 
+# shellcheck disable=SC3044
 failed_no_audio() {
   i3blocks_signal 1>/dev/null 2>/dev/null & disown
 
@@ -100,6 +104,7 @@ failed_no_audio() {
   exit "2"
 }
 
+# shellcheck disable=SC3044
 not_implemented() {
   msg="Not implemented (${display_server}): ${capture_mode} ${capture_mode}"
 
@@ -115,6 +120,7 @@ no_display_server() {
   exit "2"
 }
 
+# shellcheck disable=SC3044
 no_area_selected() {
   notify-send "No screen area selected." --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
   echo "${script}: No screen area selected." 1>&2
@@ -122,6 +128,7 @@ no_area_selected() {
   exit "2"
 }
 
+# shellcheck disable=SC3044
 countdown() {
   while [ "$delay" -gt "0" ]; do
     delay="$((delay - 1))"
@@ -185,6 +192,7 @@ case "$capture_format" in
 
     case "$capture_mode" in
       "stop")
+        # shellcheck disable=SC3044
         case "$display_server" in
           "wayland")
             set +e
