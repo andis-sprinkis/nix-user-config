@@ -24,7 +24,7 @@ if [ "$1" != "@DEFAULT_SINK@" ]; then
 fi
 
 if ! pidof -q "notify-send"; then
-  notify-send \
+  exec notify-send \
     -a "Sound volume${dev_label}" \
     -u "low" \
     -t "1150" \
