@@ -52,6 +52,9 @@
       TMOUT="5400"
     fi
 
+    # prompt marking - OSC 133 ; C ST / FTCS_COMMAND_EXECUTED - the start of the command output / the end of the commandline
+    print -Pn "\e]133;C\e\\"
+
     timethen="$(print -P "%D{%s%3.}")"
   }
 
@@ -87,6 +90,9 @@
   local exittime=""
 
   precmd() {
+    # prompt marking - OSC 133 ; A ST / FTCS_PROMPT - the start of a prompt
+    print -Pn "\e]133;A\e\\"
+
     local timenow="${timethen:+"$(print -P "%D{%s%3.}")"}"
 
     if [ "${timethen:-""}" ]; then
