@@ -88,6 +88,7 @@ case "$sel_options" in
     esac
   ;;
   *)
+    # shellcheck disable=SC2086
     screencapture $sel_options "$delay_current"
   ;;
 esac
