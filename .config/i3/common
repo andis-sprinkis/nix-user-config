@@ -123,7 +123,7 @@ bindsym Hyper_L exec --no-startup-id $applications_menu
 bindsym Print            exec screencapture picture area
 bindsym $mod+Print       exec screencapture_menu_desktop
 
-bindsym $mod+b exec --no-startup-id bmark_desktop
+bindsym $mod+x exec --no-startup-id bmark_desktop
 
 bindsym $mod+backslash    exec --no-startup-id playerctl play-pause
 bindsym $mod+braceleft    exec --no-startup-id playerctl position "10-"
@@ -226,6 +226,6 @@ bar {
   bindsym button3 exec --no-startup-id $applications_menu
 }
 
-bindsym $mod+x bar mode toggle
+bindsym $mod+b bar mode toggle
 
 exec_always ${XDG_DATA_HOME:-$HOME/.local/share}/i3/auto_edge_snap
