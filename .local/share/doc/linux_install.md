@@ -342,7 +342,7 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
 1.  Install AUR helper.
     ```sh
     temp_path="$(mktemp -d)"
-    git clone https://aur.archlinux.org/yay.git $temp_path
+    git clone https://aur.archlinux.org/yay-bin.git $temp_path
     cd $temp_path
     makepkg -si
     ```
