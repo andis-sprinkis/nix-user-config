@@ -77,8 +77,7 @@ alias \
   nethogs="sudo nethogs -l" \
   nmtui="nmcli device wifi rescan; nmtui" \
   p="python3 -q" \
-  pacman="yay --color=always" \
-  yay="yay --color=always" \
+  yay="yay --color=always --sudoloop" \
   pac_ls_installed="yay -Q" \
   pac_ls_installed_explicit="yay -Qe" \
   pac_ls_installed_in_sync_db="yay -Qn" \
