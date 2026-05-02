@@ -39,11 +39,29 @@
 
   zle -N "zle-line-init"
 
-  # expand alias in insert mode
+  # fn: expand alias in insert mode
   expand_alias() {
     zle "_expand_alias"
     zle "self-insert"
   }
+
+  # fn: offer to set execute permission on shell scripts
+  command_permission() {
+    local cmd="$(echo "$1" | awk '{print $1}')"
+
+    if [[ "$cmd" =~ ^\./ && -f "$cmd" && ! -x "$cmd" ]]; then
+      read -rq "REPLY?File '${cmd}' is not an executable. Make it executable? (y/n) "
+
+      if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+        chmod +x "$cmd"
+      fi
+
+      echo
+    fi
+  }
+
+  autoload -Uz "add-zsh-hook"
+  add-zsh-hook "preexec" "command_permission"
 
   # fn: preexec
   preexec() {
@@ -76,13 +94,13 @@
   colors
 
   # remember last dir
-  autoload -Uz "chpwd_recent_dirs" "cdr" "add-zsh-hook"
+  autoload -Uz "chpwd_recent_dirs" "cdr"
   add-zsh-hook "chpwd" "chpwd_recent_dirs"
-  zstyle ':chpwd:*' "recent-dirs-file" "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/chpwd-recent-dirs"
+  zstyle ":chpwd:*" "recent-dirs-file" "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/chpwd-recent-dirs"
 
   # vcs_info git prompt
   autoload -Uz "vcs_info"
-  zstyle ':vcs_info:*' enable git
+  zstyle ":vcs_info:*" enable git
   zstyle ":vcs_info:git:*" "formats" "$bg[white]$fg[black]  %b "
 
   ZLE_RPROMPT_INDENT="0"
