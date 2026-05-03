@@ -100,7 +100,7 @@
 
   # vcs_info git prompt
   autoload -Uz "vcs_info"
-  zstyle ":vcs_info:*" enable git
+  zstyle ":vcs_info:*" "enable" "git"
   zstyle ":vcs_info:git:*" "formats" "$bg[white]$fg[black]  %b "
 
   ZLE_RPROMPT_INDENT="0"
