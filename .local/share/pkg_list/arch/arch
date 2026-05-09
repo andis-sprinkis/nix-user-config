@@ -109,6 +109,7 @@ openrgb
 opensc
 otf-cascadia-code
 pacman
+pacman-contrib
 patch
 pcsc-tools
 perl-image-exiftool
