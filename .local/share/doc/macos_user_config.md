@@ -23,10 +23,9 @@
     mkdir -p "$HOME/.local/state"
     git_url_cfg="https://github.com/andis-sprinkis/nix-user-config"
     dir_cfg_git="$HOME/.local/state/dotfiles_git"
-    temp_path=$(mktemp -d)
-    git clone --separate-git-dir=$dir_cfg_git $git_url_cfg $temp_path
-    rsync --recursive --verbose --exclude '.git/' $temp_path/ $HOME
+    git clone --bare $git_url_cfg $dir_cfg_git
     git --git-dir=$dir_cfg_git --work-tree=$HOME config --local status.showUntrackedFiles no
+    git --git-dir=$dir_cfg_git --work-tree=$HOME checkout -f
     git --git-dir=$dir_cfg_git --work-tree=$HOME submodule update --init
     ```
 1. Install npm packages.
