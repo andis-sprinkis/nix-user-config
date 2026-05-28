@@ -61,7 +61,7 @@ alias \
   gt="git checkout" \
   hosts="sudo \$EDITOR /etc/hosts" \
   htop="htop -t --highlight-changes=10" \
-  inxi="inxi -c7 -F -xxx -y 120 --indent 15 --indents 4" \
+  inxi="inxi --full -xxx --color 2 --width 80 --indent 11 --indents 10" \
   ip="ip --color=always" \
   jq="jq -C" \
   l="lf" \
