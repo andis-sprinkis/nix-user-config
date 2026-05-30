@@ -1,6 +1,9 @@
 #!/usr/bin/env sh
 set -eu
 
+NL="
+"
+
 FPATH_INPUT="$1"
 FPATH="$(set +e; readlink -f "$FPATH_INPUT"; set -e)"
 MIME="$(file --mime-type --brief "$FPATH")"
@@ -95,7 +98,7 @@ print_mediainfo() {
 
 print_exiftool() {
   if find_util "exiftool"; then
-    out="$(set +e; exiftool -s2 "$FPATH"; set -e)"
+    out="$(set +e; exiftool -g0 -s2 "$FPATH"; set -e)"
     if [ "$out" ]; then printf '%s\n' "$out" | ansifilter; fi
   else
     return "1"
@@ -463,6 +466,22 @@ case "$MIME" in
     fi
   ;;
   font/*|application/x-font-*|application/vnd.ms-opentype)
+    if thumb_cache_create; then
+      if [ ! -f "${FPATH_THUMB}.png" ]; then
+        if find_util "magick"; then
+          if magick -size "640x224" xc:black -font "$FPATH" -pointsize "64" -fill "white" -annotate "+32+84" "The quick brown fox${NL}jumps over the lazy dog." "${FPATH_THUMB}.png"; then
+            if print_chafa "${FPATH_THUMB}.png"; then
+              echo
+            fi
+          fi
+        fi
+      else
+        if print_chafa "${FPATH_THUMB}.png"; then
+          echo
+        fi
+      fi
+    fi
+
     print_exiftool
   ;;
   application/vnd.debian.binary-package|application/x-rpm)
