@@ -45,6 +45,10 @@ if ! pidof -q "easyeffects"; then
   easyeffects --gapplication-service &
 fi
 
+# foot terminal server
+
+foot --server &
+
 # Local settings
 
 pathf_post_init_local="${XDG_CONFIG_HOME:-$HOME/.config}/sway/post_init_local"

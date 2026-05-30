@@ -4,7 +4,7 @@
 case "${OSTYPE:-"$(uname)"}" in
   [lL]"inux"*)
     if [ "${WAYLAND_DISPLAY:-""}" ]; then
-      exec foot "$@"
+      exec footclient "$@"
     fi
 
     if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
