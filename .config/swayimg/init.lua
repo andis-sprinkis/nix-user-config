@@ -38,11 +38,17 @@ local nop = function() end
 
 local function vtitle()
   local img = v.get_image()
+  local wsize = S.get_window_size()
+
+  local fname = ""
+  for part in img.path:gmatch("([^/]+)") do fname = part end
+
+  local wtitle = (wsize.width < 800) and fname or img.path
 
   title(
     '[' .. img.index .. '/' .. imglist.size() .. ']' ..
     ' ' ..
-    img.path ..
+    wtitle ..
     ' ' ..
     '[' .. math.floor(v.get_scale() * 100) .. '%' .. ']' ..
     ' ' ..
@@ -52,11 +58,17 @@ end
 
 local function gtitle()
   local img = g.get_image()
+  local wsize = S.get_window_size()
+
+  local fname = ""
+  for part in img.path:gmatch("([^/]+)") do fname = part end
+
+  local wtitle = (wsize.width < 800) and fname or img.path
 
   title(
     '[' .. img.index .. '/' .. imglist.size() .. ']' ..
     ' ' ..
-    img.path
+    wtitle
   )
 end
 
@@ -105,7 +117,16 @@ end
 
 S.on_window_resize(
   function()
-    if (S.get_mode() == 'viewer') then vzoomreset() end
+    local mode = S.get_mode()
+    if (mode == 'viewer') then
+      vzoomreset()
+      vtitle()
+      return
+    end
+
+    if (mode == 'gallery') then
+      gtitle()
+    end
   end
 )
 
