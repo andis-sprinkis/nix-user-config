@@ -168,6 +168,7 @@ user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
 user_pref("extensions.ml.enabled", false);
 user_pref("extensions.pocket.enabled", false);
 user_pref("extensions.screenshots.disabled", true);
+user_pref("extensions.update.autoUpdateDefault", false);
 user_pref("extensions.webcompat-reporter.enabled", false);
 user_pref("font.default.x-western", "sans-serif");
 user_pref("general.autoScroll", true);
