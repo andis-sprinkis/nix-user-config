@@ -87,18 +87,10 @@ v.on_image_change(
     vtitle()
     txt.set_status('')
 
-    if (vinitial == 0) then
-      local idx = v.get_image().index
+    local idx = v.get_image().index
 
-      if (idx == 1) then
-        txt.set_status('First file')
-        return
-      end
-
-      if (idx == imglist.size()) then
-        txt.set_status('Last file')
-        return
-      end
+    if (vinitial == 0 or idx ~= 1) then
+      txt.set_status(tostring(idx) .. ' of ' .. imglist.size())
     end
 
     vinitial = 0
