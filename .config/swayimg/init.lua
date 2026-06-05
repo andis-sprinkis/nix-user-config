@@ -72,28 +72,17 @@ local function gtitle()
   )
 end
 
-local vinitial = 1
-
 g.on_image_change(
   function()
     gtitle()
-    txt.set_status('')
-    vinitial = 0
+    txt.set_status(tostring(g.get_image().index) .. ' of ' .. imglist.size())
   end
 )
 
 v.on_image_change(
   function()
     vtitle()
-    txt.set_status('')
-
-    local idx = v.get_image().index
-
-    if (vinitial == 0 or idx ~= 1) then
-      txt.set_status(tostring(idx) .. ' of ' .. imglist.size())
-    end
-
-    vinitial = 0
+    txt.set_status(tostring(v.get_image().index) .. ' of ' .. imglist.size())
   end
 )
 
