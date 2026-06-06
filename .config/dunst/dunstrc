@@ -229,6 +229,7 @@
 # to have a consistent behaviour across releases.
 [experimental]
   per_monitor_dpi = true
+  pause_on_mouse_over = true
 
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.
