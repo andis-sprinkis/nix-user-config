@@ -23,6 +23,7 @@ g.set_padding_size(16)
 g.set_selected_scale(1.4)
 g.set_thumb_size(thumb_size_default)
 imglist.enable_adjacent(true)
+imglist.enable_fsmon(false)
 txt.hide()
 txt.set_background(0xaa000000)
 txt.set_font('sans-serif')
@@ -75,14 +76,14 @@ end
 g.on_image_change(
   function()
     gtitle()
-    txt.set_status(tostring(g.get_image().index) .. ' of ' .. imglist.size())
+    txt.set_status(g.get_image().index .. ' of ' .. imglist.size())
   end
 )
 
 v.on_image_change(
   function()
     vtitle()
-    txt.set_status(tostring(v.get_image().index) .. ' of ' .. imglist.size())
+    txt.set_status(v.get_image().index .. ' of ' .. imglist.size())
   end
 )
 
