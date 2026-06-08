@@ -170,9 +170,6 @@ unzip
 usbutils
 util-linux
 vbindiff
-virtualbox
-virtualbox-guest-iso
-virtualbox-host-modules-arch
 vulkan-radeon
 wayland
 wdisplays
