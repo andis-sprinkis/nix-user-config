@@ -91,6 +91,7 @@ mda.lv2
 mediainfo
 mesa
 mesa-utils
+meson
 mpg123
 mpv
 mupdf-tools
