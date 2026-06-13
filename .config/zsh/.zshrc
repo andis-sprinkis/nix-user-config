@@ -162,7 +162,7 @@
   local vcs_info="\$vcs_info_msg_0_%{$reset_color%}"
   local cwd_path="%{$bg[white]$fg[black]%} %/ %{$reset_color%}"
   local prompt_symbol="%{$fg[$role_params[1]]%}$role_params[2]%{$reset_color%} "
-  local lf="${LF_LEVEL:+"lf (${LF_LEVEL}) "}"
+  local lf="${LF_LEVEL:+"%{$bg[green]$fg[black]%} lf(${LF_LEVEL}) %{$reset_color%}"}"
 
   PROMPT="${lf}${userhost}${ssh_status}${vcs_info}${cwd_path}
 ${prompt_symbol}"
