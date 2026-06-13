@@ -139,7 +139,13 @@ rm -rf "/tmp/ansifilter-2.22"
 - [Releases - vyivel/dulcepan - Codeberg.org](https://codeberg.org/vyivel/dulcepan/releases)
 - [PKGBUILD - aur.git - AUR Package Repositories](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=dulcepan-git)
 
-Requires `meson`.
+Requires:
+
+- Build
+    - `meson`
+- Runtime
+    - `libspng`
+    - `libsfdo`
 
 Installation:
 
