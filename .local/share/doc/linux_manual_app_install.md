@@ -6,7 +6,10 @@
 - [Releases · FedoraQt/adwaita-qt](https://github.com/FedoraQt/adwaita-qt/releases)
 - [PKGBUILD - aur.git - AUR Package Repositories](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=adwaita-qt)
 
-Requires `cmake`.
+Requires:
+
+- Build
+    - `cmake`
 
 Installation:
 
@@ -312,6 +315,4 @@ sudo rm "/usr/local/bin/volta-shim"
 <!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=eparaksts-token-signing -->
 <!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=latvia-eid-middleware -->
 <!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=vmware-workstation -->
-<!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=web-eid-firefox -->
-<!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=web-eid-native -->
 <!-- ``` -->
