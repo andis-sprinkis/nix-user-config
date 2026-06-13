@@ -8,7 +8,6 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
 
 1.  [Download](https://archlinux.org/download/) the Arch Linux installer image.
 1.  Write the installation image to the installation media.
-
     - To write the image from a \*nix system:
         ```sh
         cat path/to/archlinux-version-x86_64.iso > /dev/sdx
@@ -147,7 +146,6 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     ```
 
     ### Addtional kernel options
-
     - Set the TTY default screen rotation by specifying the `fbcon=rotate:X` option.
 
         For a counter-clockwise rotation set:
@@ -165,7 +163,6 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
         ⚠️ This issue also applies to the installation media environment.
 
         More information on the issue:
-
         - [Issue with Kernel Panic on Dell Latitude 7490 and i915 - English / Hardware - openSUSE Forums](https://forums.opensuse.org/t/issue-with-kernel-panic-on-dell-latitude-7490-and-i915/164462) ([archived](https://archive.is/7IAD6))
         - [Intel graphics - LinuxReviews](https://linuxreviews.org/Intel_graphics#Kernel_Parameters) ([archived](https://archive.is/km0z3))
 
@@ -187,7 +184,6 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     #console-mode keep
     ```
 1.  Update the file `/etc/mkinitcpio.conf`.
-
     1. Change value of the variable `MODULES`, adding `usbhid xhci_hcd`:
         ```sh
         MODULES=(usbhid xhci_hcd)
@@ -250,7 +246,6 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     KEYMAP=lv
     ```
 1.  Set console typematic delay and rate (keyboard input speed).
-
     1. Create file `/etc/systemd/system/console-kbdrate.service`:
 
         ```systemd
@@ -389,6 +384,7 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     ```sh
     for p in $(cat ./pypi | paste -s -d ' ' -); do pipx install $p; done
     ```
+1.  Follow [_Applications that require manual installation_](./linux_manual_app_install.md)
 1.  Enable the audio system.
     ```sh
     systemctl --user enable --now pipewire.socket pipewire-pulse.socket wireplumber.service
@@ -597,7 +593,6 @@ Steps for adding any newly listed packages from the user package lists to an alr
     cd $HOME/.local/share/pkg_list/arch
     ```
 1. Add the packages from the respective source lists.
-
     - The Arch package repository:
 
         ```sh
@@ -623,7 +618,6 @@ Steps for adding any newly listed packages from the user package lists to an alr
         ```
 
     - PyPI:
-
         - Upgrade existing packages.
             ```sh
             pipx upgrade-all
@@ -638,6 +632,8 @@ Steps for adding any newly listed packages from the user package lists to an alr
         ```sh
         volta install $(cat "./npm" | paste -s -d ' ' -)
         ```
+
+1. Follow [_Applications that require manual installation_](./linux_manual_app_install.md)
 
 ## Connecting to Wi-Fi
 
