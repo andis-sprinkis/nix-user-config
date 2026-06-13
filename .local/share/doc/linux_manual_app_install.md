@@ -306,6 +306,22 @@ sudo rm "/usr/local/bin/volta-migrate"
 sudo rm "/usr/local/bin/volta-shim"
 ```
 
+## `ddd` 🚧
+
+- [DDD - Data Display Debugger - GNU Project - Free Software Foundation (FSF)](https://www.gnu.org/software/ddd/)
+- [PKGBUILD - aur.git - AUR Package Repositories](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=ddd)
+
+## `sasm` 🚧
+
+- [SASM - Simple crossplatform IDE for NASM, MASM, GAS, FASM assembly languages](https://dman95.github.io/SASM/english.html)
+- [PKGBUILD - aur.git - AUR Package Repositories](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=sasm)
+
+## `yay` 🚧
+
+- [Jguer/yay: Yet another Yogurt - An AUR Helper written in Go](https://github.com/Jguer/yay)
+- [PKGBUILD - aur.git - AUR Package Repositories](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=yay)
+
+<!-- yay -Qm -->
 <!-- --- -->
 <!---->
 <!-- ## From AUR -->
@@ -314,5 +330,4 @@ sudo rm "/usr/local/bin/volta-shim"
 <!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=eparakstitajs3 -->
 <!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=eparaksts-token-signing -->
 <!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=latvia-eid-middleware -->
-<!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=vmware-workstation -->
 <!-- ``` -->
