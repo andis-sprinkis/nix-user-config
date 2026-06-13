@@ -133,7 +133,7 @@ or
 sudo "make" "uninstall"
 
 cd "$HOME"
-rm -rf "/tmp/ansifilter-2.22"
+rm -rf "/tmp/ansifilter-install"
 ```
 
 ## `dulcepan`
