@@ -144,7 +144,7 @@ Removal:
 sudo rm "/usr/local/bin/dulcepan"
 ```
 
-## 📦 `qrcp`
+## `qrcp`
 
 - [claudiodangelis/qrcp: :zap: Transfer files over wifi from your computer to your mobile device by scanning a QR code without leaving the terminal.](https://github.com/claudiodangelis/qrcp)
 - [Releases · claudiodangelis/qrcp](https://github.com/claudiodangelis/qrcp/releases)
