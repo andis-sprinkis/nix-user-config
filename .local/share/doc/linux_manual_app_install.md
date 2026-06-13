@@ -266,38 +266,38 @@ cd "$HOME"
 rm -rf "/tmp/adwaita-qt-install"
 ```
 
----
-
-## 📦 `jdownloader2` 🚧
-
-- [JDownloader.org - Official Homepage](https://jdownloader.org/home/index?s=lng_en)
-- [JDownloader.org - Official Homepage](https://jdownloader.org/jdownloader2#selection=linux)
-- [PKGBUILD - aur.git - AUR Package Repositories](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=jdownloader2)
-
-Installation:
-
-```sh
-mkdir "/tmp/jdownloader2-install"
-cd "/tmp/jdownloader2-install"
-
-```
-
-Removal:
-
-```sh
-
-```
-
----
-
-## From AUR
-
-```
-https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=eparakstitajs3
-https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=eparaksts-token-signing
-https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=jdownloader2
-https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=latvia-eid-middleware
-https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=vmware-workstation
-https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=web-eid-firefox
-https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=web-eid-native
-```
+<!-- --- -->
+<!---->
+<!-- ## 📦 `jdownloader2` 🚧 -->
+<!---->
+<!-- - [JDownloader.org - Official Homepage](https://jdownloader.org/home/index?s=lng_en) -->
+<!-- - [JDownloader.org - Official Homepage](https://jdownloader.org/jdownloader2#selection=linux) -->
+<!-- - [PKGBUILD - aur.git - AUR Package Repositories](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=jdownloader2) -->
+<!---->
+<!-- Installation: -->
+<!---->
+<!-- ```sh -->
+<!-- mkdir "/tmp/jdownloader2-install" -->
+<!-- cd "/tmp/jdownloader2-install" -->
+<!---->
+<!-- ``` -->
+<!---->
+<!-- Removal: -->
+<!---->
+<!-- ```sh -->
+<!---->
+<!-- ``` -->
+<!---->
+<!-- --- -->
+<!---->
+<!-- ## From AUR -->
+<!---->
+<!-- ``` -->
+<!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=eparakstitajs3 -->
+<!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=eparaksts-token-signing -->
+<!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=jdownloader2 -->
+<!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=latvia-eid-middleware -->
+<!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=vmware-workstation -->
+<!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=web-eid-firefox -->
+<!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=web-eid-native -->
+<!-- ``` -->
