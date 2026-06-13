@@ -266,28 +266,36 @@ cd "$HOME"
 rm -rf "/tmp/adwaita-qt-install"
 ```
 
-<!-- --- -->
-<!---->
-<!-- ## `jdownloader2` 🚧 -->
-<!---->
-<!-- - [JDownloader.org - Official Homepage](https://jdownloader.org/home/index?s=lng_en) -->
-<!-- - [JDownloader.org - Official Homepage](https://jdownloader.org/jdownloader2#selection=linux) -->
-<!-- - [PKGBUILD - aur.git - AUR Package Repositories](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=jdownloader2) -->
-<!---->
-<!-- Installation: -->
-<!---->
-<!-- ```sh -->
-<!-- mkdir "/tmp/jdownloader2-install" -->
-<!-- cd "/tmp/jdownloader2-install" -->
-<!---->
-<!-- ``` -->
-<!---->
-<!-- Removal: -->
-<!---->
-<!-- ```sh -->
-<!---->
-<!-- ``` -->
-<!---->
+## `JDownloader` (user)
+
+- [JDownloader.org - Official Homepage](https://jdownloader.org/home/index?s=lng_en)
+- [JDownloader.org - Official Homepage](https://jdownloader.org/jdownloader2#selection=linux)
+- [PKGBUILD - aur.git - AUR Package Repositories](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=jdownloader2)
+- [JDownloader Support - How to verify integrity of our own (alternative) installer setups.](https://support.jdownloader.org/en/knowledgebase/article/how-to-verify-integrity-of-our-own-alternative-installer-setups)
+
+Installation:
+
+```sh
+mkdir "/tmp/jdownloader-install"
+cd "/tmp/jdownloader-install"
+
+curl -L "https://installer.jdownloader.org/JDownloader.jar" -o "./JDownloader.jar"
+curl -L "https://keys.openpgp.org/vks/v1/by-fingerprint/2B805711032D5A5CB50074C510C6265CEFB6457E" -o "./key.asc"
+gpg --verify "./key.asc" "./JDownloader.jar"
+
+mkdir -p "${HOME}/.local/share/jdownloader"
+cp "./JDownloader.jar" "${HOME}/.local/share/jdownloader"
+
+cd "$HOME"
+rm -rf "/tmp/jdownloader-install"
+```
+
+Removal:
+
+```sh
+rm "${HOME}/.local/share/jdownloader/JDownloader.jar"
+```
+
 <!-- --- -->
 <!---->
 <!-- ## From AUR -->
@@ -295,7 +303,6 @@ rm -rf "/tmp/adwaita-qt-install"
 <!-- ``` -->
 <!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=eparakstitajs3 -->
 <!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=eparaksts-token-signing -->
-<!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=jdownloader2 -->
 <!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=latvia-eid-middleware -->
 <!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=vmware-workstation -->
 <!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=web-eid-firefox -->
