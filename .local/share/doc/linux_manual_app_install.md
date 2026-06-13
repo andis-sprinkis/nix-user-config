@@ -1,4 +1,4 @@
-# Applications that require manual installation for Arch Linux
+# Applications that require manual installation on Arch Linux
 
 ## 📦 `ansifilter`
 
