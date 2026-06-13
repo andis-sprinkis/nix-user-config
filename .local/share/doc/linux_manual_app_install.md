@@ -1,6 +1,6 @@
 # Applications that require manual installation on Arch Linux
 
-## 📦 `ansifilter`
+## `ansifilter`
 
 - [André Simon / ansifilter · GitLab](https://gitlab.com/saalen/ansifilter/)
 - [Releases · André Simon / ansifilter · GitLab](https://gitlab.com/saalen/ansifilter/-/releases)
@@ -46,7 +46,7 @@ cd "$HOME"
 rm -rf "/tmp/ansifilter-2.22"
 ```
 
-## 📦 `volta`
+## `volta`
 
 - [volta-cli/volta: Volta: JS Toolchains as Code. ⚡](https://github.com/volta-cli/volta/)
 - [Releases · volta-cli/volta](https://github.com/volta-cli/volta/releases)
@@ -80,7 +80,7 @@ sudo rm "/usr/local/bin/volta-migrate"
 sudo rm "/usr/local/bin/volta-shim"
 ```
 
-## 📦 `FreeFileSync`
+## `FreeFileSync`
 
 - [Download the Latest Version - FreeFileSync](https://freefilesync.org/download.php)
 - [PKGBUILD - aur.git - AUR Package Repositories](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=freefilesync-bin)
@@ -179,7 +179,7 @@ sudo rm "/usr/share/zsh/site-functions/_qrcp"
 sudo rm "/usr/local/bin/qrcp"
 ```
 
-## 📦 `adwaita-qt`
+## `adwaita-qt`
 
 - [FedoraQt/adwaita-qt: A style to bend Qt applications to look like they belong into GNOME Shell](https://github.com/FedoraQt/adwaita-qt)
 - [Releases · FedoraQt/adwaita-qt](https://github.com/FedoraQt/adwaita-qt/releases)
@@ -268,7 +268,7 @@ rm -rf "/tmp/adwaita-qt-install"
 
 <!-- --- -->
 <!---->
-<!-- ## 📦 `jdownloader2` 🚧 -->
+<!-- ## `jdownloader2` 🚧 -->
 <!---->
 <!-- - [JDownloader.org - Official Homepage](https://jdownloader.org/home/index?s=lng_en) -->
 <!-- - [JDownloader.org - Official Homepage](https://jdownloader.org/jdownloader2#selection=linux) -->
