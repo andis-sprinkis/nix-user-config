@@ -157,16 +157,14 @@
   fi
 
   local userhost="%{$bg[$role_params[1]] $fg[black]%}%n@%M %{$reset_color%}"
-
-  if [ "${SSH_CONNECTION:-""}${SSH_CLIENT:-""}${SSH_TTY:-""}" ]; then
-    local ssh_status="%{$bg[blue]$fg[black]%} SSH %{$reset_color%}";
-  fi
-
+  local ssh_vars="${SSH_CONNECTION:-""}${SSH_CLIENT:-""}${SSH_TTY:-""}"
+  local ssh_status="${ssh_vars:+"%{$bg[blue]$fg[black]%} SSH %{$reset_color%}"}"
   local vcs_info="\$vcs_info_msg_0_%{$reset_color%}"
   local cwd_path="%{$bg[white]$fg[black]%} %/ %{$reset_color%}"
   local prompt_symbol="%{$fg[$role_params[1]]%}$role_params[2]%{$reset_color%} "
+  local lf="${LF_LEVEL:+"lf (${LF_LEVEL}) "}"
 
-  PROMPT="${userhost}${ssh_status}${vcs_info}${cwd_path}
+  PROMPT="${lf}${userhost}${ssh_status}${vcs_info}${cwd_path}
 ${prompt_symbol}"
 
   # auto/tab completion
