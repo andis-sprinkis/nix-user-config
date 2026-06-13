@@ -246,6 +246,7 @@ tar -xvzf "./archive.tar.gz"
 
 ./qrcp "completion" "bash" > "./qrcp.completion.bash"
 ./qrcp "completion" "zsh" > "./qrcp.completion.zsh"
+
 sudo cp "./qrcp.completion.bash" "/usr/share/bash-completion/completions/qrcp"
 sudo cp "./qrcp.completion.zsh" "/usr/share/zsh/site-functions/_qrcp"
 sudo cp "./qrcp" "/usr/local/bin/qrcp"
