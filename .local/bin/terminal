@@ -8,7 +8,7 @@ case "${OSTYPE:-"$(uname)"}" in
     fi
 
     if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-      exec wezterm "$@"
+      exec kitty "$@"
     fi
 
     exit "1"

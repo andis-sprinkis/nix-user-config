@@ -74,6 +74,7 @@ jalv
 jdk-openjdk
 jq
 keepassxc
+kitty
 lf
 libqalculate
 libreoffice-fresh
@@ -175,7 +176,6 @@ vulkan-radeon
 wayland
 wdisplays
 wev
-wezterm
 wf-recorder
 wget
 which
