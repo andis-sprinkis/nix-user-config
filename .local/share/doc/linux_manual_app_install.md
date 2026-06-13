@@ -258,6 +258,7 @@ or
 # ...
 cd "/tmp/adwaita-qt-install/build-qt5"
 sudo xargs -a "install_manifest.txt" "rm"
+
 cd "/tmp/adwaita-qt-install/build-qt6"
 sudo xargs -a "install_manifest.txt" "rm"
 
