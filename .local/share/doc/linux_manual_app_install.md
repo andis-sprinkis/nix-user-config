@@ -1,4 +1,4 @@
-# Applications that require manual installation
+# Applications that require manual installation for Arch Linux
 
 ## 📦 `ansifilter`
 
@@ -267,7 +267,7 @@ rm -rf "/tmp/adwaita-qt-install"
 
 ---
 
-## 📦 `jdownloader2` ❓
+## 📦 `jdownloader2` 🚧
 
 - [JDownloader.org - Official Homepage](https://jdownloader.org/home/index?s=lng_en)
 - [JDownloader.org - Official Homepage](https://jdownloader.org/jdownloader2#selection=linux)
@@ -288,6 +288,8 @@ Removal:
 ```
 
 ---
+
+## From AUR
 
 ```
 https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=eparakstitajs3
