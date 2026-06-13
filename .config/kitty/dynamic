@@ -3,4 +3,5 @@ set -eu
 
 if [ "${KITTY_OS:-""}" = "macos" ]; then
   echo "font_size 16.0"
+  echo "font-family Cascadia Code PL"
 fi
