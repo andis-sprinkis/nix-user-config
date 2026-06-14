@@ -8,8 +8,11 @@
 
 Requires:
 
-- Build
-    - `cmake`
+- Build:
+
+    ```
+    cmake qt5-x11extras qt6-base
+    ```
 
 Installation:
 
@@ -96,6 +99,12 @@ rm -rf "/tmp/adwaita-qt-install"
 - [Releases · André Simon / ansifilter · GitLab](https://gitlab.com/saalen/ansifilter/-/releases)
 - [PKGBUILD - aur.git - AUR Package Repositories](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=ansifilter)
 
+Requires:
+
+```
+glibc gcc-libs
+```
+
 Installation:
 
 ```sh
@@ -144,11 +153,17 @@ rm -rf "/tmp/ansifilter-install"
 
 Requires:
 
-- Build
-    - `meson`
-- Runtime
-    - `libspng`
-    - `libsfdo`
+- Build:
+
+    ```
+    meson wayland-protocols
+    ```
+
+- Runtime:
+
+    ```
+    cairo glibc libsfdo libspng libxkbcommon pixman wayland
+    ```
 
 Installation:
 
@@ -182,6 +197,14 @@ sudo rm "/usr/local/bin/dulcepan"
 - [JDownloader.org - Official Homepage](https://jdownloader.org/jdownloader2#selection=linux)
 - [PKGBUILD - aur.git - AUR Package Repositories](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=jdownloader2)
 - [JDownloader Support - How to verify integrity of our own (alternative) installer setups.](https://support.jdownloader.org/en/knowledgebase/article/how-to-verify-integrity-of-our-own-alternative-installer-setups)
+
+Requires:
+
+- Runtime:
+
+    ```
+    hicolor-icon-theme java-runtime libarchive libxi libxtst ttf-font
+    ```
 
 Installation:
 
@@ -241,6 +264,21 @@ sudo rm "/usr/local/bin/Freefilesync"
 - [claudiodangelis/qrcp: :zap: Transfer files over wifi from your computer to your mobile device by scanning a QR code without leaving the terminal.](https://github.com/claudiodangelis/qrcp)
 - [Releases · claudiodangelis/qrcp](https://github.com/claudiodangelis/qrcp/releases)
 - [PKGBUILD - aur.git - AUR Package Repositories](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=qrcp)
+
+Requires
+
+- Runtime:
+
+    ```
+
+    glibc
+    ```
+
+- Build:
+
+    ```
+    go
+    ```
 
 Installation:
 
