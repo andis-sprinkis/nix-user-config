@@ -317,4 +317,6 @@ sudo rm "/usr/local/bin/volta-shim"
 <!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=eparakstitajs3 -->
 <!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=eparaksts-token-signing -->
 <!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=latvia-eid-middleware -->
+<!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=openssl-1.0 -->
+<!-- https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=gtk2 -->
 <!-- ``` -->
