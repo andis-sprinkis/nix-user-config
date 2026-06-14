@@ -66,6 +66,7 @@ echo
 echo "URL: ${url}"
 echo
 echo "Interface: ${ifc} | IP: ${ip} | Port: ${port}"
+echo
 echo "Directory: ${PWD}"
 echo
 
