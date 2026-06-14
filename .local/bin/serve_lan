@@ -14,7 +14,7 @@ for ifc in $(ifconfig | sed -e '/^[a-z0-9]*:.*$/!d' -e 's/:.*$//g' | paste -s -d
   fi
 
   if [ "$ip" ]; then
-    ifcs_count=$((ifcs_count + "1"))
+    ifcs_count=$((ifcs_count + 1))
     menu_display="${menu_display}${menu_display:+"$NL"}  ${ifcs_count}. ${ifc}: ${ip}${is_localhost:+ (default)}"
     menu_values="${menu_values}${menu_values:+"$NL"}${ifc} ${ip}"
   fi
