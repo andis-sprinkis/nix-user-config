@@ -35,6 +35,7 @@ pipenv
 pipx
 pyenv
 python3
+qrencode
 ripgrep
 sd
 tmux
