@@ -61,11 +61,11 @@ url="http://${ip}:${port}/";
 echo
 echo "Selected:${NL}${menu_display_sel}"
 echo
+echo "$url" | qrencode -t "ansiutf8"
+echo
 echo "Interface: ${ifc} | IP: ${ip} | Port: ${port} | Directory: ${PWD}"
 echo
 echo "URL: ${url}"
-echo
-echo "$url" | qrencode -t "ansiutf8"
 echo
 
 if [ "${WAYLAND_DISPLAY:-""}" ] && command -v "wl-copy" 1> "/dev/null" 2> "/dev/null"; then
@@ -79,6 +79,20 @@ fi
 if command -v "pbcopy" 1> "/dev/null" 2> "/dev/null"; then
   echo "$url" | pbcopy;
 fi
+
+(
+  sleep "1"
+
+  # shellcheck disable=SC3028
+  case "${OSTYPE:-"$(uname)"}" in
+    [Dd]"arwin"*)
+      open "$url"
+    ;;
+    *)
+      xdg-open "$url"
+    ;;
+  esac
+) &
 
 echo "The server log:"
 echo
