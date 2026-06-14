@@ -259,57 +259,6 @@ sudo rm "/usr/local/bin/freefilesync"
 sudo rm "/usr/local/bin/Freefilesync"
 ```
 
-## `qrcp`
-
-- [claudiodangelis/qrcp: :zap: Transfer files over wifi from your computer to your mobile device by scanning a QR code without leaving the terminal.](https://github.com/claudiodangelis/qrcp)
-- [Releases · claudiodangelis/qrcp](https://github.com/claudiodangelis/qrcp/releases)
-- [PKGBUILD - aur.git - AUR Package Repositories](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=qrcp)
-
-Requires
-
-- Runtime:
-
-    ```
-
-    glibc
-    ```
-
-- Build:
-
-    ```
-    go
-    ```
-
-Installation:
-
-```sh
-mkdir "/tmp/qrcp-install"
-cd "/tmp/qrcp-install"
-
-curl -L "https://github.com/claudiodangelis/qrcp/releases/download/v0.11.6/qrcp_0.11.6_linux_amd64.tar.gz" -o "./archive.tar.gz"
-echo "1bcd1e23460cb2c98eeb1a9df6e4f4f7cb1e889acdb53094a7c6805808790d13  archive.tar.gz" | sha256sum -c
-
-tar -xvzf "./archive.tar.gz"
-
-./qrcp "completion" "bash" > "./qrcp.completion.bash"
-./qrcp "completion" "zsh" > "./qrcp.completion.zsh"
-
-sudo cp "./qrcp.completion.bash" "/usr/share/bash-completion/completions/qrcp"
-sudo cp "./qrcp.completion.zsh" "/usr/share/zsh/site-functions/_qrcp"
-sudo cp "./qrcp" "/usr/local/bin/qrcp"
-
-cd "$HOME"
-rm -rf "/tmp/qrcp-install"
-```
-
-Removal:
-
-```sh
-sudo rm "/usr/share/bash-completion/completions/qrcp"
-sudo rm "/usr/share/zsh/site-functions/_qrcp"
-sudo rm "/usr/local/bin/qrcp"
-```
-
 ## `volta`
 
 - [volta-cli/volta: Volta: JS Toolchains as Code. ⚡](https://github.com/volta-cli/volta/)
