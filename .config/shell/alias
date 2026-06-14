@@ -114,7 +114,6 @@ alias \
   scan_smb="sudo nmap -sS --open -p 445 192.168.1.0/24" \
   scan_ssh="sudo nmap -sS --open -p 22 192.168.1.0/24" \
   scan_vnc="sudo nmap -sS --open -p 5900 192.168.1.0/24" \
-  serve="echo \"URL: http://127.0.0.1:8080/\"; python -m http.server --bind 127.0.0.1 --directory ./ 8080" \
   sl="ls" \
   su="sudo su --login" \
   t="htop" \
