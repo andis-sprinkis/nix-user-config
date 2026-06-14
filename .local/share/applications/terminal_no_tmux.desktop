@@ -3,3 +3,5 @@ Type=Application
 Name=Terminal (no Tmux)
 Exec=env NO_TMUX=1 terminal
 Categories=Utility;System;
+
+# TODO: how to make it work with daemons like footclient
