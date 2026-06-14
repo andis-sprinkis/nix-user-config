@@ -99,4 +99,4 @@ fi
 echo "The server log:"
 echo
 
-python -m "http.server" --bind "$ip" --directory "./" "$port"
+python3 -m "http.server" --bind "$ip" --directory "./" "$port"
