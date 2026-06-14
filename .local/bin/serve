@@ -65,7 +65,8 @@ echo "$url" | qrencode -t "ansiutf8"
 echo
 echo "URL: ${url}"
 echo
-echo "Interface: ${ifc} | IP: ${ip} | Port: ${port} | Directory: ${PWD}"
+echo "Interface: ${ifc} | IP: ${ip} | Port: ${port}"
+echo "Directory: ${PWD}"
 echo
 
 if [ "${WAYLAND_DISPLAY:-""}" ] && command -v "wl-copy" 1> "/dev/null" 2> "/dev/null"; then
