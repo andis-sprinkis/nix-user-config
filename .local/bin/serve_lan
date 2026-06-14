@@ -1,0 +1,86 @@
+#!/usr/bin/env sh
+set -eu
+NL="
+"
+
+menu_display="" menu_values="" ifcs_count="0"
+for ifc in $(ifconfig | sed -e '/^[a-z0-9]*:.*$/!d' -e 's/:.*$//g' | paste -s -d ' ' -); do
+  ip="$(ifconfig "$ifc" | grep ' inet ' | sed -e 's/^  *//g' | cut -d ' ' -f2)"
+
+  is_localhost=""
+
+  if [ "$ip" = "127.0.0.1" ]; then
+    is_localhost="1"
+  fi
+
+  if [ "$ip" ]; then
+    ifcs_count=$((ifcs_count + "1"))
+    menu_display="${menu_display}${menu_display:+"$NL"}  ${ifcs_count}. ${ifc}: ${ip}${is_localhost:+ (default)}"
+    menu_values="${menu_values}${menu_values:+"$NL"}${ifc} ${ip}"
+  fi
+done
+
+if [ "$ifcs_count" = "0" ]; then
+  echo "No available network interfaces found." >&2
+  exit "1"
+fi
+
+sel_idx=""
+while true; do
+  printf '%s\n%s\n\n> ' "Select interface:" "$menu_display"
+  read -r sel_idx
+
+  case "$sel_idx" in
+    *[!0123456789]*)
+      printf '%s\n\n' "Invalid selection."
+      continue
+    ;;
+    '')
+      sel_idx="1"
+      break
+    ;;
+    *)
+      if [ "$sel_idx" -lt "1" ] || [ "$sel_idx" -gt "$ifcs_count" ]; then
+        printf '%s\n\n' "Invalid selection."
+        continue
+      fi
+
+      break
+    ;;
+  esac
+done
+
+menu_display_sel="$(echo "$menu_display" | sed "${sel_idx}q;d")"
+menu_value_sel="$(echo "$menu_values" | sed "${sel_idx}q;d")"
+
+ifc="$(echo "$menu_value_sel" | cut -d" " -f1)"
+ip="$(echo "$menu_value_sel" | cut -d" " -f2)"
+port="8080"
+url="http://${ip}:${port}/";
+
+echo
+echo "Selected:${NL}${menu_display_sel}"
+echo
+echo "Interface: ${ifc} | IP: ${ip} | Port: ${port} | Directory: ${PWD}"
+echo
+echo "URL: ${url}"
+echo
+echo "$url" | qrencode -t "ansiutf8"
+echo
+
+if [ "${WAYLAND_DISPLAY:-""}" ] && command -v "wl-copy" 1> "/dev/null" 2> "/dev/null"; then
+  echo "$url" | wl-copy
+fi
+
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && command -v "xclip" 1> "/dev/null" 2> "/dev/null"; then
+  echo "$url" | xclip -sel "clipboard"
+fi
+
+if command -v "pbcopy" 1> "/dev/null" 2> "/dev/null"; then
+  echo "$url" | pbcopy;
+fi
+
+echo "The server log:"
+echo
+
+python -m "http.server" --bind "$ip" --directory "./" "$port"
