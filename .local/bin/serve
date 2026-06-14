@@ -27,7 +27,7 @@ fi
 
 sel_idx=""
 while true; do
-  printf '%s\n%s\n\n> ' "Select interface:" "$menu_display"
+  printf '%s\n%s\n> ' "Select interface:" "$menu_display"
   read -r sel_idx
 
   case "$sel_idx" in
@@ -63,9 +63,9 @@ echo "Selected:${NL}${menu_display_sel}"
 echo
 echo "$url" | qrencode -t "ansiutf8"
 echo
-echo "Interface: ${ifc} | IP: ${ip} | Port: ${port} | Directory: ${PWD}"
-echo
 echo "URL: ${url}"
+echo
+echo "Interface: ${ifc} | IP: ${ip} | Port: ${port} | Directory: ${PWD}"
 echo
 
 if [ "${WAYLAND_DISPLAY:-""}" ] && command -v "wl-copy" 1> "/dev/null" 2> "/dev/null"; then
