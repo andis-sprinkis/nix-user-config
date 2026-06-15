@@ -73,7 +73,6 @@ except OSError:
 python
 }
 
-
 set +e
 test_port "$ip" "$port"
 exit="$?"
