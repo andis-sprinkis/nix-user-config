@@ -55,7 +55,7 @@ menu_value_sel="$(echo "$menu_values" | sed "${sel_idx}q;d")"
 
 ifc="$(echo "$menu_value_sel" | cut -d" " -f1)"
 ip="$(echo "$menu_value_sel" | cut -d" " -f2)"
-port="8080"
+port="${PORT:-"8080"}"
 
 test_port() {
   python3 <<python
@@ -99,8 +99,12 @@ url="http://${ip}:${port}/";
 
 echo
 echo "Selected:${NL}${menu_display_sel}"
-echo
-echo "$url" | qrencode -t "ansiutf8"
+
+if command -v "qrencode" 1> "/dev/null" 2> "/dev/null"; then
+  echo
+  echo "$url" | qrencode -t "ansiutf8"
+fi
+
 echo
 echo "URL: ${url}"
 
@@ -139,7 +143,6 @@ esac
 
 echo
 echo "Interface: ${ifc} | IP: ${ip} | Port: ${port}"
-echo
 echo "Directory: ${PWD}"
 echo
 echo "The server log:"
