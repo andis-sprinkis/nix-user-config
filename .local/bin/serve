@@ -56,6 +56,45 @@ menu_value_sel="$(echo "$menu_values" | sed "${sel_idx}q;d")"
 ifc="$(echo "$menu_value_sel" | cut -d" " -f1)"
 ip="$(echo "$menu_value_sel" | cut -d" " -f2)"
 port="8080"
+
+test_port() {
+  python3 <<python
+import socket
+import sys
+
+try:
+  with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+    sock.settimeout(3)
+    if sock.connect_ex(("$1", $2)) == 0:
+      sys.exit(3)
+    sys.exit(0)
+except OSError:
+  sys.exit(1)
+python
+}
+
+
+set +e
+test_port "$ip" "$port"
+exit="$?"
+set -e
+
+if [ "$exit" != "0" ]; then
+  while true; do
+    newport="$(awk 'BEGIN { srand(); print int(1024 + rand() * 49151) }')"
+
+    set +e
+    test_port "$ip" "$newport"
+    exit="$?"
+    set -e
+
+    if [ "$exit" = "0" ]; then
+      port="$newport"
+      break
+    fi
+  done
+fi
+
 url="http://${ip}:${port}/";
 
 echo
@@ -64,38 +103,45 @@ echo
 echo "$url" | qrencode -t "ansiutf8"
 echo
 echo "URL: ${url}"
+
+if [ "${WAYLAND_DISPLAY:-""}" ] && command -v "wl-copy" 1> "/dev/null" 2> "/dev/null"; then
+  echo "$url" | wl-copy
+  echo "- Copied to clipboard with wl-copy"
+fi
+
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && command -v "xclip" 1> "/dev/null" 2> "/dev/null"; then
+  echo "$url" | xclip -sel "clipboard"
+  echo "- Copied to clipboard with xclip"
+fi
+
+if command -v "pbcopy" 1> "/dev/null" 2> "/dev/null"; then
+  echo "$url" | pbcopy;
+  echo "- Copied to clipboard with pb-copy"
+fi
+
+# shellcheck disable=SC3028
+case "${OSTYPE:-"$(uname)"}" in
+  [Dd]"arwin"*)
+    echo "- Opening with open \"${url}\"..."
+    (
+      sleep "1"
+      open "$url"
+    ) &
+  ;;
+  *)
+    echo "- Opening with xdg-open \"${url}\"..."
+    (
+      sleep "1"
+      xdg-open "$url"
+    ) &
+  ;;
+esac
+
 echo
 echo "Interface: ${ifc} | IP: ${ip} | Port: ${port}"
 echo
 echo "Directory: ${PWD}"
 echo
-
-if [ "${WAYLAND_DISPLAY:-""}" ] && command -v "wl-copy" 1> "/dev/null" 2> "/dev/null"; then
-  echo "$url" | wl-copy
-fi
-
-if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && command -v "xclip" 1> "/dev/null" 2> "/dev/null"; then
-  echo "$url" | xclip -sel "clipboard"
-fi
-
-if command -v "pbcopy" 1> "/dev/null" 2> "/dev/null"; then
-  echo "$url" | pbcopy;
-fi
-
-(
-  sleep "1"
-
-  # shellcheck disable=SC3028
-  case "${OSTYPE:-"$(uname)"}" in
-    [Dd]"arwin"*)
-      open "$url"
-    ;;
-    *)
-      xdg-open "$url"
-    ;;
-  esac
-) &
-
 echo "The server log:"
 echo
 
