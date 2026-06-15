@@ -34,7 +34,6 @@
 1.  https://addons.mozilla.org/en-US/firefox/addon/jump-to-anchor/
 1.  https://addons.mozilla.org/en-US/firefox/addon/localcdn-fork-of-decentraleyes/
 1.  https://addons.mozilla.org/en-US/firefox/addon/mdn-search-provider/
-1.  https://addons.mozilla.org/en-US/firefox/addon/metager-searchengine/
 1.  https://addons.mozilla.org/en-US/firefox/addon/mojeek-search/
 1.  https://addons.mozilla.org/en-US/firefox/addon/multi-account-containers/
 1.  https://addons.mozilla.org/en-US/firefox/addon/nomoreshorts/
