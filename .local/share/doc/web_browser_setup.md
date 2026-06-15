@@ -39,7 +39,6 @@
 1.  https://addons.mozilla.org/en-US/firefox/addon/nomoreshorts/
 1.  https://addons.mozilla.org/en-US/firefox/addon/react-context-devtool/
 1.  https://addons.mozilla.org/en-US/firefox/addon/react-devtools/
-1.  https://addons.mozilla.org/en-US/firefox/addon/reduxdevtools/
 1.  https://addons.mozilla.org/en-US/firefox/addon/scroll-zoom/
 1.  https://addons.mozilla.org/en-US/firefox/addon/search_by_image/
 1.  https://addons.mozilla.org/en-US/firefox/addon/select-link-text/
