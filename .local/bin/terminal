@@ -14,7 +14,7 @@ case "${OSTYPE:-"$(uname)"}" in
     exit "1"
   ;;
   *)
-    exec wezterm "$@"
+    exec kitty "$@"
   ;;
 esac
 
