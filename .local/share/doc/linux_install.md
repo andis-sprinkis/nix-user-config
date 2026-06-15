@@ -376,10 +376,6 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     for p in $(cat ./appimage | paste -s -d ' ' -); do curl --location --output-dir "$HOME/.local/opt/appimage" --remote-name "$p"; done
     chmod +x $HOME/.local/opt/appimage/*
     ```
-1.  Install npm packages.
-    ```sh
-    volta install $(cat ./npm | paste -s -d ' ' -)
-    ```
 1.  Install PyPi packages.
     ```sh
     for p in $(cat ./pypi | paste -s -d ' ' -); do pipx install $p; done
