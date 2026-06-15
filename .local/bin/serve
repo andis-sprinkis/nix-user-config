@@ -15,7 +15,7 @@ for ifc in $(ifconfig | sed -e '/^[a-z0-9]*:.*$/!d' -e 's/:.*$//g' | paste -s -d
 
   if [ "$ip" ]; then
     ifcs_count=$((ifcs_count + 1))
-    menu_display="${menu_display}${menu_display:+"$NL"}  ${ifcs_count}. ${ifc}: ${ip}${is_localhost:+ (default)}"
+    menu_display="${menu_display}${menu_display:+"$NL"}${ifcs_count}. ${ifc}: ${ip}${is_localhost:+ (default)}"
     menu_values="${menu_values}${menu_values:+"$NL"}${ifc} ${ip}"
   fi
 done
@@ -27,7 +27,7 @@ fi
 
 sel_idx=""
 while true; do
-  printf '%s\n%s\n> ' "Select interface:" "$menu_display"
+  printf '%s\n%s\n> ' "Interface:" "$menu_display"
   read -r sel_idx
 
   case "$sel_idx" in
@@ -97,42 +97,41 @@ fi
 url="http://${ip}:${port}/";
 
 echo
-echo "Selected:${NL}${menu_display_sel}"
+echo "Selected interface:${NL}${menu_display_sel}"
+echo
 
 if command -v "qrencode" 1> "/dev/null" 2> "/dev/null"; then
-  echo
   echo "$url" | qrencode -t "ansiutf8"
 fi
 
-echo
-echo "URL: ${url}"
+printf "\x1b[0;35m%s\x1b[0m\n" "${url}"
 
 if [ "${WAYLAND_DISPLAY:-""}" ] && command -v "wl-copy" 1> "/dev/null" 2> "/dev/null"; then
   echo "$url" | wl-copy
-  echo "- Copied to clipboard with wl-copy"
+  echo "Copied to clipboard with 'wl-copy'"
 fi
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && command -v "xclip" 1> "/dev/null" 2> "/dev/null"; then
   echo "$url" | xclip -sel "clipboard"
-  echo "- Copied to clipboard with xclip"
+  echo "Copied to clipboard with 'xclip'"
 fi
 
 if command -v "pbcopy" 1> "/dev/null" 2> "/dev/null"; then
   echo "$url" | pbcopy;
-  echo "- Copied to clipboard with pb-copy"
+  echo "Copied to clipboard with 'pb-copy'"
 fi
 
 # shellcheck disable=SC3028
 case "${OSTYPE:-"$(uname)"}" in
   [Dd]"arwin"*)
-    echo "- Opening with open \"${url}\"..."
+    echo "Opening with 'open'"
     (
       sleep "1"
       open "$url"
     ) &
   ;;
   *)
-    echo "- Opening with xdg-open \"${url}\"..."
+    echo "Opening with 'xdg-open'"
     (
       sleep "1"
       xdg-open "$url"
@@ -141,10 +140,9 @@ case "${OSTYPE:-"$(uname)"}" in
 esac
 
 echo
-echo "Interface: ${ifc} | IP: ${ip} | Port: ${port}"
+echo "Interface: ${ifc} -- IP: ${ip} -- Port: ${port}"
 echo "Directory: ${PWD}"
 echo
 echo "The server log:"
-echo
 
 python3 -m "http.server" --bind "$ip" --directory "./" "$port"
