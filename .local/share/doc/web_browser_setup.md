@@ -141,6 +141,7 @@ Wikipedia (LV)
 https://lv.wikipedia.org/w/index.php?search=%s
 wlv
 ```
+
 ## Usersripts
 
 1.  https://github.com/andis-sprinkis/nix-user-config/raw/master/.local/share/userscripts/sscom_sslv_gmaps_link.user.js
