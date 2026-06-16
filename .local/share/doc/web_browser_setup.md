@@ -141,12 +141,11 @@ Wikipedia (LV)
 https://lv.wikipedia.org/w/index.php?search=%s
 wlv
 ```
-
-## Userstyles
-
-1.  https://github.com/andis-sprinkis/nix-user-config/raw/master/.local/share/userstyles/lazy_dark_mode.user.css
-
 ## Usersripts
 
 1.  https://github.com/andis-sprinkis/nix-user-config/raw/master/.local/share/userscripts/sscom_sslv_gmaps_link.user.js
 1.  https://github.com/andis-sprinkis/nix-user-config/raw/master/.local/share/userscripts/select_link_text.user.js
+
+## Userstyles
+
+1.  https://github.com/andis-sprinkis/nix-user-config/raw/master/.local/share/userstyles/lazy_dark_mode.user.css
