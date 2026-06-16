@@ -35,7 +35,6 @@
 1.  https://addons.mozilla.org/en-US/firefox/addon/react-devtools/
 1.  https://addons.mozilla.org/en-US/firefox/addon/scroll-zoom/
 1.  https://addons.mozilla.org/en-US/firefox/addon/search_by_image/
-1.  https://addons.mozilla.org/en-US/firefox/addon/select-link-text/
 1.  https://addons.mozilla.org/en-US/firefox/addon/sponsorblock/
 1.  https://addons.mozilla.org/en-US/firefox/addon/stop-autoplay-next-for-youtube/
 1.  https://addons.mozilla.org/en-US/firefox/addon/styl-us/
@@ -146,3 +145,8 @@ wlv
 ## Userstyles
 
 1.  https://github.com/andis-sprinkis/nix-user-config/raw/master/.local/share/userstyles/lazy_dark_mode.user.css
+
+## Usersripts
+
+1.  https://github.com/andis-sprinkis/nix-user-config/raw/master/.local/share/userscripts/sscom_sslv_gmaps_link.user.js
+1.  https://github.com/andis-sprinkis/nix-user-config/raw/master/.local/share/userscripts/select_link_text.user.js
