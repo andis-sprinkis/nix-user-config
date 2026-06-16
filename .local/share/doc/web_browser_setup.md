@@ -22,19 +22,14 @@
 ### Mozilla Firefox
 
 1.  https://addons.mozilla.org/en-US/firefox/addon/accessibility-checker/
-1.  https://addons.mozilla.org/en-US/firefox/addon/add-brave-search/
 1.  https://addons.mozilla.org/en-US/firefox/addon/clearurls/
 1.  https://addons.mozilla.org/en-US/firefox/addon/copy-as-markdown/
-1.  https://addons.mozilla.org/en-US/firefox/addon/ddg-lite-search-provider/
 1.  https://addons.mozilla.org/en-US/firefox/addon/extension-copycat/
 1.  https://addons.mozilla.org/en-US/firefox/addon/favicon-detector/
-1.  https://addons.mozilla.org/en-US/firefox/addon/github-search/
 1.  https://addons.mozilla.org/en-US/firefox/addon/global-speed/
 1.  https://addons.mozilla.org/en-US/firefox/addon/istilldontcareaboutcookies/
 1.  https://addons.mozilla.org/en-US/firefox/addon/jump-to-anchor/
 1.  https://addons.mozilla.org/en-US/firefox/addon/localcdn-fork-of-decentraleyes/
-1.  https://addons.mozilla.org/en-US/firefox/addon/mdn-search-provider/
-1.  https://addons.mozilla.org/en-US/firefox/addon/mojeek-search/
 1.  https://addons.mozilla.org/en-US/firefox/addon/multi-account-containers/
 1.  https://addons.mozilla.org/en-US/firefox/addon/nomoreshorts/
 1.  https://addons.mozilla.org/en-US/firefox/addon/react-devtools/
@@ -74,9 +69,79 @@
 1.  https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag
 1.  https://chromewebstore.google.com/detail/ublock-origin-lite/ddkjiahejlhfcafbddmgiahcphecmpfh
 
-## Userscripts
+## Search engines
 
-1.  https://github.com/zerodytrash/Simple-YouTube-Age-Restriction-Bypass/raw/main/dist/Simple-YouTube-Age-Restriction-Bypass.user.js
+```
+ArchWiki
+https://wiki.archlinux.org/index.php?search=%s
+aw
+```
+
+```
+Brave
+https://search.brave.com/search?q=%s
+bw
+```
+
+```
+DuckDuckGo Lite
+https://lite.duckduckgo.com/lite?q=%s
+ddg
+```
+
+```
+Google (EN)
+https://www.google.com/search?q=%s
+gg
+```
+
+```
+Google Images
+https://www.google.com/search?udm=2&q=%s
+gi
+```
+
+```
+GitHub
+https://github.com/search?q=%s&type=repositories
+gh
+```
+
+```
+Mojeek
+https://www.mojeek.com/search?q=%s
+mjk
+```
+
+```
+Mozilla Developer Network
+https://developer.mozilla.org/en-US/search?q=%s
+mdn
+```
+
+```
+Yandex Images
+https://yandex.com/images/search?text=%s
+yi
+```
+
+```
+YouTube
+https://www.youtube.com/results?search_query=%s
+yt
+```
+
+```
+Wikipedia (EN)
+https://en.wikipedia.org/w/index.php?search=%s
+wen
+```
+
+```
+Wikipedia (LV)
+https://lv.wikipedia.org/w/index.php?search=%s
+wlv
+```
 
 ## Userstyles
 
