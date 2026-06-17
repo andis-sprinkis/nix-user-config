@@ -13,6 +13,7 @@ window-width = 30
 resize-overlay = never
 macos-titlebar-style = transparent
 macos-option-as-alt = true
+auto-update = off
 
 # vscode dark colors
 palette = 0=#1F1F1F
