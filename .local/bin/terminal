@@ -8,15 +8,13 @@ case "${OSTYPE:-"$(uname)"}" in
     fi
 
     if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-      # exec kitty --single-instance "$@"
-      exec ghostty "$@"
+      exec ghostty "+new-window" "$@"
     fi
 
     exit "1"
   ;;
   *)
-    # exec kitty --single-instance "$@"
-    exec ghostty "$@"
+    exec ghostty "+new-window" "$@"
   ;;
 esac
 
