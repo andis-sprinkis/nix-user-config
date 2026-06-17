@@ -1,19 +1,19 @@
 # vi: ft=dosini
 
+adjust-cell-height = 20%
+alpha-blending = linear-corrected
+auto-update = off
+bold-color = bright
+confirm-close-surface = false
 font-family = Cascadia Code PL
 font-feature = -calt, -liga, -dlig
-adjust-cell-height = 20%
-bold-color = bright
-alpha-blending = linear-corrected
+macos-option-as-alt = true
+macos-titlebar-style = transparent
+resize-overlay = never
+window-height = 30
 window-padding-x = 0
 window-padding-y = 0
-confirm-close-surface = false
-window-height = 120
-window-width = 30
-resize-overlay = never
-macos-titlebar-style = transparent
-macos-option-as-alt = true
-auto-update = off
+window-width = 120
 
 # vscode dark colors
 palette = 0=#1F1F1F
