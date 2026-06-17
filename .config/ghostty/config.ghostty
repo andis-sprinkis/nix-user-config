@@ -16,26 +16,26 @@ window-padding-y = 0
 window-width = 120
 
 # vscode dark colors
-palette = 0=#1F1F1F
-palette = 1=#F44747
-palette = 2=#6A9955
-palette = 3=#DCDCAA
-palette = 4=#569CD6
-palette = 5=#C586C0
-palette = 6=#56B6C2
-palette = 7=#D4D4D4
+palette = 0=#1f1f1f
+palette = 1=#f44747
+palette = 2=#6a9955
+palette = 3=#dcdcaa
+palette = 4=#569cd6
+palette = 5=#c586c0
+palette = 6=#56b6c2
+palette = 7=#d4d4d4
 palette = 8=#808080
-palette = 9=#F44747
-palette = 10=#6A9955
-palette = 11=#DCDCAA
-palette = 12=#569CD6
-palette = 13=#C586C0
-palette = 14=#56B6C2
-palette = 15=#D4D4D4
-background = #1F1F1F
-foreground = #D4D4D4
-cursor-color = #D4D4D4
-selection-background = #264F78
+palette = 9=#f44747
+palette = 10=#6a9955
+palette = 11=#dcdcaa
+palette = 12=#569cd6
+palette = 13=#c586c0
+palette = 14=#56b6c2
+palette = 15=#d4d4d4
+background = #1f1f1f
+foreground = #d4d4d4
+cursor-color = #d4d4d4
+selection-background = #264f78
 selection-foreground = #ffffff
 
 config-file = ?local.ghostty
