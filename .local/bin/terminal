@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+set -eu
 
 # shellcheck disable=SC3028
 case "${OSTYPE:-"$(uname)"}" in
@@ -17,5 +18,3 @@ case "${OSTYPE:-"$(uname)"}" in
     exec ghostty "+new-window" "$@"
   ;;
 esac
-
-exit "2"
