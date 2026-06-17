@@ -5,15 +5,23 @@ alpha-blending = linear-corrected
 auto-update = off
 bold-color = bright
 confirm-close-surface = false
+copy-on-select = false
+cursor-click-to-move = true
+cursor-color = cell-foreground
+cursor-text = cell-background
 font-family = Cascadia Code PL
 font-feature = -calt, -liga, -dlig
 macos-option-as-alt = true
 macos-titlebar-style = transparent
+mouse-hide-while-typing = true
+mouse-scroll-multiplier = precision:1,discrete:1,
 resize-overlay = never
+window-colorspace = display-p3
 window-height = 30
 window-padding-x = 0
 window-padding-y = 0
 window-width = 120
+mouse-shift-capture = true
 
 # vscode dark colors
 palette = 0=#1f1f1f
@@ -34,7 +42,6 @@ palette = 14=#56b6c2
 palette = 15=#d4d4d4
 background = #1f1f1f
 foreground = #d4d4d4
-cursor-color = #d4d4d4
 selection-background = #264f78
 selection-foreground = #ffffff
 
