@@ -12,8 +12,8 @@
       cur_beam="\x1b\x5b?2\x63"
     ;;
     *)
-      cur_block="\033[1 q"
-      cur_beam="\033[5 q"
+      cur_block="\033[2 q"
+      cur_beam="\033[6 q"
     ;;
   esac
 
