@@ -39,7 +39,7 @@
     ```sh
     [ -s ./pypi ] && for p in $(cat ./pypi | paste -s -d ' ' -); do pipx install $p; done
     ```
-1. Install user Neovim configuration.
+1. Install the user Neovim configuration.
 
     ```sh
     cd $HOME/.config
