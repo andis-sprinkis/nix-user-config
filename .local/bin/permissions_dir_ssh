@@ -2,5 +2,5 @@
 
 chmod "700" "${HOME}/.ssh"
 chmod "600" "${HOME}/.ssh/"*
-chmod "644" "${HOME}/.ssh/"*".pub" "${HOME}/.ssh/authorized_keys" "${HOME}/.ssh/known_hosts"
-chmod "700" "${HOME}/.ssh/agent"
+chmod "644" -f "${HOME}/.ssh/"*".pub" "${HOME}/.ssh/authorized_keys" "${HOME}/.ssh/known_hosts"
+chmod "700" -f "${HOME}/.ssh/agent"
