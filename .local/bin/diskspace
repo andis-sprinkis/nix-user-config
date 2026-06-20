@@ -109,9 +109,9 @@ sym_angle_up_r_mute="$(mute "└")"
 sym_dash_mute="$(mute "─")"
 sym_bigdash_mute="$(mute "╶╴")"
 
-sym_severity_0="${sym_angle_up_r_mute}${sym_dash_mute}${sym_smdashl_mute}"
-sym_severity_1="${sym_angle_up_r_mute}$(SEVERITY="1" severity_fmt "~")${sym_smdashl_mute}"
-sym_severity_2="${sym_angle_up_r_mute}$(SEVERITY="2" severity_fmt "!")${sym_smdashl_mute}"
+sym_severity_0="${sym_angle_down_r_mute}${sym_dash_mute}${sym_smdashl_mute}"
+sym_severity_1="${sym_angle_down_r_mute}$(SEVERITY="1" severity_fmt "~")${sym_smdashl_mute}"
+sym_severity_2="${sym_angle_down_r_mute}$(SEVERITY="2" severity_fmt "!")${sym_smdashl_mute}"
 
 sym_severity() {
   case "$SEVERITY" in
@@ -159,6 +159,6 @@ for line in $data; do
 
   set_severity "$val_use_pcnt"
 
-  echo "${sym_angle_down_r_mute}${sym_dash_mute}${sym_smdashl_mute}$(severity_fmt "$(human "$val_size_b")") $(path_fmt "$val_p_mount") $(mute "${val_p_dev}")${NL}$(sym_severity)$(severity_fmt "${val_free_pcnt}% $(human "$val_free_b") free") $(severity_fmt "${val_use_pcnt}% $(human "$val_use_b") use")"
+  echo "$(sym_severity)$(severity_fmt "$(human "$val_size_b")") $(path_fmt "$val_p_mount") $(mute "${val_p_dev}")${NL}${sym_angle_up_r_mute}${sym_dash_mute}${sym_smdashl_mute}$(severity_fmt "${val_free_pcnt}% $(human "$val_free_b") free") $(severity_fmt "${val_use_pcnt}% $(human "$val_use_b") use")"
 done
 IFS="$IFS_"
