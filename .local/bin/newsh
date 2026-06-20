@@ -60,15 +60,15 @@ dircmd() {
   printf 'cd "%s"; ls "%s"' "$dirpath" "$fname"
 }
 
-if [ "${WAYLAND_DISPLAY:-""}" ] && [ "$(command -v "wl-copy")" ]; then
+if [ "${WAYLAND_DISPLAY:-""}" ] && command -v "wl-copy" 1> "/dev/null" 2> "/dev/null"; then
   dircmd | wl-copy
 fi
 
-if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && [ "$(command -v "xclip")" ]; then
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && command -v "xclip" 1> "/dev/null" 2> "/dev/null"; then
   dircmd | xclip -sel "clipboard"
 fi
 
-if [ "$(command -v "pbcopy")" ]; then
+if command -v "pbcopy" 1> "/dev/null" 2> "/dev/null"; then
   dircmd | pbcopy;
 fi
 
