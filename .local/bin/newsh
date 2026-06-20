@@ -41,13 +41,13 @@ set -eu
 #   continue
 # done
 #
-# IFS=\" \"
+# set -f; IFS=\" \"
 # for i in \$items; do
-#   IFS=\"\$IFS_\"
+#   set +f; IFS=\"\$IFS_\"
 #
 #   command ...
 # done
-# IFS=\"\$IFS_\"
+# set +f; IFS=\"\$IFS_\"
 "
 
 echo "$template" > "$fpath"
