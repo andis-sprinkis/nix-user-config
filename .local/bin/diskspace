@@ -131,7 +131,7 @@ set_severity() {
   SEVERITY="0"
 }
 
-sym_sever0="$(mute " ")"
+sym_sever0="$(mute ">")"
 sym_sever1="$(SEVERITY="1" severity_fmt "?")"
 sym_sever2="$(SEVERITY="2" severity_fmt "!")"
 
