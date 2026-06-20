@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 IFS_="$IFS"
 NL="
 "
@@ -78,13 +78,37 @@ severity_fmt() {
   esac
 }
 
+path_inv() {
+  inv=""
+
+  IFS="$NL"
+  for i in $(printf '%s' "$1" | sed -e 's/\//\/\n/g'); do
+    IFS="$IFS_"
+
+    case "$i" in
+      "/")
+        inv="\\${inv}"
+      ;;
+      *"/")
+        inv="\\${i%%/}${inv}"
+      ;;
+      *)
+        inv="${i}${inv}"
+      ;;
+    esac
+  done
+  IFS="$IFS_"
+
+  printf '%s\n' "$inv"
+}
+
 path_fmt() {
   if [ "$1" = "/" ]; then
-    severity_fmt "/"
+    severity_fmt "$(path_inv "/")"
     return
   fi
 
-  echo "$(mute "${1%/*}")$(severity_fmt "/${1##*/}")"
+  echo "$(severity_fmt "$(path_inv "/${1##*/}")")$(mute "$(path_inv "${1%/*}")")"
 }
 
 SEVERITY="0"
@@ -103,26 +127,20 @@ set_severity() {
   SEVERITY="0"
 }
 
-sym_smdashl_mute="$(mute "╴")"
-sym_angle_down_r_mute="$(mute "┌")"
-sym_angle_up_r_mute="$(mute "└")"
-sym_dash_mute="$(mute "─")"
-sym_bigdash_mute="$(mute "╶╴")"
-
-sym_severity_0="${sym_angle_down_r_mute}${sym_dash_mute}${sym_smdashl_mute}"
-sym_severity_1="${sym_angle_down_r_mute}$(SEVERITY="1" severity_fmt "~")${sym_smdashl_mute}"
-sym_severity_2="${sym_angle_down_r_mute}$(SEVERITY="2" severity_fmt "!")${sym_smdashl_mute}"
+sym_sever0="$(mute "> ")"
+sym_sever1="$(SEVERITY="1" severity_fmt "?") "
+sym_sever2="$(SEVERITY="2" severity_fmt "!") "
 
 sym_severity() {
   case "$SEVERITY" in
     "0")
-      echo "$sym_severity_0"
+      echo "$sym_sever0"
     ;;
     "1")
-      echo "$sym_severity_1"
+      echo "$sym_sever1"
     ;;
     "2")
-      echo "$sym_severity_2"
+      echo "$sym_sever2"
     ;;
   esac
 }
@@ -131,16 +149,16 @@ IFS="$NL"
 for line in $data; do
   IFS="$IFS_"
 
-  val_p_mount="$(echo "$line" | cut -d";" -f1)"
-  val_p_dev="$(echo "$line" | cut -d";" -f6)"
+  pnt_mnt="$(echo "$line" | cut -d";" -f1)"
+  pnt_dev="$(echo "$line" | cut -d";" -f6)"
 
   if [ "$opt_has_f" = "0" ]; then
-    case "$val_p_dev" in
+    case "$pnt_dev" in
       "none"|"tmpfs"|"efivarfs"|"dev"|*".appimage")
         continue
       ;;
       "run")
-        case "$val_p_mount" in
+        case "$pnt_mnt" in
           "/run/media/"*)
           ;;
           *)
@@ -148,17 +166,24 @@ for line in $data; do
           ;;
         esac
       ;;
+      *)
+        case "$pnt_mnt" in
+          "/boot")
+            continue
+          ;;
+        esac
+      ;;
     esac
   fi
 
-  val_use_pcnt="$(echo "$line" | cut -d";" -f2 | cut -d "%" -f1)"
-  val_free_pcnt="$((100 - val_use_pcnt))"
-  val_use_b="$(echo "$line" | cut -d";" -f3)"
-  val_free_b="$(echo "$line" | cut -d";" -f4)"
-  val_size_b="$(echo "$line" | cut -d";" -f5)"
+  use_pcnt="$(echo "$line" | cut -d";" -f2 | cut -d "%" -f1)"
+  free_pcnt="$((100 - use_pcnt))"
+  use_b="$(echo "$line" | cut -d";" -f3)"
+  free_b="$(echo "$line" | cut -d";" -f4)"
+  size_b="$(echo "$line" | cut -d";" -f5)"
 
-  set_severity "$val_use_pcnt"
+  set_severity "$use_pcnt"
 
-  echo "$(sym_severity)$(severity_fmt "$(human "$val_size_b")") $(path_fmt "$val_p_mount") $(mute "${val_p_dev}")${NL}${sym_angle_up_r_mute}${sym_dash_mute}${sym_smdashl_mute}$(severity_fmt "${val_free_pcnt}% $(human "$val_free_b") free") $(severity_fmt "${val_use_pcnt}% $(human "$val_use_b") use")"
+  echo "$(sym_severity)$(path_fmt "$pnt_mnt")$(mute " $(path_fmt "${pnt_dev}")")${NL}  $(mute "$(human "$free_b") ")$(severity_fmt "${free_pcnt}% free")$(mute " $(human "$use_b") ")$(severity_fmt "${use_pcnt}% use")$(mute " of $(human "$size_b")")"
 done
 IFS="$IFS_"
