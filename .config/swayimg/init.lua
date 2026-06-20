@@ -39,9 +39,16 @@ local nop = function() end
 
 local function vtitle()
   local img = v.get_image()
+
+  if img == nil then
+    title("swayimg")
+    return
+  end
+
   local wsize = S.get_window_size()
 
   local fname = ""
+
   for part in img.path:gmatch("([^/]+)") do fname = part end
 
   local wtitle = (wsize.width < 800) and fname or img.path
@@ -59,6 +66,12 @@ end
 
 local function gtitle()
   local img = g.get_image()
+
+  if img == nil then
+    title("swayimg")
+    return
+  end
+
   local wsize = S.get_window_size()
 
   local fname = ""
@@ -76,14 +89,14 @@ end
 g.on_image_change(
   function()
     gtitle()
-    txt.set_status(g.get_image().index .. ' of ' .. imglist.size())
+    txt.set_status(g.get_image().index .. '/' .. imglist.size())
   end
 )
 
 v.on_image_change(
   function()
     vtitle()
-    txt.set_status(v.get_image().index .. ' of ' .. imglist.size())
+    txt.set_status(v.get_image().index .. '/' .. imglist.size())
   end
 )
 
