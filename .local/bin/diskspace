@@ -100,12 +100,10 @@ path_inv() {
 }
 
 path_fmt() {
-  if [ "$1" = "/" ]; then
-    severity_fmt "\\"
-    return
-  fi
-
   case "$1" in
+    "/")
+      severity_fmt "\\"
+    ;;
     "/"*)
       echo "$(severity_fmt "$(path_inv "/${1##*/}")")$(mute "$(path_inv "${1%/*}")")"
     ;;
@@ -133,7 +131,7 @@ set_severity() {
   SEVERITY="0"
 }
 
-sym_sever0="$(SEVERITY="0" severity_fmt "*")"
+sym_sever0="$(mute " ")"
 sym_sever1="$(SEVERITY="1" severity_fmt "?")"
 sym_sever2="$(SEVERITY="2" severity_fmt "!")"
 
@@ -151,6 +149,7 @@ sym_severity() {
   esac
 }
 
+i="1"
 IFS="$NL"
 for line in $data; do
   IFS="$IFS_"
@@ -190,6 +189,8 @@ for line in $data; do
 
   set_severity "$use_pcnt"
 
-  echo "$(sym_severity) $(path_fmt "$pnt_mnt")$(mute " $(path_fmt "${pnt_dev}")")${NL}  $(severity_fmt "${free_pcnt}% free") $(mute "or $(human "$free_b")") $(mute "and $(human "$use_b") use") $(mute "of $(human "$size_b")")"
+  echo "$(mute "$(printf '%2d' "$i")") $(sym_severity) $(path_fmt "$pnt_mnt")$(mute " $(path_fmt "${pnt_dev}")")${NL}     $(severity_fmt "${free_pcnt}% free") $(mute "or $(human "$free_b")") $(mute "and $(human "$use_b") use") $(mute "of $(human "$size_b")")"
+
+  i="$((i + 1))"
 done
 IFS="$IFS_"
