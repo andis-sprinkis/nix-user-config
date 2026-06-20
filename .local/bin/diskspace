@@ -136,7 +136,7 @@ set_severity() {
   SEVERITY="0"
 }
 
-sym_sever0="$(SEVERITY="0" severity_fmt ">")"
+sym_sever0="$(SEVERITY="0" severity_fmt "*")"
 sym_sever1="$(SEVERITY="1" severity_fmt "?")"
 sym_sever2="$(SEVERITY="2" severity_fmt "!")"
 
@@ -193,6 +193,6 @@ for line in $data; do
 
   set_severity "$use_pcnt"
 
-  echo "$(sym_severity) $(path_fmt "$pnt_mnt")$(mute " $(path_fmt "${pnt_dev}")")${NL}  $(mute "$(human "$free_b") ")$(severity_fmt "${free_pcnt}% free")$(mute " $(human "$use_b") ")$(severity_fmt "${use_pcnt}% use")$(mute " of $(human "$size_b")")"
+  echo "$(sym_severity) $(path_fmt "$pnt_mnt")$(mute " $(path_fmt "${pnt_dev}")")${NL}  $(severity_fmt "${free_pcnt}% free") $(mute "or $(human "$free_b")") $(mute "and $(human "$use_b") use") $(mute "of $(human "$size_b")")"
 done
 IFS="$IFS_"
