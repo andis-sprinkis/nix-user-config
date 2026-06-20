@@ -69,12 +69,16 @@ if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && command -v "xclip"
 fi
 
 if command -v "pbcopy" 1> "/dev/null" 2> "/dev/null"; then
-  dircmd | pbcopy;
+  dircmd | pbcopy
 fi
 
-case "$EDITOR" in
+case "${EDITOR:-""}" in
   "vi"|"vim"|"nvim"|"nano")
     $EDITOR "+$(echo "$template" | wc -l)" "$fpath"
+  ;;
+  "")
+    echo "$fpath"
+    exit
   ;;
   *)
     $EDITOR "$fpath"
