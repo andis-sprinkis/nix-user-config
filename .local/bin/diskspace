@@ -40,11 +40,8 @@ while getopts fh name; do
 done
 
 data="$(
-  LC_ALL="C" df --output="target,pcent,used,avail,size,source" \
-  | tail -n "+2" \
-  | column -t -o";" \
-  | sed -e 's/\s*\;/\;/g' \
-  | sort
+  LC_ALL="C" df --output="target,pcent,used,avail,size,source" |
+    tail -n "+2" | sed -e 's/ \+/;/g' | sort
 )"
 
 # TODO: use SIZE to specify bytes instead of kB as the base unit
