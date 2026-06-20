@@ -101,7 +101,7 @@ path_inv() {
 
 path_fmt() {
   if [ "$1" = "/" ]; then
-    severity_fmt "$(path_inv "/")"
+    severity_fmt "\\"
     return
   fi
 
