@@ -108,7 +108,16 @@ path_fmt() {
     return
   fi
 
-  echo "$(severity_fmt "$(path_inv "/${1##*/}")")$(mute "$(path_inv "${1%/*}")")"
+  case "$1" in
+    "/"*)
+      echo "$(severity_fmt "$(path_inv "/${1##*/}")")$(mute "$(path_inv "${1%/*}")")"
+    ;;
+    *)
+      severity_fmt "$1"
+    ;;
+  esac
+  
+
 }
 
 SEVERITY="0"
@@ -127,7 +136,7 @@ set_severity() {
   SEVERITY="0"
 }
 
-sym_sever0="$(mute "> ")"
+sym_sever0="$(SEVERITY="0" severity_fmt ">") "
 sym_sever1="$(SEVERITY="1" severity_fmt "?") "
 sym_sever2="$(SEVERITY="2" severity_fmt "!") "
 
