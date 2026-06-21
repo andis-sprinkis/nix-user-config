@@ -22,6 +22,7 @@ window-padding-x = 0
 window-padding-y = 0
 window-width = 120
 mouse-shift-capture = true
+link-url = true
 
 # vscode dark colors
 palette = 0=#1f1f1f
