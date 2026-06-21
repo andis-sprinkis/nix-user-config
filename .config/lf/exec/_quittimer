@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 dir_heartbeat="/tmp/${USER}_lf_heartbeat"
 # shellcheck disable=SC2154

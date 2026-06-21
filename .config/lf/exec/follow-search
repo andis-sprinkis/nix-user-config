@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 fpath="$(set +e; fzf; set -e)"
 

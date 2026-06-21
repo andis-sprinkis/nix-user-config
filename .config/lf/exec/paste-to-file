@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 paste_to_file "${PWD}/${*}"

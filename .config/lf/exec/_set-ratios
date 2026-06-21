@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 # shellcheck disable=SC2154
 if [ "$lf_width" -le "40"  ]; then exec lf -remote "send ${id} set ratios 100:1";    fi
