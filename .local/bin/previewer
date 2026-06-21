@@ -81,6 +81,7 @@ print_hardlink() {
 
 print_strings() {
   if find_util "strings"; then
+    echo "Strings:"
     strings "$FPATH"
   else
     return "1"
@@ -150,9 +151,7 @@ print_hexdump() {
   if find_util "hexdump"; then
     bytes="1048576"
 
-    echo "
-
-First ${bytes} bytes or less:"
+    echo "First ${bytes} bytes or less:"
 
     hexdump -C -n "$bytes" "$FPATH"
   fi
@@ -446,18 +445,28 @@ case "$MIME" in
   ;;
   application/octet-stream)
     # TODO: re-try by file extension
-    print_strings
-    print_hexdump
-    echo
+    if print_strings; then
+      echo
+    fi
+
+    if print_hexdump; then
+      echo
+    fi
+
     print_stat
   ;;
   application/vnd.microsoft.portable-executable|application/x-dosexec*|application/x-ole-storage)
-    print_strings
+    if print_strings; then
+      echo
+    fi
+
     print_hexdump
   ;;
   application/x-coredump)
-    print_hexdump
-    echo
+    if print_hexdump; then
+      echo
+    fi
+
     print_stat
   ;;
   application/x-linux-kernel)
@@ -526,9 +535,14 @@ case "$MIME" in
     print_lines_count
 
     if ! print_bat; then
-      print_strings
-      print_hexdump
-      echo
+      if print_strings; then
+        echo
+      fi
+
+      if print_hexdump; then
+        echo
+      fi
+
       print_stat
     fi
   ;;
