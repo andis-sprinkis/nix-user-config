@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 # Inspired by a StackOverflow anwser by user 'cas' - https://unix.stackexchange.com/a/677884
-set -eu
+set -euf
 IFS_="$IFS"
 
 mouseloc="$(xdotool "getmouselocation")"

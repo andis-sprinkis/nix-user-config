@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 dir_appimage="${APPIMAGE_DATA_HOME:-"${HOME}/.local/opt/appimage"}"
 cmd_inc_appimage=""

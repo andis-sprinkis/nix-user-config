@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 # # shellcheck disable=SC3028
 # case "${OSTYPE:-"$(uname)"}" in

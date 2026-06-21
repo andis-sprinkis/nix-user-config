@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 seconds_uptime=$(date +%s -d"@$(cut -d' ' -f1 "/proc/uptime")")
 on_since="$(($(date +%s) - seconds_uptime))"

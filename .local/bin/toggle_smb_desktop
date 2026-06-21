@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 if systemctl is-active --quiet smb; then
   win_title="\033]0;Stop SMB service\007"

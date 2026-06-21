@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 # Resize the active floating X window to the available screen space accross the outputs.
 

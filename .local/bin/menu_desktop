@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 cmd="${WAYLAND_DISPLAY:+"bemenu"}"
 cmd="${cmd:-"${DISPLAY:+"bemenu"}"}"

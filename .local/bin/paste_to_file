@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 if [ -z "$*" ]; then
   echo "$(basename "$0"): No path specified"

@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 sudo rm -rf "$(xcode-select -print-path)"
 sudo xcode-select --install

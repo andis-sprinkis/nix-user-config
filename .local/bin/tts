@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 pathf_model="${XDG_DATA_HOME:-$HOME/.local/share}/piper-voices/en/en_US/hfc_female/medium/en_US-hfc_female-medium.onnx"
 text=

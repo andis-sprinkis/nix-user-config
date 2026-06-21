@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 if systemctl is-active --quiet sshd; then
   win_title="\033]0;Stop SSHD service\007"

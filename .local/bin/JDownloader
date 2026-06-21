@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 exec java -jar "${HOME}/.local/share/jdownloader/JDownloader.jar" "$@"
