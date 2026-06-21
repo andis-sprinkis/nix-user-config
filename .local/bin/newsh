@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -euff
+set -euf
 
 if [ -z "${1:-""}" ]; then
   exit "1"
@@ -20,7 +20,7 @@ fi
 fname="$(basename "$fpath")"
 
 template="#!/usr/bin/env sh
-set -euff
+set -euf
 # IFS_=\"\$IFS\"
 # NL=\"
 # \"
