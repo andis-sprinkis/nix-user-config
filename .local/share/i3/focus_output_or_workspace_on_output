@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 if [ -z "${1:-""}" ]; then
   exit "1"

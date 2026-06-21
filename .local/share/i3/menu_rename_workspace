@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 # If the current workspace is named "2":
 #

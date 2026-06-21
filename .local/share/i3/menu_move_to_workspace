@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 wm="${WAYLAND_DISPLAY:+"sway"}"
 wm="${wm:-"i3"}"

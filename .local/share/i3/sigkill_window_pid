@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   exec "xkill"

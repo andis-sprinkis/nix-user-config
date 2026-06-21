@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 if [ "${BLOCK_BUTTON:-""}" ]; then
   # shellcheck disable=SC3044

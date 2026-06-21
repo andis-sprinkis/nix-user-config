@@ -41,7 +41,7 @@ Removal:
 
 ```sh
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 # build-qt5
 sudo rm "/usr/lib/libadwaitaqtpriv.so.1.4.2"

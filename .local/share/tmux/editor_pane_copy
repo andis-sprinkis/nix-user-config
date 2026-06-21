@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -eu
+set -euf
 
 tmp="$(mktemp --suffix="_tmux_pane_copy")"
 
