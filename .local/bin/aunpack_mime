@@ -41,5 +41,3 @@ case "$MIME" in
   application/java-archive) aunpack --format=".jar" "$@" ;;
   *) aunpack "$@" ;;
 esac
-
-exit "4"
