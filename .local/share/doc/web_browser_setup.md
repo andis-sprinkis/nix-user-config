@@ -47,6 +47,8 @@
 1.  https://addons.mozilla.org/en-US/firefox/addon/webpage-extractor/
 1.  https://addons.mozilla.org/en-US/firefox/addon/youtube-recommended-videos/
 
+Follow [Configuring _Firefox Multi-Account Containers_ for session isolation](./ff_addon_multiaccountcontainers.md)
+
 ### Google Chrome / Chromium
 
 1.  https://chrome.google.com/webstore/detail/clearurls/lckanjgmijmafbedllaakclkaicjfmnk (Manifest v2)
