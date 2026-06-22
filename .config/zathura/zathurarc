@@ -10,6 +10,7 @@ set scroll-full-overlap        0.15
 set scroll-hstep               8
 set scroll-step                128
 set selection-clipboard        clipboard
+set selection-keep-highlight   true
 set selection-notification     false
 set show-hidden                true
 set show-signature-information true
