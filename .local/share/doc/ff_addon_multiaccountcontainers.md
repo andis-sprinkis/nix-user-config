@@ -20,7 +20,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
 
-Visit in Mozilla Firefox:
+Open URL in Mozilla Firefox:
 
 ```
 about:devtools-toolbox?id=%40testpilot-containers&type=extension
