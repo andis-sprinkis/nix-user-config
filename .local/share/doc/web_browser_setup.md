@@ -6,10 +6,11 @@
 
 - On Linux:
     ```sh
-    cd "$HOME/.mozilla/firefox/PROFILE_ID.default-release"
+    cd "$HOME/.config/mozilla/firefox/PROFILE_ID.default-release"
     ln -s "../../../.config/firefox/user.js" "user.js"
     ln -s "../../../.config/firefox/chrome" "chrome"
     ```
+
 - On macOS:
     ```sh
     cd "$HOME/Library/Application Support/Firefox/Profiles/PROFILE_ID.default-release"
