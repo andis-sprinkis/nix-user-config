@@ -650,7 +650,7 @@ Steps for adding any newly listed packages from the user package lists to an alr
         nmcli device wifi connect $ssid password $password
         ```
 
-## Related resources
+## Resources
 
 - `xorg.conf`, `xrandr` manpages
 - [AMDGPU - ArchWiki](https://wiki.archlinux.org/title/AMDGPU)
