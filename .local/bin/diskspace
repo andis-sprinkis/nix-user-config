@@ -189,7 +189,7 @@ for line in $data; do
 
   set_severity "$use_pcnt"
 
-  echo "$(sym_severity) $(path_fmt "$pnt_mnt") $(severity_fmt "${free_pcnt}% $(human "$free_b") free") $(mute "of $(human "$size_b")") $(mute "$(path_inv "${pnt_dev}")")"
+  echo "$(sym_severity) $(path_fmt "$pnt_mnt") $(severity_fmt "${free_pcnt}% $(human "$free_b") free") $(mute "($(human "$size_b")") $(mute "$(path_inv "${pnt_dev}"))")"
 
   i="$((i + 1))"
 done
