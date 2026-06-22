@@ -1,0 +1,45 @@
+#!/usr/bin/env sh
+set -euf
+
+for FPATH_INPUT in "$@"; do :; done
+
+FPATH="$(readlink -f "$FPATH_INPUT")"
+MIME="$(file --mime-type --brief "$FPATH")"
+
+case "$MIME" in
+  application/gzip) aunpack --format=".gz" "$@" ;;
+  application/vnd.debian.binary-package) aunpack --format=".deb" "$@" ;;
+  application/vnd.ms-cab-compressed) aunpack --format=".cab" "$@" ;;
+  application/vnd.rar) aunpack --format=".rar" "$@" ;;
+  application/x-7z-compressed) aunpack --format=".7z" "$@" ;;
+  application/x-ace) aunpack --format=".ace" "$@" ;;
+  application/x-alz) aunpack --format=".alz" "$@" ;;
+  application/x-archive) aunpack --format=".a" "$@" ;;
+  application/x-arj) aunpack --format=".arj" "$@" ;;
+  application/x-bzip1) aunpack --format=".bz" "$@" ;;
+  application/x-bzip1-compressed-tar) aunpack --format=".tar.bz" "$@" ;;
+  application/x-bzip2) aunpack --format=".bz2" "$@" ;;
+  application/x-bzip2-compressed-tar) aunpack --format=".tar.bz2" "$@" ;;
+  application/x-compress) aunpack --format=".Z" "$@" ;;
+  application/x-compressed-tar) aunpack --format=".tar.gz" "$@" ;;
+  application/x-cpio) aunpack --format=".cpio" "$@" ;;
+  application/x-lha) aunpack --format=".lha" "$@" ;;
+  application/x-lrzip) aunpack --format=".lrz" "$@" ;;
+  application/x-lzip) aunpack --format=".lz" "$@" ;;
+  application/x-lzip-compressed-tar) aunpack --format=".tar.lz" "$@" ;;
+  application/x-lzma) aunpack --format=".lzma" "$@" ;;
+  application/x-lzma-compressed-tar) aunpack --format=".tlz" "$@" ;;
+  application/x-lzop) aunpack --format=".lzo" "$@" ;;
+  application/x-rpm) aunpack --format=".rpm" "$@" ;;
+  application/x-tar) aunpack --format=".tar" "$@" ;;
+  application/x-tarz) aunpack --format=".tar.Z" "$@" ;;
+  application/x-tzo) aunpack --format=".tar.lzo" "$@" ;;
+  application/x-webarchive) aunpack --format=".war" "$@" ;;
+  application/x-xz) aunpack --format=".xz" "$@" ;;
+  application/x-xz-compressed-tar) aunpack --format=".tar.xz" "$@" ;;
+  application/zip) aunpack --format=".zip" "$@" ;;
+  application/java-archive) aunpack --format=".jar" "$@" ;;
+  *) aunpack "$@" ;;
+esac
+
+exit "4"

@@ -35,6 +35,7 @@ cmd open                   $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/o
 cmd pre-cd                 & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/pre-cd"
 cmd apack                  ! exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/apack" "$@"
 cmd aunpack                ! exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/aunpack"
+cmd aunpack_mime           ! exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/aunpack_mime"
 cmd copy-path              $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/copy-path"
 cmd follow-search          $ exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/follow-search"
 cmd follow-symlink         & exec "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/follow-symlink"
