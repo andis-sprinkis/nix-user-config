@@ -663,5 +663,5 @@ Steps for adding any newly listed packages from the user package lists to an alr
 - [Persistent block device naming - ArchWiki](https://wiki.archlinux.org/title/Persistent_block_device_naming)
 - [Smartcards - ArchWiki](https://wiki.archlinux.org/title/Smartcards)
 - [The Framebuffer Console — The Linux Kernel documentation](https://www.kernel.org/doc/html/latest/fb/fbcon.html)
-- [User/Group Name Syntax](https://systemd.io/USER_NAMES/)
+- [systemd - User/Group Name Syntax](https://systemd.io/USER_NAMES/)
 - [Xorg - ArchWiki](https://wiki.archlinux.org/title/Xorg)
