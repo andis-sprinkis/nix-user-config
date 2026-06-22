@@ -1,5 +1,7 @@
 # Configuring _Firefox Multi-Account Containers_ for session isolation
 
+---
+
 The code below is an adaptation of [phy1729/container-config by Matthew Martin](https://github.com/phy1729/container-config).
 
 The original license:
@@ -19,6 +21,8 @@ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 ```
+
+---
 
 Open URL in Mozilla Firefox:
 
