@@ -1688,7 +1688,6 @@ async function main() {
 
 ## Resources
 
-
 - [Discussion on GitHub](https://github.com/mozilla/multi-account-containers/pull/2114#issuecomment-1004056712)
 - [phy1729/container-config](https://github.com/phy1729/container-config)
 - [Fix #1670 - Add option to manually assign an URL to a container by dannycolin · Pull Request #2710 · mozilla/multi-account-containers](https://github.com/mozilla/multi-account-containers/pull/2710)
