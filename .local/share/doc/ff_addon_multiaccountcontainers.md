@@ -1,4 +1,4 @@
-# Configuring _Firefox Multi-Account Containers_ for site session isolation
+# Configuring _Firefox Multi-Account Containers_ for session isolation
 
 The code below is an adaptation of [phy1729/container-config](https://github.com/phy1729/container-config) by Matthew Martin.
 
