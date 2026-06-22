@@ -5,6 +5,7 @@
 ### Mozilla Firefox
 
 - On Linux:
+
     ```sh
     cd "$HOME/.config/mozilla/firefox/PROFILE_ID.default-release"
     ln -s "../../../.config/firefox/user.js" "user.js"
@@ -46,6 +47,8 @@
 1.  https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/
 1.  https://addons.mozilla.org/en-US/firefox/addon/webpage-extractor/
 1.  https://addons.mozilla.org/en-US/firefox/addon/youtube-recommended-videos/
+
+#### _Firefox Multi-Account Containers_
 
 Follow [Configuring _Firefox Multi-Account Containers_ for session isolation](./ff_addon_multiaccountcontainers.md)
 
