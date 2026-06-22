@@ -1583,6 +1583,7 @@ async function main() {
                 isolate: true,
                 URLs: new Map([
                     ["https://youtube.com", true],
+                    ["https://consent.youtube.com", true],
                     ["https://youtu.be", true],
                     // [List of subdomains for Youtube.com](https://www.vedbex.com/subdomain-finder/youtube.com)
                     ["https://nl.youtube.com", true],
