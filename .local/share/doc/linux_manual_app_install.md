@@ -318,8 +318,3 @@ sudo rm "/usr/local/bin/qrcp"
 
 - [SASM - Simple crossplatform IDE for NASM, MASM, GAS, FASM assembly languages](https://dman95.github.io/SASM/english.html)
 - [PKGBUILD - aur.git - AUR Package Repositories](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=sasm)
-
-## `yay` 🚧
-
-- [Jguer/yay: Yet another Yogurt - An AUR Helper written in Go](https://github.com/Jguer/yay)
-- [PKGBUILD - aur.git - AUR Package Repositories](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=yay)
