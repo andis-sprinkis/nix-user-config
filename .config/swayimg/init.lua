@@ -1,7 +1,7 @@
 local S = swayimg
 
 local thumb_size_default = 128
-local slideshow_tmout_default = 5
+local slideshow_tmout_default = 3
 local slideshow_tmout = slideshow_tmout_default
 
 S.enable_decoration(true)
