@@ -1,24 +1,19 @@
 local S = swayimg
 local imglist = S.imagelist
 local txt = S.text
-local g = S.gallery
-local v = S.viewer
-local s = S.slideshow
-local bg = g.on_key
-local mg = g.on_mouse
 
 local thumb_size_default = 128
 
 S.enable_decoration(true)
 S.enable_overlay(false)
 S.set_dnd_button('MouseExtra')
-g.enable_pstore(true)
-g.limit_cache(8192)
-g.set_aspect('fit')
-g.set_border_size(8)
-g.set_padding_size(16)
-g.set_selected_scale(1.4)
-g.set_thumb_size(thumb_size_default)
+S.gallery.enable_pstore(true)
+S.gallery.limit_cache(8192)
+S.gallery.set_aspect('fit')
+S.gallery.set_border_size(8)
+S.gallery.set_padding_size(16)
+S.gallery.set_selected_scale(1.4)
+S.gallery.set_thumb_size(thumb_size_default)
 imglist.enable_adjacent(true)
 imglist.enable_fsmon(false)
 txt.hide()
@@ -27,13 +22,13 @@ txt.set_font('sans-serif')
 txt.set_foreground(0xffffffff)
 txt.set_shadow(0xff000000)
 txt.set_size(18)
-v.enable_loop(false)
-v.limit_preload(3)
-v.set_default_scale('fit')
-v.set_drag_button('MouseRight')
-s.limit_preload(3)
-s.set_default_scale('fit')
-s.set_drag_button('MouseRight')
+S.viewer.enable_loop(false)
+S.viewer.limit_preload(3)
+S.viewer.set_default_scale('fit')
+S.viewer.set_drag_button('MouseRight')
+S.slideshow.limit_preload(3)
+S.slideshow.set_default_scale('fit')
+S.slideshow.set_drag_button('MouseRight')
 
 local nop = function() end
 
@@ -79,7 +74,7 @@ local function zoomreset()
   local mode = S.get_mode()
 
   if mode == 'gallery' then
-    g.set_thumb_size(thumb_size_default)
+    S.gallery.set_thumb_size(thumb_size_default)
     title()
 
     return
@@ -98,7 +93,7 @@ local function zoomin()
   local mode = S.get_mode()
 
   if mode == 'gallery' then
-    g.set_thumb_size(g.get_thumb_size() + 10)
+    S.gallery.set_thumb_size(S.gallery.get_thumb_size() + 10)
     return
   end
 
@@ -111,7 +106,7 @@ local function zoomout()
   local mode = S.get_mode()
 
   if mode == 'gallery' then
-    g.set_thumb_size(g.get_thumb_size() - 10)
+    S.gallery.set_thumb_size(S.gallery.get_thumb_size() - 10)
     return
   end
 
@@ -124,7 +119,7 @@ local function mzoomin()
   local mode = S.get_mode()
 
   if mode == 'gallery' then
-    g.set_thumb_size(g.get_thumb_size() + 10)
+    S.gallery.set_thumb_size(S.gallery.get_thumb_size() + 10)
     return
   end
 
@@ -138,7 +133,7 @@ local function mzoomout()
   local mode = S.get_mode()
 
   if mode == 'gallery' then
-    g.set_thumb_size(g.get_thumb_size() - 10)
+    S.gallery.set_thumb_size(S.gallery.get_thumb_size() - 10)
     return
   end
 
@@ -363,29 +358,29 @@ for _, mode in pairs({ 'viewer', 'slideshow' }) do
   S[mode].on_mouse('ScrollRight', img_next)
 end
 
-bg('Ctrl-0', zoomreset)
-bg('Space', mode_viewer)
-bg('s', mode_slideshow)
-bg('Shift-space', mode_viewer)
-bg('h', function() g.switch_image('left') end)
-bg('j', function() g.switch_image('down') end)
-bg('k', function() g.switch_image('up') end)
-bg('l', function() g.switch_image('right') end)
-bg('Left', function() g.switch_image('left') end)
-bg('Down', function() g.switch_image('down') end)
-bg('Up', function() g.switch_image('up') end)
-bg('Right', function() g.switch_image('right') end)
-bg('n', function() g.switch_image('pgdown') end)
-bg('p', function() g.switch_image('pgup') end)
-bg('bracketleft', function() g.switch_image('pgup') end)
-bg('bracketright', function() g.switch_image('pgdown') end)
-bg('g', function() g.switch_image('first') end)
-bg('Shift-g', function() g.switch_image('last') end)
+S.gallery.on_key('Ctrl-0', zoomreset)
+S.gallery.on_key('Space', mode_viewer)
+S.gallery.on_key('s', mode_slideshow)
+S.gallery.on_key('Shift-space', mode_viewer)
+S.gallery.on_key('h', function() S.gallery.switch_image('left') end)
+S.gallery.on_key('j', function() S.gallery.switch_image('down') end)
+S.gallery.on_key('k', function() S.gallery.switch_image('up') end)
+S.gallery.on_key('l', function() S.gallery.switch_image('right') end)
+S.gallery.on_key('Left', function() S.gallery.switch_image('left') end)
+S.gallery.on_key('Down', function() S.gallery.switch_image('down') end)
+S.gallery.on_key('Up', function() S.gallery.switch_image('up') end)
+S.gallery.on_key('Right', function() S.gallery.switch_image('right') end)
+S.gallery.on_key('n', function() S.gallery.switch_image('pgdown') end)
+S.gallery.on_key('p', function() S.gallery.switch_image('pgup') end)
+S.gallery.on_key('bracketleft', function() S.gallery.switch_image('pgup') end)
+S.gallery.on_key('bracketright', function() S.gallery.switch_image('pgdown') end)
+S.gallery.on_key('g', function() S.gallery.switch_image('first') end)
+S.gallery.on_key('Shift-g', function() S.gallery.switch_image('last') end)
 
-mg('ScrollUp', function() g.switch_image('pgup') end)
-mg('ScrollDown', function() g.switch_image('pgdown') end)
-mg('ScrollLeft', function() g.switch_image('pgup') end)
-mg('ScrollRight', function() g.switch_image('pgdown') end)
-mg('Ctrl-MouseLeft', mode_viewer)
-mg('Ctrl-MouseRight', mode_viewer)
-mg('MouseLeft', mode_viewer)
+S.gallery.on_mouse('ScrollUp', function() S.gallery.switch_image('pgup') end)
+S.gallery.on_mouse('ScrollDown', function() S.gallery.switch_image('pgdown') end)
+S.gallery.on_mouse('ScrollLeft', function() S.gallery.switch_image('pgup') end)
+S.gallery.on_mouse('ScrollRight', function() S.gallery.switch_image('pgdown') end)
+S.gallery.on_mouse('Ctrl-MouseLeft', mode_viewer)
+S.gallery.on_mouse('Ctrl-MouseRight', mode_viewer)
+S.gallery.on_mouse('MouseLeft', mode_viewer)
