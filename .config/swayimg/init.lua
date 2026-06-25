@@ -203,6 +203,15 @@ local function pager_desktop()
   )
 end
 
+local function toggle_mode_gallery()
+  if S.get_mode() == 'gallery' then
+    mode_viewer()
+    return
+  end
+
+  mode_gallery()
+end
+
 for _, mode in pairs({ 'gallery', 'viewer', 'slideshow' }) do
   S[mode].on_image_change(
     function()
@@ -213,6 +222,7 @@ for _, mode in pairs({ 'gallery', 'viewer', 'slideshow' }) do
 
   S[mode].bind_reset()
 
+  S[mode].on_key('Return', toggle_mode_gallery)
   S[mode].on_key('equal', zoomin)
   S[mode].on_key('plus', zoomin)
   S[mode].on_key('minus', zoomout)
@@ -227,6 +237,7 @@ for _, mode in pairs({ 'gallery', 'viewer', 'slideshow' }) do
   S[mode].on_key('r', reopen)
   S[mode].on_key('Shift-o', open_with_menu_desktop)
 
+  S[mode].on_mouse('MouseMiddle', toggle_mode_gallery)
   S[mode].on_mouse('Ctrl-ScrollLeft', mzoomin)
   S[mode].on_mouse('Ctrl-ScrollRight', mzoomout)
   S[mode].on_mouse('Ctrl-ScrollUp', mzoomin)
@@ -283,7 +294,6 @@ for _, mode in pairs({ 'viewer', 'slideshow' }) do
     S[mode].switch_image('prev')
   end
 
-  S[mode].on_key('Return', mode_gallery)
   S[mode].on_key('w', zoomreset)
   S[mode].on_key('Ctrl-0', zoomreal)
   S[mode].on_key(
@@ -342,7 +352,6 @@ for _, mode in pairs({ 'viewer', 'slideshow' }) do
     end
   )
 
-  S[mode].on_mouse('MouseMiddle', mode_gallery)
   S[mode].on_mouse('Ctrl-MouseRight', nop)
   S[mode].on_mouse('MouseLeft', img_next)
   S[mode].on_mouse('MouseRight-MouseLeft', img_prev)
@@ -355,7 +364,6 @@ for _, mode in pairs({ 'viewer', 'slideshow' }) do
 end
 
 bg('Ctrl-0', zoomreset)
-bg('Return', mode_viewer)
 bg('Space', mode_viewer)
 bg('s', mode_slideshow)
 bg('Shift-space', mode_viewer)
@@ -381,4 +389,3 @@ mg('ScrollRight', function() g.switch_image('pgdown') end)
 mg('Ctrl-MouseLeft', mode_viewer)
 mg('Ctrl-MouseRight', mode_viewer)
 mg('MouseLeft', mode_viewer)
-mg('MouseMiddle', mode_viewer)
