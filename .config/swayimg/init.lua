@@ -213,14 +213,14 @@ local function toggle_mode_gallery()
 end
 
 for _, mode in pairs({ 'gallery', 'viewer', 'slideshow' }) do
+  S[mode].bind_reset()
+
   S[mode].on_image_change(
     function()
       title()
       txt.set_status(S[mode].get_image().index .. '/' .. imglist.size())
     end
   )
-
-  S[mode].bind_reset()
 
   S[mode].on_key('Return', toggle_mode_gallery)
   S[mode].on_key('equal', zoomin)
