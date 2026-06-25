@@ -30,6 +30,7 @@ S.slideshow.limit_preload(3)
 S.slideshow.set_default_scale('fit')
 S.slideshow.set_drag_button('MouseRight')
 S.slideshow.set_timeout(slideshow_tmout)
+S.slideshow.set_window_background(0xff000000)
 
 local nop = function() end
 
