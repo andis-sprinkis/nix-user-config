@@ -152,24 +152,6 @@ local function mzoomout()
   title()
 end
 
-for _, mode in pairs({ 'gallery', 'viewer', 'slideshow' }) do
-  S[mode].on_image_change(
-    function()
-      title()
-      txt.set_status(S[mode].get_image().index .. '/' .. imglist.size())
-    end
-  )
-
-  S[mode].bind_reset()
-
-
-  S[mode].on_key('equal', zoomin)
-  S[mode].on_key('plus', zoomin)
-  S[mode].on_key('minus', zoomout)
-  S[mode].on_key('0', zoomreset)
-  S[mode].on_key('i', function() if txt.visible() then txt.hide() else txt.show() end end)
-end
-
 S.on_window_resize(
   function()
     if (S.get_mode() == 'gallery') then
@@ -233,7 +215,30 @@ local function pager_desktop()
   )
 end
 
-bg('e', file_manager_desktop)
+for _, mode in pairs({ 'gallery', 'viewer', 'slideshow' }) do
+  S[mode].on_image_change(
+    function()
+      title()
+      txt.set_status(S[mode].get_image().index .. '/' .. imglist.size())
+    end
+  )
+
+  S[mode].bind_reset()
+
+  S[mode].on_key('equal', zoomin)
+  S[mode].on_key('plus', zoomin)
+  S[mode].on_key('minus', zoomout)
+  S[mode].on_key('0', zoomreset)
+  S[mode].on_key('i', function() if txt.visible() then txt.hide() else txt.show() end end)
+  S[mode].on_key('f', S.set_fullscreen)
+  S[mode].on_key('Escape', S.exit)
+  S[mode].on_key('q', S.exit)
+  S[mode].on_key('e', file_manager_desktop)
+  S[mode].on_key('Shift-p', pager_desktop)
+  S[mode].on_key('Shift-r', S[mode].reload)
+  S[mode].on_key('r', reopen)
+end
+
 bg('Ctrl-0', zoomreset)
 bg('Return', mode_viewer)
 bg('Space', mode_viewer)
@@ -251,14 +256,9 @@ bg('n', function() g.switch_image('pgdown') end)
 bg('p', function() g.switch_image('pgup') end)
 bg('bracketleft', function() g.switch_image('pgup') end)
 bg('bracketright', function() g.switch_image('pgdown') end)
-bg('r', reopen)
 bg('Shift-o', open_with_menu_desktop)
-bv('Shift-p', pager_desktop)
 bg('g', function() g.switch_image('first') end)
 bg('Shift-g', function() g.switch_image('last') end)
-bg('f', S.set_fullscreen)
-bg('Escape', S.exit)
-bg('q', S.exit)
 
 mg('ScrollUp', function() g.switch_image('pgup') end)
 mg('ScrollDown', function() g.switch_image('pgdown') end)
@@ -323,7 +323,6 @@ local function vimg_prev()
   v.switch_image('prev')
 end
 
-bv('e', file_manager_desktop)
 bv('Return', mode_gallery)
 bv('s', mode_slideshow)
 bv('h', vpanl)
@@ -353,9 +352,7 @@ bv('Shift-braceleft', v.flip_vertical)
 bv('Shift-braceright', v.flip_horizontal)
 bv('n', vimg_next)
 bv('p', vimg_prev)
-bv('r', reopen)
 bv('Shift-o', open_with_menu_desktop)
-bv('Shift-p', pager_desktop)
 bv('Space', vimg_next)
 bv('Shift-space', vimg_prev)
 bv('g', function() v.switch_image('first') end)
@@ -375,10 +372,6 @@ bv(
   end
 )
 bv('w', zoomreset)
-bv('Shift-r', v.reload)
-bv('f', S.set_fullscreen)
-bv('Escape', S.exit)
-bv('q', S.exit)
 
 mv('MouseLeft', vimg_next)
 mv('MouseRight-MouseLeft', vimg_prev)
@@ -444,7 +437,6 @@ local function simg_prev()
   s.switch_image('prev')
 end
 
-bs('e', file_manager_desktop)
 bs('Return', mode_gallery)
 bs('s', mode_slideshow)
 bs('h', spanl)
@@ -474,9 +466,7 @@ bs('Shift-braceleft', s.flip_vertical)
 bs('Shift-braceright', s.flip_horizontal)
 bs('n', simg_next)
 bs('p', simg_prev)
-bs('r', reopen)
 bs('Shift-o', open_with_menu_desktop)
-bs('Shift-p', pager_desktop)
 bs('Space', simg_next)
 bs('Shift-space', simg_prev)
 bs('g', function() s.switch_image('first') end)
@@ -496,10 +486,6 @@ bs(
   end
 )
 bs('w', zoomreset)
-bs('Shift-r', s.reload)
-bs('f', S.set_fullscreen)
-bs('Escape', S.exit)
-bs('q', S.exit)
 
 ms('MouseLeft', simg_next)
 ms('MouseRight-MouseLeft', simg_prev)
