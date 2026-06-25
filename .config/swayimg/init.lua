@@ -5,11 +5,7 @@ local g = S.gallery
 local v = S.viewer
 local s = S.slideshow
 local bg = g.on_key
-local bs = s.on_key
-local bv = v.on_key
 local mg = g.on_mouse
-local ms = s.on_mouse
-local mv = v.on_mouse
 
 local thumb_size_default = 128
 
@@ -173,9 +169,7 @@ local function file_manager_desktop()
   if (imgpath == nil) then return end
 
   os.execute(
-    'nohup file_manager_desktop ' ..
-    '"' .. imgpath .. '"' ..
-    ' 0</dev/null 1>/dev/null 2>/dev/null & disown'
+    'nohup file_manager_desktop ' .. '"' .. imgpath .. '"' .. ' 0</dev/null 1>/dev/null 2>/dev/null & disown'
   )
 end
 
@@ -257,12 +251,107 @@ for _, mode in pairs({ 'gallery', 'viewer', 'slideshow' }) do
 end
 
 for _, mode in pairs({ 'viewer', 'slideshow' }) do
+  local function panl()
+    local wsize = S.get_window_size()
+    local icoord = S[mode].get_position()
+    S[mode].set_abs_position(math.floor(icoord.x + wsize.width / 10), icoord.y)
+  end
+
+  local function panr()
+    local wsize = S.get_window_size()
+    local icoord = S[mode].get_position()
+    S[mode].set_abs_position(math.floor(icoord.x - wsize.width / 10), icoord.y)
+  end
+
+  local function panu()
+    local wsize = S.get_window_size()
+    local icoord = S[mode].get_position()
+    S[mode].set_abs_position(icoord.x, math.floor(icoord.y + wsize.height / 10))
+  end
+
+  local function pand()
+    local wsize = S.get_window_size()
+    local icoord = S[mode].get_position()
+    S[mode].set_abs_position(icoord.x, math.floor(icoord.y - wsize.height / 10))
+  end
+
+  local function img_next()
+    S[mode].switch_image('next')
+  end
+
+  local function img_prev()
+    S[mode].switch_image('prev')
+  end
+
   S[mode].on_key('Return', mode_gallery)
   S[mode].on_key('w', zoomreset)
   S[mode].on_key('Ctrl-0', zoomreal)
+  S[mode].on_key(
+    's',
+    function()
+      if mode == 'viewer' then
+        mode_slideshow()
+        return
+      end
+
+      mode_viewer()
+    end
+  )
+  S[mode].on_key('h', panl)
+  S[mode].on_key('j', pand)
+  S[mode].on_key('k', panu)
+  S[mode].on_key('l', panr)
+  S[mode].on_key('Left', panl)
+  S[mode].on_key('Down', pand)
+  S[mode].on_key('Up', panu)
+  S[mode].on_key('Right', panr)
+  S[mode].on_key(
+    'bracketleft',
+    function()
+      S[mode].rotate(270)
+      zoomreset()
+    end
+  )
+  S[mode].on_key(
+    'bracketright',
+    function()
+      S[mode].rotate(90)
+      zoomreset()
+    end
+  )
+  S[mode].on_key('Shift-braceleft', S[mode].flip_vertical)
+  S[mode].on_key('Shift-braceright', S[mode].flip_horizontal)
+  S[mode].on_key('n', img_next)
+  S[mode].on_key('p', img_prev)
+  S[mode].on_key('Space', img_next)
+  S[mode].on_key('Shift-space', img_prev)
+  S[mode].on_key('g', function() S[mode].switch_image('first') end)
+  S[mode].on_key('Shift-g', function() S[mode].switch_image('last') end)
+  S[mode].on_key(
+    'Shift-w',
+    function()
+      S[mode].set_fix_scale('width')
+      title()
+    end
+  )
+  S[mode].on_key(
+    'Ctrl-w',
+    function()
+      S[mode].set_fix_scale('height')
+      title()
+    end
+  )
 
   S[mode].on_mouse('MouseMiddle', mode_gallery)
   S[mode].on_mouse('Ctrl-MouseRight', nop)
+  S[mode].on_mouse('MouseLeft', img_next)
+  S[mode].on_mouse('MouseRight-MouseLeft', img_prev)
+  S[mode].on_mouse('Ctrl-MouseLeft', img_next)
+  S[mode].on_mouse('Ctrl-MouseRight-MouseLeft', img_prev)
+  S[mode].on_mouse('ScrollUp', img_prev)
+  S[mode].on_mouse('ScrollDown', img_next)
+  S[mode].on_mouse('ScrollLeft', img_prev)
+  S[mode].on_mouse('ScrollRight', img_next)
 end
 
 bg('Ctrl-0', zoomreset)
@@ -293,177 +382,3 @@ mg('Ctrl-MouseLeft', mode_viewer)
 mg('Ctrl-MouseRight', mode_viewer)
 mg('MouseLeft', mode_viewer)
 mg('MouseMiddle', mode_viewer)
-
-local function vpanl()
-  local wsize = S.get_window_size()
-  local icoord = v.get_position()
-  v.set_abs_position(math.floor(icoord.x + wsize.width / 10), icoord.y)
-end
-
-local function vpanr()
-  local wsize = S.get_window_size()
-  local icoord = v.get_position()
-  v.set_abs_position(math.floor(icoord.x - wsize.width / 10), icoord.y)
-end
-
-local function vpanu()
-  local wsize = S.get_window_size()
-  local icoord = v.get_position()
-  v.set_abs_position(icoord.x, math.floor(icoord.y + wsize.height / 10))
-end
-
-local function vpand()
-  local wsize = S.get_window_size()
-  local icoord = v.get_position()
-  v.set_abs_position(icoord.x, math.floor(icoord.y - wsize.height / 10))
-end
-
-local function vimg_next()
-  v.switch_image('next')
-end
-
-local function vimg_prev()
-  v.switch_image('prev')
-end
-
-bv('s', mode_slideshow)
-bv('h', vpanl)
-bv('j', vpand)
-bv('k', vpanu)
-bv('l', vpanr)
-bv('Left', vpanl)
-bv('Down', vpand)
-bv('Up', vpanu)
-bv('Right', vpanr)
-bv(
-  'bracketleft',
-  function()
-    v.rotate(270)
-    zoomreset()
-  end
-)
-bv(
-  'bracketright',
-  function()
-    v.rotate(90)
-    zoomreset()
-  end
-)
-bv('Shift-braceleft', v.flip_vertical)
-bv('Shift-braceright', v.flip_horizontal)
-bv('n', vimg_next)
-bv('p', vimg_prev)
-bv('Space', vimg_next)
-bv('Shift-space', vimg_prev)
-bv('g', function() v.switch_image('first') end)
-bv('Shift-g', function() v.switch_image('last') end)
-bv(
-  'Shift-w',
-  function()
-    v.set_fix_scale('width')
-    title()
-  end
-)
-bv(
-  'Ctrl-w',
-  function()
-    v.set_fix_scale('height')
-    title()
-  end
-)
-
-mv('MouseLeft', vimg_next)
-mv('MouseRight-MouseLeft', vimg_prev)
-mv('Ctrl-MouseLeft', vimg_next)
-mv('Ctrl-MouseRight-MouseLeft', vimg_prev)
-mv('ScrollUp', vimg_prev)
-mv('ScrollDown', vimg_next)
-mv('ScrollLeft', vimg_prev)
-mv('ScrollRight', vimg_next)
-
-local function spanl()
-  local wsize = S.get_window_size()
-  local icoord = s.get_position()
-  s.set_abs_position(math.floor(icoord.x + wsize.width / 10), icoord.y)
-end
-
-local function spanr()
-  local wsize = S.get_window_size()
-  local icoord = s.get_position()
-  s.set_abs_position(math.floor(icoord.x - wsize.width / 10), icoord.y)
-end
-
-local function spanu()
-  local wsize = S.get_window_size()
-  local icoord = s.get_position()
-  s.set_abs_position(icoord.x, math.floor(icoord.y + wsize.height / 10))
-end
-
-local function spand()
-  local wsize = S.get_window_size()
-  local icoord = s.get_position()
-  s.set_abs_position(icoord.x, math.floor(icoord.y - wsize.height / 10))
-end
-
-local function simg_next()
-  s.switch_image('next')
-end
-
-local function simg_prev()
-  s.switch_image('prev')
-end
-
-bs('s', mode_viewer)
-bs('h', spanl)
-bs('j', spand)
-bs('k', spanu)
-bs('l', spanr)
-bs('Left', spanl)
-bs('Down', spand)
-bs('Up', spanu)
-bs('Right', spanr)
-bs(
-  'bracketleft',
-  function()
-    s.rotate(270)
-    zoomreset()
-  end
-)
-bs(
-  'bracketright',
-  function()
-    s.rotate(90)
-    zoomreset()
-  end
-)
-bs('Shift-braceleft', s.flip_vertical)
-bs('Shift-braceright', s.flip_horizontal)
-bs('n', simg_next)
-bs('p', simg_prev)
-bs('Space', simg_next)
-bs('Shift-space', simg_prev)
-bs('g', function() s.switch_image('first') end)
-bs('Shift-g', function() s.switch_image('last') end)
-bs(
-  'Shift-w',
-  function()
-    s.set_fix_scale('width')
-    title()
-  end
-)
-bs(
-  'Ctrl-w',
-  function()
-    s.set_fix_scale('height')
-    title()
-  end
-)
-
-ms('MouseLeft', simg_next)
-ms('MouseRight-MouseLeft', simg_prev)
-ms('Ctrl-MouseLeft', simg_next)
-ms('Ctrl-MouseRight-MouseLeft', simg_prev)
-ms('ScrollUp', simg_prev)
-ms('ScrollDown', simg_next)
-ms('ScrollLeft', simg_prev)
-ms('ScrollRight', simg_next)
