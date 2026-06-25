@@ -185,9 +185,7 @@ local function reopen()
   if (imgpath == nil) then return end
 
   os.execute(
-    'nohup swayimg --gallery ' ..
-    '"' .. imgpath .. '"' ..
-    ' 0</dev/null 1>/dev/null 2>/dev/null & disown'
+    'nohup swayimg --gallery ' .. '"' .. imgpath .. '"' .. ' 0</dev/null 1>/dev/null 2>/dev/null & disown'
   )
 end
 
@@ -197,9 +195,7 @@ local function open_with_menu_desktop()
   if (imgpath == nil) then return end
 
   os.execute(
-    'nohup open_with_menu_desktop ' ..
-    '"' .. imgpath .. '"' ..
-    ' 0</dev/null 1>/dev/null 2>/dev/null & disown'
+    'nohup open_with_menu_desktop ' .. '"' .. imgpath .. '"' .. ' 0</dev/null 1>/dev/null 2>/dev/null & disown'
   )
 end
 
@@ -209,9 +205,7 @@ local function pager_desktop()
   if (imgpath == nil) then return end
 
   os.execute(
-    'nohup pager_desktop ' ..
-    '"' .. imgpath .. '"' ..
-    ' 0</dev/null 1>/dev/null 2>/dev/null & disown'
+    'nohup pager_desktop ' .. '"' .. imgpath .. '"' .. ' 0</dev/null 1>/dev/null 2>/dev/null & disown'
   )
 end
 
