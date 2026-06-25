@@ -1,6 +1,8 @@
 local S = swayimg
 
 local thumb_size_default = 128
+local slideshow_tmout_default = 5
+local slideshow_tmout = slideshow_tmout_default
 
 S.enable_decoration(true)
 S.enable_overlay(false)
@@ -27,6 +29,7 @@ S.viewer.set_drag_button('MouseRight')
 S.slideshow.limit_preload(3)
 S.slideshow.set_default_scale('fit')
 S.slideshow.set_drag_button('MouseRight')
+S.slideshow.set_timeout(slideshow_tmout)
 
 local nop = function() end
 
@@ -382,3 +385,46 @@ S.gallery.on_mouse('ScrollRight', function() S.gallery.switch_image('pgdown') en
 S.gallery.on_mouse('Ctrl-MouseLeft', mode_viewer)
 S.gallery.on_mouse('Ctrl-MouseRight', mode_viewer)
 S.gallery.on_mouse('MouseLeft', mode_viewer)
+
+local function slideshow_tmout_inc()
+  slideshow_tmout = slideshow_tmout + 1
+  S.slideshow.set_timeout(slideshow_tmout)
+  S.set_mode('viewer')
+  S.set_mode('slideshow')
+
+  S.text.set_status(slideshow_tmout .. 's')
+end
+
+local function slideshow_tmout_dec()
+  if slideshow_tmout > 0 then
+    slideshow_tmout = slideshow_tmout - 1
+    S.slideshow.set_timeout(slideshow_tmout)
+    S.set_mode('viewer')
+    S.set_mode('slideshow')
+  end
+
+  S.text.set_status(slideshow_tmout .. 's')
+end
+
+local function slideshow_tmout_reset()
+  slideshow_tmout = slideshow_tmout_default
+  S.slideshow.set_timeout(slideshow_tmout_default)
+  S.set_mode('viewer')
+  S.set_mode('slideshow')
+
+  S.text.set_status(slideshow_tmout_default .. 's')
+end
+
+local function slideshow_tmout_pause()
+  slideshow_tmout = 0
+  S.slideshow.set_timeout(slideshow_tmout)
+  S.set_mode('viewer')
+  S.set_mode('slideshow')
+
+  S.text.set_status(slideshow_tmout .. 's')
+end
+
+S.slideshow.on_key('comma', slideshow_tmout_dec)
+S.slideshow.on_key('period', slideshow_tmout_inc)
+S.slideshow.on_key('slash', slideshow_tmout_reset)
+S.slideshow.on_key('m', slideshow_tmout_pause)
