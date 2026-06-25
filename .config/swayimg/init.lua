@@ -1,6 +1,4 @@
 local S = swayimg
-local imglist = S.imagelist
-local txt = S.text
 
 local thumb_size_default = 128
 
@@ -14,14 +12,14 @@ S.gallery.set_border_size(8)
 S.gallery.set_padding_size(16)
 S.gallery.set_selected_scale(1.4)
 S.gallery.set_thumb_size(thumb_size_default)
-imglist.enable_adjacent(true)
-imglist.enable_fsmon(false)
-txt.hide()
-txt.set_background(0xaa000000)
-txt.set_font('sans-serif')
-txt.set_foreground(0xffffffff)
-txt.set_shadow(0xff000000)
-txt.set_size(18)
+S.imagelist.enable_adjacent(true)
+S.imagelist.enable_fsmon(false)
+S.text.hide()
+S.text.set_background(0xaa000000)
+S.text.set_font('sans-serif')
+S.text.set_foreground(0xffffffff)
+S.text.set_shadow(0xff000000)
+S.text.set_size(18)
 S.viewer.enable_loop(false)
 S.viewer.limit_preload(3)
 S.viewer.set_default_scale('fit')
@@ -51,7 +49,7 @@ local function title()
 
   if mode == 'gallery' then
     S.set_title(
-      '[' .. img.index .. '/' .. imglist.size() .. ']' ..
+      '[' .. img.index .. '/' .. S.imagelist.size() .. ']' ..
       ' ' ..
       wtitle
     )
@@ -60,7 +58,7 @@ local function title()
   end
 
   S.set_title(
-    '[' .. img.index .. '/' .. imglist.size() .. ']' ..
+    '[' .. img.index .. '/' .. S.imagelist.size() .. ']' ..
     ' ' ..
     wtitle ..
     ' ' ..
@@ -213,7 +211,7 @@ for _, mode in pairs({ 'gallery', 'viewer', 'slideshow' }) do
   S[mode].on_image_change(
     function()
       title()
-      txt.set_status(S[mode].get_image().index .. '/' .. imglist.size())
+      S.text.set_status(S[mode].get_image().index .. '/' .. S.imagelist.size())
     end
   )
 
@@ -222,7 +220,7 @@ for _, mode in pairs({ 'gallery', 'viewer', 'slideshow' }) do
   S[mode].on_key('plus', zoomin)
   S[mode].on_key('minus', zoomout)
   S[mode].on_key('0', zoomreset)
-  S[mode].on_key('i', function() if txt.visible() then txt.hide() else txt.show() end end)
+  S[mode].on_key('i', function() if S.text.visible() then S.text.hide() else S.text.show() end end)
   S[mode].on_key('f', S.set_fullscreen)
   S[mode].on_key('Escape', S.exit)
   S[mode].on_key('q', S.exit)
