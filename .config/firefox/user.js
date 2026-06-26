@@ -64,7 +64,7 @@ user_pref("browser.newtabpage.activity-stream.feeds.telemetry", false);
 user_pref("browser.newtabpage.activity-stream.feeds.topsites", false);
 user_pref("browser.newtabpage.activity-stream.feeds.weatherfeed", false);
 user_pref("browser.newtabpage.activity-stream.hideLogo", true);
-user_pref("browser.newtabpage.activity-stream.logowordmark.alwaysVisible", false)
+user_pref("browser.newtabpage.activity-stream.logowordmark.alwaysVisible", false);
 user_pref("browser.newtabpage.activity-stream.newtabWallpapers.enabled", false);
 user_pref("browser.newtabpage.activity-stream.showRecentSaves", false);
 user_pref("browser.newtabpage.activity-stream.showSearch", false);
@@ -207,6 +207,7 @@ user_pref("geo.provider.use_gpsd", false);
 user_pref("identity.fxaccounts.enabled", false);
 user_pref("intl.accept_languages", "en-US, en");
 user_pref("javascript.use_us_english_locale", true);
+user_pref("layout.forms.reveal-password-button.enabled", true);
 user_pref("layout.testing.overlay-scrollbars.always-visible", true);
 user_pref("layout.word_select.eat_space_to_next_word", false);
 user_pref("lightweightThemes.update.enabled", false);
