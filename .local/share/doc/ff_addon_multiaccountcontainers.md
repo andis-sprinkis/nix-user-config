@@ -1637,7 +1637,9 @@ async function main() {
         const context_identities = await browser.contextualIdentities.query({
             name: name,
         });
+
         let container;
+
         if (context_identities.length === 0) {
             container = await browser.contextualIdentities.create({
                 name: name,
@@ -1660,6 +1662,7 @@ async function main() {
         const cookieStoreId = container.cookieStoreId;
         const userContextId =
             backgroundLogic.getUserContextIdFromCookieStoreId(cookieStoreId);
+
         for (const [url, neverAsk] of spec.URLs) {
             await assignManager._setOrRemoveAssignment(
                 false,
@@ -1667,6 +1670,7 @@ async function main() {
                 userContextId,
                 false,
             );
+
             if (neverAsk) {
                 await assignManager._neverAsk({
                     neverAsk: true,
@@ -1676,6 +1680,7 @@ async function main() {
         }
 
         const state = await identityState.storageArea.get(cookieStoreId);
+
         if (spec.isolate != !!state.isIsolated) {
             await backgroundLogic.addRemoveSiteIsolation(cookieStoreId);
         }
