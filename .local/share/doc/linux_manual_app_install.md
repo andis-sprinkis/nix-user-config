@@ -318,3 +318,7 @@ sudo rm "/usr/local/bin/qrcp"
 
 - [SASM - Simple crossplatform IDE for NASM, MASM, GAS, FASM assembly languages](https://dman95.github.io/SASM/english.html)
 - [PKGBUILD - aur.git - AUR Package Repositories](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=sasm)
+
+<!-- ## `eparakstitajs3` `latvia-eid-middleware` `eparaksts-token-signing` 🚧 -->
+<!---->
+<!-- - [Instalēt Latvijas digitālo parakstu uz Ubuntu linux 20.10](https://gist.github.com/aabele/762bfd965df92b6d8d95a5a7c7195780) -->
