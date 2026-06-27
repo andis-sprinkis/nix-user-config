@@ -37,7 +37,7 @@ case "$MIME" in
   application/x-webarchive) aunpack --format=".war" "$@" ;;
   application/x-xz) aunpack --format=".xz" "$@" ;;
   application/x-xz-compressed-tar) aunpack --format=".tar.xz" "$@" ;;
-  application/zip) aunpack --format=".zip" "$@" ;;
+  application/zip|application/*+zip|*opendocument*|*openxmlformats-officedocument*) aunpack --format=".zip" "$@" ;;
   application/java-archive) aunpack --format=".jar" "$@" ;;
   *) aunpack "$@" ;;
 esac
