@@ -23,6 +23,7 @@ user_pref("browser.bookmarks.openInTabClosesMenu", false);
 user_pref("browser.chrome.site_icons", false);
 user_pref("browser.compactmode.show", true);
 user_pref("browser.contentblocking.category", "strict");
+user_pref("browser.contentblocking.report.show_mobile_app", false);
 user_pref("browser.crashReports.unsubmittedCheck.autoSubmit2", false);
 user_pref("browser.discovery.enabled", false);
 user_pref("browser.download.alwaysOpenPanel", false);
