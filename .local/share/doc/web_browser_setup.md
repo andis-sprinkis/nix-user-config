@@ -37,7 +37,6 @@
 1.  https://addons.mozilla.org/en-US/firefox/addon/scroll-zoom/
 1.  https://addons.mozilla.org/en-US/firefox/addon/search_by_image/
 1.  https://addons.mozilla.org/en-US/firefox/addon/sponsorblock/
-1.  https://addons.mozilla.org/en-US/firefox/addon/stop-autoplay-next-for-youtube/
 1.  https://addons.mozilla.org/en-US/firefox/addon/styl-us/
 1.  https://addons.mozilla.org/en-US/firefox/addon/toggle-dark-mode/
 1.  https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/
@@ -67,7 +66,6 @@ Follow [Configuring _Firefox Multi-Account Containers_ for session isolation](./
 1.  https://chrome.google.com/webstore/detail/scroll-zoom/ccfomhdaagemnbhbpminjoggkbglmcgb
 1.  https://chrome.google.com/webstore/detail/search-by-image/cnojnbdhbhnkbcieeekonklommdnndci
 1.  https://chrome.google.com/webstore/detail/sponsorblock-for-youtube/mnjggcdmjocbbbhaepdhchncahnbgone
-1.  https://chrome.google.com/webstore/detail/stop-autoplay-next-for-yo/bhnhbmjfaanopkalgkjoiemhekdnhanh
 1.  https://chrome.google.com/webstore/detail/stylus/clngdbkpkpeebahjckkjfobafhncgmne (Manifest v2)
 1.  https://chrome.google.com/webstore/detail/unhook-remove-youtube-rec/khncfooichmfjbepaaaebmommgaepoid
 1.  https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag
