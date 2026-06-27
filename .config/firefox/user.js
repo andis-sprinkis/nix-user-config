@@ -143,6 +143,7 @@ user_pref("browser.urlbar.suggest.calculator", false);
 user_pref("browser.urlbar.suggest.clipboard", false);
 user_pref("browser.urlbar.suggest.engines", false);
 user_pref("browser.urlbar.suggest.fakespot", false);
+user_pref("browser.urlbar.suggest.quickactions", false);
 user_pref("browser.urlbar.suggest.quicksuggest.nonsponsored", false);
 user_pref("browser.urlbar.suggest.quicksuggest.sponsored", false);
 user_pref("browser.urlbar.suggest.recentsearches", false);
