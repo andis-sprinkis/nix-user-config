@@ -33,7 +33,6 @@
 1.  https://addons.mozilla.org/en-US/firefox/addon/jump-to-anchor/
 1.  https://addons.mozilla.org/en-US/firefox/addon/localcdn-fork-of-decentraleyes/
 1.  https://addons.mozilla.org/en-US/firefox/addon/multi-account-containers/
-1.  https://addons.mozilla.org/en-US/firefox/addon/nomoreshorts/
 1.  https://addons.mozilla.org/en-US/firefox/addon/react-devtools/
 1.  https://addons.mozilla.org/en-US/firefox/addon/scroll-zoom/
 1.  https://addons.mozilla.org/en-US/firefox/addon/search_by_image/
@@ -152,6 +151,7 @@ wlv
 
 1.  https://github.com/andis-sprinkis/nix-user-config/raw/master/.local/share/userscripts/sscom_sslv_gmaps_link.user.js
 1.  https://github.com/andis-sprinkis/nix-user-config/raw/master/.local/share/userscripts/select_link_text.user.js
+1.  https://github.com/fznhq/userscript-collection/raw/main/Redirect_Youtube_Shorts.user.js
 
 ## Userstyles
 
