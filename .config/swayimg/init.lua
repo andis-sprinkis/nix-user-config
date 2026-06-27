@@ -4,6 +4,7 @@ local thumb_size_default = 128
 local slideshow_tmout_default = 3
 local slideshow_tmout = slideshow_tmout_default
 
+S.text.hide()
 S.enable_decoration(true)
 S.enable_overlay(false)
 S.set_dnd_button('MouseExtra')
@@ -16,7 +17,6 @@ S.gallery.set_selected_scale(1.4)
 S.gallery.set_thumb_size(thumb_size_default)
 S.imagelist.enable_adjacent(true)
 S.imagelist.enable_fsmon(false)
-S.text.hide()
 S.text.set_background(0xaa000000)
 S.text.set_font('sans-serif')
 S.text.set_foreground(0xffffffff)
