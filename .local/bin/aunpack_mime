@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 set -euf
 
+# TODO: replace this with just aunpack -o use_file_always=1 ?
+
 for FPATH_INPUT in "$@"; do :; done
 
 FPATH="$(readlink -f "$FPATH_INPUT")"
