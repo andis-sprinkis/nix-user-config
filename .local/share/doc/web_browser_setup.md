@@ -16,7 +16,7 @@
 
     ```sh
     mozlz4a "$HOME/.config/firefox/search.json" "$HOME/.config/firefox/search.json.mozlz4"
-    mv "$HOME/.config/firefox/search.json.mozlz4" "$HOME/.config/mozilla/firefox/PROFILE_ID.default-release/search.json.mozlz4"
+    cp "$HOME/.config/firefox/search.json.mozlz4" "$HOME/.config/mozilla/firefox/PROFILE_ID.default-release/search.json.mozlz4"
     ```
 
 - On macOS:
@@ -31,7 +31,7 @@
 
     ```sh
     mozlz4a "$HOME/.config/firefox/search.json" "$HOME/.config/firefox/search.json.mozlz4"
-    mv "$HOME/.config/firefox/search.json.mozlz4" "$HOME/Library/Application Support/Firefox/Profiles/PROFILE_ID.default-release/search.json.mozlz4"
+    cp "$HOME/.config/firefox/search.json.mozlz4" "$HOME/Library/Application Support/Firefox/Profiles/PROFILE_ID.default-release/search.json.mozlz4"
     ```
 
 ## Addons
