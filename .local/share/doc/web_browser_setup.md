@@ -20,6 +20,7 @@
     ```
 
 - On macOS:
+
     ```sh
     cd "$HOME/Library/Application Support/Firefox/Profiles/PROFILE_ID.default-release"
     ln -s "../../../../../.config/firefox/user.js" "user.js"
@@ -31,6 +32,7 @@
     ```sh
     mozlz4a "$HOME/.config/firefox/search.json" "$HOME/.config/firefox/search.json.mozlz4"
     mv "$HOME/.config/firefox/search.json.mozlz4" "$HOME/Library/Application Support/Firefox/Profiles/PROFILE_ID.default-release/search.json.mozlz4"
+    ```
 
 ## Addons
 
@@ -167,3 +169,9 @@ wlv
 ## Userstyles
 
 1.  https://github.com/andis-sprinkis/nix-user-config/raw/master/.local/share/userstyles/lazy_dark_mode.user.css
+
+## Resources
+
+- [MozLz4a compression/decompression utility](https://gist.github.com/Tblue/62ff47bef7f894e92ed5)
+    - [1209390 - Use standard lz4 file format instead of the non-standard jsonlz4/mozlz4](https://bugzilla.mozilla.org/show_bug.cgi?id=1209390)
+- [firefox.js - mozsearch](https://searchfox.org/firefox-main/source/browser/app/profile/firefox.js)
