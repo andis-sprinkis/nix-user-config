@@ -3,6 +3,10 @@ set -euf
 NL="
 "
 
+if [ "${1:-""}" ]; then
+  cd "$1"
+fi
+
 menu_display="" menu_values="" ifcs_count="0"
 for ifc in $(ifconfig | sed -e '/^[a-z0-9]*:.*$/!d' -e 's/:.*$//g' | paste -s -d ' ' -); do
   ip="$(ifconfig "$ifc" | sed -e 's/^[[:space:]]*//g' | grep '^inet ' | cut -d ' ' -f2)"
