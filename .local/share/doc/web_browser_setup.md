@@ -12,12 +12,25 @@
     ln -s "../../../.config/firefox/chrome" "chrome"
     ```
 
+    Close Mozilla Firefox and run:
+
+    ```sh
+    mozlz4a "$HOME/.config/firefox/search.json" "$HOME/.config/firefox/search.json.mozlz4"
+    mv "$HOME/.config/firefox/search.json.mozlz4" "$HOME/.config/mozilla/firefox/PROFILE_ID.default-release/search.json.mozlz4"
+    ```
+
 - On macOS:
     ```sh
     cd "$HOME/Library/Application Support/Firefox/Profiles/PROFILE_ID.default-release"
     ln -s "../../../../../.config/firefox/user.js" "user.js"
     ln -s "../../../../../.config/firefox/chrome" "chrome"
     ```
+
+    Close Mozilla Firefox and run:
+
+    ```sh
+    mozlz4a "$HOME/.config/firefox/search.json" "$HOME/.config/firefox/search.json.mozlz4"
+    mv "$HOME/.config/firefox/search.json.mozlz4" "$HOME/Library/Application Support/Firefox/Profiles/PROFILE_ID.default-release/search.json.mozlz4"
 
 ## Addons
 

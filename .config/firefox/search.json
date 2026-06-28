@@ -1,0 +1,325 @@
+{
+  "version": 13,
+  "engines": [
+    {
+      "id": "f8db0ddd-c1ee-484e-aa24-509056a3c4c9",
+      "_name": "DuckDuckGo Lite",
+      "_loadPath": "[user]",
+      "_iconMapObj": null,
+      "_metaData": {
+        "alias": "ddg",
+        "order": 1
+      },
+      "_urls": [
+        {
+          "params": [],
+          "rels": [],
+          "template": "https://lite.duckduckgo.com/lite?q={searchTerms}"
+        }
+      ],
+      "_filePath": null,
+      "_definedAliases": []
+    },
+    {
+      "id": "cff1a4a5-fb89-4ad0-8a9e-f98b7f7f6b95",
+      "_name": "Google (EN)",
+      "_loadPath": "[user]",
+      "_iconMapObj": null,
+      "_metaData": {
+        "alias": "gg",
+        "order": 2
+      },
+      "_urls": [
+        {
+          "params": [],
+          "rels": [],
+          "template": "https://www.google.com/search?q={searchTerms}"
+        }
+      ],
+      "_filePath": null,
+      "_definedAliases": []
+    },
+    {
+      "id": "e6ad9261-8cf1-4fb5-b72f-2978e9e59f90",
+      "_name": "Brave",
+      "_loadPath": "[user]",
+      "_iconMapObj": null,
+      "_metaData": {
+        "alias": "bw",
+        "order": 3
+      },
+      "_urls": [
+        {
+          "params": [],
+          "rels": [],
+          "template": "https://search.brave.com/search?q={searchTerms}"
+        }
+      ],
+      "_filePath": null,
+      "_definedAliases": []
+    },
+    {
+      "id": "eef62595-bcce-4851-b859-10304ae460ce",
+      "_name": "Mojeek",
+      "_loadPath": "[user]",
+      "_iconMapObj": null,
+      "_metaData": {
+        "alias": "mjk",
+        "order": 4
+      },
+      "_urls": [
+        {
+          "params": [],
+          "rels": [],
+          "template": "https://www.mojeek.com/search?q={searchTerms}"
+        }
+      ],
+      "_filePath": null,
+      "_definedAliases": []
+    },
+    {
+      "id": "d4d978c1-6383-46a9-b0da-337169c2e4e6",
+      "_name": "Wikipedia (EN)",
+      "_loadPath": "[user]",
+      "_iconMapObj": null,
+      "_metaData": {
+        "alias": "wen",
+        "order": 5
+      },
+      "_urls": [
+        {
+          "params": [],
+          "rels": [],
+          "template": "https://en.wikipedia.org/w/index.php?search={searchTerms}"
+        }
+      ],
+      "_filePath": null,
+      "_definedAliases": []
+    },
+    {
+      "id": "9fa62d30-0139-45de-bc6b-e8763e4c0812",
+      "_name": "Wikipedia (LV)",
+      "_loadPath": "[user]",
+      "_iconMapObj": null,
+      "_metaData": {
+        "alias": "wlv",
+        "order": 6
+      },
+      "_urls": [
+        {
+          "params": [],
+          "rels": [],
+          "template": "https://lv.wikipedia.org/w/index.php?search={searchTerms}"
+        }
+      ],
+      "_filePath": null,
+      "_definedAliases": []
+    },
+    {
+      "id": "61c539b5-2f1e-4d4b-b2ac-c76418d6e2d1",
+      "_name": "ArchWiki",
+      "_loadPath": "[user]",
+      "_iconMapObj": null,
+      "_metaData": {
+        "alias": "aw",
+        "order": 7
+      },
+      "_urls": [
+        {
+          "params": [],
+          "rels": [],
+          "template": "https://wiki.archlinux.org/index.php?search={searchTerms}"
+        }
+      ],
+      "_filePath": null,
+      "_definedAliases": []
+    },
+    {
+      "id": "1641fe05-856b-4971-b119-b78fd00487d8",
+      "_name": "Yandex Images",
+      "_loadPath": "[user]",
+      "_iconMapObj": null,
+      "_metaData": {
+        "alias": "yi",
+        "order": 8
+      },
+      "_urls": [
+        {
+          "params": [],
+          "rels": [],
+          "template": "https://yandex.com/images/search?text={searchTerms}"
+        }
+      ],
+      "_filePath": null,
+      "_definedAliases": []
+    },
+    {
+      "id": "f78c654e-945c-42d1-8a52-e21f433a4210",
+      "_name": "Google Images",
+      "_loadPath": "[user]",
+      "_iconMapObj": null,
+      "_metaData": {
+        "alias": "gi",
+        "order": 9
+      },
+      "_urls": [
+        {
+          "params": [],
+          "rels": [],
+          "template": "https://www.google.com/search?udm=2&q={searchTerms}"
+        }
+      ],
+      "_filePath": null,
+      "_definedAliases": []
+    },
+    {
+      "id": "1b093ec8-1c60-4bc5-b6df-0b5cbbc80692",
+      "_name": "GitHub",
+      "_loadPath": "[user]",
+      "_iconMapObj": null,
+      "_metaData": {
+        "alias": "gh",
+        "order": 10
+      },
+      "_urls": [
+        {
+          "params": [],
+          "rels": [],
+          "template": "https://github.com/search?q={searchTerms}&type=repositories"
+        }
+      ],
+      "_filePath": null,
+      "_definedAliases": []
+    },
+    {
+      "id": "7f069f20-f9fc-4950-8ff1-7e06e3fe6460",
+      "_name": "Mozilla Developer Network",
+      "_loadPath": "[user]",
+      "_iconMapObj": null,
+      "_metaData": {
+        "alias": "mdn",
+        "order": 11
+      },
+      "_urls": [
+        {
+          "params": [],
+          "rels": [],
+          "template": "https://developer.mozilla.org/en-US/search?q={searchTerms}"
+        }
+      ],
+      "_filePath": null,
+      "_definedAliases": []
+    },
+    {
+      "id": "501654d2-b59a-4e98-abbe-06697a82ab8e",
+      "_name": "YouTube",
+      "_loadPath": "[user]",
+      "_iconMapObj": null,
+      "_metaData": {
+        "alias": "yt",
+        "order": 12
+      },
+      "_urls": [
+        {
+          "params": [],
+          "rels": [],
+          "template": "https://www.youtube.com/results?search_query={searchTerms}"
+        }
+      ],
+      "_filePath": null,
+      "_definedAliases": []
+    },
+    {
+      "id": "google",
+      "_name": "Google",
+      "_isConfigEngine": true,
+      "_metaData": {
+        "alias": "",
+        "order": 999,
+        "hidden": true,
+        "hideOneOffButton": false
+      }
+    },
+    {
+      "id": "bing",
+      "_name": "Bing",
+      "_isConfigEngine": true,
+      "_metaData": {
+        "alias": null,
+        "order": 999,
+        "hidden": true,
+        "hideOneOffButton": true
+      }
+    },
+    {
+      "id": "ddg",
+      "_name": "DuckDuckGo",
+      "_isConfigEngine": true,
+      "_metaData": {
+        "alias": "",
+        "order": 999,
+        "hideOneOffButton": false,
+        "hidden": true
+      }
+    },
+    {
+      "id": "perplexity",
+      "_name": "Perplexity",
+      "_isConfigEngine": true,
+      "_metaData": {
+        "hidden": true,
+        "alias": "",
+        "order": 999
+      }
+    },
+    {
+      "id": "wikipedia",
+      "_name": "Wikipedia (en)",
+      "_isConfigEngine": true,
+      "_metaData": {
+        "alias": "",
+        "order": 999,
+        "hidden": true,
+        "hideOneOffButton": false
+      }
+    },
+    {
+      "id": "startpage",
+      "_name": "Startpage",
+      "_isConfigEngine": true,
+      "_metaData": {}
+    },
+    {
+      "id": "amazondotcom",
+      "_name": "Amazon.com",
+      "_metaData": {
+        "alias": null,
+        "order": 999,
+        "hidden": true,
+        "hideOneOffButton": false
+      },
+      "_isConfigEngine": true
+    }
+  ],
+  "metaData": {
+    "searchDefault": "Google",
+    "searchDefaultHash": "KgH2DyujtgO2+d2i6y3WWHNuIHRIu8Kq5ZxdV+bZlG8=",
+    "visibleDefaultEngines": "amazondotcom,bing,google,twitter,wikipedia,ddg",
+    "visibleDefaultEnginesHash": "Mu+5pQ9iRghkPWFoFYlrufEFV2LY1S7DoYdTuboq1TU=",
+    "searchDefaultExpir": 1596167435398,
+    "current": "DuckDuckGo",
+    "hash": "YgOWCNCLYZyCkKN8MHXNwy+BaxODGvtEaDEKOprouUw=",
+    "useSavedOrder": true,
+    "locale": "en-US",
+    "region": "LV",
+    "channel": "release",
+    "experiment": "",
+    "distroID": "archlinux",
+    "appDefaultEngine": "Google",
+    "defaultEngineId": "f8db0ddd-c1ee-484e-aa24-509056a3c4c9",
+    "defaultEngineIdHash": "8L/doUZk46PyiikpfQLGEYI37StmWJU8r/62kYgeSJE=",
+    "privateDefaultEngineId": "",
+    "privateDefaultEngineIdHash": "84C+BVyZwpmq8lHwUq4lgbYU5Ja0mGcYPhljtqMVmY0=",
+    "appDefaultEngineId": "google"
+  }
+}
