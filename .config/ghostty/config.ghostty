@@ -47,5 +47,6 @@ selection-background = #264f78
 selection-foreground = #ffffff
 
 keybind = ctrl+shift+v=paste_from_clipboard
+keybind = command+shift+v=paste_from_clipboard
 
 config-file = ?local.ghostty
