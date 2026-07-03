@@ -183,7 +183,7 @@ for line in $data; do
 
   use_pcnt="$(echo "$line" | cut -d";" -f2 | cut -d "%" -f1)"
   free_pcnt="$((100 - use_pcnt))"
-  use_b="$(echo "$line" | cut -d";" -f3)"
+  # use_b="$(echo "$line" | cut -d";" -f3)"
   free_b="$(echo "$line" | cut -d";" -f4)"
   size_b="$(echo "$line" | cut -d";" -f5)"
 
