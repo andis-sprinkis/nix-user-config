@@ -1,5 +1,4 @@
 # vi: ft=dosini
-
 [screencapture]
 command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/screencapture
 interval=30
