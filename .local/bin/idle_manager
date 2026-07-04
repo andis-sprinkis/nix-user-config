@@ -3,8 +3,10 @@ set -euf
 
 status() {
   if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
+    set +e
     pidof_xscreensaver="$(pidof "xscreensaver")"
     pidof_xsslock="$(pidof "xss-lock")"
+    set -e
 
     if [ -z "$pidof_xscreensaver" ] && [ -z "$pidof_xsslock" ]; then
       echo "stopped"
