@@ -37,6 +37,7 @@ start() {
   if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
     ## Starting or reloading xscreensaver
 
+    # shellcheck disable=SC3044
     if pidof -q "xscreensaver"; then
       xscreensaver-command --restart 1> "/dev/null" 2> "/dev/null" & disown
     else
@@ -45,6 +46,7 @@ start() {
 
     ## Starting xss-lock
 
+    # shellcheck disable=SC3044
     if ! pidof -q "xss-lock"; then
       xss-lock --ignore-sleep -- xscreensaver-command -lock 1> "/dev/null" 2> "/dev/null" & disown
     fi
@@ -52,6 +54,7 @@ start() {
     return "0"
   fi
 
+  # shellcheck disable=SC3044
   if [ "${WAYLAND_DISPLAY:-""}" ]; then
     if pidof -q "swayidle"; then
       set +e
