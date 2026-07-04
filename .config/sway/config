@@ -1,4 +1,4 @@
-set $font sans-serif medium 13.5
+set $font sans-serif medium 11
 
 include ${XDG_CONFIG_HOME:-$HOME/.config}/i3/common
 
@@ -26,10 +26,10 @@ mouse_warping container
 
 tiling_drag_threshold 1
 
-titlebar_padding 10 2
+titlebar_padding 8 1
 
 exec_always swaymsg bar bar status_edge_padding 0
-exec_always swaymsg bar bar height 32
+exec_always swaymsg bar bar height 24
 
 for_window {
   [shell="xwayland"] title_format "[XW] %title"
