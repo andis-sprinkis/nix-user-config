@@ -22,7 +22,6 @@ S.text.set_font('sans-serif')
 S.text.set_foreground(0xffffffff)
 S.text.set_shadow(0xff000000)
 S.text.set_size(18)
-S.viewer.enable_loop(false)
 S.viewer.limit_preload(3)
 S.viewer.set_default_scale('fit')
 S.viewer.set_drag_button('MouseRight')
@@ -360,29 +359,72 @@ for _, mode in pairs({ 'viewer', 'slideshow' }) do
   S[mode].on_mouse('ScrollRight', img_next)
 end
 
+local function gallery_left()
+  local img = S['gallery'].get_image()
+  if img == nil then return end
+  if img.index == 1 then S.gallery.switch_image('last') return end
+  S.gallery.switch_image('left')
+end
+
+
+local function gallery_down()
+  local img = S['gallery'].get_image()
+  if img == nil then return end
+  if img.index == S.imagelist.size() then S.gallery.switch_image('first') return end
+  S.gallery.switch_image('down')
+end
+
+local function gallery_up()
+  local img = S['gallery'].get_image()
+  if img == nil then return end
+  if img.index == 1 then S.gallery.switch_image('last') return end
+  S.gallery.switch_image('up')
+end
+
+local function gallery_right()
+  local img = S['gallery'].get_image()
+  if img == nil then return end
+  if img.index == S.imagelist.size() then S.gallery.switch_image('first') return end
+  S.gallery.switch_image('right')
+end
+
+local function gallery_pgup()
+  local img = S['gallery'].get_image()
+  if img == nil then return end
+  if img.index == 1 then S.gallery.switch_image('last') return end
+  S.gallery.switch_image('pgup')
+end
+
+local function gallery_pgdown()
+  local img = S['gallery'].get_image()
+  if img == nil then return end
+  if img.index == S.imagelist.size() then S.gallery.switch_image('first') return end
+  S.gallery.switch_image('pgdown')
+end
+
 S.gallery.on_key('Ctrl-0', zoomreset)
 S.gallery.on_key('Space', mode_viewer)
 S.gallery.on_key('s', mode_slideshow)
 S.gallery.on_key('Shift-space', mode_viewer)
-S.gallery.on_key('h', function() S.gallery.switch_image('left') end)
-S.gallery.on_key('j', function() S.gallery.switch_image('down') end)
-S.gallery.on_key('k', function() S.gallery.switch_image('up') end)
-S.gallery.on_key('l', function() S.gallery.switch_image('right') end)
-S.gallery.on_key('Left', function() S.gallery.switch_image('left') end)
-S.gallery.on_key('Down', function() S.gallery.switch_image('down') end)
-S.gallery.on_key('Up', function() S.gallery.switch_image('up') end)
-S.gallery.on_key('Right', function() S.gallery.switch_image('right') end)
-S.gallery.on_key('n', function() S.gallery.switch_image('pgdown') end)
-S.gallery.on_key('p', function() S.gallery.switch_image('pgup') end)
-S.gallery.on_key('bracketleft', function() S.gallery.switch_image('pgup') end)
-S.gallery.on_key('bracketright', function() S.gallery.switch_image('pgdown') end)
+S.gallery.on_key('h', gallery_left)
+S.gallery.on_key('j', gallery_down)
+S.gallery.on_key('k', gallery_up)
+S.gallery.on_key('l', gallery_right)
+S.gallery.on_key('Left', gallery_left)
+S.gallery.on_key('Down', gallery_down)
+S.gallery.on_key('Up', gallery_up)
+S.gallery.on_key('Right', gallery_right)
+S.gallery.on_key('n', gallery_pgdown)
+S.gallery.on_key('p', gallery_pgup)
+S.gallery.on_key('bracketleft', gallery_pgup)
+S.gallery.on_key('bracketright', gallery_pgdown)
 S.gallery.on_key('g', function() S.gallery.switch_image('first') end)
 S.gallery.on_key('Shift-g', function() S.gallery.switch_image('last') end)
 
-S.gallery.on_mouse('ScrollUp', function() S.gallery.switch_image('pgup') end)
-S.gallery.on_mouse('ScrollDown', function() S.gallery.switch_image('pgdown') end)
-S.gallery.on_mouse('ScrollLeft', function() S.gallery.switch_image('pgup') end)
-S.gallery.on_mouse('ScrollRight', function() S.gallery.switch_image('pgdown') end)
+S.gallery.on_mouse('ScrollUp', gallery_pgup)
+S.gallery.on_mouse('ScrollDown', gallery_pgdown)
+S.gallery.on_mouse('ScrollLeft', gallery_pgup)
+S.gallery.on_mouse('ScrollRight', gallery_pgdown)
 S.gallery.on_mouse('Ctrl-MouseLeft', mode_viewer)
 S.gallery.on_mouse('Ctrl-MouseRight', mode_viewer)
 S.gallery.on_mouse('MouseLeft', mode_viewer)
