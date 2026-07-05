@@ -131,20 +131,16 @@ set_severity() {
   SEVERITY="0"
 }
 
-sym_sever0="$(mute "*")"
-sym_sever1="$(SEVERITY="1" severity_fmt "~")"
-sym_sever2="$(SEVERITY="2" severity_fmt "!")"
-
 sym_severity() {
   case "$SEVERITY" in
     "0")
-      echo "$sym_sever0"
+      echo ""
     ;;
     "1")
-      echo "$sym_sever1"
+      echo "~"
     ;;
     "2")
-      echo "$sym_sever2"
+      echo "!"
     ;;
   esac
 }
@@ -189,7 +185,7 @@ for line in $data; do
 
   set_severity "$use_pcnt"
 
-  echo "$(sym_severity) $(path_fmt "$pnt_mnt") $(severity_fmt "Free ${free_pcnt}% $(human "$free_b")") $(mute "($(human "$size_b")") $(mute "$(path_inv "${pnt_dev}"))")"
+  echo "$(path_fmt "$pnt_mnt") $(severity_fmt "Free ${free_pcnt}%$(sym_severity) $(human "$free_b")") $(mute "($(human "$size_b")") $(mute "$(path_inv "${pnt_dev}"))")"
 
   i="$((i + 1))"
 done
