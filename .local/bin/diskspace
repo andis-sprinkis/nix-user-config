@@ -123,7 +123,7 @@ set_severity() {
     return
   fi
 
-  if [ "$1" -ge "70" ]; then
+  if [ "$1" -ge "60" ]; then
     SEVERITY="1"
     return
   fi
