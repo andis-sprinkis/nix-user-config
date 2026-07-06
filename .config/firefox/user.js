@@ -175,6 +175,7 @@ user_pref("devtools.command-button-screenshot.enabled", true);
 user_pref("devtools.debugger.remote-enabled", true);
 user_pref("devtools.inspector.simple-highlighters-reduced-motion", true);
 user_pref("devtools.webconsole.timestampMessages", true);
+user_pref("dom.battery.enabled", false);
 user_pref("dom.private-attribution.submission.enabled", false);
 user_pref("dom.security.https_only_mode", true);
 user_pref("extensions.experiments.enabled", false);
