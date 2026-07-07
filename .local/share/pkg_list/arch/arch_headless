@@ -54,13 +54,11 @@ pacman
 pacman-contrib
 patch
 perl-image-exiftool
-pkgconf
 pyenv
 python
 python-pip
 python-pipenv
 python-pipx
-qrencode
 r
 reflector
 ripgrep
@@ -79,7 +77,6 @@ unclutter
 unrar
 unzip
 util-linux
-vbindiff
 wget
 which
 zip
