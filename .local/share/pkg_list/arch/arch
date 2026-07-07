@@ -9,7 +9,6 @@ arandr
 atool
 autoconf
 automake
-autossh
 base-devel
 bat
 bc
@@ -55,7 +54,6 @@ gawk
 gcc
 gdb
 gettext
-git-lfs
 glu
 gnome-keyring
 gnome-themes-extra
@@ -75,7 +73,6 @@ jalv
 jdk-openjdk
 jq
 keepassxc
-kitty
 lf
 libqalculate
 libreoffice-fresh
@@ -166,7 +163,6 @@ tcl
 tesseract
 tesseract-data-eng
 tesseract-data-lav
-texinfo
 tk
 tmux
 tree
