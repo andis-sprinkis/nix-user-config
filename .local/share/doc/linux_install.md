@@ -374,8 +374,9 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     cd $HOME/nix-user-config/.local/share/doc/pkg_list/arch
     yay -S --needed $(cat ./aur | paste -s -d ' ' -)
     ```
-1.  Install user general configuration.
+1.  Install user general configuration for regular user.
     ```sh
+    cd $HOME
     mkdir -p "$HOME/.local/state"
     git_url="https://github.com/andis-sprinkis/nix-user-config"
     dir_git="$HOME/.local/state/dotfiles_git"
@@ -389,6 +390,24 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     cd $HOME/.config
     git clone https://github.com/andis-sprinkis/nvim-user-config nvim
     ```
+1.  Install user general configuration for root.
+
+    ```sh
+    sudo su
+    ```
+
+    ```sh
+    cd $HOME
+    mkdir -p "$HOME/.local/state"
+    git_url="https://github.com/andis-sprinkis/nix-user-config"
+    dir_git="$HOME/.local/state/dotfiles_git"
+    git clone --bare $git_url $dir_git
+    git --git-dir=$dir_git --work-tree=$HOME config --local status.showUntrackedFiles no
+    git --git-dir=$dir_git --work-tree=$HOME checkout -f
+    git --git-dir=$dir_git --work-tree=$HOME submodule update --init
+    exit
+    ```
+
 1.  Create user download directries.
     ```sh
     mkdir -p $HOME/dl/{_chrm,_eph,_ff,_jd2,_misc,_qbt,_scdl,_ytdlp}
@@ -432,16 +451,32 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     ```
 1.  To customize functions of the device power buttons:
     1. Update file `/etc/systemd/logind.conf`.
+
         ```sh
         sudo nvim /etc/systemd/logind.conf
         ```
+
+        For example:
+
+        ```dosini
+        [Login]
+        HandlePowerKey=hibernate
+        HandlePowerKeyLongPress=poweroff
+        ```
+
     1. Restart the systemd-logind.service.
         ```sh
         sudo systemctl restart systemd-logind.service
         ```
+
 1.  Log out and log in again.
+
     ```sh
     exit
+    ```
+
+    ```sh
+    ssh us0@192.168.1.99
     ```
 
 ## Encryption, automatic unlocking and mounting of an another drive on the system
