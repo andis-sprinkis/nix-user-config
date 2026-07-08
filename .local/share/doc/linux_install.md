@@ -693,6 +693,7 @@ Steps for adding any newly listed packages from the user package lists to an alr
         ```
 
 1. Follow [_Applications that require manual installation_](./linux_manual_app_install.md)
+1. Follow [_The web browsers setup_](./web_browser_setup.md)
 
 ## Connecting to Wi-Fi
 
