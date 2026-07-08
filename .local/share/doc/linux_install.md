@@ -250,7 +250,7 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
 1.  Set console typematic delay and rate (keyboard input speed).
     1. Create file `/etc/systemd/system/console-kbdrate.service`:
 
-        ```systemd
+        ```dosini
         [Unit]
         Description=Console typematic delay and rate (kbdrate).
 
