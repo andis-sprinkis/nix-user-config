@@ -476,8 +476,9 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     ```
 
     ```sh
-    ssh us0@192.168.1.99
+    ssh usr0@192.168.1.99
     ```
+1.  Start the graphical session and follow [_The web browsers setup_](./web_browser_setup.md)
 
 ## Encryption, automatic unlocking and mounting of an another drive on the system
 
@@ -693,7 +694,6 @@ Steps for adding any newly listed packages from the user package lists to an alr
         ```
 
 1. Follow [_Applications that require manual installation_](./linux_manual_app_install.md)
-1. Follow [_The web browsers setup_](./web_browser_setup.md)
 
 ## Connecting to Wi-Fi
 
