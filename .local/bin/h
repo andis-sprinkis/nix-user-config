@@ -11,9 +11,9 @@ case "${1:-""}" in
   *)
     line="$(
       (
-        man -k ''  | sed -e 's/^/ man: /g'
-        info -k '' | sed -e 's/^/info: /g'
-        tldr -l    | sed -e 's/^/tldr: /g'
+        (man -k ''  | sed -e 's/^/ man: /g') &
+        (info -k '' | sed -e 's/^/info: /g') &
+        (tldr -l    | sed -e 's/^/tldr: /g') &
       ) | fzf -e --preview='h --preview {}' -q "${1:-""}"
     )"
   ;;
