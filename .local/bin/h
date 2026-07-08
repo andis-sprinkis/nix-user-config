@@ -1,21 +1,37 @@
 #!/usr/bin/env sh
 set -euf
 
-line="$(
-  (
-    man -k ''  | sed -e 's/^/ man: /g'
-    info -k '' | sed -e 's/^/info: /g'
-    tldr -l    | sed -e 's/^/tldr: /g'
-  ) | fzf -e --preview='h_preview {}' -q "${1:-""}"
-)"
+is_preview=""
+
+case "${1:-""}" in
+  '--preview')
+    is_preview="1"
+    line="$2"
+  ;;
+  *)
+    line="$(
+      (
+        man -k ''  | sed -e 's/^/ man: /g'
+        info -k '' | sed -e 's/^/info: /g'
+        tldr -l    | sed -e 's/^/tldr: /g'
+      ) | fzf -e --preview='h --preview {}' -q "${1:-""}"
+    )"
+  ;;
+esac
+
 
 case "$(echo "$line" | cut -d":" -f1)" in
   " man")
     cmd="$(echo "$line" | cut -d" " -f3)"
     section="$(echo "$line" | cut -d" " -f4 | sed -e "s/(//g" -e "s/)//g")"
 
-    echo "man \"${section}\" \"${cmd}\""
-    man "$section" "$cmd"
+    if [ "$is_preview" ]; then
+      echo "man \"${section}\" \"${cmd}\""
+      man "$section" "$cmd" | bat --color="always" -p -l "Manpage"
+    else
+      echo "man \"${section}\" \"${cmd}\""
+      man "$section" "$cmd"
+    fi
   ;;
   "info")
     manual="$(echo "$line" | sed -e 's/info: "\(.*.\)" -- .*/\1/g')"
