@@ -19,6 +19,7 @@ mouse-scroll-multiplier = precision:1,discrete:1,
 mouse-shift-capture = true
 resize-overlay = never
 window-colorspace = display-p3
+window-decoration = server
 window-height = 30
 window-padding-x = 0
 window-padding-y = 0
