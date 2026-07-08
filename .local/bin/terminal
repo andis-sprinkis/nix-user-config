@@ -9,7 +9,11 @@ case "${OSTYPE:-"$(uname)"}" in
     fi
 
     if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-      exec ghostty "+new-window" "$@"
+      if pidof -q "ghostty"; then
+        exec ghostty "+new-window" "$@"
+      fi
+
+      exec ghostty "$@"
     fi
 
     exit "1"
