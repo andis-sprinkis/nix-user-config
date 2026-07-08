@@ -19,7 +19,6 @@ case "${1:-""}" in
   ;;
 esac
 
-
 case "$(echo "$line" | cut -d":" -f1)" in
   " man")
     cmd="$(echo "$line" | cut -d" " -f3)"
