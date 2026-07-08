@@ -13,7 +13,7 @@ case "${1:-""}" in
       (
         (man -k ''  | sed -e 's/^/ man: /g') &
         (info -k '' | sed -e 's/^/info: /g') &
-        (tldr -l    | sed -e 's/^/tldr: /g') &
+        (tldr -l    | sed -e 's/^/tldr: /g')
       ) | fzf -e --preview='h --preview {}' -q "${1:-""}"
     )"
   ;;
