@@ -10,11 +10,13 @@ case "${1:-""}" in
   ;;
   *)
     line="$(
+      set +e
       (
         (man -k ''  | sed -e 's/^/ man: /g') &
         (info -k '' | sed -e 's/^/info: /g') &
         (tldr -l    | sed -e 's/^/tldr: /g')
       ) | fzf -e --preview='h --preview {}' -q "${1:-""}"
+      set -e
     )"
   ;;
 esac
@@ -45,7 +47,7 @@ case "$(echo "$line" | cut -d":" -f1)" in
     echo "tldr \"${page}\""
     tldr "$page"
   ;;
-  *)
-    exit "1"
+  "")
+    exit "0"
   ;;
 esac

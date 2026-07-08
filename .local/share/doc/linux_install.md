@@ -26,9 +26,9 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
         ```sh
         passwd
         ```
-    1. Enable and start SSH server.
+    1. Start SSH server.
         ```sh
-        systemctl enable --now sshd
+        systemctl start sshd
         ```
     1. Determine installation target computer IP address.
         ```sh
@@ -168,6 +168,8 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
 
 1.  Add boot-loader initramfs fallback entry.
 
+    <!-- TODO: config details to generate initramfs fallback -->
+
     Create file `/boot/loader/entries/arch_fallback.conf`:
 
     ```
@@ -302,11 +304,37 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     chown usr0:usr0 $dirs
     ```
 
-1.  Exit from /mnt root shell and reboot, then log in as the regular user.
+1.  Exit from /mnt root shell and reboot, then log in as the regular user in Linux console.
+
     ```sh
     exit
+    ```
+
+    ```sh
     reboot
     ```
+
+1.  Enable and start SSH server.
+    ```sh
+    systemctl start sshd
+    ```
+1.  Determine installation target computer IP address.
+    ```sh
+    ip a
+    ```
+1.  From another device SSH into installation target computer to continue the setup.
+    1. Delete the target computer stale SSH `known_hosts` entry.
+
+        ```sh
+        ssh-keygen -R 192.168.1.99
+        ```
+
+    1. SSH into the target computer.
+
+        ```sh
+        ssh usr0@192.168.1.99
+        ```
+
 1.  Enable Network Time Protocol.
     ```sh
     sudo timedatectl set-ntp on
