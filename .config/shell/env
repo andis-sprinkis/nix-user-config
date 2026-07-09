@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-export ENV_PATHDIFF=""
+ENV_PATHDIFF="${ENV_PATHDIFF:-""}"
 
 if [ -z "${HAS_ENV_SET:-""}" ]; then
   if [ -d "/opt/homebrew" ]; then # the default arm64 macOS homebrew dir. path
@@ -39,7 +39,7 @@ if [ -z "${HAS_ENV_SET:-""}" ]; then
 
   # set local bin PATH
   PATH="$HOME/.local/bin:$PATH"
-  ENV_PATHDIFF="$HOME/.local/bin:$ENV_PATHDIFF"
+  ENV_PATHDIFF="$HOME/.local/bin:${ENV_PATHDIFF}"
 
   # set user AppImages location
   # shellcheck disable=SC3028
@@ -47,7 +47,7 @@ if [ -z "${HAS_ENV_SET:-""}" ]; then
     [lL]"inux"*)
       export APPIMAGE_DATA_HOME="$HOME/.local/opt/appimage"
       PATH="$APPIMAGE_DATA_HOME:$PATH"
-      ENV_PATHDIFF="$APPIMAGE_DATA_HOME:$ENV_PATHDIFF"
+      ENV_PATHDIFF="$APPIMAGE_DATA_HOME:${ENV_PATHDIFF}"
     ;;
   esac
 
@@ -155,12 +155,12 @@ if [ -z "${HAS_ENV_SET:-""}" ]; then
   # configure cargo
   export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
   PATH="$CARGO_HOME/bin:$PATH"
-  ENV_PATHDIFF="$CARGO_HOME/bin:$ENV_PATHDIFF"
+  ENV_PATHDIFF="$CARGO_HOME/bin:${ENV_PATHDIFF}"
 
   # configure volta
   export VOLTA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/volta"
   PATH="$VOLTA_HOME/bin:$PATH"
-  ENV_PATHDIFF="$VOLTA_HOME/bin:$ENV_PATHDIFF"
+  ENV_PATHDIFF="$VOLTA_HOME/bin:${ENV_PATHDIFF}"
   export VOLTA_FEATURE_PNPM="1"
 
   # configure homebrew
@@ -211,6 +211,8 @@ if [ -z "${HAS_ENV_SET:-""}" ]; then
 
   export HAS_ENV_SET="1"
 fi
+
+export ENV_PATHDIFF="$ENV_PATHDIFF"
 
 # shellcheck disable=SC3028
 case "${OSTYPE:-"$(uname)"}" in
