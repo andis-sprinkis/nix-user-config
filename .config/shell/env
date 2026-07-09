@@ -217,6 +217,7 @@ export ENVPATHDIFF="$ENVPATHDIFF"
 # shellcheck disable=SC3028
 case "${OSTYPE:-"$(uname)"}" in
   [dD]"arwin"*)
+    PATH="${PATH#"$ENVPATHDIFF"}"
     PATH="${ENVPATHDIFF}${PATH}"
   ;;
 esac
