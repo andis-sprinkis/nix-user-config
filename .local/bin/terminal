@@ -9,6 +9,7 @@ case "${OSTYPE:-"$(uname)"}" in
         exec foot "$@"
       fi
 
+      # TODO: launch foot server
       exec footclient "$@"
     fi
 
@@ -17,6 +18,7 @@ case "${OSTYPE:-"$(uname)"}" in
         exec ghostty "+new-window" "$@"
       fi
 
+      # TODO: launch ghostty server
       exec ghostty "$@"
     fi
 
