@@ -5,6 +5,10 @@ set -euf
 case "${OSTYPE:-"$(uname)"}" in
   [lL]"inux"*)
     if [ "${WAYLAND_DISPLAY:-""}" ]; then
+      if [ "${SSH_CLIENT:-""}" ]; then
+        exec foot "$@"
+      fi
+
       exec footclient "$@"
     fi
 
