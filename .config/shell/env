@@ -217,9 +217,6 @@ export ENVPATHDIFF="$ENVPATHDIFF"
 # shellcheck disable=SC3028
 case "${OSTYPE:-"$(uname)"}" in
   [dD]"arwin"*)
-    if [ -z "$MACOS_HAS_ENVPATHDIFF" ]; then
-      PATH="${ENVPATHDIFF}${PATH}"
-      export MACOS_HAS_ENVPATHDIFF="1"
-    fi
+    PATH="${ENVPATHDIFF}${PATH}"
   ;;
 esac
