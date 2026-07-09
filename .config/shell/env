@@ -7,6 +7,8 @@ case "${OSTYPE:-"$(uname)"}" in
   ;;
 esac
 
+# TODO: save 'env' PATH addition diff in variable ENV_ADD_PATH and append it if HAS_ENV_SET && is_macos
+
 if [ -z "${HAS_ENV_SET:-""}" ] || [ "$is_macos" ]; then
   if [ -d "/opt/homebrew" ]; then # the default arm64 macOS homebrew dir. path
     export BREW_PREFIX="/opt/homebrew"
