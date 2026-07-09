@@ -5,7 +5,11 @@ set -euf
 case "${OSTYPE:-"$(uname)"}" in
   [lL]"inux"*)
     if [ "${WAYLAND_DISPLAY:-""}" ]; then
-      exec footclient "$@"
+      if pidof -q "foot"; then
+        exec footclient "$@"
+      fi
+
+      exec foot "$@"
     fi
 
     if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
