@@ -23,6 +23,6 @@ case "${OSTYPE:-"$(uname)"}" in
     exit "1"
   ;;
   *)
-    exec ghostty "+new-window" "$@"
+    exec ghostty "$@"
   ;;
 esac
