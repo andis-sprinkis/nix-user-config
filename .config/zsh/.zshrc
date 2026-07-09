@@ -157,7 +157,8 @@
   fi
 
   local userhost="%{$bg[$role_params[1]] $fg[black]%}%n@%M %{$reset_color%}"
-  local ssh_status="${SSH_CLIENT:+"%{$bg[blue]$fg[black]%} SSH %{$reset_color%}"}"
+  local ssh_variables="${SSH_CLIENT:-""}${SSH_CONNECTION:-""}${SSH_TTY:-""}"
+  local ssh_status="${ssh_variables:+"%{$bg[blue]$fg[black]%} SSH %{$reset_color%}"}"
   local vcs_info="\$vcs_info_msg_0_%{$reset_color%}"
   local cwd_path="%{$bg[white]$fg[black]%} %/ %{$reset_color%}"
   local prompt_symbol="%{$fg[$role_params[1]]%}$role_params[2]%{$reset_color%} "

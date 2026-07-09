@@ -1,89 +1,93 @@
 #!/usr/bin/env sh
 
-# lfcd
-lfcd() { cd "$(command lf -print-last-dir "$@")" || return; }
+if [ -z "${HAS_INTERACTIVE_SET:-""}" ]; then
+  # lfcd
+  lfcd() { cd "$(command lf -print-last-dir "$@")" || return; }
 
-# initialize homebrew
-if [ "${BREW_PREFIX:-""}" ] && [ -f "${BREW_PREFIX}/bin/brew" ]; then
-  # eval "$("${BREW_PREFIX}/bin/brew" "shellenv")"
-  PATH="${BREW_PREFIX}/bin:${BREW_PREFIX}/sbin:${PATH}"
+  # initialize homebrew
+  if [ "${BREW_PREFIX:-""}" ] && [ -f "${BREW_PREFIX}/bin/brew" ]; then
+    # eval "$("${BREW_PREFIX}/bin/brew" "shellenv")"
+    PATH="${BREW_PREFIX}/bin:${BREW_PREFIX}/sbin:${PATH}"
 
-  # use the GNU utils on macOS
-  if [ "$HAS_BREW_GNUBIN" ]; then
-    PATH="${BREW_PREFIX}/opt/coreutils/libexec/gnubin:${PATH}"
+    # use the GNU utils on macOS
+    if [ "$HAS_BREW_GNUBIN" ]; then
+      PATH="${BREW_PREFIX}/opt/coreutils/libexec/gnubin:${PATH}"
+    fi
   fi
-fi
 
-# configure windows terminal
-# if [ "$WT_SESSION" ]; then
-#   export COLORTERM="truecolor"
-# fi
+  # configure windows terminal
+  # if [ "$WT_SESSION" ]; then
+  #   export COLORTERM="truecolor"
+  # fi
 
-# launch tmux
-if [ -z "${TMUX:-""}" ] && [ "$TERM" != "linux" ] && [ -z "${NO_TMUX:-""}" ]; then
+  # launch tmux
+  if [ -z "${TMUX:-""}" ] && [ "$TERM" != "linux" ] && [ -z "${NO_TMUX:-""}" ]; then
+    # shellcheck disable=SC3028
+    case "${OSTYPE:-"$(uname)"}" in
+      [Dd]"arwin"*)
+        if [ "${UID:-"$(id -u)"}" -ge "501" ] && command -v "tmux" 1>/dev/null 2>/dev/null; then
+          exec tmux
+        fi
+      ;;
+      *)
+        if [ "${UID:-"$(id -u)"}" -ge "1000" ] && command -v "tmux" 1>/dev/null 2>/dev/null; then
+          exec tmux
+        fi
+      ;;
+    esac
+  fi
+
+  # set window title
+  printf "\033]0;%s\007" "$PWD"
+
+  # disable ctrl-s to freeze terminal
+  stty "stop" "undef"
+
+  # history file path
+  export HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/shell/history"
+
+  # storing history in memory
+  HISTSIZE="1000000"
+
+  # inactivity timeout
+  TMOUT="5400"
+
+  # alias
+  # shellcheck disable=SC1091
+  . "${XDG_CONFIG_HOME:-$HOME/.config}/shell/alias"
+
+  # configure pyenv
+  # if command -v "pyenv" 1>/dev/null 2>/dev/null; then
+  #   eval "$(pyenv init - zsh)"
+  # fi
+
+  export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/pyenv/shims:${PATH}"
+
+  pyenv() {
+    command="${1:-""}"
+
+    if [ "$#" -gt "0" ]; then
+      shift
+    fi
+
+    case "$command" in
+      "rehash"|"shell")
+        eval "$(pyenv "sh-$command" "$@")"
+      ;;
+      *)
+        command pyenv "$command" "$@"
+      ;;
+    esac
+  }
+
+  # configure X11
   # shellcheck disable=SC3028
-  case "${OSTYPE:-"$(uname)"}" in
-    [Dd]"arwin"*)
-      if [ "${UID:-"$(id -u)"}" -ge "501" ] && command -v "tmux" 1>/dev/null 2>/dev/null; then
-        exec tmux
-      fi
-    ;;
-    *)
-      if [ "${UID:-"$(id -u)"}" -ge "1000" ] && command -v "tmux" 1>/dev/null 2>/dev/null; then
-        exec tmux
-      fi
-    ;;
-  esac
-fi
-
-# set window title
-printf "\033]0;%s\007" "$PWD"
-
-# disable ctrl-s to freeze terminal
-stty "stop" "undef"
-
-# history file path
-export HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/shell/history"
-
-# storing history in memory
-HISTSIZE="1000000"
-
-# inactivity timeout
-TMOUT="5400"
-
-# alias
-# shellcheck disable=SC1091
-. "${XDG_CONFIG_HOME:-$HOME/.config}/shell/alias"
-
-# configure pyenv
-# if command -v "pyenv" 1>/dev/null 2>/dev/null; then
-#   eval "$(pyenv init - zsh)"
-# fi
-
-export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/pyenv/shims:${PATH}"
-
-pyenv() {
-  command="${1:-""}"
-
-  if [ "$#" -gt "0" ]; then
-    shift
+  if [ "${DISPLAY:-""}" ] && [ "${UID:-"$(id -u)"}" -lt "1000" ]; then
+    unset DISPLAY
   fi
 
-  case "$command" in
-    "rehash"|"shell")
-      eval "$(pyenv "sh-$command" "$@")"
-    ;;
-    *)
-      command pyenv "$command" "$@"
-    ;;
-  esac
-}
+  # configure gpg
+  export GPG_TTY="${TTY:-"$(tty)"}"
 
-# configure X11
-# shellcheck disable=SC3028
-if [ "${DISPLAY:-""}" ] && [ "${UID:-"$(id -u)"}" -lt "1000" ]; then
-  unset DISPLAY
+  HAS_INTERACTIVE_SET="1"
 fi
-
-# configure gpg
-export GPG_TTY="${TTY:-"$(tty)"}"
