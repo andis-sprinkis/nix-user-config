@@ -175,6 +175,7 @@ usbutils
 util-linux
 vulkan-radeon
 wayland
+waypipe
 wdisplays
 wev
 wf-recorder
@@ -206,6 +207,7 @@ xorg-xwininfo
 xscreensaver
 xsettingsd
 xss-lock
+xwayland-satellite
 yt-dlp
 zam-plugins-lv2
 zathura
