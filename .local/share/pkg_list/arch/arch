@@ -167,6 +167,7 @@ tk
 tmux
 tree
 tree-sitter
+tree-sitter-cli
 unclutter
 unicode-character-database
 unrar

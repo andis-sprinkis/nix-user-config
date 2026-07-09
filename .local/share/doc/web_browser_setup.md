@@ -8,8 +8,8 @@
 
     ```sh
     cd "$HOME/.config/mozilla/firefox/PROFILE_ID.default-release"
-    ln -s "../../../.config/firefox/user.js" "user.js"
-    ln -s "../../../.config/firefox/chrome" "chrome"
+    ln -s "../../../firefox/user.js" "user.js"
+    ln -s "../../../firefox/chrome" "chrome"
     ```
 
     Close Mozilla Firefox and run:

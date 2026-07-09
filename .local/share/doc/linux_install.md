@@ -302,6 +302,7 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     dirs=$(eval "echo /mnt/nvme{1..5} /mnt/sata{1..5} /mnt/usb{1..5} /mnt/pc{1..5} /mnt/nas{1..5} /mnt/vm{1..5} /mnt/mobile{1..5}")
     mkdir -p $dirs
     chown usr0:usr0 $dirs
+    chmod 700 $dirs
     ```
 
 1.  Exit from /mnt root shell and reboot, then log in as the regular user in Linux console.
