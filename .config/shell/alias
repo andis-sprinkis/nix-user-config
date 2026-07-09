@@ -123,6 +123,7 @@ alias \
   unlock_user="sudo faillock --reset --user" \
   tree="tree -CF" \
   viff="nvim -d" \
+  waypipe="waypipe --title-prefix \"[WAYPIPE] \" --no-gpu" \
   wget="wget --hsts-file=\"\${XDG_DATA_HOME:-\$HOME/.local/share}/wget-hsts\"" \
   yt-dlp-date="yt-dlp -o \"%(release_date>%Y%m%d,upload_date>%Y%m%d|Unknown)s %(title)s.%(ext)s\""
 
