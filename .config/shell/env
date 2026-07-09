@@ -1,6 +1,13 @@
 #!/usr/bin/env sh
 
-if [ -z "${HAS_ENV_SET:-""}" ]; then
+# shellcheck disable=SC3028
+case "${OSTYPE:-"$(uname)"}" in
+  [dD]"arwin"*)
+    is_macos="1"
+  ;;
+esac
+
+if [ -z "${HAS_ENV_SET:-""}" ] || [ "$is_macos" ]; then
   if [ -d "/opt/homebrew" ]; then # the default arm64 macOS homebrew dir. path
     export BREW_PREFIX="/opt/homebrew"
 
@@ -203,3 +210,5 @@ if [ -z "${HAS_ENV_SET:-""}" ]; then
 
   export HAS_ENV_SET="1"
 fi
+
+unset is_macos
