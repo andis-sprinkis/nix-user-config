@@ -20,23 +20,23 @@ fi
 
 "${XDG_DATA_HOME:-$HOME/.local/share}/xsettingsd/init" &
 
-# Notification-daemon
-if ! pidof -q "dunst"; then
-  dunst &
-fi
-
-# Polkit authentication agent
-
-if ! pidof -q "polkit-gnome-authentication-agent-1"; then
-  /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-fi
-
-# EeasyEffects audio effects interface
-
-if ! pidof -q "easyeffects"; then
-  easyeffects --gapplication-service &
-fi
-
-# foot terminal server
-
-foot --server &
+# # Notification-daemon
+# if ! pidof -q "dunst"; then
+#   dunst &
+# fi
+#
+# # Polkit authentication agent
+#
+# if ! pidof -q "polkit-gnome-authentication-agent-1"; then
+#   /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+# fi
+#
+# # EeasyEffects audio effects interface
+#
+# if ! pidof -q "easyeffects"; then
+#   easyeffects --gapplication-service &
+# fi
+#
+# # foot terminal server
+#
+# foot --server &
