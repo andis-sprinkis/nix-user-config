@@ -40,3 +40,5 @@ fi
 # # foot terminal server
 #
 # foot --server &
+
+exec /usr/bin/waypipe "$@"
