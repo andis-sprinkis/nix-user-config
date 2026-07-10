@@ -1,0 +1,42 @@
+#!/usr/bin/env sh
+
+# gsettings
+
+"${XDG_CONFIG_HOME:-$HOME/.config}/gsettings/init"
+
+# .Xresources
+
+## xrdb
+
+xrdb -retain -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
+
+pathf_xresources_local="${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources"
+
+if [ -f "$pathf_xresources_local" ]; then
+  xrdb -retain -override "$pathf_xresources_local"
+fi
+
+## xsettingsd
+
+"${XDG_DATA_HOME:-$HOME/.local/share}/xsettingsd/init" &
+
+# Notification-daemon
+if ! pidof -q "dunst"; then
+  dunst &
+fi
+
+# Polkit authentication agent
+
+if ! pidof -q "polkit-gnome-authentication-agent-1"; then
+  /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+fi
+
+# EeasyEffects audio effects interface
+
+if ! pidof -q "easyeffects"; then
+  easyeffects --gapplication-service &
+fi
+
+# foot terminal server
+
+foot --server &
