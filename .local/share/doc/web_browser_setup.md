@@ -125,6 +125,12 @@ gh
 ```
 
 ```
+Marginalia
+https://marginalia-search.com/search?query=%s
+mgn
+```
+
+```
 Mojeek
 https://www.mojeek.com/search?q=%s
 mjk
