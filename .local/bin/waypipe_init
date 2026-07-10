@@ -18,7 +18,7 @@ fi
 
 ## xsettingsd
 
-"${XDG_DATA_HOME:-$HOME/.local/share}/xsettingsd/init" &
+# "${XDG_DATA_HOME:-$HOME/.local/share}/xsettingsd/init" &
 
 # # Notification-daemon
 # if ! pidof -q "dunst"; then
