@@ -6,6 +6,8 @@ echo "${DISPLAY:-""}"
 
 "${XDG_CONFIG_HOME:-$HOME/.config}/gsettings/init"
 
+# .Xresources
+
 ## xrdb
 
 xrdb -retain -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
@@ -21,11 +23,13 @@ fi
 "${XDG_DATA_HOME:-$HOME/.local/share}/xsettingsd/init" &
 
 # Notification-daemon
+
 dunst &
 
 # Running unclutter to automatically hide the mouse pointer
+
 unclutter --timeout 1 --start-hidden &
 
-## waypipe
+# waypipe process
 
 exec "$@"
