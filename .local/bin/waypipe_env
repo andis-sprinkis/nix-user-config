@@ -20,6 +20,12 @@ fi
 
 "${XDG_DATA_HOME:-$HOME/.local/share}/xsettingsd/init" &
 
+# Notification-daemon
+dunst &
+
+# Running unclutter to automatically hide the mouse pointer
+unclutter --timeout 1 --start-hidden &
+
 ## waypipe
 
 exec "$@"
