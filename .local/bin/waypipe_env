@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+
+# gsettings
+
+"${XDG_CONFIG_HOME:-$HOME/.config}/gsettings/init"
+
+## xrdb
+
+xrdb -retain -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
+
+pathf_xresources_local="${XDG_CONFIG_HOME:-$HOME/.config}/xresources/local.Xresources"
+
+if [ -f "$pathf_xresources_local" ]; then
+  xrdb -retain -override "$pathf_xresources_local"
+fi
+
+## xsettingsd
+
+"${XDG_DATA_HOME:-$HOME/.local/share}/xsettingsd/init" &
+
+## waypipe
+
+exec "$@"
