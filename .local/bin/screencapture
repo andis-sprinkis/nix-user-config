@@ -46,7 +46,7 @@ i3blocks_signal() {
   if [ "${1:-""}" = "wait" ]; then sleep "1"; fi
 
   if pidof -q "i3blocks"; then
-    pkill "-SIGRTMIN+7" "i3blocks"
+    pkill "-SIGRTMIN+7" -x "i3blocks"
   fi
 }
 
@@ -190,14 +190,16 @@ case "$capture_format" in
   "video")
     path_out="${path_dir}/$(date "+%s").mp4"
 
+    mkdir -p "$path_dir"
+
     case "$capture_mode" in
       "stop")
         # shellcheck disable=SC3044
         case "$display_server" in
           "wayland")
             set +e
-            pkill -SIGINT -f "wf-recorder"
-            pkill -SIGINT -f "slurp"
+            pkill -SIGINT -x "wf-recorder"
+            pkill -SIGINT -x "slurp"
             set -e
 
             i3blocks_signal 1>/dev/null 2>/dev/null & disown
@@ -290,6 +292,8 @@ case "$capture_format" in
   ;;
   "picture")
     path_out="${path_dir}/$(date "+%s").png"
+
+    mkdir -p "$path_dir"
 
     case "$display_server" in
       "wayland")
