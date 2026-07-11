@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
+NL="
+"
 
 # Merging the xsettingsd common and local configurations
 
@@ -25,8 +27,7 @@ if [ -f "$pathf_cfg_local" ]; then
         printf '%s %s\n' "$key" "$val"
       done < "$pathf_cfg_common"
     fi
-  )
-${cfg_local}" > "$pathf_cfg"
+  )${NL}${cfg_local}" > "$pathf_cfg"
 else
   if [ -f "$pathf_cfg_common" ]; then
     cat "$pathf_cfg_common" > "$pathf_cfg"
