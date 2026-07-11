@@ -4,12 +4,14 @@
 
 "${XDG_CONFIG_HOME:-$HOME/.config}/gsettings/init"
 
+# xwayland-satellite
+
 if [ "${DISPLAY:-""}" ]; then
   echo "DISPLAY: $DISPLAY"
 
-  # .Xresources
+  ## .Xresources
 
-  ## xrdb
+  ### xrdb
 
   xrdb -retain -load "${XDG_CONFIG_HOME:-$HOME/.config}/xresources/.Xresources"
 
@@ -19,7 +21,7 @@ if [ "${DISPLAY:-""}" ]; then
     xrdb -retain -override "$pathf_xresources_local"
   fi
 
-  ## xsettingsd
+  ### xsettingsd
 
   "${XDG_DATA_HOME:-$HOME/.local/share}/xsettingsd/init" &
 fi
