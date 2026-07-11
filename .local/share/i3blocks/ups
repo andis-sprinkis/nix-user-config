@@ -19,7 +19,9 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
   esac
 fi
 
+set +e
 ups_devices="$(upsc -l 2> "/dev/null")"
+set -e
 
 if [ -z "$ups_devices" ]; then
   exit "0"
