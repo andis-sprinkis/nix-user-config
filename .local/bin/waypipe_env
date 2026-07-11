@@ -26,10 +26,6 @@ fi
 
 dunst &
 
-# Running unclutter to automatically hide the mouse pointer
-
-unclutter --timeout 1 --start-hidden &
-
 # waypipe process
 
 exec "$@"
