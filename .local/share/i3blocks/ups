@@ -39,9 +39,7 @@ fi
 
 i="0"
 
-IFS="
-"
-
+IFS="$NL"
 for name in $ups_devices; do
   IFS="$IFS_"
 
@@ -78,7 +76,6 @@ for name in $ups_devices; do
     ;;
   esac
 done
-
 IFS="$IFS_"
 
 if [ "$info" ]; then
