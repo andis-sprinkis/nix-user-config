@@ -4,6 +4,7 @@ NL="
 "
 
 status="$(idle_manager "status")"
+user="${USER:-"$(whoami)"}"
 
 if [ "${BLOCK_BUTTON:-""}" ]; then
   # shellcheck disable=SC3044
@@ -15,14 +16,14 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
 
   # shellcheck disable=SC3044
   idle_manager_lock() {
-    echo "Lock${NL}Lock"
+    echo "Lock (${user})${NL}Lock (${user})"
     idle_manager "lock" 1> "/dev/null" 2> "/dev/null" & disown
     exit "0"
   }
 
   # shellcheck disable=SC3044
   idle_manager_start() {
-    echo "Starting idle-manager...${NL}Starting idle-mgr."
+    echo "Starting idle-manager (${user})...${NL}Starting idle-mgr. (${user})"
     idle_manager "start" 1> "/dev/null" 2> "/dev/null" & disown
     reload
     exit "0"
@@ -30,7 +31,7 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
 
   # shellcheck disable=SC3044
   idle_manager_stop() {
-    echo "Stopping idle-manager...${NL}Stopping idle-mgr."
+    echo "Stopping idle-manager (${user})...${NL}Stopping idle-mgr. (${user})"
     idle_manager "stop" 1> "/dev/null" 2> "/dev/null" & disown
     reload
     exit "0"
@@ -38,7 +39,7 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
 
   # shellcheck disable=SC3044
   idle_manager_reload() {
-    echo "Stopping idle-manager...${NL}Stopping idle-mgr."
+    echo "Stopping idle-manager (${user})...${NL}Stopping idle-mgr. (${user})"
     idle_manager "reload" 1> "/dev/null" 2> "/dev/null" & disown
     reload
     exit "0"
@@ -73,12 +74,12 @@ fi
 
 case "$status" in
   "started")
-    echo "Lock${NL}Lock"
+    echo "Lock (${user})${NL}Lock (${user})"
   ;;
   "stopped")
-    echo "Idle-manager off${NL}Idle mgr. off"
+    echo "Idle-manager off (${user})${NL}Idle mgr. off (${user})"
   ;;
   "partial")
-    echo "Idle-manager off (partial)${NL}Idle-mgr. off (partial)"
+    echo "Idle-manager off (partial) (${user})${NL}Idle-mgr. off (partial) (${user})"
   ;;
 esac
