@@ -39,13 +39,9 @@ while getopts fh name; do
   esac
 done
 
-data="$(
-  LC_ALL="C" df --output="target,pcent,used,avail,size,source" |
-    tail -n "+2" | sed -e 's/ \+/;/g' | sort
-)"
+# POSIX: "source,size,used,avail,pcent,target"
 
-# TODO: use SIZE to specify bytes instead of kB as the base unit
-# b_kb="1024"  b_mb="1048576" b_gb="1073741824" b_tb="1099511627776" b_pb="1125899906842624" b_eb=""
+data="$(LC_ALL="C" df -P | tail -n "+2" | sort -k 6 | sed -e 's/ \+/;/g')"
 
 kb_mb="1024" kb_gb="1048576" kb_tb="1073741824" kb_pb="1099511627776" kb_eb="1125899906842624"
 
@@ -150,8 +146,8 @@ IFS="$NL"
 for line in $data; do
   IFS="$IFS_"
 
-  pnt_mnt="$(echo "$line" | cut -d";" -f1)"
-  pnt_dev="$(echo "$line" | cut -d";" -f6)"
+  pnt_dev="$(echo "$line" | cut -d";" -f1)"
+  pnt_mnt="$(echo "$line" | cut -d";" -f6)"
 
   if [ "$opt_has_f" = "0" ]; then
     case "$pnt_dev" in
@@ -177,11 +173,11 @@ for line in $data; do
     esac
   fi
 
-  use_pcnt="$(echo "$line" | cut -d";" -f2 | cut -d "%" -f1)"
+  use_pcnt="$(echo "$line" | cut -d";" -f5 | cut -d "%" -f1)"
   free_pcnt="$((100 - use_pcnt))"
   # use_b="$(echo "$line" | cut -d";" -f3)"
   free_b="$(echo "$line" | cut -d";" -f4)"
-  size_b="$(echo "$line" | cut -d";" -f5)"
+  size_b="$(echo "$line" | cut -d";" -f2)"
 
   set_severity "$use_pcnt"
 
