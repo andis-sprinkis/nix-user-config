@@ -30,12 +30,12 @@ menu_display="" menu_values="" ifcs_count="0"
 for ifc in $(ifconfig | sed -e '/^[a-z0-9]*:.*$/!d' -e 's/:.*$//g' | paste -s -d ' ' -); do
   ip="$(ifconfig "$ifc" | sed -e 's/^[[:space:]]*//g' | grep '^inet ' | cut -d ' ' -f2)"
 
-  is_localhost=""
-  if [ "$ip" = "127.0.0.1" ]; then
-    is_localhost="1"
-  fi
-
   if [ "$ip" ]; then
+    is_localhost=""
+    if [ "$ip" = "127.0.0.1" ]; then
+      is_localhost="1"
+    fi
+
     ifcs_count=$((ifcs_count + 1))
     menu_display="${menu_display}${menu_display:+"$NL"}${ifcs_count}. ${ifc}: ${ip}${is_localhost:+ (default)}"
     menu_values="${menu_values}${menu_values:+"$NL"}${ifc} ${ip}"
