@@ -119,14 +119,14 @@ fi
 url="http://${ip}:${port}/";
 
 echo
-echo "Selected interface:${NL}${menu_display_sel}"
+echo "Selected: ${menu_display_sel}"
 echo
 
 if command -v "qrencode" 1> "/dev/null" 2> "/dev/null"; then
   echo "$url" | qrencode -t "ansiutf8"
 fi
 
-printf "\x1b[0;35m%s\x1b[0m\n" "${url}"
+printf "URL: \x1b[0;35m%s\x1b[0m\n" "${url}"
 
 if [ "${WAYLAND_DISPLAY:-""}" ] && command -v "wl-copy" 1> "/dev/null" 2> "/dev/null"; then
   echo "$url" | wl-copy
@@ -162,8 +162,7 @@ case "${OSTYPE:-"$(uname)"}" in
 esac
 
 echo
-echo "Interface: ${ifc} | IP: ${ip} | Port: ${port}"
-echo "Directory: ${directory}"
+echo "Interface: ${ifc} | IP: ${ip} | Port: ${port} | Directory: ${directory}"
 if [ "$warnings" ]; then
   printf "\x1b[0;33m%s\x1b[0m\n" "$warnings"
 fi
