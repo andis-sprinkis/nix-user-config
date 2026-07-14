@@ -118,7 +118,7 @@ fi
 
 url="http://${ip}:${port}/";
 
-echo "${NL}Selected: ${menu_display_sel}$NL"
+echo "Selected: ${menu_display_sel}$NL"
 
 if command -v "qrencode" 1> "/dev/null" 2> "/dev/null"; then
   echo "$url" | qrencode -t "ansiutf8"
