@@ -32,6 +32,7 @@ for ifc in $(ifconfig | sed -e '/^[a-z0-9]*:.*$/!d' -e 's/:.*$//g' | paste -s -d
 
   if [ "$ip" ]; then
     is_localhost=""
+
     if [ "$ip" = "127.0.0.1" ]; then
       is_localhost="1"
     fi
