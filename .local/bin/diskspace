@@ -107,22 +107,6 @@ path_fmt() {
   esac
 }
 
-sym_severity() {
-  case "$SEVERITY" in
-    "0")
-      echo ""
-    ;;
-    "1")
-      echo "~"
-    ;;
-    "2")
-      echo "!"
-    ;;
-  esac
-}
-
-SEVERITY="0"
-
 i="1"
 IFS="$NL"
 for line in $(df -P -k | tail -n "+2" | sort -k 6 | sed -e 's/ \+/;/g'); do
@@ -162,15 +146,18 @@ for line in $(df -P -k | tail -n "+2" | sort -k 6 | sed -e 's/ \+/;/g'); do
   free_b="$(echo "$line" | cut -d";" -f4)"
   size_b="$(echo "$line" | cut -d";" -f2)"
 
+  SEVERITY="0"
+  sym_severity=""
+
   if [ "$use_pcnt" -ge "90" ]; then
     SEVERITY="2"
+    sym_severity="!"
   elif [ "$use_pcnt" -ge "60" ]; then
     SEVERITY="1"
-  else
-    SEVERITY="0"
+    sym_severity="~"
   fi
 
-  echo "$(path_fmt "$pnt_mnt") $(severity_fmt "Free ${free_pcnt}%$(sym_severity) $(human "$free_b")") $(mute "($(human "$size_b") $(path_inv "${pnt_dev}"))")"
+  echo "$(path_fmt "$pnt_mnt") $(severity_fmt "Free ${free_pcnt}%${sym_severity} $(human "$free_b")") $(mute "($(human "$size_b") $(path_inv "${pnt_dev}"))")"
 
   i="$((i + 1))"
 done
