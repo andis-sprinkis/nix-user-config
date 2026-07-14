@@ -157,7 +157,8 @@ for line in $data; do
     esac
   fi
 
-  use_pcnt="$(echo "$line" | cut -d";" -f5 | cut -d "%" -f1)"
+  use_pcnt="$(echo "$line" | cut -d";" -f5)"
+  use_pcnt="${use_pcnt%%%}"
   free_pcnt="$((100 - use_pcnt))"
   # use_b="$(echo "$line" | cut -d";" -f3)"
   free_b="$(echo "$line" | cut -d";" -f4)"
