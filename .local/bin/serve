@@ -130,14 +130,14 @@ fi
 # shellcheck disable=SC3028
 case "${OSTYPE:-"$(uname)"}" in
   [Dd]"arwin"*)
-    echo "Opening with 'open'"
+    echo "Opening URL with 'open'"
     (
       sleep "1"
       open "$url"
     ) &
   ;;
   *)
-    echo "Opening with 'xdg-open'"
+    echo "Opening URL with 'xdg-open'"
     (
       sleep "1"
       xdg-open "$url"
