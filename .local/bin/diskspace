@@ -107,25 +107,9 @@ path_fmt() {
       severity_fmt "$1"
     ;;
   esac
-  
-
 }
 
 SEVERITY="0"
-
-set_severity() {
-  if [ "$1" -ge "90" ]; then
-    SEVERITY="2"
-    return
-  fi
-
-  if [ "$1" -ge "60" ]; then
-    SEVERITY="1"
-    return
-  fi
-
-  SEVERITY="0"
-}
 
 sym_severity() {
   case "$SEVERITY" in
@@ -179,9 +163,15 @@ for line in $data; do
   free_b="$(echo "$line" | cut -d";" -f4)"
   size_b="$(echo "$line" | cut -d";" -f2)"
 
-  set_severity "$use_pcnt"
+  if [ "$use_pcnt" -ge "90" ]; then
+    SEVERITY="2"
+  elif [ "$use_pcnt" -ge "60" ]; then
+    SEVERITY="1"
+  else
+    SEVERITY="0"
+  fi
 
-  echo "$(path_fmt "$pnt_mnt") $(severity_fmt "Free ${free_pcnt}%$(sym_severity) $(human "$free_b")") $(mute "($(human "$size_b")") $(mute "$(path_inv "${pnt_dev}"))")"
+  echo "$(path_fmt "$pnt_mnt") $(severity_fmt "Free ${free_pcnt}%$(sym_severity) $(human "$free_b")") $(mute "($(human "$size_b") $(path_inv "${pnt_dev}"))")"
 
   i="$((i + 1))"
 done
