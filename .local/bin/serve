@@ -3,10 +3,27 @@ set -euf
 NL="
 "
 
+warnings=""
 directory="$PWD"
 
 if [ "${1:-""}" ]; then
   directory="$(readlink -f "$1")"
+fi
+
+if [ -e "$directory" ] && [ ! -d "$directory" ]; then
+  warnings="${warnings}${warnings:+"$NL"}Warning: ${directory} is not a directory"
+fi
+
+if [ -e "$directory" ] && [ ! -r "$directory" ]; then
+  warnings="${warnings}${warnings:+"$NL"}Warning: ${directory} does not have a read access for the current user"
+fi
+
+if [ ! -e "$directory" ]; then
+  warnings="${warnings}${warnings:+"$NL"}Warning: ${directory} does not exist"
+fi
+
+if [ "$warnings" ]; then
+  printf "\x1b[0;33m%s\x1b[0m\n\n" "$warnings"
 fi
 
 menu_display="" menu_values="" ifcs_count="0"
@@ -14,8 +31,7 @@ for ifc in $(ifconfig | sed -e '/^[a-z0-9]*:.*$/!d' -e 's/:.*$//g' | paste -s -d
   ip="$(ifconfig "$ifc" | sed -e 's/^[[:space:]]*//g' | grep '^inet ' | cut -d ' ' -f2)"
 
   is_localhost=""
-
-  if [ "$ip" = "127.0.0.1" ]; then
+if [ "$ip" = "127.0.0.1" ]; then
     is_localhost="1"
   fi
 
@@ -38,7 +54,7 @@ while true; do
 
   case "$sel_idx" in
     *[!0123456789]*)
-      printf '%s\n\n' "Invalid selection."
+      printf '%s\n\n' "Invalid selection"
       continue
     ;;
     '')
@@ -47,7 +63,7 @@ while true; do
     ;;
     *)
       if [ "$sel_idx" -lt "1" ] || [ "$sel_idx" -gt "$ifcs_count" ]; then
-        printf '%s\n\n' "Invalid selection."
+        printf '%s\n\n' "Invalid selection"
         continue
       fi
 
@@ -146,9 +162,14 @@ case "${OSTYPE:-"$(uname)"}" in
 esac
 
 echo
-echo "Interface: ${ifc} -- IP: ${ip} -- Port: ${port}"
+echo "Interface: ${ifc} | IP: ${ip} | Port: ${port}"
 echo "Directory: ${directory}"
+if [ "$warnings" ]; then
+  printf "\x1b[0;33m%s\x1b[0m\n" "$warnings"
+fi
 echo
 echo "The server log:"
 
 python3 -m "http.server" --bind "$ip" --directory "$directory" "$port"
+
+trap "echo 'Suspending...'" TSTP
