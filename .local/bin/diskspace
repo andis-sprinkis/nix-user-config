@@ -39,9 +39,9 @@ while getopts fh name; do
   esac
 done
 
-# POSIX: "source,size,used,avail,pcent,target"
+export LC_ALL="C"
 
-data="$(LC_ALL="C" df -P | tail -n "+2" | sort -k 6 | sed -e 's/ \+/;/g')"
+data="$(df -P -k | tail -n "+2" | sort -k 6 | sed -e 's/ \+/;/g')"
 
 kb_mb="1024" kb_gb="1048576" kb_tb="1073741824" kb_pb="1099511627776" kb_eb="1125899906842624"
 
