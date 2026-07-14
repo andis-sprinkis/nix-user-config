@@ -114,17 +114,17 @@ printf "\x1b[0;35m%s\x1b[0m\n" "${url}"
 
 if [ "${WAYLAND_DISPLAY:-""}" ] && command -v "wl-copy" 1> "/dev/null" 2> "/dev/null"; then
   echo "$url" | wl-copy
-  echo "Copied to clipboard with 'wl-copy'"
+  echo "Copied URL to clipboard with 'wl-copy'"
 fi
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && command -v "xclip" 1> "/dev/null" 2> "/dev/null"; then
   echo "$url" | xclip -sel "clipboard"
-  echo "Copied to clipboard with 'xclip'"
+  echo "Copied URL to clipboard with 'xclip'"
 fi
 
 if command -v "pbcopy" 1> "/dev/null" 2> "/dev/null"; then
   echo "$url" | pbcopy;
-  echo "Copied to clipboard with 'pb-copy'"
+  echo "Copied URL to clipboard with 'pb-copy'"
 fi
 
 # shellcheck disable=SC3028
