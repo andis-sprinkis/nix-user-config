@@ -3,8 +3,10 @@ set -euf
 NL="
 "
 
+directory="$PWD"
+
 if [ "${1:-""}" ]; then
-  cd "$1"
+  directory="$(readlink -f "$1")"
 fi
 
 menu_display="" menu_values="" ifcs_count="0"
@@ -145,8 +147,8 @@ esac
 
 echo
 echo "Interface: ${ifc} -- IP: ${ip} -- Port: ${port}"
-echo "Directory: ${PWD}"
+echo "Directory: ${directory}"
 echo
 echo "The server log:"
 
-python3 -m "http.server" --bind "$ip" --directory "./" "$port"
+python3 -m "http.server" --bind "$ip" --directory "$directory" "$port"
