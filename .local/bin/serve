@@ -166,7 +166,7 @@ if [ "$warnings" ]; then
   printf "\x1b[0;33m%s\x1b[0m\n" "$warnings"
 fi
 
-echo "${NL}The server log:"
+echo "${NL}Python http.server log:"
 
 python3 -m "http.server" --bind "$ip" --directory "$directory" "$port"
 
