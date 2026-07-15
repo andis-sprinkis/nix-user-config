@@ -212,11 +212,11 @@ if [ -z "${HAS_ENV_SET:-""}" ]; then
   export HAS_ENV_SET="1"
 fi
 
-export ENVPATHDIFF="$ENVPATHDIFF"
-
 # shellcheck disable=SC3028
 case "${OSTYPE:-"$(uname)"}" in
   [dD]"arwin"*)
+    export ENVPATHDIFF="$ENVPATHDIFF"
+
     PATH="${PATH#"$ENVPATHDIFF"}"
     PATH="${ENVPATHDIFF}${PATH}"
   ;;
