@@ -56,13 +56,13 @@ if [ -z "${HAS_INTERACTIVE_SET:-""}" ]; then
   export HAS_INTERACTIVE_SET="1"
 fi
 
+# lfcd
+lfcd() { cd "$(command lf -print-last-dir "$@")" || return; }
+
 # configure pyenv
 # if command -v "pyenv" 1>/dev/null 2>/dev/null; then
 #   eval "$(pyenv init - zsh)"
 # fi
-
-# lfcd
-lfcd() { cd "$(command lf -print-last-dir "$@")" || return; }
 
 pyenv() {
   command="${1:-""}"
