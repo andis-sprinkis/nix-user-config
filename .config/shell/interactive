@@ -1,8 +1,5 @@
 #!/usr/bin/env sh
 
-# lfcd
-lfcd() { cd "$(command lf -print-last-dir "$@")" || return; }
-
 # configure windows terminal
 # if [ "$WT_SESSION" ]; then
 #   export COLORTERM="truecolor"
@@ -54,6 +51,9 @@ fi
 # if command -v "pyenv" 1>/dev/null 2>/dev/null; then
 #   eval "$(pyenv init - zsh)"
 # fi
+
+# lfcd
+lfcd() { cd "$(command lf -print-last-dir "$@")" || return; }
 
 pyenv() {
   command="${1:-""}"
