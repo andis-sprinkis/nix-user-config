@@ -3,19 +3,6 @@
 # lfcd
 lfcd() { cd "$(command lf -print-last-dir "$@")" || return; }
 
-if [ -z "${HAS_INTERACTIVE_SET:-""}" ]; then
-  # initialize homebrew
-  if [ "${BREW_PREFIX:-""}" ] && [ -f "${BREW_PREFIX}/bin/brew" ]; then
-    # eval "$("${BREW_PREFIX}/bin/brew" "shellenv")"
-    PATH="${BREW_PREFIX}/bin:${BREW_PREFIX}/sbin:${PATH}"
-
-    # use the GNU utils on macOS
-    if [ "$HAS_BREW_GNUBIN" ]; then
-      PATH="${BREW_PREFIX}/opt/coreutils/libexec/gnubin:${PATH}"
-    fi
-  fi
-fi
-
 # configure windows terminal
 # if [ "$WT_SESSION" ]; then
 #   export COLORTERM="truecolor"
