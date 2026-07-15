@@ -217,7 +217,7 @@ case "${OSTYPE:-"$(uname)"}" in
   [dD]"arwin"*)
     export ENVPATHDIFF="$ENVPATHDIFF"
 
-    PATH="$(printf '%s' "$PATH" | sed -e "s|${ENVPATHDIFF}||g")"
+    PATH="$(echo "$PATH" | sed -e "s|${ENVPATHDIFF}||g")"
     PATH="${ENVPATHDIFF}${PATH}"
   ;;
 esac
