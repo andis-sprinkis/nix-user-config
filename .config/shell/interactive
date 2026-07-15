@@ -47,6 +47,15 @@ if [ "${DISPLAY:-""}" ] && [ "${UID:-"$(id -u)"}" -lt "1000" ]; then
   unset DISPLAY
 fi
 
+if [ -z "${HAS_INTERACTIVE_SET:-""}" ]; then
+  # history file path
+  export HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/shell/history"
+
+  export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/pyenv/shims:${PATH}"
+
+  export HAS_INTERACTIVE_SET="1"
+fi
+
 # configure pyenv
 # if command -v "pyenv" 1>/dev/null 2>/dev/null; then
 #   eval "$(pyenv init - zsh)"
@@ -71,12 +80,3 @@ pyenv() {
     ;;
   esac
 }
-
-if [ -z "${HAS_INTERACTIVE_SET:-""}" ]; then
-  # history file path
-  export HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/shell/history"
-
-  export PATH="${XDG_DATA_HOME:-$HOME/.local/share}/pyenv/shims:${PATH}"
-
-  export HAS_INTERACTIVE_SET="1"
-fi
