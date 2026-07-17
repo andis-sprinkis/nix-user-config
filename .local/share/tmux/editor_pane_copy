@@ -1,12 +1,15 @@
 #!/usr/bin/env sh
 set -euf
+NL="
+"
 
 tmp="$(mktemp --suffix="_tmux_pane_copy")"
 
-[ "$tmp" ] || exit "1"
+if [ -z "$tmp" ]; then
+  exit "1"
+fi
 
-echo "# vi: nowrap ft=
-$(tmux capture-pane -pS -)" > "$tmp"
+echo "# vi: nowrap ft=${NL}$(tmux capture-pane -pS -)" > "$tmp"
 
 arg=""
 case "$EDITOR" in
