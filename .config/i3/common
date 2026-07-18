@@ -236,4 +236,4 @@ bar {
 
 bindsym $mod+b bar mode toggle
 
-exec_always ${XDG_DATA_HOME:-$HOME/.local/share}/i3/auto_edge_snap
+# exec_always ${XDG_DATA_HOME:-$HOME/.local/share}/i3/auto_edge_snap
