@@ -7,10 +7,12 @@ fi
 
 tmp="$(mktemp)"
 
-echo "$*" | qrencode -t PNG -s "128" -o - > "$tmp"
+printf '%s\n' "$*" | qrencode -t PNG -s "256" -o - > "$tmp"
 
-case "$(uname)" in
-  "Darwin")
+# shellcheck disable=SC3028
+# shellcheck disable=SC3044
+case "${OSTYPE:-"$(uname)"}" in
+  [dD]"arwin"*)
     open "$tmp" 1>/dev/null 2>/dev/null & disown
   ;;
   *)
