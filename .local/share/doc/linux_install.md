@@ -138,11 +138,13 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
 
     Create file `/boot/loader/entries/arch.conf`:
 
-    ```
+    ```sh
+    cat > "/boot/loader/entries/arch.conf" << 'HEREDOC'
     title Arch Linux
     linux /vmlinuz-linux
     initrd /initramfs-linux.img
     options cryptdevice=UUID=<LUKS container partition UUID>:nvme0n1_luks0 root=/dev/nvme0n1_luks0_volgrp0/root resume=/dev/nvme0n1_luks0_volgrp0/swap module_blacklist=pcspkr,snd_pcsp
+    HEREDOC
     ```
 
     ### Addtional kernel options
@@ -172,19 +174,26 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
 
     Create file `/boot/loader/entries/arch_fallback.conf`:
 
-    ```
+    ```sh
+    cat > "/boot/loader/entries/arch_fallback.conf" << 'HEREDOC'
     title Arch Linux (fallback)
     linux /vmlinuz-linux
     initrd /initramfs-linux-fallback.img
     options cryptdevice=UUID=<LUKS container partition UUID>:nvme0n1_luks0 root=/dev/nvme0n1_luks0_volgrp0/root resume=/dev/nvme0n1_luks0_volgrp0/swap module_blacklist=pcspkr,snd_pcsp
+    HEREDOC
     ```
 
 1.  Configure boot-loader.
+
     Create file `/boot/loader/loader.conf`:
-    ```
+
+    ```sh
+    cat > "/boot/loader/loader.conf" << 'HEREDOC'
     #timeout 0
     #console-mode keep
+    HEREDOC
     ```
+
 1.  Update the file `/etc/mkinitcpio.conf`.
     1. Change value of the variable `MODULES`, adding `usbhid xhci_hcd`:
         ```sh
@@ -219,15 +228,21 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     ```
 1.  Set system locale.
     1. Add to file `/etc/locale.gen`:
-        ```
+
+        ```sh
+        cat >> "/etc/locale.gen" << 'HEREDOC'
         en_US.UTF-8 UTF-8
         lv_LV.UTF-8 UTF-8
+        HEREDOC
         ```
+
     1. ```sh
        locale-gen
        ```
-    1. Create file `/etc/locale.conf`
+    1. Create file `/etc/locale.conf`:
+
         ```sh
+        cat > "/etc/locale.conf" << 'sh'
         LANG=en_US.UTF-8
         LC_CTYPE=lv_LV.UTF-8
         LC_NUMERIC=lv_LV.UTF-8
@@ -240,17 +255,25 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
         LC_ADDRESS=lv_LV.UTF-8
         LC_TELEPHONE=lv_LV.UTF-8
         LC_MEASUREMENT=lv_LV.UTF-8
+        sh
         ```
+
 1.  Set the console font and keymap.
-    Add to file `/etc/vconsole.conf`:
+
+    Create file `/etc/vconsole.conf`:
+
     ```sh
+    cat > "/etc/vconsole.conf" << 'sh'
     FONT=ter-v24b
     KEYMAP=lv
+    sh
     ```
+
 1.  Set console typematic delay and rate (keyboard input speed).
     1. Create file `/etc/systemd/system/console-kbdrate.service`:
 
-        ```dosini
+        ```sh
+        cat > "/etc/systemd/system/console-kbdrate.service" << 'dosini'
         [Unit]
         Description=Console typematic delay and rate (kbdrate).
 
@@ -263,6 +286,7 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
 
         [Install]
         WantedBy=multi-user.target
+        dosini
         ```
 
     1. ```sh
@@ -479,6 +503,7 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     ```sh
     ssh usr0@192.168.1.99
     ```
+
 1.  Start the graphical session and follow [_The web browsers setup_](./web_browser_setup.md)
 
 ## Encryption, automatic unlocking and mounting of an another drive on the system
@@ -586,7 +611,8 @@ LVM on LUKS.
 1. Use `arandr` to define and test the display configuration.
 1. Create file `/etc/X11/xorg.conf.d/30-displays.conf` with the display configuration parameters e.g.
 
-    ```xf86conf
+    ```sh
+    cat > "/etc/X11/xorg.conf.d/30-displays.conf" << 'xf86conf'
     Section "Monitor"
          Identifier "DisplayPort-0"
          Option "Rotate" "right"
@@ -604,6 +630,7 @@ LVM on LUKS.
          Option "Rotate" "right"
          Option "LeftOf" "DisplayPort-0"
     EndSection
+    xf86conf
     ```
 
 1. Restart X11 and the window manager.
@@ -621,11 +648,13 @@ LVM on LUKS.
 1.  Use `wdisplays` to define and test the display configuration.
 1.  Create file `/etc/sway/config.d/20-outputs.conf` with the display configuration parameters e.g.
 
-    ```swayconfig
+    ```sh
+    cat > "/etc/sway/config.d/20-outputs.conf" << 'swayconfig'
     # vi: ft=swayconfig
     output HDMI-A-1 pos 0    0 res 2560x1440 transform 90
     output DP-1     pos 1440 0 res 2560x1440 transform 90
     output DP-2     pos 2880 0 res 2560x1440 transform 90
+    swayconfig
     ```
 
 1.  Include file `/etc/sway/config.d/20-outputs.conf` in end of the `${XDG_CONFIG_HOME:-$HOME/.config}/sway/config` file.
