@@ -112,16 +112,16 @@ IFS="$NL"
 for line in $(df -P -k | tail -n "+2" | sort -k 6 | sed -e 's/ \+/;/g'); do
   IFS="$IFS_"
 
-  pnt_dev="$(echo "$line" | cut -d";" -f1)"
-  pnt_mnt="$(echo "$line" | cut -d";" -f6)"
+  fs="$(echo "$line" | cut -d";" -f1)"
+  mnt="$(echo "$line" | cut -d";" -f6)"
 
   if [ "$opt_has_f" = "0" ]; then
-    case "$pnt_dev" in
+    case "$fs" in
       "none"|"tmpfs"|"efivarfs"|"dev"|*".appimage")
         continue
       ;;
       "run")
-        case "$pnt_mnt" in
+        case "$mnt" in
           "/run/media/"*)
           ;;
           *)
@@ -130,7 +130,7 @@ for line in $(df -P -k | tail -n "+2" | sort -k 6 | sed -e 's/ \+/;/g'); do
         esac
       ;;
       *)
-        case "$pnt_mnt" in
+        case "$mnt" in
           "/boot")
             continue
           ;;
@@ -157,7 +157,7 @@ for line in $(df -P -k | tail -n "+2" | sort -k 6 | sed -e 's/ \+/;/g'); do
     sym_severity="~"
   fi
 
-  echo "$(path_fmt "$pnt_mnt") $(severity_fmt "Free ${free_pcnt}%${sym_severity} $(human "$free_b")") $(mute "($(human "$size_b") $(path_inv "${pnt_dev}"))")"
+  echo "$(path_fmt "$mnt") $(severity_fmt "Free ${free_pcnt}%${sym_severity} $(human "$free_b")") $(mute "($(human "$size_b") $(path_inv "${fs}"))")"
 
   i="$((i + 1))"
 done
