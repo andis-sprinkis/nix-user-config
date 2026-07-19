@@ -51,24 +51,6 @@ human() {
   if [ "$1" -lt "$kb_eb" ]; then printf "%sPB\n" "$(awk "BEGIN { printf \"%.1f\n\", ${1} / ${kb_pb} }" | sed -e 's/\.0$//g')"; return; fi
 }
 
-mute() {
-  printf "\x1b[0;90m%s\x1b[0m\n" "$1"
-}
-
-severity_fmt() {
-  case "$SEVERITY" in
-    "0")
-      printf "\x1b[0;32m%s\x1b[0m\n" "$1"
-    ;;
-    "1")
-      printf "\x1b[0;33m%s\x1b[0m\n" "$1"
-    ;;
-    "2")
-      printf "\x1b[0;31m%s\x1b[0m\n" "$1"
-    ;;
-  esac
-}
-
 path_inv() {
   inv=""
 
@@ -96,18 +78,20 @@ path_inv() {
 path_fmt() {
   case "$1" in
     "/")
-      severity_fmt "\\"
+      printf "${fmt_severity}%s${fmt_reset}\n" "\\"
     ;;
     "/"*)
-      echo "$(severity_fmt "$(path_inv "/${1##*/}")")$(mute "$(path_inv "${1%/*}")")"
+      printf \
+        "${fmt_severity}%s${fmt_reset}${fmt_mute}%s${fmt_reset}\n" "${1##*/}" "\\$(path_inv "${1%/*}")"
     ;;
     *)
-      severity_fmt "$1"
+      printf "${fmt_severity}%s${fmt_reset}\n" "$1"
     ;;
   esac
 }
 
-i="1"
+fmt_reset="\x1b[0m" fmt_severity="\x1b[0;32m" fmt_mute="\x1b[0;90m"
+
 IFS="$NL"
 for line in $(df -P -k | tail -n "+2" | sort -k 6 | sed -e 's/ \+/;/g'); do
   IFS="$IFS_"
@@ -139,26 +123,27 @@ for line in $(df -P -k | tail -n "+2" | sort -k 6 | sed -e 's/ \+/;/g'); do
     esac
   fi
 
-  use_pcnt="$(echo "$line" | cut -d";" -f5)"
-  use_pcnt="${use_pcnt%%%}"
-  free_pcnt="$((100 - use_pcnt))"
+  size_b="$(echo "$line" | cut -d";" -f2)"
   # use_b="$(echo "$line" | cut -d";" -f3)"
   free_b="$(echo "$line" | cut -d";" -f4)"
-  size_b="$(echo "$line" | cut -d";" -f2)"
+  use_pcnt="$(echo "$line" | cut -d";" -f5)"
+  use_pcnt="${use_pcnt%%%}"
 
-  SEVERITY="0"
+  free_pcnt="$((100 - use_pcnt))"
+
+  fmt_severity="\x1b[0;32m"
   sym_severity=""
 
   if [ "$use_pcnt" -ge "90" ]; then
-    SEVERITY="2"
     sym_severity="!"
+    fmt_severity="\x1b[0;31m"
   elif [ "$use_pcnt" -ge "60" ]; then
-    SEVERITY="1"
     sym_severity="~"
+    fmt_severity="\x1b[0;33m"
   fi
 
-  echo "$(path_fmt "$mnt") $(severity_fmt "Free ${free_pcnt}%${sym_severity} $(human "$free_b")") $(mute "($(human "$size_b") $(path_inv "${fs}"))")"
-
-  i="$((i + 1))"
+  printf \
+    "%s ${fmt_severity}Free %s%%%s %s${fmt_reset} ${fmt_mute}(%s %s)${fmt_reset}\n" \
+    "$(path_fmt "$mnt")" "$free_pcnt" "$sym_severity" "$(human "$free_b")" "$(human "$size_b")" "$(path_inv "$fs")"
 done
 IFS="$IFS_"
