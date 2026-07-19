@@ -90,7 +90,9 @@ path_fmt() {
   esac
 }
 
-fmt_reset="\x1b[0m" fmt_severity="\x1b[0;32m" fmt_mute="\x1b[0;90m"
+fmt_reset="\x1b[0m"
+fmt_severity="\x1b[0;32m"
+fmt_mute="\x1b[0;90m"
 
 IFS="$NL"
 for line in $(df -P -k | tail -n "+2" | sort -k 6 | sed -e 's/ \+/;/g'); do
