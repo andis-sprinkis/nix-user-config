@@ -99,8 +99,13 @@ IFS="$NL"
 for line in $(df -P -k | tail -n "+2" | sort -k 6 | sed -e 's/[[:space:]]\+/;/g'); do
   IFS="$IFS_"
 
-  fs="$(echo "$line" | cut -d";" -f1)"
-  mnt="$(echo "$line" | cut -d";" -f6)"
+  IFS=";"
+  # shellcheck disable=SC2086
+  set -- $line
+  IFS="$IFS_"
+
+  fs="$1"
+  mnt="$6"
 
   if [ -z "$opt_has_f" ]; then
     case "$fs" in
@@ -126,10 +131,9 @@ for line in $(df -P -k | tail -n "+2" | sort -k 6 | sed -e 's/[[:space:]]\+/;/g'
     esac
   fi
 
-  size_b="$(echo "$line" | cut -d";" -f2)"
-  free_b="$(echo "$line" | cut -d";" -f4)"
-  use_pcnt="$(echo "$line" | cut -d";" -f5)"
-  use_pcnt="${use_pcnt%%%}"
+  size_b="$2"
+  free_b="$4"
+  use_pcnt="${5%%%}"
 
   free_pcnt="$((100 - use_pcnt))"
 
