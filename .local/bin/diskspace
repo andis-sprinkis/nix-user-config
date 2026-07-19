@@ -141,11 +141,11 @@ for line in $(df -P -k | tail -n "+2" | sort -k 6 | sed -e 's/[[:space:]]\+/;/g'
   sym_severity=""
 
   if [ "$use_pcnt" -ge "90" ]; then
-    sym_severity="!"
     fmt_severity="\x1b[0;31m"
+    sym_severity="!"
   elif [ "$use_pcnt" -ge "60" ]; then
-    sym_severity="~"
     fmt_severity="\x1b[0;33m"
+    sym_severity="~"
   fi
 
   printf \
