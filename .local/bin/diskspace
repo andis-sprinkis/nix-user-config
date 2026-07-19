@@ -45,10 +45,10 @@ kb_mb="1024" kb_gb="1048576" kb_tb="1073741824" kb_pb="1099511627776" kb_eb="112
 
 human() {
   if [ "$1" -lt "$kb_mb" ]; then printf "%sKB\n" "$1";  return; fi
-  if [ "$1" -lt "$kb_gb" ]; then printf "%sMB\n" "$(echo "scale = 1; ${1} / ${kb_mb}" | bc | sed -e 's/\.0$//g')"; return; fi
-  if [ "$1" -lt "$kb_tb" ]; then printf "%sGB\n" "$(echo "scale = 1; ${1} / ${kb_gb}" | bc | sed -e 's/\.0$//g')"; return; fi
-  if [ "$1" -lt "$kb_pb" ]; then printf "%sTB\n" "$(echo "scale = 1; ${1} / ${kb_tb}" | bc | sed -e 's/\.0$//g')"; return; fi
-  if [ "$1" -lt "$kb_eb" ]; then printf "%sPB\n" "$(echo "scale = 1; ${1} / ${kb_pb}" | bc | sed -e 's/\.0$//g')"; return; fi
+  if [ "$1" -lt "$kb_gb" ]; then printf "%sMB\n" "$(awk "BEGIN { printf \"%.1f\n\", ${1} / ${kb_mb} }" | sed -e 's/\.0$//g')"; return; fi
+  if [ "$1" -lt "$kb_tb" ]; then printf "%sGB\n" "$(awk "BEGIN { printf \"%.1f\n\", ${1} / ${kb_gb} }" | sed -e 's/\.0$//g')"; return; fi
+  if [ "$1" -lt "$kb_pb" ]; then printf "%sTB\n" "$(awk "BEGIN { printf \"%.1f\n\", ${1} / ${kb_tb} }" | sed -e 's/\.0$//g')"; return; fi
+  if [ "$1" -lt "$kb_eb" ]; then printf "%sPB\n" "$(awk "BEGIN { printf \"%.1f\n\", ${1} / ${kb_pb} }" | sed -e 's/\.0$//g')"; return; fi
 }
 
 mute() {
