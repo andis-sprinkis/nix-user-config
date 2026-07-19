@@ -169,5 +169,3 @@ fi
 echo "${NL}Python http.server log:"
 
 python3 -m "http.server" --bind "$ip" --directory "$directory" "$port"
-
-trap "echo 'Suspending...'" TSTP
