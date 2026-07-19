@@ -127,7 +127,6 @@ for line in $(df -P -k | tail -n "+2" | sort -k 6 | sed -e 's/ \+/;/g'); do
   fi
 
   size_b="$(echo "$line" | cut -d";" -f2)"
-  # use_b="$(echo "$line" | cut -d";" -f3)"
   free_b="$(echo "$line" | cut -d";" -f4)"
   use_pcnt="$(echo "$line" | cut -d";" -f5)"
   use_pcnt="${use_pcnt%%%}"
