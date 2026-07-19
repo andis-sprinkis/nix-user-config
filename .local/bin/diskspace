@@ -56,7 +56,7 @@ path_inv() {
   inv=""
 
   IFS="$NL"
-  for i in $(printf '%s' "$1" | sed -e 's/\//\/\n/g'); do
+  for i in $(printf '%s' "$1" | sed -e 's|/|/\n|g'); do
     IFS="$IFS_"
 
     case "$i" in
