@@ -4,9 +4,10 @@ IFS_="$IFS"
 NL="
 "
 
-script="$(basename "$0")"
+help_info() {
+  script="$(basename "$0")"
 
-help_info="NAME
+  echo "NAME
     ${script} - Show disk utilization.
 
 SYNOPSIS
@@ -19,21 +20,21 @@ DESCRIPTION
         Shows utilization for all devices (including all of the 'tmpfs', 'efivarf', 'run', 'dev').
 
     -h
-        Prints this message.
-"
+        Prints this message."
+}
 
-opt_has_f="0"
+opt_has_f=""
 while getopts fh name; do
   case "$name" in
     "f")
       opt_has_f="1"
     ;;
     "h")
-      echo "$help_info"
+      help_info
       exit
     ;;
     "?")
-      echo "$help_info" 1>&2
+      help_info 1>&2
       exit "2"
     ;;
   esac
@@ -101,7 +102,7 @@ for line in $(df -P -k | tail -n "+2" | sort -k 6 | sed -e 's/ \+/;/g'); do
   fs="$(echo "$line" | cut -d";" -f1)"
   mnt="$(echo "$line" | cut -d";" -f6)"
 
-  if [ "$opt_has_f" = "0" ]; then
+  if [ -z "$opt_has_f" ]; then
     case "$fs" in
       "none"|"tmpfs"|"efivarfs"|"dev"|*".appimage")
         continue
