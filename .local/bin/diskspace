@@ -96,7 +96,7 @@ fmt_severity="\x1b[0;32m"
 fmt_mute="\x1b[0;90m"
 
 IFS="$NL"
-for line in $(df -P -k | tail -n "+2" | sort -k 6 | sed -e 's/ \+/;/g'); do
+for line in $(df -P -k | tail -n "+2" | sort -k 6 | sed -e 's/[[:space:]]\+/;/g'); do
   IFS="$IFS_"
 
   fs="$(echo "$line" | cut -d";" -f1)"
