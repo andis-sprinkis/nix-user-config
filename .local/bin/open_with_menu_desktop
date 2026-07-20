@@ -1,12 +1,14 @@
 #!/usr/bin/env sh
 set -euf
 IFS_="$IFS"
+NL="
+"
 
-file_list="" cmd=""
+file_list=""
+cmd=""
 
 open_with_cmd() {
-  IFS="
-"
+  IFS="$NL"
   for f in $file_list; do
     IFS="$IFS_"
     $cmd "$f" 1> "/dev/null" 2> "/dev/null" & disown
@@ -17,13 +19,11 @@ open_with_cmd() {
 }
 
 open_with_cmd_terminal() {
-  IFS="
-"
+  IFS="$NL"
   for f in $file_list; do
     IFS="$IFS_"
 
-    $TERMINAL -e "$SHELL" -c "$cmd \"${f}\"
-echo \"(\$?) Press any key to exit\"; read" 1> "/dev/null" 2> "/dev/null" & disown
+    $TERMINAL -e "$SHELL" -c "$cmd \"${f}\"${NL}echo \"(\$?) Press any key to exit\"; read" 1> "/dev/null" 2> "/dev/null" & disown
   done
   IFS="$IFS_"
 
@@ -49,15 +49,13 @@ fi
 if [ "$#" -eq "0" ]; then
   while read file; do
     if [ "$file" ]; then
-      file_list="${file_list:+"$file_list"
-}${file}"
+      file_list="${file_list:+"${file_list}${NL}"}${file}"
     fi
   done
 else
   while [ "$#" -gt "0" ]; do
     if [ "$1" ]; then
-      file_list="${file_list:+"$file_list"
-}${1}"
+      file_list="${file_list:+"${file_list}${NL}"}${1}"
     fi
 
     shift
