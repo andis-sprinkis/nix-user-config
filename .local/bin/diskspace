@@ -45,30 +45,30 @@ export LC_ALL="C"
 fmt_reset="\x1b[0m" fmt_severity="\x1b[0;32m" fmt_mute="\x1b[0;90m"
 
 human() {
-  if [ "$1" -lt "1024" ]; then
+  if [ "$1" -lt "1024" ]; then # <1MB
     echo "${1}KB"
     return
   fi
 
-  if [ "$1" -lt "1048576" ]; then
+  if [ "$1" -lt "1048576" ]; then # <1GB
     ans="$(awk "BEGIN { printf \"%.1f\n\", ${1} / 1024 }")"
     echo "${ans%.0}MB"
     return
   fi
 
-  if [ "$1" -lt "1073741824" ]; then
+  if [ "$1" -lt "1073741824" ]; then # <1TB
     ans="$(awk "BEGIN { printf \"%.1f\n\", ${1} / 1048576 }")"
     echo "${ans%.0}GB"
     return
   fi
 
-  if [ "$1" -lt "1099511627776" ]; then
+  if [ "$1" -lt "1099511627776" ]; then # <1PB
     ans="$(awk "BEGIN { printf \"%.1f\n\", ${1} / 1073741824 }")"
     echo "${ans%.0}TB"
     return
   fi
 
-  if [ "$1" -lt "1125899906842624" ]; then
+  if [ "$1" -lt "1125899906842624" ]; then # <1EB
     ans="$(awk "BEGIN { printf \"%.1f\n\", ${1} / 1099511627776 }")"
     echo "${ans%.0}PB"
     return
