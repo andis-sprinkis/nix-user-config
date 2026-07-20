@@ -42,15 +42,37 @@ done
 
 export LC_ALL="C"
 
-kb_mb="1024" kb_gb="1048576" kb_tb="1073741824" kb_pb="1099511627776" kb_eb="1125899906842624"
 fmt_reset="\x1b[0m" fmt_severity="\x1b[0;32m" fmt_mute="\x1b[0;90m"
 
 human() {
-  if [ "$1" -lt "$kb_mb" ]; then printf "%sKB\n" "$1";  return; fi
-  if [ "$1" -lt "$kb_gb" ]; then printf "%sMB\n" "$(awk "BEGIN { printf \"%.1f\n\", ${1} / ${kb_mb} }" | sed -e 's/\.0$//g')"; return; fi
-  if [ "$1" -lt "$kb_tb" ]; then printf "%sGB\n" "$(awk "BEGIN { printf \"%.1f\n\", ${1} / ${kb_gb} }" | sed -e 's/\.0$//g')"; return; fi
-  if [ "$1" -lt "$kb_pb" ]; then printf "%sTB\n" "$(awk "BEGIN { printf \"%.1f\n\", ${1} / ${kb_tb} }" | sed -e 's/\.0$//g')"; return; fi
-  if [ "$1" -lt "$kb_eb" ]; then printf "%sPB\n" "$(awk "BEGIN { printf \"%.1f\n\", ${1} / ${kb_pb} }" | sed -e 's/\.0$//g')"; return; fi
+  if [ "$1" -lt "1024" ]; then
+    printf "%sKB\n" "$1"
+    return
+  fi
+
+  if [ "$1" -lt "1048576" ]; then
+    ans="$(awk "BEGIN { printf \"%.1f\n\", ${1} / 1024 }")"
+    printf "%sMB\n" "${ans%.0}"
+    return
+  fi
+
+  if [ "$1" -lt "1073741824" ]; then
+    ans="$(awk "BEGIN { printf \"%.1f\n\", ${1} / 1048576 }")"
+    printf "%sGB\n" "${ans%.0}"
+    return
+  fi
+
+  if [ "$1" -lt "1099511627776" ]; then
+    ans="$(awk "BEGIN { printf \"%.1f\n\", ${1} / 1073741824 }")"
+    printf "%sTB\n" "${ans%.0}"
+    return
+  fi
+
+  if [ "$1" -lt "1125899906842624" ]; then
+    ans="$(awk "BEGIN { printf \"%.1f\n\", ${1} / 1099511627776 }")"
+    printf "%sPB\n" "${ans%.0}"
+    return
+  fi
 }
 
 path_inv() {
