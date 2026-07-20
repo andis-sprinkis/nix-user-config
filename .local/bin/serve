@@ -4,11 +4,7 @@ NL="
 "
 
 warnings=""
-directory="$PWD"
-
-if [ "${1:-""}" ]; then
-  directory="$(readlink -f "$1")"
-fi
+directory="$(readlink -f "${1:-"$PWD"}")"
 
 if [ -e "$directory" ] && [ ! -d "$directory" ]; then
   warnings="${warnings}${warnings:+"$NL"}Warning: ${directory} is not a directory"
