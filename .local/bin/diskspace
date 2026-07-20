@@ -42,8 +42,8 @@ done
 
 export LC_ALL="C"
 
-fmt_reset="\x1b[0m" fmt_severity="\x1b[0;32m" fmt_mute="\x1b[0;90m"
 kb_mb="1024" kb_gb="1048576" kb_tb="1073741824" kb_pb="1099511627776" kb_eb="1125899906842624"
+fmt_reset="\x1b[0m" fmt_severity="\x1b[0;32m" fmt_mute="\x1b[0;90m"
 
 human() {
   if [ "$1" -lt "$kb_mb" ]; then printf "%sKB\n" "$1";  return; fi
