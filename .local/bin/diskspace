@@ -53,27 +53,29 @@ human() {
 }
 
 path_inv() {
-  inv=""
+  printf '%s\n' "$1" | sed -e 's|/|/\n|g' | {
+    inv=""
 
-  IFS="$NL"
-  for i in $(printf '%s' "$1" | sed -e 's|/|/\n|g'); do
+    IFS="$NL"
+    while read -r i; do
+      IFS="$IFS_"
+
+      case "$i" in
+        "/")
+          inv="\\${inv}"
+        ;;
+        *"/")
+          inv="\\${i%%/}${inv}"
+        ;;
+        *)
+          inv="${i}${inv}"
+        ;;
+      esac
+    done
     IFS="$IFS_"
 
-    case "$i" in
-      "/")
-        inv="\\${inv}"
-      ;;
-      *"/")
-        inv="\\${i%%/}${inv}"
-      ;;
-      *)
-        inv="${i}${inv}"
-      ;;
-    esac
-  done
-  IFS="$IFS_"
-
-  printf '%s\n' "$inv"
+    printf '%s\n' "$inv"
+  }
 }
 
 path_fmt() {
