@@ -5,7 +5,10 @@ dev=""
 
 # shellcheck disable=SC2154
 if [ -d "$f" ] && mountpoint -q -- "$f" 1>/dev/null 2>/dev/null; then
-  dev="$(set +e; grep " ${f} " "/proc/mounts" | cut -d" " -f1; set -e)"
+  dev="$(
+    set +e; d="$(grep " ${f} " "/proc/mounts")"; set -e
+    printf '%s\n' "${d%% *}"
+  )"
 fi
 
 # shellcheck disable=SC2154

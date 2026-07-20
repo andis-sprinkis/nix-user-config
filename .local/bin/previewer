@@ -167,7 +167,8 @@ print_mime() {
 }
 
 print_lines_count() {
-  lines_count="$(wc -l "$FPATH" | cut -d" " -f1)"
+  lines_count="$(wc -l "$FPATH")"
+  lines_count="${lines_count%% *}"
 
   case "$lines_count" in
     "1")
@@ -413,7 +414,11 @@ case "$MIME" in
     if [ -r "$FPATH" ]; then
       if find_util "mountpoint"; then
         if mountpoint -q -- "$FPATH"; then
-          dev="$(set +e; grep " ${FPATH} " "/proc/mounts" | cut -d" " -f1; set -e)"
+          dev="$(
+            set +e; d="$(grep " ${FPATH} " "/proc/mounts")"; set -e
+            d="${d% * * * *}" d="${d#* }"
+            printf '%s' "$d"
+          )"
 
           if [ "$dev" ]; then
             printf "\x1b[0;1m%s\x1b[0m\n%s\n" "Mount point of:" "${dev}"
