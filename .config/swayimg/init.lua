@@ -8,7 +8,7 @@ S.text.hide()
 S.enable_decoration(true)
 S.enable_overlay(false)
 S.set_dnd_button('MouseExtra')
-S.gallery.enable_pstore(true)
+S.gallery.enable_pstore(false)
 S.gallery.limit_cache(8192)
 S.gallery.set_aspect('fit')
 S.gallery.set_border_size(8)
@@ -30,6 +30,17 @@ S.slideshow.set_default_scale('fit')
 S.slideshow.set_drag_button('MouseRight')
 S.slideshow.set_timeout(slideshow_tmout)
 S.slideshow.set_window_background(0xff000000)
+
+local username = os.getenv('USER')
+
+if username ~= nil then
+  local pstore_path="/tmp/swayimg_" .. username
+
+  if os.execute('mkdir -p ' .. pstore_path .. ' && chmod 700 ' .. pstore_path) then
+    S.gallery.set_pstore_path(pstore_path)
+    S.gallery.enable_pstore(true)
+  end
+end
 
 local nop = function() end
 
