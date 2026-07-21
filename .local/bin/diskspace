@@ -76,7 +76,16 @@ human() {
 }
 
 path_inv() {
-  printf '%s\n' "$1" | sed -e 's|/|/\n|g' | {
+  fp="$1" pre=""
+
+  case "$1" in
+    *"@"*":/"*)
+      fp="${1#*"@"*":"}"
+      pre="${1%"$fp"}"
+    ;;
+  esac
+
+  printf '%s\n' "$fp" | sed -e 's|/|/\n|g' | {
     inv=""
 
     IFS="$NL"
@@ -97,7 +106,7 @@ path_inv() {
     done
     IFS="$IFS_"
 
-    printf '%s\n' "$inv"
+    printf '%s\n' "${pre}${inv}"
   }
 }
 
