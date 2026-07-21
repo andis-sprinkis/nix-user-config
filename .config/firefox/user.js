@@ -296,6 +296,7 @@ user_pref("toolkit.telemetry.updatePing.enabled", false);
 user_pref("toolkit.winRegisterApplicationRestart", false);
 user_pref("toolkit.zoomManager.zoomValues", ".3,.5,.67,.8,.9,1,1.1,1.15,1.2,1.25,1.33,1.5,1.7,2,2.4,3,4,5");
 user_pref("trailhead.firstrun.didSeeAboutWelcome", true);
+user_pref("ui.tooltip.delay_ms", 210);
 user_pref("view_source.tab_size", 2);
 user_pref("view_source.wrap_long_lines", true);
 user_pref("widget.non-native-theme.scrollbar.style", 3);
