@@ -120,6 +120,7 @@ alias \
   T="TMOUT=5400" \
   T0="TMOUT=0" \
   umount="sudo umount" \
+  umount_sshfs="fusermount -u" \
   unlock_user="sudo faillock --reset --user" \
   tree="tree -CF" \
   viff="nvim -d" \
