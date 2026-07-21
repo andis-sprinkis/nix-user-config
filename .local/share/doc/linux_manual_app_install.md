@@ -309,6 +309,40 @@ sudo rm "/usr/share/zsh/site-functions/_qrcp"
 sudo rm "/usr/local/bin/qrcp"
 ```
 
+## `volta`
+
+- [volta-cli/volta: Volta: JS Toolchains as Code. ⚡](https://github.com/volta-cli/volta/)
+- [Releases · volta-cli/volta](https://github.com/volta-cli/volta/releases)
+- [PKGBUILD - aur.git - AUR Package Repositories](https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=volta-bin)
+
+Installation:
+
+```sh
+mkdir "/tmp/volta-install"
+cd "/tmp/volta-install"
+
+curl -L "https://github.com/volta-cli/volta/releases/download/v2.0.2/volta-2.0.2-linux.tar.gz" -o "./archive.tar.gz"
+echo "6cec054c911fb925b629a09455775af6e95dc0f5694a4c28b63979ab9ef18037  archive.tar.gz" | sha256sum -c
+
+tar -xvzf "./archive.tar.gz"
+
+chmod +x "./volta" "./volta-shim" "./volta-migrate"
+sudo cp "./volta" "/usr/local/bin/volta"
+sudo cp "./volta-shim" "/usr/local/bin/volta-shim"
+sudo cp "./volta-migrate" "/usr/local/bin/volta-migrate"
+
+cd "$HOME"
+rm -rf "/tmp/volta-install"
+```
+
+Removal:
+
+```sh
+sudo rm "/usr/local/bin/volta"
+sudo rm "/usr/local/bin/volta-migrate"
+sudo rm "/usr/local/bin/volta-shim"
+```
+
 ## `ddd` 🚧
 
 - [DDD - Data Display Debugger - GNU Project - Free Software Foundation (FSF)](https://www.gnu.org/software/ddd/)
