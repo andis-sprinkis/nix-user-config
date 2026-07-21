@@ -17,6 +17,7 @@ user_pref("browser.ai.control.sidebarChatbot", "blocked");
 user_pref("browser.ai.control.smartTabGroups", "blocked");
 user_pref("browser.ai.control.translations", "blocked");
 user_pref("browser.backspace_action", 0);
+user_pref("browser.backup.scheduled.enabled", false);
 user_pref("browser.bookmarks.defaultLocation", "menu");
 user_pref("browser.bookmarks.max_backups", 0);
 user_pref("browser.bookmarks.openInTabClosesMenu", false);
