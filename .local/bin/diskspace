@@ -75,8 +75,8 @@ human() {
   fi
 }
 
-path_inv() {
-  fp="$1" pre="" suf=""
+path_rev() {
+  fp="$1" suf=""
 
   case "$1" in
     "//"*)
@@ -90,7 +90,7 @@ path_inv() {
   esac
 
   printf '%s\n' "$fp" | sed -e 's|/|/\n|g' | {
-    inv=""
+    rev=""
 
     IFS="$NL"
     while read -r i; do
@@ -98,19 +98,19 @@ path_inv() {
 
       case "$i" in
         "/")
-          inv="\\${inv}"
+          rev="\\${rev}"
         ;;
         *"/")
-          inv="\\${i%%/}${inv}"
+          rev="\\${i%%/}${rev}"
         ;;
         *)
-          inv="${i}${inv}"
+          rev="${i}${rev}"
         ;;
       esac
     done
     IFS="$IFS_"
 
-    printf '%s\n' "${pre}${inv}${suf}"
+    printf '%s\n' "${rev}${suf}"
   }
 }
 
@@ -121,7 +121,7 @@ path_fmt() {
     ;;
     "/"*)
       printf \
-        "${fmt_severity}%s${fmt_reset}${fmt_mute}\\%s${fmt_reset}\n" "${1##*/}" "$(path_inv "${1%/*}")"
+        "${fmt_severity}%s${fmt_reset}${fmt_mute}\\%s${fmt_reset}\n" "${1##*/}" "$(path_rev "${1%/*}")"
     ;;
     *)
       printf "${fmt_severity}%s${fmt_reset}\n" "$1"
@@ -182,6 +182,6 @@ df -P -k | tail -n "+2" | sort -k 6 | sed -e 's/[[:space:]]\+/;/g' | while read 
 
   printf \
     "%s ${fmt_severity}Free %s%%%s %s${fmt_reset} ${fmt_mute}(%s %s)${fmt_reset}\n" \
-    "$(path_fmt "$mnt")" "$free_pcnt" "$sym_severity" "$(human "$free_b")" "$(human "$size_b")" "$(path_inv "$fs")"
+    "$(path_fmt "$mnt")" "$free_pcnt" "$sym_severity" "$(human "$free_b")" "$(human "$size_b")" "$(path_rev "$fs")"
 done
 IFS="$IFS_"
