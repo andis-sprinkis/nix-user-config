@@ -93,7 +93,7 @@ path_rev() {
     rev=""
 
     IFS="$NL"
-    while read -r i; do
+    while read -r "i"; do
       IFS="$IFS_"
 
       case "$i" in
