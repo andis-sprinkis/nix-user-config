@@ -76,12 +76,16 @@ human() {
 }
 
 path_inv() {
-  fp="$1" pre=""
+  fp="$1" pre="" suf=""
 
   case "$1" in
+    "//"*)
+      fp="${1#"/"}"
+      suf="\\"
+    ;;
     *"@"*":/"*)
       fp="${1#*"@"*":"}"
-      pre="${1%"$fp"}"
+      suf=":${1%":${fp}"}"
     ;;
   esac
 
@@ -106,7 +110,7 @@ path_inv() {
     done
     IFS="$IFS_"
 
-    printf '%s\n' "${pre}${inv}"
+    printf '%s\n' "${pre}${inv}${suf}"
   }
 }
 
