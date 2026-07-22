@@ -46,7 +46,7 @@ end"
 
 IN() { return "$((($3 - $1) * ($2 - $3) >= 0 ? 0 : 1))"; }
 
-metrics_cache="${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}" # 50 entries
+metrics_cache="${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}" # 50
 
 prev_workspaces=""
 
@@ -118,7 +118,7 @@ while true; do
   $wm_cmd -q "move absolute position ${17} ${18}"
   set -e
 
-  metrics_cache="${*}${NL}${metrics_cache%"${metrics_cache#*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"}"}" # 50 entries
+  metrics_cache="${*}${NL}${metrics_cache%"${metrics_cache#*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"}"}" # 50
 
   sleep "1"
 done
