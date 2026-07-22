@@ -1,7 +1,9 @@
 #!/usr/bin/env sh
 set -euf
-
 IFS_="$IFS"
+NL="
+"
+
 wm="${WAYLAND_DISPLAY:+"sway"}"
 wm="${wm:-"i3"}"
 
@@ -19,8 +21,7 @@ esac
 
 wss_num="$($wm_cmd -t get_workspaces | jq '[.[] | select(.num != -1 ) | .num] | sort | .[]')"
 i="1"
-IFS="
-"
+IFS="$NL"
 echo "$wss_num" | while read -r workspace; do
   IFS="$IFS_"
 

@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 set -euf
+NL="
+"
 
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   exec "xkill"
@@ -20,10 +22,6 @@ details_ps="${details_ps## }"
 
 comm="$(echo "$details_ps" | cut -d" " -f4)"
 
-details="Process:
-${details_ps}
-
-Window title:
-${name}"
+details="Process:${NL}${details_ps}${NL}Window title:${NL}${name}"
 
 printf "%s" "$details" | swaynag -t "warning" -l -b "htop" "htop -p ${pid}" -m "Kill (9) process ${pid} \"${comm}\" of window ${name}?" -Z "Yes" "kill -9 ${pid}"

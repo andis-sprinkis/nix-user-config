@@ -1,9 +1,10 @@
 #!/usr/bin/env sh
 set -euf
+IFS_="$IFS"
+NL="
+"
 
 # Almost works.
-
-_IFS="$IFS"
 
 wm="${WAYLAND_DISPLAY:+"sway"}"
 wm="${wm:-"i3"}"
@@ -25,10 +26,9 @@ ws_focused_num="$(echo "$wss" | jq -r ".[] | select(.focused == true) | .num")"
 wss_vis_count="$(echo "$wss_vis_nums" | wc -l)"
 wss_num_max="$(echo "$wss_nums" | tail -n1)"
 
-wss_num_gaps="$(IFS="
-"
+wss_num_gaps="$(IFS="$NL"
 for c in $(seq "$wss_num_max"); do
-  IFS="$_IFS"
+  IFS="$IFS_"
 
   if echo "$wss_nums" | grep -xq "$c"; then
     continue
@@ -36,7 +36,7 @@ for c in $(seq "$wss_num_max"); do
 
   echo "$c"
 done
-IFS="$_IFS")"
+IFS="$IFS_")"
 
 wss_new_nums="$(echo "${wss_num_gaps:+$wss_num_gaps
 }$(seq "$((wss_num_max + 1))" "$((wss_num_max + wss_vis_count))")" | head -n"$wss_vis_count")"
@@ -49,10 +49,9 @@ $wss_new_nums" | pr -2 -t -s' ')"
 ws_first_vis_num="$(echo "$wss_vis_nums" | head -n "1")"
 ws_last_new_num="$(echo "$wss_new_nums" | tail -n "1")"
 
-IFS="
-"
+IFS="$NL"
 for c in $wss_vis_new_num_cols; do
-  IFS="$_IFS"
+  IFS="$IFS_"
 
   c_num_vis="$(echo "$c" | cut -d" " -f1)"
   c_num_vis_match="$(echo "$c" | cut -d" " -f2)"
@@ -71,7 +70,7 @@ for c in $wss_vis_new_num_cols; do
     query_ws_return="workspace ${c_num_vis_match};"
   fi
 done
-IFS="$_IFS"
+IFS="$IFS_"
 
 query="${query}${query_ws_return}"
 

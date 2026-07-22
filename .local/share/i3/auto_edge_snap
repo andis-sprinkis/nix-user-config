@@ -68,8 +68,11 @@ while true; do
   set -e
 
   if [ "$cache_hit" ]; then
+    # shellcheck disable=SC2086
+    set -- $cache_hit
+
     set +e # The focused window may not be floating anymore
-    $wm_cmd -q "move absolute position $(echo "$cache_hit" | head -n 1 | cut -f17-18 -d" ")"
+    $wm_cmd -q "move absolute position ${17} ${18}"
     set -e
 
     sleep "1"
