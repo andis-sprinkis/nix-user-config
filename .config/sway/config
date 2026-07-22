@@ -83,6 +83,7 @@ bindsym $mod+f fullscreen toggle global
 bindsym $mod+Mod1+r  reload
 bindsym $mod+Mod1+q  exec swaynag -t warning -m 'Exit sway?' -B 'Yes' 'swaymsg exit'
 
+exec_always ${XDG_DATA_HOME:-$HOME/.local/share}/i3/auto_edge_snap
 exec_always ${XDG_CONFIG_HOME:-$HOME/.config}/sway/post_init
 
 include /etc/sway/config.d/*
