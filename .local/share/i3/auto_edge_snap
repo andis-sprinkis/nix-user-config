@@ -3,6 +3,8 @@ set -euf
 NL="
 "
 
+# TODO: Does not work on i3. The i3 get_workspaces array items do not contain .floating_nodes array.
+
 wm="${WAYLAND_DISPLAY:+"sway"}"
 wm="${wm:-"i3"}"
 
