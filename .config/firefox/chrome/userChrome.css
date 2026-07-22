@@ -68,11 +68,11 @@
 }
 
 @-moz-document url-prefix("about:home"), url-prefix("about:newtab"), url-prefix("about:blank") {
-  menu.personalizeButtonWrapper {
+  h1.logo-and-wordmark-wrapper {
     display: none !important;
   }
 
-  h1.logo-and-wordmark-wrapper {
+  menu.personalizeButtonWrapper {
     display: none !important;
   }
 }
