@@ -3,4 +3,8 @@
   menu.personalizeButtonWrapper {
     display: none !important;
   }
+
+  h1.logo-and-wordmark-wrapper {
+    display: none !important;
+  }
 }
