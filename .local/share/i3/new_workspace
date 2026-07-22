@@ -13,7 +13,7 @@ case "$wm" in
   ;;
 esac
 
-wss="$($wm_cmd -t get_workspaces | jq -r 'map({num,focused,representation})')"
+wss="$($wm_cmd -t "get_workspaces" | jq -r 'map({num,focused,representation})')"
 
 # In Sway - checking if workspace is already empty.
 # In i3 the containers have no 'representation' property.
