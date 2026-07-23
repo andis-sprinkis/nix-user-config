@@ -76,16 +76,64 @@ human() {
 }
 
 path_rev() {
-  fp="$1" suf=""
+  fp="$1" suf="" suf_fmt=""
 
   case "$1" in
-    "//"*)
-      fp="${1#"/"}"
-      suf="\\"
+    "//"*"/"*)
+      fp="${1#"//"*"/"}"
+
+      suf="${1%"$fp"}"
+      suf="${suf#"//"}"
+      suf="${suf%"/"}"
+
+      suf_fmt="$(printf '%s\n' "$suf" | sed -e 's|\.|\.\n|g' | {
+        rev=""
+
+        IFS="$NL"
+        while read -r "i"; do
+          IFS="$IFS_"
+
+          case "$i" in
+            *".")
+              rev=".${i%%.}${rev}"
+            ;;
+            *)
+              rev="${i}${rev}"
+            ;;
+          esac
+        done
+        IFS="$IFS_"
+
+        printf '\%s\\\\\n' "$rev"
+      })"
     ;;
     *"@"*":/"*)
       fp="${1#*"@"*":"}"
-      suf=":${1%":${fp}"}"
+      suf="${1%":${fp}"}"
+
+      suf_fmt="$(printf '%s\n' "$suf" | sed -e 's|@|@\n|g' -e 's|\.|\.\n|g' | {
+        rev=""
+
+        IFS="$NL"
+        while read -r "i"; do
+          IFS="$IFS_"
+
+          case "$i" in
+            *".")
+              rev=".${i%%.}${rev}"
+            ;;
+            *"@")
+              rev="@${i%%@}${rev}"
+            ;;
+            *)
+              rev="${i}${rev}"
+            ;;
+          esac
+        done
+        IFS="$IFS_"
+
+        printf ':%s\n' "$rev"
+      })"
     ;;
   esac
 
@@ -110,7 +158,7 @@ path_rev() {
     done
     IFS="$IFS_"
 
-    printf '%s\n' "${rev}${suf}"
+    printf '%s\n' "${rev}${suf_fmt}"
   }
 }
 
