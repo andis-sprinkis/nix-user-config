@@ -42,7 +42,7 @@ done
 
 export LC_ALL="C"
 
-fmt_reset="\x1b[0m" fmt_severity="\x1b[0;32m" fmt_mute="\x1b[0;90m"
+fmt_reset="\x1b[0m" fmt_sever="\x1b[0;32m" fmt_mute="\x1b[0;90m"
 
 human() {
   if [ "$1" -lt "1024" ]; then # <1MB
@@ -165,14 +165,14 @@ path_rev() {
 path_fmt() {
   case "$1" in
     "/")
-      printf "${fmt_severity}%s${fmt_reset}\n" "\\"
+      printf "${fmt_sever}%s${fmt_reset}\n" "\\"
     ;;
     "/"*)
       printf \
-        "${fmt_severity}%s${fmt_reset}${fmt_mute}\\%s${fmt_reset}\n" "${1##*/}" "$(path_rev "${1%/*}")"
+        "${fmt_sever}%s${fmt_reset}${fmt_mute}\\%s${fmt_reset}\n" "${1##*/}" "$(path_rev "${1%/*}")"
     ;;
     *)
-      printf "${fmt_severity}%s${fmt_reset}\n" "$1"
+      printf "${fmt_sever}%s${fmt_reset}\n" "$1"
     ;;
   esac
 }
@@ -217,19 +217,19 @@ df -P -k | tail -n "+2" | sort -k "6" | sed -e 's/[[:space:]]\+/;/g' | while rea
 
   free_pcnt="$((100 - use_pcnt))"
 
-  fmt_severity="\x1b[0;32m"
-  sym_severity=""
+  fmt_sever="\x1b[0;32m"
+  sym_sever=""
 
   if [ "$use_pcnt" -ge "90" ]; then
-    fmt_severity="\x1b[0;31m"
-    sym_severity="!"
+    fmt_sever="\x1b[0;31m"
+    sym_sever="!"
   elif [ "$use_pcnt" -ge "60" ]; then
-    fmt_severity="\x1b[0;33m"
-    sym_severity="~"
+    fmt_sever="\x1b[0;33m"
+    sym_sever="~"
   fi
 
   printf \
-    "%s ${fmt_severity}%s%%%s %s${fmt_reset}${fmt_mute}/%s (%s)${fmt_reset}\n" \
-    "$(path_fmt "$mnt")" "$free_pcnt" "$sym_severity" "$(human "$free_b")" "$(human "$size_b")" "$(path_rev "$fs")"
+    "%s ${fmt_sever}%s%%%s %s${fmt_reset}${fmt_mute}\\%s (%s)${fmt_reset}\n" \
+    "$(path_fmt "$mnt")" "$free_pcnt" "$sym_sever" "$(human "$free_b")" "$(human "$size_b")" "$(path_rev "$fs")"
 done
 IFS="$IFS_"
