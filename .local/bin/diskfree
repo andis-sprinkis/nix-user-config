@@ -23,11 +23,11 @@ DESCRIPTION
         Prints this message."
 }
 
-opt_has_f=""
+opt_f=""
 while getopts fh name; do
   case "$name" in
     "f")
-      opt_has_f="1"
+      opt_f="1"
     ;;
     "h")
       help_info
@@ -187,7 +187,7 @@ df -P -k | tail -n "+2" | sort -k "6" | sed -e 's/[[:space:]]\+/;/g' | while rea
   fs="$1"
   mnt="$6"
 
-  if [ -z "$opt_has_f" ]; then
+  if [ -z "$opt_f" ]; then
     case "$fs" in
       "none"|"tmpfs"|"efivarfs"|"dev"|*".appimage")
         continue
