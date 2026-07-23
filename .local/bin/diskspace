@@ -229,7 +229,7 @@ df -P -k | tail -n "+2" | sort -k "6" | sed -e 's/[[:space:]]\+/;/g' | while rea
   fi
 
   printf \
-    "%s ${fmt_severity}Free %s%%%s %s${fmt_reset} ${fmt_mute}(%s %s)${fmt_reset}\n" \
+    "%s ${fmt_severity}%s%%%s %s${fmt_reset} ${fmt_mute}(%s %s)${fmt_reset}\n" \
     "$(path_fmt "$mnt")" "$free_pcnt" "$sym_severity" "$(human "$free_b")" "$(human "$size_b")" "$(path_rev "$fs")"
 done
 IFS="$IFS_"
