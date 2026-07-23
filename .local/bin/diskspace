@@ -178,7 +178,7 @@ path_fmt() {
 }
 
 IFS="$NL"
-df -P -k | tail -n "+2" | sort -k 6 | sed -e 's/[[:space:]]\+/;/g' | while read -r "line"; do
+df -P -k | tail -n "+2" | sort -k "6" | sed -e 's/[[:space:]]\+/;/g' | while read -r "line"; do
   IFS=";"
   # shellcheck disable=SC2086
   set -- $line
