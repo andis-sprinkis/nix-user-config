@@ -214,7 +214,6 @@ df -P -k | tail -n "+2" | sort -k "6" | sed -e 's/[[:space:]]\+/;/g' | while rea
   size_b="$2"
   free_b="$4"
   use_pcnt="${5%"%"}"
-
   free_pcnt="$((100 - use_pcnt))"
 
   fmt_sever="\x1b[0;32m"
