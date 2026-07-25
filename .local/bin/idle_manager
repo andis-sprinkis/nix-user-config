@@ -4,16 +4,18 @@ set -euf
 status() {
   if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
     set +e
-    pidof_xscreensaver="$(pidof "xscreensaver")"
-    pidof_xsslock="$(pidof "xss-lock")"
+    pidof -q "xscreensaver"
+    ret_xscreensaver="$?"
+    pidof -q "xss-lock"
+    ret_xsslock="$?"
     set -e
 
-    if [ -z "$pidof_xscreensaver" ] && [ -z "$pidof_xsslock" ]; then
+    if [ "$ret_xscreensaver" != "0" ] && [ "$ret_xsslock" != "0" ]; then
       echo "stopped"
       return "0"
     fi
 
-    if [ -z "$pidof_xscreensaver" ] || [ -z "$pidof_xsslock" ]; then
+    if [ "$ret_xscreensaver" != "0" ] || [ "$ret_xsslock" != "0" ]; then
       echo "partial"
       return "0"
     fi
