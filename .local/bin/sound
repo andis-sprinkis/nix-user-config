@@ -52,4 +52,4 @@ esac
 
 sound_notify "$device" 1> "/dev/null" 2> "/dev/null" & disown
 
-pkill "-SIGRTMIN+3" "i3blocks" 1> "/dev/null" 2> "/dev/null" & disown
+pkill "-SIGRTMIN+3" -x "i3blocks" 1> "/dev/null" 2> "/dev/null" & disown
