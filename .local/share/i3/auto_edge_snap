@@ -44,11 +44,11 @@ if.floating_nodes|.[]|select(.focused)then
 .rect.y,.rect.y+.rect.height,.rect.y+${ws_thr_jq},.rect.y+.rect.height-${ws_thr_jq},.rect.y-${ws_thr_jq},.rect.y+.rect.height+${ws_thr_jq}]|@sh
 end"
 
-IN() { return "$((($3 - $1) * ($2 - $3) >= 0 ? 0 : 1))"; }
-
 metrics_cache="${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}" # 50
 
 prev_workspaces=""
+
+# IN() { return "$((($3 - $1) * ($2 - $3) >= 0 ? 0 : 1))"; }
 
 while true; do
   workspaces="$($wm_cmd -r -t "get_workspaces")"
@@ -95,20 +95,41 @@ while true; do
       ;;
     esac
 
-    if [ "$(((AZ - AS) * (BZ - BS)))" -eq "0" ]; then set -- "$@" "$AS"; continue; fi
-
-    if IN "$AO" "$AZ" "$AS" && IN "$AO" "$AZ" "$BS"; then set -- "$@" "$AZ"; continue; fi
-
-    if IN "$AO" "$AI" "$AS"; then
-      if IN "$AZ" "$BI" "$BS" || IN "$BO" "10000000" "$BS"; then set -- "$@" "$AZ"; continue; fi
-      if IN "$BI" "$BO" "$BS"; then set -- "$@" "$(((AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS) ? AZ : AS + BZ - BS))"; continue; fi
+    if [ "$(((AZ - AS) * (BZ - BS)))" -eq "0" ]; then
+      set -- "$@" "$AS"; continue
     fi
 
-    if (! IN "$AO" "$AI" "$AS" || IN "$AI" "$BI" "$AS") && IN "$BI" "$BO" "$BS"; then set -- "$@" "$((AS + BZ - BS))"; continue; fi
+    if [ "$(((AS - AO) * (AZ - AS)))" -ge "0" ] && [ "$(((BS - AO) * (AZ - BS)))" -ge "0" ]; then
+      set -- "$@" "$AZ"; continue
+    fi
 
-    if IN "$AI" "$BI" "$AS" && ! IN "$AO" "$AI" "$BS" && ! IN "$BI" "$BO" "$BS"; then set -- "$@" "$AS"; continue; fi
-    if ! IN "$AO" "$BO" "$AS" && ! IN "$BI" "$BO" "$BS"; then set -- "$@" "$AS"; continue; fi
-    if IN "$BI" "$BO" "$AS" && ! IN "$AO" "$BO" "$BS"; then set -- "$@" "$AS"; continue; fi
+    if [ "$(((AS - AO) * (AI - AS)))" -ge "0" ]; then
+      if [ "$(((BS - AZ) * (BI - BS)))" -ge "0" ] || [ "$(((BS - BO) * (10000000 - BS)))" -ge "0" ]; then
+        set -- "$@" "$AZ"; continue
+      fi
+
+      if [ "$(((BS - BI) * (BO - BS)))" -ge "0" ]; then
+        set -- "$@" "$(((AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS) ? AZ : AS + BZ - BS))"
+        continue
+      fi
+    fi
+
+    if { [ "$(((AS - AO) * (AI - AS)))" -lt "0" ] || [ "$(((AS - AI) * (BI - AS)))" -ge "0" ]; } && [ "$(((BS - BI) * (BO - BS)))" -ge "0" ]; then
+      set -- "$@" "$((AS + BZ - BS))"; continue
+    fi
+
+    if
+      [ "$(((AS - AI) * (BI - AS)))" -ge "0" ] && [ "$(((BS - AO) * (AI - BS)))" -lt "0" ] && [ "$(((BS - BI) * (BO - BS)))" -lt "0" ]; then
+      set -- "$@" "$AS"; continue
+    fi
+
+    if [ "$(((AS - AO) * (BO - AS)))" -lt "0" ] && [ "$(((BS - BI) * (BO - BS)))" -lt "0" ]; then
+      set -- "$@" "$AS"; continue
+    fi
+
+    if [ "$(((AS - BI) * (BO - AS)))" -ge "0" ] && [ "$(((BS - AO) * (BO - BS)))" -lt "0" ]; then
+      set -- "$@" "$AS"; continue
+    fi
 
     echo "Failure on: ${*}" >> "${XDG_CACHE_HOME:-$HOME/.cache}/auto_edge_snap.log"
     exit "2"

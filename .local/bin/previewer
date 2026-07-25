@@ -113,16 +113,13 @@ print_chafa() {
         return "2"
       fi
 
-      lines="$(tput lines)"
-      columns="$(tput cols)"
-
       chafa \
         --format "symbols" \
         --font-ratio "1/2" \
         --animate "off" \
         --polite "on" \
         --work "1" \
-        -s "${W_CHR:-"$columns"}x${H_CHR:-"$lines"}" \
+        -s "${W_CHR:-"$(tput cols)"}x${H_CHR:-"$(tput lines)"}" \
         "$1"
     fi
   else
