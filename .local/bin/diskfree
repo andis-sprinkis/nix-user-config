@@ -24,7 +24,7 @@ DESCRIPTION
 }
 
 opt_f=""
-while getopts fh name; do
+while getopts "fh" "name"; do
   case "$name" in
     "f")
       opt_f="1"
