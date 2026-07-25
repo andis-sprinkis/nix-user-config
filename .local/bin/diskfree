@@ -115,7 +115,7 @@ path_rev() {
       fp="${1#*"@"*":"}"
       suf="${1%":${fp}"}"
 
-      suf_rev="$(printf '%s\n' "$suf" | sed -e 's|@|@\n|g' -e 's|\.|\.\n|g' | {
+      suf_rev="$(printf '%s\n' "$suf" | sed -e 's|\([@.]\)|\1\n|g' | {
         rev=""
 
         IFS="$NL"
