@@ -17,7 +17,7 @@ if [ -r "$path_cfg_wm" ]; then
 fi
 
 echo "${cfg_common:-""}${cfg_wm:-""}" \
-  | sed 's/  */ /g' \
+  | tr -s ' ' \
   | sed -e 's/\\\n//g' \
   | grep "bindsym" \
   | sed \
