@@ -217,16 +217,15 @@ df -P -k | tail -n "+2" | sort -k "6" | tr -s ' ' ';' | while read -r "line"; do
 
   size_b="$2"
   free_b="$4"
-  use_pcnt="${5%"%"}"
-  free_pcnt="$((100 - use_pcnt))"
+  free_pcnt="$(((free_b * 100) / size_b))"
 
   fmt_sever="\x1b[0;32m"
   sym_sever=""
 
-  if [ "$use_pcnt" -ge "90" ]; then
+  if [ "$free_pcnt" -lt "10" ]; then
     fmt_sever="\x1b[0;31m"
     sym_sever="!"
-  elif [ "$use_pcnt" -ge "60" ]; then
+  elif [ "$free_pcnt" -lt "40" ]; then
     fmt_sever="\x1b[0;33m"
     sym_sever="~"
   fi
