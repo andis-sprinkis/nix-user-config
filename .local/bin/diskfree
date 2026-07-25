@@ -203,7 +203,7 @@ df -P -k | tail -n "+2" | sort -k "6" | tr -s ' ' ';' | while read -r "line"; do
       ;;
       *)
         case "$mnt" in
-          "/boot")
+          "/boot"|"/System/Volumes/"*)
             continue
           ;;
         esac
