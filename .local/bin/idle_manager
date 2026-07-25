@@ -159,7 +159,7 @@ lock() {
     exec xscreensaver-command -lock
   fi
 
-  # exec killall -u "$(whoami)" -s "SIGUSR1" "swayidle"
+  # exec killall -u "$(whoami)" -s "SIGUSR1" -e "swayidle"
   exec loginctl "lock-session"
 }
 
