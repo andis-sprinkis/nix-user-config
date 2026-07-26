@@ -96,13 +96,13 @@ while true; do
     if [ "$((
       (AZ - AS) * (BZ - BS) == 0 ?
         1
-      : (BS - BI) * (BO - BS) < 0 ?
+      : ((BS - BI) * (BO - BS) < 0 ?
           (AS - AI) * (BI - AS) >= 0 ?
             (BS - AO) * (AI - BS) < 0
           : (AS - AO) * (BO - AS) < 0
         : (AS - BI) * (BO - AS) >= 0 ?
             (BS - AO) * (BO - BS) < 0
-          : 0
+          : 0)
     ))" = "1" ]; then
       set -- "$@" "$AS"; continue
     fi
@@ -111,21 +111,13 @@ while true; do
       (AS - AO) * (AZ - AS) >= 0 ?
         (BS - AO) * (AZ - BS) >= 0
       : 0
-    ))" = "1" ]; then
-      set -- "$@" "$AZ"; continue
-    fi
-
-    if [ "$((
+    ))" = "1" ] || [ "$((
       (AS - AO) * (AI - AS) >= 0 ?
         (BS - AZ) * (BI - BS) >= 0 ?
           1
         : (BS - BO) * (10000000 - BS) >= 0
       : 0
-    ))" = "1" ]; then
-      set -- "$@" "$AZ"; continue
-    fi
-
-    if [ "$((
+    ))" = "1" ] || [ "$((
       (AS - AO) * (AI - AS) >= 0 ?
         (BS - BI) * (BO - BS) >= 0 ?
           (AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS)
@@ -136,22 +128,16 @@ while true; do
     fi
 
     if [ "$((
-      (AS - AO) * (AI - AS) >= 0 ?
-        (BS - BI) * (BO - BS) >= 0 ?
+      (BS - BI) * (BO - BS) >= 0 ?
+        (AS - AO) * (AI - AS) >= 0 ?
           (AS - AZ > 0 ? AS - AZ : AZ - AS) > (BS - BZ > 0 ? BS - BZ : BZ - BS)
         : 0
       : 0
-    ))" = "1" ]; then
-      set -- "$@" "$((AS + BZ - BS))"; continue
-    fi
-
-    if [ "$((
-      (
-        (AS - AO) * (AI - AS) < 0 ?
-          1
-        : (AS - AI) * (BI - AS) >= 0
-      ) ?
-        (BS - BI) * (BO - BS) >= 0
+    ))" = "1" ] || [ "$((
+      (BS - BI) * (BO - BS) >= 0 ?
+        (AS - AO) * (AI - AS) >= 0 ?
+          (AS - AI) * (BI - AS) >= 0
+        : 1
       : 0
     ))" = "1" ]; then
       set -- "$@" "$((AS + BZ - BS))"; continue
