@@ -143,19 +143,11 @@ while true; do
           (BS - BI) * (BO - BS) < 0
         : 0
       : 0
-    ))" = "1" ]; then
-      set -- "$@" "$AS"; continue
-    fi
-
-    if [ "$((
+    ))" = "1" ] || [ "$((
       (AS - AO) * (BO - AS) < 0 ?
         (BS - BI) * (BO - BS) < 0
       : 0
-    ))" = "1" ]; then
-      set -- "$@" "$AS"; continue
-    fi
-
-    if [ "$((
+    ))" = "1" ] || [ "$((
       (AS - BI) * (BO - AS) >= 0 ?
         (BS - AO) * (BO - BS) < 0
       : 0
