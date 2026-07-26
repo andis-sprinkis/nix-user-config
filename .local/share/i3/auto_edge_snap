@@ -99,35 +99,69 @@ while true; do
       set -- "$@" "$AS"; continue
     fi
 
-    if [ "$(((AS - AO) * (AZ - AS) >= 0 ? (BS - AO) * (AZ - BS) >= 0 : 0))" = "1" ]; then
+    if [ "$((
+      (AS - AO) * (AZ - AS) >= 0 ?
+        (BS - AO) * (AZ - BS) >= 0
+      : 0
+    ))" = "1" ]; then
       set -- "$@" "$AZ"; continue
     fi
 
     if [ "$(((AS - AO) * (AI - AS) >= 0))" = "1" ]; then
-      if [ "$(((BS - AZ) * (BI - BS) >= 0 ? 1 : (BS - BO) * (10000000 - BS) >= 0))" = "1" ]; then
+      if [ "$((
+        (BS - AZ) * (BI - BS) >= 0 ?
+          1
+        : (BS - BO) * (10000000 - BS) >= 0
+      ))" = "1" ]; then
         set -- "$@" "$AZ"; continue
       fi
 
       if [ "$(((BS - BI) * (BO - BS) >= 0))" = "1" ]; then
-        set -- "$@" "$(((AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS) ? AZ : AS + BZ - BS))"
+        set -- "$@" "$((
+          (AS - AZ > 0 ? AS - AZ : AZ - AS) <=
+            (BS - BZ > 0 ? BS - BZ : BZ - BS) ?
+            AZ
+          : AS + BZ - BS
+        ))"
         continue
       fi
     fi
 
-    if { [ "$(((AS - AO) * (AI - AS) < 0 ? 1 : (AS - AI) * (BI - AS) >= 0))" = "1" ]; } && [ "$(((BS - BI) * (BO - BS) >= 0))" = "1" ]; then
+    if [ "$((
+      (
+        (AS - AO) * (AI - AS) < 0 ?
+          1
+        : (AS - AI) * (BI - AS) >= 0
+      ) ?
+        (BS - BI) * (BO - BS) >= 0
+      : 0
+    ))" = "1" ]; then
       set -- "$@" "$((AS + BZ - BS))"; continue
     fi
 
-    if
-      [ "$(((AS - AI) * (BI - AS) >= 0 ? (BS - AO) * (AI - BS) < 0 : 0))" = "1" ] && [ "$(((BS - BI) * (BO - BS) < 0))" = "1" ]; then
+    if [ "$((
+      (AS - AI) * (BI - AS) >= 0 ?
+        (BS - AO) * (AI - BS) < 0 ?
+          (BS - BI) * (BO - BS) < 0
+        : 0
+      : 0
+    ))" = "1" ]; then
       set -- "$@" "$AS"; continue
     fi
 
-    if [ "$(((AS - AO) * (BO - AS) < 0 ? (BS - BI) * (BO - BS) < 0 : 0))" = "1" ]; then
+    if [ "$((
+      (AS - AO) * (BO - AS) < 0 ?
+        (BS - BI) * (BO - BS) < 0
+      : 0
+    ))" = "1" ]; then
       set -- "$@" "$AS"; continue
     fi
 
-    if [ "$(((AS - BI) * (BO - AS) >= 0 ? (BS - AO) * (BO - BS) < 0 : 0))" = "1" ]; then
+    if [ "$((
+      (AS - BI) * (BO - AS) >= 0 ?
+        (BS - AO) * (BO - BS) < 0
+      : 0
+    ))" = "1" ]; then
       set -- "$@" "$AS"; continue
     fi
 
