@@ -131,12 +131,6 @@ while true; do
       (BS - BI) * (BO - BS) >= 0 ?
         (AS - AO) * (AI - AS) >= 0 ?
           (AS - AZ > 0 ? AS - AZ : AZ - AS) > (BS - BZ > 0 ? BS - BZ : BZ - BS)
-        : 0
-      : 0
-    ))" = "1" ] || [ "$((
-      (BS - BI) * (BO - BS) >= 0 ?
-        (AS - AO) * (AI - AS) >= 0 ?
-          (AS - AI) * (BI - AS) >= 0
         : 1
       : 0
     ))" = "1" ]; then
