@@ -138,19 +138,14 @@ while true; do
     fi
 
     if [ "$((
-      (AS - AI) * (BI - AS) >= 0 ?
-        (BS - AO) * (AI - BS) < 0 ?
-          (BS - BI) * (BO - BS) < 0
+      (BS - BI) * (BO - BS) < 0 ?
+        (AS - AI) * (BI - AS) >= 0 ?
+          (BS - AO) * (AI - BS) < 0
+        : (AS - AO) * (BO - AS) < 0
+      :
+        (AS - BI) * (BO - AS) >= 0 ?
+          (BS - AO) * (BO - BS) < 0
         : 0
-      : 0
-    ))" = "1" ] || [ "$((
-      (AS - AO) * (BO - AS) < 0 ?
-        (BS - BI) * (BO - BS) < 0
-      : 0
-    ))" = "1" ] || [ "$((
-      (AS - BI) * (BO - AS) >= 0 ?
-        (BS - AO) * (BO - BS) < 0
-      : 0
     ))" = "1" ]; then
       set -- "$@" "$AS"; continue
     fi
