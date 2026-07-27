@@ -110,8 +110,17 @@ while true; do
       fi
 
       if [ "$(((BS - BI) * (BO - BS) >= 0))" = "1" ]; then
-        set -- "$@" "$(((AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS) ? AZ : AS + BZ - BS))"
-        continue
+        if [ "$(((AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS)))" = "1" ]; then
+          set -- "$@" "$AZ"
+          continue
+        fi
+      fi
+
+      if [ "$(((BS - BI) * (BO - BS) >= 0))" = "1" ]; then
+        if [ "$(((AS - AZ > 0 ? AS - AZ : AZ - AS) > (BS - BZ > 0 ? BS - BZ : BZ - BS)))" = "1" ]; then
+          set -- "$@" "$((AS + BZ - BS))"
+          continue
+        fi
       fi
     fi
 
