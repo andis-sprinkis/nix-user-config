@@ -108,12 +108,12 @@ while true; do
       continue
     fi
 
-    if [ "$(((AS - AO) * (AI - AS) >= 0))" = "1" ] && ! [ "$(((BS - AZ) * (BI - BS) >= 0 || (BS - BO) * (10000000 - BS) >= 0))" = "1" ] && [ "$(((BS - BI) * (BO - BS) >= 0))" = "1" ] && [ "$(((AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS)))" = "1" ]; then
+    if [ "$(((AS - AO) * (AI - AS) >= 0))" = "1" ] && [ "$(((BS - AZ) * (BI - BS) < 0 && (BS - BO) * (10000000 - BS) < 0))" = "1" ] && [ "$(((BS - BI) * (BO - BS) >= 0))" = "1" ] && [ "$(((AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS)))" = "1" ]; then
       set -- "$@" "$AZ"
       continue
     fi
 
-    if [ "$(((AS - AO) * (AI - AS) >= 0))" = "1" ] && ! [ "$(((BS - AZ) * (BI - BS) >= 0 || (BS - BO) * (10000000 - BS) >= 0))" = "1" ] && [ "$(((BS - BI) * (BO - BS) >= 0))" = "1" ] && [ "$(((AS - AZ > 0 ? AS - AZ : AZ - AS) > (BS - BZ > 0 ? BS - BZ : BZ - BS)))" = "1" ]; then
+    if [ "$(((AS - AO) * (AI - AS) >= 0))" = "1" ] && [ "$(((BS - AZ) * (BI - BS) < 0 && (BS - BO) * (10000000 - BS) < 0))" = "1" ] && [ "$(((BS - BI) * (BO - BS) >= 0))" = "1" ] && [ "$(((AS - AZ > 0 ? AS - AZ : AZ - AS) > (BS - BZ > 0 ? BS - BZ : BZ - BS)))" = "1" ]; then
       set -- "$@" "$((AS + BZ - BS))"
       continue
     fi
