@@ -93,7 +93,7 @@ while true; do
       ;;
     esac
 
-    if [ "$(((AZ - AS) * (BZ - BS)))" = "0" ]; then
+    if [ "$(((AZ - AS) * (BZ - BS) == 0 || ((AS - AI) * (BI - AS) >= 0 && (BS - AO) * (AI - BS) < 0 && (BS - BI) * (BO - BS) < 0) || ((AS - AO) * (BO - AS) < 0 && (BS - BI) * (BO - BS) < 0) || ((AS - BI) * (BO - AS) >= 0 && (BS - AO) * (BO - BS) < 0)))" = "1" ]; then
       set -- "$@" "$AS"
       continue
     fi
@@ -126,11 +126,6 @@ while true; do
 
     if [ "$((((AS - AO) * (AI - AS) < 0 || (AS - AI) * (BI - AS) >= 0) && (BS - BI) * (BO - BS) >= 0))" = "1" ]; then
       set -- "$@" "$((AS + BZ - BS))"
-      continue
-    fi
-
-    if [ "$((((AS - AI) * (BI - AS) >= 0 && (BS - AO) * (AI - BS) < 0 && (BS - BI) * (BO - BS) < 0) || ((AS - AO) * (BO - AS) < 0 && (BS - BI) * (BO - BS) < 0) || ((AS - BI) * (BO - AS) >= 0 && (BS - AO) * (BO - BS) < 0)))" = "1" ]; then
-      set -- "$@" "$AS"
       continue
     fi
 
