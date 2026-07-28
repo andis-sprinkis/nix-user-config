@@ -93,23 +93,80 @@ while true; do
       ;;
     esac
 
-    if [ "$(((AZ - AS) * (BZ - BS) == 0 || ((AS - AI) * (BI - AS) >= 0 && (BS - AO) * (AI - BS) < 0 && (BS - BI) * (BO - BS) < 0) || ((AS - AO) * (BO - AS) < 0 && (BS - BI) * (BO - BS) < 0) || ((AS - BI) * (BO - AS) >= 0 && (BS - AO) * (BO - BS) < 0)))" = "1" ]; then
-      set -- "$@" "$AS"
-      continue
-    fi
+    set -- "$@" "$((
+      (
+        (AZ - AS) * (BZ - BS) == 0
+        || (
+          (AS - AI) * (BI - AS) >= 0
+          && (BS - AO) * (AI - BS) < 0
+          && (BS - BI) * (BO - BS) < 0
+        )
+        || (
+          (AS - AO) * (BO - AS) < 0
+          && (BS - BI) * (BO - BS) < 0
+        )
+        || (
+          (AS - BI) * (BO - AS) >= 0
+          && (BS - AO) * (BO - BS) < 0
+        )
+      )
+      ? AS
+      : (
+          (
+            (AS - AO) * (AZ - AS) >= 0
+            && (BS - AO) * (AZ - BS) >= 0
+          )
+          || (
+            (AS - AO) * (AI - AS) >= 0
+            && (
+              (BS - AZ) * (BI - BS) >= 0
+              || (BS - BO) * (10000000 - BS) >= 0)
+            )
+            || (
+              (AS - AO) * (AI - AS) >= 0
+              && (BS - AZ) * (BI - BS) < 0
+              && (BS - BO) * (10000000 - BS) < 0
+              && (BS - BI) * (BO - BS) >= 0
+              && (AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS)
+            )
+          )
+          ? AZ
+          : (
+              (
+                (AS - AO) * (AI - AS) >= 0
+                && (BS - AZ) * (BI - BS) < 0
+                && (BS - BO) * (10000000 - BS) < 0
+                && (BS - BI) * (BO - BS) >= 0
+                && (AS - AZ > 0 ? AS - AZ : AZ - AS) > (BS - BZ > 0 ? BS - BZ : BZ - BS)
+              )
+              || (
+                (
+                  (AS - AO) * (AI - AS) < 0
+                  || (AS - AI) * (BI - AS) >= 0
+                )
+                && (BS - BI) * (BO - BS) >= 0
+              )
+            )
+            ? AS + BZ - BS
+            : 99999999999
+    ))"
 
-    if [ "$((((AS - AO) * (AZ - AS) >= 0 && (BS - AO) * (AZ - BS) >= 0) || ((AS - AO) * (AI - AS) >= 0 && ((BS - AZ) * (BI - BS) >= 0 || (BS - BO) * (10000000 - BS) >= 0)) || ((AS - AO) * (AI - AS) >= 0 && (BS - AZ) * (BI - BS) < 0 && (BS - BO) * (10000000 - BS) < 0 && (BS - BI) * (BO - BS) >= 0 && (AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS))))" = "1" ]; then
-      set -- "$@" "$AZ"
-      continue
-    fi
+    case "$axis" in
+      "X")
+        if [ "${17}" = "99999999999" ]; then
+          echo "Failure on: ${*}" >> "${XDG_CACHE_HOME:-$HOME/.cache}/auto_edge_snap.log"
+          exit "2"
+        fi
+      ;;
+      "Y")
+        if [ "${18}" = "99999999999" ]; then
+          echo "Failure on: ${*}" >> "${XDG_CACHE_HOME:-$HOME/.cache}/auto_edge_snap.log"
+          exit "2"
+        fi
+      ;;
+    esac
 
-    if [ "$((((AS - AO) * (AI - AS) >= 0 && (BS - AZ) * (BI - BS) < 0 && (BS - BO) * (10000000 - BS) < 0 && (BS - BI) * (BO - BS) >= 0 && (AS - AZ > 0 ? AS - AZ : AZ - AS) > (BS - BZ > 0 ? BS - BZ : BZ - BS)) || (((AS - AO) * (AI - AS) < 0 || (AS - AI) * (BI - AS) >= 0) && (BS - BI) * (BO - BS) >= 0)))" = "1" ]; then
-      set -- "$@" "$((AS + BZ - BS))"
-      continue
-    fi
-
-    echo "Failure on: ${*}" >> "${XDG_CACHE_HOME:-$HOME/.cache}/auto_edge_snap.log"
-    exit "2"
+    continue
   done
 
   set +e # The focused window may not be floating anymore
