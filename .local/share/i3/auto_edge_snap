@@ -120,31 +120,29 @@ while true; do
             (AS - AO) * (AI - AS) >= 0
             && (
               (BS - AZ) * (BI - BS) >= 0
-              || (BS - BO) * (10000000 - BS) >= 0)
-            )
-            || (
-              (AS - AO) * (AI - AS) >= 0
-              && (BS - BI) * (BO - BS) >= 0
-              && (AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS)
+              || (BS - BO) * (10000000 - BS) >= 0
             )
           )
-          ? AZ
-          : (
-              (
-                (AS - AO) * (AI - AS) >= 0
-                && (BS - BI) * (BO - BS) >= 0
-                && (AS - AZ > 0 ? AS - AZ : AZ - AS) > (BS - BZ > 0 ? BS - BZ : BZ - BS)
-              )
-              || (
-                (
-                  (AS - AO) * (AI - AS) < 0
-                  || (AS - AI) * (BI - AS) >= 0
-                )
-                && (BS - BI) * (BO - BS) >= 0
-              )
+          || (
+            (AS - AO) * (AI - AS) >= 0
+            && (BS - BI) * (BO - BS) >= 0
+            && (AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS)
+          )
+        )
+        ? AZ
+        : (
+            (
+              (AS - AO) * (AI - AS) >= 0
+              && (BS - BI) * (BO - BS) >= 0
+              && (AS - AZ > 0 ? AS - AZ : AZ - AS) > (BS - BZ > 0 ? BS - BZ : BZ - BS)
             )
-            ? AS + BZ - BS
-            : 99999999999
+            || (
+              (AS - AO) * (AI - AS) < 0
+              && (BS - BI) * (BO - BS) >= 0
+            )
+          )
+          ? AS + BZ - BS
+          : 99999999999
     ))"
 
     case "$axis" in
