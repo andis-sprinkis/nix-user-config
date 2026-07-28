@@ -48,6 +48,13 @@ metrics_cache="${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}
 
 prev_workspaces=""
 
+fail_pos="99999999999"
+
+fail_pos_exit() {
+  echo "Failure on: ${1}" >> "${XDG_CACHE_HOME:-$HOME/.cache}/auto_edge_snap.log"
+  exit "2"
+}
+
 while true; do
   workspaces="$($wm_cmd -r -t "get_workspaces")"
 
@@ -119,10 +126,8 @@ while true; do
           || (
             (AS - AO) * (AI - AS) >= 0
             && (
-              (
-                (BS - AZ) * (BI - BS) >= 0
-                || (BS - BO) * (10000000 - BS) >= 0
-              )
+              (BS - AZ) * (BI - BS) >= 0
+              || (BS - BO) * (10000000 - BS) >= 0
               || (
                 (BS - BI) * (BO - BS) >= 0
                 && (AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS)
@@ -132,34 +137,22 @@ while true; do
         )
         ? AZ
         : (
-            (
-              (AS - AO) * (AI - AS) >= 0
-              && (BS - BI) * (BO - BS) >= 0
-              && (AS - AZ > 0 ? AS - AZ : AZ - AS) > (BS - BZ > 0 ? BS - BZ : BZ - BS)
-            )
-            || (
+            (BS - BI) * (BO - BS) >= 0
+            && (
               (AS - AO) * (AI - AS) < 0
-              && (BS - BI) * (BO - BS) >= 0
+              || (
+                (AS - AO) * (AI - AS) >= 0
+                && (AS - AZ > 0 ? AS - AZ : AZ - AS) > (BS - BZ > 0 ? BS - BZ : BZ - BS)
+              )
             )
           )
           ? AS + BZ - BS
-          : 99999999999
+          : fail_pos
     ))"
 
-    case "$axis" in
-      "X")
-        if [ "${17}" = "99999999999" ]; then
-          echo "Failure on: ${*}" >> "${XDG_CACHE_HOME:-$HOME/.cache}/auto_edge_snap.log"
-          exit "2"
-        fi
-      ;;
-      "Y")
-        if [ "${18}" = "99999999999" ]; then
-          echo "Failure on: ${*}" >> "${XDG_CACHE_HOME:-$HOME/.cache}/auto_edge_snap.log"
-          exit "2"
-        fi
-      ;;
-    esac
+    if [ "$((${17} == fail_pos || ${18} == fail_pos))" = "1" ]; then
+      fail_pos_exit "$*"
+    fi
 
     continue
   done
