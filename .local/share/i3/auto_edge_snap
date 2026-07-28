@@ -48,8 +48,6 @@ metrics_cache="${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}
 
 prev_workspaces=""
 
-fail_pos="99999999999"
-
 fail_pos_exit() {
   echo "Failure on: ${1}" >> "${XDG_CACHE_HOME:-$HOME/.cache}/auto_edge_snap.log"
   exit "2"
@@ -100,7 +98,7 @@ while true; do
       ;;
     esac
 
-    set -- "$@" "$((
+    pos="$((
       (
         (AZ - AS) * (BZ - BS) == 0
         || (
@@ -147,14 +145,14 @@ while true; do
             )
           )
           ? AS + BZ - BS
-          : fail_pos
+          : 99999999999
     ))"
 
-    if [ "$((${17} == fail_pos || ${18} == fail_pos))" = "1" ]; then
+    if [ "$pos" = "99999999999" ]; then
       fail_pos_exit "$*"
     fi
 
-    continue
+    set -- "$@" "$pos"
   done
 
   set +e # The focused window may not be floating anymore
