@@ -119,14 +119,15 @@ while true; do
           || (
             (AS - AO) * (AI - AS) >= 0
             && (
-              (BS - AZ) * (BI - BS) >= 0
-              || (BS - BO) * (10000000 - BS) >= 0
+              (
+                (BS - AZ) * (BI - BS) >= 0
+                || (BS - BO) * (10000000 - BS) >= 0
+              )
+              || (
+                (BS - BI) * (BO - BS) >= 0
+                && (AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS)
+              )
             )
-          )
-          || (
-            (AS - AO) * (AI - AS) >= 0
-            && (BS - BI) * (BO - BS) >= 0
-            && (AS - AZ > 0 ? AS - AZ : AZ - AS) <= (BS - BZ > 0 ? BS - BZ : BZ - BS)
           )
         )
         ? AZ
