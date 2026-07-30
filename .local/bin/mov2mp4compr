@@ -3,5 +3,6 @@ set -euf
 
 fpath="$(readlink -f "$1")"
 fname="$(basename "$fpath")"
+fname_out="${fname%.mov}_output.mp4"
 
-ffmpeg -i "$fpath" -vcodec "libx264" -crf "23" -preset "medium" -acodec "aac" -movflags "+faststart" "${fname%.mov}_output.mp4"
+ffmpeg -i "$fpath" -vcodec "libx264" -crf "23" -preset "medium" -acodec "aac" -movflags "+faststart" "$fname_out"

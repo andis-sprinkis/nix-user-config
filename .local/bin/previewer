@@ -414,7 +414,8 @@ case "$MIME" in
         if mountpoint -q -- "$FPATH"; then
           dev="$(
             set +e; d="$(grep " ${FPATH} " "/proc/mounts")"; set -e
-            d="${d% * * * *}" d="${d#* }"
+            d="${d% * * * *}"
+            d="${d#* }"
             printf '%s' "$d"
           )"
 
