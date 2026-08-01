@@ -102,6 +102,7 @@ alias \
   qqqq="exit" \
   qqqqq="exit" \
   qqqqqq="exit" \
+  Q="exit" \
   qalc="qalc -c" \
   qr_txt="qrencode -t ansiutf8" \
   qr_receive="qrcp receive" \
