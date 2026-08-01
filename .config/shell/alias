@@ -43,6 +43,7 @@ alias \
   dgt="dotgit checkout" \
   dup="rmlint" \
   e="\$EDITOR" \
+  enew="\$EDITOR +" \
   fd="fd --hidden" \
   g="git" \
   g_submodule_init="git submodule update --init --recursive" \
