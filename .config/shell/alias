@@ -44,6 +44,9 @@ alias \
   dup="rmlint" \
   e="\$EDITOR" \
   enew="\$EDITOR +" \
+  :enew="\$EDITOR +" \
+  :new="\$EDITOR +" \
+  new="\$EDITOR +" \
   fd="fd --hidden" \
   g="git" \
   g_submodule_init="git submodule update --init --recursive" \
