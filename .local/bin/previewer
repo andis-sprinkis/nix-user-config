@@ -210,7 +210,7 @@ case "$MIME" in
     if thumb_cache_create; then
       if [ ! -f "${FPATH_THUMB}.jpg" ]; then
         if find_util "pdftoppm"; then
-          if pdftoppm -jpeg -jpegopt quality=50 -f "1" -singlefile "$1" "$FPATH_THUMB"; then
+          if pdftoppm -jpeg -jpegopt quality=50 -f "1" -singlefile "$FPATH" "$FPATH_THUMB"; then
             if print_chafa "${FPATH_THUMB}.jpg"; then
               echo
             fi
