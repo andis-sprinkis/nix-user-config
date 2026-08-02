@@ -242,7 +242,7 @@ case "$MIME" in
     if thumb_cache_create; then
       if [ ! -f "${FPATH_THUMB}.jpg" ]; then
         if find_util "ddjvu" && find_util "magick"; then
-          if ddjvu -format=ppm -page=1 "$1" | magick "-" "${FPATH_THUMB}.jpg"; then
+          if ddjvu -format=ppm -page=1 "$FPATH" | magick "-" "${FPATH_THUMB}.jpg"; then
             if print_chafa "${FPATH_THUMB}.jpg"; then
               echo
             fi
@@ -341,7 +341,7 @@ case "$MIME" in
     if thumb_cache_create; then
       if [ ! -f "${FPATH_THUMB}.jpg" ]; then
         if find_util "ffmpegthumbnailer"; then
-          if ffmpegthumbnailer -i "$1" -o "${FPATH_THUMB}.jpg" -s "0" -q "5"; then
+          if ffmpegthumbnailer -i "$FPATH" -o "${FPATH_THUMB}.jpg" -s "0" -q "5"; then
             if print_chafa "${FPATH_THUMB}.jpg"; then
               echo
             fi
