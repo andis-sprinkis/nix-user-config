@@ -4,53 +4,53 @@ local thumb_size_default = 128
 local slideshow_tmout_default = 3
 local slideshow_tmout = slideshow_tmout_default
 
-S.text.hide()
-S.enable_decoration(true)
-S.enable_overlay(false)
-S.set_dnd_button('MouseExtra')
-S.gallery.enable_pstore(false)
-S.gallery.limit_cache(8192)
-S.gallery.set_aspect('fit')
-S.gallery.set_border_size(8)
-S.gallery.set_padding_size(16)
-S.gallery.set_selected_scale(1.4)
-S.gallery.set_thumb_size(thumb_size_default)
-S.imagelist.enable_adjacent(true)
-S.imagelist.enable_fsmon(false)
-S.text.set_background(0xaa000000)
-S.text.set_font('sans-serif')
-S.text.set_foreground(0xffffffff)
-S.text.set_shadow(0xff000000)
-S.text.set_size(18)
-S.viewer.limit_preload(3)
-S.viewer.set_default_scale('fit')
-S.viewer.set_drag_button('MouseRight')
-S.slideshow.limit_preload(3)
-S.slideshow.set_default_scale('fit')
-S.slideshow.set_drag_button('MouseRight')
-S.slideshow.set_timeout(slideshow_tmout)
+S.text.visible = false
+S.decoration = true
+S.overlay = false
+S.dnd_button = 'MouseExtra'
+S.gallery.pstore = false
+S.gallery.cache = 8192
+S.gallery.aspect = 'fit'
+S.gallery.border_size = 8
+S.gallery.padding_size = 16
+S.gallery.selected_scale = 1.4
+S.gallery.thumb_size = thumb_size_default
+S.imagelist.adjacent = true
+S.imagelist.fsmon = false
+S.text.background = 0xaa000000
+S.text.font = 'sans-serif'
+S.text.color = 0xffffffff
+S.text.shadow = 0xff000000
+S.text.size = 18
+S.viewer.preload = 3
+S.viewer.default_scale = 'fit'
+S.viewer.drag_button = 'MouseRight'
+S.slideshow.preload = 3
+S.slideshow.default_scale = 'fit'
+S.slideshow.drag_button = 'MouseRight'
+S.slideshow.timeout = slideshow_tmout
 S.slideshow.set_window_background(0xff000000)
 
 local username = os.getenv('USER')
 
 if username ~= nil then
-  local pstore_path="/tmp/swayimg_" .. username
+  local pstore_path = "/tmp/swayimg_" .. username
 
   if os.execute('mkdir -p ' .. pstore_path .. ' && chmod 700 ' .. pstore_path) then
-    S.gallery.set_pstore_path(pstore_path)
-    S.gallery.enable_pstore(true)
+    S.gallery.pstore_path = pstore_path
+    S.gallery.pstore = true
   end
 end
 
 local nop = function() end
 
 local function title()
-  local mode = S.get_mode()
+  local mode = S.mode
 
   local img = S[mode].get_image()
 
   if img == nil then
-    S.set_title("swayimg")
+    S.title = "swayimg"
     return
   end
 
@@ -62,31 +62,29 @@ local function title()
   local wtitle = (wsize.width < 800) and fname or img.path
 
   if mode == 'gallery' then
-    S.set_title(
-      '[' .. img.index .. '/' .. S.imagelist.size() .. ']' ..
-      ' ' ..
-      wtitle
-    )
+    S.title =
+        '[' .. img.index .. '/' .. S.imagelist.size .. ']' ..
+        ' ' ..
+        wtitle
 
     return
   end
 
-  S.set_title(
-    '[' .. img.index .. '/' .. S.imagelist.size() .. ']' ..
-    ' ' ..
-    wtitle ..
-    ' ' ..
-    '[' .. math.floor(S[mode].get_scale() * 100) .. '%' .. ']' ..
-    ' ' ..
-    '[' .. img.width .. 'x' .. img.height .. ']'
-  )
+  S.title =
+      '[' .. img.index .. '/' .. S.imagelist.size .. ']' ..
+      ' ' ..
+      wtitle ..
+      ' ' ..
+      '[' .. math.floor(S[mode].scale * 100) .. '%' .. ']' ..
+      ' ' ..
+      '[' .. img.width .. 'x' .. img.height .. ']'
 end
 
 local function zoomreset()
-  local mode = S.get_mode()
+  local mode = S.mode
 
   if mode == 'gallery' then
-    S.gallery.set_thumb_size(thumb_size_default)
+    S.gallery.thumb_size = thumb_size_default
     title()
 
     return
@@ -97,15 +95,15 @@ local function zoomreset()
 end
 
 local function zoomreal()
-  S[S.get_mode()].set_fix_scale('real')
+  S[S.mode].set_fix_scale('real')
   title()
 end
 
 local function zoomin()
-  local mode = S.get_mode()
+  local mode = S.mode
 
   if mode == 'gallery' then
-    S.gallery.set_thumb_size(S.gallery.get_thumb_size() + 10)
+    S.gallery.thumb_size = (S.gallery.thumb_size + 10)
     return
   end
 
@@ -115,10 +113,10 @@ local function zoomin()
 end
 
 local function zoomout()
-  local mode = S.get_mode()
+  local mode = S.mode
 
   if mode == 'gallery' then
-    S.gallery.set_thumb_size(S.gallery.get_thumb_size() - 10)
+    S.gallery.thumb_size= (S.gallery.thumb_size - 10)
     return
   end
 
@@ -128,36 +126,36 @@ local function zoomout()
 end
 
 local function mzoomin()
-  local mode = S.get_mode()
+  local mode = S.mode
 
   if mode == 'gallery' then
-    S.gallery.set_thumb_size(S.gallery.get_thumb_size() + 10)
+    S.gallery.thumb_size = (S.gallery.thumb_size + 10)
     return
   end
 
   local mpos = S.get_mouse_pos()
-  local scale = S[mode].get_scale()
+  local scale = S[mode].scale
   S[mode].set_abs_scale(scale + scale / 10, mpos.x, mpos.y)
   title()
 end
 
 local function mzoomout()
-  local mode = S.get_mode()
+  local mode = S.mode
 
   if mode == 'gallery' then
-    S.gallery.set_thumb_size(S.gallery.get_thumb_size() - 10)
+    S.gallery.thumb_size = (S.gallery.thumb_size - 10)
     return
   end
 
   local mpos = S.get_mouse_pos()
-  local scale = S[mode].get_scale()
+  local scale = S[mode].scale
   S[mode].set_abs_scale(scale - scale / 10, mpos.x, mpos.y)
   title()
 end
 
 S.on_window_resize(
   function()
-    if (S.get_mode() == 'gallery') then
+    if (S.mode == 'gallery') then
       title()
       return
     end
@@ -166,12 +164,12 @@ S.on_window_resize(
   end
 )
 
-local function mode_viewer() S.set_mode('viewer') end
-local function mode_gallery() S.set_mode('gallery') end
-local function mode_slideshow() S.set_mode('slideshow') end
+local function mode_viewer() S.mode = 'viewer' end
+local function mode_gallery() S.mode = 'gallery' end
+local function mode_slideshow() S.mode = 'slideshow' end
 
 local function file_manager_desktop()
-  local imgpath = S[S.get_mode()].get_image().path
+  local imgpath = S[S.mode].get_image().path
 
   if (imgpath == nil) then return end
 
@@ -181,7 +179,7 @@ local function file_manager_desktop()
 end
 
 local function reopen()
-  local imgpath = S[S.get_mode()].get_image().path
+  local imgpath = S[S.mode].get_image().path
 
   if (imgpath == nil) then return end
 
@@ -191,7 +189,7 @@ local function reopen()
 end
 
 local function open_with_menu_desktop()
-  local imgpath = S[S.get_mode()].get_image().path
+  local imgpath = S[S.mode].get_image().path
 
   if (imgpath == nil) then return end
 
@@ -201,7 +199,7 @@ local function open_with_menu_desktop()
 end
 
 local function pager_desktop()
-  local imgpath = S[S.get_mode()].get_image().path
+  local imgpath = S[S.mode].get_image().path
 
   if (imgpath == nil) then return end
 
@@ -211,7 +209,7 @@ local function pager_desktop()
 end
 
 local function toggle_mode_gallery()
-  if S.get_mode() == 'gallery' then
+  if S.mode == 'gallery' then
     mode_viewer()
     return
   end
@@ -225,7 +223,7 @@ for _, mode in pairs({ 'gallery', 'viewer', 'slideshow' }) do
   S[mode].on_image_change(
     function()
       title()
-      S.text.set_status(S[mode].get_image().index .. '/' .. S.imagelist.size())
+      S.text.status = S[mode].get_image().index .. '/' .. S.imagelist.size
     end
   )
 
@@ -234,8 +232,9 @@ for _, mode in pairs({ 'gallery', 'viewer', 'slideshow' }) do
   S[mode].on_key('plus', zoomin)
   S[mode].on_key('minus', zoomout)
   S[mode].on_key('0', zoomreset)
-  S[mode].on_key('i', function() if S.text.visible() then S.text.hide() else S.text.show() end end)
-  S[mode].on_key('f', S.set_fullscreen)
+  S[mode].on_key('i', function() S.text.visible = !S.text.visible
+  end)
+  S[mode].on_key('f', function() S.fullscreen = !S.fullscreen end)
   S[mode].on_key('Escape', S.exit)
   S[mode].on_key('q', S.exit)
   S[mode].on_key('e', file_manager_desktop)
@@ -373,7 +372,10 @@ end
 local function gallery_left()
   local img = S['gallery'].get_image()
   if img == nil then return end
-  if img.index == 1 then S.gallery.switch_image('last') return end
+  if img.index == 1 then
+    S.gallery.switch_image('last')
+    return
+  end
   S.gallery.switch_image('left')
 end
 
@@ -381,35 +383,50 @@ end
 local function gallery_down()
   local img = S['gallery'].get_image()
   if img == nil then return end
-  if img.index == S.imagelist.size() then S.gallery.switch_image('first') return end
+  if img.index == S.imagelist.size then
+    S.gallery.switch_image('first')
+    return
+  end
   S.gallery.switch_image('down')
 end
 
 local function gallery_up()
   local img = S['gallery'].get_image()
   if img == nil then return end
-  if img.index == 1 then S.gallery.switch_image('last') return end
+  if img.index == 1 then
+    S.gallery.switch_image('last')
+    return
+  end
   S.gallery.switch_image('up')
 end
 
 local function gallery_right()
   local img = S['gallery'].get_image()
   if img == nil then return end
-  if img.index == S.imagelist.size() then S.gallery.switch_image('first') return end
+  if img.index == S.imagelist.size then
+    S.gallery.switch_image('first')
+    return
+  end
   S.gallery.switch_image('right')
 end
 
 local function gallery_pgup()
   local img = S['gallery'].get_image()
   if img == nil then return end
-  if img.index == 1 then S.gallery.switch_image('last') return end
+  if img.index == 1 then
+    S.gallery.switch_image('last')
+    return
+  end
   S.gallery.switch_image('pgup')
 end
 
 local function gallery_pgdown()
   local img = S['gallery'].get_image()
   if img == nil then return end
-  if img.index == S.imagelist.size() then S.gallery.switch_image('first') return end
+  if img.index == S.imagelist.size then
+    S.gallery.switch_image('first')
+    return
+  end
   S.gallery.switch_image('pgdown')
 end
 
@@ -442,40 +459,40 @@ S.gallery.on_mouse('MouseLeft', mode_viewer)
 
 local function slideshow_tmout_inc()
   slideshow_tmout = slideshow_tmout + 1
-  S.slideshow.set_timeout(slideshow_tmout)
-  S.set_mode('viewer')
-  S.set_mode('slideshow')
+  S.slideshow.timeout = slideshow_tmout
+  S.mode = 'viewer'
+  S.mode = 'slideshow'
 
-  S.text.set_status(slideshow_tmout .. 's')
+  S.text.status = slideshow_tmout .. 's'
 end
 
 local function slideshow_tmout_dec()
   if slideshow_tmout > 0 then
     slideshow_tmout = slideshow_tmout - 1
-    S.slideshow.set_timeout(slideshow_tmout)
-    S.set_mode('viewer')
-    S.set_mode('slideshow')
+    S.slideshow.timeout = slideshow_tmout
+    S.mode = 'viewer'
+    S.mode = 'slideshow'
   end
 
-  S.text.set_status(slideshow_tmout .. 's')
+  S.text.status = slideshow_tmout .. 's'
 end
 
 local function slideshow_tmout_reset()
   slideshow_tmout = slideshow_tmout_default
-  S.slideshow.set_timeout(slideshow_tmout_default)
-  S.set_mode('viewer')
-  S.set_mode('slideshow')
+  S.slideshow.timeout = slideshow_tmout_default
+  S.mode = 'viewer'
+  S.mode = 'slideshow'
 
-  S.text.set_status(slideshow_tmout_default .. 's')
+  S.text.status = slideshow_tmout_default .. 's'
 end
 
 local function slideshow_tmout_pause()
   slideshow_tmout = 0
-  S.slideshow.set_timeout(slideshow_tmout)
-  S.set_mode('viewer')
-  S.set_mode('slideshow')
+  S.slideshow.timeout = slideshow_tmout
+  S.mode = 'viewer'
+  S.mode = 'slideshow'
 
-  S.text.set_status(slideshow_tmout .. 's')
+  S.text.status = slideshow_tmout .. 's'
 end
 
 S.slideshow.on_key('comma', slideshow_tmout_dec)
