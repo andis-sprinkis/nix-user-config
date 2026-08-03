@@ -1,4 +1,4 @@
-@-moz-document url(chrome://browser/content/browser.xul), url(chrome://browser/content/browser.xhtml)
+@-moz-document url(chrome://browser/content/browser.xul), url(chrome://browser/content/browser.xhtml), url(chrome://browser/content/sidebar/sidebar-bookmarks.html), url(chrome://browser/content/sidebar/sidebar-history.html)
 {
   :root {
     --toolbarbutton-outer-padding: 2px !important;
@@ -57,13 +57,53 @@
     height: 2.5em !important;
   }
 
-  #sidebar-header {
-    padding: 4px 8px !important;
-    border-bottom: none !important;
+  /* #sidebar-header { */
+  /*   padding: 4px 8px !important; */
+  /*   border-bottom: none !important; */
+  /* } */
+  /**/
+  /* #sidebar-search-container { */
+  /*   padding: 4px 8px !important; */
+  /* } */
+
+  vbox#sidebar-box.chromeclass-extrachrome.chrome-block {
+    padding: 0 !important;
   }
 
-  #sidebar-search-container {
-    padding: 4px 8px !important;
+  .sidebar-panel {
+    padding: 0 !important;
+
+   .sidebar-panel-scrollable-content {
+      padding: 0 !important;
+    }
+  }
+
+  sidebar-panel-header {
+    padding: var(--space-large) var(--space-medium) var(--space-small) !important;
+  }
+
+  .sidebar-panel-heading {
+    > h4 {
+      margin-block: 0 !important;
+    }
+  }
+  .actions-list {
+    > moz-button:not(.tools-overflow) {
+      --button-outer-padding-inline: 3px !important;
+      --button-outer-padding-block: 0 !important;
+
+      &:first-of-type {
+        --button-outer-padding-block-start: 0 !important;
+      }
+
+      &:last-of-type {
+        --button-outer-padding-block-end: var(--space-xsmall) !important;
+      }
+    }
+  }
+
+  sidebar-bookmark-row {
+    height: var(--size-item-medium) !important;
   }
 }
 
