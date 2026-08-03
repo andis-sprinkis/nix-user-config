@@ -373,10 +373,10 @@ local function gallery_left()
   local img = S['gallery'].get_image()
   if img == nil then return end
   if img.index == 1 then
-    S.gallery.switch_image('last')
+    S.gallery.select('last')
     return
   end
-  S.gallery.switch_image('left')
+  S.gallery.select('left')
 end
 
 
@@ -384,50 +384,50 @@ local function gallery_down()
   local img = S['gallery'].get_image()
   if img == nil then return end
   if img.index == S.imagelist.size then
-    S.gallery.switch_image('first')
+    S.gallery.select('first')
     return
   end
-  S.gallery.switch_image('down')
+  S.gallery.select('down')
 end
 
 local function gallery_up()
   local img = S['gallery'].get_image()
   if img == nil then return end
   if img.index == 1 then
-    S.gallery.switch_image('last')
+    S.gallery.select('last')
     return
   end
-  S.gallery.switch_image('up')
+  S.gallery.select('up')
 end
 
 local function gallery_right()
   local img = S['gallery'].get_image()
   if img == nil then return end
   if img.index == S.imagelist.size then
-    S.gallery.switch_image('first')
+    S.gallery.select('first')
     return
   end
-  S.gallery.switch_image('right')
+  S.gallery.select('right')
 end
 
 local function gallery_pgup()
   local img = S['gallery'].get_image()
   if img == nil then return end
   if img.index == 1 then
-    S.gallery.switch_image('last')
+    S.gallery.select('last')
     return
   end
-  S.gallery.switch_image('pgup')
+  S.gallery.select('pgup')
 end
 
 local function gallery_pgdown()
   local img = S['gallery'].get_image()
   if img == nil then return end
   if img.index == S.imagelist.size then
-    S.gallery.switch_image('first')
+    S.gallery.select('first')
     return
   end
-  S.gallery.switch_image('pgdown')
+  S.gallery.select('pgdown')
 end
 
 S.gallery.on_key('Ctrl-0', zoomreset)
@@ -446,8 +446,8 @@ S.gallery.on_key('n', gallery_pgdown)
 S.gallery.on_key('p', gallery_pgup)
 S.gallery.on_key('bracketleft', gallery_pgup)
 S.gallery.on_key('bracketright', gallery_pgdown)
-S.gallery.on_key('g', function() S.gallery.switch_image('first') end)
-S.gallery.on_key('Shift-g', function() S.gallery.switch_image('last') end)
+S.gallery.on_key('g', function() S.gallery.select('first') end)
+S.gallery.on_key('Shift-g', function() S.gallery.select('last') end)
 
 S.gallery.on_mouse('ScrollUp', gallery_pgup)
 S.gallery.on_mouse('ScrollDown', gallery_pgdown)
