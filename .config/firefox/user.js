@@ -222,6 +222,8 @@ user_pref("media.videocontrols.picture-in-picture.respect-disablePictureInPictur
 user_pref("media.videocontrols.picture-in-picture.video-toggle.always-show", true);
 user_pref("media.videocontrols.picture-in-picture.video-toggle.has-used", true);
 user_pref("media.videocontrols.picture-in-picture.video-toggle.min-video-secs", 30);
+user_pref("media.webspeech.synth.dont_notify_on_error", true)
+user_pref("media.webspeech.synth.enabled", false)
 user_pref("middlemouse.contentLoadURL", false);
 user_pref("middlemouse.paste", false);
 user_pref("mousewheel.acceleration.factor", 10);
