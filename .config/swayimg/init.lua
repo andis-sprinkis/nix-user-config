@@ -293,11 +293,11 @@ for _, mode in pairs({ 'viewer', 'slideshow' }) do
   end
 
   local function img_next()
-    S[mode].switch_image('next')
+    S[mode].open('next')
   end
 
   local function img_prev()
-    S[mode].switch_image('prev')
+    S[mode].open('prev')
   end
 
   S[mode].on_key('w', zoomreset)
@@ -341,8 +341,8 @@ for _, mode in pairs({ 'viewer', 'slideshow' }) do
   S[mode].on_key('p', img_prev)
   S[mode].on_key('Space', img_next)
   S[mode].on_key('Shift-space', img_prev)
-  S[mode].on_key('g', function() S[mode].switch_image('first') end)
-  S[mode].on_key('Shift-g', function() S[mode].switch_image('last') end)
+  S[mode].on_key('g', function() S[mode].open('first') end)
+  S[mode].on_key('Shift-g', function() S[mode].open('last') end)
   S[mode].on_key(
     'Shift-w',
     function()
@@ -370,7 +370,7 @@ for _, mode in pairs({ 'viewer', 'slideshow' }) do
 end
 
 local function gallery_left()
-  local img = S['gallery'].get_image()
+  local img = S.gallery.get_image()
   if img == nil then return end
   if img.index == 1 then
     S.gallery.select('last')
@@ -381,7 +381,7 @@ end
 
 
 local function gallery_down()
-  local img = S['gallery'].get_image()
+  local img = S.gallery.get_image()
   if img == nil then return end
   if img.index == S.imagelist.size then
     S.gallery.select('first')
@@ -391,7 +391,7 @@ local function gallery_down()
 end
 
 local function gallery_up()
-  local img = S['gallery'].get_image()
+  local img = S.gallery.get_image()
   if img == nil then return end
   if img.index == 1 then
     S.gallery.select('last')
@@ -401,7 +401,7 @@ local function gallery_up()
 end
 
 local function gallery_right()
-  local img = S['gallery'].get_image()
+  local img = S.gallery.get_image()
   if img == nil then return end
   if img.index == S.imagelist.size then
     S.gallery.select('first')
@@ -411,7 +411,7 @@ local function gallery_right()
 end
 
 local function gallery_pgup()
-  local img = S['gallery'].get_image()
+  local img = S.gallery.get_image()
   if img == nil then return end
   if img.index == 1 then
     S.gallery.select('last')
@@ -421,7 +421,7 @@ local function gallery_pgup()
 end
 
 local function gallery_pgdown()
-  local img = S['gallery'].get_image()
+  local img = S.gallery.get_image()
   if img == nil then return end
   if img.index == S.imagelist.size then
     S.gallery.select('first')
