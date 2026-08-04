@@ -107,7 +107,7 @@ local function zoomin()
     return
   end
 
-  local scale = S[mode].get_scale()
+  local scale = S[mode].scale
   S[mode].set_abs_scale(scale + scale / 10)
   title()
 end
@@ -120,7 +120,7 @@ local function zoomout()
     return
   end
 
-  local scale = S[mode].get_scale()
+  local scale = S[mode].scale
   S[mode].set_abs_scale(scale - scale / 10)
   title()
 end
@@ -155,12 +155,7 @@ end
 
 S.on_window_resize(
   function()
-    if (S.mode == 'gallery') then
-      title()
-      return
-    end
-
-    zoomreset()
+    title()
   end
 )
 
