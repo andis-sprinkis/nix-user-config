@@ -218,7 +218,10 @@ for _, mode in pairs({ 'gallery', 'viewer', 'slideshow' }) do
   S[mode].on_image_change(
     function()
       title()
-      S.text.status = S[mode].get_image().index .. '/' .. S.imagelist.size
+
+      local img = S[mode].get_image()
+      if img == nil then return end
+      S.text.status = img.index .. '/' .. S.imagelist.size
     end
   )
 
