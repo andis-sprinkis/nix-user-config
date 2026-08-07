@@ -72,6 +72,12 @@ bindsym --locked --whole-window $mod+Shift+button7 exec --no-startup-id sound "+
 bindsym --locked --whole-window $mod+Shift+button6 exec --no-startup-id sound "-"
 bindsym --locked --whole-window $mod+button2       exec --no-startup-id sound "toggle"
 
+bindsym --input-device=touchpad --whole-window $mod+button4 exec --no-startup-id sound "+"
+bindsym --input-device=touchpad --whole-window $mod+button5 exec --no-startup-id sound "-"
+
+bindsym --input-device=touchpad --locked --whole-window $mod+button4 exec --no-startup-id sound "+"
+bindsym --input-device=touchpad --locked --whole-window $mod+button5 exec --no-startup-id sound "-"
+
 bindsym --locked XF86AudioRaiseVolume      exec --no-startup-id sound "4%+"
 bindsym --locked XF86AudioLowerVolume      exec --no-startup-id sound "4%-"
 bindsym --locked $mod+XF86AudioRaiseVolume exec --no-startup-id sound "+"
