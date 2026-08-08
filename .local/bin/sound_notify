@@ -13,7 +13,9 @@ fi
 
 vol_float="${status##Volume: }"
 vol_float="${vol_float%% *}"
-vol_int="$(awk "BEGIN{print 100*${vol_float}}")"
+vol_int="${vol_float%%.*}${vol_float##*.}"
+vol_int="${vol_int##0}"
+vol_int="${vol_int##0}"
 muted="${status##Volume: * }"
 muted="${muted##Volume: *}"
 
