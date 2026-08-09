@@ -431,9 +431,8 @@ end
 local function gallery_mview()
   local pos = swayimg.get_mouse_pos()
 
-  if S.gallery.select_at(pos.x, pos.y) then
-    mode_viewer()
-  end
+  S.gallery.select_at(pos.x, pos.y)
+  mode_viewer()
 end
 
 S.gallery.on_key('Ctrl-0', zoomreset)
