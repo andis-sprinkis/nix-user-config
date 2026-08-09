@@ -230,8 +230,7 @@ for _, mode in pairs({ 'gallery', 'viewer', 'slideshow' }) do
   S[mode].on_key('plus', zoomin)
   S[mode].on_key('minus', zoomout)
   S[mode].on_key('0', zoomreset)
-  S[mode].on_key('i', function() S.text.visible = !S.text.visible
-  end)
+  S[mode].on_key('i', function() S.text.visible = !S.text.visible end)
   S[mode].on_key('f', function() S.fullscreen = !S.fullscreen end)
   S[mode].on_key('Escape', S.exit)
   S[mode].on_key('q', S.exit)
