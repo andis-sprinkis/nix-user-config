@@ -4,7 +4,7 @@ set -euf
 # shellcheck disable=SC3028
 case "${OSTYPE:-"$(uname)"}" in
   [dD]"arwin"*)
-    open -a "QuickTime" "$@"
+    open -a "QuickTime Player" "$@"
   ;;
   *)
     exec mpv --player-operation-mode=pseudo-gui -- "$@"
