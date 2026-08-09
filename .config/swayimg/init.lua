@@ -15,6 +15,7 @@ S.gallery.border_size = 8
 S.gallery.padding_size = 16
 S.gallery.selected_scale = 1.4
 S.gallery.thumb_size = thumb_size_default
+S.gallery.hover = false
 S.imagelist.adjacent = true
 S.imagelist.fsmon = false
 S.text.background = 0xaa000000
@@ -427,6 +428,13 @@ local function gallery_pgdown()
   S.gallery.select('pgdown')
 end
 
+local function gallery_mview()
+  local pos = swayimg.get_mouse_pos()
+
+  S.gallery.select_at(pos.x, pos.y)
+  mode_viewer()
+end
+
 S.gallery.on_key('Ctrl-0', zoomreset)
 S.gallery.on_key('Space', mode_viewer)
 S.gallery.on_key('s', mode_slideshow)
@@ -450,9 +458,10 @@ S.gallery.on_mouse('ScrollUp', gallery_pgup)
 S.gallery.on_mouse('ScrollDown', gallery_pgdown)
 S.gallery.on_mouse('ScrollLeft', gallery_pgup)
 S.gallery.on_mouse('ScrollRight', gallery_pgdown)
-S.gallery.on_mouse('Ctrl-MouseLeft', mode_viewer)
-S.gallery.on_mouse('Ctrl-MouseRight', mode_viewer)
-S.gallery.on_mouse('MouseLeft', mode_viewer)
+S.gallery.on_mouse('Ctrl-MouseLeft', gallery_mview)
+S.gallery.on_mouse('Ctrl-MouseRight', gallery_mview)
+S.gallery.on_mouse('MouseLeft', gallery_mview)
+S.gallery.on_mouse('MouseRight', gallery_mview)
 
 local function slideshow_tmout_inc()
   slideshow_tmout = slideshow_tmout + 1
