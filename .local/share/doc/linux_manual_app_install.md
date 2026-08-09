@@ -171,8 +171,8 @@ Installation:
 mkdir "/tmp/dulcepan-install"
 cd "/tmp/dulcepan-install"
 
-curl -L "https://codeberg.org/vyivel/dulcepan/archive/v1.0.3.tar.gz" -o "./archive.tar.gz"
-echo "022a57335326b89b9ccc1efb98f043c7ad50fc3dcc14e1d0a220fae8d5efdf6d  archive.tar.gz" | sha256sum -c
+curl -L "https://codeberg.org/vyivel/dulcepan/archive/v1.1.0.tar.gz" -o "./archive.tar.gz"
+echo "5b6126f200761d434bb90dd28c4abb5969a7c640cfceea6cd528e56a9bd6d2a3  archive.tar.gz" | sha256sum -c
 
 tar -xvzf "./archive.tar.gz"
 
