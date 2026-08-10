@@ -45,15 +45,15 @@ export LC_ALL="C"
 fmt_reset="\x1b[0m" fmt_sever="\x1b[0;32m" fmt_mute="\x1b[0;90m"
 
 human() {
-  cscl="K" sclr="1"
+  cscl="K" scl="1"
   case "$(($1 < 1024 ? 1 : $1 < 1048576 ? 2 : $1 < 1073741824 ? 3 : $1 < 1099511627776 ? 4 : $1 < 1125899906842624 ? 5 : 6))" in
-    "2") cscl="M" sclr="1024" ;;
-    "3") cscl="G" sclr="1048576" ;;
-    "4") cscl="T" sclr="1073741824" ;;
-    "5") cscl="E" sclr="1099511627776" ;;
+    "2") cscl="M" scl="1024" ;;
+    "3") cscl="G" scl="1048576" ;;
+    "4") cscl="T" scl="1073741824" ;;
+    "5") cscl="E" scl="1099511627776" ;;
   esac
 
-  ans="$((($1 * 10) / sclr))"
+  ans="$((($1 * 10) / scl))"
   ans="${ans%[0-9]}.${ans#"${ans%[0-9]}"}"
   echo "${ans%.0}${cscl}"
 }
