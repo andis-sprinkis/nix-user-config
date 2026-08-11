@@ -20,4 +20,4 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
   esac
 fi
 
-date "+%-H:%M %Z"
+date "+%-H:%M${TZ:+" %Z"}"
