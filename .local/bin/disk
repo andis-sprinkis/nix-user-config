@@ -55,6 +55,7 @@ human() {
   ))"
 
   unit="K"
+
   case "$scl" in
     "1024") unit="M" ;;
     "1048576") unit="G" ;;
