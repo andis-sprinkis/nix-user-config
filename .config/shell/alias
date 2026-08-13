@@ -40,7 +40,7 @@ alias \
   dgpl="dotgit pull" \
   dgps="dotgit push" \
   dgs="dotgit status" \
-  dgt="dotgit checkout" \
+  dgk="dotgit checkout" \
   dup="rmlint" \
   e="\$EDITOR" \
   enew="\$EDITOR +" \
@@ -56,13 +56,14 @@ alias \
   gcan="git commit --amend --no-edit" \
   gcm="git commit -m" \
   gd="git diff" \
+  gk="git checkout" \
   gl="git log" \
   gm="git merge" \
+  gv="git checkout -" \
   gpl="git pull" \
   gps="git push" \
-  grep="grep --color=always" \
   gs="git status" \
-  gt="git checkout" \
+  grep="grep --color=always" \
   hosts="sudo \$EDITOR /etc/hosts" \
   htop="htop -t --highlight-changes=10" \
   inxi="inxi --full -xxx --color 2 --width 80 --indent 11 --indents 10" \
@@ -89,6 +90,8 @@ alias \
   pac_pkg_db_info="yay -Si" \
   pac_pkg_installed_info="yay -Qi" \
   pac_pkg_installed_info_files="yay -Qlk" \
+  pac_rm_cache_unused="yay -Sc" \
+  pac_rm_cache_all="yay -Scc" \
   pac_search_db="yay -Ss" \
   pac_search_installed="yay -Qs" \
   pac_stats="yay -P --stats" \
