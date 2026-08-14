@@ -81,7 +81,7 @@ path_rev() {
       suf_rev="$(printf '%s\n' "$suf" | sed -e 's|\.|\.\n|g' | {
         rev=""
 
-        IFS="$NL"
+        IFS=""
         while read -r "i"; do
           IFS="$IFS_"
 
@@ -106,7 +106,7 @@ path_rev() {
       suf_rev="$(printf '%s\n' "$suf" | sed -e 's|\([@.]\)|\1\n|g' | {
         rev=""
 
-        IFS="$NL"
+        IFS=""
         while read -r "i"; do
           IFS="$IFS_"
 
@@ -132,7 +132,7 @@ path_rev() {
   printf '%s\n' "$fp" | sed -e 's|/|/\n|g' | {
     rev=""
 
-    IFS="$NL"
+    IFS=""
     while read -r "i"; do
       IFS="$IFS_"
 
