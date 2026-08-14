@@ -169,7 +169,7 @@ path_fmt() {
   esac
 }
 
-IFS="$NL"
+IFS=""
 df -P -k | tail -n "+2" | tr -s " " ";" | sort -t ";" -k "6" | while read -r "line"; do
   IFS=";"
   # shellcheck disable=SC2086
