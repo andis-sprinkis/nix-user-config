@@ -35,11 +35,14 @@ set -euf
 # if [ \"\${1:-\"\"}\" ]; then
 #   echo \"\$1\"
 # fi
-#
+# 
+# IFS=\"\"
 # while read -r l; do
+#   IFS=\"\$IFS_\"
 #   echo \"\$l\"
 #   continue
 # done
+# IFS=\"\$IFS_\"
 #
 # IFS=\" \"
 # for i in \$items; do
