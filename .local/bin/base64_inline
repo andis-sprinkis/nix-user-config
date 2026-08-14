@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 set -euf
+NL="
+"
 
 if [ "${1:-""}" ]; then
   printf '%s' "$1" | base64 -w0
@@ -7,10 +9,8 @@ if [ "${1:-""}" ]; then
 fi
 
 text=""
-
 while read -r l; do
-  text="${text:+"$text"
-}${l}"
+  text="${text}${text:+"$NL"}${l}"
 done
 
 if [ "$text" ]; then

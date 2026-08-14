@@ -18,5 +18,5 @@ done
 new_rotation="$(echo "$menu_options" | head -n -1 | dmenu -b -p "\"$screen\" screen rotation:")"
 
 if [ "$new_rotation" ]; then
-  xrandr --output "$screen" --rotate "$new_rotation"
+  exec xrandr --output "$screen" --rotate "$new_rotation"
 fi

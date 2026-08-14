@@ -7,15 +7,15 @@ if [ -z "$*" ]; then
   exit "1"
 fi
 
-if [ "${WAYLAND_DISPLAY:-""}" ] && [ "$(command -v "wl-paste")" ]; then
+if [ "${WAYLAND_DISPLAY:-""}" ] && command -v "wl-paste" 1> "/dev/null" 2> "/dev/null"; then
   exec wl-paste >> "$@"
 fi
 
-if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && [ "$(command -v "xclip")" ]; then
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ] && command -v "xclip" 1> "/dev/null" 2> "/dev/null"; then
   exec xclip -o -sel "clipboard" >> "$@"
 fi
 
-if [ "$(command -v "pbcopy")" ]; then
+if command -v "pbcopy" 1> "/dev/null" 2> "/dev/null"; then
   exec pbpaste >> "$@"
 fi
 

@@ -2,6 +2,8 @@
 # Inspired by a StackOverflow anwser by user 'cas' - https://unix.stackexchange.com/a/677884
 set -euf
 IFS_="$IFS"
+NL="
+"
 
 mouseloc="$(xdotool "getmouselocation")"
 
@@ -17,8 +19,7 @@ outputs="$(set +e; xrandr | grep " connected "; set -e)"
 # DP-2 connected 1440x2560+2880+0 right (normal left inverted right x axis y axis) 530mm x 300mm
 # DP-1 connected primary 1440x2560+1440+0 right (normal left inverted right x axis y axis) 530mm x 300mm
 
-IFS="
-"
+IFS="$NL"
 for o in $outputs; do
   IFS="$IFS_"
 

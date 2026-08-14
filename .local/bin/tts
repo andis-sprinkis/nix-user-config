@@ -1,17 +1,18 @@
 #!/usr/bin/env sh
 set -euf
+NL="
+"
 
 pathf_model="${XDG_DATA_HOME:-$HOME/.local/share}/piper-voices/en/en_US/hfc_female/medium/en_US-hfc_female-medium.onnx"
 text=
 
 while read -r ln || [ -n "$ln" ]; do 
-  text="$text${ln}
-" 
+  text="$text${ln}${NL}" 
 done
 
 echo "Input text:"
 
-printf "\n%s\n" "${text}" | fmt --split-only --width="48" 
+printf "\n%s\n" "${text}" | fmt --split-only --width="48"
 
 echo "$text" | \
   piper \
