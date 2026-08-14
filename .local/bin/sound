@@ -1,10 +1,6 @@
 #!/usr/bin/env sh
 set -euf
 
-if [ -z "${1:-""}" ]; then
-  exit "2"
-fi
-
 device=""
 
 case "${2:-"output"}" in

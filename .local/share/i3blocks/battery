@@ -31,9 +31,7 @@ fi
 
 info=""
 i="0"
-
-IFS="
-"
+IFS="$NL"
 for battery in $batteries; do
   IFS="$IFS_"
   i="$((i+1))"
