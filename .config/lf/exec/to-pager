@@ -1,11 +1,12 @@
 #!/usr/bin/env sh
 set -euf
 IFS_="$IFS"
+NL="
+"
 
 files="${fv:-"$fx"}"
 
-IFS="
-"
+IFS="$NL"
 for file in $files; do
   IFS="$IFS_"
   set -- "$@" "$file"

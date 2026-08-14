@@ -2,17 +2,18 @@
 # shellcheck disable=SC3044
 set -euf
 IFS_="$IFS"
+NL="
+"
 
 "${XDG_CONFIG_HOME:-"${HOME}/.config"}/lf/exec/_heartbeat" 0</dev/null 1>/dev/null 2>/dev/null & disown
 "${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/_set-title" 0</dev/null 1>/dev/null 2>/dev/null & disown
 
 files="${fv:-"$fx"}"
-first_file="$(echo "$files" | head -n1)"
+first_file="${files%%"$NL"*}"
 mime="$(file --mime-type --brief "$(readlink -f "$first_file")")"
 
 in_pager() {
-  IFS="
-"
+  IFS="$NL"
   for file in $files; do
     IFS="$IFS_"
     set -- "$@" "$file"
@@ -23,8 +24,7 @@ in_pager() {
 }
 
 in_opener() {
-  IFS="
-"
+  IFS="$NL"
   for f in $files; do
     IFS="$IFS_"
     nohup "$OPENER" "$f" 0</dev/null 1>/dev/null 2>/dev/null & disown
@@ -37,7 +37,7 @@ open_with() {
   exec lf -remote "send ${id} push :open-with<space>"
 }
 
-case $mime in
+case "$mime" in
   application/octet-stream)
     open_with
   ;;

@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 set -euf
 IFS_="$IFS"
+NL="
+"
 
 files="${fv:-"$fx"}"
 
@@ -8,8 +10,7 @@ echo
 clear
 printf 'Selected to send:\n%s\n\n' "$files"
 
-IFS="
-"
+IFS="$NL"
 for f in $files; do
   IFS="$IFS_"
   set -- "$@" "$f"

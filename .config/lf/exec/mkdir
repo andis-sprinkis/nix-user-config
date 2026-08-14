@@ -1,8 +1,6 @@
 #!/usr/bin/env sh
 set -euf
 
-IFS=" "
-
 mkdir -pv -- "$*"
 # shellcheck disable=SC2154
 lf -remote "send ${id} select \"${*}\""

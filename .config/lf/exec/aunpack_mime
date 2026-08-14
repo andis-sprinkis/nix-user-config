@@ -1,18 +1,17 @@
 #!/usr/bin/env sh
 set -euf
+IFS_="$IFS"
+NL="
+"
 
 files="${fv:-"$fx"}"
 
-IFS="
-"
-
 printf 'Selected to extract:\n%s\n' "$files"
 
+IFS="$NL"
 for f in $files; do 
-  echo "
----
-
-${f}
-"
+  IFS="$IFS_"
+  echo "${NL}---${NL}${f}${NL}"
   aunpack_mime "$f"
 done
+IFS="$IFS_"
