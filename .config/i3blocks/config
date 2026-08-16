@@ -1,4 +1,8 @@
 # vi: ft=dosini
+[mem]
+command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/mem
+interval=10
+
 [screencapture]
 command=${XDG_DATA_HOME:-$HOME/.local/share}/i3blocks/screencapture
 interval=30
