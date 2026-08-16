@@ -120,6 +120,7 @@ user_pref("browser.tabs.hoverPreview.enabled", true);
 user_pref("browser.tabs.hoverPreview.showThumbnails", true);
 user_pref("browser.tabs.loadBookmarksInBackground", true);
 user_pref("browser.tabs.loadBookmarksInTabs", true);
+user_pref("browser.tabs.notes.enabled", false);
 user_pref("browser.tabs.searchclipboardfor.middleclick", false);
 user_pref("browser.tabs.splitView.enabled", false);
 user_pref("browser.taskbar.lists.enabled", false);
