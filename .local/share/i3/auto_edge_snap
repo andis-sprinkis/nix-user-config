@@ -81,7 +81,7 @@ while true; do
     set -- $cache_hit
 
     set +e # The window may not be floating anymore
-    $wm_cmd -q "[ ${pat_var_id}=${17} ] move absolute position ${18} ${19}"
+    $wm_cmd -q "[${pat_var_id}=${17}] move absolute position ${18} ${19}"
     set -e
 
     sleep "1"
@@ -159,7 +159,7 @@ while true; do
   done
 
   set +e # The window may not be floating anymore
-  $wm_cmd -q "[ ${pat_var_id}=${17} ] move absolute position ${18} ${19}"
+  $wm_cmd -q "[${pat_var_id}=${17}] move absolute position ${18} ${19}"
   set -e
 
   metrics_cache="${*}${NL}${metrics_cache%"${metrics_cache#*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"}"}" # 50

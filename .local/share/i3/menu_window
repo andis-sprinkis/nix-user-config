@@ -82,7 +82,7 @@ case "$sel_options" in
     printf "%s" "$details" | swaynag -t "warning" -l -b "htop" "htop -p ${pid}" -m "Kill (9) process ${pid} \"${comm}\" of window ${name}?" -Z "Yes" "kill -9 ${pid}"
   ;;
   "quit")
-    $wm_cmd "[ ${pat_var_id}=${id} ] kill"
+    $wm_cmd "[${pat_var_id}=${id}] kill"
   ;;
   "cancel")
   ;;
