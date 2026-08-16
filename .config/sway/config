@@ -36,7 +36,6 @@ for_window {
   [app_id="blueman-manager"] floating enable, sticky enable
   [app_id="firefox" title="Picture-in-Picture"] floating enable, sticky enable
   [app_id="mpv"] floating enable, sticky enable
-  # [app_id="com.system76.CosmicFilesDialog"] floating enable, sticky enable
 }
 
 set $tabs_new "wtype -M 'ctrl' -k 't' -m 'ctrl'"
