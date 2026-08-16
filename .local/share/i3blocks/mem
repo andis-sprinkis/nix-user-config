@@ -1,0 +1,32 @@
+#!/usr/bin/env sh
+set -euf
+NL="
+"
+
+mem="$(free | tr -s " ")"
+mem="${mem%"$NL"*}"
+mem="${mem##*"$NL"}"
+mem="${mem##Mem: }"
+
+free="$mem"
+free="${free% * * * * *}"
+free="${free#}"
+
+used="$mem"
+used="${used% * * * *}"
+used="${used#* }"
+
+pct_used="$(((used * 100) / free))"
+
+if [ "$pct_used" -ge "75" ]; then
+  if [ "${BLOCK_BUTTON:-""}" ]; then
+    # shellcheck disable=SC3044
+    case "$BLOCK_BUTTON" in
+      "1"|"3")
+        $TERMINAL -e "$SHELL" -c "htop -s 'PERCENT_MEM'" 1> "/dev/null" 2> "/dev/null" & disown
+      ;;
+    esac
+  fi
+
+  echo "Physical memory used ⚠️ ${pct_used}% ${NL}Phys. mem. ⚠️ $pct_used%"
+fi
