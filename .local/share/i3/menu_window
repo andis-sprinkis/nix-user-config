@@ -1,0 +1,89 @@
+#!/usr/bin/env sh
+set -euf
+NL="
+"
+
+wm="${WAYLAND_DISPLAY:+"sway"}"
+wm="${wm:-"i3"}"
+
+case "$wm" in
+  "sway") echo 1
+    wm_cmd="swaymsg"
+    pat_var_id="con_id"
+  ;;
+  "i3")
+    wm_cmd="i3-msg"
+    pat_var_id="id"
+  ;;
+esac
+
+win="$($wm_cmd -t get_tree | jq '.. | select(.type?) | select(.focused == true)')"
+
+if [ "$wm" = "sway" ]; then
+  pid="$(echo "$win" | jq '.pid')"
+
+  if [ "$pid" = "null" ]; then
+    exit "1"
+  fi
+fi
+
+name="$(echo "$win" | jq -r '.name')"
+id="$(echo "$win" | jq -r '.id')"
+floating="$(echo "$win" | jq -r '.floating')"
+
+opt_line_togglefloat="Tiling"
+opt_line_togglefullscreen="Fullscreen"
+
+if [ "$floating" = "auto_off" ]; then
+  opt_line_togglefloat="Floating"
+fi
+
+lines="${opt_line_togglefloat}
+${opt_line_togglefullscreen}
+$(if [ "$wm" = "sway" ]; then echo "Htop${NL}Kill"; fi)
+Quit
+Cancel"
+
+options="togglefloat
+togglefullscreen
+$(if [ "$wm" = "sway" ]; then echo "htop${NL}kill"; fi)
+quit
+cancel"
+
+sel_line="$(printf "%s\n" "$lines" | menu_desktop)"
+
+sel_idx="$(echo "$lines" | grep -n -x "$sel_line" | cut -f"1" -d":")"
+
+if [ -z "$sel_idx" ]; then
+  exit "1"
+fi
+
+sel_options="$(echo "$options" | sed "${sel_idx}q;d")"
+
+case "$sel_options" in
+  "togglefloat")
+    $wm_cmd "[ ${pat_var_id}=${id} ] floating toggle; move position cursor; focus"
+  ;;
+  "togglefullscreen")
+    $wm_cmd "[ ${pat_var_id}=${id} ] fullscreen toggle; focus"
+  ;;
+  "htop")
+    $TERMINAL -e "$SHELL" -c "htop -p ${pid}"
+  ;;
+  "kill")
+    details_ps="$(ps --no-headers -p "${pid}" -o "pid,user,group,comm,args" | tr -s " ")"
+    details_ps="${details_ps%% }"
+    details_ps="${details_ps## }"
+
+    comm="$(echo "$details_ps" | cut -d" " -f4)"
+
+    details="Process:${NL}${details_ps}${NL}Window title:${NL}${name}"
+
+    printf "%s" "$details" | swaynag -t "warning" -l -b "htop" "htop -p ${pid}" -m "Kill (9) process ${pid} \"${comm}\" of window ${name}?" -Z "Yes" "kill -9 ${pid}"
+  ;;
+  "quit")
+    $wm_cmd "[ ${pat_var_id}=${id} ] kill"
+  ;;
+  "cancel")
+  ;;
+esac

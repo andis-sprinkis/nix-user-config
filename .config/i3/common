@@ -51,7 +51,8 @@ bindsym $mod+Shift+f     fullscreen toggle; focus
 bindsym $mod+Shift+space floating toggle; move position center; focus
 bindsym $mod+space       focus mode_toggle; focus
 
-bindsym button3 floating toggle; move position cursor; focus
+# bindsym button3 floating toggle; move position cursor; focus
+bindsym button3 exec --no-startup-id ${XDG_DATA_HOME:-$HOME/.local/share}/i3/menu_window
 
 bindsym $mod+Escape exec --no-startup-id idle_manager lock
 

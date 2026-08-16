@@ -26,11 +26,13 @@ case "$wm" in
     wm_cmd="swaymsg"
     win_edge_top_jq=".rect.y-.deco_rect.height"
     win_height_jq=".rect.height+.deco_rect.height"
+    pat_var_id="con_id"
   ;;
   "i3")
     wm_cmd="i3-msg"
     win_edge_top_jq=".rect.y"
     win_height_jq=".rect.height"
+    pat_var_id="id"
   ;;
 esac
 
@@ -41,7 +43,8 @@ if.floating_nodes|.[]|select(.focused)then
 [(.floating_nodes|.[]|select(.focused)|.rect.x,.rect.x+.rect.width),
 .rect.x,.rect.x+.rect.width,.rect.x+${ws_thr_jq},.rect.x+.rect.width-${ws_thr_jq},.rect.x-${ws_thr_jq},.rect.x+.rect.width+${ws_thr_jq},
 (.floating_nodes|.[]|select(.focused)|${win_edge_top_jq},${win_edge_top_jq}+${win_height_jq}),
-.rect.y,.rect.y+.rect.height,.rect.y+${ws_thr_jq},.rect.y+.rect.height-${ws_thr_jq},.rect.y-${ws_thr_jq},.rect.y+.rect.height+${ws_thr_jq}]|@sh
+.rect.y,.rect.y+.rect.height,.rect.y+${ws_thr_jq},.rect.y+.rect.height-${ws_thr_jq},.rect.y-${ws_thr_jq},.rect.y+.rect.height+${ws_thr_jq},
+(.floating_nodes|.[]|select(.focused)|.id)]|@sh
 end"
 
 metrics_cache="${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}${NL}" # 50
@@ -77,8 +80,8 @@ while true; do
     # shellcheck disable=SC2086
     set -- $cache_hit
 
-    set +e # The focused window may not be floating anymore
-    $wm_cmd -q "move absolute position ${17} ${18}"
+    set +e # The window may not be floating anymore
+    $wm_cmd -q "[ ${pat_var_id}=${17} ] move absolute position ${18} ${19}"
     set -e
 
     sleep "1"
@@ -155,8 +158,8 @@ while true; do
     set -- "$@" "$pos"
   done
 
-  set +e # The focused window may not be floating anymore
-  $wm_cmd -q "move absolute position ${17} ${18}"
+  set +e # The window may not be floating anymore
+  $wm_cmd -q "[ ${pat_var_id}=${17} ] move absolute position ${18} ${19}"
   set -e
 
   metrics_cache="${*}${NL}${metrics_cache%"${metrics_cache#*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"*"$NL"}"}" # 50
