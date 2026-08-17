@@ -5,15 +5,8 @@ NL="
 
 FPATH_INPUT="$1"
 FPATH="$(set +e; readlink -f "$FPATH_INPUT"; set -e)"
-
-if [ -d "$FPATH" ]; then
-  MIME="inode/directory"
-  BRIEF="directory"
-else
-  MIME="$(file --mime-type --brief "$FPATH")"
-  BRIEF="$(file --brief "$FPATH")"
-fi
-
+MIME="$(file --mime-type --brief "$FPATH")"
+BRIEF="$(file --brief "$FPATH")"
 W_CHR="${2:-""}"
 H_CHR="${3:-""}"
 FPATH_THUMB=""
