@@ -26,6 +26,7 @@ S.text.size = 18
 S.viewer.preload = 3
 S.viewer.default_scale = 'fit'
 S.viewer.drag_button = 'MouseRight'
+S.viewer.loop = false
 S.slideshow.preload = 3
 S.slideshow.default_scale = 'fit'
 S.slideshow.drag_button = 'MouseRight'
