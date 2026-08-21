@@ -3,7 +3,7 @@
 // @namespace   https://sprinkis.com
 // @match       *://*/*
 // @grant       none
-// @version     0.1.0
+// @version     0.2.0
 // @copyright   Licensed under the MIT License. This script is a code fork of the Firefox add-on "Select Link Text" authored by Afnan Khan - https://addons.mozilla.org/en-US/firefox/addon/select-link-text/
 // @author      Andis Spriņķis
 // @description Select link's text just like regular text.
