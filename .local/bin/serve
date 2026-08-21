@@ -22,6 +22,7 @@ if [ "$warnings" ]; then
   printf "\x1b[0;33m%s\x1b[0m\n\n" "$warnings"
 fi
 
+# TODO: `ip address`, `ip -f inet address`, `ip -br -f inet address`, `ip -o -f inet address` command on Linux
 menu_display="" menu_values="" ifcs_count="0"
 for ifc in $(ifconfig | sed -e '/^[a-z0-9]*:.*$/!d' -e 's/:.*$//g' | paste -s -d ' ' -); do
   ip="$(ifconfig "$ifc" | sed -e 's/^[[:space:]]*//g' | grep '^inet ' | cut -d ' ' -f2)"
