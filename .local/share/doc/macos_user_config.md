@@ -125,6 +125,8 @@
 
     ```
 
+    <!-- TODO: Add Autohide the Dock setting. -->
+
 1. Configure TextEdit.
 
     ```sh
