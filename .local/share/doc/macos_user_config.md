@@ -123,9 +123,18 @@
     # Don't show the recent applications
     defaults write com.apple.dock show-recents -bool false
 
-    ```
+    # Autohide
+    defaults write com.apple.dock autohide -bool true
 
-    <!-- TODO: Add Autohide the Dock setting. -->
+    # Disable entering Mission Control on window drag to the top of the screen
+    defaults write com.apple.enterMissionControlByTopWindowDrag -bool false
+
+    # Disable showing recently used applications
+    defaults write com.apple.show-recents -bool false
+
+    # Set the icon size
+    defaults write com.apple.tilesize -float 128
+    ```
 
 1. Configure TextEdit.
 
