@@ -4,9 +4,9 @@
 // @match       *://*/*
 // @grant       none
 // @version     0.1.0
-// @copyright   Licensed under the MIT License. This script is a code fork of the Firefox add-on "Select Link Text" authored by Dzianis Rusak - https://addons.mozilla.org/en-US/firefox/addon/select-link-text/
+// @copyright   Licensed under the MIT License. This script is a code fork of the Firefox add-on "Select Link Text" authored by Afnan Khan - https://addons.mozilla.org/en-US/firefox/addon/select-link-text/
 // @author      Andis Spriņķis
-// @description Automatically enables Picture-in-Picture (PiP) for all web videos.
+// @description Select link's text just like regular text.
 // @downloadURL https://github.com/andis-sprinkis/nix-user-config/raw/master/.local/share/userscripts/select_link_text.user.js
 // @updateURL   https://github.com/andis-sprinkis/nix-user-config/raw/master/.local/share/userscripts/select_link_text.user.js
 // ==/UserScript==
@@ -14,6 +14,7 @@
 /**********************************************************************************\
 
   Copyright (c) 2014-2015 Dzianis Rusak
+  Copyright (c) 2016-2024 Afnan Khan
   Copyright (c) 2026- Andis Spriņķis
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
