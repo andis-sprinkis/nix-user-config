@@ -259,6 +259,8 @@ Steps for adding any newly listed packages from the user package lists to an alr
         volta install $(cat "./npm" | paste -s -d ' ' -)
         ```
 
+1. Follow [_The web browsers setup_](./web_browser_setup.md)
+
 ## Resources
 
 - [macOS defaults list](https://macos-defaults.com/)
