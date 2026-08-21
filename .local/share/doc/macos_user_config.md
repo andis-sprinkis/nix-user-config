@@ -52,6 +52,12 @@
     osascript -e 'tell application "System Preferences" to quit'
     ```
 
+1. Set the keyboard to use F-keys as the standard function keys
+
+    ```sh
+    defaults write NSGlobalDomain com.apple.keyboard.fnState -bool true
+    ```
+
 1. Enable the keyboard navigation.
 
     ```sh
@@ -150,6 +156,13 @@
     defaults write com.apple.TextEdit TabWidth 2
     ```
 
+1. Enable showing full website URL in Safari.
+
+    ```sh
+    defaults write com.apple.Safari "ShowFullURLInSmartSearchField" -bool "true"
+    killall Safari
+    ```
+
 1. Disable the animations.
 
     ```sh
@@ -191,10 +204,6 @@
     | `Show Desktop`    | `Mouse Button 5` |
 
     <!-- TODO: Add the CLI commands for these settings. -->
-
-1. In `Settings`, `Keyboard`, `Keyboard Shortcuts...`, `Function keys` enable the option `Use F1, F2, etc. keys as standard function keys`
-
-  <!-- TODO: Add the CLI commands for these settings. -->
 
 1. In `Settings`, `Keyboard`, `Keyboard Shortcuts...`, `Modifier Keys`, for each generic keyboard replace the modifier keys:
 
