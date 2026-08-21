@@ -4,7 +4,7 @@
 // @match       *://*/*
 // @grant       none
 // @version     0.2.0
-// @copyright   Licensed under the MIT License. This script is a code fork of the Firefox add-on "Select Link Text" Version 2017.3.27resigned1 authored by Afnan Khan - https://addons.mozilla.org/en-US/firefox/addon/select-link-text/
+// @copyright   Licensed under the MIT License. This script is a code fork of the Mozilla Firefox add-on "Select Link Text" Version 2017.3.27resigned1 authored by Afnan Khan - https://addons.mozilla.org/en-US/firefox/addon/select-link-text/
 // @author      Andis Spriņķis
 // @description Select link's text just like regular text.
 // @downloadURL https://github.com/andis-sprinkis/nix-user-config/raw/master/.local/share/userscripts/select_link_text.user.js
