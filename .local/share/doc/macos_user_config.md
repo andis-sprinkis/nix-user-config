@@ -172,6 +172,35 @@
     killall Finder
     ```
 
+1. In `Settings`, `Desktop & Dock`, `Shortcuts...` assign mouse buttons:
+
+    | Action            | Mouse button     |
+    | ----------------- | ---------------- |
+    | `Mission Control` | `Mouse Button 4` |
+    | `Show Desktop`    | `Mouse Button 5` |
+
+    <!-- TODO: Add the CLI commands for these settings. -->
+
+1. In `Settings`, `Keyboard`, `Keyboard Shortcuts...`, `Function keys` enable the option `Use F1, F2, etc. keys as standard function keys`
+
+  <!-- TODO: Add the CLI commands for these settings. -->
+
+1. In `Settings`, `Keyboard`, `Keyboard Shortcuts...`, `Modifier Keys`, for each generic keyboard replace the modifier keys:
+
+    | Default key | Replacement key |
+    | ----------- | --------------- |
+    | `Caps Lock` | `Command`       |
+    | `Control`   | `Command`       |
+    | `Option`    | `Option`        |
+    | `Command`   | `Control`       |
+    | `Globe`     | `No Action`     |
+
+1. In `Settings`, `Keyboard`, `Keyboard Shortcuts...`, `Modifier Keys`, for Apple Internal Keyboad replace the modifier keys:
+
+    | Default key | Replacement key |
+    | ----------- | --------------- |
+    | `Caps Lock` | `Command`       |
+
 ## Addition of newly listed packages to an existing setup
 
 Steps for adding any newly listed packages from the user package lists to an already existing setup.
