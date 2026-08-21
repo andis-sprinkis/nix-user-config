@@ -210,9 +210,6 @@
     | Default key | Replacement key |
     | ----------- | --------------- |
     | `Caps Lock` | `Command`       |
-    | `Control`   | `Command`       |
-    | `Option`    | `Option`        |
-    | `Command`   | `Control`       |
     | `Globe`     | `No Action`     |
 
 1. In `Settings`, `Keyboard`, `Keyboard Shortcuts...`, `Modifier Keys`, for Apple Internal Keyboad replace the modifier keys:
