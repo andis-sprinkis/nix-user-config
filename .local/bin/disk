@@ -133,7 +133,6 @@ df -P -k | tail -n "+2" | tr -s " " ";" | sort -t ";" -k "6" | while read -r "li
 
   path_mpt_rev=""
   path_dev_rev=""
-
   for p in "m" "d"; do
     case "$p" in
       "m")
