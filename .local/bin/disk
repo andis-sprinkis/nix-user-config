@@ -71,7 +71,7 @@ path_rev() {
   fp="$1" suf_rev=""
 
   case "$1" in
-    "//"*"/"*)
+    "//"*"/"*) # The SMB //<host>/<path>
       fp="${1#"//"*"/"}"
 
       suf="${1%"$fp"}"
@@ -109,7 +109,7 @@ path_rev() {
 
       suf_rev="\\$tmp\\\\"
     ;;
-    *"@"*":/"*)
+    *"@"*":/"*) # The SSHFS <user>@<host>:<path>
       fp="${1#*"@"*":"}"
       suf="${1%":${fp}"}"
 
