@@ -53,10 +53,11 @@
       read -rq "REPLY?File '${cmd}' is not an executable. Make it executable? (y/n) "
 
       if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-        chmod +x "$cmd"
+        if chmod +x "$cmd"; then
+          echo
+          echo "${cmd} is now an executable. You can try to run it."
+        fi
       fi
-
-      echo
     fi
   }
 
@@ -292,8 +293,8 @@ ${prompt_symbol}"
     fpath[1,0]="${BREW_PREFIX}/share/zsh/site-functions"
 
     # completion plugins on macos
-    . "${BREW_PREFIX}/opt/fzf/shell/completion.zsh" 2> /dev/null
-    . "${BREW_PREFIX}/opt/pyenv/completions/pyenv.zsh" 2> /dev/null
+    . "${BREW_PREFIX}/opt/fzf/shell/completion.zsh" 2> "/dev/null"
+    . "${BREW_PREFIX}/opt/pyenv/completions/pyenv.zsh" 2> "/dev/null"
   fi
 
   # git-completion plugin
