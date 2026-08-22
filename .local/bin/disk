@@ -237,11 +237,13 @@ df -P -k | tail -n "+2" | tr -s " " ";" | sort -t ";" -k "6" | while read -r "li
     while [ "$tmp" ]; do
       rest="${tmp#?}"
       first="${tmp%"$rest"}"
+
+      fp_nl="${fp_nl}${first}"
+
       if [ "$first" = "/" ]; then
-        fp_nl="${fp_nl}${first}${NL}"
-      else
-        fp_nl="${fp_nl}${first}"
+        fp_nl="${fp_nl}${NL}"
       fi
+
       tmp="$rest"
     done
 
