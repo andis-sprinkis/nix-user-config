@@ -21,7 +21,7 @@ case "${1:-""}" in
   ;;
 esac
 
-case "$(echo "$line" | cut -d":" -f1)" in
+case "${line%%: *}" in
   " man")
     cmd="$(echo "$line" | cut -d" " -f3)"
     section="$(echo "$line" | cut -d" " -f4 | sed -e "s/(//g" -e "s/)//g")"

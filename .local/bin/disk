@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 set -euf
 IFS_="$IFS"
+NL="
+"
 
 help_info() {
   script="$(basename "$0")"
@@ -76,30 +78,42 @@ path_rev() {
       suf="${suf#"//"}"
       suf="${suf%"/"}"
 
-      suf_rev="$(printf '%s\n' "$suf" | sed -e 's|\.|\.\n|g' | {
-        rev=""
+      suf_rev=""
 
-        IFS=""
-        while read -r "i"; do
-          IFS="$IFS_"
+      tmp="$suf"
+      while [ "$tmp" ]; do
+        rest="${tmp#?}"
+        first="${tmp%"$rest"}"
+        if [ "$first" = "." ]; then
+          suf_rev="${suf_rev}${first}${NL}"
+        else
+          suf_rev="${suf_rev}${first}"
+        fi
+        tmp="$rest"
+      done
 
-          case "$i" in
-            *".")
-              rev=".${i%%.}${rev}"
-            ;;
-            *)
-              rev="${i}${rev}"
-            ;;
-          esac
-        done
+      tmp=""
+      IFS="$NL"
+      for i in $suf_rev; do
         IFS="$IFS_"
+        case "$i" in
+          *".")
+            tmp=".${i%%.}${tmp}"
+          ;;
+          *)
+            tmp="${i}${tmp}"
+          ;;
+        esac
+      done
+      IFS="$IFS_"
 
-        printf '\%s\\\\\n' "$rev"
-      })"
+      suf_rev="\\$tmp\\\\"
     ;;
     *"@"*":/"*)
       fp="${1#*"@"*":"}"
       suf="${1%":${fp}"}"
+
+      suf_rev=""
 
       suf_rev="$(printf '%s\n' "$suf" | sed -e 's|\([@.]\)|\1\n|g' | {
         rev=""
@@ -127,29 +141,39 @@ path_rev() {
     ;;
   esac
 
-  printf '%s\n' "$fp" | sed -e 's|/|/\n|g' | {
-    rev=""
+  fp_nl=""
+  tmp="$fp"
+  while [ "$tmp" ]; do
+    rest="${tmp#?}"
+    first="${tmp%"$rest"}"
+    if [ "$first" = "/" ]; then
+      fp_nl="${fp_nl}${first}${NL}"
+    else
+      fp_nl="${fp_nl}${first}"
+    fi
+    tmp="$rest"
+  done
 
-    IFS=""
-    while read -r "i"; do
-      IFS="$IFS_"
-
-      case "$i" in
-        "/")
-          rev="\\${rev}"
-        ;;
-        *"/")
-          rev="\\${i%%/}${rev}"
-        ;;
-        *)
-          rev="${i}${rev}"
-        ;;
-      esac
-    done
+  rev=""
+  IFS="$NL"
+  for i in $fp_nl; do
     IFS="$IFS_"
 
-    printf '%s\n' "${rev}${suf_rev}"
-  }
+    case "$i" in
+      "/")
+        rev="\\${rev}"
+      ;;
+      *"/")
+        rev="\\${i%%/}${rev}"
+      ;;
+      *)
+        rev="${i}${rev}"
+      ;;
+    esac
+  done
+  IFS="$IFS_"
+
+  printf '%s\n' "${rev}${suf_rev}"
 }
 
 path_fmt() {
