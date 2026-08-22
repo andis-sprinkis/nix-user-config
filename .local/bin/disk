@@ -134,12 +134,12 @@ df -P -k | tail -n "+2" | tr -s " " ";" | sort -t ";" -k "6" | while read -r "li
   path_mpt_rev=""
   path_dev_rev=""
 
-  for p in "mpt" "dev"; do
+  for p in "m" "d"; do
     case "$p" in
-      "mpt")
+      "m")
         var="$6"
       ;;
-      "dev")
+      "d")
         var="$1"
       ;;
     esac
@@ -265,10 +265,10 @@ df -P -k | tail -n "+2" | tr -s " " ";" | sort -t ";" -k "6" | while read -r "li
     IFS="$IFS_"
 
     case "$p" in
-      "mpt")
+      "m")
         path_mpt_rev="${rev}${suf_rev}"
       ;;
-      "dev")
+      "d")
         path_dev_rev="${rev}${suf_rev}"
       ;;
     esac
