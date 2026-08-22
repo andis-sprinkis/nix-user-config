@@ -84,11 +84,13 @@ path_rev() {
       while [ "$tmp" ]; do
         rest="${tmp#?}"
         first="${tmp%"$rest"}"
+
+        suf_rev="${suf_rev}${first}"
+
         if [ "$first" = "." ]; then
-          suf_rev="${suf_rev}${first}${NL}"
-        else
-          suf_rev="${suf_rev}${first}"
+          suf_rev="${suf_rev}${NL}"
         fi
+
         tmp="$rest"
       done
 
@@ -115,29 +117,42 @@ path_rev() {
 
       suf_rev=""
 
-      suf_rev="$(printf '%s\n' "$suf" | sed -e 's|\([@.]\)|\1\n|g' | {
-        rev=""
+      tmp="$suf"
+      while [ "$tmp" ]; do
+        rest="${tmp#?}"
+        first="${tmp%"$rest"}"
 
-        IFS=""
-        while read -r "i"; do
-          IFS="$IFS_"
+        suf_rev="${suf_rev}${first}"
 
-          case "$i" in
-            *".")
-              rev=".${i%%.}${rev}"
-            ;;
-            *"@")
-              rev="@${i%%@}${rev}"
-            ;;
-            *)
-              rev="${i}${rev}"
-            ;;
-          esac
-        done
+        case "$first" in
+          "."|"@")
+            suf_rev="${suf_rev}${NL}"
+          ;;
+        esac
+
+        tmp="$rest"
+      done
+
+      tmp=""
+      IFS="$NL"
+      for i in $suf_rev; do
         IFS="$IFS_"
 
-        printf ':%s\n' "$rev"
-      })"
+        case "$i" in
+          *".")
+            tmp=".${i%%.}${tmp}"
+          ;;
+          *"@")
+            tmp="@${i%%@}${tmp}"
+          ;;
+          *)
+            tmp="${i}${tmp}"
+          ;;
+        esac
+      done
+      IFS="$IFS_"
+
+      suf_rev=":${tmp}"
     ;;
   esac
 
