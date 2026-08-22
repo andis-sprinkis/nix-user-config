@@ -58,6 +58,8 @@
           echo "${cmd} is now an executable. You can try to run it."
         fi
       fi
+
+      unset REPLY
     fi
   }
 
