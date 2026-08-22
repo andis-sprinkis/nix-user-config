@@ -4,20 +4,5 @@
 if [ "$TERM" = "linux" ]; then
   . "$GUI_ENV"
 
-  printf "\033]P0%s" "${GUI_COLOR_0#\#}"
-  printf "\033]P1%s" "${GUI_COLOR_1#\#}"
-  printf "\033]P2%s" "${GUI_COLOR_2#\#}"
-  printf "\033]P3%s" "${GUI_COLOR_3#\#}"
-  printf "\033]P4%s" "${GUI_COLOR_4#\#}"
-  printf "\033]P5%s" "${GUI_COLOR_5#\#}"
-  printf "\033]P6%s" "${GUI_COLOR_6#\#}"
-  printf "\033]P7%s" "${GUI_COLOR_7#\#}"
-  printf "\033]P8%s" "${GUI_COLOR_8#\#}"
-  printf "\033]P9%s" "${GUI_COLOR_9#\#}"
-  printf "\033]PA%s" "${GUI_COLOR_A#\#}"
-  printf "\033]PB%s" "${GUI_COLOR_B#\#}"
-  printf "\033]PC%s" "${GUI_COLOR_C#\#}"
-  printf "\033]PD%s" "${GUI_COLOR_D#\#}"
-  printf "\033]PE%s" "${GUI_COLOR_E#\#}"
-  printf "\033]PF%s" "${GUI_COLOR_F#\#}"
+  printf "\033]P0%s\033]P1%s\033]P2%s\033]P3%s\033]P4%s\033]P5%s\033]P6%s\033]P7%s\033]P8%s\033]P9%s\033]PA%s\033]PB%s\033]PC%s\033]PD%s\033]PE%s\033]PF%s" "${GUI_COLOR_0#\#}" "${GUI_COLOR_1#\#}" "${GUI_COLOR_2#\#}" "${GUI_COLOR_3#\#}" "${GUI_COLOR_4#\#}" "${GUI_COLOR_5#\#}" "${GUI_COLOR_6#\#}" "${GUI_COLOR_7#\#}" "${GUI_COLOR_8#\#}" "${GUI_COLOR_9#\#}" "${GUI_COLOR_A#\#}" "${GUI_COLOR_B#\#}" "${GUI_COLOR_C#\#}" "${GUI_COLOR_D#\#}" "${GUI_COLOR_E#\#}" "${GUI_COLOR_F#\#}"
 fi
