@@ -280,7 +280,6 @@ df -P -k | tail -n "+2" | tr -s " " ";" | sort -t ";" -k "6" | while read -r "li
   case "$path_mpt_rev" in
     "\\")
       path_mpt_rev_name="$path_mpt_rev"
-      path_mpt_rev_path=""
     ;;
     *"\\")
       path_mpt_rev_name="${path_mpt_rev%%\\*}"
