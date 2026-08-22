@@ -44,168 +44,6 @@ export LC_ALL="C"
 
 fmt_reset="\x1b[0m" fmt_sever="\x1b[0;32m" fmt_mute="\x1b[0;90m"
 
-human() {
-  scl="$((
-    $1 < 1024 ? 1 :
-      $1 < 1048576 ? 1024 :
-        $1 < 1073741824 ? 1048576 :
-          $1 < 1099511627776 ? 1073741824 :
-            $1 < 1125899906842624 ? 1099511627776 :
-              0
-  ))"
-
-  case "$scl" in
-    "1") unit="K" ;;
-    "1024") unit="M" ;;
-    "1048576") unit="G" ;;
-    "1073741824") unit="T" ;;
-    "1099511627776") unit="P" ;;
-  esac
-
-  ans="$((($1 * 10) / scl))"
-  ans="${ans%[0-9]}.${ans#"${ans%[0-9]}"}"
-  echo "${ans%.0}${unit}"
-}
-
-path_rev() {
-  fp="$1" suf_rev=""
-
-  case "$1" in
-    "//"*"/"*) # The SMB //<host>/<path>
-      fp="${1#"//"*"/"}"
-
-      suf="${1%"$fp"}"
-      suf="${suf#"//"}"
-      suf="${suf%"/"}"
-
-      suf_rev=""
-
-      tmp="$suf"
-      while [ "$tmp" ]; do
-        rest="${tmp#?}"
-        first="${tmp%"$rest"}"
-
-        suf_rev="${suf_rev}${first}"
-
-        if [ "$first" = "." ]; then
-          suf_rev="${suf_rev}${NL}"
-        fi
-
-        tmp="$rest"
-      done
-
-      tmp=""
-      IFS="$NL"
-      for i in $suf_rev; do
-        IFS="$IFS_"
-        case "$i" in
-          *".")
-            tmp=".${i%%.}${tmp}"
-          ;;
-          *)
-            tmp="${i}${tmp}"
-          ;;
-        esac
-      done
-      IFS="$IFS_"
-
-      suf_rev="\\$tmp\\\\"
-    ;;
-    *"@"*":/"*) # The SSHFS <user>@<host>:<path>
-      fp="${1#*"@"*":"}"
-      suf="${1%":${fp}"}"
-
-      suf_rev=""
-
-      tmp="$suf"
-      while [ "$tmp" ]; do
-        rest="${tmp#?}"
-        first="${tmp%"$rest"}"
-
-        suf_rev="${suf_rev}${first}"
-
-        case "$first" in
-          "."|"@")
-            suf_rev="${suf_rev}${NL}"
-          ;;
-        esac
-
-        tmp="$rest"
-      done
-
-      tmp=""
-      IFS="$NL"
-      for i in $suf_rev; do
-        IFS="$IFS_"
-
-        case "$i" in
-          *".")
-            tmp=".${i%%.}${tmp}"
-          ;;
-          *"@")
-            tmp="@${i%%@}${tmp}"
-          ;;
-          *)
-            tmp="${i}${tmp}"
-          ;;
-        esac
-      done
-      IFS="$IFS_"
-
-      suf_rev=":${tmp}"
-    ;;
-  esac
-
-  fp_nl=""
-  tmp="$fp"
-  while [ "$tmp" ]; do
-    rest="${tmp#?}"
-    first="${tmp%"$rest"}"
-    if [ "$first" = "/" ]; then
-      fp_nl="${fp_nl}${first}${NL}"
-    else
-      fp_nl="${fp_nl}${first}"
-    fi
-    tmp="$rest"
-  done
-
-  rev=""
-  IFS="$NL"
-  for i in $fp_nl; do
-    IFS="$IFS_"
-
-    case "$i" in
-      "/")
-        rev="\\${rev}"
-      ;;
-      *"/")
-        rev="\\${i%%/}${rev}"
-      ;;
-      *)
-        rev="${i}${rev}"
-      ;;
-    esac
-  done
-  IFS="$IFS_"
-
-  printf '%s\n' "${rev}${suf_rev}"
-}
-
-path_fmt() {
-  case "$1" in
-    "/")
-      printf "${fmt_sever}%s${fmt_reset}\n" "\\"
-    ;;
-    "/"*)
-      printf \
-        "${fmt_sever}%s${fmt_reset}${fmt_mute}\\%s${fmt_reset}\n" "${1##*/}" "$(path_rev "${1%/*}")"
-    ;;
-    *)
-      printf "${fmt_sever}%s${fmt_reset}\n" "$1"
-    ;;
-  esac
-}
-
 IFS=""
 df -P -k | tail -n "+2" | tr -s " " ";" | sort -t ";" -k "6" | while read -r "line"; do
   IFS=";"
@@ -250,8 +88,208 @@ df -P -k | tail -n "+2" | tr -s " " ";" | sort -t ";" -k "6" | while read -r "li
     sym_sever="~"
   fi
 
+  human_free=""
+  human_total=""
+  for size in "f" "t"; do
+    case "$size" in
+      "f")
+        var="$4"
+      ;;
+      "t")
+        var="$2"
+      ;;
+    esac
+
+    scl="$((
+      var < 1024 ? 1 :
+        var < 1048576 ? 1024 :
+          var < 1073741824 ? 1048576 :
+            var < 1099511627776 ? 1073741824 :
+              var < 1125899906842624 ? 1099511627776 :
+                0
+    ))"
+
+    case "$scl" in
+      "1") unit="K" ;;
+      "1024") unit="M" ;;
+      "1048576") unit="G" ;;
+      "1073741824") unit="T" ;;
+      "1099511627776") unit="P" ;;
+    esac
+
+    ans="$(((var * 10) / scl))"
+    ans="${ans%[0-9]}.${ans#"${ans%[0-9]}"}"
+    ans="${ans%.0}${unit}"
+
+    case "$size" in
+      "f")
+        human_free="$ans"
+      ;;
+      "t")
+        human_total="$ans"
+      ;;
+    esac
+  done
+
+  path_mpt_rev=""
+  path_dev_rev=""
+
+  for p in "mpt" "dev"; do
+    case "$p" in
+      "mpt")
+        var="$6"
+      ;;
+      "dev")
+        var="$1"
+      ;;
+    esac
+
+    fp="$var" suf_rev=""
+
+    case "$var" in
+      "//"*"/"*) # SMB //<host>/ in //<host>/<path>
+        fp="${var#"//"*"/"}"
+
+        suf="${var%"$fp"}"
+        suf="${suf#"//"}"
+        suf="${suf%"/"}"
+
+        suf_rev=""
+
+        tmp="$suf"
+        while [ "$tmp" ]; do
+          rest="${tmp#?}"
+          first="${tmp%"$rest"}"
+
+          suf_rev="${suf_rev}${first}"
+
+          if [ "$first" = "." ]; then
+            suf_rev="${suf_rev}${NL}"
+          fi
+
+          tmp="$rest"
+        done
+
+        tmp=""
+        IFS="$NL"
+        for i in $suf_rev; do
+          IFS="$IFS_"
+          case "$i" in
+            *".")
+              tmp=".${i%%.}${tmp}"
+            ;;
+            *)
+              tmp="${i}${tmp}"
+            ;;
+          esac
+        done
+        IFS="$IFS_"
+
+        suf_rev="\\$tmp\\\\"
+      ;;
+      *"@"*":/"*) # SSFHS: <user>@<host>:/ in <user>@<host>:/<path>
+        fp="${1#*"@"*":"}"
+        suf="${1%":${fp}"}"
+
+        suf_rev=""
+
+        tmp="$suf"
+        while [ "$tmp" ]; do
+          rest="${tmp#?}"
+          first="${tmp%"$rest"}"
+
+          suf_rev="${suf_rev}${first}"
+
+          case "$first" in
+            "."|"@")
+              suf_rev="${suf_rev}${NL}"
+            ;;
+          esac
+
+          tmp="$rest"
+        done
+
+        tmp=""
+        IFS="$NL"
+        for i in $suf_rev; do
+          IFS="$IFS_"
+
+          case "$i" in
+            *".")
+              tmp=".${i%%.}${tmp}"
+            ;;
+            *"@")
+              tmp="@${i%%@}${tmp}"
+            ;;
+            *)
+              tmp="${i}${tmp}"
+            ;;
+          esac
+        done
+        IFS="$IFS_"
+
+        suf_rev=":${tmp}"
+      ;;
+    esac
+
+    fp_nl=""
+    tmp="$fp"
+    while [ "$tmp" ]; do
+      rest="${tmp#?}"
+      first="${tmp%"$rest"}"
+      if [ "$first" = "/" ]; then
+        fp_nl="${fp_nl}${first}${NL}"
+      else
+        fp_nl="${fp_nl}${first}"
+      fi
+      tmp="$rest"
+    done
+
+    rev=""
+    IFS="$NL"
+    for i in $fp_nl; do
+      IFS="$IFS_"
+
+      case "$i" in
+        "/")
+          rev="\\${rev}"
+        ;;
+        *"/")
+          rev="\\${i%%/}${rev}"
+        ;;
+        *)
+          rev="${i}${rev}"
+        ;;
+      esac
+    done
+    IFS="$IFS_"
+
+    case "$p" in
+      "mpt")
+        path_mpt_rev="${rev}${suf_rev}"
+      ;;
+      "dev")
+        path_dev_rev="${rev}${suf_rev}"
+      ;;
+    esac
+  done
+
+  path_mpt_rev_name="$path_mpt_rev"
+  path_mpt_rev_path=""
+
+  case "$path_mpt_rev" in
+    "\\")
+      path_mpt_rev_name="$path_mpt_rev"
+      path_mpt_rev_path=""
+    ;;
+    *"\\")
+      path_mpt_rev_name="${path_mpt_rev%%\\*}"
+      path_mpt_rev_path="\\${path_mpt_rev#*\\}"
+    ;;
+  esac
+
   printf \
-    "%s ${fmt_sever}%s%%%s %s${fmt_reset}${fmt_mute}\\%s (%s)${fmt_reset}\n" \
-    "$(path_fmt "$6")" "$free_pcnt" "$sym_sever" "$(human "$4")" "$(human "$2")" "$(path_rev "$1")"
+    "${fmt_sever}%s${fmt_reset}${fmt_mute}%s${fmt_reset} ${fmt_sever}%s%%%s %s${fmt_reset}${fmt_mute}\\%s (%s)${fmt_reset}\n" \
+    "$path_mpt_rev_name" "$path_mpt_rev_path" "$free_pcnt" "$sym_sever" "$human_free" "$human_total" "$path_dev_rev"
 done
 IFS="$IFS_"
