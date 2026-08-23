@@ -10,7 +10,7 @@ case "${OSTYPE:-"$(uname)"}" in
       fi
 
       # TODO: launch foot server
-      exec footclient "$@"
+      exec footclient -E "$@"
     fi
 
     if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
