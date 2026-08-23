@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 set -euf
+NL="
+"
 
 if [ -z "${1:-""}" ]; then
   exit "1"
@@ -15,13 +17,11 @@ files="${fv:-"$fx"}"
 
 fy=""
 
-IFS="
-"
+IFS="$NL"
 for f in $files; do
   IFS="$IFS_"
 
-  fy="${fy}${fy:+
-}$(basename "$f")"
+  fy="${fy}${fy:+"$NL"}$(basename "$f")"
 done
 IFS="$IFS_"
 
