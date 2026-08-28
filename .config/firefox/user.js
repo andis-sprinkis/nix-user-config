@@ -199,6 +199,7 @@ user_pref("full-screen-api.transition-duration.enter", "0 0");
 user_pref("full-screen-api.transition-duration.leave", "0 0");
 user_pref("full-screen-api.warning.timeout", 0);
 user_pref("general.autoScroll", true);
+user_pref("general.autoscroll.speed_multiplier", 80);
 user_pref("general.smoothScroll.lines.durationMaxMS", 30);
 user_pref("general.smoothScroll.lines.durationMinMS", 0);
 user_pref("general.smoothScroll.mouseWheel.durationMaxMS", 37);
