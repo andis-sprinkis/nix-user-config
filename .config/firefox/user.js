@@ -305,6 +305,7 @@ user_pref("trailhead.firstrun.didSeeAboutWelcome", true);
 user_pref("ui.tooltip.delay_ms", 210);
 user_pref("view_source.tab_size", 2);
 user_pref("view_source.wrap_long_lines", true);
+user_pref("widget.non-native-theme.scrollbar.size.override", 12);
 user_pref("widget.non-native-theme.scrollbar.style", 3);
 user_pref("zoom.maxPercent", 2000);
 user_pref("zoom.minPercent", 1);
