@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 set -euf
+IFS_="$IFS"
 NL="
 "
 
@@ -9,9 +10,13 @@ if [ "${1:-""}" ]; then
 fi
 
 text=""
+IFS=""
 while read -r l; do
+  IFS="$IFS_"
+
   text="${text}${text:+"$NL"}${l}"
 done
+IFS="$IFS_"
 
 if [ "$text" ]; then
   printf '%s' "$text" | base64 -w0
