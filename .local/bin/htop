@@ -3,7 +3,7 @@ set -euf
 
 if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/htop/htoprc_common" ]; then
   set +e
-  cat "${XDG_CONFIG_HOME:-$HOME/.config}/htop/htoprc_common" > "${XDG_CONFIG_HOME:-$HOME/.config}/htoprc"
+  cat "${XDG_CONFIG_HOME:-$HOME/.config}/htop/htoprc_common" > "${XDG_CONFIG_HOME:-$HOME/.config}/htop/htoprc"
   set -e
 fi
 
