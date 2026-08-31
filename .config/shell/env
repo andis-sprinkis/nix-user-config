@@ -95,13 +95,8 @@ if [ -z "${HAS_ENV_SET:-""}" ]; then
 "--color=fg:${GUI_COLOR_FOREGROUND:-""},fg+:${GUI_COLOR_FOREGROUND:-""},bg:${GUI_COLOR_BACKGROUND:-""},bg+:${GUI_COLOR_BACKGROUND:-""},hl:${GUI_COLOR_A:-""},hl+:${GUI_COLOR_D:-""},info:${GUI_COLOR_D:-""},marker:${GUI_COLOR_D:-""},prompt:${GUI_COLOR_D:-""},spinner:${GUI_COLOR_D:-""},pointer:${GUI_COLOR_D:-""},header:${GUI_COLOR_A:-""},border:${GUI_COLOR_8:-""},label:${GUI_COLOR_D:-""},query:${GUI_COLOR_FOREGROUND:-""} --tabstop=2 --cycle --layout=reverse --preview-border=none --preview='previewer {}'"
 
   # configure makepkg
-  if command -v "nproc" 1>/dev/null 2>/dev/null; then
-    proc_units_no="$(nproc)"
-
-    if [ "$proc_units_no" ]; then
-      export MAKEFLAGS="-j${proc_units_no}"
-    fi
-  fi
+  proc_units_no="$(nproc 2>/dev/null)"
+  export MAKEFLAGS="${proc_units_no:+"-j${proc_units_no}"}"
 
   # configure X11
   export XINITRC="${XDG_CONFIG_HOME:-$HOME/.config}/xinit/xinitrc"
