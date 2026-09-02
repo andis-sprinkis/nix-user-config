@@ -65,7 +65,6 @@ alias \
   gs="git status" \
   grep="grep --color=always" \
   hosts="sudo \$EDITOR /etc/hosts" \
-  htop="htop -t --highlight-changes=10" \
   inxi="inxi --full -xxx --color 2 --width 80 --indent 11 --indents 10" \
   ip="ip --color=always" \
   jq="jq -C" \
