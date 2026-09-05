@@ -6,6 +6,7 @@ NL="
 delay_current=""
 path_state="${XDG_STATE_HOME-"${HOME}/.local/state"}/screencapture_menu_desktop"
 path_state_delay="${path_state}/delay"
+path_state_previous_choice="${path_state}/previous_choice"
 delay_current_str=""
 
 if [ -f "$path_state_delay" ]; then
@@ -14,6 +15,12 @@ if [ -f "$path_state_delay" ]; then
   if [ "$delay_current" != "0" ]; then
     delay_current_str="${delay_current:+" (${delay_current}s)"}"
   fi
+else
+  mkdir -p "$path_state"
+fi
+
+if [ -f "$path_state_previous_choice" ]; then
+  previous_choice="$(head < "$path_state_previous_choice")"
 else
   mkdir -p "$path_state"
 fi
@@ -54,6 +61,27 @@ video window
 video workspace
 set_delay"
 
+if [ "$previous_choice" ]; then
+  case "$previous_choice" in
+    "Picture: "*|"Video: "*)
+      if ! echo "$lines" | grep -q -x "$previous_choice"; then
+        mkdir -p "$path_state"
+        echo > "$path_state_previous_choice"
+      else
+        previous_choice_idx="$(echo "$lines" | grep -n -x "$previous_choice" | cut -f"1" -d":")"
+        previous_choice_option="$(echo "$options" | sed "${previous_choice_idx}q;d")"
+
+        lines="${previous_choice}${NL}$(echo "$lines" | grep -v -x "$previous_choice")"
+        options="${previous_choice_option}${NL}$(echo "$options" | grep -v -x "$previous_choice_option")"
+      fi
+    ;;
+    *)
+      mkdir -p "$path_state"
+      echo > "$path_state_previous_choice"
+    ;;
+  esac
+fi
+
 sel_line="$(printf "%s\n" "$lines" | menu_desktop -p "Capture${delay_current_str}:")"
 
 sel_idx="$(echo "$lines" | grep -n -x "$sel_line" | cut -f"1" -d":")"
@@ -62,9 +90,9 @@ if [ -z "$sel_idx" ]; then
   exit "1"
 fi
 
-sel_options="$(echo "$options" | sed "${sel_idx}q;d")"
+sel_option="$(echo "$options" | sed "${sel_idx}q;d")"
 
-case "$sel_options" in
+case "$sel_option" in
   "set_delay")
     options_delay="0${NL}3${NL}5${NL}10${NL}15${NL}30"
 
@@ -85,7 +113,10 @@ case "$sel_options" in
     esac
   ;;
   *)
+    mkdir -p "$path_state"
+    echo "$sel_line" > "$path_state_previous_choice"
+
     # shellcheck disable=SC2086
-    screencapture $sel_options "$delay_current"
+    screencapture $sel_option "$delay_current"
   ;;
 esac
