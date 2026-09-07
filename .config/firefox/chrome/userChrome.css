@@ -105,6 +105,10 @@
   sidebar-bookmark-row {
     height: var(--size-item-medium) !important;
   }
+
+  #fxview-tab-list virtual-list details summary, #fxview-tab-list virtual-list .bookmark-folder-label { 
+    padding-inline: calc(var(--space-xsmall) + var(--space-medium) + var(--space-large)) var(--space-small) !important;
+  }
 }
 
 @-moz-document url-prefix("about:home"), url-prefix("about:newtab"), url-prefix("about:blank") {
