@@ -41,7 +41,6 @@ alias \
   dgps="dotgit push" \
   dgs="dotgit status" \
   dgk="dotgit checkout" \
-  dup="rmlint" \
   e="\$EDITOR" \
   enew="\$EDITOR +" \
   :enew="\$EDITOR +" \
