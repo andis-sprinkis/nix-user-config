@@ -82,6 +82,7 @@ alias \
   nmtui="nmcli device wifi rescan; nmtui" \
   p="python3 -q" \
   yay="yay --color=always --sudoloop --disable-download-timeout" \
+  pac_cache_clean="paccache -r" \
   pac_ls_installed="yay -Q" \
   pac_ls_installed_explicit="yay -Qe" \
   pac_ls_installed_in_sync_db="yay -Qn" \
