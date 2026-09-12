@@ -289,7 +289,7 @@ df -P -k | tail -n "+2" | tr -s " " ";" | sort -t ";" -k "6" | while read -r "li
   esac
 
   printf \
-    "${fmt_sever}%s${fmt_reset}${fmt_mute}%s${fmt_reset} ${fmt_sever}%s%%%s %s${fmt_reset}${fmt_mute}\\%s @ %s${fmt_reset}\n" \
+    "${fmt_sever}%s${fmt_reset}${fmt_mute}%s${fmt_reset} ${fmt_sever}%s%%%s %s${fmt_reset}${fmt_mute}\\%s @%s${fmt_reset}\n" \
     "$path_mpt_rev_name" "$path_mpt_rev_path" "$free_pcnt" "$sym_sever" "$human_free" "$human_total" "$path_dev_rev"
 done
 IFS="$IFS_"
