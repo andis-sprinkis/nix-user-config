@@ -47,7 +47,8 @@
 
   # fn: offer to set execute permission on shell scripts
   command_permission() {
-    local cmd="$(echo "$1" | awk '{print $1}')"
+    local cmd="${1#${1%%[![:space:]]*}}"
+    cmd="${cmd%${cmd##*[![:space:]]}}"
 
     if [[ "$cmd" =~ ^\./ && -f "$cmd" && ! -x "$cmd" ]]; then
       read -rq "REPLY?File '${cmd}' is not an executable. Make it executable? (y/n) "
@@ -55,9 +56,13 @@
       if [[ "$REPLY" =~ ^[Yy]$ ]]; then
         if chmod +x "$cmd"; then
           echo
-          echo "${cmd} is now an executable. You can try to run it."
+          echo "${cmd} is now an executable. You can try to rerun it."
+
+          return
         fi
       fi
+
+      echo
 
       unset REPLY
     fi
