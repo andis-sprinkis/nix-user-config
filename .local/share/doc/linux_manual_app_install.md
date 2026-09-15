@@ -213,7 +213,7 @@ mkdir "/tmp/jdownloader-install"
 cd "/tmp/jdownloader-install"
 
 curl -L "https://installer.jdownloader.org/JDownloader.jar" -o "./JDownloader.jar"
-curl -L "https://keys.openpgp.org/vks/v1/by-fingerprint/2B805711032D5A5CB50074C510C6265CEFB6457E" -o "./key.asc"
+curl -L "https://installer.jdownloader.org/jd_release_signing_key.asc" -o "./key.asc"
 gpg --verify "./key.asc" "./JDownloader.jar"
 
 mkdir -p "${HOME}/.local/share/jdownloader"
