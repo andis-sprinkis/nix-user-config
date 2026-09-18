@@ -10,7 +10,7 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
 1.  Write the installation image to the installation media.
     - To write the image from a \*nix system:
         ```sh
-        cat path/to/archlinux-version-x86_64.iso > /dev/sdx
+        cat ./archlinux-version-x86_64.iso > /dev/sdx
         ```
     - To write the image from Microsoft Windows, use [Rufus](https://rufus.ie/en/).
     - Alternatively, copy the downloaded image to [a Ventoy prepared](https://www.ventoy.net/en/doc_start.html) device.
