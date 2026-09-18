@@ -2,54 +2,10 @@
 
 ## Setup process
 
-1. Install and activate Homebrew.
-    ```sh
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    eval $(/opt/homebrew/bin/brew shellenv)
-    ```
-1. Clone the configuration setup repository and change the directory to it.
-    ```sh
-    git clone https://github.com/andis-sprinkis/nix-user-config $HOME/nix-user-config
-    cd $HOME/nix-user-config/.local/share/pkg_list/macos
-    ```
-1. Install Homebrew packages.
-    ```sh
-    [ -s "./brew_tap" ] && brew tap $(cat "./brew_tap" | paste -s -d ' ' -)
-    [ -s "./brew" ] && brew install $(cat "./brew" | paste -s -d ' ' -)
-    [ -s "./brew_cask" ] && brew install --cask $(cat "./brew_cask" | paste -s -d ' ' -)
-    ```
-1. Install user general configuration.
-    ```sh
-    mkdir -p "$HOME/.local/state"
-    git_cfg="https://github.com/andis-sprinkis/nix-user-config"
-    dir_git="$HOME/.local/state/dotfiles_git"
-    git clone --bare $git_cfg $dir_git
-    git --git-dir=$dir_git --work-tree=$HOME config --local status.showUntrackedFiles no
-    git --git-dir=$dir_git --work-tree=$HOME checkout -f
-    git --git-dir=$dir_git --work-tree=$HOME submodule update --init
-    ```
-1. Install npm packages.
-    ```sh
-    export VOLTA_HOME="$HOME/.local/share/volta"
-    PATH="$VOLTA_HOME/bin:$PATH"
-    cd $HOME/nix-user-config/.local/share/pkg_list/macos
-    [ -s ./npm ] && volta install $(cat ./npm | paste -s -d ' ' -)
-    ```
-1. Install PyPi packages.
-    ```sh
-    [ -s ./pypi ] && for p in $(cat ./pypi | paste -s -d ' ' -); do pipx install $p; done
-    ```
-1. Install user Neovim configuration.
-
-    ```sh
-    cd $HOME/.config
-    git clone https://github.com/andis-sprinkis/nvim-user-config nvim
-    ```
-
 1. Close any Sytem Preferences windows.
 
     ```sh
-    osascript -e 'tell application "System Preferences" to quit'
+    osascript -e "tell application \"System Preferences\" to quit"
     ```
 
 1. Set the keyboard to use F-keys as the standard function keys
@@ -218,6 +174,52 @@
     | ----------- | --------------- |
     | `Caps Lock` | `Command`       |
 
+1. Install and activate Homebrew.
+    ```sh
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval $(/opt/homebrew/bin/brew shellenv)
+    ```
+1. Clone the configuration setup repository and change the directory to it.
+    ```sh
+    git clone https://github.com/andis-sprinkis/nix-user-config $HOME/nix-user-config
+    cd $HOME/nix-user-config/.local/share/pkg_list/macos
+    ```
+1. Install Homebrew packages.
+    ```sh
+    [ -s "./brew_tap" ] && brew tap $(cat "./brew_tap" | paste -s -d ' ' -)
+    [ -s "./brew" ] && brew install $(cat "./brew" | paste -s -d ' ' -)
+    [ -s "./brew_cask" ] && brew install --cask $(cat "./brew_cask" | paste -s -d ' ' -)
+    ```
+1. Install user general configuration.
+    ```sh
+    mkdir -p "$HOME/.local/state"
+    git_cfg="https://github.com/andis-sprinkis/nix-user-config"
+    dir_git="$HOME/.local/state/dotfiles_git"
+    git clone --bare $git_cfg $dir_git
+    git --git-dir=$dir_git --work-tree=$HOME config --local status.showUntrackedFiles no
+    git --git-dir=$dir_git --work-tree=$HOME checkout -f
+    git --git-dir=$dir_git --work-tree=$HOME submodule update --init
+    ```
+1. Install npm packages.
+    ```sh
+    export VOLTA_HOME="$HOME/.local/share/volta"
+    PATH="$VOLTA_HOME/bin:$PATH"
+    cd $HOME/nix-user-config/.local/share/pkg_list/macos
+    [ -s ./npm ] && volta install $(cat ./npm | paste -s -d ' ' -)
+    ```
+1. Install PyPi packages.
+    ```sh
+    [ -s ./pypi ] && for p in $(cat ./pypi | paste -s -d ' ' -); do pipx install $p; done
+    ```
+1. Install user Neovim configuration.
+
+    ```sh
+    cd $HOME/.config
+    git clone https://github.com/andis-sprinkis/nvim-user-config nvim
+    ```
+
+1. Follow [_The web browsers setup_](./web_browser_setup.md)
+
 ## Addition of newly listed packages to an existing setup
 
 Steps for adding any newly listed packages from the user package lists to an already existing setup.
@@ -255,8 +257,6 @@ Steps for adding any newly listed packages from the user package lists to an alr
         ```sh
         volta install $(cat "./npm" | paste -s -d ' ' -)
         ```
-
-1. Follow [_The web browsers setup_](./web_browser_setup.md)
 
 ## Resources
 
