@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 set -euf
+IFS_="$IFS"
 NL="
 "
 
@@ -72,9 +73,19 @@ while true; do
     continue
   fi
 
-  set +e
-  cache_hit="$(echo "$metrics_cache" | grep "^${metrics} ")"
-  set -e
+  cache_hit=""
+  IFS="$NL"
+  for line in $metrics_cache; do
+    IFS="$IFS_"
+
+    case "$line" in
+      "${metrics} "*)
+        cache_hit="$line"
+        break
+      ;;
+    esac
+  done
+  IFS="$IFS_"
 
   if [ "$cache_hit" ]; then
     # shellcheck disable=SC2086
