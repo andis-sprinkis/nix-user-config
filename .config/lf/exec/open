@@ -5,10 +5,43 @@ IFS_="$IFS"
 NL="
 "
 
+confirm_prompt() {
+  ANS=""
+  while [ "$ANS" = "" ]; do
+    printf "\n%s\nyes / no ?\n> " "$1"
+    read -r input
+    case "$input" in
+      [yY]|[yY][eE]|[yY][eE][sS]) ANS="yes" ;;
+      [nN]|[nN][oO]) ANS="no" ;;
+    esac
+  done
+
+  printf '%s\n\n' "[ ${ANS} ]"
+}
+
 "${XDG_CONFIG_HOME:-"${HOME}/.config"}/lf/exec/_heartbeat" 0</dev/null 1>/dev/null 2>/dev/null & disown
-"${XDG_CONFIG_HOME:-"$HOME/.config"}/lf/exec/_set-title" 0</dev/null 1>/dev/null 2>/dev/null & disown
+"${XDG_CONFIG_HOME:-"${HOME}/.config"}/lf/exec/_set-title" 0</dev/null 1>/dev/null 2>/dev/null & disown
 
 files="${fv:-"$fx"}"
+
+case "${files}${NL}" in
+  *"$NL"*"$NL"*"$NL"*"$NL"*"$NL")
+    clear
+
+    echo "Files:${NL}${files}"
+
+    confirm_prompt "Open $(echo "$files" | wc -l) files?"
+
+    case "$ANS" in
+      "yes")
+      ;;
+      "no")
+        exit
+      ;;
+    esac
+  ;;
+esac
+
 first_file="${files%%"$NL"*}"
 mime="$(file --mime-type --brief "$(readlink -f "$first_file")")"
 
