@@ -206,7 +206,7 @@ if [ ! -r "$FPATH" ]; then
 fi
 
 case "$MIME" in
-  application/eps|application/pdf|application/postscript|application/x-eps|image/x-eps)
+  "application/eps"|"application/pdf"|"application/postscript"|"application/x-eps"|"image/x-eps")
     if thumb_cache_create; then
       if [ ! -f "${FPATH_THUMB}.jpg" ]; then
         if find_util "pdftoppm"; then
@@ -238,7 +238,7 @@ case "$MIME" in
       if [ "$out" ]; then printf '%s' "$out" | ansifilter; fi
     fi
   ;;
-  image/vnd.djvu*)
+  "image/vnd.djvu"*)
     if thumb_cache_create; then
       if [ ! -f "${FPATH_THUMB}.jpg" ]; then
         if find_util "ddjvu" && find_util "magick"; then
@@ -255,7 +255,7 @@ case "$MIME" in
       fi
     fi
   ;;
-  application/vnd.openxmlformats-officedocument.wordprocessingml.document)
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document")
     if find_util "docx2txt"; then
       out="$(set +e; docx2txt "$FPATH" -; set -e)"
       if [ "$out" ]; then printf '%s\n' "$out" | ansifilter; fi
@@ -263,7 +263,7 @@ case "$MIME" in
 
     print_als "zip"
   ;;
-  application/zip|application/epub+zip|application/java-archive|*openxmlformats-officedocument*)
+  "application/zip"|"application/epub+zip"|"application/java-archive"|*"openxmlformats-officedocument"*)
     print_als "zip"
   ;;
   "application/x-compressed-tar")
@@ -318,11 +318,11 @@ case "$MIME" in
       if [ "$out" ]; then printf '%s' "$out" | ansifilter; fi
     fi
   ;;
-  application/gzip|application/x-bzip1|application/x-bzip2|application/x-compress|application/x-lzma|application/x-lzop|application/x-lzip|application/x-xz|application/x-lrzip|application/x-alz)
+  "application/gzip"|"application/x-bzip1"|"application/x-bzip2"|"application/x-compress"|"application/x-lzma"|"application/x-lzop"|"application/x-lzip"|"application/x-xz"|"application/x-lrzip"|"application/x-alz")
     # Archive types that 'als' recognizes, but cannot list.
     print_stat
   ;;
-  image/svg+xml)
+  "image/svg+xml")
     if print_chafa "$FPATH"; then
       echo
     fi
@@ -330,7 +330,7 @@ case "$MIME" in
     print_lines_count
     print_bat
   ;;
-  image/vnd.adobe.photoshop)
+  "image/vnd.adobe.photoshop")
     if thumb_cache_create; then
       if [ ! -f "${FPATH_THUMB}.jpg" ]; then
         if find_util "ffmpeg"; then
@@ -351,14 +351,14 @@ case "$MIME" in
       fi
     fi
   ;;
-  image/*)
+  "image/"*)
     if print_chafa "$FPATH"; then
       echo
     fi
 
     print_exiftool
   ;;
-  video/*|application/x-ogm-video)
+  "video/"*|"application/x-ogm-video")
     if thumb_cache_create; then
       if [ ! -f "${FPATH_THUMB}.jpg" ]; then
         if find_util "ffmpegthumbnailer"; then
@@ -377,7 +377,7 @@ case "$MIME" in
 
     print_mediainfo
   ;;
-  *opendocument*)
+  *"opendocument"*)
     if find_util "odt2txt"; then
       out="$(set +e; odt2txt "$FPATH"; set -e)"
       if [ "$out" ]; then printf '%s\n' "$out" | ansifilter; fi
@@ -385,7 +385,7 @@ case "$MIME" in
 
     print_als "zip"
   ;;
-  audio/*|application/mxf|application/ogg|application/sdp|application/smil|application/streamingmedia|application/vnd.apple.mpegurl|application/vnd.ms-asf|application/vnd.rn-realmedia-vbr|application/vnd.rn-realmedia|application/x-cue|application/x-extension-m4a|application/x-extension-mp4|application/x-matroska|application/x-mpegurl|application/x-ogg|application/x-ogm-audio|application/x-ogm|application/x-shorten|application/x-smil|application/x-streamingmedia)
+  "audio/"*|"application/mxf"|"application/ogg"|"application/sdp"|"application/smil"|"application/streamingmedia"|"application/vnd.apple.mpegurl"|"application/vnd.ms-asf"|"application/vnd.rn-realmedia-vbr"|"application/vnd.rn-realmedia"|"application/x-cue"|"application/x-extension-m4a"|"application/x-extension-mp4"|"application/x-matroska"|"application/x-mpegurl"|"application/x-ogg"|"application/x-ogm-audio"|"application/x-ogm"|"application/x-shorten"|"application/x-smil"|"application/x-streamingmedia")
     if thumb_cache_create; then
       if [ ! -f "${FPATH_THUMB}.jpg" ]; then
         if find_util "exiftool"; then
@@ -415,7 +415,7 @@ case "$MIME" in
       if [ "$out" ]; then printf '%s' "$out" | ansifilter; fi
     fi
   ;;
-  application/vnd.sqlite*)
+  "application/vnd.sqlite"*)
     if find_util "sqlite3"; then
       out="$(set +e; sqlite3 "$FPATH" '.tables'; set -e)"
       if [ "$out" ]; then printf '.tables:%s\n' "$out" | ansifilter; fi
@@ -423,13 +423,13 @@ case "$MIME" in
 
     print_strings
   ;;
-  application/x-executable|application/x-pie-executable|application/x-object|application/x-sharedlib)
+  "application/x-executable"|"application/x-pie-executable"|"application/x-object"|"application/x-sharedlib")
     if find_util "readelf"; then
       out="$(set +e; readelf -a "$FPATH"; set -e)"
       if [ "$out" ]; then printf '%s' "$out" | ansifilter; fi
     fi
   ;;
-  inode/directory)
+  "inode/directory")
     if [ -r "$FPATH" ]; then
       if find_util "mountpoint"; then
         if mountpoint -q -- "$FPATH"; then
@@ -464,10 +464,10 @@ case "$MIME" in
     echo
     print_stat
   ;;
-  inode/*)
+  "inode/"*)
     print_stat
   ;;
-  application/octet-stream)
+  "application/octet-stream")
     # TODO: re-try by file extension
     if print_strings; then
       echo
@@ -479,26 +479,26 @@ case "$MIME" in
 
     print_stat
   ;;
-  application/vnd.microsoft.portable-executable|application/x-dosexec*|application/x-ole-storage)
+  "application/vnd.microsoft.portable-executable"|"application/x-dosexec"*|"application/x-ole-storage")
     if print_strings; then
       echo
     fi
 
     print_hexdump
   ;;
-  application/x-coredump)
+  "application/x-coredump")
     if print_hexdump; then
       echo
     fi
 
     print_stat
   ;;
-  application/x-linux-kernel)
+  "application/x-linux-kernel")
     if [ "$BRIEF" ]; then
       echo "$BRIEF" | tr ',' '\n' | sed 's/^ //g'
     fi
   ;;
-  font/*|application/x-font-*|application/vnd.ms-opentype)
+  "font/"*|"application/x-font-"*|"application/vnd.ms-opentype")
     if thumb_cache_create; then
       if [ ! -f "${FPATH_THUMB}.png" ]; then
         if find_util "magick"; then
@@ -517,7 +517,7 @@ case "$MIME" in
 
     print_exiftool
   ;;
-  application/vnd.debian.binary-package|application/x-rpm)
+  "application/vnd.debian.binary-package"|"application/x-rpm")
     if find_util "als"; then
       out="$(set +e; als -- "$FPATH"; set -e)"
       if [ "$out" ]; then printf '%s\n' "$out" | ansifilter; fi
@@ -525,10 +525,10 @@ case "$MIME" in
 
     print_strings
   ;;
-  application/x-bittorrent|application/x-lz4+json|application/x-mobipocket-ebook)
+  "application/x-bittorrent"|"application/x-lz4+json"|"application/x-mobipocket-ebook")
     print_strings
   ;;
-  application/x-iso9660-image)
+  "application/x-iso9660-image")
     if find_util "iso-info"; then
       out="$(set +e; iso-info --no-header -U "$FPATH"; set -e)"
       if [ "$out" ]; then printf '%s\n' "$out" | ansifilter; fi
@@ -536,7 +536,7 @@ case "$MIME" in
       if [ "$out" ]; then printf '%s' "$out" | ansifilter; fi
     fi
   ;;
-  text/x-ssh-public-key|application/x-pem-file)
+  "text/x-ssh-public-key"|"application/x-pem-file")
     if find_util "ssh-keygen"; then
       out="$(set +e; ssh-keygen -lv -f "$FPATH"; set -e)"
       if [ "$out" ]; then printf '%s' "$out" | ansifilter; fi
@@ -545,7 +545,7 @@ case "$MIME" in
     print_lines_count
     print_bat
   ;;
-  text/html)
+  "text/html")
     if [ "${FPATH##*.}" = "svg" ]; then
       if print_chafa "$FPATH"; then
         echo
