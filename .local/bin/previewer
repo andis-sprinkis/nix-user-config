@@ -546,7 +546,7 @@ case "$MIME" in
     print_bat
   ;;
   "text/html")
-    if [ "${FPATH##*.}" = "svg" ]; then
+    if [ "${FPATH##*"."}" = "svg" ]; then
       if print_chafa "$FPATH"; then
         echo
       fi
