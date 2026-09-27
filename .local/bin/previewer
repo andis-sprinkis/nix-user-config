@@ -330,6 +330,27 @@ case "$MIME" in
     print_lines_count
     print_bat
   ;;
+  image/vnd.adobe.photoshop)
+    if thumb_cache_create; then
+      if [ ! -f "${FPATH_THUMB}.jpg" ]; then
+        if find_util "ffmpeg"; then
+          if ffmpeg -v "quiet" -y -i "$FPATH" -frames:v "1" -vf "scale='if(gt(iw,ih),min(500,iw),-1)':'if(gt(ih,iw),min(500,ih),-1)':flags=lanczos" "${FPATH_THUMB}.jpg"; then
+            if print_chafa "${FPATH_THUMB}.jpg"; then
+              echo
+            fi
+
+            print_exiftool
+          fi
+        fi
+      else
+        if print_chafa "${FPATH_THUMB}.jpg"; then
+          echo
+        fi
+
+        print_exiftool
+      fi
+    fi
+  ;;
   image/*)
     if print_chafa "$FPATH"; then
       echo
