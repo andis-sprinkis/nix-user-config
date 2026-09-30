@@ -127,6 +127,7 @@ user_pref("browser.taskbar.lists.enabled", false);
 user_pref("browser.taskbar.lists.frequent.enabled", false);
 user_pref("browser.taskbar.lists.recent.enabled", false);
 user_pref("browser.taskbar.lists.tasks.enabled", false);
+user_pref("browser.theme.native-theme", true);
 user_pref("browser.toolbars.bookmarks.visibility", "never");
 user_pref("browser.topsites.contile.enabled", false);
 user_pref("browser.translations.enable", false);

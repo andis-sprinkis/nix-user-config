@@ -61,6 +61,8 @@ fi
 sel_options="$(echo "$options" | sed "${sel_idx}q;d")"
 
 case "$sel_options" in
+  "togglescratchpad")
+  ;;
   "togglefloat")
     $wm_cmd "[ ${pat_var_id}=${id} ] floating toggle; move position cursor; focus"
   ;;
