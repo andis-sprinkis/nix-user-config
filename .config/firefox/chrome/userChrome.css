@@ -2,19 +2,20 @@
 {
   :root {
     --toolbarbutton-outer-padding: 2px !important;
+    --urlbar-container-padding-block: 1px !important;
   }
 
-  :root[lwt-newtab-brighttext] {
-    --newtab-background-color: var(--color-gray-90);
-  }
+  /* :root[lwt-newtab-brighttext] { */
+  /*   --newtab-background-color: var(--color-gray-90); */
+  /* } */
 
   toolbar .toolbaritem-combined-buttons {
     margin-inline: 0 !important;
   }
 
-  #urlbar-container {
-    --urlbar-container-height: 30px !important;
-  }
+  /* #urlbar-container { */
+  /*   --urlbar-container-height: 30px !important; */
+  /* } */
 
   #PanelUI-menu-button {
     padding-inline-end: 4px !important;
