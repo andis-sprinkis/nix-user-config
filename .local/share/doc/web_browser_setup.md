@@ -34,6 +34,24 @@
     cp "$HOME/.config/firefox/search.json.mozlz4" "$HOME/Library/Application Support/Firefox/Profiles/PROFILE_ID.default-release/search.json.mozlz4"
     ```
 
+### Google Chrome / Chromium
+
+- On Linux:
+
+    Chromium:
+
+    ```sh
+    sudo mkdir -p "/etc/chromium/policies/managed/policies"
+    sudo cp "$HOME/.config/chromium_user/policies.json" "/etc/chromium/policies/managed/policies/policies.json"
+    ```
+
+    Google Chrome:
+
+    ```sh
+    sudo mkdir -p "/etc/opt/chrome/policies/managed/policies"
+    sudo cp "$HOME/.config/chromium_user/policies.json" "/etc/opt/chrome/policies/managed/policies/policies.json"
+    ```
+
 ## Addons
 
 ### Mozilla Firefox
@@ -181,3 +199,4 @@ wlv
 - [MozLz4a compression/decompression utility](https://gist.github.com/Tblue/62ff47bef7f894e92ed5)
     - [1209390 - Use standard lz4 file format instead of the non-standard jsonlz4/mozlz4](https://bugzilla.mozilla.org/show_bug.cgi?id=1209390)
 - [firefox.js - mozsearch](https://searchfox.org/firefox-main/source/browser/app/profile/firefox.js)
+- [Chrome Enterprise Policy List & Management | Documentation](https://chromeenterprise.google/policies/)
