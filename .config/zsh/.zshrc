@@ -81,7 +81,7 @@
     # prompt marking - OSC 133 ; C ST / FTCS_COMMAND_EXECUTED - the start of the command output / the end of the commandline
     print -Pn "\e]133;C\e\\"
 
-    timethen="$(print -P "%D{%s%3.}")"
+    timethen=${(%):-%D{%s%3.}}
   }
 
   # keytimeout
@@ -119,10 +119,11 @@
     # prompt marking - OSC 133 ; A ST / FTCS_PROMPT - the start of a prompt
     print -Pn "\e]133;A\e\\"
 
-    local timenow="${timethen:+"$(print -P "%D{%s%3.}")"}"
+    local tmp=${(%):-%D{%s%3.}}
+    local timenow="${timethen:+"$tmp"}"
 
     if [ "${timethen:-""}" ]; then
-      exittime="$(print -P "%D{%T}")"
+      exittime=${(%):-%D{%T}}
     fi
 
     # set window title
