@@ -145,7 +145,7 @@
         if ((h > 0)); then elapsedtime="${h}h ${m}m ${s}s "                # 1h 1m 1s
       elif ((m > 0)); then elapsedtime="${m}m ${s}.$((ms / 100))s "        # 1m 12.3s
       elif ((s > 9)); then elapsedtime="${s}.${(l:2::0:)"$((ms / 10))"}s " # 12.34s
-      elif ((s > 0)); then elapsedtime="${s}.${(l:2::0:)"$ms"}s "          # 1.234s
+      elif ((s > 0)); then elapsedtime="${s}.${(l:3::0:)ms}s "             # 1.234s
       else                 elapsedtime="${ms}ms "                          # 1ms
       fi
 
