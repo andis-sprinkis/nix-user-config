@@ -199,4 +199,5 @@ wlv
 - [MozLz4a compression/decompression utility](https://gist.github.com/Tblue/62ff47bef7f894e92ed5)
     - [1209390 - Use standard lz4 file format instead of the non-standard jsonlz4/mozlz4](https://bugzilla.mozilla.org/show_bug.cgi?id=1209390)
 - [firefox.js - mozsearch](https://searchfox.org/firefox-main/source/browser/app/profile/firefox.js)
+- [Understand Chrome policy management - Chrome Enterprise and Education Help](https://support.google.com/chrome/a/answer/9037717?hl=en-EN)
 - [Chrome Enterprise Policy List & Management | Documentation](https://chromeenterprise.google/policies/)
