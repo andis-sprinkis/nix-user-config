@@ -37,14 +37,14 @@
 ### Google Chrome / Chromium
 
 - On Linux:
-    - Chromium:
+    - For Chromium run:
 
         ```sh
         sudo mkdir -p "/etc/chromium/policies/managed/policies"
         sudo cp "$HOME/.config/chromium_user/policies.json" "/etc/chromium/policies/managed/policies/policies.json"
         ```
 
-    - Google Chrome:
+    - For Google Chrome run:
 
         ```sh
         sudo mkdir -p "/etc/opt/chrome/policies/managed/policies"
