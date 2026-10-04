@@ -108,7 +108,7 @@ reload() {
 
   status="$(status)"
 
-  case "$(status)" in
+  case "$status" in
     "unknown")
       exit "1"
     ;;
@@ -141,7 +141,7 @@ toggle() {
 lock() {
   status="$(status)"
 
-  case "$(status)" in
+  case "$status" in
     "unknown")
       exit "1"
     ;;
