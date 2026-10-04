@@ -119,8 +119,7 @@
     # prompt marking - OSC 133 ; A ST / FTCS_PROMPT - the start of a prompt
     print -Pn "\e]133;A\e\\"
 
-    local tmp=${(%):-%D{%s%3.}}
-    local timenow="${timethen:+"$tmp"}"
+    local timenow=${(%):-%D{%s%3.}}
 
     if [ "${timethen:-""}" ]; then
       exittime=${(%):-%D{%T}}
@@ -143,11 +142,11 @@
       local    m="$(((d_s / 60) % 60))"
       local    h="$((d_s / 3600))"
 
-        if ((h > 0)); then elapsedtime="${h}h ${m}m ${s}s "                     # 1h 1m 1s
-      elif ((m > 0)); then elapsedtime="${m}m ${s}.$((ms / 100))s "             # 1m 12.3s
-      elif ((s > 9)); then elapsedtime="${s}.$(printf "%02d" "$((ms / 10))")s " # 12.34s
-      elif ((s > 0)); then elapsedtime="${s}.$(printf "%03d" "$ms")s "          # 1.234s
-      else                 elapsedtime="${ms}ms "                               # 1ms
+        if ((h > 0)); then elapsedtime="${h}h ${m}m ${s}s "                # 1h 1m 1s
+      elif ((m > 0)); then elapsedtime="${m}m ${s}.$((ms / 100))s "        # 1m 12.3s
+      elif ((s > 9)); then elapsedtime="${s}.${(l:2::0:)"$((ms / 10))"}s " # 12.34s
+      elif ((s > 0)); then elapsedtime="${s}.${(l:2::0:)"$ms"}s "          # 1.234s
+      else                 elapsedtime="${ms}ms "                          # 1ms
       fi
 
       unset timethen
@@ -192,7 +191,8 @@ ${prompt_symbol}"
   local zcompdump="${ZDOTDIR:-"$HOME"}/.zcompdump"
   local zcompdump_age_max_s="172800" # 24h = 86400s, 1h =  3600s
 
-  if [ ! -f "$zcompdump" ] || [ "$(("$(LOCALE=C date '+%s')" - "$(LOCALE=C "${statcmd[@]}" "$zcompdump")"))" -gt "$zcompdump_age_max_s" ]; then
+  local tmp=${(%):-%D{%s}}
+  if [[ ! -f "$zcompdump" || "$(($tmp - "$(LOCALE=C "${statcmd[@]}" "$zcompdump")"))" -gt "$zcompdump_age_max_s" ]]; then
     compinit
   else
     compinit -C
@@ -200,7 +200,7 @@ ${prompt_symbol}"
 
   {
     # compile zcompdump, if modified, to increase startup speed.
-    if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
+    if [[ -s "$zcompdump" ]] && [[ ! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc" ]]; then
       zcompile "$zcompdump"
     fi
   } &! # execute code in the background to not affect the current session
