@@ -201,3 +201,4 @@ wlv
 - [firefox.js - mozsearch](https://searchfox.org/firefox-main/source/browser/app/profile/firefox.js)
 - [Understand Chrome policy management - Chrome Enterprise and Education Help](https://support.google.com/chrome/a/answer/9037717?hl=en-EN)
 - [Chrome Enterprise Policy List & Management | Documentation](https://chromeenterprise.google/policies/)
+- [List of Chromium Command Line Switches « Peter Beverloo](https://peter.sh/experiments/chromium-command-line-switches/)
