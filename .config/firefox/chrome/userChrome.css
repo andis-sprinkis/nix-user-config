@@ -12,17 +12,9 @@
     --border-radius-xlarge: 6px !important; 
   }
 
-  /* :root[lwt-newtab-brighttext] { */
-  /*   --newtab-background-color: var(--color-gray-90); */
-  /* } */
-
   toolbar .toolbaritem-combined-buttons {
     margin-inline: 0 !important;
   }
-
-  /* #urlbar-container { */
-  /*   --urlbar-container-height: 30px !important; */
-  /* } */
 
   #PanelUI-menu-button {
     padding-inline-end: 4px !important;
@@ -36,7 +28,7 @@
 
   #tabbrowser-tabs .tabbrowser-tab {
     --tab-label-mask-size: 0.45em !important;
-    padding: 0 1px !important;
+    padding: 0 0.5px !important;
   }
 
   #tabbrowser-tabs .tabbrowser-tab:not(:focus-within, :hover) .tab-close-button {
@@ -53,14 +45,6 @@
     }
   }
 
-  /* #tabbrowser-tabs { */
-  /*   --tab-min-width: 200px !important; */
-  /* } */
-  /**/
-  /* #tabbrowser-tabs .tabbrowser-tab:not([pinned="true"]) { */
-  /*   max-width: 304px !important; */
-  /* } */
-
   #tabbrowser-tabs[haspinnedtabs]:not([positionpinnedtabs])
     > #tabbrowser-arrowscrollbox
     > .tabbrowser-tab:nth-child(1 of :not([pinned], [hidden])) {
@@ -70,15 +54,6 @@
   #tabbrowser-tabs #tabbrowser-arrowscrollbox .tab-label-container {
     height: 2.5em !important;
   }
-
-  /* #sidebar-header { */
-  /*   padding: 4px 8px !important; */
-  /*   border-bottom: none !important; */
-  /* } */
-  /**/
-  /* #sidebar-search-container { */
-  /*   padding: 4px 8px !important; */
-  /* } */
 
   vbox#sidebar-box.chromeclass-extrachrome.chrome-block {
     padding: 0 !important;
