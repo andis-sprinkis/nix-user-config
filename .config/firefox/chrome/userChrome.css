@@ -5,10 +5,10 @@
     --urlbar-container-padding-block: 1px !important;
     --tab-margin-block: 3px !important;
     --tab-inline-padding: 5px !important;
-    --border-radius-xsmall: 2px !important;
-    --border-radius-small: 3px !important;
-    --border-radius-medium: 4px !important;
-    --border-radius-large: 5px !important;
+    --border-radius-xsmall: 1px !important;
+    --border-radius-small: 2px !important;
+    --border-radius-medium: 3px !important;
+    --border-radius-large: 4px !important;
     --border-radius-xlarge: 6px !important;
   }
 
