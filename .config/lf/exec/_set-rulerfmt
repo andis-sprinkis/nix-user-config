@@ -14,4 +14,3 @@ if [ -d "$f" ] && mountpoint -q -- "$f" 1>/dev/null 2>/dev/null; then
 else
   lf -remote "send ${id} set user_fmnt \"\""
 fi
-
