@@ -3,6 +3,13 @@
   :root {
     --toolbarbutton-outer-padding: 2px !important;
     --urlbar-container-padding-block: 1px !important;
+    --tab-margin-block: 3px !important;
+    --tab-inline-padding: 3px !important;
+    --border-radius-xsmall: 1px !important; 
+    --border-radius-small: 2px !important; 
+    --border-radius-medium: 3px !important; 
+    --border-radius-large: 4px !important; 
+    --border-radius-xlarge: 6px !important; 
   }
 
   /* :root[lwt-newtab-brighttext] { */
@@ -38,6 +45,12 @@
 
   #tabbrowser-tabs .tabbrowser-tab:not([pinned="true"]) .tab-content .tab-icon-stack {
     display: none !important;
+  }
+
+  #tabbrowser-tabs {
+    &[orient="horizontal"] {
+      --tab-max-width: 100% !important;
+    }
   }
 
   /* #tabbrowser-tabs { */
