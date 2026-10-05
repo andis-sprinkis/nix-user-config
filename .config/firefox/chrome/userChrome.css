@@ -49,7 +49,7 @@
 
   #tabbrowser-tabs {
     &[orient="horizontal"] {
-      --tab-max-width: 100% !important;
+      --tab-max-width: 33.3333333333% !important;
     }
   }
 
