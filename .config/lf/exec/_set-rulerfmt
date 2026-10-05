@@ -7,8 +7,11 @@ if [ -d "$f" ] && mountpoint -q -- "$f" 1>/dev/null 2>/dev/null; then
     case "$line" in
       *" ${f} "*)
         lf -remote "send ${id} set user_fmnt \"${line%% *}\""
-        exit "0"
+        exit
       ;;
     esac
   done
+else
+  lf -remote "send ${id} set user_fmnt \"\""
 fi
+
