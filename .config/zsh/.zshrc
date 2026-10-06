@@ -126,7 +126,7 @@
     fi
 
     # set window title
-    printf "\033]0;%s\007" "$PWD"
+    printf "\033]0;%s\007" "$PWD" &!
 
     local tmout_status=""
     if [ "${TMOUT:-""}" = "0" ]; then
