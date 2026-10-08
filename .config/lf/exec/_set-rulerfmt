@@ -6,11 +6,10 @@ if [ -d "$f" ] && mountpoint -q -- "$f" 1>/dev/null 2>/dev/null; then
   cat "/proc/mounts" | while read -r line; do
     case "$line" in
       *" ${f} "*)
-        lf -remote "send ${id} set user_fmnt \"${line%% *}\""
-        exit
+        exec lf -remote "send ${id} set user_fmnt \"${line%% *}\""
       ;;
     esac
   done
 else
-  lf -remote "send ${id} set user_fmnt \"\""
+  exec lf -remote "send ${id} set user_fmnt \"\""
 fi

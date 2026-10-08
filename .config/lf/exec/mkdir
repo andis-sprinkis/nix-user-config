@@ -3,4 +3,4 @@ set -euf
 
 mkdir -pv -- "$*"
 # shellcheck disable=SC2154
-lf -remote "send ${id} select \"${*}\""
+exec lf -remote "send ${id} select \"${*}\""
