@@ -285,8 +285,8 @@ Installation:
 mkdir "/tmp/qrcp-install"
 cd "/tmp/qrcp-install"
 
-curl -L "https://github.com/claudiodangelis/qrcp/releases/download/v0.11.6/qrcp_0.11.6_linux_amd64.tar.gz" -o "./archive.tar.gz"
-echo "1bcd1e23460cb2c98eeb1a9df6e4f4f7cb1e889acdb53094a7c6805808790d13  archive.tar.gz" | sha256sum -c
+curl -L "https://github.com/claudiodangelis/qrcp/releases/download/v0.11.7/qrcp_0.11.7_linux_amd64.tar.gz" -o "./archive.tar.gz"
+echo "84220cc93e6e33ba63658b46619c9946c65a86d62ba063d4eac5be34753e786e  archive.tar.gz" | sha256sum -c
 
 tar -xvzf "./archive.tar.gz"
 
