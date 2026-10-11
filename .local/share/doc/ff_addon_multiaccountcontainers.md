@@ -197,6 +197,7 @@ async function main() {
                 URLs: new Map([
                     ["https://gmail.com", true],
                     ["https://consent.google.com", true],
+                    ["https://translate.google.com", true],
                     // [no-google/google-domains at master · nickspaargaren/no-google](https://github.com/nickspaargaren/no-google/blob/master/google-domains)
                     // [google.com/supported\_domains](https://www.google.com/supported_domains)
                     ["https://google.com", true],
