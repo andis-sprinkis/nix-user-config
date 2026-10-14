@@ -66,6 +66,7 @@ user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", false);
 user_pref("browser.newtabpage.activity-stream.feeds.telemetry", false);
 user_pref("browser.newtabpage.activity-stream.feeds.topsites", false);
 user_pref("browser.newtabpage.activity-stream.feeds.weatherfeed", false);
+user_pref("browser.newtabpage.activity-stream.feeds.wallpaperfeed", false);
 user_pref("browser.newtabpage.activity-stream.hideLogo", true);
 user_pref("browser.newtabpage.activity-stream.logowordmark.alwaysVisible", false);
 user_pref("browser.newtabpage.activity-stream.newtabWallpapers.enabled", false);
