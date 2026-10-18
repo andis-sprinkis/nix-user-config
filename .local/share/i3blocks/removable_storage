@@ -36,8 +36,7 @@ for mount in $active_mounts; do
   if [ "$tmp" ]; then continue; fi
 
   rsds_count="$(("$rsds_count" + "1"))"
-  rsd_mount="$(echo "$active_mounts" | sed "${mpts_parsed_count}q;d")"
-  rsds_mounts="${rsds_mounts:+"${rsds_mounts}${NL}"}\x1b[0;90m${rsds_count}.\x1b[0m ${rsd_mount}"
+  rsds_mounts="${rsds_mounts:+"${rsds_mounts}${NL}"}\x1b[0;90m${rsds_count}.\x1b[0m ${mount}"
 done
 IFS="$IFS_"
 
