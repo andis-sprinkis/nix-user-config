@@ -15,21 +15,17 @@ for mount in $fstab_mounts; do
   set -- $mount
   fstab_mounts_mpts="${fstab_mounts_mpts}${fstab_mounts_mpts:+"$NL"}${2}"
 done
-IFS="$NL"
+IFS="$IFS_"
 
 rsds_mounts="" rsds_count="0"
-mpts_parsed_count="0"
 IFS="$NL"
 for mount in $active_mounts; do
   IFS="$IFS_"
   # shellcheck disable=SC2086
   set -- $mount
-  mpt="$2"
-
-  mpts_parsed_count="$((mpts_parsed_count + 1))"
 
   tmp="${NL}${NL}${fstab_mounts_mpts}${NL}${NL}"
-  tmp="${tmp##"${tmp%%"${NL}${mpt}${NL}"*}"}"
+  tmp="${tmp##"${tmp%%"${NL}${2}${NL}"*}"}"
   tmp="${tmp##"$NL"}"
   tmp="${tmp%%"$NL"*}"
 
