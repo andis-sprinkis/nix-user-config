@@ -62,7 +62,7 @@ start() {
   if [ "${WAYLAND_DISPLAY:-""}" ]; then
     if pidof -q "swayidle"; then
       set +e
-      killall -u "$(whoami)" "swayidle"
+      killall -u "${USER:-"$(whoami)"}" "swayidle"
       set -e
     fi
 
@@ -159,7 +159,7 @@ lock() {
     exec xscreensaver-command -lock
   fi
 
-  # exec killall -u "$(whoami)" -s "SIGUSR1" -e "swayidle"
+  # exec killall -u "${USER:-"$(whoami)"}" -s "SIGUSR1" -e "swayidle"
   exec loginctl "lock-session"
 }
 
