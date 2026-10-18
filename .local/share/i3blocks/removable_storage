@@ -13,8 +13,7 @@ for mount in $fstab_mounts; do
   IFS="$IFS_"
   # shellcheck disable=SC2086
   set -- $mount
-  mpt="$2"
-  fstab_mounts_mpts="${fstab_mounts_mpts}${fstab_mounts_mpts:+"$NL"}${mpt}"
+  fstab_mounts_mpts="${fstab_mounts_mpts}${fstab_mounts_mpts:+"$NL"}${2}"
 done
 IFS="$NL"
 
