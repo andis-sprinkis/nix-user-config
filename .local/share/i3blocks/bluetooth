@@ -29,7 +29,7 @@ controller_id="$(bluetoothctl "list" 2> "/dev/null" | grep "\[default\]" | cut -
 if [ "$controller_id" ]; then
   dev_count="$(set +e; bluetoothctl "devices" "Connected" 2> "/dev/null" | grep -c "^Device "; set -e)"
 
-  if bluetoothctl show "$controller_id" 2> "/dev/null" | grep -q "PowerState: on"; then
+  if bluetoothctl "show" "$controller_id" 2> "/dev/null" | grep -q "PowerState: on"; then
     controller_is_on="1"
   fi
 fi
