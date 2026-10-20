@@ -493,7 +493,7 @@ case "$MIME" in
 
     print_stat
   ;;
-  "application/x-linux-kernel")
+  "application/x-linux-kernel"|"application/vnd.ms-msi")
     if [ "$BRIEF" ]; then
       echo "$BRIEF" | tr ',' '\n' | sed 's/^ //g'
     fi
