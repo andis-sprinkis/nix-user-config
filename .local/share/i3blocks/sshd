@@ -19,7 +19,7 @@ fi
 if systemctl is-active --quiet sshd; then
   # shellcheck disable=SC3044
   if [ "${BLOCK_BUTTON:-""}" ] && [ "$BLOCK_BUTTON" = "3" ]; then
-    cmd="echo \"\033]0;%s\007\" \"Stop SSHD service\"; systemctl stop sshd; read"
+    cmd="printf \"\033]0;%s\007\" \"Stop SSHD service\"; systemctl stop sshd; read"
     $TERMINAL -e "/usr/bin/env" "sh" "-c" "$cmd" 1> "/dev/null" 2> "/dev/null" & disown
   fi
 
