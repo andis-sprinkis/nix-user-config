@@ -23,7 +23,7 @@ open_with_cmd_terminal() {
   for f in $file_list; do
     IFS="$IFS_"
 
-    $TERMINAL -e "$SHELL" -c "$cmd \"${f}\"${NL}echo \"(\$?) Press any key to exit\"; read" 1> "/dev/null" 2> "/dev/null" & disown
+    $TERMINAL -e "$SHELL" -c "${cmd} \"${f}\"${NL}echo \"(\$?) Press any key to exit\"; read" 1> "/dev/null" 2> "/dev/null" & disown
   done
   IFS="$IFS_"
 
@@ -42,49 +42,41 @@ cmd_args="$(
   2> "/dev/null"
 )"
 
-if [ -z "$cmd_args" ]; then
-  exit "0"
-fi
+if [ -z "$cmd_args" ]; then exit "0"; fi
 
 if [ "$#" -eq "0" ]; then
   while read file; do
-    if [ "$file" ]; then
-      file_list="${file_list:+"${file_list}${NL}"}${file}"
-    fi
+    if [ "$file" ]; then file_list="${file_list:+"${file_list}${NL}"}${file}"; fi
   done
 else
   while [ "$#" -gt "0" ]; do
-    if [ "$1" ]; then
-      file_list="${file_list:+"${file_list}${NL}"}${1}"
-    fi
-
+    if [ "$1" ]; then file_list="${file_list:+"${file_list}${NL}"}${1}"; fi
     shift
   done
 fi
 
-if [ -z "$file_list" ]; then
-  exit "1"
-fi
+if [ -z "$file_list" ]; then exit "1"; fi
 
+IFS=" "
 for a in $cmd_args; do
+  IFS="$IFS_"
+
   arg="$a"
   arg="${arg#"'"}"
   arg="${arg%"'"}"
   cmd="${cmd:+"$cmd "}${arg}"
 done
+IFS="$IFS_"
 
-if echo "$cmd" | grep -q "^${TERMINAL} -e "; then
-  open_with_cmd
-fi
-
-if ! echo "$cmd" | grep -q "^/bin/sh -c "; then
-  open_with_cmd
-fi
-
-cmd="${cmd#"/bin/sh -c "}"
-
-if echo "$cmd" | grep -iq '^.*.\.appimage$'; then
-  open_with_cmd
-fi
-
-open_with_cmd_terminal
+case "$cmd" in
+  *"/bin/sh -c "|*"."[aA][pP][pP][iI][mM][aA][gG][eE])
+    cmd="${cmd#"/bin/sh -c "}"
+    open_with_cmd
+  ;;
+  "${TERMINAL} -e "*)
+    open_with_cmd
+  ;;
+  *)
+    open_with_cmd_terminal
+  ;;
+esac

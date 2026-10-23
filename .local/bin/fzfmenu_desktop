@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-
-"$TERMINAL" -e "$SHELL" -c "fzf ${*} < /proc/${$}/fd/0 > /proc/${$}/fd/1"
