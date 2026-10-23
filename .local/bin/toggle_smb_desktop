@@ -3,8 +3,8 @@ set -euf
 
 if systemctl is-active --quiet smb; then
   win_title="\033]0;Stop SMB service\007"
-  exec $TERMINAL -e "$SHELL" -c "echo -n \"$win_title\"; systemctl stop smb; read"
+  exec $TERMINAL -e "/usr/bin/env" "sh" "-c" "echo -n \"$win_title\"; systemctl stop smb; read"
 fi
 
 win_title="\033]0;Start SMB service\007"
-exec $TERMINAL -e "$SHELL" -c "echo -n \"$win_title\"; systemctl start smb; read"
+exec $TERMINAL -e "/usr/bin/env" "sh" "-c" "echo -n \"$win_title\"; systemctl start smb; read"

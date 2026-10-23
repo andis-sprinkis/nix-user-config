@@ -32,7 +32,7 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
   case "$BLOCK_BUTTON" in
     "1"|"3")
       cmd="echo \"\033]0;UPS information\007\"; ups_info | ${PAGER}"
-      $TERMINAL -e "$SHELL" -c "$cmd" 1> "/dev/null" 2> "/dev/null" & disown
+      $TERMINAL -e "/usr/bin/env" "sh" "-c" "$cmd" 1> "/dev/null" 2> "/dev/null" & disown
     ;;
   esac
 fi

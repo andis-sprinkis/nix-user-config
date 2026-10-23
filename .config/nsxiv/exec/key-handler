@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 set -eu
+NL="
+"
 
 unset NSXIV_OPTS
 
@@ -19,13 +21,11 @@ case "${1:-""}" in
     done
   ;;
   "o")
-    files="$(while read file; do echo "${files:+
-}${file}"; done)"
+    files="$(while read file; do echo "${files:+"$NL"}${file}"; done)"
     (trap "" "HUP"; echo "$files" | open_with_menu_desktop) 0</dev/null 1>/dev/null 2>/dev/null & disown
   ;;
   "Y")
-    files="$(while read file; do echo "${files:+
-}${file}"; done)"
+    files="$(while read file; do echo "${files:+"$NL"}${file}"; done)"
 
     [ "$WAYLAND_DISPLAY" ] && [ "$(command -v "wl-copy")" ] && {
       printf '%s' "$files" | wl-copy
@@ -53,7 +53,7 @@ case "${1:-""}" in
     exit "1"
   ;;
   "h")
-    nohup "$TERMINAL" -e "$SHELL" -c "$PAGER ${XDG_CONFIG_HOME:-$HOME/.config}/nsxiv/exec/key-handler" 0</dev/null 1>/dev/null 2>/dev/null & disown
+    nohup "$TERMINAL" -e "/usr/bin/env" "sh" "-c" "${PAGER} ${XDG_CONFIG_HOME:-$HOME/.config}/nsxiv/exec/key-handler" 0</dev/null 1>/dev/null 2>/dev/null & disown
   ;;
   *)
     exit "2";

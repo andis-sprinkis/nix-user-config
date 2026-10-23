@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 set -euf
 
-exec $TERMINAL -e "$SHELL" -c "sleep \"0.5\"; set +e; nmcli device wifi rescan 2> /dev/null; set -e; nmtui"
+exec $TERMINAL -e "/usr/bin/env" "sh" "-c" "sleep \"0.5\"; set +e; nmcli device wifi rescan 2> /dev/null; set -e; nmtui"
