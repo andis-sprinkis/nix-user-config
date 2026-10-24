@@ -53,7 +53,7 @@ case "${1:-""}" in
     exit "1"
   ;;
   "h")
-    nohup "$TERMINAL" -e "/usr/bin/env" "sh" "-c" "${PAGER} ${XDG_CONFIG_HOME:-$HOME/.config}/nsxiv/exec/key-handler" 0</dev/null 1>/dev/null 2>/dev/null & disown
+    nohup pager_desktop "${XDG_CONFIG_HOME:-$HOME/.config}/nsxiv/exec/key-handler" 0</dev/null 1>/dev/null 2>/dev/null & disown
   ;;
   *)
     exit "2";

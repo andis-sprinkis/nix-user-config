@@ -3,4 +3,4 @@
 set -euf
 
 # shellcheck disable=SC2154 disable=SC2086
-nohup $TERMINAL -e "/usr/bin/env" "sh" "-c" "lf -command select \"$f\"" 0</dev/null 1>/dev/null 2>/dev/null & disown
+nohup terminal_shell_cmd exec "lf -command select" "$f" 0</dev/null 1>/dev/null 2>/dev/null & disown

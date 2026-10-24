@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
 Name=Snippets
-Exec=terminal_shell_cmd snip
+Exec=terminal_shell_cmd exec snip
 Categories=Office;

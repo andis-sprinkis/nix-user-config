@@ -1,3 +1,69 @@
 #!/usr/bin/env sh
+set -euf
+IFS_="$IFS"
+NL="
+"
 
-$TERMINAL -e "/usr/bin/env" "sh" "-c" "$@"
+task="$1" cmd="$2"
+
+shift "2"
+
+case "$task" in
+  "exec")
+
+    if [ "$#" != "0" ]; then
+      fp_files="$(mktemp)"
+
+      while [ "$#" != "0" ]; do
+        echo "$1" >> "$fp_files"
+        shift
+      done
+
+      exec $TERMINAL -e "/usr/bin/env" "sh" "-c" "terminal_shell_cmd shell \"${cmd}\" \"${fp_files}\""
+    else
+      exec $TERMINAL -e "/usr/bin/env" "sh" "-c" "terminal_shell_cmd shell \"${cmd}\""
+    fi
+  ;;
+  "shell")
+    fp_files="${1:-""}"
+
+    if [ "$fp_files" ]; then
+      cat "$fp_files" | {
+        set --
+
+        IFS=" "
+        for arg in $cmd; do
+          IFS="$IFS_"
+
+          set -- "$@" "$arg"
+        done
+        IFS="$IFS_"
+
+        IFS="$NL"
+        while read -r f; do
+          IFS="$IFS_"
+
+          set -- "$@" "$f"
+        done
+        IFS="$IFS_"
+
+        set +e; rm "$fp_files"; set -e;
+
+        exec "$@"
+      }
+    else
+      IFS=" "
+      for arg in $cmd; do
+        IFS="$IFS_"
+
+        set -- "$@" "$arg"
+      done
+      IFS="$IFS_"
+
+      exec "$@"
+    fi
+  ;;
+  *)
+    exit "3"
+  ;;
+esac

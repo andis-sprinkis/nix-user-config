@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
 Name=Scrap note
-Exec=terminal_shell_cmd scrap
+Exec=terminal_shell_cmd exec scrap
 Categories=Office;
