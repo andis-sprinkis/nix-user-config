@@ -10,7 +10,6 @@ shift "2"
 
 case "$task" in
   "exec"|"exec_wait")
-
     case "$task" in
       "exec")
         shell_task="shell"
