@@ -14,6 +14,8 @@ case "$task" in
 
     if [ "$task" = "exec_wait" ]; then shell_task="shell_wait"; fi
 
+    fp_files=""
+
     if [ "$#" != "0" ]; then
       fp_files="$(mktemp)"
 
@@ -53,12 +55,14 @@ case "$task" in
 
         case "$task" in
           "shell")
-            exec "$@"
+            exec env "$@"
           ;;
           "shell_wait")
-            set +e; env "$@"; set -e
+            set +e
+            env "$@"
             echo "(${?}) Press any key to exit"
-            read -r "_"
+            set -e
+            IFS= read -r "_" < "/dev/tty"
           ;;
         esac
       }
@@ -76,9 +80,11 @@ case "$task" in
           exec "$@"
         ;;
         "shell_wait")
-          set +e; env "$@"; set -e
+          set +e
+          env "$@"
           echo "(${?}) Press any key to exit"
-          read -r "_"
+          set -e
+          IFS= read -r "_" < "/dev/tty"
         ;;
       esac
     fi

@@ -23,10 +23,7 @@ open_with_cmd_terminal() {
   for f in $file_list; do
     IFS="$IFS_"
 
-    # $TERMINAL -e "/usr/bin/env" "sh" "-c" "${cmd} \"${f}\"${NL}echo \"(\$?) Press any key to exit\"; read" 1> "/dev/null" 2> "/dev/null" & disown
-    echo "$cmd"
-    echo "$f"
-    terminal_shell_cmd "exec" "$cmd" "$f" 1> "/dev/null" 2> "/dev/null" & disown
+    terminal_shell_cmd "exec_wait" "$cmd" "$f" 1> "/dev/null" 2> "/dev/null" & disown
   done
   IFS="$IFS_"
 
