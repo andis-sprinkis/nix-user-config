@@ -9,7 +9,10 @@ task="$1" cmd="$2"
 shift "2"
 
 case "$task" in
-  "exec")
+  "exec"|"exec_wait")
+    shell_task="shell"
+
+    if [ "$task" = "exec_wait" ]; then shell_task="shell_wait"; fi
 
     if [ "$#" != "0" ]; then
       fp_files="$(mktemp)"
@@ -18,13 +21,12 @@ case "$task" in
         echo "$1" >> "$fp_files"
         shift
       done
-
-      exec $TERMINAL -e "/usr/bin/env" "sh" "-c" "terminal_shell_cmd shell \"${cmd}\" \"${fp_files}\""
-    else
-      exec $TERMINAL -e "/usr/bin/env" "sh" "-c" "terminal_shell_cmd shell \"${cmd}\""
     fi
+
+    exec $TERMINAL -e \
+      "/usr/bin/env" "sh" "-c" "terminal_shell_cmd ${shell_task} \"${cmd}\"${fp_files:+" \"${fp_files}\""}"
   ;;
-  "shell")
+  "shell"|"shell_wait")
     fp_files="${1:-""}"
 
     if [ "$fp_files" ]; then
@@ -49,7 +51,16 @@ case "$task" in
 
         set +e; rm "$fp_files"; set -e;
 
-        exec "$@"
+        case "$task" in
+          "shell")
+            exec "$@"
+          ;;
+          "shell_wait")
+            set +e; env "$@"; set -e
+            echo "(${?}) Press any key to exit"
+            read -r "_"
+          ;;
+        esac
       }
     else
       IFS=" "
@@ -60,7 +71,16 @@ case "$task" in
       done
       IFS="$IFS_"
 
-      exec "$@"
+      case "$task" in
+        "shell")
+          exec "$@"
+        ;;
+        "shell_wait")
+          set +e; env "$@"; set -e
+          echo "(${?}) Press any key to exit"
+          read -r "_"
+        ;;
+      esac
     fi
   ;;
   *)

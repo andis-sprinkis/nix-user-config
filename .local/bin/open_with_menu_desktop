@@ -23,7 +23,10 @@ open_with_cmd_terminal() {
   for f in $file_list; do
     IFS="$IFS_"
 
-    $TERMINAL -e "/usr/bin/env" "sh" "-c" "${cmd} \"${f}\"${NL}echo \"(\$?) Press any key to exit\"; read" 1> "/dev/null" 2> "/dev/null" & disown
+    # $TERMINAL -e "/usr/bin/env" "sh" "-c" "${cmd} \"${f}\"${NL}echo \"(\$?) Press any key to exit\"; read" 1> "/dev/null" 2> "/dev/null" & disown
+    echo "$cmd"
+    echo "$f"
+    terminal_shell_cmd "exec" "$cmd" "$f" 1> "/dev/null" 2> "/dev/null" & disown
   done
   IFS="$IFS_"
 
@@ -69,7 +72,7 @@ done
 IFS="$IFS_"
 
 case "$cmd" in
-  *"/bin/sh -c "|*"."[aA][pP][pP][iI][mM][aA][gG][eE])
+  *"."[aA][pP][pP][iI][mM][aA][gG][eE])
     cmd="${cmd#"/bin/sh -c "}"
     open_with_cmd
   ;;
@@ -77,6 +80,7 @@ case "$cmd" in
     open_with_cmd
   ;;
   *)
+    cmd="${cmd#"/bin/sh -c "}"
     open_with_cmd_terminal
   ;;
 esac
