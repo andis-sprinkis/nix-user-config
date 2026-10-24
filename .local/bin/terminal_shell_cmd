@@ -10,9 +10,15 @@ shift "2"
 
 case "$task" in
   "exec"|"exec_wait")
-    shell_task="shell"
 
-    if [ "$task" = "exec_wait" ]; then shell_task="shell_wait"; fi
+    case "$task" in
+      "exec")
+        shell_task="shell"
+      ;;
+      "exec_wait")
+        shell_task="shell_wait"
+      ;;
+    esac
 
     fp_files=""
 
