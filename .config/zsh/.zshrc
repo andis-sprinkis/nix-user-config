@@ -64,7 +64,7 @@
 
       echo
 
-      unset REPLY
+      unset "REPLY"
     fi
   }
 
