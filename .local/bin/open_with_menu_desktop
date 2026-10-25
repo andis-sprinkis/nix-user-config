@@ -70,13 +70,13 @@ if [ -z "$file_list" ]; then exit "1"; fi
 cmd=""
 
 IFS=" "
-for a in $cmd_args; do
+for arg in $cmd_args; do
   IFS="$IFS_"
 
-  arg="$a"
-  arg="${arg#"'"}"
-  arg="${arg%"'"}"
-  cmd="${cmd:+"$cmd "}${arg}"
+  tmp="$arg"
+  tmp="${tmp#"'"}"
+  tmp="${tmp%"'"}"
+  cmd="${cmd:+"$cmd "}${tmp}"
 done
 IFS="$IFS_"
 
