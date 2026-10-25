@@ -4,30 +4,38 @@ IFS_="$IFS"
 NL="
 "
 
-file_list=""
-cmd=""
-
 open_with_cmd() {
-  IFS="$NL"
-  for f in $file_list; do
+  cmd="$1"
+
+  set --
+
+  IFS=" "
+  for arg in $cmd; do
     IFS="$IFS_"
-    $cmd "$f" 1> "/dev/null" 2> "/dev/null" & disown
+
+    set -- "$@" "$arg"
   done
   IFS="$IFS_"
 
-  exit "0"
+  IFS="$NL"
+  # shellcheck disable=SC3044
+  for f in $file_list; do
+    IFS="$IFS_"
+
+    env "$@" "$f" 1> "/dev/null" 2> "/dev/null" & disown
+  done
+  IFS="$IFS_"
 }
 
 open_with_cmd_terminal() {
   IFS="$NL"
+  # shellcheck disable=SC3044
   for f in $file_list; do
     IFS="$IFS_"
 
-    terminal_shell_cmd "exec_wait" "$cmd" "$f" 1> "/dev/null" 2> "/dev/null" & disown
+    terminal_shell_cmd "exec_wait" "$1" "$f" 1> "/dev/null" 2> "/dev/null" & disown
   done
   IFS="$IFS_"
-
-  exit "0"
 }
 
 cmd_args="$(
@@ -44,18 +52,22 @@ cmd_args="$(
 
 if [ -z "$cmd_args" ]; then exit "0"; fi
 
+file_list=""
+
 if [ "$#" -eq "0" ]; then
-  while read file; do
-    if [ "$file" ]; then file_list="${file_list:+"${file_list}${NL}"}${file}"; fi
+  while read -r file; do
+    if [ "$file" ]; then file_list="${file_list}${file_list:+"$NL"}${file}"; fi
   done
 else
   while [ "$#" -gt "0" ]; do
-    if [ "$1" ]; then file_list="${file_list:+"${file_list}${NL}"}${1}"; fi
+    if [ "$1" ]; then file_list="${file_list}${file_list:+"$NL"}${1}"; fi
     shift
   done
 fi
 
 if [ -z "$file_list" ]; then exit "1"; fi
+
+cmd=""
 
 IFS=" "
 for a in $cmd_args; do
@@ -69,15 +81,16 @@ done
 IFS="$IFS_"
 
 case "$cmd" in
-  *"."[aA][pP][pP][iI][mM][aA][gG][eE])
-    cmd="${cmd#"/bin/sh -c "}"
-    open_with_cmd
-  ;;
   "${TERMINAL} -e "*)
-    open_with_cmd
+    open_with_cmd "$cmd"
+  ;;
+  *"."[aA][pP][pP][iI][mM][aA][gG][eE])
+    open_with_cmd "${cmd#"/bin/sh -c "}"
+  ;;
+  "/bin/sh -c "*)
+    open_with_cmd_terminal "${cmd#"/bin/sh -c "}"
   ;;
   *)
-    cmd="${cmd#"/bin/sh -c "}"
-    open_with_cmd_terminal
+    open_with_cmd "$cmd"
   ;;
 esac
