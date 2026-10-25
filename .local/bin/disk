@@ -90,12 +90,12 @@ df -P -k | tail -n "+2" | tr -s " " ";" | sort -t ";" -k "6" | while read -r "li
 
   human_free=""
   human_total=""
-  for size in "f" "t"; do
+  for size in "free" "total"; do
     case "$size" in
-      "f")
+      "free")
         var="$4"
       ;;
-      "t")
+      "total")
         var="$2"
       ;;
     esac
@@ -126,10 +126,10 @@ df -P -k | tail -n "+2" | tr -s " " ";" | sort -t ";" -k "6" | while read -r "li
     fi
 
     case "$size" in
-      "f")
+      "free")
         human_free="$ans"
       ;;
-      "t")
+      "total")
         human_total="$ans"
       ;;
     esac
