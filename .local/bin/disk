@@ -67,7 +67,7 @@ df -P -k | tail -n "+2" | tr -s " " ";" | sort -t ";" -k "6" | while read -r "li
       ;;
       *)
         case "$6" in
-          "/boot"|"/System/Volumes/"*)
+          "/boot"|"/tmp/."*|"/System/Volumes/"*)
             continue
           ;;
         esac
