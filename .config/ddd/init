@@ -1,7 +1,7 @@
 Ddd*saveOptionsOnExit: off
 Ddd*variableWidthFont: Noto Sans
-Ddd*fixedWidthFont: Cascadia Code
-Ddd*dataFont: Cascadia Code
+Ddd*fixedWidthFont: Cascadia Mono
+Ddd*dataFont: Cascadia Mono
 Ddd*defaultFontSize: 120
 Ddd*variableWidthFontSize: 11
 Ddd*fixedWidthFontSize: 12

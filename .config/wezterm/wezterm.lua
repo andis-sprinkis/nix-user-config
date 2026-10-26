@@ -9,7 +9,7 @@ local harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' }
 
 M.font_size = cfg_local_status and cfg_local['font_size'] or (os.getenv("WAYLAND_DISPLAY") and 13.5 or 12)
 M.font = wezterm.font_with_fallback({
-  { family = 'Cascadia Code PL', harfbuzz_features = harfbuzz_features },
+  { family = 'Cascadia Mono PL', harfbuzz_features = harfbuzz_features },
   { family = 'monospace',        harfbuzz_features = harfbuzz_features },
 })
 M.adjust_window_size_when_changing_font_size = false
