@@ -3,11 +3,7 @@ set -euf
 NL="
 "
 
-tmp="$(mktemp --suffix="_tmux_pane_copy")"
-
-if [ -z "$tmp" ]; then
-  exit "1"
-fi
+tmp="$(mktemp)"
 
 echo "# vi: nowrap ft=${NL}$(tmux capture-pane -pS -)" > "$tmp"
 
