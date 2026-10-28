@@ -17,7 +17,7 @@ for mount in $fstab_mounts; do
 done
 IFS="$IFS_"
 
-rsds_mounts="" rsds_count="0"
+rsds_count="0"
 IFS="$NL"
 for mount in $active_mounts; do
   IFS="$IFS_"
@@ -32,7 +32,6 @@ for mount in $active_mounts; do
   if [ "$tmp" ]; then continue; fi
 
   rsds_count="$(("$rsds_count" + "1"))"
-  rsds_mounts="${rsds_mounts:+"${rsds_mounts}${NL}"}\x1b[0;90m${rsds_count}.\x1b[0m ${mount}"
 done
 IFS="$IFS_"
 
@@ -42,8 +41,7 @@ if [ "${BLOCK_BUTTON:-""}" ]; then
   # shellcheck disable=SC3044
   case "$BLOCK_BUTTON" in
     "1"|"3")
-      title="Removable storage devices"
-      cmd="printf \"\033]0;%s\007\" \"${title}\"; echo \"${title}:${NL}${rsds_mounts}\" | ${PAGER}"
+      cmd="printf \"\033]0;%s\007\" \"Removable storage devices\"; removable_storage | ${PAGER}"
       $TERMINAL -e "/usr/bin/env" "sh" "-c" "$cmd" 1> "/dev/null" 2> "/dev/null" & disown
     ;;
     "2")
