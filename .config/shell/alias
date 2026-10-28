@@ -98,6 +98,7 @@ alias \
   pac_upgrade="yay" \
   pac_upgrade_db="yay -Sy" \
   pkg="\$EDITOR \"\${XDG_DATA_HOME:-\$HOME/.local/share}/pkg_list/\"" \
+  pn="pnpm" \
   ports="sudo ss -tunlp" \
   py="python3 -q" \
   python3="python3 -q" \
