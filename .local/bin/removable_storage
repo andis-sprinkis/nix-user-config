@@ -1,0 +1,35 @@
+#!/usr/bin/env sh
+set -euf
+IFS_="$IFS"
+NL="
+"
+
+fstab_mounts="$(set +e; grep -v -e "^#" -e "^$" "/etc/fstab"; set -e)"
+active_mounts="$(set +e; grep -v -P ' \/(sys|run(?!\/media)|dev|proc|tmp|var)(/| )' "/proc/mounts"; set -e)"
+
+fstab_mounts_mpts=""
+IFS="$NL"
+for mount in $fstab_mounts; do
+  IFS="$IFS_"
+  # shellcheck disable=SC2086
+  set -- $mount
+  fstab_mounts_mpts="${fstab_mounts_mpts}${fstab_mounts_mpts:+"$NL"}${2}"
+done
+IFS="$IFS_"
+
+IFS="$NL"
+for mount in $active_mounts; do
+  IFS="$IFS_"
+  # shellcheck disable=SC2086
+  set -- $mount
+
+  tmp="${NL}${NL}${fstab_mounts_mpts}${NL}${NL}"
+  tmp="${tmp##"${tmp%%"${NL}${2}${NL}"*}"}"
+  tmp="${tmp##"$NL"}"
+  tmp="${tmp%%"$NL"*}"
+
+  if [ "$tmp" ]; then continue; fi
+
+  echo "$mount"
+done
+IFS="$IFS_"
