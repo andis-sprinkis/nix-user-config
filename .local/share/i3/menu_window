@@ -40,12 +40,14 @@ fi
 
 lines="${opt_line_togglefloat}
 ${opt_line_togglefullscreen}
+To scratchpad
 $(if [ "$wm" = "sway" ]; then echo "Htop${NL}Kill"; fi)
 Quit
 Cancel"
 
 options="togglefloat
 togglefullscreen
+toscratchpad
 $(if [ "$wm" = "sway" ]; then echo "htop${NL}kill"; fi)
 quit
 cancel"
@@ -60,8 +62,10 @@ fi
 
 sel_options="$(echo "$options" | sed "${sel_idx}q;d")"
 
+# shellcheck disable=SC3044
 case "$sel_options" in
-  "togglescratchpad")
+  "toscratchpad")
+    $wm_cmd "[ ${pat_var_id}=${id} ] move scratchpad"
   ;;
   "togglefloat")
     $wm_cmd "[ ${pat_var_id}=${id} ] floating toggle; move position cursor; focus"
@@ -70,10 +74,10 @@ case "$sel_options" in
     $wm_cmd "[ ${pat_var_id}=${id} ] fullscreen toggle; focus"
   ;;
   "htop")
-    $TERMINAL -e "$SHELL" -c "htop -p ${pid}"
+    $TERMINAL -e "/usr/bin/env" "sh" "-c" "htop -p ${pid}" 1> "/dev/null" 2> "/dev/null" & disown
   ;;
   "kill")
-    details_ps="$(ps --no-headers -p "${pid}" -o "pid,user,group,comm,args" | tr -s " ")"
+    details_ps="$(ps --no-headers -p "$pid" -o "pid,user,group,comm,args" | tr -s " ")"
     details_ps="${details_ps%% }"
     details_ps="${details_ps## }"
 
