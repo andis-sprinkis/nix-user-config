@@ -60,10 +60,10 @@ if [ -z "$sel_idx" ]; then
   exit "1"
 fi
 
-sel_options="$(echo "$options" | sed "${sel_idx}q;d")"
+sel_option="$(echo "$options" | sed "${sel_idx}q;d")"
 
 # shellcheck disable=SC3044
-case "$sel_options" in
+case "$sel_option" in
   "toscratchpad")
     $wm_cmd "[ ${pat_var_id}=${id} ] move scratchpad"
   ;;
