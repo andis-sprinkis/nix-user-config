@@ -14,12 +14,12 @@ TARGET all|area|output|output_focused|window|window_focused|workspace|workspace_
 DELAY  <integer seconds> (Default: 0)
 AUDIO  true|false (Default: false)
 
+Examples:
 ${script} -a capture -t window -d 5  Capture screenshot of the selected window after 5s
 ${script} <No options>|-a capture    Same as '${script} -a capture -t area -d 0'
 ${script} -a record_start            Same as '${script} -a record_start -t area -d 0 -i false'
 ${script} -a record_stop             Stop recording video
-${script} -h                         Print this message
-"
+${script} -h                         Print this message"
 
 action="record_start"
 target="area"
