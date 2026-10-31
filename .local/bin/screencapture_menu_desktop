@@ -3,26 +3,30 @@ set -euf
 NL="
 "
 
-delay_current=""
 path_state="${XDG_STATE_HOME-"${HOME}/.local/state"}/screencapture_menu_desktop"
+
+if [ ! -d "$path_state" ]; then mkdir -p "$path_state"; fi
+
+delay_current=""
 path_state_delay="${path_state}/delay"
+path_state_audio="${path_state}/audio"
 path_state_previous_choice="${path_state}/previous_choice"
+
 delay_current_str=""
 
-if [ -f "$path_state_delay" ]; then
-  delay_current="$(head < "$path_state_delay")"
+if [ -f "$path_state_delay" ]; then delay_current="$(head < "$path_state_delay")"; fi
 
-  if [ "$delay_current" != "0" ]; then
-    delay_current_str="${delay_current:+" (${delay_current}s)"}"
-  fi
-else
-  mkdir -p "$path_state"
-fi
+delay_current_str="${delay_current:+" (${delay_current:-"0"}s)"}"
+
+audio_current=""
+audio_current_str=""
+
+if [ -f "$path_state_audio" ]; then audio_current="$(head < "$path_state_audio")"; fi
+
+audio_current_str=" (${audio_current:-"false"})"
 
 if [ -f "$path_state_previous_choice" ]; then
   previous_choice="$(head < "$path_state_previous_choice")"
-else
-  mkdir -p "$path_state"
 fi
 
 lines="Capture: all screens
@@ -41,8 +45,9 @@ Record: area selection
 Record: screen selection
 Record: window selection
 Record: workspace selection
-Set delay${delay_current_str}
-Cancel"
+Audio${audio_current_str}
+Delay${delay_current_str}
+Exit"
 
 options="-a capture -t all
 -a capture -t output_focused
@@ -60,8 +65,9 @@ options="-a capture -t all
 -a record_start -t output
 -a record_start -t window
 -a record_start -t workspace
+set_audio
 set_delay
-cancel"
+exit"
 
 if [ "$previous_choice" ]; then
   case "$previous_choice" in
@@ -94,8 +100,6 @@ fi
 
 sel_option="$(printf '%s\n' "$options" | sed "${sel_idx}q;d")"
 
-echo "$sel_option"
-
 case "$sel_option" in
   "set_delay")
     options_delay="0${NL}3${NL}5${NL}10${NL}15${NL}30${NL}Cancel"
@@ -116,7 +120,26 @@ case "$sel_option" in
       ;;
     esac
   ;;
-  "cancel")
+  "set_audio")
+    options_audio="false${NL}true${NL}Cancel"
+
+    sel_line="$(
+      set +e
+      printf "%s\n" "$options_audio" | menu_desktop -p "Audio${audio_current_str}:"
+      set -e
+    )"
+
+    case "$sel_line" in
+      "false"|"true")
+        printf '%s\n' "$sel_line" > "$path_state_audio"
+        exec screencapture_menu_desktop
+      ;;
+      *)
+        exec screencapture_menu_desktop
+      ;;
+    esac
+  ;;
+  "exit")
     exit
   ;;
   *)
@@ -124,6 +147,6 @@ case "$sel_option" in
     printf '%s\n' "$sel_line" > "$path_state_previous_choice"
 
     # shellcheck disable=SC2086
-    screencapture $sel_option -d "$delay_current"
+    screencapture $sel_option -d "$delay_current" -i "$audio_current"
   ;;
 esac

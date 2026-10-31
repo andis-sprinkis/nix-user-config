@@ -288,17 +288,23 @@ case "$action" in
               canceled
             fi
 
-            set +e;
-            audio_dev="$(pactl get-default-sink)"
-            set -e;
+            set -- "wf-recorder" --codec="libx264rgb" --geometry="$ptr_coord" --file="$path_out"
 
-            if [ -z "$audio_dev" ]; then
-              failed_no_audio
+            if [ "$audio" = "true" ]; then
+              set +e;
+              audio_dev="$(pactl get-default-sink)"
+              set -e;
+
+              if [ -z "$audio_dev" ]; then
+                failed_no_audio
+              fi
+
+              set -- "$@" --audio="${audio_dev}.monitor"
             fi
 
             countdown
 
-            if ! wf-recorder --audio="${audio_dev}.monitor" --codec="libx264rgb" --geometry="$ptr_coord" --file="$path_out"; then
+            if ! "$@"; then
               failed
             fi
 
