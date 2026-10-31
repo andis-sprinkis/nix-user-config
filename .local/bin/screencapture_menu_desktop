@@ -25,45 +25,47 @@ else
   mkdir -p "$path_state"
 fi
 
-lines="Picture: all screens
-Picture: current screen
-Picture: current window
-Picture: current workspace
-Picture: area selection...
-Picture: screen selection...
-Picture: window selection...
-Picture: workspace selection...
-Video: all screens
-Video: current screen
-Video: current window
-Video: current workspace
-Video: area selection...
-Video: screen selection...
-Video: window selection...
-Video: workspace selection...
-Delay${delay_current_str}"
+lines="Capture: all screens
+Capture: current screen
+Capture: current window
+Capture: current workspace
+Capture: area selection
+Capture: screen selection
+Capture: window selection
+Capture: workspace selection
+Record: all screens
+Record: current screen
+Record: current window
+Record: current workspace
+Record: area selection
+Record: screen selection
+Record: window selection
+Record: workspace selection
+Set delay${delay_current_str}
+Cancel"
 
-options="picture all
-picture output_focused
-picture window_focused
-picture workspace_focused
-picture area
-picture output
-picture window
-picture workspace
-video all
-video output_focused
-video window_focused
-video workspace_focused
-video area
-video output
-video window
-video workspace
-set_delay"
+options="capture all
+capture output_focused
+capture window_focused
+capture workspace_focused
+capture area
+capture output
+capture window
+capture workspace
+record all
+record output_focused
+record window_focused
+record workspace_focused
+record area
+record output
+record window
+record workspace
+set_delay
+cancel"
 
 if [ "$previous_choice" ]; then
   case "$previous_choice" in
-    "Picture: "*|"Video: "*)
+    "Capture: "*|"Record: "*)
       if ! echo "$lines" | grep -q -x "$previous_choice"; then
         mkdir -p "$path_state"
         echo > "$path_state_previous_choice"
@@ -82,7 +84,7 @@ if [ "$previous_choice" ]; then
   esac
 fi
 
-sel_line="$(printf "%s\n" "$lines" | menu_desktop -p "Capture${delay_current_str}:")"
+sel_line="$(printf "%s\n" "$lines" | menu_desktop -p "Action${delay_current_str}:")"
 
 sel_idx="$(echo "$lines" | grep -n -x "$sel_line" | cut -f"1" -d":")"
 
@@ -94,7 +96,7 @@ sel_option="$(echo "$options" | sed "${sel_idx}q;d")"
 
 case "$sel_option" in
   "set_delay")
-    options_delay="0${NL}3${NL}5${NL}10${NL}15${NL}30"
+    options_delay="0${NL}3${NL}5${NL}10${NL}15${NL}30${NL}Cancel"
 
     sel_line="$(
       set +e
@@ -111,6 +113,9 @@ case "$sel_option" in
         exec screencapture_menu_desktop
       ;;
     esac
+  ;;
+  "cancel")
+    exit
   ;;
   *)
     mkdir -p "$path_state"

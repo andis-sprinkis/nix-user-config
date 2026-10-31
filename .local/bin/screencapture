@@ -5,18 +5,18 @@ NL="
 "
 
 script="$(basename "$0")"
-msg_usage="${script} [FORMAT] [MODE] [DELAY|stop]
+msg_usage="${script} [ACTION] [MODE] [DELAY|stop]
 ${script} --help|-h
 
 options:
-FORMAT picture|video
+ACTION capture|record
 MODE   all|area|output|output_focused|window|window_focused|workspace|workspace_focused
 DELAY  <integer seconds>
 
-${script} picture window 5      capture picture of the selected window after 5s
-${script} <no options>|picture  same as '${script} picture area'
-${script} video                 same as '${script} video area'
-${script} video stop            stop recording video
+${script} capture window 5      capture screenshot of the selected window after 5s
+${script} <no options>|capture  same as '${script} capture area'
+${script} record                same as '${script} record area'
+${script} record stop           stop recording video
 ${script} --help|-h             print this message"
 
 case "${1:-""}" in
@@ -28,8 +28,8 @@ esac
 
 path_dir="${HOME}/scr"
 
-capture_format="${1:-"picture"}"
-capture_mode="${2:-"area"}"
+action="${1:-"record"}"
+target="${2:-"area"}"
 delay="${3:-"0"}"
 
 display_server=""
@@ -41,6 +41,16 @@ fi
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
   display_server="x11"
 fi
+
+action_name=""
+case "$action" in
+  "capture")
+    action_name="Screen capture"
+  ;;
+  "record")
+    action_name="Screen recording"
+  ;;
+esac
 
 i3blocks_signal() {
   if [ "${1:-""}" = "wait" ]; then sleep "1"; fi
@@ -55,12 +65,12 @@ saved() {
   i3blocks_signal 1>/dev/null 2>/dev/null & disown
 
   (
-    if [ "$(notify-send "Screen capture (${capture_format}) saved." "$path_out" --app-name="$script" --action="LOCATE=Locate" --wait)" ]; then
+    if [ "$(notify-send "${action_name} saved." "$path_out" --app-name="$script" --action="LOCATE=Locate" --wait)" ]; then
       file_manager_desktop "$path_out"
     fi
   ) 1>/dev/null 2>/dev/null & disown
 
-  echo "${script}: Screen capture (${capture_format}) saved at ${path_out}"
+  echo "${script}: ${action_name} saved at ${path_out}"
 
   case "$display_server" in
     "wayland")
@@ -78,8 +88,8 @@ saved() {
 canceled() {
   i3blocks_signal 1>/dev/null 2>/dev/null & disown
 
-  # notify-send "Screen capture (${capture_format}) canceled." --app-name="$script" --urgency="low" 1>/dev/null 2>/dev/null & disown
-  echo "${script}: Screen capture (${capture_format}) canceled." 1>&2
+  # notify-send "${action_name} canceled." --app-name="$script" --urgency="low" 1>/dev/null 2>/dev/null & disown
+  echo "${script}: ${action_name} was canceled." 1>&2
 
   exit "6"
 }
@@ -88,8 +98,8 @@ canceled() {
 failed() {
   i3blocks_signal 1>/dev/null 2>/dev/null & disown
 
-  notify-send "Screen capture (${capture_format}) failed." --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
-  echo "${script}: Screen capture (${capture_format}) failed." 1>&2
+  notify-send "${action_name} has failed." --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
+  echo "${script}: ${action_name} has failed." 1>&2
 
   exit "2"
 }
@@ -98,15 +108,15 @@ failed() {
 failed_no_audio() {
   i3blocks_signal 1>/dev/null 2>/dev/null & disown
 
-  notify-send "Screen capture (${capture_format}) failed. Cannot get the default audio device." --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
-  echo "${script}: Screen capture (${capture_format}) failed. Cannot get the default audio device." 1>&2
+  notify-send "${action_name} has failed. Could not get the default audio device." --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
+  echo "${script}: ${action_name} has failed. Could not get the default audio device." 1>&2
 
   exit "2"
 }
 
 # shellcheck disable=SC3044
 not_implemented() {
-  msg="Not implemented (${display_server}): ${capture_mode} ${capture_mode}"
+  msg="Not implemented (${display_server}): ${action} ${target}"
 
   notify-send "$msg" --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
   echo "${script}: $msg" 1>&2
@@ -115,7 +125,7 @@ not_implemented() {
 }
 
 no_display_server() {
-  echo "Must be ran under X11 or Wayland." 1>&2
+  echo "Must be ran under X11 or Wayland display server." 1>&2
 
   exit "2"
 }
@@ -186,13 +196,13 @@ ptr_coord_workspace_focused() {
 ptr_coord=""
 jq_rect_map='"\(.x),\(.y) \(.width)x\(.height)"'
 
-case "$capture_format" in
-  "video")
+case "$action" in
+  "record")
     path_out="${path_dir}/$(date "+%s").mp4"
 
     mkdir -p "$path_dir"
 
-    case "$capture_mode" in
+    case "$target" in
       "stop")
         # shellcheck disable=SC3044
         case "$display_server" in
@@ -221,7 +231,7 @@ case "$capture_format" in
               exit "3"
             fi
 
-            case "$capture_mode" in
+            case "$target" in
               "all")
                 not_implemented
               ;;
@@ -290,7 +300,7 @@ case "$capture_format" in
       ;;
     esac
   ;;
-  "picture")
+  "capture")
     path_out="${path_dir}/$(date "+%s").png"
 
     mkdir -p "$path_dir"
@@ -301,7 +311,7 @@ case "$capture_format" in
           exit "3"
         fi
 
-        case "$capture_mode" in
+        case "$target" in
           "all")
             countdown
 
@@ -374,7 +384,7 @@ case "$capture_format" in
         saved
       ;;
       "x11")
-        case "${capture_mode:-""}" in
+        case "${target:-""}" in
           "all")
             if ! maim -d "$delay" -u "$path_out"; then
               failed
