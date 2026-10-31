@@ -181,6 +181,6 @@ case "$sel_option" in
     printf '%s\n' "$sel_line" > "$path_state_last_action"
 
     # shellcheck disable=SC2086
-    screencapture $sel_option -d "$delay_current" -i "$audio_current"
+    exec screencapture $sel_option -d "$delay_current" -i "$audio_current"
   ;;
 esac
