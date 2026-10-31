@@ -21,7 +21,7 @@ ${script} -a record_start            Same as '${script} -a record_start -t area 
 ${script} -a record_stop             Stop recording video
 ${script} -h                         Print this message"
 
-action="record_start"
+action="capture"
 target="area"
 delay="0"
 audio="false"
