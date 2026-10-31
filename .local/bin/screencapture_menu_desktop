@@ -44,37 +44,37 @@ Record: workspace selection
 Set delay${delay_current_str}
 Cancel"
 
-options="capture all
-capture output_focused
-capture window_focused
-capture workspace_focused
-capture area
-capture output
-capture window
-capture workspace
-record all
-record output_focused
-record window_focused
-record workspace_focused
-record area
-record output
-record window
-record workspace
+options="-a capture -t all
+-a capture -t output_focused
+-a capture -t window_focused
+-a capture -t workspace_focused
+-a capture -t area
+-a capture -t output
+-a capture -t window
+-a capture -t workspace
+-a record_start -t all
+-a record_start -t output_focused
+-a record_start -t window_focused
+-a record_start -t workspace_focused
+-a record_start -t area
+-a record_start -t output
+-a record_start -t window
+-a record_start -t workspace
 set_delay
 cancel"
 
 if [ "$previous_choice" ]; then
   case "$previous_choice" in
     "Capture: "*|"Record: "*)
-      if ! echo "$lines" | grep -q -x "$previous_choice"; then
+      if ! printf '%s\n' "$lines" | grep -q -v -e "^.${previous_choice}.$"; then
         mkdir -p "$path_state"
         echo > "$path_state_previous_choice"
       else
-        previous_choice_idx="$(echo "$lines" | grep -n -x "$previous_choice" | cut -f"1" -d":")"
-        previous_choice_option="$(echo "$options" | sed "${previous_choice_idx}q;d")"
+        previous_choice_idx="$(printf '%s\n' "$lines" | grep -n -x "$previous_choice" | cut -f"1" -d":")"
+        previous_choice_option="$(printf '%s\n' "$options" | sed "${previous_choice_idx}q;d")"
 
-        lines="${previous_choice}${NL}$(echo "$lines" | grep -v -x "$previous_choice")"
-        options="${previous_choice_option}${NL}$(echo "$options" | grep -v -x "$previous_choice_option")"
+        lines="${previous_choice}${NL}$(printf '%s\n' "$lines" | grep -v -e "^.${previous_choice}.$")"
+        options="${previous_choice_option}${NL}$(printf '%s\n' "$options" | grep -v -e "^.${previous_choice_option}.$")"
       fi
     ;;
     *)
@@ -86,13 +86,15 @@ fi
 
 sel_line="$(printf "%s\n" "$lines" | menu_desktop -p "Action${delay_current_str}:")"
 
-sel_idx="$(echo "$lines" | grep -n -x "$sel_line" | cut -f"1" -d":")"
+sel_idx="$(printf '%s\n' "$lines" | grep -n -x "$sel_line" | cut -f"1" -d":")"
 
 if [ -z "$sel_idx" ]; then
   exit "1"
 fi
 
-sel_option="$(echo "$options" | sed "${sel_idx}q;d")"
+sel_option="$(printf '%s\n' "$options" | sed "${sel_idx}q;d")"
+
+echo "$sel_option"
 
 case "$sel_option" in
   "set_delay")
@@ -109,7 +111,7 @@ case "$sel_option" in
         exec screencapture_menu_desktop
       ;;
       *)
-        echo "$sel_line" > "$path_state_delay"
+        printf '%s\n' "$sel_line" > "$path_state_delay"
         exec screencapture_menu_desktop
       ;;
     esac
@@ -119,9 +121,9 @@ case "$sel_option" in
   ;;
   *)
     mkdir -p "$path_state"
-    echo "$sel_line" > "$path_state_previous_choice"
+    printf '%s\n' "$sel_line" > "$path_state_previous_choice"
 
     # shellcheck disable=SC2086
-    screencapture $sel_option "$delay_current"
+    screencapture $sel_option -d "$delay_current"
   ;;
 esac
