@@ -72,15 +72,15 @@ exit"
 if [ "$previous_choice" ]; then
   case "$previous_choice" in
     "Capture: "*|"Record: "*)
-      if ! printf '%s\n' "$lines" | grep -q -v -e "^.${previous_choice}.$"; then
+      if ! printf '%s\n' "$lines" | grep -q -v -x "$previous_choice"; then
         mkdir -p "$path_state"
         echo > "$path_state_previous_choice"
       else
         previous_choice_idx="$(printf '%s\n' "$lines" | grep -n -x "$previous_choice" | cut -f"1" -d":")"
-        previous_choice_option="$(printf '%s\n' "$options" | sed "${previous_choice_idx}q;d")"
+        previous_choice_option="$(printf '%s\n' "$options" | sed -e "${previous_choice_idx}q;d")"
 
-        lines="${previous_choice}${NL}$(printf '%s\n' "$lines" | grep -v -e "^.${previous_choice}.$")"
-        options="${previous_choice_option}${NL}$(printf '%s\n' "$options" | grep -v -e "^.${previous_choice_option}.$")"
+        lines="${previous_choice}${NL}$(printf '%s\n' "$lines" | grep -v -x "$previous_choice")"
+        options="${previous_choice_option}${NL}$(printf '%s\n' "$options" | grep -v -e "^.$previous_choice_option.$")"
       fi
     ;;
     *)
@@ -91,14 +91,13 @@ if [ "$previous_choice" ]; then
 fi
 
 sel_line="$(printf "%s\n" "$lines" | menu_desktop -p "Action${delay_current_str}:")"
-
 sel_idx="$(printf '%s\n' "$lines" | grep -n -x "$sel_line" | cut -f"1" -d":")"
 
 if [ -z "$sel_idx" ]; then
   exit "1"
 fi
 
-sel_option="$(printf '%s\n' "$options" | sed "${sel_idx}q;d")"
+sel_option="$(printf '%s\n' "$options" | sed -e "${sel_idx}q;d")"
 
 case "$sel_option" in
   "set_delay")
