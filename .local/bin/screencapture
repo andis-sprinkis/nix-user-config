@@ -77,8 +77,6 @@ date_iso8601() {
 }
 
 i3blocks_signal() {
-  if [ "${1:-""}" = "wait" ]; then sleep "1"; fi
-
   if pidof -q "i3blocks"; then pkill "-SIGRTMIN+7" -x "i3blocks"; fi
 }
 
