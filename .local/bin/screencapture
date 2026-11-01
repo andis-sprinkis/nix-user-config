@@ -89,9 +89,9 @@ exit_stopped() {
 }
 
 # shellcheck disable=SC3044
-exit_canceled() {
+exit_cancelled() {
   i3blocks_signal 1>/dev/null 2>/dev/null & disown
-  exec echo "canceled"
+  exec echo "cancelled"
 }
 
 # shellcheck disable=SC3044
@@ -233,7 +233,7 @@ case "$action" in
 
             if [ -z "$ptr_coord" ]; then no_area_selected; fi
 
-            if [ "$ptr_coord" = "selection cancelled" ]; then canceled; fi
+            if [ "$ptr_coord" = "selection cancelled" ]; then cancelled; fi
 
             set -- "wf-recorder" --codec="libx264rgb" --geometry="$ptr_coord" --file="$path_out"
 
@@ -290,7 +290,7 @@ case "$action" in
             set -e
 
             if [ "$dulcepan_exit" != "0" ]; then
-              if [ -z "$dulcepan_stderr" ]; then exit_canceled; fi
+              if [ -z "$dulcepan_stderr" ]; then exit_cancelled; fi
 
               if [ "$dulcepan_stderr" = "[FATAL] The selection is empty" ]; then exit_no_area_selected; fi
 
@@ -324,7 +324,7 @@ case "$action" in
 
         if [ -z "$ptr_coord" ]; then no_area_selected; fi
 
-        if [ "$ptr_coord" = "selection cancelled" ]; then exit_canceled; fi
+        if [ "$ptr_coord" = "selection cancelled" ]; then exit_cancelled; fi
 
         countdown
 

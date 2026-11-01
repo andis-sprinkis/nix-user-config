@@ -77,7 +77,7 @@ case "$sel_option" in
       ;;
       "no_area_selected")
       ;;
-      "canceled")
+      "cancelled")
       ;;
       "stopped")
       ;;
