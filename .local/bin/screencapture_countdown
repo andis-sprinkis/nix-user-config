@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+set -euf
+
+delay="$1"
+
+if [ "$delay" = "0" ]; then exit; fi
+
+echo "$delay" 1>&2
+
+while [ "$delay" -gt "0" ]; do
+  delay="$((delay - 1))"
+
+  sleep "1"
+
+  echo "$delay" 1>&2
+done
+
+sleep "1"
+
+set +e; pkill "-SIGRTMIN+7" -x "i3blocks"; set -e
+
+exit "0"

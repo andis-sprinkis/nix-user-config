@@ -124,19 +124,6 @@ exit_no_area_selected() {
   exec echo "no_area_selected"
 }
 
-# shellcheck disable=SC3044
-countdown() {
-  while [ "$delay" -gt "0" ]; do
-    delay="$((delay - 1))"
-
-    sleep "1"
-
-    echo "$delay" 1>&2
-  done
-
-  i3blocks_signal "wait" 1>/dev/null 2>/dev/null & disown
-}
-
 ptr_coord_output() {
   set +e
   swaymsg -t "get_outputs" | jq -r ".. | select(.active?).rect | ${jq_rect_map}" | slurp 2>&1
@@ -249,7 +236,7 @@ case "$action" in
               set -- "$@" --audio="${audio_dev}.monitor"
             fi
 
-            countdown
+            screencapture_countdown "$delay"
 
             if ! "$@"; then exit_failed; fi
 
@@ -277,14 +264,14 @@ case "$action" in
 
         case "$target" in
           "all")
-            countdown
+            screencapture_countdown "$delay"
 
             if ! grim "$path_out"; then exit_failed; fi
 
             exit_saved
           ;;
           "area")
-            countdown
+            screencapture_countdown "$delay"
 
             set +e
             dulcepan_stderr="$(dulcepan -f "png" -o "$path_out" 2>&1)"
@@ -328,7 +315,7 @@ case "$action" in
 
         if [ "$ptr_coord" = "selection cancelled" ]; then exit_cancelled; fi
 
-        countdown
+        screencapture_countdown "$delay"
 
         if ! grim -g "$ptr_coord" "$path_out"; then exit_failed; fi
 
