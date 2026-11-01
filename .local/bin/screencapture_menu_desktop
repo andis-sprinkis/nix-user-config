@@ -12,7 +12,7 @@ path_state_target="${path_state}/target"
 path_state_delay="${path_state}/delay"
 path_state_audio="${path_state}/audio"
 
-if [ -f "$path_state_action" ]; then action="$(head < "$path_state_action")"; else action="capture"; fi
+if [ -f "$path_state_action" ]; then action="$(head < "$path_state_action")"; else action="screenshot"; fi
 if [ -f "$path_state_target" ]; then target="$(head < "$path_state_target")"; else target="area"; fi
 if [ -f "$path_state_delay" ]; then delay="$(head < "$path_state_delay")"; else delay="0"; fi
 if [ -f "$path_state_audio" ]; then audio="$(head < "$path_state_audio")"; else audio="false"; fi
@@ -20,12 +20,12 @@ if [ -f "$path_state_audio" ]; then audio="$(head < "$path_state_audio")"; else 
 sel_option=""
 
 if [ "${1:-""}" = "silent" ]; then
-  if [ "$action" = "capture" ]; then sel_option="start"; fi
+  if [ "$action" = "screenshot" ]; then sel_option="start"; fi
 else
-  lines="Start${NL}action: ${action}${NL}delay: ${delay}${NL}target: ${target}${NL}audio: ${audio}${NL}Exit"
-  options="start${NL}action${NL}delay${NL}target${NL}audio${NL}exit"
+  lines="Start${NL}delay: ${delay}${NL}action: ${action}${NL}target: ${target}${NL}audio: ${audio}${NL}Exit"
+  options="start${NL}delay${NL}action${NL}target${NL}audio${NL}exit"
 
-  sel_line="$(echo "$lines" | menu_desktop -p "Screen capture:")"
+  sel_line="$(echo "$lines" | menu_desktop -p "Capture:")"
   sel_idx="$(echo "$lines" | grep -n -x "$sel_line" | cut -f"1" -d":")"
 
   if [ -z "$sel_idx" ]; then exit "1"; fi
@@ -35,16 +35,65 @@ fi
 
 case "$sel_option" in
   "start")
-    exec screencapture -a "$action" -t "$target" -d "$delay" -i "$audio"
+    set +e
+    result="$(screencapture -a "$action" -t "$target" -d "$delay" -i "$audio")"
+    exit_code="$?"
+    set -e
+
+    case "$result" in
+      "saved "*)
+        path_out="${result##* }"
+
+        (
+          if [ "$(notify-send "Saved (action: ${action}, target: ${target})" "$path_out" -a "Screen capture" -A "LOCATE=Locate" -w)" ]; then
+            exec file_manager_desktop "$path_out"
+          fi
+        ) 1>/dev/null 2>/dev/null & disown
+
+        if [ "${WAYLAND_DISPLAY:-""}" ]; then display_server="wayland"; fi
+
+        if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then display_server="x11"; fi
+
+        case "$display_server" in
+          "wayland")
+            printf '%s' "$path_out" | wl-copy
+          ;;
+          "x11")
+            printf '%s' "$path_out" | xclip -sel "clipboard"
+          ;;
+        esac
+      ;;
+      "failed")
+        notify-send "Failed (action: ${action}, target: ${target})" -a "Screen capture" -u "critical" 1>/dev/null 2>/dev/null & disown
+      ;;
+      "failed_no_audio_device")
+        notify-send "Failed (action: ${action}, target: ${target}). Could not find the default audio device." -a "Screen capture" -u "critical" 1>/dev/null 2>/dev/null & disown
+      ;;
+      "not_implemented")
+        notify-send "Not implemented (action: ${action}, target: ${target})." -a "Screen capture" -u "critical" 1>/dev/null 2>/dev/null & disown
+      ;;
+      "no_area_selected")
+      ;;
+      "canceled")
+      ;;
+      "stopped")
+      ;;
+      *)
+        exit "1"
+      ;;
+    esac
+
+    echo "$result"
+    exit "$exit_code"
   ;;
   "exit")
     exit
   ;;
   "action")
-    sel="$(set +e; echo "capture${NL}record${NL}Cancel" | menu_desktop -p "action (${action}):"; set -e)"
+    sel="$(set +e; echo "screenshot${NL}record${NL}Cancel" | menu_desktop -p "action (${action}):"; set -e)"
 
     case "$sel" in
-      "capture"|"record_start")
+      "screenshot"|"record")
         echo "$sel" > "$path_state_action"
       ;;
     esac

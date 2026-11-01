@@ -4,24 +4,30 @@ IFS_="$IFS"
 NL="
 "
 
-script="$(basename "$0")"
-msg_usage="${script} [-a ACTION] [-t TARGET] [-d DELAY] [-i AUDIO]
+exit_usage() {
+  script="$(basename "$0")"
+  msg_usage="${script} [-a ACTION] [-t TARGET] [-d DELAY] [-i AUDIO]
 ${script} -h
 
 Options:
-ACTION capture|record|stop (Default: capture)
+ACTION screenshot|record|stop (Default: screenshot)
 TARGET all|area|output|output_focused|window|window_focused|workspace|workspace_focused (Default: area)
 DELAY  <integer seconds> (Default: 0)
 AUDIO  true|false (Default: false)
 
 Examples:
-${script} -a capture -t window -d 5  Capture screenshot of the selected window after 5s
-${script} <No options>|-a capture    Same as '${script} -a capture -t area -d 0'
-${script} -a record                  Same as '${script} -a record -t area -d 0 -i false'
-${script} -a stop                    Stop recording video
-${script} -h                         Print this message"
+${script} -a screenshot -t window -d 5  Capture screenshot of the selected window after 5s
+${script} <No options>|-a screenshot    Same as '${script} -a screenshot -t area -d 0'
+${script} -a record                     Same as '${script} -a record -t area -d 0 -i false'
+${script} -a stop                       Stop recording video
+${script} -h                            Print this message"
 
-action="capture"
+  echo "$msg_usage" 1>&2
+
+  exit "${1:-"0"}"
+}
+
+action="screenshot"
 target="area"
 delay="0"
 audio="false"
@@ -42,136 +48,70 @@ while getopts "a:t:d:i:h" opt; do
       audio="$OPTARG"
     ;;
     "h")
-      echo "$msg_usage" 1>&2
-      exit
+      exit_usage
     ;;
     *)
-      echo "$msg_usage" 1>&2
-      exit "1"
+      exit_usage "1"
     ;;
   esac
 done
 
 path_dir="${HOME}/scr"
 
+exit_no_display_server() {
+  exec echo "no_display_server"
+}
+
 display_server=""
 
-if [ "${WAYLAND_DISPLAY:-""}" ]; then
-  display_server="wayland"
-fi
+if [ "${WAYLAND_DISPLAY:-""}" ]; then display_server="wayland"; fi
 
-if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then
-  display_server="x11"
-fi
+if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then display_server="x11"; fi
 
-action_name=""
-case "$action" in
-  "capture")
-    action_name="Screen capture"
-  ;;
-  "record")
-    action_name="Screen recording"
-  ;;
-esac
+if [ -z "$display_server" ]; then exit_no_display_server; fi
 
 i3blocks_signal() {
   if [ "${1:-""}" = "wait" ]; then sleep "1"; fi
 
-  if pidof -q "i3blocks"; then
-    pkill "-SIGRTMIN+7" -x "i3blocks"
-  fi
+  if pidof -q "i3blocks"; then pkill "-SIGRTMIN+7" -x "i3blocks"; fi
 }
 
 # shellcheck disable=SC3044
-saved() {
+exit_saved() {
   i3blocks_signal 1>/dev/null 2>/dev/null & disown
-
-  (
-    if [ "$(notify-send "${action_name} saved." "$path_out" --app-name="$script" --action="LOCATE=Locate" --wait)" ]; then
-      file_manager_desktop "$path_out"
-    fi
-  ) 1>/dev/null 2>/dev/null & disown
-
-  echo "${script}: ${action_name} saved at ${path_out}"
-
-  case "$display_server" in
-    "wayland")
-      printf '%s' "$path_out" | wl-copy
-    ;;
-    "x11")
-      printf '%s' "$path_out" | xclip -sel "clipboard"
-    ;;
-  esac
-
-  echo "saved ${path_out}"
-
-  exit
+  exec echo "saved ${path_out}"
 }
 
 # shellcheck disable=SC3044
-canceled() {
+exit_stopped() {
   i3blocks_signal 1>/dev/null 2>/dev/null & disown
-
-  # notify-send "${action_name} canceled." --app-name="$script" --urgency="low" 1>/dev/null 2>/dev/null & disown
-  echo "${script}: ${action_name} was canceled." 1>&2
-
-  echo "canceled"
-
-  exit "6"
+  exec echo "stopped"
 }
 
 # shellcheck disable=SC3044
-failed() {
+exit_canceled() {
   i3blocks_signal 1>/dev/null 2>/dev/null & disown
-
-  notify-send "${action_name} has failed." --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
-  echo "${script}: ${action_name} has failed." 1>&2
-
-  echo "failed"
-
-  exit "2"
+  exec echo "canceled"
 }
 
 # shellcheck disable=SC3044
-failed_no_audio() {
+exit_failed() {
   i3blocks_signal 1>/dev/null 2>/dev/null & disown
-
-  notify-send "${action_name} has failed. Could not get the default audio device." --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
-  echo "${script}: ${action_name} has failed. Could not get the default audio device." 1>&2
-
-  echo "failed_no_audio"
-
-  exit "2"
+  exec echo "failed"
 }
 
 # shellcheck disable=SC3044
-not_implemented() {
-  msg="Not implemented (${display_server}): ${action} ${target}"
-
-  notify-send "$msg" --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
-  echo "${script}: $msg" 1>&2
-
-  echo "not_implemented"
-
-  exit "5"
+exit_failed_no_audio_device() {
+  i3blocks_signal 1>/dev/null 2>/dev/null & disown
+  exec echo "failed_no_audio_device"
 }
 
-no_display_server() {
-  echo "Must be ran under X11 or Wayland display server." 1>&2
-
-  echo "not_display_server"
-
-  exit "2"
+exit_not_implemented() {
+  exec echo "not_implemented"
 }
 
-# shellcheck disable=SC3044
-no_area_selected() {
-  notify-send "No screen area selected." --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
-  echo "${script}: No screen area selected." 1>&2
-
-  echo "no_area_selected"
-
-  exit "2"
+exit_no_area_selected() {
+  exec echo "no_area_selected"
 }
 
 # shellcheck disable=SC3044
@@ -242,15 +182,10 @@ case "$action" in
         pkill -SIGINT -x "slurp"
         set -e
 
-        i3blocks_signal 1>/dev/null 2>/dev/null & disown
-
-        exit "0"
+        stopped
       ;;
       "x11")
         not_implemented
-      ;;
-      *)
-        no_display_server
       ;;
     esac
   ;;
@@ -263,13 +198,11 @@ case "$action" in
       "all"|"area"|"output"|"output_focused"|"window"|"window_focused"|"workspace"|"workspace_focused")
         case "$display_server" in
           "wayland")
-            if pidof -q "wf-recorder" || pidof -q "slurp"; then
-              exit "3"
-            fi
+            if pidof -q "wf-recorder" || pidof -q "slurp"; then exit "3"; fi
 
             case "$target" in
               "all")
-                not_implemented
+                exit_not_implemented
               ;;
               "area")
                 ptr_coord="$(set +e; slurp 2>&1; set -e)"
@@ -294,55 +227,40 @@ case "$action" in
               ;;
             esac
 
-            if [ -z "$ptr_coord" ]; then
-              no_area_selected
-            fi
+            if [ -z "$ptr_coord" ]; then no_area_selected; fi
 
-            if [ "$ptr_coord" = "selection cancelled" ]; then
-              canceled
-            fi
+            if [ "$ptr_coord" = "selection cancelled" ]; then canceled; fi
 
             set -- "wf-recorder" --codec="libx264rgb" --geometry="$ptr_coord" --file="$path_out"
 
             if [ "$audio" = "true" ]; then
-              set +e;
-              audio_dev="$(pactl get-default-sink)"
-              set -e;
+              set +e; audio_dev="$(pactl get-default-sink)"; set -e;
 
-              if [ -z "$audio_dev" ]; then
-                failed_no_audio
-              fi
+              if [ -z "$audio_dev" ]; then exit_failed_no_audio_device; fi
 
               set -- "$@" --audio="${audio_dev}.monitor"
             fi
 
             countdown
 
-            if ! "$@"; then
-              failed
-            fi
+            if ! "$@"; then exit_failed; fi
 
-            saved
+            exit_saved
           ;;
           "x11")
             not_implemented
           ;;
-          *)
-            no_display_server
-          ;;
         esac
       ;;
       "-h"|"--help")
-        echo "$msg_usage"
-        exit "0"
+        exit_usage
       ;;
       *)
-        echo "$msg_usage" 1>&2
-        exit "1"
+        exit_usage "1"
       ;;
     esac
   ;;
-  "capture")
+  "screenshot")
     path_out="${path_dir}/$(date "+%s").png"
 
     mkdir -p "$path_dir"
@@ -361,7 +279,7 @@ case "$action" in
               failed
             fi
 
-            saved
+            exit_saved
           ;;
           "area")
             countdown
@@ -372,18 +290,14 @@ case "$action" in
             set -e
 
             if [ "$dulcepan_exit" != "0" ]; then
-              if [ -z "$dulcepan_stderr" ]; then
-                canceled
-              fi
+              if [ -z "$dulcepan_stderr" ]; then exit_canceled; fi
 
-              if [ "$dulcepan_stderr" = "[FATAL] The selection is empty" ]; then
-                no_area_selected
-              fi
+              if [ "$dulcepan_stderr" = "[FATAL] The selection is empty" ]; then exit_no_area_selected; fi
 
-              failed
+              exit_failed
             fi
 
-            saved
+            exit_saved
           ;;
           "output")
             ptr_coord="$(ptr_coord_output)"
@@ -404,42 +318,31 @@ case "$action" in
             ptr_coord="$(ptr_coord_workspace_focused)"
           ;;
           *)
-            echo "$msg_usage" 1>&2
-            exit "1"
+            exit_usage "1"
           ;;
         esac
 
-        if [ -z "$ptr_coord" ]; then
-          no_area_selected
-        fi
+        if [ -z "$ptr_coord" ]; then no_area_selected; fi
 
-        if [ "$ptr_coord" = "selection cancelled" ]; then
-          canceled
-        fi
+        if [ "$ptr_coord" = "selection cancelled" ]; then canceled; fi
 
         countdown
 
-        if ! grim -g "$ptr_coord" "$path_out"; then
-          failed
-        fi
+        if ! grim -g "$ptr_coord" "$path_out"; then exit_failed; fi
 
-        saved
+        exit_saved
       ;;
       "x11")
         case "${target:-""}" in
           "all")
-            if ! maim -d "$delay" -u "$path_out"; then
-              failed
-            fi
+            if ! maim -d "$delay" -u "$path_out"; then exit_failed; fi
 
-            saved
+            exit_saved
           ;;
           "area")
-            if ! maim -d "$delay" -u --select "$path_out"; then
-              failed
-            fi
+            if ! maim -d "$delay" -u --select "$path_out"; then exit_failed; fi
 
-            saved
+            exit_saved
           ;;
           "output")
             # prompt to use pointer coordinates to select the output ?
@@ -450,7 +353,7 @@ case "$action" in
             #
             # saved
 
-            not_implemented
+            exit_not_implemented
           ;;
           "output_focused")
             mouseloc="$(xdotool "getmouselocation")"
@@ -495,11 +398,9 @@ case "$action" in
             done
             IFS="$IFS_"
 
-            if ! maim -d "$delay" -u -g "$o_coords" "$path_out"; then
-              failed
-            fi
+            if ! maim -d "$delay" -u -g "$o_coords" "$path_out"; then exit_failed; fi
 
-            saved
+            exit_saved
           ;;
           "window")
             # see i3_get_win_criteria
@@ -511,14 +412,12 @@ case "$action" in
             #
             # saved
 
-            not_implemented
+            exit_not_implemented
           ;;
           "window_focused")
-            if ! maim -d "$delay" -u --window "$(xdotool "getactivewindow")" "$path_out"; then
-              failed
-            fi
+            if ! maim -d "$delay" -u --window "$(xdotool "getactivewindow")" "$path_out"; then exit_failed; fi
 
-            saved
+            exit_saved
           ;;
           "workspace")
             # prompt to use pointer coordinates to select the workspace ?
@@ -530,7 +429,7 @@ case "$action" in
             #
             # saved
 
-            not_implemented
+            exit_not_implemented
           ;;
           "workspace_focused")
             # xdotool get_desktop_for_window ?
@@ -542,21 +441,16 @@ case "$action" in
             #
             # saved
 
-            not_implemented
+            exit_not_implemented
           ;;
           *)
-            echo "$msg_usage" 1>&2
-            exit "1"
+            exit_usage "1"
           ;;
         esac
-      ;;
-      *)
-        no_display_server
       ;;
     esac
   ;;
   *)
-    echo "$msg_usage" 1>&2
-    exit "1"
+    exit_usage "1"
   ;;
 esac
