@@ -39,6 +39,8 @@ case "$command" in
     result="$(screencapture -a "$action" -t "$target" -d "$delay" -i "$audio")"
     set -e
 
+    if pidof -q "i3blocks"; then pkill "-SIGRTMIN+7" -x "i3blocks"; fi
+
     inputs_text="action: ${action}, target: ${target}"
 
     case "$result" in

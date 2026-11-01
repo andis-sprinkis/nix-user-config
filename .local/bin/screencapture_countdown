@@ -17,6 +17,6 @@ done
 
 sleep "1"
 
-set +e; pkill "-SIGRTMIN+7" -x "i3blocks"; set -e
+if pidof -q "i3blocks"; then pkill "-SIGRTMIN+7" -x "i3blocks"; fi
 
 exit "0"

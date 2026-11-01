@@ -72,55 +72,16 @@ if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then display_server=
 
 if [ -z "$display_server" ]; then exit_no_display_server; fi
 
-date_iso8601() {
-  LC_ALL="C" TZ="" date -u '+%Y-%m-%dT%H:%M:%S.%4NZ'
-}
+date_iso8601() { LC_ALL="C" TZ="" date -u '+%Y-%m-%dT%H:%M:%S.%4NZ'; }
 
-i3blocks_signal() {
-  if pidof -q "i3blocks"; then pkill "-SIGRTMIN+7" -x "i3blocks"; fi
-}
-
-# shellcheck disable=SC3044
-exit_saved() {
-  i3blocks_signal 1>/dev/null 2>/dev/null & disown
-  exec echo "saved ${path_out}"
-}
-
-# shellcheck disable=SC3044
-exit_stopped() {
-  i3blocks_signal 1>/dev/null 2>/dev/null & disown
-  exec echo "stopped"
-}
-
-# shellcheck disable=SC3044
-exit_cancelled() {
-  i3blocks_signal 1>/dev/null 2>/dev/null & disown
-  exec echo "cancelled"
-}
-
-# shellcheck disable=SC3044
-exit_failed() {
-  i3blocks_signal 1>/dev/null 2>/dev/null & disown
-  exec echo "failed"
-}
-
-# shellcheck disable=SC3044
-exit_no_audio_device() {
-  i3blocks_signal 1>/dev/null 2>/dev/null & disown
-  exec echo "no_audio_device"
-}
-
-exit_area_selection_in_progress() {
-  exec echo "area_selection_in_progress"
-}
-
-exit_not_implemented() {
-  exec echo "not_implemented"
-}
-
-exit_no_area_selected() {
-  exec echo "no_area_selected"
-}
+exit_saved() { exec echo "saved ${path_out}"; }
+exit_stopped() { exec echo "stopped"; }
+exit_cancelled() { exec echo "cancelled"; }
+exit_failed() { exec echo "failed"; }
+exit_no_audio_device() { exec echo "no_audio_device"; }
+exit_area_selection_in_progress() { exec echo "area_selection_in_progress"; }
+exit_not_implemented() { exec echo "not_implemented"; }
+exit_no_area_selected() { exec echo "no_area_selected"; }
 
 ptr_coord_output() {
   set +e
@@ -169,7 +130,6 @@ jq_rect_map='"\(.x),\(.y) \(.width)x\(.height)"'
 
 case "$action" in
   "stop")
-    # shellcheck disable=SC3044
     case "$display_server" in
       "wayland")
         set +e
