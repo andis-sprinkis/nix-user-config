@@ -60,9 +60,7 @@ path_dir="${HOME}/scr"
 
 mkdir -p "$path_dir"
 
-exit_no_display_server() {
-  exec echo "no_display_server"
-}
+exit_no_display_server() { exec echo "no_display_server"; }
 
 display_server=""
 
