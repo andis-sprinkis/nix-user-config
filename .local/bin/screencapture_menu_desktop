@@ -37,15 +37,16 @@ case "$sel_option" in
   "start")
     set +e
     result="$(screencapture -a "$action" -t "$target" -d "$delay" -i "$audio")"
-    exit_code="$?"
     set -e
+
+    inputs_text="action: ${action}, target: ${target}"
 
     case "$result" in
       "saved "*)
         path_out="${result##* }"
 
         (
-          if [ "$(notify-send "Saved (action: ${action}, target: ${target})" "$path_out" -a "Screen capture" -A "LOCATE=Locate" -w)" ]; then
+          if [ "$(notify-send "Saved." "${path_out}${NL}${inputs_text}" -a "Screen capture" -A "LOCATE=Locate" -w)" ]; then
             exec file_manager_desktop "$path_out"
           fi
         ) 1>/dev/null 2>/dev/null & disown
@@ -64,13 +65,15 @@ case "$sel_option" in
         esac
       ;;
       "failed")
-        notify-send "Failed (action: ${action}, target: ${target})" -a "Screen capture" -u "critical" 1>/dev/null 2>/dev/null & disown
+        notify-send "Failed." "${inputs_text}" -a "Screen capture" -u "critical" 1>/dev/null 2>/dev/null & disown
       ;;
-      "failed_no_audio_device")
-        notify-send "Failed (action: ${action}, target: ${target}). Could not find the default audio device." -a "Screen capture" -u "critical" 1>/dev/null 2>/dev/null & disown
+      "no_audio_device")
+        notify-send "Failed." "Could not find the default audio device.${NL}${inputs_text}" -a "Screen capture" -u "critical" 1>/dev/null 2>/dev/null & disown
       ;;
       "not_implemented")
-        notify-send "Not implemented (action: ${action}, target: ${target})." -a "Screen capture" -u "critical" 1>/dev/null 2>/dev/null & disown
+        notify-send "Failed." "Not implemented.${NL}${inputs_text}" -a "Screen capture" -u "critical" 1>/dev/null 2>/dev/null & disown
+      ;;
+      "area_selection_in_progress")
       ;;
       "no_area_selected")
       ;;
@@ -84,7 +87,7 @@ case "$sel_option" in
     esac
 
     echo "$result"
-    exit "$exit_code"
+    exit
   ;;
   "exit")
     exit

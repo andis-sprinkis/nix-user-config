@@ -101,9 +101,13 @@ exit_failed() {
 }
 
 # shellcheck disable=SC3044
-exit_failed_no_audio_device() {
+exit_no_audio_device() {
   i3blocks_signal 1>/dev/null 2>/dev/null & disown
-  exec echo "failed_no_audio_device"
+  exec echo "no_audio_device"
+}
+
+exit_area_selection_in_progress() {
+  exec echo "area_selection_in_progress"
 }
 
 exit_not_implemented() {
@@ -182,10 +186,10 @@ case "$action" in
         pkill -SIGINT -x "slurp"
         set -e
 
-        stopped
+        exit_stopped
       ;;
       "x11")
-        not_implemented
+        exit_not_implemented
       ;;
     esac
   ;;
@@ -236,7 +240,7 @@ case "$action" in
             if [ "$audio" = "true" ]; then
               set +e; audio_dev="$(pactl get-default-sink)"; set -e;
 
-              if [ -z "$audio_dev" ]; then exit_failed_no_audio_device; fi
+              if [ -z "$audio_dev" ]; then exit_no_audio_device; fi
 
               set -- "$@" --audio="${audio_dev}.monitor"
             fi
@@ -248,7 +252,7 @@ case "$action" in
             exit_saved
           ;;
           "x11")
-            not_implemented
+            exit_not_implemented
           ;;
         esac
       ;;
@@ -267,17 +271,13 @@ case "$action" in
 
     case "$display_server" in
       "wayland")
-        if pidof -q "grim" || pidof -q "dulcepan"; then
-          exit "3"
-        fi
+        if pidof -q "grim" || pidof -q "dulcepan"; then exit_area_selection_in_progress; fi
 
         case "$target" in
           "all")
             countdown
 
-            if ! grim "$path_out"; then
-              failed
-            fi
+            if ! grim "$path_out"; then exit_failed; fi
 
             exit_saved
           ;;
@@ -324,7 +324,7 @@ case "$action" in
 
         if [ -z "$ptr_coord" ]; then no_area_selected; fi
 
-        if [ "$ptr_coord" = "selection cancelled" ]; then canceled; fi
+        if [ "$ptr_coord" = "selection cancelled" ]; then exit_canceled; fi
 
         countdown
 
@@ -348,10 +348,10 @@ case "$action" in
             # prompt to use pointer coordinates to select the output ?
             #
             # if ! maim -d "$delay" -u -g "..." "$path_out"; then
-            #   failed
+            #   exit_failed
             # fi
             #
-            # saved
+            # exit_saved
 
             exit_not_implemented
           ;;
@@ -407,10 +407,10 @@ case "$action" in
             # window_id="$(xwininfo -int | sed -nre "s/^xwininfo: Window id: (${match_int}) .*$/\1/p")"
             #
             # if ! maim -d "$delay" -u --window "..." "$path_out"; then
-            #   failed
+            #   exit_failed
             # fi
             #
-            # saved
+            # exit_saved
 
             exit_not_implemented
           ;;
@@ -424,10 +424,10 @@ case "$action" in
             # query i3 for the focused workspace geometry ?
             #
             # if ! maim -d "$delay" -u -g "..." "$path_out"; then
-            #   failed
+            #   exit_failed
             # fi
             #
-            # saved
+            # exit_saved
 
             exit_not_implemented
           ;;
@@ -436,10 +436,10 @@ case "$action" in
             # query i3 for the focused workspace geometry ?
             #
             # if ! maim -d "$delay" -u -g "..." "$path_out"; then
-            #   failed
+            #   exit_failed
             # fi
             #
-            # saved
+            # exit_saved
 
             exit_not_implemented
           ;;

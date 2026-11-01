@@ -128,10 +128,10 @@ reload() {
 toggle() {
   case "$(status)" in
     "stopped")
-      exec start
+      start
     ;;
     "started")
-      exec stop
+      stop
     ;;
   esac
 
