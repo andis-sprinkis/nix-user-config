@@ -125,7 +125,7 @@ countdown() {
 
     sleep "1"
 
-    echo "$delay"
+    echo "$delay" 2>&1
   done
 
   i3blocks_signal "wait" 1>/dev/null 2>/dev/null & disown
