@@ -103,6 +103,8 @@ saved() {
     ;;
   esac
 
+  echo "saved ${path_out}"
+
   exit
 }
 
@@ -112,6 +114,8 @@ canceled() {
 
   # notify-send "${action_name} canceled." --app-name="$script" --urgency="low" 1>/dev/null 2>/dev/null & disown
   echo "${script}: ${action_name} was canceled." 1>&2
+
+  echo "canceled"
 
   exit "6"
 }
@@ -123,6 +127,8 @@ failed() {
   notify-send "${action_name} has failed." --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
   echo "${script}: ${action_name} has failed." 1>&2
 
+  echo "failed"
+
   exit "2"
 }
 
@@ -132,6 +138,8 @@ failed_no_audio() {
 
   notify-send "${action_name} has failed. Could not get the default audio device." --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
   echo "${script}: ${action_name} has failed. Could not get the default audio device." 1>&2
+
+  echo "failed_no_audio"
 
   exit "2"
 }
@@ -143,11 +151,15 @@ not_implemented() {
   notify-send "$msg" --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
   echo "${script}: $msg" 1>&2
 
+  echo "not_implemented"
+
   exit "5"
 }
 
 no_display_server() {
   echo "Must be ran under X11 or Wayland display server." 1>&2
+
+  echo "not_display_server"
 
   exit "2"
 }
@@ -156,6 +168,8 @@ no_display_server() {
 no_area_selected() {
   notify-send "No screen area selected." --app-name="$script" --urgency="critical" 1>/dev/null 2>/dev/null & disown
   echo "${script}: No screen area selected." 1>&2
+
+  echo "no_area_selected"
 
   exit "2"
 }

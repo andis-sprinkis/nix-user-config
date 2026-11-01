@@ -1,186 +1,83 @@
 #!/usr/bin/env sh
 set -euf
-IFS_="$IFS"
 NL="
 "
-
-do_last_action="false"
-
-if [ "${1:-""}" ]; then
-  case "$1" in
-    "last_action")
-      do_last_action="true"
-    ;;
-    *)
-      exit "1"
-    ;;
-  esac
-fi
 
 path_state="${XDG_STATE_HOME-"${HOME}/.local/state"}/screencapture_menu_desktop"
 
 if [ ! -d "$path_state" ]; then mkdir -p "$path_state"; fi
 
+path_state_action="${path_state}/action"
+path_state_target="${path_state}/target"
 path_state_delay="${path_state}/delay"
 path_state_audio="${path_state}/audio"
-path_state_last_action="${path_state}/last_action"
 
-if [ -f "$path_state_delay" ]; then
-  delay_current="$(head < "$path_state_delay")"
+if [ -f "$path_state_action" ]; then action="$(head < "$path_state_action")"; else action="capture"; fi
+if [ -f "$path_state_target" ]; then target="$(head < "$path_state_target")"; else target="area"; fi
+if [ -f "$path_state_delay" ]; then delay="$(head < "$path_state_delay")"; else delay="0"; fi
+if [ -f "$path_state_audio" ]; then audio="$(head < "$path_state_audio")"; else audio="false"; fi
+
+sel_option=""
+
+if [ "${1:-""}" = "silent" ]; then
+  if [ "$action" = "capture" ]; then sel_option="start"; fi
 else
-  delay_current="0"
+  lines="Start${NL}delay (${delay})${NL}action (${action})${NL}target (${target})${NL}audio (${audio})${NL}Exit"
+  options="start${NL}delay${NL}action${NL}target${NL}audio${NL}exit"
+
+  sel_line="$(echo "$lines" | menu_desktop -p "Screen capture:")"
+  sel_idx="$(echo "$lines" | grep -n -x "$sel_line" | cut -f"1" -d":")"
+
+  if [ -z "$sel_idx" ]; then exit "1"; fi
+
+  sel_option="$(echo "$options" | sed -e "${sel_idx}q;d")"
 fi
-
-if [ -f "$path_state_audio" ]; then
-  audio_current="$(head < "$path_state_audio")"
-else
-  audio_current="false"
-fi
-
-if [ -f "$path_state_last_action" ]; then
-  last_action="$(head < "$path_state_last_action")"
-else
-  last_action=""
-fi
-
-lines="Capture: select area
-Capture: active window
-Capture: active workspace
-Capture: active screen
-Capture: pick window
-Capture: pick workspace
-Capture: pick screen
-Capture: all screens
-Record: select area
-Record: active window
-Record: active workspace
-Record: active screen
-Record: pick window
-Record: pick workspace
-Record: pick screen
-Record: all screens
-Audio (${audio_current})
-Delay (${delay_current}s)
-Exit"
-
-options="-a capture -t area
--a capture -t window_focused
--a capture -t workspace_focused
--a capture -t output_focused
--a capture -t window
--a capture -t workspace
--a capture -t output
--a capture -t all
--a record_start -t area
--a record_start -t window_focused
--a record_start -t workspace_focused
--a record_start -t output_focused
--a record_start -t window
--a record_start -t workspace
--a record_start -t output
--a record_start -t all
-set_audio
-set_delay
-exit"
-
-last_action_option=""
-has_valid_last_action="false"
-
-case "$last_action" in
-  "Capture: "*|"Record: "*)
-
-    i="1"
-    IFS="$NL"
-    for line in $lines; do
-      IFS="$IFS_"
-      case "$line" in
-        "$last_action")
-          has_valid_last_action="true"
-          last_action_option="$(printf '%s\n' "$options" | sed -e "${i}q;d")"
-
-          lines="${last_action}${NL}$(printf '%s\n' "$lines" | sed -e "${i}d")"
-          options="${last_action_option}${NL}$(printf '%s\n' "$options" | sed -e "${i}d")"
-          break
-        ;;
-        *)
-          i="$((i + 1))"
-        ;;
-      esac
-    done
-    IFS="$IFS_"
-
-    if [ "$has_valid_last_action" = "false" ]; then echo > "$path_state_last_action"; fi
-  ;;
-  *)
-    echo > "$path_state_last_action"
-  ;;
-esac
-
-if [ "$do_last_action" = "true" ] && [ "$has_valid_last_action" = "true" ]; then
-  case "$last_action" in
-    "Capture: "*)
-      # shellcheck disable=SC2086
-      exec screencapture $last_action_option -d "$delay_current" -i "$audio_current"
-    ;;
-    "Record: "*)
-      exec screencapture_menu_desktop
-    ;;
-  esac
-fi
-
-sel_line="$(printf '%s\n' "$lines" | menu_desktop -p "Action (${delay_current}s):")"
-sel_idx="$(printf '%s\n' "$lines" | grep -n -x "$sel_line" | cut -f"1" -d":")"
-
-if [ -z "$sel_idx" ]; then exit "1"; fi
-
-sel_option="$(printf '%s\n' "$options" | sed -e "${sel_idx}q;d")"
 
 case "$sel_option" in
-  "set_delay")
-    options_delay="0${NL}3${NL}5${NL}10${NL}15${NL}30${NL}Cancel"
-
-    sel_line="$(
-      set +e
-      printf "%s\n" "$options_delay" | menu_desktop -p "Delay (${delay_current}s):"
-      set -e
-    )"
-
-    case "$sel_line" in
-      ''|*[!0123456789]*)
-        exec screencapture_menu_desktop
-      ;;
-      *)
-        printf '%s\n' "$sel_line" > "$path_state_delay"
-        exec screencapture_menu_desktop
-      ;;
-    esac
-  ;;
-  "set_audio")
-    options_audio="false${NL}true${NL}Cancel"
-
-    sel_line="$(
-      set +e
-      printf "%s\n" "$options_audio" | menu_desktop -p "Audio (${audio_current}):"
-      set -e
-    )"
-
-    case "$sel_line" in
-      "false"|"true")
-        printf '%s\n' "$sel_line" > "$path_state_audio"
-        exec screencapture_menu_desktop
-      ;;
-      *)
-        exec screencapture_menu_desktop
-      ;;
-    esac
+  "start")
+    exec screencapture -a "$action" -t "$target" -d "$delay" -i "$audio"
   ;;
   "exit")
     exit
   ;;
-  *)
-    printf '%s\n' "$sel_line" > "$path_state_last_action"
+  "action")
+    sel="$(set +e; echo "capture${NL}record_start${NL}Cancel" | menu_desktop -p "action (${action}):"; set -e)"
 
-    # shellcheck disable=SC2086
-    exec screencapture $sel_option -d "$delay_current" -i "$audio_current"
+    case "$sel" in
+      "capture"|"record_start")
+        echo "$sel" > "$path_state_action"
+      ;;
+    esac
+  ;;
+  "target")
+    sel="$(set +e; echo "area${NL}window_focused${NL}workspace_focused${NL}output_focused${NL}window${NL}workspace${NL}output${NL}all${NL}Cancel" | menu_desktop -p "target (${target}):"; set -e)"
+
+    case "$sel" in
+      "area"|"window_focused"|"workspace_focused"|"output_focused"|"window"|"workspace"|"output"|"all")
+        echo "$sel" > "$path_state_target"
+      ;;
+    esac
+  ;;
+  "audio")
+    sel="$(set +e; echo "false${NL}true${NL}Cancel" | menu_desktop -p "audio (${audio}):"; set -e)"
+
+    case "$sel" in
+      "false"|"true")
+        echo "$sel" > "$path_state_audio"
+      ;;
+    esac
+  ;;
+  "delay")
+    sel="$(set +e; echo "0${NL}3${NL}5${NL}10${NL}15${NL}30${NL}Cancel" | menu_desktop -p "delay (${delay}):"; set -e)"
+
+    case "$sel" in
+      ''|*[!0123456789]*)
+      ;;
+      *)
+        echo "$sel" > "$path_state_delay"
+      ;;
+    esac
   ;;
 esac
+
+exec screencapture_menu_desktop
