@@ -82,44 +82,32 @@ exit_no_area_selected() { exec echo "no_area_selected"; }
 date_iso8601() { LC_ALL="C" TZ="" date -u '+%Y-%m-%dT%H:%M:%S.%4NZ'; }
 
 ptr_coord_output() {
-  set +e
-  swaymsg -t "get_outputs" | jq -r ".. | select(.active?).rect | ${jq_rect_map}" | slurp 2>&1
-  set -e
+  set +e; swaymsg -t "get_outputs" | jq -r ".. | select(.active?).rect | ${jq_rect_map}" | slurp 2>&1; set -e
   return "0"
 }
 
 ptr_coord_output_focused() {
-  set +e
-  swaymsg -t "get_outputs" | jq -r ".. | select(.focused?).rect | ${jq_rect_map}"
-  set -e
+  set +e; swaymsg -t "get_outputs" | jq -r ".. | select(.focused?).rect | ${jq_rect_map}"; set -e
   return "0"
 }
 
 ptr_coord_window() {
-  set +e
-  swaymsg -t "get_tree" | jq -r ".. | select(.pid? and .visible?).rect | ${jq_rect_map}" | slurp 2>&1
-  set -e
+  set +e; swaymsg -t "get_tree" | jq -r ".. | select(.pid? and .visible?).rect | ${jq_rect_map}" | slurp 2>&1; set -e
   return "0"
 }
 
 ptr_coord_window_focused() {
-  set +e
-  swaymsg -t "get_tree" | jq -j ".. | select(.type? and .focused?).rect | ${jq_rect_map}"
-  set -e
+  set +e; swaymsg -t "get_tree" | jq -j ".. | select(.type? and .focused?).rect | ${jq_rect_map}"; set -e
   return "0"
 }
 
 ptr_coord_workspace() {
-  set +e
-  swaymsg -t "get_workspaces" | jq -r ".. | select(.visible? and .type == \"workspace\").rect | ${jq_rect_map}" | slurp 2>&1
-  set -e
+  set +e; swaymsg -t "get_workspaces" | jq -r ".. | select(.visible? and .type == \"workspace\").rect | ${jq_rect_map}" | slurp 2>&1; set -e
   return "0"
 }
 
 ptr_coord_workspace_focused() {
-  set +e
-  swaymsg -t "get_workspaces" | jq -r ".. | select(.focused? and .type == \"workspace\").rect | ${jq_rect_map}"
-  set -e
+  set +e; swaymsg -t "get_workspaces" | jq -r ".. | select(.focused? and .type == \"workspace\").rect | ${jq_rect_map}"; set -e
   return "0"
 }
 
