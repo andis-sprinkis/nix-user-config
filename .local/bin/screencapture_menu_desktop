@@ -22,8 +22,8 @@ sel_option=""
 if [ "${1:-""}" = "silent" ]; then
   if [ "$action" = "capture" ]; then sel_option="start"; fi
 else
-  lines="Start${NL}delay (${delay})${NL}action (${action})${NL}target (${target})${NL}audio (${audio})${NL}Exit"
-  options="start${NL}delay${NL}action${NL}target${NL}audio${NL}exit"
+  lines="Start${NL}action: ${action}${NL}delay: ${delay}${NL}target: ${target}${NL}audio: ${audio}${NL}Exit"
+  options="start${NL}action${NL}delay${NL}target${NL}audio${NL}exit"
 
   sel_line="$(echo "$lines" | menu_desktop -p "Screen capture:")"
   sel_idx="$(echo "$lines" | grep -n -x "$sel_line" | cut -f"1" -d":")"
@@ -41,7 +41,7 @@ case "$sel_option" in
     exit
   ;;
   "action")
-    sel="$(set +e; echo "capture${NL}record_start${NL}Cancel" | menu_desktop -p "action (${action}):"; set -e)"
+    sel="$(set +e; echo "capture${NL}record${NL}Cancel" | menu_desktop -p "action (${action}):"; set -e)"
 
     case "$sel" in
       "capture"|"record_start")
