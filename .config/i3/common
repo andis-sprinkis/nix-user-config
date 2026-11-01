@@ -119,9 +119,8 @@ bindsym --whole-window $mod+Mod1+button9 exec --no-startup-id ${XDG_DATA_HOME:-$
 
 bindsym Hyper_L exec --no-startup-id applications_menu_desktop
 
-bindsym Print            exec screencapture -a capture -t area
+bindsym Print            exec screencapture_menu_desktop silent
 bindsym $mod+Print       exec screencapture_menu_desktop
-bindsym $mod+Shift+Print exec screencapture_menu_desktop silent
 
 bindsym $mod+x exec --no-startup-id bmark_desktop
 

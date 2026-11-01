@@ -17,23 +17,23 @@ if [ -f "$path_state_target" ]; then target="$(head < "$path_state_target")"; el
 if [ -f "$path_state_delay" ]; then delay="$(head < "$path_state_delay")"; else delay="0"; fi
 if [ -f "$path_state_audio" ]; then audio="$(head < "$path_state_audio")"; else audio="false"; fi
 
-sel_option=""
+command=""
 
 if [ "${1:-""}" = "silent" ]; then
-  if [ "$action" = "screenshot" ]; then sel_option="start"; fi
+  if [ "$action" = "screenshot" ]; then command="start"; fi
 else
-  lines="Start${NL}delay: ${delay}${NL}action: ${action}${NL}target: ${target}${NL}audio: ${audio}${NL}Exit"
-  options="start${NL}delay${NL}action${NL}target${NL}audio${NL}exit"
+  labels="Start${NL}delay: ${delay}${NL}action: ${action}${NL}target: ${target}${NL}audio: ${audio}${NL}Exit"
+  commands="start${NL}delay${NL}action${NL}target${NL}audio${NL}exit"
 
-  sel_line="$(echo "$lines" | menu_desktop -p "Capture:")"
-  sel_idx="$(echo "$lines" | grep -n -x "$sel_line" | cut -f"1" -d":")"
+  sel_line="$(echo "$labels" | menu_desktop -p "Capture:")"
+  sel_idx="$(echo "$labels" | grep -n -x "$sel_line" | cut -f"1" -d":")"
 
   if [ -z "$sel_idx" ]; then exit "1"; fi
 
-  sel_option="$(echo "$options" | sed -e "${sel_idx}q;d")"
+  command="$(echo "$commands" | sed -e "${sel_idx}q;d")"
 fi
 
-case "$sel_option" in
+case "$command" in
   "start")
     set +e
     result="$(screencapture -a "$action" -t "$target" -d "$delay" -i "$audio")"
@@ -46,7 +46,7 @@ case "$sel_option" in
         path_out="${result##* }"
 
         (
-          if [ "$(notify-send "Saved." "${path_out}${NL}${inputs_text}" -a "Screen capture" -A "LOCATE=Locate" -w)" ]; then
+          if [ "$(notify-send "${path_out}${NL}${inputs_text}" -a "Screen capture saved" -A "LOCATE=Locate" -w)" ]; then
             exec file_manager_desktop "$path_out"
           fi
         ) 1>/dev/null 2>/dev/null & disown
@@ -65,13 +65,13 @@ case "$sel_option" in
         esac
       ;;
       "failed")
-        notify-send "Failed." "${inputs_text}" -a "Screen capture" -u "critical" 1>/dev/null 2>/dev/null & disown
+        notify-send "${inputs_text}" -a "Screen capture failed" -u "critical" 1>/dev/null 2>/dev/null & disown
       ;;
       "no_audio_device")
-        notify-send "Failed." "Could not find the default audio device.${NL}${inputs_text}" -a "Screen capture" -u "critical" 1>/dev/null 2>/dev/null & disown
+        notify-send "Could not find the default audio device.${NL}${inputs_text}" -a "Screen capture failed" -u "critical" 1>/dev/null 2>/dev/null & disown
       ;;
       "not_implemented")
-        notify-send "Failed." "Not implemented.${NL}${inputs_text}" -a "Screen capture" -u "critical" 1>/dev/null 2>/dev/null & disown
+        notify-send "Not implemented.${NL}${inputs_text}" -a "Screen capture failed" -u "critical" 1>/dev/null 2>/dev/null & disown
       ;;
       "area_selection_in_progress")
       ;;
@@ -93,40 +93,40 @@ case "$sel_option" in
     exit
   ;;
   "action")
-    sel="$(set +e; echo "screenshot${NL}record${NL}Cancel" | menu_desktop -p "action (${action}):"; set -e)"
+    subcommand="$(set +e; echo "screenshot${NL}record${NL}Cancel" | menu_desktop -p "action (${action}):"; set -e)"
 
-    case "$sel" in
+    case "$subcommand" in
       "screenshot"|"record")
-        echo "$sel" > "$path_state_action"
+        echo "$subcommand" > "$path_state_action"
       ;;
     esac
   ;;
   "target")
-    sel="$(set +e; echo "area${NL}window_focused${NL}workspace_focused${NL}output_focused${NL}window${NL}workspace${NL}output${NL}all${NL}Cancel" | menu_desktop -p "target (${target}):"; set -e)"
+    subcommand="$(set +e; echo "area${NL}window_focused${NL}workspace_focused${NL}output_focused${NL}window${NL}workspace${NL}output${NL}all${NL}Cancel" | menu_desktop -p "target (${target}):"; set -e)"
 
-    case "$sel" in
+    case "$subcommand" in
       "area"|"window_focused"|"workspace_focused"|"output_focused"|"window"|"workspace"|"output"|"all")
-        echo "$sel" > "$path_state_target"
+        echo "$subcommand" > "$path_state_target"
       ;;
     esac
   ;;
   "audio")
-    sel="$(set +e; echo "false${NL}true${NL}Cancel" | menu_desktop -p "audio (${audio}):"; set -e)"
+    subcommand="$(set +e; echo "false${NL}true${NL}Cancel" | menu_desktop -p "audio (${audio}):"; set -e)"
 
-    case "$sel" in
+    case "$subcommand" in
       "false"|"true")
-        echo "$sel" > "$path_state_audio"
+        echo "$subcommand" > "$path_state_audio"
       ;;
     esac
   ;;
   "delay")
-    sel="$(set +e; echo "0${NL}3${NL}5${NL}10${NL}15${NL}30${NL}Cancel" | menu_desktop -p "delay (${delay}):"; set -e)"
+    subcommand="$(set +e; echo "0${NL}3${NL}5${NL}10${NL}15${NL}30${NL}Cancel" | menu_desktop -p "delay (${delay}):"; set -e)"
 
-    case "$sel" in
+    case "$subcommand" in
       ''|*[!0123456789]*)
       ;;
       *)
-        echo "$sel" > "$path_state_delay"
+        echo "$subcommand" > "$path_state_delay"
       ;;
     esac
   ;;

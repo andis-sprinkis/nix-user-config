@@ -58,6 +58,8 @@ done
 
 path_dir="${HOME}/scr"
 
+mkdir -p "$path_dir"
+
 exit_no_display_server() {
   exec echo "no_display_server"
 }
@@ -69,6 +71,10 @@ if [ "${WAYLAND_DISPLAY:-""}" ]; then display_server="wayland"; fi
 if [ "${DISPLAY:-""}" ] && [ -z "${WAYLAND_DISPLAY:-""}" ]; then display_server="x11"; fi
 
 if [ -z "$display_server" ]; then exit_no_display_server; fi
+
+date_iso8601() {
+  LC_ALL="C" TZ="" date -u '+%Y-%m-%dT%H:%M:%S.%4NZ'
+}
 
 i3blocks_signal() {
   if [ "${1:-""}" = "wait" ]; then sleep "1"; fi
@@ -125,7 +131,7 @@ countdown() {
 
     sleep "1"
 
-    echo "$delay" 2>&1
+    echo "$delay" 1>&2
   done
 
   i3blocks_signal "wait" 1>/dev/null 2>/dev/null & disown
@@ -194,9 +200,7 @@ case "$action" in
     esac
   ;;
   "record")
-    path_out="${path_dir}/$(date "+%s").mp4"
-
-    mkdir -p "$path_dir"
+    path_out="${path_dir}/$(date_iso8601).mp4"
 
     case "$target" in
       "all"|"area"|"output"|"output_focused"|"window"|"window_focused"|"workspace"|"workspace_focused")
@@ -265,9 +269,7 @@ case "$action" in
     esac
   ;;
   "screenshot")
-    path_out="${path_dir}/$(date "+%s").png"
-
-    mkdir -p "$path_dir"
+    path_out="${path_dir}/$(date_iso8601).png"
 
     case "$display_server" in
       "wayland")
@@ -322,7 +324,7 @@ case "$action" in
           ;;
         esac
 
-        if [ -z "$ptr_coord" ]; then no_area_selected; fi
+        if [ -z "$ptr_coord" ]; then exit_no_area_selected; fi
 
         if [ "$ptr_coord" = "selection cancelled" ]; then exit_cancelled; fi
 
