@@ -758,5 +758,5 @@ Steps for adding any newly listed packages from the user package lists to an alr
 - [Smartcards - ArchWiki](https://wiki.archlinux.org/title/Smartcards)
 - [The Framebuffer Console — The Linux Kernel documentation](https://www.kernel.org/doc/html/latest/fb/fbcon.html)
 - [User/Group Name Syntax - systemd](https://systemd.io/USER_NAMES/)
-- [Xorg - ArchWiki](https://wiki.archlinux.org/title/Xorg)
 - [We are Wayland now!](https://wearewaylandnow.com/)
+- [Xorg - ArchWiki](https://wiki.archlinux.org/title/Xorg)
