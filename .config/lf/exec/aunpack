@@ -9,7 +9,7 @@ files="${fv:-"$fx"}"
 printf 'Selected to extract:\n%s\n' "$files"
 
 IFS="$NL"
-for f in $files; do 
+for f in $files; do
   IFS="$IFS_"
   echo "${NL}---${NL}${f}${NL}"
   aunpack --explain --subdir "$f"

@@ -7,7 +7,6 @@ local slideshow_tmout = slideshow_tmout_default
 S.text.visible = false
 S.decoration = true
 S.overlay = false
-S.dnd_button = 'MouseExtra'
 S.gallery.pstore = false
 S.gallery.cache = 8192
 S.gallery.aspect = 'fit'
@@ -28,6 +27,7 @@ S.viewer.default_scale = 'fit'
 S.viewer.drag_button = 'MouseRight'
 S.viewer.loop = false
 S.slideshow.preload = 3
+S.dnd_button = 'MouseExtra'
 S.slideshow.default_scale = 'fit'
 S.slideshow.drag_button = 'MouseRight'
 S.slideshow.timeout = slideshow_tmout
@@ -45,6 +45,8 @@ if username ~= nil then
 end
 
 local nop = function() end
+
+S.on_dnd = nil
 
 local function title()
   local mode = S.mode
@@ -243,27 +245,13 @@ for _, mode in pairs({ 'gallery', 'viewer', 'slideshow' }) do
   S[mode].on_key('Shift-o', open_with_menu_desktop)
 
   S[mode].on_mouse('MouseMiddle', toggle_mode_gallery)
-  S[mode].on_mouse('Ctrl-ScrollLeft', mzoomin)
-  S[mode].on_mouse('Ctrl-ScrollRight', mzoomout)
-  S[mode].on_mouse('Ctrl-ScrollUp', mzoomin)
-  S[mode].on_mouse('Ctrl-ScrollDown', mzoomout)
   S[mode].on_mouse('Ctrl-MouseMiddle', zoomreset)
-  S[mode].on_mouse('MouseRight-ScrollLeft', mzoomin)
-  S[mode].on_mouse('MouseRight-ScrollRight', mzoomout)
-  S[mode].on_mouse('MouseRight-ScrollUp', mzoomin)
-  S[mode].on_mouse('MouseRight-ScrollDown', mzoomout)
+  -- S[mode].on_mouse('MouseRight-ScrollLeft', mzoomin)
+  -- S[mode].on_mouse('MouseRight-ScrollRight', mzoomout)
+  -- S[mode].on_mouse('MouseRight-ScrollUp', mzoomin)
+  -- S[mode].on_mouse('MouseRight-ScrollDown', mzoomout)
   S[mode].on_mouse('MouseRight-MouseMiddle', zoomreset)
   S[mode].on_mouse('MouseRight', nop)
-  S[mode].on_mouse('MouseMiddle-ScrollLeft', nop)
-  S[mode].on_mouse('MouseMiddle-ScrollRight', nop)
-  S[mode].on_mouse('MouseMiddle-ScrollUp', nop)
-  S[mode].on_mouse('MouseMiddle-ScrollDown', nop)
-  S[mode].on_mouse('MouseLeft-ScrollLeft', nop)
-  S[mode].on_mouse('MouseLeft-ScrollRight', nop)
-  S[mode].on_mouse('MouseLeft-ScrollUp', nop)
-  S[mode].on_mouse('MouseLeft-ScrollDown', nop)
-  S[mode].on_mouse('MouseRight-MouseMiddle-ScrollUp', nop)
-  S[mode].on_mouse('MouseRight-MouseMiddle-ScrollDown', nop)
 end
 
 for _, mode in pairs({ 'viewer', 'slideshow' }) do
@@ -294,6 +282,7 @@ for _, mode in pairs({ 'viewer', 'slideshow' }) do
   local function img_next()
     S[mode].open('next')
   end
+
 
   local function img_prev()
     S[mode].open('prev')
@@ -362,10 +351,30 @@ for _, mode in pairs({ 'viewer', 'slideshow' }) do
   S[mode].on_mouse('MouseRight-MouseLeft', img_prev)
   S[mode].on_mouse('Ctrl-MouseLeft', img_next)
   S[mode].on_mouse('Ctrl-MouseRight-MouseLeft', img_prev)
-  S[mode].on_mouse('ScrollUp', img_prev)
-  S[mode].on_mouse('ScrollDown', img_next)
-  S[mode].on_mouse('ScrollLeft', img_prev)
-  S[mode].on_mouse('ScrollRight', img_next)
+
+  S[mode].on_scroll(function (mod, h, v)
+    if mod == 'Ctrl' then
+      if v + h < 0 then
+        mzoomin()
+        return
+      end
+
+      if v + h > 0 then
+        mzoomout()
+        return
+      end
+    else
+      if v + h < 0 then
+        S[mode].open('prev')
+        return
+      end
+
+      if v + h > 0 then
+        S[mode].open('next')
+        return
+      end
+    end
+  end)
 end
 
 local function gallery_left()
@@ -455,14 +464,34 @@ S.gallery.on_key('bracketright', gallery_pgdown)
 S.gallery.on_key('g', function() S.gallery.select('first') end)
 S.gallery.on_key('Shift-g', function() S.gallery.select('last') end)
 
-S.gallery.on_mouse('ScrollUp', gallery_pgup)
-S.gallery.on_mouse('ScrollDown', gallery_pgdown)
-S.gallery.on_mouse('ScrollLeft', gallery_pgup)
-S.gallery.on_mouse('ScrollRight', gallery_pgdown)
 S.gallery.on_mouse('Ctrl-MouseLeft', gallery_mview)
 S.gallery.on_mouse('Ctrl-MouseRight', gallery_mview)
 S.gallery.on_mouse('MouseLeft', gallery_mview)
 S.gallery.on_mouse('MouseRight', gallery_mview)
+
+S.gallery.on_scroll(function (mod, h, v)
+  if mod == 'Ctrl' then
+    if v + h < 0 then
+      mzoomin()
+      return
+    end
+
+    if v + h > 0 then
+      mzoomout()
+      return
+    end
+  else
+    if v + h < 0 then
+      gallery_pgup()
+      return
+    end
+
+    if v + h > 0 then
+      gallery_pgdown()
+      return
+    end
+  end
+end)
 
 local function slideshow_tmout_inc()
   slideshow_tmout = slideshow_tmout + 1
