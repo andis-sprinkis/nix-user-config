@@ -36,18 +36,18 @@ case "$task" in
   "shell"|"shell_wait")
     fp_files="${1:-""}"
 
+    set --
+
+    IFS=" "
+    for arg in $cmd; do
+      IFS="$IFS_"
+
+      set -- "$@" "$arg"
+    done
+    IFS="$IFS_"
+
     if [ "$fp_files" ]; then
       files="$(cat "$fp_files")"
-
-      set --
-
-      IFS=" "
-      for arg in $cmd; do
-        IFS="$IFS_"
-
-        set -- "$@" "$arg"
-      done
-      IFS="$IFS_"
 
       IFS="$NL"
       for f in $files; do
@@ -58,41 +58,20 @@ case "$task" in
       IFS="$IFS_"
 
       set +e; rm "$fp_files"; set -e;
-
-      case "$task" in
-        "shell")
-          exec env "$@"
-        ;;
-        "shell_wait")
-          set +e
-          env "$@"
-          echo "(${?}) Press any key to exit"
-          set -e
-          IFS= read -r "_" < "/dev/tty"
-        ;;
-      esac
-    else
-      IFS=" "
-      for arg in $cmd; do
-        IFS="$IFS_"
-
-        set -- "$@" "$arg"
-      done
-      IFS="$IFS_"
-
-      case "$task" in
-        "shell")
-          exec env "$@"
-        ;;
-        "shell_wait")
-          set +e
-          env "$@"
-          echo "(${?}) Press any key to exit"
-          set -e
-          IFS= read -r "_" < "/dev/tty"
-        ;;
-      esac
     fi
+
+    case "$task" in
+      "shell")
+        exec env "$@"
+      ;;
+      "shell_wait")
+        set +e
+        env "$@"
+        echo "(${?}) Press any key to exit"
+        set -e
+        IFS= read -r "_" < "/dev/tty"
+      ;;
+    esac
   ;;
   *)
     exit "3"
