@@ -158,6 +158,11 @@ if [ -z "${HAS_ENV_SET:-""}" ]; then
   ENVPATHDIFF="$VOLTA_HOME/bin:${ENVPATHDIFF}"
   export VOLTA_FEATURE_PNPM="1"
 
+  # configure pnpm
+  export PNPM_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/pnpm"
+  PATH="${PNPM_HOME}/bin:${PATH}"
+  ENVPATHDIFF="${PNPM_HOME}/bin:${ENVPATHDIFF}"
+
   # configure homebrew
   export HOMEBREW_NO_ANALYTICS="1"
   export HOMEBREW_NO_EMOJI="1"
