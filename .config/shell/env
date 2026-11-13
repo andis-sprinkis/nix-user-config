@@ -219,8 +219,11 @@ case "${OSTYPE:-"$(uname)"}" in
     newpath=""
     envpathdiff_filt=":${ENVPATHDIFF}:"
 
+    IFS_="$IFS"
+
     IFS=":"
     for p in $PATH; do
+      IFS="$IFS_"
       case "$envpathdiff_filt" in
         *":${p}:"*)
         ;;
@@ -229,6 +232,9 @@ case "${OSTYPE:-"$(uname)"}" in
         ;;
       esac
     done
+    IFS="$IFS_"
+
+    unset IFS_ p newpath envpathdiff_filt
 
     PATH="${ENVPATHDIFF}${newpath}"
   ;;
