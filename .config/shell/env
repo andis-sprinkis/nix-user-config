@@ -234,8 +234,6 @@ case "${OSTYPE:-"$(uname)"}" in
     done
     IFS="$IFS_"
 
-    unset IFS_ p newpath envpathdiff_filt
-
     PATH="${ENVPATHDIFF}${newpath}"
   ;;
 esac
