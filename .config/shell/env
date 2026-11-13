@@ -228,7 +228,7 @@ case "${OSTYPE:-"$(uname)"}" in
         *":${p}:"*)
         ;;
         *)
-          newpath="${p}${newpath:+":${newpath}"}"
+          newpath="${newpath:+"${newpath}:"}${p}"
         ;;
       esac
     done
