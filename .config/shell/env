@@ -216,24 +216,8 @@ fi
 case "${OSTYPE:-"$(uname)"}" in
   [dD]"arwin"*)
     export ENVPATHDIFF="$ENVPATHDIFF"
-    newpath=""
-    envpathdiff_filt=":${ENVPATHDIFF}:"
 
-    IFS_="$IFS"
-
-    IFS=":"
-    for p in $PATH; do
-      IFS="$IFS_"
-      case "$envpathdiff_filt" in
-        *":${p}:"*)
-        ;;
-        *)
-          newpath="${p}${newpath:+":${newpath}"}"
-        ;;
-      esac
-    done
-    IFS="$IFS_"
-
-    PATH="${ENVPATHDIFF}${newpath}"
+    PATH="$(echo "$PATH" | sed -e "s|${ENVPATHDIFF}||g")"
+    PATH="${ENVPATHDIFF}${PATH}"
   ;;
 esac
