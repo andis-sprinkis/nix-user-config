@@ -343,6 +343,10 @@ sudo rm "/usr/local/bin/volta-migrate"
 sudo rm "/usr/local/bin/volta-shim"
 ```
 
+## `proton-mail-export-cli` 🚧
+
+- [How to export and restore emails using the Proton Mail Export Tool | Proton](https://proton.me/support/proton-mail-export-tool)
+
 ## `ddd` 🚧
 
 - [DDD - Data Display Debugger - GNU Project - Free Software Foundation (FSF)](https://www.gnu.org/software/ddd/)
