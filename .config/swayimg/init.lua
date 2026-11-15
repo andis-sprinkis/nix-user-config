@@ -22,6 +22,7 @@ S.text.font = 'sans-serif'
 S.text.color = 0xffffffff
 S.text.shadow = 0xff000000
 S.text.size = 18
+S.text.status_timeout = 0.75
 S.viewer.preload = 3
 S.viewer.default_scale = 'fit'
 S.viewer.drag_button = 'MouseRight'
