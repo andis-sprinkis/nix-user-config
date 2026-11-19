@@ -1,0 +1,818 @@
+{
+    "controllers": [
+        {
+            "active_mode": 2,
+            "colors": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            "description": "Keychron Keyboard",
+            "display_name": "",
+            "flags": 0,
+            "leds": [
+                {
+                    "name": "Key: Escape"
+                },
+                {
+                    "name": "Key: `"
+                },
+                {
+                    "name": "Key: Tab"
+                },
+                {
+                    "name": "Key: Caps Lock"
+                },
+                {
+                    "name": "Key: Left Shift"
+                },
+                {
+                    "name": "Key: Left Control"
+                },
+                {
+                    "name": "Key: F1"
+                },
+                {
+                    "name": "Key: 1"
+                },
+                {
+                    "name": "Key: Left Windows"
+                },
+                {
+                    "name": "Key: F2"
+                },
+                {
+                    "name": "Key: 2"
+                },
+                {
+                    "name": "Key: Q"
+                },
+                {
+                    "name": "Key: A"
+                },
+                {
+                    "name": "Key: Z"
+                },
+                {
+                    "name": "Key: Left Alt"
+                },
+                {
+                    "name": "Key: F3"
+                },
+                {
+                    "name": "Key: 3"
+                },
+                {
+                    "name": "Key: W"
+                },
+                {
+                    "name": "Key: S"
+                },
+                {
+                    "name": "Key: X"
+                },
+                {
+                    "name": "Key: F4"
+                },
+                {
+                    "name": "Key: 4"
+                },
+                {
+                    "name": "Key: E"
+                },
+                {
+                    "name": "Key: D"
+                },
+                {
+                    "name": "Key: C"
+                },
+                {
+                    "name": "Key: F5"
+                },
+                {
+                    "name": "Key: 5"
+                },
+                {
+                    "name": "Key: R"
+                },
+                {
+                    "name": "Key: F"
+                },
+                {
+                    "name": "Key: V"
+                },
+                {
+                    "name": "Key: F6"
+                },
+                {
+                    "name": "Key: 6"
+                },
+                {
+                    "name": "Key: T"
+                },
+                {
+                    "name": "Key: G"
+                },
+                {
+                    "name": "Key: B"
+                },
+                {
+                    "name": "Key: Space"
+                },
+                {
+                    "name": "Key: F7"
+                },
+                {
+                    "name": "Key: 7"
+                },
+                {
+                    "name": "Key: Y"
+                },
+                {
+                    "name": "Key: H"
+                },
+                {
+                    "name": "Key: N"
+                },
+                {
+                    "name": "Key: F8"
+                },
+                {
+                    "name": "Key: 8"
+                },
+                {
+                    "name": "Key: U"
+                },
+                {
+                    "name": "Key: J"
+                },
+                {
+                    "name": "Key: M"
+                },
+                {
+                    "name": "Key: F9"
+                },
+                {
+                    "name": "Key: 9"
+                },
+                {
+                    "name": "Key: I"
+                },
+                {
+                    "name": "Key: K"
+                },
+                {
+                    "name": "Key: ,"
+                },
+                {
+                    "name": "Key: F10"
+                },
+                {
+                    "name": "Key: 0"
+                },
+                {
+                    "name": "Key: O"
+                },
+                {
+                    "name": "Key: L"
+                },
+                {
+                    "name": "Key: ."
+                },
+                {
+                    "name": "Key: Right Alt"
+                },
+                {
+                    "name": "Key: F11"
+                },
+                {
+                    "name": "Key: -"
+                },
+                {
+                    "name": "Key: P"
+                },
+                {
+                    "name": "Key: ;"
+                },
+                {
+                    "name": "Key: /"
+                },
+                {
+                    "name": "Key: Right Fn"
+                },
+                {
+                    "name": "Key: F12"
+                },
+                {
+                    "name": "Key: Number Pad +"
+                },
+                {
+                    "name": "Key: ["
+                },
+                {
+                    "name": "Key: '"
+                },
+                {
+                    "name": "Key: Left Shift"
+                },
+                {
+                    "name": "Key: Right Control"
+                },
+                {
+                    "name": "Key: Print Screen"
+                },
+                {
+                    "name": "Key: Backspace"
+                },
+                {
+                    "name": "Key: ]"
+                },
+                {
+                    "name": "Key: Left Arrow"
+                },
+                {
+                    "name": "Key: Delete"
+                },
+                {
+                    "name": "Key: \\ (ANSI)"
+                },
+                {
+                    "name": "Key: Enter (ISO)"
+                },
+                {
+                    "name": "Key: Up Arrow"
+                },
+                {
+                    "name": "Key: Down Arrow"
+                },
+                {
+                    "name": "Key: Light"
+                },
+                {
+                    "name": "Key: Page Up"
+                },
+                {
+                    "name": "Key: Page Down"
+                },
+                {
+                    "name": "Key: Home"
+                },
+                {
+                    "name": "Key: End"
+                },
+                {
+                    "name": "Key: Right Arrow"
+                }
+            ],
+            "location": "HID: /dev/hidraw1",
+            "modes": [
+                {
+                    "brightness": 10,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 1,
+                    "colors_max": 0,
+                    "colors_min": 0,
+                    "direction": 0,
+                    "flags": 560,
+                    "name": "Custom",
+                    "speed": 0,
+                    "speed_max": 0,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 15,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 2,
+                    "colors": [
+                        0
+                    ],
+                    "colors_max": 1,
+                    "colors_min": 1,
+                    "direction": 0,
+                    "flags": 720,
+                    "name": "Static",
+                    "speed": 0,
+                    "speed_max": 0,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 4,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 2,
+                    "colors": [
+                        38650
+                    ],
+                    "colors_max": 1,
+                    "colors_min": 1,
+                    "direction": 0,
+                    "flags": 721,
+                    "name": "Keystroke light up",
+                    "speed": 10,
+                    "speed_max": 15,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 15,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 2,
+                    "colors": [
+                        0
+                    ],
+                    "colors_max": 1,
+                    "colors_min": 1,
+                    "direction": 0,
+                    "flags": 721,
+                    "name": "Keystroke dim",
+                    "speed": 0,
+                    "speed_max": 15,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 15,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 2,
+                    "colors": [
+                        0
+                    ],
+                    "colors_max": 1,
+                    "colors_min": 1,
+                    "direction": 0,
+                    "flags": 721,
+                    "name": "Sparkle",
+                    "speed": 0,
+                    "speed_max": 15,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 15,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 2,
+                    "colors": [
+                        0
+                    ],
+                    "colors_max": 1,
+                    "colors_min": 1,
+                    "direction": 0,
+                    "flags": 721,
+                    "name": "Rain",
+                    "speed": 0,
+                    "speed_max": 15,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 15,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 0,
+                    "colors_max": 0,
+                    "colors_min": 0,
+                    "direction": 0,
+                    "flags": 657,
+                    "name": "Random colors",
+                    "speed": 0,
+                    "speed_max": 15,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 15,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 2,
+                    "colors": [
+                        0
+                    ],
+                    "colors_max": 1,
+                    "colors_min": 1,
+                    "direction": 0,
+                    "flags": 721,
+                    "name": "Breathing",
+                    "speed": 0,
+                    "speed_max": 15,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 15,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 0,
+                    "colors_max": 0,
+                    "colors_min": 0,
+                    "direction": 0,
+                    "flags": 657,
+                    "name": "Spectrum cycle",
+                    "speed": 0,
+                    "speed_max": 15,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 15,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 2,
+                    "colors": [
+                        0
+                    ],
+                    "colors_max": 1,
+                    "colors_min": 1,
+                    "direction": 0,
+                    "flags": 721,
+                    "name": "Ring gradient",
+                    "speed": 0,
+                    "speed_max": 15,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 15,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 2,
+                    "colors": [
+                        0
+                    ],
+                    "colors_max": 1,
+                    "colors_min": 1,
+                    "direction": 0,
+                    "flags": 725,
+                    "name": "Vertical gradient",
+                    "speed": 0,
+                    "speed_max": 15,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 15,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 2,
+                    "colors": [
+                        0
+                    ],
+                    "colors_max": 1,
+                    "colors_min": 1,
+                    "direction": 0,
+                    "flags": 723,
+                    "name": "Horizontal gradient / Rainbow wave",
+                    "speed": 0,
+                    "speed_max": 15,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 15,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 2,
+                    "colors": [
+                        0
+                    ],
+                    "colors_max": 1,
+                    "colors_min": 1,
+                    "direction": 0,
+                    "flags": 721,
+                    "name": "Around edges",
+                    "speed": 0,
+                    "speed_max": 15,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 15,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 2,
+                    "colors": [
+                        0
+                    ],
+                    "colors_max": 1,
+                    "colors_min": 1,
+                    "direction": 0,
+                    "flags": 721,
+                    "name": "Keystroke horizontal lines",
+                    "speed": 0,
+                    "speed_max": 15,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 15,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 2,
+                    "colors": [
+                        0
+                    ],
+                    "colors_max": 1,
+                    "colors_min": 1,
+                    "direction": 0,
+                    "flags": 721,
+                    "name": "Keystroke tilted lines",
+                    "speed": 0,
+                    "speed_max": 15,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 15,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 2,
+                    "colors": [
+                        0
+                    ],
+                    "colors_max": 1,
+                    "colors_min": 1,
+                    "direction": 0,
+                    "flags": 721,
+                    "name": "Keystroke ripples",
+                    "speed": 0,
+                    "speed_max": 15,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 15,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 2,
+                    "colors": [
+                        0
+                    ],
+                    "colors_max": 1,
+                    "colors_min": 1,
+                    "direction": 0,
+                    "flags": 723,
+                    "name": "Sequence",
+                    "speed": 0,
+                    "speed_max": 15,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 15,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 2,
+                    "colors": [
+                        0
+                    ],
+                    "colors_max": 1,
+                    "colors_min": 1,
+                    "direction": 0,
+                    "flags": 721,
+                    "name": "Wave line",
+                    "speed": 0,
+                    "speed_max": 15,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 15,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 2,
+                    "colors": [
+                        0
+                    ],
+                    "colors_max": 1,
+                    "colors_min": 1,
+                    "direction": 0,
+                    "flags": 721,
+                    "name": "Tilted lines",
+                    "speed": 0,
+                    "speed_max": 15,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 15,
+                    "brightness_max": 15,
+                    "brightness_min": 0,
+                    "color_mode": 2,
+                    "colors": [
+                        0
+                    ],
+                    "colors_max": 1,
+                    "colors_min": 1,
+                    "direction": 0,
+                    "flags": 723,
+                    "name": "Back and forth",
+                    "speed": 0,
+                    "speed_max": 15,
+                    "speed_min": 0
+                },
+                {
+                    "brightness": 0,
+                    "brightness_max": 0,
+                    "brightness_min": 0,
+                    "color_mode": 0,
+                    "colors_max": 0,
+                    "colors_min": 0,
+                    "direction": 0,
+                    "flags": 512,
+                    "name": "Off",
+                    "speed": 0,
+                    "speed_max": 0,
+                    "speed_min": 0
+                }
+            ],
+            "name": "Keychron Gaming Keyboard 1",
+            "serial": "",
+            "type": 5,
+            "vendor": "Keychron",
+            "version": "",
+            "zones": [
+                {
+                    "display_name": "",
+                    "flags": 4096,
+                    "leds_count": 84,
+                    "leds_max": 84,
+                    "leds_min": 84,
+                    "matrix_map": {
+                        "height": 6,
+                        "map": [
+                            0,
+                            6,
+                            9,
+                            15,
+                            20,
+                            25,
+                            30,
+                            36,
+                            41,
+                            46,
+                            51,
+                            57,
+                            63,
+                            69,
+                            73,
+                            78,
+                            1,
+                            7,
+                            10,
+                            16,
+                            21,
+                            26,
+                            31,
+                            37,
+                            42,
+                            47,
+                            52,
+                            58,
+                            64,
+                            70,
+                            4294967295,
+                            79,
+                            2,
+                            4294967295,
+                            11,
+                            17,
+                            22,
+                            27,
+                            32,
+                            38,
+                            43,
+                            48,
+                            53,
+                            59,
+                            65,
+                            71,
+                            74,
+                            80,
+                            3,
+                            4294967295,
+                            12,
+                            18,
+                            23,
+                            28,
+                            33,
+                            39,
+                            44,
+                            49,
+                            54,
+                            60,
+                            66,
+                            4294967295,
+                            75,
+                            81,
+                            4,
+                            4294967295,
+                            13,
+                            19,
+                            24,
+                            29,
+                            34,
+                            40,
+                            45,
+                            50,
+                            55,
+                            61,
+                            67,
+                            4294967295,
+                            76,
+                            82,
+                            5,
+                            8,
+                            14,
+                            4294967295,
+                            4294967295,
+                            4294967295,
+                            35,
+                            4294967295,
+                            4294967295,
+                            4294967295,
+                            56,
+                            62,
+                            68,
+                            72,
+                            77,
+                            83
+                        ],
+                        "width": 16
+                    },
+                    "name": "Keyboard",
+                    "type": 2
+                }
+            ]
+        }
+    ],
+    "profile_name": "kc84_amber_light_up",
+    "profile_version": 6
+}
