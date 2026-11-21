@@ -42,7 +42,7 @@ fi
 # EeasyEffects audio effects interface
 
 if ! pidof -q "easyeffects"; then
-  easyeffects --gapplication-service &
+  easyeffects --service-mode &
 fi
 
 # foot terminal server

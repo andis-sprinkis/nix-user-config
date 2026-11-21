@@ -81,7 +81,7 @@ idle_manager "start" &
 # EeasyEffects audio effects interface
 
 if ! pidof -q "easyeffects"; then
-  easyeffects --gapplication-service &
+  easyeffects --service-mode &
 fi
 
 # Starting or reloading i3 window manager
