@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+# xdg-desktop-portal
+
+systemctl --user restart "xdg-desktop-portal.service"
+
 # gsettings
 
 "${XDG_CONFIG_HOME:-$HOME/.config}/gsettings/init"
