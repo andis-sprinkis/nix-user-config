@@ -320,6 +320,16 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
         ```sudoers
         %wheel ALL=(ALL:ALL) ALL
         ```
+1.  Set up systemd to inherit the user Shell environment for the user systemd units:
+
+    ```sh
+    cat > "/etc/systemd/user-environment-generators/10-profile" << 'sh'
+    #!/usr/bin/env sh
+
+    env -i -- $SHELL --login -c "env" | grep -vE '^(_|SHLVL|PWD|OLDPWD)='
+    sh
+    ```
+
 1.  Create user mount directories.
 
     ```sh
@@ -443,16 +453,6 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
     sudo chsh -s /usr/bin/zsh usr0
     exec zsh
     ```
-1.  Set up systemd to inherit the user Shell environment for the user systemd units:
-
-    ```sh
-    cat > "/etc/systemd/user-environment-generators/10-profile" << 'sh'
-    #!/usr/bin/env sh
-
-    env -i -- $SHELL --login -c "env" | grep -vE '^(_|SHLVL|PWD|OLDPWD)='
-    sh
-    ```
-
 1.  Install AppImage packages.
     ```sh
     for p in $(cat ./appimage | paste -s -d ' ' -); do curl --location --output-dir "$HOME/.local/opt/appimage" --remote-name "$p"; done
