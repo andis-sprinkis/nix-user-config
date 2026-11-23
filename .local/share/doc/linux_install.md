@@ -270,11 +270,9 @@ With LVM on LUKS, systemd-boot bootloader, hibernation, applying user personal c
         sh
         ```
 
-    1. Set the script as executable:
-
-        ```sh
-         chmod +x "/etc/systemd/user-environment-generators/10-profile"
-        ```
+    1. ```sh
+       chmod +x "/etc/systemd/user-environment-generators/10-profile"
+       ```
 
 1.  Set the console font and keymap.
 
