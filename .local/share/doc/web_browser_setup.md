@@ -40,15 +40,15 @@
     - Chromium:
 
         ```sh
-        sudo mkdir -p "/etc/chromium/policies/managed/policies"
-        sudo cp "$HOME/.config/chromium_user/policies.json" "/etc/chromium/policies/managed/policies/policies.json"
+        sudo mkdir -p "/etc/chromium/policies/managed"
+        sudo cp "$HOME/.config/chromium_user/policies.json" "/etc/chromium/policies/managed/policies.json"
         ```
 
     - Google Chrome:
 
         ```sh
-        sudo mkdir -p "/etc/opt/chrome/policies/managed/policies"
-        sudo cp "$HOME/.config/chromium_user/policies.json" "/etc/opt/chrome/policies/managed/policies/policies.json"
+        sudo mkdir -p "/etc/opt/chrome/policies/managed"
+        sudo cp "$HOME/.config/chromium_user/policies.json" "/etc/opt/chrome/policies/managed/policies.json"
         ```
 
 ## Addons
