@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         Lazy dark mode
 @namespace    https://sprinkis.com
-@version      0.305.0
+@version      0.306.0
 @license      MIT
 @description  A lazy dark mode.
 @author       Andis Spriņķis (https://sprinkis.com)
@@ -233,8 +233,6 @@ domain("getapro.lv"),
 domain("git-lfs.com"),
 domain("git-scm.com"),
 domain("githubstatus.com"),
-domain("gitlab.gnome.org"),
-domain("gitlab.kitware.com"),
 domain("glassdoor.co.uk"),
 domain("gnu.org"),
 domain("gnupg.org"),
