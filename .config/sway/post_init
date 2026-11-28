@@ -1,5 +1,11 @@
 #!/usr/bin/env sh
 
+# User environment variables in systemd and dbus
+
+systemctl --user set-environment "XDG_CURRENT_DESKTOP=sway"
+systemctl --user import-environment "DISPLAY" "SWAYSOCK" "XDG_CURRENT_DESKTOP" "WAYLAND_DISPLAY"
+dbus-update-activation-environment --systemd "DISPLAY" "SWAYSOCK" "XDG_CURRENT_DESKTOP=sway" "WAYLAND_DISPLAY"
+
 # xdg-desktop-portal
 
 systemctl --user restart "xdg-desktop-portal.service"
